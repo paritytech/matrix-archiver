@@ -66,9 +66,9 @@ slug       = lambda s: urllib.parse.quote(s, safe="").replace("%","_")
 def rich_color(uid:str) -> str:
     """return a visually distinct pastel color for each user id"""
     digest = hashlib.sha1(uid.encode()).digest()
-    hue         = int.from_bytes(digest[:2],"big") / 0xFFFF          # 0‑1
-    lightness   = 0.55 + (digest[2] / 255 - .5) * 0.25               # 0.43‑0.68
-    saturation  = 0.55 + (digest[3] / 255 - .5) * 0.25               # 0.43‑0.68
+    hue        = int.from_bytes(digest[:2], "big") / 0xFFFF
+    lightness  = 0.55 + (digest[2]/255 - .5) * 0.25
+    saturation = 0.55 + (digest[3]/255 - .5) * 0.25
     r,g,b = colorsys.hls_to_rgb(hue, lightness, saturation)
     return f"#{int(r*255):02x}{int(g*255):02x}{int(b*255):02x}"
 
@@ -81,15 +81,17 @@ def archive_room(room:str):
     cred["room_id"] = cred["default_room"] = room
     cred_file.write_text(json.dumps(cred))
 
-    room_dir = pathlib.Path("archive")/slug(room)
+    room_dir = pathlib.Path("archive") / slug(room)
     room_dir.mkdir(parents=True, exist_ok=True)
 
     try: run(["matrix-commander", *CRED, "--room-join", room])
-    except subprocess.CalledProcessError: pass
+    except subprocess.CalledProcessError:
+        pass
 
     # tiny sync (so that subsequent --listen doesn’t 404)
     try: run(["matrix-commander", *CRED, "--room", room, "--listen", "once"])
-    except subprocess.CalledProcessError: pass
+    except subprocess.CalledProcessError:
+        pass
 
     # ── room title ────────────────────────────────────────────────────
     title = room
@@ -97,50 +99,59 @@ def archive_room(room:str):
         info = next(json_lines(run(["matrix-commander", *CRED,
                                     "--room", room, "--get-room-info",
                                     "--output", "json"])), {})
-        for k in ("room_display_name","room_name",
-                  "canonical_alias","room_alias"):
-            if info.get(k): title = info[k]; break
+        for k in ("room_display_name", "room_name",
+                  "canonical_alias", "room_alias"):
+            if info.get(k):
+                title = info[k]
+                break
     except Exception as e:
         logging.warning("  get‑room‑info failed – %s", e)
 
     # ── fetch messages ────────────────────────────────────────────────
-    listen = {"all":["--listen","all","--listen-self"],
-              "tail":["--listen","tail","--tail",TAIL_N,"--listen-self"],
-              "once":["--listen","once","--listen-self"]}[LISTEN_MODE]
-    raw = run(["matrix-commander", *CRED, "--room", room,
-               *listen, "--output","json"],
-              timeout=TIMEOUT_S if LISTEN_MODE=="all" else None)
+    listen = {"all":  ["--listen", "all",  "--listen-self"],
+              "tail": ["--listen", "tail", "--tail", TAIL_N, "--listen-self"],
+              "once": ["--listen", "once", "--listen-self"]}[LISTEN_MODE]
 
-    events=[e for j in json_lines(raw)
-              for e in [(j.get("source", j))] if e.get("type")=="m.room.message"]
+    raw = run(["matrix-commander", *CRED, "--room", room,
+               *listen, "--output", "json"],
+              timeout=TIMEOUT_S if LISTEN_MODE == "all" else None)
+
+    events = [e for j in json_lines(raw)
+                for e in [(j.get("source", j))]
+                if e.get("type") == "m.room.message"]
+
     logging.info("  messages: %d", len(events))
     if not events:
         return (room, title, slug(room))
 
     # ── threading split ───────────────────────────────────────────────
-    by_id   = {e["event_id"]:e for e in events}
+    by_id   = {e["event_id"]: e for e in events}
     threads = collections.defaultdict(list)
     for e in events:
-        rel=e["content"].get("m.relates_to",{})
-        if rel.get("rel_type")=="m.thread":
+        rel = e["content"].get("m.relates_to", {})
+        if rel.get("rel_type") == "m.thread":
             threads[rel["event_id"]].append(e["event_id"])
-    roots = sorted([e for e in events if e["event_id"] not in
-                   {c for kids in threads.values() for c in kids}], key=when)
+    roots = sorted(
+        [e for e in events if e["event_id"] not in
+         {c for kids in threads.values() for c in kids}],
+        key=when)
 
-    # ── plaintext ‑‑ optimised for LLM ingestion ──────────────────────
-    stamp = datetime.now(timezone.utc).isoformat(timespec="seconds").replace("+00:00","Z")
+    # ── plaintext (LLM‑friendly) ──────────────────────────────────────
+    stamp = datetime.now(timezone.utc).isoformat(timespec="seconds").replace("+00:00", "Z")
     txt   = [f"# room: {title}", f"# exported: {stamp}"]
-    def add_txt(ev,lvl):
+
+    def add_txt(ev, lvl):
         arrow = "↳ " if lvl else ""
         txt.append(f"{'  '*lvl}{arrow}{when(ev).strftime('%Y-%m-%d %H:%M')} "
                    f"{nice_user(ev['sender'])}: {ev['content'].get('body','')}")
+
     for r in roots:
-        add_txt(r,0)
+        add_txt(r, 0)
         for cid in sorted(threads[r["event_id"]], key=lambda i: when(by_id[i])):
-            add_txt(by_id[cid],1)
+            add_txt(by_id[cid], 1)
 
     # ── HTML view ─────────────────────────────────────────────────────
-    html_lines=[
+    html_lines = [
         "<!doctype html><meta charset=utf-8>",
         f"<title>{html.escape(title)} – archive</title>",
         "<style>body{font:14px/1.45 ui-monospace,monospace;background:#111;color:#eee;padding:1em}"
@@ -150,30 +161,41 @@ def archive_room(room:str):
         "<p><a href='room_log.txt'>⇩ plaintext</a>  ·  <a href='/'>⇦ all rooms</a></p>",
         "<hr>",
     ]
-    def add_html(ev,lvl):
+
+    def add_html(ev, lvl):
         cls = "msg reply" if lvl else "msg"
         html_lines.append(
             f"<div class='{cls}'>"
             f"<time>{when(ev).strftime('%Y‑%m‑%d %H:%M')}</time>&ensp;"
-            f"<span class='u' style='color:{rich_color(ev['sender'])}'>{nice_user(ev['sender'])}</span>: "
+            f"<span class='u' style='color:{rich_color(ev['sender'])}'>"
+            f"{nice_user(ev['sender'])}</span>: "
             f"{html.escape(ev['content'].get('body',''))}</div>")
-    for r in roots:
-        add_html(r,0)
-        for cid in sorted(threads[r["event_id"]], key=lambda i: when(by_id[i])):
-            add_html(by_id[cid],1)
 
-    (room_dir/"room_log.txt").write_text("\n".join(txt)+"\n", encoding="utf-8")
-    (room_dir/"index.html" ).write_text("\n".join(html_lines)+"\n", encoding="utf-8")
+    for r in roots:
+        add_html(r, 0)
+        for cid in sorted(threads[r["event_id"]], key=lambda i: when(by_id[i])):
+            add_html(by_id[cid], 1)
+
+    (room_dir / "room_log.txt").write_text("\n".join(txt)  + "\n", encoding="utf-8")
+    (room_dir / "index.html" ).write_text("\n".join(html_lines) + "\n", encoding="utf-8")
     logging.info("  written → %s", room_dir)
+
     return (room, title, slug(room))
 
 # ═════════ main ════════════════════════════════════════════════════════
 pathlib.Path("archive").mkdir(exist_ok=True)
+
+# remove any legacy /archive/index.html
+legacy = pathlib.Path("archive/index.html")
+if legacy.exists():
+    legacy.unlink()
+
 room_meta = []
 for r in ROOMS:
     try:
         meta = archive_room(r)
-        if meta: room_meta.append(meta)
+        if meta:
+            room_meta.append(meta)
     except Exception as exc:
         logging.error("‼ failed for %s – %s", r, exc)
 
@@ -186,11 +208,13 @@ list_items = "\n".join(
 pathlib.Path("index.html").write_text(
     "\n".join([
         "<!doctype html><meta charset=utf-8>",
-        "<title>Matrix room archive</title>",
+        "<title>Archived rooms</title>",
         "<style>body{font:15px ui-monospace,monospace;background:#111;color:#eee;padding:1em}"
         "a{color:#9cf;text-decoration:none}</style>",
-        "<h1>Archived rooms</h1><ul>", list_items, "</ul>"
-    ])+"\n", encoding="utf-8")
+        "<h1>Archived rooms</h1>",
+        "<ul>", list_items, "</ul>"
+    ]) + "\n",
+    encoding="utf-8")
 
 logging.info("root index.html regenerated ✓")
 
