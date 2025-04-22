@@ -1,2 +1,12 @@
 # room: !CjTsfhoKvQeyZThdxL:polkadot.io
-# exported: 2025-04-22T12:39:49Z
+# exported: 2025-04-22T13:26:20Z
+2025-04-22T10:34:35.447000Z @erin:polkadot.io: blah blah
+2025-04-22T10:34:39.497000Z @erin:polkadot.io: blah x2
+  2025-04-22T10:34:42.575000Z @erin:polkadot.io: a thread
+2025-04-22T10:34:45.637000Z @erin:polkadot.io: test
+2025-04-22T12:37:01.521000Z @erin:polkadot.io: test
+2025-04-22T12:37:03.678000Z @erin:polkadot.io: blah blah
+  2025-04-22T12:37:09.376000Z @erin:polkadot.io: a thread!
+  2025-04-22T12:37:11.499000Z @erin:polkadot.io: more thread
+2025-04-22T12:37:05.633000Z @erin:polkadot.io: blah x 4
+  2025-04-22T12:37:15.768000Z @erin:polkadot.io: a second thread
