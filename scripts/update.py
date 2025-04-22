@@ -1,181 +1,213 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 """
-Dump a (public, un‑encrypted) Matrix room to
-    •  room_log.txt   (plain‑text)
-    •  index.html     (colourised, links to txt)
-
-Designed for CI / GitHub Actions: prints every byte the CLI writes,
-but never leaks the access‑token.
+Archive one Matrix room into   • index.html   • room_log.txt
+Intended for non‑encrypted, world‑readable rooms, run inside CI.
 """
 
-import os, sys, json, subprocess, datetime, hashlib, html, colorsys
-import collections, pathlib, logging, shlex, signal
+import os, sys, json, subprocess, shlex, hashlib, colorsys, html, logging
+import collections, pathlib, textwrap
 from datetime import datetime, timezone
 
-# ─── configuration via env ──────────────────────────────────────────────
+# ────────── configuration (env‑vars) ────────────────────────────────────
 HS   = os.environ["MATRIX_HS"]
-UID  = os.environ["MATRIX_USER"]
-RID  = os.environ["MATRIX_ROOM"]
-TOK  = os.environ["MATRIX_TOKEN"]
+USER = os.environ["MATRIX_USER"]
+ROOM = os.environ["MATRIX_ROOM"]          # '!roomid:homeserver'
+TOKEN= os.environ["MATRIX_TOKEN"]
 
-LISTEN_MODE = os.getenv("LISTEN_MODE", "all")   # tail | once | all
-TAIL_N      = os.getenv("TAIL_N",      "20000")  # only used for tail
-TIMEOUT_S   = int(os.getenv("LISTEN_TIMEOUT", "30"))   # safety for “all”
+LISTEN_MODE = os.getenv("LISTEN_MODE", "all").lower()   # all | tail | once
+TAIL_N      = os.getenv("TAIL_N", "20000")              # if LISTEN_MODE=tail
+TIMEOUT_S   = int(os.getenv("TIMEOUT", 20))             # only for mode=all
 
-# ─── logging ────────────────────────────────────────────────────────────
-logging.basicConfig(stream=sys.stderr,
+# ────────── logging ─────────────────────────────────────────────────────
+logging.basicConfig(level=logging.DEBUG,
                     format="%(levelname)s: %(message)s",
-                    level=logging.DEBUG)
-os.environ["NIO_LOG_LEVEL"] = "error"            # hush nio validator spam
+                    stream=sys.stderr)
+os.environ["NIO_LOG_LEVEL"] = "error"       # mute nio crypto warnings
 
-logging.debug(f"homeserver={HS} user={UID} room={RID} mode={LISTEN_MODE}")
+logging.debug(f"homeserver={HS}  user={USER}  room={ROOM}")
 
-# ─── credentials file / store dir ───────────────────────────────────────
+# ────────── credentials file / store dir ───────────────────────────────
 cred_file = pathlib.Path("mc_creds.json")
-store_dir = pathlib.Path("store"); store_dir.mkdir(exist_ok=True)
+store_dir = pathlib.Path("store")
+store_dir.mkdir(exist_ok=True)
 
-if not cred_file.exists():     # first run on fresh runner
+if not cred_file.exists():
     cred_file.write_text(json.dumps({
         "homeserver":   HS,
-        "user_id":      UID,
-        "access_token": TOK,
+        "user_id":      USER,
+        "access_token": TOKEN,
         "device_id":    "GH",
-        "room_id":      RID,
-        "default_room": RID
+        "room_id":      ROOM,
+        "default_room": ROOM,
     }))
 
 CRED = ["--credentials", str(cred_file), "--store", str(store_dir)]
 
-# ─── helpers ────────────────────────────────────────────────────────────
-def _tee(stream):                      # generator: log + yield
-    for line in stream:
-        logging.debug(line.rstrip("\n"))
-        yield line
+# ────────── helpers ─────────────────────────────────────────────────────
+def pastel(uid: str) -> str:
+    h = int(hashlib.sha1(uid.encode()).hexdigest()[:8], 16) / 0xFFFFFFFF
+    r, g, b = colorsys.hls_to_rgb(h, .70, .45)
+    return f"#{int(r*255):02x}{int(g*255):02x}{int(b*255):02x}"
 
-def run_json(cmd, timeout=None):
-    """
-    Run *cmd* (iterable of args).  Every byte of stdout/stderr is streamed to
-    DEBUG.  Stdout is also returned (string) for later JSON parsing.
-    """
+def when(ev):                                   # --> datetime (UTC)
+    return datetime.utcfromtimestamp(ev["origin_server_ts"] / 1000.0)
+
+def json_lines(raw: str):
+    """Return JSON objects; silently ignore non‑JSON lines."""
+    out = []
+    for line in raw.splitlines():
+        line = line.strip()
+        if not line or line[0] not in "{[":
+            continue
+        try:
+            out.append(json.loads(line))
+        except json.JSONDecodeError:
+            logging.debug(f"skipped non‑json line: {line[:80]}")
+    return out
+
+def _stream_lines(stream):
+    for ln in stream:
+        logging.debug(ln.rstrip())
+        yield ln
+
+def run_stream(cmd: list[str]) -> str:
+    """Run *matrix‑commander*, stream both stdio to DEBUG, return stdout."""
     logging.debug("⟹ " + " ".join(map(shlex.quote, cmd)))
     proc = subprocess.Popen(cmd, text=True,
                             stdout=subprocess.PIPE,
-                            stderr=subprocess.PIPE,
-                            bufsize=1)
-
-    # pump stderr in background so it cannot fill the pipe and dead‑lock
-    for _ in _tee(proc.stderr):
+                            stderr=subprocess.PIPE)
+    # pump stderr in background
+    for _ in _stream_lines(proc.stderr):
         pass
+    out_buf = []
+    for ln in _stream_lines(proc.stdout):
+        out_buf.append(ln)
+    ret = proc.wait()
+    if ret:
+        raise subprocess.CalledProcessError(ret, cmd)
+    return "".join(out_buf)
 
+def run_with_timeout(cmd: list[str], timeout_s: int) -> str:
+    """Run cmd, kill after timeout_s, return stdout (log everything)."""
+    logging.debug("⟹ " + " ".join(map(shlex.quote, cmd)))
     try:
-        stdout = "".join(_tee(proc.stdout))
-        proc.wait(timeout=timeout)
-    except subprocess.TimeoutExpired:
-        proc.kill()
-        logging.warning(f"matrix‑commander timed‑out after {timeout}s – killed")
-    if proc.returncode not in (0, None):
-        raise subprocess.CalledProcessError(proc.returncode, cmd)
-    return stdout
+        res = subprocess.run(cmd, text=True, capture_output=True,
+                             timeout=timeout_s, check=False)
+    except subprocess.TimeoutExpired as exc:
+        # coreutils ‘timeout’ style exit‑code (124) for consistency
+        logging.warning(f"command exceeded {timeout_s}s – killed")
+        res = exc
+    for ln in res.stderr.splitlines():
+        logging.debug(ln)
+    for ln in res.stdout.splitlines():
+        logging.debug(ln)
+    return res.stdout
 
-def json_lines(blob: str):
-    """Parse every *valid* JSON line; quietly ignore human chatter."""
-    out = []
-    for line in blob.splitlines():
-        line = line.strip()
-        if line and line[0] in "{[":
-            try:
-                out.append(json.loads(line))
-            except json.JSONDecodeError:
-                logging.debug(f"skip non‑json line: {line[:40]}")
-    return out
-
-pastel = lambda u: "#{:02x}{:02x}{:02x}".format(*(
-        int(c*255) for c in colorsys.hls_to_rgb(
-            int(hashlib.sha1(u.encode()).hexdigest()[:8],16)/0xffffffff,
-            0.70, 0.45)))
-when = lambda ev: datetime.utcfromtimestamp(ev["origin_server_ts"]/1000)
-
-# ─── make sure we’re joined ─────────────────────────────────────────────
+# ────────── ensure we’re a member of the room ───────────────────────────
 try:
-    run_json(["matrix-commander", *CRED, "--room-join", RID])
+    run_stream(["matrix-commander", *CRED, "--room-join", ROOM])
 except subprocess.CalledProcessError:
-    pass      # already joined / join forbidden – fine for public room
+    pass                             # already joined / not allowed – ignore
 
-# ─── pretty room name (best effort) ─────────────────────────────────────
-pretty = RID
+# ────────── room pretty‑name (best effort) ──────────────────────────────
+pretty = ROOM
 try:
-    meta = json_lines(run_json(
+    meta = json_lines(run_stream(
         ["matrix-commander", *CRED,
-         "--room", RID, "--get-room-info", "--output", "json"]))[0]
-    for k in ("room_display_name","room_name",
-              "room_canonical_alias","room_alias"):
-        if meta.get(k):
-            pretty = meta[k]; break
+         "--room", ROOM, "--get-room-info", "--output", "json"]))
+    if meta:
+        meta = meta[0]
+        for key in ("room_display_name", "room_name",
+                    "room_canonical_alias", "room_alias"):
+            if meta.get(key):
+                pretty = meta[key]; break
 except Exception as e:
-    logging.warning(f"room‑info failed: {e}")
+    logging.warning(f"meta fetch failed: {e}")
 
-# ─── harvest events ─────────────────────────────────────────────────────
-listen_args = ["--room", RID, "--listen", LISTEN_MODE, "--listen-self",
-               "--output", "json"]
-if LISTEN_MODE == "tail":
-    listen_args.extend(["--tail", TAIL_N])
+# ────────── fetch events ────────────────────────────────────────────────
+listen_args = {
+    "all" : ["--listen", "all",  "--listen-self"],
+    "tail": ["--listen", "tail", "--tail", TAIL_N, "--listen-self"],
+    "once": ["--listen", "once", "--listen-self"],
+}[LISTEN_MODE]
 
-raw = run_json(["matrix-commander", *CRED, *listen_args],
-               timeout = (TIMEOUT_S if LISTEN_MODE == "all" else None))
+if LISTEN_MODE == "all":
+    raw = run_with_timeout(
+        ["matrix-commander", *CRED, "--room", ROOM,
+         *listen_args, "--output", "json"],
+        TIMEOUT_S)
+else:
+    raw = run_stream(
+        ["matrix-commander", *CRED, "--room", ROOM,
+         *listen_args, "--output", "json"])
 
 events = [e for e in json_lines(raw) if e.get("type") == "m.room.message"]
-logging.info(f"got {len(events)} m.room.message events")
+logging.info(f"parsed {len(events)} m.room.message events")
 
 if not events:
-    logging.error("no events found – aborting archive")
+    logging.error("no events – nothing to archive")
     sys.exit(1)
 
-# ─── thread linkage ─────────────────────────────────────────────────────
-by_id, threads = {}, collections.defaultdict(list)
+# ────────── thread bookkeeping ──────────────────────────────────────────
+by_id   : dict[str, dict]           = {}
+threads : dict[str, list[str]]      = collections.defaultdict(list)
+
 for ev in events:
     by_id[ev["event_id"]] = ev
     rel = ev["content"].get("m.relates_to", {})
     if rel.get("rel_type") == "m.thread":
         threads[rel["event_id"]].append(ev["event_id"])
 
-roots = sorted(
+root_events = sorted(
     [e for e in events
      if e["event_id"] not in {c for kids in threads.values() for c in kids}],
     key=when)
 
-# ─── build outputs ──────────────────────────────────────────────────────
-stamp = datetime.now(timezone.utc).isoformat(timespec="seconds").replace("+00:00","Z")
-txt  = [f"# room: {pretty}", f"# exported: {stamp}"]
-html = [
+# ────────── build plaintext & html outputs ──────────────────────────────
+stamp = datetime.now(timezone.utc).isoformat(timespec="seconds")\
+         .replace("+00:00", "Z")
+
+txt_lines  = [f"# room: {pretty}", f"# exported: {stamp}"]
+html_lines = [
     "<!doctype html><meta charset=utf-8>",
     f"<title>{html.escape(pretty)}</title>",
-    "<style>body{{font:14px/1.45 ui-monospace,monospace;background:#111;color:#eee;padding:1em}}"
-    "time{{color:#888;margin-right:.5em}}.u{{font-weight:600}}.reply{{margin-left:2ch}}"
-    "a{{color:#9cf;text-decoration:none}}</style>".format(),
+    "<style>",
+    "body{font:14px/1.45 ui-monospace,monospace;"
+    "background:#111;color:#eee;padding:1em}",
+    "time{color:#888;margin-right:.5em}",
+    ".u{font-weight:600}",
+    ".reply{margin-left:2ch}",
+    "a{color:#9cf;text-decoration:none}",
+    "</style>",
     f"<h1>{html.escape(pretty)}</h1>",
     "<p><a href='room_log.txt'>⇩ download plaintext</a></p>",
-    "<hr><pre>"
+    "<hr><pre>",
 ]
 
-def emit(ev, indent=""):
-    t,u,b = when(ev).isoformat()+"Z", ev["sender"], ev["content"].get("body","")
-    txt.append(f"{indent}{t} {u}: {b}")
-    html.append(
-        f"<div class='{'reply' if indent else ''}'>"
-        f"<time>{t}</time>"
-        f"<span class='u' style='color:{pastel(u)}'>{html.escape(u)}</span>: "
-        f"{html.escape(b)}</div>")
+def emit(ev, indent: str = "") -> None:
+    ts  = when(ev).isoformat() + "Z"
+    usr = ev["sender"]
+    body= ev["content"].get("body", "")
+    txt_lines.append(f"{indent}{ts} {usr}: {body}")
+    html_lines.append(
+        f"<div class='{('reply' if indent else '')}'>"
+        f"<time>{ts}</time>"
+        f"<span class='u' style='color:{pastel(usr)}'>{html.escape(usr)}</span>: "
+        f"{html.escape(body)}</div>")
 
-for root in roots:
+for root in root_events:
     emit(root)
-    for cid in sorted(threads[root["event_id"]],
-                      key=lambda x: when(by_id[x])):
+    for cid in sorted(threads[root["event_id"]], key=lambda i: when(by_id[i])):
         emit(by_id[cid], indent="  ")
 
-html.append("</pre>")
+html_lines.append("</pre>")
 
-pathlib.Path("room_log.txt").write_text("\n".join(txt)+"\n", encoding="utf8")
-pathlib.Path("index.html" ).write_text("\n".join(html),        encoding="utf8")
-logging.info("archive written  ✓  (index.html  +  room_log.txt)")
+# ────────── write files ─────────────────────────────────────────────────
+pathlib.Path("room_log.txt").write_text("\n".join(txt_lines)  + "\n",
+                                        encoding="utf-8")
+pathlib.Path("index.html" ).write_text("\n".join(html_lines)+ "\n",
+                                        encoding="utf-8")
+
+logging.info("archive written: index.html  +  room_log.txt   ✓")
 
