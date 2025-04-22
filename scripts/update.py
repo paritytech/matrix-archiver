@@ -6,7 +6,6 @@ from datetime import datetime, timezone
 
 # hush nio “one_time_key_counts” noise
 os.environ["NIO_LOG_LEVEL"] = "error"
-# we don't need encryption errors
 logging.getLogger("nio").setLevel(logging.ERROR)
 
 # ---------- env ----------
