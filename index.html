@@ -1,25 +1,25 @@
 <!doctype html><meta charset=utf-8>
 <title>test room – archive</title>
 <style>
-body{background:#111;color:#eee;font:15px/1.5 ui-monospace,monospace;padding:1.2em max(1.2em,5vw)}
+body{background:#111;color:#eee;font:15px/1.55 ui-monospace,monospace;padding:1.2em clamp(1.2em,5vw,3em)}
 .hdr{font:22px/1.35 ui-monospace;margin-bottom:.4em}
 .topic{color:#aaa;margin:.3em 0 1.2em}
-.root{margin:.35em 0 .15em;padding-left:.8em;border-left:3px solid #555}
-.reply{margin:.25em 0 .15em .8em;padding-left:.8em;border-left:3px solid #666}
-time{color:#888;margin-right:.6em}
-.u{font-weight:600}
+.msg{display:flex;gap:.6em;margin:.28em 0}
+.time{color:#777;flex:none;width:3.5ch;text-align:right}
+.user{font-weight:600}
+.thread{margin-left:2em;border-left:2px solid #444;padding-left:1em}
 a{color:#9cf;text-decoration:none}
 </style>
 <div class=hdr>test room</div>
 <p><a href='room_log.txt'>⇩ download plain‑text</a></p>
 <hr>
-<div class='root'><time>2025-04-22 10:34:35 UTC</time><span class='u' style='color:#b190d4'>@erin:polkadot.io</span>: blah blah</div>
-<div class='root'><time>2025-04-22 10:34:39 UTC</time><span class='u' style='color:#b190d4'>@erin:polkadot.io</span>: blah x2</div>
-<div class='reply'><time>2025-04-22 10:34:42 UTC</time><span class='u' style='color:#b190d4'>@erin:polkadot.io</span>: a thread</div>
-<div class='root'><time>2025-04-22 10:34:45 UTC</time><span class='u' style='color:#b190d4'>@erin:polkadot.io</span>: test</div>
-<div class='root'><time>2025-04-22 12:37:01 UTC</time><span class='u' style='color:#b190d4'>@erin:polkadot.io</span>: test</div>
-<div class='root'><time>2025-04-22 12:37:03 UTC</time><span class='u' style='color:#b190d4'>@erin:polkadot.io</span>: blah blah</div>
-<div class='reply'><time>2025-04-22 12:37:09 UTC</time><span class='u' style='color:#b190d4'>@erin:polkadot.io</span>: a thread!</div>
-<div class='reply'><time>2025-04-22 12:37:11 UTC</time><span class='u' style='color:#b190d4'>@erin:polkadot.io</span>: more thread</div>
-<div class='root'><time>2025-04-22 12:37:05 UTC</time><span class='u' style='color:#b190d4'>@erin:polkadot.io</span>: blah x 4</div>
-<div class='reply'><time>2025-04-22 12:37:15 UTC</time><span class='u' style='color:#b190d4'>@erin:polkadot.io</span>: a second thread</div>
+<div class='msg'><span class=time>10:34</span><span class='user' style='color:#b693db'>@erin:polkadot.io</span><span>blah blah</span></div>
+<div class='msg'><span class=time>10:34</span><span class='user' style='color:#b693db'>@erin:polkadot.io</span><span>blah x2</span></div>
+<div class='thread'><div class='msg'><span class=time>10:34</span><span class='user' style='color:#b693db'>@erin:polkadot.io</span><span>a thread</span></div></div>
+<div class='msg'><span class=time>10:34</span><span class='user' style='color:#b693db'>@erin:polkadot.io</span><span>test</span></div>
+<div class='msg'><span class=time>12:37</span><span class='user' style='color:#b693db'>@erin:polkadot.io</span><span>test</span></div>
+<div class='msg'><span class=time>12:37</span><span class='user' style='color:#b693db'>@erin:polkadot.io</span><span>blah blah</span></div>
+<div class='thread'><div class='msg'><span class=time>12:37</span><span class='user' style='color:#b693db'>@erin:polkadot.io</span><span>a thread!</span></div></div>
+<div class='thread'><div class='msg'><span class=time>12:37</span><span class='user' style='color:#b693db'>@erin:polkadot.io</span><span>more thread</span></div></div>
+<div class='msg'><span class=time>12:37</span><span class='user' style='color:#b693db'>@erin:polkadot.io</span><span>blah x 4</span></div>
+<div class='thread'><div class='msg'><span class=time>12:37</span><span class='user' style='color:#b693db'>@erin:polkadot.io</span><span>a second thread</span></div></div>
