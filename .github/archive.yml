@@ -1,0 +1,49 @@
+name: mirror‑matrix‑room
+
+permissions:
+  contents: write          # push commits
+  pages: write             # publish the site
+  id-token: write          # for pages deploy
+
+on:
+  schedule:                # daily 03:07 utc
+    - cron: '7 3 * * *'
+  workflow_dispatch:       # manual “run” button
+  push:
+    paths: ['scripts/update.py']  # redeploy if script changes
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.x'
+
+      - run: pip install matrix-commander==8.*        # pin a bit
+      - run: python scripts/update.py
+        env:
+          MATRIX_HS:    ${{ secrets.MATRIX_HS }}
+          MATRIX_USER:  ${{ secrets.MATRIX_USER }}
+          MATRIX_ROOM:  ${{ secrets.MATRIX_ROOM }}
+          MATRIX_TOKEN: ${{ secrets.MATRIX_TOKEN }}
+
+      # commit artefacts back so txt history lives in git
+      - name: commit artefacts
+        run: |
+          git config user.name  github-actions
+          git config user.email gh-actions@users.noreply.github.com
+          git add room_log.txt index.html
+          git diff --cached --quiet || git commit -m "bot: update $(date -u +'%F')" && git push
+
+      #  ---- pages deployment bits ----
+      - name: upload pages artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: .           # root contains index.html + room_log.txt
+      - name: deploy to gh‑pages
+        id: deploy
+        uses: actions/deploy-pages@v4
+
