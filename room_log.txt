@@ -1,5 +1,5 @@
-# room: !CjTsfhoKvQeyZThdxL:polkadot.io
-# exported: 2025-04-22T14:04:10Z
+# room: test room
+# exported: 2025-04-22T14:10:57Z
 2025‑04‑22 10:34 erin: blah blah
 2025‑04‑22 10:34 erin: blah x2
   ↳ 2025‑04‑22 10:34 erin: a thread
