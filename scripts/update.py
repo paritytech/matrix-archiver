@@ -2,23 +2,24 @@
 # -*- coding: utf-8 -*-
 """
 Archive a public, un‑encrypted Matrix room into
-    • index.html      (pretty, threaded)
-    • room_log.txt    (plain–text)
+    • index.html (pretty, threaded)
+    • room_log.txt (plain text)
 
-Required ENV :  MATRIX_HS  MATRIX_USER  MATRIX_ROOM  MATRIX_TOKEN
-Optional      :  LISTEN_MODE=all|tail|once  TAIL_N  TIMEOUT
+ENV:  MATRIX_HS  MATRIX_USER  MATRIX_ROOM  MATRIX_TOKEN
+OPT:  LISTEN_MODE=all|tail|once  TAIL_N  TIMEOUT
 """
 
-import os, sys, json, subprocess, shlex, hashlib, colorsys, html, logging
+import os, sys, json, subprocess, shlex, hashlib, colorsys, logging
 import collections, pathlib
+import html as htmllib                         # <── keep original module here
 from datetime import datetime, timezone
 
 # ─────────────── ENV ────────────────────────────────────────────────────
 HS, USER, ROOM, TOKEN = (os.environ[k] for k in
                          ("MATRIX_HS", "MATRIX_USER", "MATRIX_ROOM", "MATRIX_TOKEN"))
-MODE     = os.getenv("LISTEN_MODE", "all").lower()            # all|tail|once
+MODE     = os.getenv("LISTEN_MODE", "all").lower()           # all|tail|once
 TAIL_N   = os.getenv("TAIL_N", "20000")
-TIMEOUT  = int(os.getenv("TIMEOUT", "20"))                    # for mode=all
+TIMEOUT  = int(os.getenv("TIMEOUT", "20"))                   # when MODE == all
 
 # ─────────────── LOGGING ───────────────────────────────────────────────
 logging.basicConfig(level=logging.DEBUG,
@@ -68,9 +69,9 @@ def run_mc(cmd, timeout=None) -> str:
     for l in res.stderr.splitlines(): logging.debug(l)
     return res.stdout
 
-# ─────────────── JOIN (idempotent) ─────────────────────────────────────
+# ─────────────── JOIN ─────────────────────────────────────────────────
 try:   run_mc(["matrix-commander", *CRED, "--room-join", ROOM])
-except subprocess.CalledProcessError: pass
+except subprocess.CalledProcessError: pass     # already joined / public
 
 # ─────────────── ROOM META ─────────────────────────────────────────────
 pretty, topic = ROOM, ""
@@ -84,7 +85,7 @@ try:
 except Exception as e:
     logging.warning(f"meta fetch failed: {e}")
 
-# ─────────────── FETCH EVENTS ──────────────────────────────────────────
+# ─────────────── FETCH EVENTS ─────────────────────────────────────────
 listen_args = {
     "all" : ["--listen","all","--listen-self"],
     "tail": ["--listen","tail","--tail",TAIL_N,"--listen-self"],
@@ -104,8 +105,8 @@ logging.info(f"{len(events)} message events")
 if not events:
     logging.error("no events – nothing to archive"); sys.exit(1)
 
-# ─────────────── BUILD THREAD MAP (1‑level) ────────────────────────────
-roots   : dict[str,dict]            = {}          # event_id ➜ event
+# ─────────────── THREAD MAP (single level) ────────────────────────────
+roots   : dict[str,dict]            = {}
 replies : collections.defaultdict[list[str]] = collections.defaultdict(list)
 
 for ev in events:
@@ -113,21 +114,20 @@ for ev in events:
     if rel.get("rel_type") == "m.thread" and rel.get("event_id") != ev["event_id"]:
         replies[rel["event_id"]].append(ev["event_id"])
     else:
-        roots[ev["event_id"]] = ev                      # root message
+        roots[ev["event_id"]] = ev
 
-# sort roots chronologically
 ordered_roots = sorted(roots.values(), key=when)
 
-# ─────────────── BUILD ARCHIVE ─────────────────────────────────────────
+# ─────────────── BUILD OUTPUTS ────────────────────────────────────────
 ts_now  = datetime.now(timezone.utc).strftime("%Y-%m-%d %H:%M:%S UTC")
 
 txt  = [f"# {pretty}"]
 if topic: txt += [f"# {t}" for t in topic.splitlines()]
 txt += [f"# exported: {ts_now}", ""]
 
-html = [
+page = [                                               # ← renamed from `html`
     "<!doctype html><meta charset=utf-8>",
-    f"<title>{html.escape(pretty)} – archive</title>",
+    f"<title>{htmllib.escape(pretty)} – archive</title>",
     "<style>",
     "body{background:#111;color:#eee;font:15px/1.5 ui-monospace,monospace;"
     "padding:1.2em max(1.2em,5vw)}",
@@ -139,11 +139,11 @@ html = [
     ".u{font-weight:600}",
     "a{color:#9cf;text-decoration:none}",
     "</style>",
-    f"<div class=hdr>{html.escape(pretty)}</div>",
+    f"<div class=hdr>{htmllib.escape(pretty)}</div>",
 ]
 if topic:
-    html.append(f"<div class=topic>{html.escape(topic)}</div>")
-html += [
+    page.append(f"<div class=topic>{htmllib.escape(topic)}</div>")
+page += [
     "<p><a href='room_log.txt'>⇩ download plain‑text</a></p>",
     "<hr>",
 ]
@@ -152,24 +152,25 @@ def emit(ev, depth):
     ts  = when(ev).strftime("%Y-%m-%d %H:%M:%S UTC")
     usr = ev["sender"]
     bod = ev["content"].get("body","")
-    # TXT
+    # text
     txt.append(f"{'  '*depth}{ts} {usr}: {bod}")
-    # HTML
-    cls = "root" if depth==0 else "reply"
-    html.append(
+    # html
+    cls = "root" if depth == 0 else "reply"
+    page.append(
         f"<div class='{cls}'>"
         f"<time>{ts}</time>"
-        f"<span class='u' style='color:{pastel(usr)}'>{html.escape(usr)}</span>: "
-        f"{html.escape(bod)}</div>"
+        f"<span class='u' style='color:{pastel(usr)}'>{htmllib.escape(usr)}</span>: "
+        f"{htmllib.escape(bod)}</div>"
     )
 
 for root in ordered_roots:
     emit(root, 0)
-    for cid in sorted(replies.get(root["event_id"], []), key=lambda x: when(next(e for e in events if e["event_id"]==x))):
+    for cid in sorted(replies.get(root["event_id"], []),
+                      key=lambda x: when(next(e for e in events if e["event_id"]==x))):
         emit(next(e for e in events if e["event_id"]==cid), 1)
 
 # ─────────────── WRITE FILES ───────────────────────────────────────────
 pathlib.Path("room_log.txt").write_text("\n".join(txt)+"\n",  encoding="utf-8")
-pathlib.Path("index.html" ).write_text("\n".join(html)+"\n", encoding="utf-8")
+pathlib.Path("index.html" ).write_text("\n".join(page)+"\n", encoding="utf-8")
 logging.info("archive written  →  index.html  &  room_log.txt  ✓")
 
