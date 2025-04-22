@@ -65,13 +65,15 @@ except Exception as e:
 
 # ---------- fetch events ----------
 def fetch(mode):
-    raw = run("matrix-commander", *cred,
-              "--room", rid, "--listen", mode, "--tail", "5000",
-              "--output", "json")
+    cmd = ["matrix-commander", *cred, "--room", rid, "--listen", mode,
+           "--output", "json"]
+    if mode == "tail":
+        cmd += ["--tail", "5000"]
+    raw = run(*cmd)
     return [e for e in parse_lines(raw) if e.get("type") == "m.room.message"]
 
-events = fetch("tail")        # grab up to 5k msgs
-if not events:                # still empty? try the old way
+events = fetch("tail")        # up to 5 k msgs
+if not events:                # still nothing? last resort
     events = fetch("all")
 
 # ---------- threads ----------
