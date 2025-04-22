@@ -1,16 +1,16 @@
 name: mirror‑matrix‑room
 
 permissions:
-  contents: write       # push commits
-  pages:    write       # publish the site
-  id-token: write       # for pages deploy
+  contents: write
+  pages:    write
+  id-token: write
 
 on:
-  schedule:
-    - cron: '7 3 * * *'     # every day 03:07 UTC
+  schedule:        # daily 03:07 UTC
+    - cron:  '7 3 * * *'
   workflow_dispatch:
   push:
-    paths: ['scripts/update.py']
+    paths: [ 'scripts/update.py', '.github/workflows/mirror‑matrix‑room.yml' ]
 
 jobs:
   build:
@@ -19,10 +19,9 @@ jobs:
       - uses: actions/checkout@v4
 
       - uses: actions/setup-python@v5
-        with:
-          python-version: '3.x'
+        with: { python-version: '3.x' }
 
-      - run: pip install "matrix-commander==8.*"
+      - run: pip install matrix-commander==8.*
 
       - name: run archiver
         run: python scripts/update.py
@@ -30,28 +29,26 @@ jobs:
           MATRIX_HS:     ${{ secrets.MATRIX_HS }}
           MATRIX_USER:   ${{ secrets.MATRIX_USER }}
           MATRIX_TOKEN:  ${{ secrets.MATRIX_TOKEN }}
-          MATRIX_ROOMS:  ${{ secrets.MATRIX_ROOMS }}   # space/comma separated
-          LISTEN_MODE:   all         # or tail / once
-          TAIL_N:        20000
+          MATRIX_ROOMS:  ${{ secrets.MATRIX_ROOMS }}
+          # optional tunables
+          LISTEN_MODE: "all"        # or tail / once
+          TIMEOUT:     "20"
+          TAIL_N:      "20000"
 
-      # ─── commit artefacts back to the repo ────────────────────────────
       - name: commit artefacts
         run: |
           git config user.name  github-actions
           git config user.email gh-actions@users.noreply.github.com
-          git add -A archive
-          if git diff --cached --quiet; then
-            echo "nothing new to commit"
-          else
-            git commit -m "bot: archive update $(date -u +'%F %T')" 
-            git push
-          fi
+          git add index.html archive
+          git diff --cached --quiet || git commit -m "bot: update $(date -u +'%F')" && git push
+        continue-on-error: true     # don’t fail if nothing changed
 
-      # ─── publish with GitHub Pages ────────────────────────────────────
-      - name: upload pages artifact
+      # ── GitHub Pages ────────────────────────────────────────────────
+      - name: upload pages artefact
         uses: actions/upload-pages-artifact@v3
-        with:
-          path: archive           # publish **only** the archive folder
-      - name: deploy to gh‑pages
+        with: { path: . }           # contains root index.html & archive/
+
+      - name: deploy
+        id: deploy
         uses: actions/deploy-pages@v4
 
