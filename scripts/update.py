@@ -19,7 +19,7 @@ if not ROOMS:
     sys.exit("‼  No MATRIX_ROOMS specified")
 
 LISTEN_MODE = os.getenv("LISTEN_MODE", "all").lower()      # all|tail|once
-TAIL_N      = os.getenv("TAIL_N", "20000")
+TAIL_N      = os.getenv("TAIL_N", "10000")
 TIMEOUT_S   = int(os.getenv("TIMEOUT", 20))
 
 logging.basicConfig(level=logging.INFO,
