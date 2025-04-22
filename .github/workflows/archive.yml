@@ -8,10 +8,10 @@ steps:
 
   - name: archive matrix rooms
     env:
-      MATRIX_HS:   ${{ secrets.MATRIX_HS }}
-      MATRIX_USER: ${{ secrets.MATRIX_USER }}
-      MATRIX_TOKEN:${{ secrets.MATRIX_TOKEN }}
-      MATRIX_ROOMS:${{ secrets.MATRIX_ROOMS }}   # “roomA roomB #alias”
+      MATRIX_HS:    ${{ secrets.MATRIX_HS }}
+      MATRIX_USER:  ${{ secrets.MATRIX_USER }}
+      MATRIX_TOKEN: ${{ secrets.MATRIX_TOKEN }}
+      MATRIX_ROOMS: ${{ secrets.MATRIX_ROOMS }}   # “roomA roomB #alias”
       LISTEN_MODE: all
       TIMEOUT:     15
     run: python scripts/update.py
