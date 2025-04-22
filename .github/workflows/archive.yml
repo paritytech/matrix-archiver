@@ -37,7 +37,6 @@ jobs:
           MATRIX_ROOMS: ${{ secrets.MATRIX_ROOMS }}   # space‑separated list
           LISTEN_MODE:  all      # all | tail | once   – change if desired
           TIMEOUT:      15       # seconds for mode=all
-        run: mkdir -p archive
         run: python scripts/update.py
 
       # ─── commit artefacts back to the repo ───────────────────────────
