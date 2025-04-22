@@ -1,33 +1,41 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 """
-Archive a public, un‑encrypted Matrix room into
-    • index.html (pretty, threaded)
-    • room_log.txt (plain text)
+Matrix → static archive (index.html + room_log.txt)
+ – Public, un‑encrypted rooms
+ – One‑level threads
+CI‑friendly: no interaction, token via env.
 
-ENV:  MATRIX_HS  MATRIX_USER  MATRIX_ROOM  MATRIX_TOKEN
-OPT:  LISTEN_MODE=all|tail|once  TAIL_N  TIMEOUT
+ENV (required)
+  MATRIX_HS      homeserver URL
+  MATRIX_USER    full user id             (e.g. @bot:example.org)
+  MATRIX_ROOM    room id or alias         (e.g. !abc:example.org)
+  MATRIX_TOKEN   user access‑token
+
+ENV (optional)
+  LISTEN_MODE = all | tail | once   (default: all)
+  TAIL_N      = N messages for tail (default: 20000)
+  TIMEOUT     = seconds for mode=all (default: 20)
 """
 
-import os, sys, json, subprocess, shlex, hashlib, colorsys, logging
-import collections, pathlib
-import html as htmllib                         # <── keep original module here
+import os, sys, json, subprocess, shlex, hashlib, colorsys, logging, pathlib
+import html as htmllib
 from datetime import datetime, timezone
+import collections
 
-# ─────────────── ENV ────────────────────────────────────────────────────
+# ────────────────────────────── configuration ──────────────────────────
 HS, USER, ROOM, TOKEN = (os.environ[k] for k in
                          ("MATRIX_HS", "MATRIX_USER", "MATRIX_ROOM", "MATRIX_TOKEN"))
-MODE     = os.getenv("LISTEN_MODE", "all").lower()           # all|tail|once
+MODE     = os.getenv("LISTEN_MODE", "all").lower()
 TAIL_N   = os.getenv("TAIL_N", "20000")
-TIMEOUT  = int(os.getenv("TIMEOUT", "20"))                   # when MODE == all
+TIMEOUT  = int(os.getenv("TIMEOUT", "20"))
 
-# ─────────────── LOGGING ───────────────────────────────────────────────
 logging.basicConfig(level=logging.DEBUG,
-                    format="%(levelname)s: %(message)s", stream=sys.stderr)
-os.environ["NIO_LOG_LEVEL"] = "error"         # mute nio crypto spew
-logging.debug(f"homeserver={HS}  user={USER}  room={ROOM}")
+                    format="%(levelname)s: %(message)s",
+                    stream=sys.stderr)
+os.environ["NIO_LOG_LEVEL"] = "error"              # silence nio crypto debug
 
-# ─────────────── CREDENTIALS ───────────────────────────────────────────
+# ────────────────────────────── credentials ────────────────────────────
 cred_file = pathlib.Path("mc_creds.json")
 store_dir = pathlib.Path("store"); store_dir.mkdir(exist_ok=True)
 
@@ -42,14 +50,14 @@ if not cred_file.exists():
     }))
 CRED = ["--credentials", str(cred_file), "--store", str(store_dir)]
 
-# ─────────────── HELPERS ───────────────────────────────────────────────
+# ────────────────────────────── helpers ────────────────────────────────
 def pastel(uid: str) -> str:
     h = int(hashlib.sha1(uid.encode()).hexdigest()[:8], 16) / 0xffffffff
-    r, g, b = colorsys.hls_to_rgb(h, .70, .45)
+    r, g, b = colorsys.hls_to_rgb(h, .72, .50)
     return f"#{int(r*255):02x}{int(g*255):02x}{int(b*255):02x}"
 
-def when(ev):
-    return datetime.fromtimestamp(ev["origin_server_ts"]/1000.0, tz=timezone.utc)
+def when(ev):       # dt (UTC)
+    return datetime.fromtimestamp(ev["origin_server_ts"]/1000, tz=timezone.utc)
 
 def json_lines(raw: str):
     for ln in raw.splitlines():
@@ -57,9 +65,9 @@ def json_lines(raw: str):
         if ln and ln[0] in "{[":
             try: yield json.loads(ln)
             except json.JSONDecodeError:
-                logging.debug(f"skip ≠json → {ln[:70]}")
+                logging.debug(f"skip ≠json → {ln[:70]}")
 
-def run_mc(cmd, timeout=None) -> str:
+def mc(cmd, timeout=None) -> str:
     logging.debug("⟹ " + " ".join(map(shlex.quote, cmd)))
     try:
         res = subprocess.run(cmd, text=True, capture_output=True, timeout=timeout)
@@ -69,14 +77,14 @@ def run_mc(cmd, timeout=None) -> str:
     for l in res.stderr.splitlines(): logging.debug(l)
     return res.stdout
 
-# ─────────────── JOIN ─────────────────────────────────────────────────
-try:   run_mc(["matrix-commander", *CRED, "--room-join", ROOM])
-except subprocess.CalledProcessError: pass     # already joined / public
+# ────────────────────────────── ensure membership ───────────────────────
+try:   mc(["matrix-commander", *CRED, "--room-join", ROOM])
+except subprocess.CalledProcessError: pass        # already joined / public
 
-# ─────────────── ROOM META ─────────────────────────────────────────────
+# ────────────────────────────── room meta ───────────────────────────────
 pretty, topic = ROOM, ""
 try:
-    meta = next(json_lines(run_mc(
+    meta = next(json_lines(mc(
         ["matrix-commander", *CRED,
          "--room", ROOM, "--get-room-info", "--output", "json"])), {})
     pretty = (meta.get("display_name") or meta.get("room_name") or
@@ -85,16 +93,16 @@ try:
 except Exception as e:
     logging.warning(f"meta fetch failed: {e}")
 
-# ─────────────── FETCH EVENTS ─────────────────────────────────────────
-listen_args = {
+# ────────────────────────────── fetch events ────────────────────────────
+listen = {
     "all" : ["--listen","all","--listen-self"],
     "tail": ["--listen","tail","--tail",TAIL_N,"--listen-self"],
     "once": ["--listen","once","--listen-self"],
 }[MODE]
 
-raw = run_mc(["matrix-commander", *CRED, "--room", ROOM,
-              *listen_args, "--output", "json"],
-             timeout=TIMEOUT if MODE=="all" else None)
+raw = mc(["matrix-commander", *CRED, "--room", ROOM,
+          *listen, "--output", "json"],
+         timeout=TIMEOUT if MODE=="all" else None)
 
 events = [(e["source"] if "source" in e else e)
           for e in json_lines(raw)
@@ -105,7 +113,7 @@ logging.info(f"{len(events)} message events")
 if not events:
     logging.error("no events – nothing to archive"); sys.exit(1)
 
-# ─────────────── THREAD MAP (single level) ────────────────────────────
+# ────────────────────────────── thread map (1‑level) ────────────────────
 roots   : dict[str,dict]            = {}
 replies : collections.defaultdict[list[str]] = collections.defaultdict(list)
 
@@ -118,25 +126,25 @@ for ev in events:
 
 ordered_roots = sorted(roots.values(), key=when)
 
-# ─────────────── BUILD OUTPUTS ────────────────────────────────────────
-ts_now  = datetime.now(timezone.utc).strftime("%Y-%m-%d %H:%M:%S UTC")
+# ────────────────────────────── build outputs ───────────────────────────
+now_txt = datetime.now(timezone.utc).strftime("%Y-%m-%d %H:%M:%S UTC")
 
-txt  = [f"# {pretty}"]
-if topic: txt += [f"# {t}" for t in topic.splitlines()]
-txt += [f"# exported: {ts_now}", ""]
+plain = [f"# {pretty}"]
+if topic: plain += [f"# {t}" for t in topic.splitlines()]
+plain += [f"# exported: {now_txt}", ""]
 
-page = [                                               # ← renamed from `html`
+page  = [
     "<!doctype html><meta charset=utf-8>",
     f"<title>{htmllib.escape(pretty)} – archive</title>",
     "<style>",
-    "body{background:#111;color:#eee;font:15px/1.5 ui-monospace,monospace;"
-    "padding:1.2em max(1.2em,5vw)}",
+    "body{background:#111;color:#eee;font:15px/1.55 ui-monospace,monospace;"
+    "padding:1.2em clamp(1.2em,5vw,3em)}",
     ".hdr{font:22px/1.35 ui-monospace;margin-bottom:.4em}",
     ".topic{color:#aaa;margin:.3em 0 1.2em}",
-    ".root{margin:.35em 0 .15em;padding-left:.8em;border-left:3px solid #555}",
-    ".reply{margin:.25em 0 .15em .8em;padding-left:.8em;border-left:3px solid #666}",
-    "time{color:#888;margin-right:.6em}",
-    ".u{font-weight:600}",
+    ".msg{display:flex;gap:.6em;margin:.28em 0}",
+    ".time{color:#777;flex:none;width:3.5ch;text-align:right}",
+    ".user{font-weight:600}",
+    ".thread{margin-left:2em;border-left:2px solid #444;padding-left:1em}",
     "a{color:#9cf;text-decoration:none}",
     "</style>",
     f"<div class=hdr>{htmllib.escape(pretty)}</div>",
@@ -149,28 +157,30 @@ page += [
 ]
 
 def emit(ev, depth):
-    ts  = when(ev).strftime("%Y-%m-%d %H:%M:%S UTC")
+    t   = when(ev).strftime("%H:%M")          # ← compact timestamp
     usr = ev["sender"]
-    bod = ev["content"].get("body","")
+    body= ev["content"].get("body","")
     # text
-    txt.append(f"{'  '*depth}{ts} {usr}: {bod}")
+    plain.append(f"{'  '*depth}{when(ev).isoformat()} {usr}: {body}")
     # html
-    cls = "root" if depth == 0 else "reply"
+    wrapper_open  = "<div class='thread'>" if depth else ""
+    wrapper_close = "</div>"                 if depth else ""
     page.append(
-        f"<div class='{cls}'>"
-        f"<time>{ts}</time>"
-        f"<span class='u' style='color:{pastel(usr)}'>{htmllib.escape(usr)}</span>: "
-        f"{htmllib.escape(bod)}</div>"
+        f"{wrapper_open}"
+        f"<div class='msg'><span class=time>{t}</span>"
+        f"<span class='user' style='color:{pastel(usr)}'>{htmllib.escape(usr)}</span>"
+        f"<span>{htmllib.escape(body)}</span></div>"
+        f"{wrapper_close}"
     )
 
 for root in ordered_roots:
     emit(root, 0)
     for cid in sorted(replies.get(root["event_id"], []),
-                      key=lambda x: when(next(e for e in events if e["event_id"]==x))):
+                      key=lambda i: when(next(e for e in events if e["event_id"]==i))):
         emit(next(e for e in events if e["event_id"]==cid), 1)
 
-# ─────────────── WRITE FILES ───────────────────────────────────────────
-pathlib.Path("room_log.txt").write_text("\n".join(txt)+"\n",  encoding="utf-8")
-pathlib.Path("index.html" ).write_text("\n".join(page)+"\n", encoding="utf-8")
+# ────────────────────────────── write files ─────────────────────────────
+pathlib.Path("room_log.txt").write_text("\n".join(plain)+"\n",  encoding="utf-8")
+pathlib.Path("index.html" ).write_text("\n".join(page )+"\n",  encoding="utf-8")
 logging.info("archive written  →  index.html  &  room_log.txt  ✓")
 
