@@ -158,7 +158,7 @@ def archive_room(room:str):
         ".msg{white-space:pre-wrap}time{color:#888;margin-right:.5em}"
         ".u{font-weight:600}.reply{margin-left:2ch}a{color:#9cf;text-decoration:none}</style>",
         f"<h1>{html.escape(title)}</h1>",
-        "<p><a href='room_log.txt'>⇩ plaintext</a>  ·  <a href='index.html'>⇦ all rooms</a></p>",
+        "<p><a href='room_log.txt'>⇩ plaintext</a>  ·  <a href='/matrix-archiver'>⇦ all rooms</a></p>",
         "<hr>",
     ]
 
