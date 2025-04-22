@@ -1,47 +1,58 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
-import os, json, subprocess, datetime, hashlib, html, colorsys, collections, sys
+import os, json, subprocess, datetime, hashlib, html, colorsys, collections, pathlib, sys, tempfile
 
-# ---- env ----
-hs, uid, rid, tok = (os.environ[k] for k in
-    ("MATRIX_HS", "MATRIX_USER", "MATRIX_ROOM", "MATRIX_TOKEN"))
+# ---------------- env ----------------
+try:
+    hs   = os.environ["MATRIX_HS"]
+    uid  = os.environ["MATRIX_USER"]
+    rid  = os.environ["MATRIX_ROOM"]
+    tok  = os.environ["MATRIX_TOKEN"]
+except KeyError as k:
+    sys.exit(f"missing env: {k}")
 
-def sh(*args):
-    return subprocess.check_output(args, text=True)
+# ---------------- minimal creds ----------------
+cred_file = pathlib.Path("mc_creds.json")
+store_dir = pathlib.Path("store")
+store_dir.mkdir(exist_ok=True)
 
-# ---- pull room meta (name / alias) ----
+if not cred_file.exists():
+    cred_file.write_text(json.dumps({
+        "homeserver":    hs,
+        "user_id":       uid,
+        "access_token":  tok,
+        "device_id":     "GH",
+        "default_room":  rid
+    }))
+
+cred_opts = ["--credentials", str(cred_file), "--store", str(store_dir)]
+
+def run_cmd(args, **kw):
+    return subprocess.check_output(args, text=True, **kw)
+
+# ---------------- room meta ----------------
 meta = {}
 try:
-    meta_json = sh(
-        "matrix-commander",
-        "--access-token", tok,
-        "--homeserver",   hs,
-        "--login",   uid,
-        "--room",         rid,
-        "--get-room-info",
-        "--output",       "json",
-    )
-    meta = json.loads(meta_json)[0]  # commander spits list
+    meta_json = run_cmd([
+        "matrix-commander", *cred_opts,
+        "--room", rid, "--get-room-info", "--output", "json"
+    ])
+    meta = json.loads(meta_json)[0]
 except Exception as e:
-    print("meta fetch failed:", e, file=sys.stderr)
+    print("warn: room meta fetch failed:", e, file=sys.stderr)
 
-title = meta.get("room_display_name") or meta.get("room_name")
-alias = meta.get("room_canonical_alias") or meta.get("room_alias")
-pretty = title or alias or rid      # fallbacks chained
+title  = meta.get("room_display_name") or meta.get("room_name")
+alias  = meta.get("room_canonical_alias") or meta.get("room_alias")
+pretty = title or alias or rid
 
-# ---- yank history ----
-events = json.loads(sh(
-    "matrix-commander",
-    "--access-token", tok,
-    "--homeserver",   hs,
-    "--user-login",   uid,
-    "--room",         rid,
-    "--listen",       "all",
-    "--output",       "json"
-))
+# ---------------- fetch events ----------------
+events = json.loads(run_cmd([
+    "matrix-commander", *cred_opts,
+    "--room", rid, "--listen", "all", "--output", "json"
+]))
 
-# ---- thread index ----
+# ---------------- index threads ----------------
 by_id, threads = {}, collections.defaultdict(list)
 for ev in events:
     if ev.get("type") != "m.room.message":
@@ -52,64 +63,62 @@ for ev in events:
     if rel.get("rel_type") == "m.thread":
         threads[rel["event_id"]].append(eid)
 
-def ts(ev):
-    return datetime.datetime.utcfromtimestamp(ev["origin_server_ts"]/1000)
+def when(ev):
+    return datetime.datetime.utcfromtimestamp(ev["origin_server_ts"] / 1000)
 
 def pastel(user):
-    h = int(hashlib.sha1(user.encode()).hexdigest()[:8],16)/0xffffffff
-    r,g,b = colorsys.hls_to_rgb(h, 0.7, 0.45)
+    h = int(hashlib.sha1(user.encode()).hexdigest()[:8], 16) / 0xffffffff
+    r, g, b = colorsys.hls_to_rgb(h, 0.70, 0.45)
     return f"#{int(r*255):02x}{int(g*255):02x}{int(b*255):02x}"
 
-roots = [e for e in by_id.values() if e["event_id"]
-         not in {c for kids in threads.values() for c in kids}]
-roots.sort(key=ts)
+roots = [e for e in by_id.values()
+         if e["event_id"] not in {c for kids in threads.values() for c in kids}]
+roots.sort(key=when)
 
-# ---- emit txt + html ----
+# ---------------- build outputs ----------------
 stamp = datetime.datetime.utcnow().isoformat(timespec="seconds") + "Z"
 
-txt_out  = [
+txt_lines = [
     f"# room: {pretty}",
     f"# exported: {stamp}",
 ]
-html_out = [
+
+html_lines = [
     "<!doctype html><meta charset='utf-8'>",
     f"<title>{html.escape(pretty)} archive</title>",
     "<style>",
     "body{font:14px/1.45 ui-monospace,monospace;background:#111;color:#e5e5e5;padding:1em}",
-    "h1{margin-top:0;font:20px/1.2 ui-monospace,monospace}",
+    "h1{margin:0 0 .5em 0;font:20px/1.3 ui-monospace,monospace}",
     "time{color:#888;margin-right:.5em}",
     ".u{font-weight:600}",
     ".reply{margin-left:2ch}",
     "a{color:#9cf;text-decoration:none}",
     "</style>",
     f"<h1>{html.escape(pretty)}</h1>",
-    f"<p><a href='room_log.txt'>⇩ download plaintext</a></p>",
+    "<p><a href='room_log.txt'>⇩ download plaintext</a></p>",
     "<hr><pre>"
 ]
 
 def emit(ev, indent=""):
-    t = ts(ev).isoformat() + "Z"
+    t = when(ev).isoformat() + "Z"
     u = ev["sender"]
-    b = ev["content"].get("body", "")
-    txt_out.append(f"{indent}{t} {u}: {b}")
-    html_out.append(
-        f"<div class='{ 'reply' if indent else '' }'>"
+    body = ev["content"].get("body", "")
+    txt_lines.append(f"{indent}{t} {u}: {body}")
+    html_lines.append(
+        f"<div class='{'reply' if indent else ''}'>"
         f"<time>{t}</time>"
         f"<span class='u' style='color:{pastel(u)}'>{html.escape(u)}</span>: "
-        f"{html.escape(b)}</div>"
+        f"{html.escape(body)}</div>"
     )
 
 for root in roots:
     emit(root)
-    for cid in sorted(threads[root["event_id"]], key=lambda i: ts(by_id[i])):
+    for cid in sorted(threads[root["event_id"]], key=lambda i: when(by_id[i])):
         emit(by_id[cid], indent="  ")
 
-html_out.append("</pre>")
+html_lines.append("</pre>")
 
-# ---- write files ----
-with open("room_log.txt","w",encoding="utf8") as f:
-    f.write("\n".join(txt_out) + "\n")
-
-with open("index.html","w",encoding="utf8") as f:
-    f.write("\n".join(html_out))
+# ---------------- write files ----------------
+pathlib.Path("room_log.txt").write_text("\n".join(txt_lines) + "\n", encoding="utf8")
+pathlib.Path("index.html").write_text("\n".join(html_lines), encoding="utf8")
 
