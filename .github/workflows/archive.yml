@@ -1,62 +1,57 @@
 name: mirror‑matrix‑room
 
 permissions:
-  contents: write          # push commits
-  pages:     write         # publish the site
-  id-token:  write         # for pages deploy
+  contents: write       # push commits
+  pages:    write       # publish the site
+  id-token: write       # for pages deploy
 
 on:
-  schedule:                # every day 03:07 UTC
-    - cron: '7 3 * * *'
-  workflow_dispatch:       # manual “Run workflow” button
-  push:                    # re‑deploy whenever the script changes
-    paths:
-      - 'scripts/update.py'
+  schedule:
+    - cron: '7 3 * * *'     # every day 03:07 UTC
+  workflow_dispatch:
+  push:
+    paths: ['scripts/update.py']
 
 jobs:
   build:
     runs-on: ubuntu-latest
-
     steps:
-      # ─── checkout repo ───────────────────────────────────────────────
       - uses: actions/checkout@v4
 
-      # ─── python toolchain ────────────────────────────────────────────
       - uses: actions/setup-python@v5
         with:
           python-version: '3.x'
 
-      - run: pip install "matrix-commander~=8.0"
+      - run: pip install "matrix-commander==8.*"
 
-      # ─── run the archiver ────────────────────────────────────────────
-      - name: archive Matrix rooms
-        env:
-          MATRIX_HS:    ${{ secrets.MATRIX_HS }}
-          MATRIX_USER:  ${{ secrets.MATRIX_USER }}
-          MATRIX_TOKEN: ${{ secrets.MATRIX_TOKEN }}
-          MATRIX_ROOMS: ${{ secrets.MATRIX_ROOMS }}   # space‑separated list
-          LISTEN_MODE:  all      # all | tail | once   – change if desired
-          TIMEOUT:      15       # seconds for mode=all
+      - name: run archiver
         run: python scripts/update.py
+        env:
+          MATRIX_HS:     ${{ secrets.MATRIX_HS }}
+          MATRIX_USER:   ${{ secrets.MATRIX_USER }}
+          MATRIX_TOKEN:  ${{ secrets.MATRIX_TOKEN }}
+          MATRIX_ROOMS:  ${{ secrets.MATRIX_ROOMS }}   # space/comma separated
+          LISTEN_MODE:   all         # or tail / once
+          TAIL_N:        20000
 
-      # ─── commit artefacts back to the repo ───────────────────────────
-      #      The script writes everything under  ./archive/<room>/…
+      # ─── commit artefacts back to the repo ────────────────────────────
       - name: commit artefacts
         run: |
           git config user.name  github-actions
           git config user.email gh-actions@users.noreply.github.com
           git add -A archive
-          git diff --cached --quiet || \
-            git commit -m "bot: archive update $(date -u +'%F')" && \
+          if git diff --cached --quiet; then
+            echo "nothing new to commit"
+          else
+            git commit -m "bot: archive update $(date -u +'%F %T')" 
             git push
+          fi
 
-      # ─── publish to GitHub Pages ─────────────────────────────────────
-      - name: upload Pages artefact
+      # ─── publish with GitHub Pages ────────────────────────────────────
+      - name: upload pages artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          path: archive          # publish the whole archive directory
-
+          path: archive           # publish **only** the archive folder
       - name: deploy to gh‑pages
-        id: deploy
         uses: actions/deploy-pages@v4
 
