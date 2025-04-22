@@ -142,7 +142,7 @@ page  = [
     ".hdr{font:22px/1.35 ui-monospace;margin-bottom:.4em}",
     ".topic{color:#aaa;margin:.3em 0 1.2em}",
     ".msg{display:flex;gap:.6em;margin:.28em 0}",
-    ".time{color:#777;flex:none;width:3.5ch;text-align:right}",
+    ".time{color:#777;flex:none;width:3.5ch;text-align:right;margin-right:.4em}",
     ".user{font-weight:600}",
     ".thread{margin-left:2em;border-left:2px solid #444;padding-left:1em}",
     "a{color:#9cf;text-decoration:none}",
@@ -167,7 +167,7 @@ def emit(ev, depth):
     wrapper_close = "</div>"                 if depth else ""
     page.append(
         f"{wrapper_open}"
-        f"<div class='msg'><span class=time>{t}</span>"
+        f"<div class='msg'><span class=time>{t}&nbsp;</span>"
         f"<span class='user' style='color:{pastel(usr)}'>{htmllib.escape(usr)}</span>"
         f"<span>{htmllib.escape(body)}</span></div>"
         f"{wrapper_close}"
