@@ -12,18 +12,19 @@ try:
 except KeyError as k:
     sys.exit(f"missing env: {k}")
 
-# ---------------- minimal creds ----------------
+# ---------- creds file ----------
 cred_file = pathlib.Path("mc_creds.json")
 store_dir = pathlib.Path("store")
 store_dir.mkdir(exist_ok=True)
 
 if not cred_file.exists():
     cred_file.write_text(json.dumps({
-        "homeserver":    hs,
-        "user_id":       uid,
-        "access_token":  tok,
-        "device_id":     "GH",
-        "default_room":  rid
+        # names are exactly what matrix‑commander expects ↓↓↓
+        "homeserver":   hs,          # https://matrix.example
+        "user_id":      uid,         # @bot:example
+        "access_token": tok,         # your secret
+        "device_id":    "GH",        # anything short
+        "room_id":      rid          # *** MUST start with '!' ***
     }))
 
 cred_opts = ["--credentials", str(cred_file), "--store", str(store_dir)]
