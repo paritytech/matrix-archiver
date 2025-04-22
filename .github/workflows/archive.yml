@@ -28,6 +28,7 @@ jobs:
           MATRIX_HS:    ${{ secrets.MATRIX_HS }}
           MATRIX_USER:  ${{ secrets.MATRIX_USER }}
           MATRIX_ROOM:  ${{ secrets.MATRIX_ROOM }}
+          MATRIX_ROOMS:  ${{ secrets.MATRIX_ROOMS }}
           MATRIX_TOKEN: ${{ secrets.MATRIX_TOKEN }}
 
       # commit artefacts back so txt history lives in git
