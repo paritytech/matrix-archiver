@@ -106,8 +106,8 @@ except Exception as e:
 # ─── grab messages ──────────────────────────────────────────────────────
 TAIL_N = os.getenv("TAIL_N", "20000")
 raw = run_json("matrix-commander", *cred_opts,
-               "--room", rid, "--listen", "tail",
-               "--tail", TAIL_N, "--listen-self", "--output", "json")
+               "--room", rid, "--listen", "all",
+               "--listen-self", "--output", "json")
 
 events = [e for e in json_lines(raw) if e.get("type") == "m.room.message"]
 logging.info(f"parsed {len(events)} m.room.message events")
