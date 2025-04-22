@@ -65,17 +65,14 @@ except Exception as e:
     print("warn: meta fetch failed:", e, file=sys.stderr)
 
 # ---------- fetch events ----------
-def fetch(mode):
-    cmd = ["matrix-commander", *cred, "--room", rid, "--listen", mode,
-           "--output", "json"]
-    if mode == "tail":
-        cmd += ["--tail", "5000"]
-    raw = run(*cmd)
-    return [e for e in parse_lines(raw) if e.get("type") == "m.room.message"]
+tail_n = "10000"  # grab up to 10k msgs every run
 
-events = fetch("tail")        # up to 5 k msgs
-if not events:                # still nothing? last resort
-    events = fetch("all")
+raw = run("matrix-commander", *cred,
+          "--room", rid, "--listen", "tail",
+          "--tail", tail_n, "--listen-self",
+          "--output", "json")
+
+events = [e for e in parse_lines(raw) if e.get("type") == "m.room.message"]
 
 # ---------- threads ----------
 by_id, threads = {}, collections.defaultdict(list)
