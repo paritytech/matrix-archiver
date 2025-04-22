@@ -142,7 +142,13 @@ else:
         ["matrix-commander", *CRED, "--room", ROOM,
          *listen_args, "--output", "json"])
 
-events = [e for e in json_lines(raw) if e.get("type") == "m.room.message"]
+events = [
+    (e["source"] if "source" in e else e)
+    for e in json_lines(raw)
+    if (e.get("type") == "m.room.message"
+        or (e.get("source", {}).get("type") == "m.room.message"))
+]
+
 logging.info(f"parsed {len(events)} m.room.message events")
 
 if not events:
