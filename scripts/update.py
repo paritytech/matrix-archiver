@@ -19,6 +19,7 @@ TAIL_N      = os.getenv("TAIL_N", "20000")
 TIMEOUT_S   = int(os.getenv("TIMEOUT", 20))
 
 # ───── logging ─────────────────────────────────────────────────────────
+# we don't need debug logs if everything is working!
 logging.basicConfig(level=logging.DEBUG,
                     format="%(levelname)s: %(message)s", stream=sys.stderr)
 os.environ["NIO_LOG_LEVEL"] = "error"
