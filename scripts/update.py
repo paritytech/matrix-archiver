@@ -1,27 +1,24 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
-import os, sys, json, subprocess, datetime, hashlib, html, colorsys, collections, pathlib, logging
+import os, sys, json, subprocess, datetime, hashlib, html, colorsys
+import collections, pathlib, logging
 from datetime import datetime, timezone
 
 # ─── logging ────────────────────────────────────────────────────────────
-logging.basicConfig(
-    level=logging.DEBUG,      # always noisy
-    format="%(levelname)s: %(message)s",
-    stream=sys.stderr)
+logging.basicConfig(level=logging.DEBUG,
+                    format="%(levelname)s: %(message)s",
+                    stream=sys.stderr)
+os.environ["NIO_LOG_LEVEL"] = "error"                # mute nio spam
 
-os.environ["NIO_LOG_LEVEL"] = "error"      # mute crypto key‑count spam
-
-# ─── env (don’t print token) ────────────────────────────────────────────
-hs, uid, rid, tok = (
-    os.environ["MATRIX_HS"],
-    os.environ["MATRIX_USER"],
-    os.environ["MATRIX_ROOM"],
-    os.environ["MATRIX_TOKEN"],
-)
+# ─── env (keep token secret) ────────────────────────────────────────────
+hs   = os.environ["MATRIX_HS"]
+uid  = os.environ["MATRIX_USER"]
+rid  = os.environ["MATRIX_ROOM"]
+tok  = os.environ["MATRIX_TOKEN"]
 logging.debug(f"homeserver={hs} user={uid} room={rid}")
 
-# ─── creds ──────────────────────────────────────────────────────────────
+# ─── credentials ────────────────────────────────────────────────────────
 cred_file = pathlib.Path("mc_creds.json")
 store_dir = pathlib.Path("store"); store_dir.mkdir(exist_ok=True)
 
@@ -35,56 +32,91 @@ if not cred_file.exists():
         "default_room": rid
     }))
 
-cred = ["--credentials", str(cred_file), "--store", str(store_dir)]
+cred_opts = ["--credentials", str(cred_file), "--store", str(store_dir)]
 
-# ─── commander helper: stream live + capture ────────────────────────────
-def run_cmd(*args):
-    logging.debug("⟹ " + " ".join(args))
-    proc = subprocess.Popen(args, text=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
-    out = []
-    for line in proc.stdout:
+# ─── helpers ────────────────────────────────────────────────────────────
+def _stream(proc):
+    """yield each line from proc, teeing to DEBUG log"""
+    for line in proc:
         logging.debug(line.rstrip("\n"))
-        out.append(line)
+        yield line
+
+def run_json(*args):
+    """
+    Run matrix‑commander:
+      * everything written to **stderr** is streamed to DEBUG (human text);
+      * **stdout** is returned, *but* we also log it line‑by‑line.
+    """
+    logging.debug("⟹ " + " ".join(args))
+    proc = subprocess.Popen(args, text=True,
+                            stdout=subprocess.PIPE,
+                            stderr=subprocess.PIPE)
+
+    # pump stderr in the background so it doesn’t dead‑lock
+    for l in _stream(proc.stderr):
+        pass
+
+    stdout = []
+    for l in _stream(proc.stdout):
+        stdout.append(l)
     ret = proc.wait()
     if ret:
         raise subprocess.CalledProcessError(ret, args)
-    return "".join(out)
+    return "".join(stdout)
 
-parse_lines = lambda raw: [json.loads(l) for l in raw.splitlines() if l.strip()]
-pastel      = lambda u: "#{:02x}{:02x}{:02x}".format(
-    *[int(c*255) for c in colorsys.hls_to_rgb(
-        int(hashlib.sha1(u.encode()).hexdigest()[:8],16)/0xffffffff, 0.70, 0.45)])
-when        = lambda ev: datetime.utcfromtimestamp(ev["origin_server_ts"]/1000)
+def json_lines(raw: str):
+    """return list of json objects; silently skip non‑json lines"""
+    out = []
+    for line in raw.splitlines():
+        line = line.strip()
+        if not line or (line[0] not in "{["):
+            continue            # human rubbish – ignore
+        try:
+            out.append(json.loads(line))
+        except json.JSONDecodeError:
+            logging.debug(f"skipped non‑json line: {line[:60]}")
+    return out
 
-# ─── ensure joined ──────────────────────────────────────────────────────
-try:   run_cmd("matrix-commander", *cred, "--room-join", rid)
+pastel = lambda u: "#{:02x}{:02x}{:02x}".format(
+        *[int(c*255) for c in colorsys.hls_to_rgb(
+            int(hashlib.sha1(u.encode()).hexdigest()[:8],16)/0xffffffff,
+            0.70, 0.45)])
+when   = lambda ev: datetime.utcfromtimestamp(ev["origin_server_ts"]/1000)
+
+# ─── make sure we are in the room ───────────────────────────────────────
+try:
+    run_json("matrix-commander", *cred_opts, "--room-join", rid)
 except subprocess.CalledProcessError:
-    pass
+    pass  # already joined / not needed
 
-# ─── room meta (best‑effort) ────────────────────────────────────────────
+# ─── room meta (best effort) ────────────────────────────────────────────
 pretty = rid
 try:
-    meta = parse_lines(run_cmd("matrix-commander", *cred,
-                               "--room", rid, "--get-room-info", "--output", "json"))[0]
-    pretty = next((meta.get(k) for k in (
-        "room_display_name","room_name","room_canonical_alias","room_alias") if meta.get(k)), rid)
+    meta_j = json_lines(run_json("matrix-commander", *cred_opts,
+                                 "--room", rid,
+                                 "--get-room-info", "--output", "json"))
+    if meta_j:
+        meta   = meta_j[0]
+        pretty = next((meta.get(k) for k in (
+            "room_display_name","room_name","room_canonical_alias","room_alias")
+            if meta.get(k)), rid)
 except Exception as e:
     logging.warning(f"meta fetch failed: {e}")
 
-# ─── fetch messages – stateless tail page ───────────────────────────────
-TAIL_N = os.getenv("TAIL_N", "20000")      # bump as you like
-raw = run_cmd("matrix-commander", *cred,
-              "--room", rid, "--listen", "tail", "--tail", TAIL_N,
-              "--listen-self", "--output", "json")
+# ─── grab messages ──────────────────────────────────────────────────────
+TAIL_N = os.getenv("TAIL_N", "20000")
+raw = run_json("matrix-commander", *cred_opts,
+               "--room", rid, "--listen", "tail",
+               "--tail", TAIL_N, "--listen-self", "--output", "json")
 
-events = [e for e in parse_lines(raw) if e.get("type") == "m.room.message"]
-logging.info(f"fetched {len(events)} events")
+events = [e for e in json_lines(raw) if e.get("type") == "m.room.message"]
+logging.info(f"parsed {len(events)} m.room.message events")
 
 if not events:
-    logging.error("zero events returned – room empty or hs visibility blocking us")
+    logging.error("zero events – nothing to archive?")
     sys.exit(1)
 
-# ─── threading split ────────────────────────────────────────────────────
+# ─── thread bookkeeping ────────────────────────────────────────────────
 by_id, threads = {}, collections.defaultdict(list)
 for ev in events:
     by_id[ev["event_id"]] = ev
@@ -93,14 +125,14 @@ for ev in events:
         threads[rel["event_id"]].append(ev["event_id"])
 
 roots = sorted(
-    [e for e in events if e["event_id"] not in
-     {c for kids in threads.values() for c in kids}],
+    [e for e in events
+     if e["event_id"] not in {c for kids in threads.values() for c in kids}],
     key=when)
 
-# ─── generate outputs ───────────────────────────────────────────────────
+# ─── build outputs ──────────────────────────────────────────────────────
 stamp = datetime.now(timezone.utc).isoformat(timespec="seconds").replace("+00:00","Z")
 txt  = [f"# room: {pretty}", f"# exported: {stamp}"]
-html_lines = [
+html = [
     "<!doctype html><meta charset=utf-8>",
     f"<title>{html.escape(pretty)}</title>",
     "<style>body{font:14px/1.45 ui-monospace,monospace;background:#111;color:#eee;padding:1em}"
@@ -113,8 +145,8 @@ html_lines = [
 
 def emit(ev, indent=""):
     t,u,b = when(ev).isoformat()+"Z", ev["sender"], ev["content"].get("body","")
-    txt.append(f"{indent}{t} {u}: {b}")
-    html_lines.append(
+    txt  .append(f"{indent}{t} {u}: {b}")
+    html.append(
         f"<div class='{('reply' if indent else '')}'>"
         f"<time>{t}</time>"
         f"<span class='u' style='color:{pastel(u)}'>{html.escape(u)}</span>: "
@@ -125,10 +157,10 @@ for root in roots:
     for cid in sorted(threads[root["event_id"]], key=lambda x: when(by_id[x])):
         emit(by_id[cid], indent="  ")
 
-html_lines.append("</pre>")
+html.append("</pre>")
 
 pathlib.Path("room_log.txt").write_text("\n".join(txt)+"\n", encoding="utf8")
-pathlib.Path("index.html").write_text("\n".join(html_lines), encoding="utf8")
+pathlib.Path("index.html" ).write_text("\n".join(html),        encoding="utf8")
 
-logging.info("archive written to index.html + room_log.txt ✓")
+logging.info("archive written to index.html & room_log.txt ✓")
 
