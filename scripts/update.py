@@ -17,7 +17,7 @@ try:
         "matrix-commander",
         "--access-token", tok,
         "--homeserver",   hs,
-        "--user-login",   uid,
+        "--login",   uid,
         "--room",         rid,
         "--get-room-info",
         "--output",       "json",
