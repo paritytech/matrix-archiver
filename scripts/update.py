@@ -2,17 +2,14 @@
 # -*- coding: utf-8 -*-
 """
 Archive one‑or‑many public Matrix rooms.
-
-• Rooms come from the env‑var MATRIX_ROOMS  (space / comma / newline list)
-• Each room ends up in  archive/<slug>/index.html  +  room_log.txt
-• A root  index.html  is (re‑)built that links to every archived room
+Creates archive/<slug>/index.html + room_log.txt and a root directory page.
 """
 
 import os, sys, json, subprocess, shlex, hashlib, colorsys, html, logging, re
 import collections, pathlib, urllib.parse
 from datetime import datetime, timezone
 
-# ────────── basic settings ─────────────────────────────────────────────
+# ────────── basic settings ────────────────────────────────────────────
 HS        = os.environ["MATRIX_HS"]
 USER_ID   = os.environ["MATRIX_USER"]
 TOKEN     = os.environ["MATRIX_TOKEN"]
@@ -25,12 +22,11 @@ LISTEN_MODE = os.getenv("LISTEN_MODE", "all").lower()      # all|tail|once
 TAIL_N      = os.getenv("TAIL_N", "20000")
 TIMEOUT_S   = int(os.getenv("TIMEOUT", 20))
 
-# ────────── logging ────────────────────────────────────────────────────
 logging.basicConfig(level=logging.INFO,
                     format="%(levelname)s: %(message)s", stream=sys.stderr)
 os.environ["NIO_LOG_LEVEL"] = "error"
 
-# ────────── credentials (shared for all rooms) ─────────────────────────
+# ────────── credentials (shared) ───────────────────────────────────────
 cred_file = pathlib.Path("mc_creds.json")
 store_dir = pathlib.Path("store"); store_dir.mkdir(exist_ok=True)
 if not cred_file.exists():
@@ -39,7 +35,7 @@ if not cred_file.exists():
         "user_id":      USER_ID,
         "access_token": TOKEN,
         "device_id":    "GH",
-        "default_room": ROOMS[0],     # any
+        "default_room": ROOMS[0],
     }))
 CRED = ["--credentials", str(cred_file), "--store", str(store_dir)]
 
@@ -52,52 +48,52 @@ def run(cmd, timeout=None):
         raise subprocess.CalledProcessError(res.returncode, cmd, res.stdout, res.stderr)
     return res.stdout
 
-def json_lines(blob: str):
+def json_lines(blob:str):
     for line in blob.splitlines():
         line=line.strip()
         if line and line[0] in "{[":
             try: yield json.loads(line)
             except json.JSONDecodeError: pass
 
-# pretty colour
-def pastel(uid:str):
-    h=int(hashlib.sha1(uid.encode()).hexdigest()[:8],16)/0xffffffff
-    r,g,b=colorsys.hls_to_rgb(h,.70,.45); return f"#{int(r*255):02x}{int(g*255):02x}{int(b*255):02x}"
+when      = lambda e: datetime.utcfromtimestamp(e["origin_server_ts"]/1000)
 nice_user = lambda u: u.lstrip("@").split(":",1)[0]
-when      = lambda ev: datetime.utcfromtimestamp(ev["origin_server_ts"]/1000)
-
-# ensure file/dir exists
-def slug(room_id_or_alias:str)->str:
-    """create safe dir name"""
-    return urllib.parse.quote(room_id_or_alias, safe="").replace("%","_")
+def pastel(u):
+    h=int(hashlib.sha1(u.encode()).hexdigest()[:8],16)/0xffffffff
+    r,g,b=colorsys.hls_to_rgb(h,.70,.45); return f"#{int(r*255):02x}{int(g*255):02x}{int(b*255):02x}"
+slug = lambda s: urllib.parse.quote(s, safe="").replace("%","_")
 
 # ────────── archive one room ───────────────────────────────────────────
-def archive_room(room: str):
+def archive_room(room:str):
     logging.info("room: %s", room)
+
+    # ── put this room into the credentials file so matrix‑commander is happy
+    cred = json.loads(cred_file.read_text())
+    cred["room_id"]      = room
+    cred["default_room"] = room
+    cred_file.write_text(json.dumps(cred))
+
     room_dir = pathlib.Path("archive")/slug(room)
     room_dir.mkdir(parents=True, exist_ok=True)
 
-    # join (no error if already a member)
     try: run(["matrix-commander", *CRED, "--room-join", room])
     except subprocess.CalledProcessError: pass
 
-    # mini‑sync so state is cached
+    # mini‑sync
     try: run(["matrix-commander", *CRED, "--room", room, "--listen", "once"])
     except subprocess.CalledProcessError: pass
 
-    # get room‑info (may still fail – fallback to id/alias)
+    # title
     title = room
     try:
         info = next(json_lines(run(["matrix-commander", *CRED,
                                     "--room", room, "--get-room-info",
                                     "--output", "json"])), {})
         for k in ("room_display_name","room_name","canonical_alias","room_alias"):
-            if info.get(k):
-                title = info[k]; break
+            if info.get(k): title = info[k]; break
     except Exception as e:
         logging.warning("  get‑room‑info failed – %s", e)
 
-    # fetch messages
+    # messages
     listen = {"all":["--listen","all","--listen-self"],
               "tail":["--listen","tail","--tail",TAIL_N,"--listen-self"],
               "once":["--listen","once","--listen-self"]}[LISTEN_MODE]
@@ -107,9 +103,8 @@ def archive_room(room: str):
     events=[ev for j in json_lines(raw)
               for ev in [(j.get("source", j))] if ev.get("type")=="m.room.message"]
     logging.info("  messages: %d", len(events))
-    if not events: return                               # nothing new
+    if not events: return
 
-    # thread bookkeeping
     by_id={e["event_id"]:e for e in events}
     threads=collections.defaultdict(list)
     for e in events:
@@ -154,31 +149,27 @@ def archive_room(room: str):
         for cid in sorted(threads[r["event_id"]], key=lambda i: when(by_id[i])):
             add_html(by_id[cid],1)
 
-    # write
     (room_dir/"room_log.txt").write_text("\n".join(txt)+"\n", encoding="utf-8")
     (room_dir/"index.html" ).write_text("\n".join(html_lines)+"\n", encoding="utf-8")
     logging.info("  written → %s", room_dir)
 
-# ────────── main loop ──────────────────────────────────────────────────
+# ────────── main ───────────────────────────────────────────────────────
 pathlib.Path("archive").mkdir(exist_ok=True)
-for r in ROOMS:                                     # archive every room
-    try:
-        archive_room(r)
+for r in ROOMS:
+    try: archive_room(r)
     except Exception as exc:
         logging.error("‼ failed for %s – %s", r, exc)
 
-# ────────── root directory page ────────────────────────────────────────
-rooms_li = "\n".join(
-    f"<li><a href='archive/{slug(r)}/index.html'>{html.escape(r)}</a></li>"
-    for r in ROOMS )
-root = [
-    "<!doctype html><meta charset=utf-8>",
-    "<title>Matrix room archive</title>",
-    "<style>body{font:15px ui-monospace,monospace;background:#111;color:#eee;padding:1em}"
-    "a{color:#9cf;text-decoration:none}</style>",
-    "<h1>Archived rooms</h1>",
-    "<ul>", rooms_li, "</ul>",
-]
-pathlib.Path("index.html").write_text("\n".join(root)+"\n", encoding="utf-8")
+# directory page
+rooms_li="\n".join(
+    f"<li><a href='archive/{slug(r)}/index.html'>{html.escape(r)}</a></li>" for r in ROOMS)
+pathlib.Path("index.html").write_text(
+    "\n".join([
+        "<!doctype html><meta charset=utf-8>",
+        "<title>Matrix room archive</title>",
+        "<style>body{font:15px ui-monospace,monospace;background:#111;color:#eee;padding:1em}"
+        "a{color:#9cf;text-decoration:none}</style>",
+        "<h1>Archived rooms</h1><ul>",rooms_li,"</ul>"
+    ])+"\n", encoding="utf-8")
 logging.info("root index.html regenerated ✓")
 
