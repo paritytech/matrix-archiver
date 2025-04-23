@@ -1,5 +1,5 @@
 # room: #graypaper:polkadot.io
-# exported: 2025-04-22T17:32:02Z
+# exported: 2025-04-23T03:27:23Z
 2024-04-17 20:29 syed: https://matrix.to/#/!hyzRkDqDthePbodYFz:parity.io/$f_DMsIEcDXZegw6Sabnehzc-LrdDQkmq5MbxDDyoZxY?via=parity.io&via=web3.foundation
 
 2024-04-17 20:29 syed: 
@@ -9843,3 +9843,11 @@ In Eqn 14.14 and 14.15 we are using s (now b) which is defined as all the segmen
 and then we are calculating it's merkle root and comparing with segment root of some previously exported segments of any work package. 
 
 Is this what it implies? As segments exported from a work package leads to different segment roots, then in that case how can it be same as segment root of all the segments (from all wps)?
+2025-04-22 18:33 sourabhniyogi: We have found our development life has improved with the "metadata" attached to preimages, specifically when the preimage is for service code, because we can then have tools show that metadata as strings like "fib" and "gameoflife".   Can we get the same for workpackages+bundles so that we can attach metadata like "fib(93)", "gameoflife(314)", or should that be in the payload as a mere convention?
+2025-04-22 19:56 sourabhniyogi: Another quick request: Would you mind assigning `provide` a number like 17 or 27, and perhaps starting historical_lookup at 32 or 64 or 128? That would leave a bit of space between the two big groups of host functions for "one more".
+2025-04-22 20:15 sourabhniyogi: * Another quick request: Would you mind assigning `provide` a number like 17 or 27, and perhaps starting historical\_lookup at 32 or 64 or 128? That would leave a bit of space between the two big groups of host functions for "one more".
+
+Wondering why there is no a_l adjustment similar to [12.40](https://graypaper.fluffylabs.dev/#/68eaa1f/18a50118a501?v=0.6.4) for this new `provide`-based preimage submission -- I would expect a_l to have the accumulate's timeslot.  
+2025-04-22 20:21 sourabhniyogi: * Another quick request: Would you mind assigning `provide` a number like 17 or 27, and perhaps starting historical\_lookup at 32 or 64 or 128? That would leave a bit of space between the two big groups of host functions for "one more".
+
+Wondering why there is no a\_l adjustment similar to [12.40](https://graypaper.fluffylabs.dev/#/68eaa1f/18a50118a501?v=0.6.4) for this new `provide`-based preimage submission -- I would expect a\_l to have the accumulate's timeslot.  How could this `provide`d preimage be followed by a `forget` and by which service?

@@ -1,5 +1,5 @@
 # room: #jam:polkadot.io
-# exported: 2025-04-22T17:31:41Z
+# exported: 2025-04-23T03:27:05Z
 2024-04-20 02:08 johnjiao123: 
 2024-04-20 02:09 johnjiao123: 
 2024-05-30 21:48 nradko: Hey everyone,
@@ -11598,3 +11598,4 @@ Having data streams to attack bottlenecks that motivate [RFC-139 - Faster Erasur
 
 With benchmark workpackages + services, a implementer leaderboard should be developed, focussing on KPIs central to meeting M3/M4 "Kusama-performance" and "Polkadot-performance" -- where we need guidance on what this means exactly so it falls out of the telemetry server dataset.  What else is required?
 2025-04-22 14:10 jay_ztc: Many thanks for organizing this event 🙏. When can we expect approvals to start being processed for this registration?
+2025-04-22 19:58 wabkebab: I don't have the exact date but it will be very soon. You can approach Mila | Pala Labs as she can provide you more details about it
