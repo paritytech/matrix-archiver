@@ -1,22 +1,35 @@
-<!doctype html><meta charset=utf-8><meta name='viewport' content='width=device-width,initial-scale=1'>
+<!doctype html><meta charset=utf-8>
+<meta name=viewport content='width=device-width,initial-scale=1'>
 <title>#jam:polkadot.io – archive</title>
+
 <style>
-body{margin:0 auto;max-width:75ch;font:15px/1.55 system-ui,-apple-system,'Segoe UI',Helvetica,Arial,sans-serif;background:#141414;color:#e6e6e6;padding:2rem}
-.msg{white-space:pre-wrap;margin:0.3em 0}
+body{
+    margin:0 auto;
+    max-width:75ch;
+    font:15px/1.55 system-ui,-apple-system,'Segoe UI',Helvetica,Arial,sans-serif;
+    background:#141414;
+    color:#e6e6e6;
+    padding:2rem
+}
+.msg{white-space:pre-wrap;margin:.3em 0}
 .reply{margin-left:2ch}
-.edited{opacity:0.75;font-style:italic}
-pre{background:#1e1e1e;padding:0.6em;border-radius:4px;overflow:auto}
+.edited{opacity:.7;font-style:italic}
+pre{background:#1e1e1e;padding:.6em;border-radius:4px;overflow:auto}
 code{font-family:ui-monospace,monospace}
 .u{font-weight:600}
 time{color:#888}
 a{color:#9cf;text-decoration:none}
-em{font-style:italic}
-i,em:not(.allow){font-style:normal}
-@media(max-width:480px){body{padding:1rem;font-size:14px}pre{font-size:13px}}
+i,em{font-style:normal}           /* kill stray italics */
+em{font-style:italic}             /* restore our own */
+@media(max-width:480px){
+    body{padding:1rem;font-size:14px}
+    pre{font-size:13px}
+}
 </style>
 <h1>#jam:polkadot.io</h1>
-<p><small>last updated 2025-04-24 14:02 UTC</small></p>
-<p><a href='room_log.txt'>⇩ plaintext</a> · <a href='../../'>⇦ all rooms</a></p><hr>
+<p><small>last updated 2025-04-24 14:12 UTC</small></p>
+<p><a href='room_log.txt'>⇩ plaintext</a> · <a href='../../'>⇦ all rooms</a></p>
+<hr>
 <div class='msg'><time>2024-04-20 02:08</time>&ensp;<span class='u' style='color:#d0709e'>johnjiao123</span>: </div>
 <div class='msg'><time>2024-04-20 02:09</time>&ensp;<span class='u' style='color:#d0709e'>johnjiao123</span>: </div>
 <div class='msg'><time>2024-05-30 21:48</time>&ensp;<span class='u' style='color:#cba87a'>nradko</span>: Hey everyone,
@@ -111,7 +124,7 @@ also, it says &quot;Each team is only allowed to work on one implementation&quot
 i was actually going to try and work on multiple implementations using multiple language sets (e.g. Rust, Swift Ruby, Python, JS/TS) in parallel as a contingency incase i got stuck and couldn&#x27;t get support with one of them. after submission of our initial application form, will be possible for us to later on change what programming language(s) and language set that we&#x27;ll be using for the one implementation that could be eligible for the JAM prize?</div>
 <div class='msg edited'><time>2024-06-16 20:09</time>&ensp;<span class='u' style='color:#c67452'>sourabhniyogi</span>: For rule 7, &quot;Any JAM-implementation code which is viewed before or during implementation must be declared&quot;, is the following acceptable for declaration:
 
-<pre><code class="">In our implementation, beyond the Graypaper, we relied on the following for either FFIs or our learning of JAM:
+<pre><code class=''>In our implementation, beyond the Graypaper, we relied on the following for either FFIs or our learning of JAM:
  1. Koute&#x27;s PVM Implementation: (no FFI)
     https://github.com/koute/polkavm
  2. Ring VRF: (FFI [link](...))
@@ -165,7 +178,7 @@ It may be useful to have JAM teams get a head start over TRON/BSC/... type actor
 <div class='msg edited'><time>2024-06-18 17:05</time>&ensp;<span class='u' style='color:#cd8957'>gav</span>: Could you make this question clearer/more specific?</div>
 <div class='msg'><time>2024-06-18 17:19</time>&ensp;<span class='u' style='color:#c67452'>sourabhniyogi</span>: Sure -- for Rule 24  &quot;The repository must include a clear and permissive open-source license.&quot; is this license acceptable:
 
-<pre><code class="">Business Source License 1.1
+<pre><code class=''>Business Source License 1.1
 
 License text copyright (c) 2017 MariaDB Corporation Ab, All Rights Reserved.
 &quot;Business Source License&quot; is a trademark of MariaDB Corporation Ab.
@@ -297,7 +310,7 @@ One quite likely possibility is that likely performance requirements will be set
 
 In graypaper pg 8,9
 
-<pre><code class="">(18) β′ ≺ (H,EG,β†,C)
+<pre><code class=''>(18) β′ ≺ (H,EG,β†,C)
 (28) (..., C) ≺ (EA,ρ′,δ†,χ,ι,φ)
 </code></pre>
 
@@ -362,7 +375,7 @@ I am an enthusiast of Elixir, a very powerful language for concurring systems. I
 <div class='msg'><time>2024-06-27 04:56</time>&ensp;<span class='u' style='color:#4cbfa8'>xlchen</span>: the order of the keys is different between GP and the test vector</div>
 <div class='msg'><time>2024-06-27 04:57</time>&ensp;<span class='u' style='color:#4cbfa8'>xlchen</span>: <a href="https://github.com/w3f/jamtestvectors/blob/fa8699f94b2769cee5d05472072e6a5f839a57ed/safrole/safrole.asn#L35" target="_blank" rel="noopener">https://github.com/w3f/jamtestvectors/blob/fa8699f94b2769cee5d05472072e6a5f839a57ed/safrole/safrole.asn#L35</a></div>
 <div class='msg'><time>2024-06-27 05:10</time>&ensp;<span class='u' style='color:#4cbfa8'>xlchen</span>: looks like the safrole test vectors are encoded using JSON instead of the scale codec described in GP. i.e. a validator data is
-<pre><code class="">{
+<pre><code class=''>{
                 &quot;ed25519&quot;: &quot;0x837ce344bc9defceb0d7de7e9e9925096768b7adb4dad932e532eb6551e0ea02&quot;,
                 &quot;bandersnatch&quot;: &quot;0xf16e5352840afb47e206b5c89f560f2611835855cf2e6ebad1acc9520a72591d&quot;,
                 &quot;bls&quot;: &quot;0x000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000&quot;,
@@ -376,7 +389,7 @@ instead of bunch bytes. Will it be better to offer a variant that&#x27;s using t
 
 Yes indeed <a href="https://matrix.to/#/@davxy:matrix.org" target="_blank" rel="noopener">@davxy:matrix.org</a>could you fix this?</div>
 <div class='msg'><time>2024-06-27 08:13</time>&ensp;<span class='u' style='color:#cd8957'>gav</span>: &gt; &lt;@xlchen:matrix.org&gt; looks like the safrole test vectors are encoded using JSON instead of the scale codec described in GP. i.e. a validator data is
-&gt; <pre><code class="">&gt; {
+&gt; <pre><code class=''>&gt; {
 &gt;                 &quot;ed25519&quot;: &quot;0x837ce344bc9defceb0d7de7e9e9925096768b7adb4dad932e532eb6551e0ea02&quot;,
 &gt;                 &quot;bandersnatch&quot;: &quot;0xf16e5352840afb47e206b5c89f560f2611835855cf2e6ebad1acc9520a72591d&quot;,
 &gt;                 &quot;bls&quot;: &quot;0x000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000&quot;,
@@ -391,7 +404,7 @@ Probably yes. I’m not against having smaller data items separately encoded (as
 <div class='msg'><time>2024-06-27 15:55</time>&ensp;<span class='u' style='color:#c9419d'>davxy</span>: Ah. As you may have noticed, both metadata and bls key are placeholders. Not a big deal BTW, as they are not influencing Safole&#x27;s STF</div>
 <div class='msg'><time>2024-06-28 06:47</time>&ensp;<span class='u' style='color:#ad33c0'>kianenigma</span>: I am trying to make sure my understanding of the semi-coherence property of JAM is correct. 
 
-My understanding of this property is that parts of the system (i.e. <em>services</em>) that need to talk a lot with one another should be close to one another to do so without needing to deal with asynchrony. The most ideal system would then be one in which services can talk synchronously to the services that happen to execute in the same core in that time-slot, and asynchronous with those that are not.  
+My understanding of this property is that parts of the system (i.e. *services*) that need to talk a lot with one another should be close to one another to do so without needing to deal with asynchrony. The most ideal system would then be one in which services can talk synchronously to the services that happen to execute in the same core in that time-slot, and asynchronous with those that are not.  
 
 That being said, I believe I heard in the Singapore Graypaper lecture that the interfaces for services to communicate with one another is always asynchronous. 
 
@@ -404,7 +417,7 @@ Is that a correct description of where JAM service stand in terms of synchronous
 <div class='msg reply edited'><time>2024-06-28 06:57</time>&ensp;<span class='u' style='color:#ca815c'>rtti-5220</span>: yes, Key Pictures (creators of Behind the Code) along with The Kusamarian are recording and documenting all talks, and they will be made available after production I believe.</div>
 <div class='msg'><time>2024-06-28 07:12</time>&ensp;<span class='u' style='color:#cd8957'>gav</span>: &gt; &lt;@kianenigma:parity.io&gt; I am trying to make sure my understanding of the semi-coherence property of JAM is correct. 
 &gt; 
-&gt; My understanding of this property is that parts of the system (i.e. <em>services</em>) that need to talk a lot with one another should be close to one another to do so without needing to deal with asynchrony. The most ideal system would then be one in which services can talk synchronously to the services that happen to execute in the same core in that time-slot, and asynchronous with those that are not.  
+&gt; My understanding of this property is that parts of the system (i.e. *services*) that need to talk a lot with one another should be close to one another to do so without needing to deal with asynchrony. The most ideal system would then be one in which services can talk synchronously to the services that happen to execute in the same core in that time-slot, and asynchronous with those that are not.  
 &gt; 
 &gt; That being said, I believe I heard in the Singapore Graypaper lecture that the interfaces for services to communicate with one another is always asynchronous. 
 &gt; 
@@ -475,7 +488,7 @@ At the moment, we just add jamvectors as a submodule in our code and treat them 
 <div class='msg'><time>2024-07-04 09:25</time>&ensp;<span class='u' style='color:#4cbfa8'>xlchen</span>: I am not sure what kind of constraints will the API introduces. The most simple way will be require some CLI interface and use stdin/stdout to pipe test cases and results</div>
 <div class='msg'><time>2024-07-04 09:26</time>&ensp;<span class='u' style='color:#4cbfa8'>xlchen</span>: all those tests are pure functional</div>
 <div class='msg'><time>2024-07-04 09:27</time>&ensp;<span class='u' style='color:#2fbc2e'>purpletentacle</span>: There is a very small amount of tests... so it is easy to link the error code to the failure mode described in the README
-<pre><code class="">- [publish-tickets-no-mark-3](publish-tickets-no-mark-3.json)
+<pre><code class=''>- [publish-tickets-no-mark-3](publish-tickets-no-mark-3.json)
   - Fail: Re-submit tickets from authority 0.
 - [publish-tickets-no-mark-4](publish-tickets-no-mark-4.json)
   - Fail: Submit tickets in bad order.
@@ -562,7 +575,7 @@ No</div>
 <div class='msg'><time>2024-07-15 09:16</time>&ensp;<span class='u' style='color:#b36e3d'>masapr</span>: Well, it&#x27;s just a big risk to put a team on an unknown amount of work with unknown payment. If I know your estimate, I can draw my own conclusions on how that relates to our own productivity. ... Of course, we would have quite some additional effort understanding the graypaper in detail. But it would give some indication on the actual implementation effort. I understand, if you don&#x27;t want to give a number. Just thought I&#x27;d ask. It would help me to know, if I should go further with this or stop right here ... </div>
 <div class='msg edited'><time>2024-07-15 09:18</time>&ensp;<span class='u' style='color:#cd8957'>gav</span>: The spec is published and aims to be unambiguous. For milestone 1, I think it&#x27;s pretty much there, too.</div>
 <div class='msg'><time>2024-07-15 09:18</time>&ensp;<span class='u' style='color:#cd8957'>gav</span>: I see little risk beyond your own expertise.</div>
-<div class='msg'><time>2024-07-15 09:19</time>&ensp;<span class='u' style='color:#cd8957'>gav</span>: I suggest you look at the JAM Prize as a <em>prize</em>, not a corporate SLA.</div>
+<div class='msg'><time>2024-07-15 09:19</time>&ensp;<span class='u' style='color:#cd8957'>gav</span>: I suggest you look at the JAM Prize as a *prize*, not a corporate SLA.</div>
 <div class='msg edited'><time>2024-07-15 09:25</time>&ensp;<span class='u' style='color:#cd8957'>gav</span>: For what it&#x27;s worth, while pre-existing companies are 100% welcome to code up JAM and claim the prize, the structure of the prize (along with Fellowship membership and support structures) is aimed more at individuals and small unincorporated teams: Those who believe themselves capable of bringing the Graypaper to life and don&#x27;t mind taking a risk on their time and talent. If you&#x27;re looking for a low risk way of getting a monthly income on some blockchain engineering, it may not be the most appropriate opportunity.</div>
 <div class='msg'><time>2024-07-15 09:34</time>&ensp;<span class='u' style='color:#b36e3d'>masapr</span>: Fair enough. Either way, it is an investment. Also for individuals. So, it does make sense to calculate an estimate of the costs. Anyone has to do that, really. Thanks for the feedback, though. It does give me an idea.</div>
 <div class='msg'><time>2024-07-15 09:35</time>&ensp;<span class='u' style='color:#4cbfa8'>xlchen</span>: if you just want a number, I will say 3 to 6 months</div>
@@ -582,7 +595,7 @@ Lol. One person who should be no more capable of reading and assessing the GP th
 <div class='msg'><time>2024-07-15 10:27</time>&ensp;<span class='u' style='color:#cd8957'>gav</span>: Perhaps it might be sensible to read and understand the specification <em>you</em> want to implement (enough to make a rough estimate of how long you think it might take <em>you</em> to implement, anyway) before considering the case closed.</div>
 <div class='msg edited'><time>2024-07-15 10:28</time>&ensp;<span class='u' style='color:#cd8957'>gav</span>: I&#x27;ll put it another way: if you cannot get far enough through the paper to understand how much effort it might take you or your team to implement, perhaps that&#x27;s not a great sign for things to come? Basing your predictions not on the specification of what you&#x27;d have to implement or you/your team&#x27;s skills, talents and background but rather on the casual opinion of a single self-selected member of the public seems like an extraordinarily ill-considered approach.</div>
 <div class='msg reply edited'><time>2024-07-15 10:34</time>&ensp;<span class='u' style='color:#a8a636'>darkartistry</span>: That was what was on my mind. I think the requirement is to at least first get through the paper before deciding to implement. This will be the first time I attempt to write a client from scratch. Any tips are very much welcome. :) </div>
-<div class='msg edited'><time>2024-07-15 10:56</time>&ensp;<span class='u' style='color:#cd8957'>gav</span>: Perhaps one point which could be clearer is the purpose of the JAM-prize: the W3F is not handing $60m+ out specifically in order to get lots of redundant code into the ecosystem. The reason for such a large prize fund is to help create a lot of experts on the protocol. Experts who understand, <em>inside-out</em>, both the strict protocol _and_ the numerous factors in creating a viable implementation. The prizes denominated in DOT, Fellowship membership and other long-term benefits and support are all there to help incentivise those experts to stick around for the long-haul whether to continue improving their implementations, to help evolve the protocol or to build atop of it. In pursuit of this, we&#x27;ll take a rather sink-or-swim tactic with teams: beyond corrections and clarifications to the GP, we&#x27;ll be offering no great help along the way and will expect teams to solve their own problems in their own way. It&#x27;s not the fastest way of getting from A to B, but this forges a rare asset: the kind of expertise you get from innovators learning through first-principles. Furthermore, it also helps ensure an intellectually diverse ecosystem less constrained by the biases and design-decisions of a single engineering team, leading to a more resilient engineering ecosystem.</div>
+<div class='msg edited'><time>2024-07-15 10:56</time>&ensp;<span class='u' style='color:#cd8957'>gav</span>: Perhaps one point which could be clearer is the purpose of the JAM-prize: the W3F is not handing $60m+ out specifically in order to get lots of redundant code into the ecosystem. The reason for such a large prize fund is to help create a lot of experts on the protocol. Experts who understand, *inside-out*, both the strict protocol _and_ the numerous factors in creating a viable implementation. The prizes denominated in DOT, Fellowship membership and other long-term benefits and support are all there to help incentivise those experts to stick around for the long-haul whether to continue improving their implementations, to help evolve the protocol or to build atop of it. In pursuit of this, we&#x27;ll take a rather sink-or-swim tactic with teams: beyond corrections and clarifications to the GP, we&#x27;ll be offering no great help along the way and will expect teams to solve their own problems in their own way. It&#x27;s not the fastest way of getting from A to B, but this forges a rare asset: the kind of expertise you get from innovators learning through first-principles. Furthermore, it also helps ensure an intellectually diverse ecosystem less constrained by the biases and design-decisions of a single engineering team, leading to a more resilient engineering ecosystem.</div>
 <div class='msg edited'><time>2024-07-15 11:00</time>&ensp;<span class='u' style='color:#cd8957'>gav</span>: They say there are no Dumb Questions. Perhaps. But there are certainly Lazy Questions. If any come my way I&#x27;ll mark them <code>LQ</code> and  move on. Be warned :P</div>
 <div class='msg'><time>2024-07-15 11:04</time>&ensp;<span class='u' style='color:#b36e3d'>masapr</span>: I&#x27;m sorry, I really didn&#x27;t want to upset you. Yes, it certainly was a lazy question. But I still believe, it&#x27;s a fair question. These things are hard to estimate and it&#x27;s not dumb to ask the expert.</div>
 <div class='msg'><time>2024-07-15 11:04</time>&ensp;<span class='u' style='color:#cd8957'>gav</span>: The point is to make <em>you</em> the expert :)</div>
@@ -975,7 +988,7 @@ The DA system is not the only storage available. There is also the service state
 See ^^^</div>
 <div class='msg edited'><time>2024-07-31 15:32</time>&ensp;<span class='u' style='color:#c67452'>sourabhniyogi</span>: For those of you who are trying to write their first refine / accumulate code (or connect PVM + Patricia Merkle Tries + DA to your first attempt at host functions), this assembly compiler is going to be insanely useful:
 
-<pre><code class=""># cat tools/spectool/spec/src/inst_branch_greater_or_equal_signed_ok.txt 
+<pre><code class=''># cat tools/spectool/spec/src/inst_branch_greater_or_equal_signed_ok.txt 
 pub @main:
     a0 = 10
     a1 = -10
@@ -1032,7 +1045,7 @@ i&#x27;ve added my identity and estimated budget here <a href="https://github.co
 
 I checked the chat and read your discussion with Sourabh regarding signature verification. I also checked the two repositories <code>ark-ec-vrfs</code> and <code>bandersnatch-vrfs-spec</code>
 
-I wanted to confirm my understanding: Is <code>pub type RingCommitment&lt;S&gt; = ring_proof::FixedColumnsCommitted&lt;BaseField&lt;S&gt;, PcsCommitment&lt;S&gt;&gt;; </code>the ring root commitment ($\gamma_z$) mentioned in the Gray Paper?
+I wanted to confirm my understanding: Is <code>pub type RingCommitment&amp;lt;S&amp;gt; = ring_proof::FixedColumnsCommitted&amp;lt;BaseField&amp;lt;S&amp;gt;, PcsCommitment&amp;lt;S&amp;gt;&amp;gt;; </code>the ring root commitment ($\gamma_z$) mentioned in the Gray Paper?
 
 If yes, when we need a verifier for the ring commitment, we need <code>PcsParams</code>. What should I use? From the code, it seems we take these params from the ring context, and there appears to be some randomness when instantiating ring context. Is this normal? Should I just initialize the ring context with <code>RingContext::from_seed(RING_DOMAIN_SIZE, [0; 32])</code> in the code and not worry about the rest ?
 
@@ -1089,7 +1102,7 @@ I would hate teams to not get started on this exciting journey just because 100%
 
 The protocol definition is 0.3.2. There are going to be changes. Nothing is final. </div>
 <div class='msg reply'><time>2024-08-02 23:02</time>&ensp;<span class='u' style='color:#4cbfa8'>xlchen</span>: I mainly want to know in relatively terms which part is more stable. But I guess that could be an unknown as well</div>
-<div class='msg edited'><time>2024-08-03 15:13</time>&ensp;<span class='u' style='color:#39bc2a'>ltfschoen</span>: does anyone know where i can find out more information about the *<em>zkSNARK Service</em>* that Gav mentioned at 51mins in this old discussion &quot;Gavin Wood on JAM: The next disruptor in Web3&quot; <a href="https://x.com/paritytech/status/1788847203622043974" target="_blank" rel="noopener">https://x.com/paritytech/status/1788847203622043974</a></div>
+<div class='msg edited'><time>2024-08-03 15:13</time>&ensp;<span class='u' style='color:#39bc2a'>ltfschoen</span>: does anyone know where i can find out more information about the **zkSNARK Service** that Gav mentioned at 51mins in this old discussion &quot;Gavin Wood on JAM: The next disruptor in Web3&quot; <a href="https://x.com/paritytech/status/1788847203622043974" target="_blank" rel="noopener">https://x.com/paritytech/status/1788847203622043974</a></div>
 <div class='msg'><time>2024-08-05 15:19</time>&ensp;<span class='u' style='color:#83c95e'>tebdev</span>: &gt; &lt;@asmie:matrix.org&gt; Hi! qq about in-memory db - can we use anything external (eg.: RocksDB, ParityDB) or it should be something implemented from scratch?
 
 This a good question. I also need advice.</div>
@@ -1156,11 +1169,11 @@ Therefore, e&#x27; = e. What I missing here?
 <div class='msg reply edited'><time>2024-08-09 11:44</time>&ensp;<span class='u' style='color:#db4dca'>celadari</span>: You&#x27;re talking about tiny or full ? Because if you&#x27;re talking about tiny then E=12</div>
 <div class='msg reply'><time>2024-08-09 11:46</time>&ensp;<span class='u' style='color:#c457c5'>vinsystems</span>: About tiny. Thank you!</div>
 <div class='msg'><time>2024-08-09 11:44</time>&ensp;<span class='u' style='color:#4cbfa8'>xlchen</span>: <a href="https://github.com/w3f/jamtestvectors/blob/master/safrole/tiny.asn#L4" target="_blank" rel="noopener">https://github.com/w3f/jamtestvectors/blob/master/safrole/tiny.asn#L4</a></div>
-<div class='msg edited'><time>2024-08-09 16:25</time>&ensp;<span class='u' style='color:#db4dca'>celadari</span>: Hello, I have a doubt regarding **ordering of extrinsic** in file <code>tiny/publish-tickets-with-mark-2.json</code>.
+<div class='msg edited'><time>2024-08-09 16:25</time>&ensp;<span class='u' style='color:#db4dca'>celadari</span>: Hello, I have a doubt regarding **ordering of extrinsic** in file `tiny/publish-tickets-with-mark-2.json`.
 
 We have the following extrinsic:
 
-<pre><code class="json">{
+<pre><code class='json'>{
         &quot;attempt&quot;: 1,
         &quot;signature&quot;: &quot;0x8e.......cf7&quot;
       },
@@ -1192,7 +1205,7 @@ Verifying signatures and thus getting VRF output I get in the same order:
 but then they are not in any order (ascending or descending) if taken as LITTLE-ENDIAN.
 (They are in ascending order if taken as BIG-ENDIAN though...)
 
-*<em>Is there a problem with the order of extrinsic in this file or there is something I am missing ?</em>*</div>
+**Is there a problem with the order of extrinsic in this file or there is something I am missing ?**</div>
 <div class='msg reply'><time>2024-08-09 21:10</time>&ensp;<span class='u' style='color:#4cbfa8'>xlchen</span>: I think you are confused how le/be works between hex string vs binary number</div>
 <div class='msg reply'><time>2024-08-09 21:11</time>&ensp;<span class='u' style='color:#4cbfa8'>xlchen</span>: for data [1,2,3,4], written in hex using le will be 0x01020304</div>
 <div class='msg reply'><time>2024-08-09 21:11</time>&ensp;<span class='u' style='color:#4cbfa8'>xlchen</span>: lsb is on left, unlike numbers</div>
@@ -1344,7 +1357,7 @@ Indeed, such a dump is in line with my expectations of what we’ll provide for 
 <div class='msg'><time>2024-08-18 16:28</time>&ensp;<span class='u' style='color:#5adda3'>shwchg</span>: davxy: Hi, I have a question about your dispute test vector
 You mentioned in your README that when an execution error occurs, the post-state must match the pre-state. But some of your vectors are still being updated.
 <a href="https://github.com/davxy/jam-test-vectors/blob/disputes/disputes/tiny/progress_with_culprits-3.json" target="_blank" rel="noopener">https://github.com/davxy/jam-test-vectors/blob/disputes/disputes/tiny/progress_with_culprits-3.json</a>
-<pre><code class="">&quot;pre_state&quot;: {
+<pre><code class=''>&quot;pre_state&quot;: {
         &quot;psi&quot;: {
             &quot;psi_g&quot;: [],
             &quot;psi_b&quot;: [],
@@ -1593,7 +1606,7 @@ In tranche 1, they will use this function to check if there are any missing or f
 (b) auditable by the FEW
 (2) SLIM blocks with just (hash, length) pairs sharable with ALL, validated by ALL, thus (285)
 
-Clearly, JAM departs from the classic FAT block paradigm where all transactions/extrinsics are stored in every block (and validated by ALL), all state transitions verifiable from genesis, in favor of SLIM blocks ala (2) with as much &quot;work&quot; *<em>and data</em>* pushed out to cores ala (1).  (285) shows the FAT extrinsics are gone, but   the question is how audits can be done with the TINY onion of (183)+(184).</div>
+Clearly, JAM departs from the classic FAT block paradigm where all transactions/extrinsics are stored in every block (and validated by ALL), all state transitions verifiable from genesis, in favor of SLIM blocks ala (2) with as much &quot;work&quot; **and data** pushed out to cores ala (1).  (285) shows the FAT extrinsics are gone, but   the question is how audits can be done with the TINY onion of (183)+(184).</div>
 <div class='msg reply edited'><time>2024-08-31 08:18</time>&ensp;<span class='u' style='color:#c67452'>sourabhniyogi</span>: The contention on the work packages + work items on whether FAT extrinsics are kept &quot;alongside&quot; vs &quot;inside&quot; work packages is also to keep work packages SLIM like the blocks, by keeping FAT extrinsics out of work items _as well_, while also meeting assurance/auditability concerns and keeping the availability proof onion TINY.
 
 Just a guess (since we have not reconstructed the onion yet) but its seems clear of the whole extrinsic by the FEW when audited is necessary.  The key bits doesn&#x27;t have to be in the block or the work package, and maybe not in the work items either so long as it makes it into the onion.
@@ -1639,7 +1652,7 @@ Sorry I guess this is not really accurate. The reason for distributing amongst a
 
 FWIW the message you replied to was talking about the block extrinsic data E, though it seems this is not actually what you&#x27;re interested in. Not sure if the GP says anywhere explicitly that this is shared, but it&#x27;s not really possible to validate blocks etc unless it is</div>
 <div class='msg reply edited'><time>2024-08-31 16:55</time>&ensp;<span class='u' style='color:#c67452'>sourabhniyogi</span>: Validation of the &quot;off-chain&quot; refine extrinsic data is done through the auditing (which re-executes the same refine after reconstruction), which is a requirement for finalization of blocks.  Validation of blocks (which is done by all validators) does not require this auditing of the <code>refine</code> execution to be done by every validator, but just a few.    The <code>accumulate</code> execution must be done by all validators to validate a block.  We need to peel all the layers of the availability specifier to maximally appreciate the beauty/novelty of this =)</div>
-<div class='msg'><time>2024-08-31 16:57</time>&ensp;<span class='u' style='color:#c67452'>sourabhniyogi</span>:  davxy  After review we don&#x27;t have an issue =)  We need a fully worked out case (in your style =)) of the Availability Specifier inputs ${\bf b}$ and ${\bf s}$, intermediate Encode(p, x, i, j), where p is the package, x is the [hash, len], i is the imported data, and j the justifications for this imported data -- culminating in a JAMP instruction for sharing (justified) DA chunks, which gav says will likely just be <code>Vec&lt;Hash&gt;</code> (blob subtree) ++ <code>Blob</code> ++ <code>Vec&lt;Hash&gt;</code> (segments subtree) ++ <code>Vec&lt;SegmentChunk&gt;</code> ++ <code>Vec&lt;Hash&gt;</code> (super-tree) and maps onto these Encoded inputs.  It is super helpful to have you choose verbose JSON attribute names both consistent with everything else and disambiguating.   Even better would be a diagram though =)</div>
+<div class='msg'><time>2024-08-31 16:57</time>&ensp;<span class='u' style='color:#c67452'>sourabhniyogi</span>:  davxy  After review we don&#x27;t have an issue =)  We need a fully worked out case (in your style =)) of the Availability Specifier inputs ${\bf b}$ and ${\bf s}$, intermediate Encode(p, x, i, j), where p is the package, x is the [hash, len], i is the imported data, and j the justifications for this imported data -- culminating in a JAMP instruction for sharing (justified) DA chunks, which gav says will likely just be <code>Vec&amp;lt;Hash&amp;gt;</code> (blob subtree) ++ <code>Blob</code> ++ <code>Vec&amp;lt;Hash&amp;gt;</code> (segments subtree) ++ <code>Vec&amp;lt;SegmentChunk&amp;gt;</code> ++ <code>Vec&amp;lt;Hash&amp;gt;</code> (super-tree) and maps onto these Encoded inputs.  It is super helpful to have you choose verbose JSON attribute names both consistent with everything else and disambiguating.   Even better would be a diagram though =)</div>
 <div class='msg'><time>2024-09-02 10:22</time>&ensp;<span class='u' style='color:#a2d35c'>rhee</span>: kianenigma: Hey Kian, this is the first Korean_translated version of your <a href="https://blog.kianenigma.nl/posts/tech/demystifying-jam/" target="_blank" rel="noopener">JAM summary blog</a>. I&#x27;ve invited a professional local technical writer + one of the research firms to deliver your contents in a correct tone &amp; manner. Hope you like it and link to your blog article: <a href="https://research.despread.io/ko/report-jam/" target="_blank" rel="noopener">https://research.despread.io/ko/report-jam/</a></div>
 <div class='msg reply'><time>2024-09-02 15:30</time>&ensp;<span class='u' style='color:#ad33c0'>kianenigma</span>: that&#x27;s awesome, thanks for sharing! 
 
@@ -1706,7 +1719,7 @@ my pleasure :)</div>
 <div class='msg'><time>2024-09-12 03:01</time>&ensp;<span class='u' style='color:#cd8957'>gav</span>: &gt; &lt;@gav:polkadot.io&gt; However, said filtering should be defined within the Bandersnatch appendix. I introduced a note <a href="https://github.com/gavofyork/graypaper/pull/77/commits/f1c867f163b326d21a7654f0cb7898754f1750f4" target="_blank" rel="noopener">Bandersnatch: Ignore bad keys</a>
 
 Note: After davxy&#x27;s comment, the GP appendix was updated to state that when building the ring, do <em>not</em> skip but instead use the Bandersnatch padding point for any keys with no point of their own.</div>
-<div class='msg'><time>2024-09-12 13:17</time>&ensp;<span class='u' style='color:#5c84c9'>prematurata</span>: question about the host call definition. Appendix A.6. it looks like that the invocation shouldreturn <code>x&#x27;</code> when a page fault happen when callling <code>f</code> but <code>x&#x27;</code> is not defined anywhere so i guess it&#x27;s just a typo and instead of <code>x&#x27;</code> we want <code>x</code>... is this assumption correct?
+<div class='msg'><time>2024-09-12 13:17</time>&ensp;<span class='u' style='color:#5c84c9'>prematurata</span>: question about the host call definition. Appendix A.6. it looks like that the invocation shouldreturn <code>x&amp;#x27;</code> when a page fault happen when callling <code>f</code> but <code>x&amp;#x27;</code> is not defined anywhere so i guess it&#x27;s just a typo and instead of <code>x&amp;#x27;</code> we want <code>x</code>... is this assumption correct?
 
 
 Also I have a couple of questions about gammax (green underline). 
@@ -1725,7 +1738,7 @@ Also I have a couple of questions about gammax (green underline).
 - <code>239</code> implies that if all the statements cannot be satisfied, then basically <code>Y()</code> output is &quot;empty/nil&quot;
 - this means that since the <code>ΨI</code> always passess a code hash then <code>ΨM</code> is always returning <code>panic</code> due to <code>246</code></div>
 <div class='msg'><time>2024-09-12 15:46</time>&ensp;<span class='u' style='color:#cd8957'>gav</span>: here it is p_c where the c is bold and not italic, thereby referring to the code preimage not the hash. </div>
-<div class='msg'><time>2024-09-12 15:50</time>&ensp;<span class='u' style='color:#cd8957'>gav</span>: &gt; &lt;@prematurata:matrix.org&gt; question about the host call definition. Appendix A.6. it looks like that the invocation shouldreturn <code>x&#x27;</code> when a page fault happen when callling <code>f</code> but <code>x&#x27;</code> is not defined anywhere so i guess it&#x27;s just a typo and instead of <code>x&#x27;</code> we want <code>x</code>... is this assumption correct?
+<div class='msg'><time>2024-09-12 15:50</time>&ensp;<span class='u' style='color:#cd8957'>gav</span>: &gt; &lt;@prematurata:matrix.org&gt; question about the host call definition. Appendix A.6. it looks like that the invocation shouldreturn <code>x&amp;#x27;</code> when a page fault happen when callling <code>f</code> but <code>x&amp;#x27;</code> is not defined anywhere so i guess it&#x27;s just a typo and instead of <code>x&amp;#x27;</code> we want <code>x</code>... is this assumption correct?
 &gt; 
 &gt; 
 &gt; Also I have a couple of questions about gammax (green underline). 
@@ -1736,7 +1749,7 @@ Also I have a couple of questions about gammax (green underline).
 
 Yes that should be x not x’. Will be fixed in next release. </div>
 <div class='msg edited'><time>2024-09-12 15:52</time>&ensp;<span class='u' style='color:#cd8957'>gav</span>: <a href="https://matrix.to/#/@prematurata:matrix.org" target="_blank" rel="noopener">@prematurata:matrix.org</a>this stuff is OT in here. In future please use the gray paper channel. </div>
-<div class='msg'><time>2024-09-13 04:13</time>&ensp;<span class='u' style='color:#cd8957'>gav</span>: &gt; &lt;@prematurata:matrix.org&gt; question about the host call definition. Appendix A.6. it looks like that the invocation shouldreturn <code>x&#x27;</code> when a page fault happen when callling <code>f</code> but <code>x&#x27;</code> is not defined anywhere so i guess it&#x27;s just a typo and instead of <code>x&#x27;</code> we want <code>x</code>... is this assumption correct?
+<div class='msg'><time>2024-09-13 04:13</time>&ensp;<span class='u' style='color:#cd8957'>gav</span>: &gt; &lt;@prematurata:matrix.org&gt; question about the host call definition. Appendix A.6. it looks like that the invocation shouldreturn <code>x&amp;#x27;</code> when a page fault happen when callling <code>f</code> but <code>x&amp;#x27;</code> is not defined anywhere so i guess it&#x27;s just a typo and instead of <code>x&amp;#x27;</code> we want <code>x</code>... is this assumption correct?
 &gt; 
 &gt; 
 &gt; Also I have a couple of questions about gammax (green underline). 
@@ -1846,7 +1859,7 @@ block.
 Protocol 128 is used for the first step (generating validator to proxy validator), protocol 129 is
 used for the second step (proxy validator to all current validators).
 
-<pre><code class="">Attempt = { 0, 1 }
+<pre><code class=''>Attempt = { 0, 1 }
 Ticket = Attempt ++ Signature
 
 Validator -&gt; Validator
@@ -1956,7 +1969,7 @@ I am preparing the agenda for the JAM meetup Oct 21st. If anyone has a proposal 
 <div class='msg'><time>2024-09-24 20:16</time>&ensp;<span class='u' style='color:#4977cf'>danicuki</span>: </div>
 <div class='msg'><time>2024-09-24 20:16</time>&ensp;<span class='u' style='color:#4977cf'>danicuki</span>: </div>
 <div class='msg'><time>2024-09-24 20:17</time>&ensp;<span class='u' style='color:#4977cf'>danicuki</span>: </div>
-<div class='msg'><time>2024-09-25 03:11</time>&ensp;<span class='u' style='color:#4cbfa8'>xlchen</span>: I am trying to figure out what is the best way to know if I am the block author of the next block and it seems a bit tricky for the first block on an epoch. <code>γs&#x27;</code> determines the block authors and it is only updated at the first block on an epoch. That means for validators to check if they are the block author, they need to figure out <code>γs&#x27;</code> first and then check for it.</div>
+<div class='msg'><time>2024-09-25 03:11</time>&ensp;<span class='u' style='color:#4cbfa8'>xlchen</span>: I am trying to figure out what is the best way to know if I am the block author of the next block and it seems a bit tricky for the first block on an epoch. <code>γs&amp;#x27;</code> determines the block authors and it is only updated at the first block on an epoch. That means for validators to check if they are the block author, they need to figure out <code>γs&amp;#x27;</code> first and then check for it.</div>
 <div class='msg'><time>2024-09-25 03:29</time>&ensp;<span class='u' style='color:#4cbfa8'>xlchen</span>: What I really want is at begin of an epoch, check <code>γs</code>, and then I know exactly when I need to spawn the block producing task in this epoch. However this won&#x27;t work for the edge case.</div>
 <div class='msg reply'><time>2024-09-25 06:08</time>&ensp;<span class='u' style='color:#db4dca'>celadari</span>: At the begin of a new block the ticket submission period should be over for I think 100 time slots so you should have an updated gamma_s by then I would say. Unless your node has been malfunctioning and two epochs have passed.
 Can someone correct me on this one ?</div>
@@ -1987,7 +2000,7 @@ Does it make sense ?</div>
 <div class='msg'><time>2024-09-25 07:39</time>&ensp;<span class='u' style='color:#6247cb'>bamzedev</span>: </div>
 <div class='msg edited'><time>2024-09-26 17:03</time>&ensp;<span class='u' style='color:#4977cf'>danicuki</span>: We have a question about the JAM prize payment. Rule 20:
 
-<pre><code class="">Prizes are paid to the earliest Polkadot /
+<pre><code class=''>Prizes are paid to the earliest Polkadot /
  Kusama account IDs stated in the
  repository&#x27;s README. In the case of a tie,
  payment is split equally. Local (Swiss) law
@@ -1999,7 +2012,7 @@ Does it make sense ?</div>
 What if the prize will be divided between individuals? Even if these individuals create a multisign wallet, the wallet itself does not belong to any specific entity (individual or company). Who should KYC? All multisign signers? Do individuals need to create an entity that &quot;owns&quot; the multisign wallet?</div>
 <div class='msg'><time>2024-09-26 17:09</time>&ensp;<span class='u' style='color:#48d03d'>tomusdrw</span>: &gt; &lt;@danicuki:matrix.org&gt; We have a question about the JAM prize payment. Rule 20:
 &gt; 
-&gt; <pre><code class="">&gt; Prizes are paid to the earliest Polkadot /
+&gt; <pre><code class=''>&gt; Prizes are paid to the earliest Polkadot /
 &gt;  Kusama account IDs stated in the
 &gt;  repository&#x27;s README. In the case of a tie,
 &gt;  payment is split equally. Local (Swiss) law
@@ -2013,7 +2026,7 @@ What if the prize will be divided between individuals? Even if these individuals
 Curious as well. Note that the tokens are also vested so it needs to be not a one-off distribution between multisig members, but rather a 24-months+ active collective</div>
 <div class='msg'><time>2024-09-26 22:55</time>&ensp;<span class='u' style='color:#cd8957'>gav</span>: &gt; &lt;@danicuki:matrix.org&gt; We have a question about the JAM prize payment. Rule 20:
 &gt; 
-&gt; <pre><code class="">&gt; Prizes are paid to the earliest Polkadot /
+&gt; <pre><code class=''>&gt; Prizes are paid to the earliest Polkadot /
 &gt;  Kusama account IDs stated in the
 &gt;  repository&#x27;s README. In the case of a tie,
 &gt;  payment is split equally. Local (Swiss) law
@@ -2158,7 +2171,7 @@ From what i understood this targets non-GP functionality, like logs monitoring a
 Sounds reasonable. Focus on interface agreements and treat GP as black box. There is value in that.</div>
 <div class='msg'><time>2024-10-11 12:58</time>&ensp;<span class='u' style='color:#98d67f'>sebastian</span>: &gt; &lt;@danicuki:matrix.org&gt; We have a question about the JAM prize payment. Rule 20:
 &gt; 
-&gt; <pre><code class="">&gt; Prizes are paid to the earliest Polkadot /
+&gt; <pre><code class=''>&gt; Prizes are paid to the earliest Polkadot /
 &gt;  Kusama account IDs stated in the
 &gt;  repository&#x27;s README. In the case of a tie,
 &gt;  payment is split equally. Local (Swiss) law
@@ -2181,12 +2194,12 @@ One issue we&#x27;re looking is that in CE 137 / 138
 you have  Assurers <em>pulling</em> from Guarantors by &quot;Shard Index&quot; rather than Guarantors <em>pushing</em> to Assurers.   GP uses &quot;distribute&quot; + &quot;send&quot; vocabulary here:
 * Section 11: &quot;At this point, the work-package is erasure coded into a multitude of segments and each segment <em>distributed</em> to the associated validator who then attests to its availability through an assurance placed on-chain&quot;
 
-* Section 14: &quot;Validators are incentivized to *<em>distribute</em>* each newly erasure-coded data chunk to the relevant validator, .... Given our work-package p, we should therefore *<em>send</em>* the corresponding work-package bundle chunk and exported segments chunks to each validator whose keys are together with similarly corresponding chunks for imported, extrinsic and exported segments data, such that each validator can justify completeness according to the work-report’s erasure-root.
+* Section 14: &quot;Validators are incentivized to **distribute** each newly erasure-coded data chunk to the relevant validator, .... Given our work-package p, we should therefore **send** the corresponding work-package bundle chunk and exported segments chunks to each validator whose keys are together with similarly corresponding chunks for imported, extrinsic and exported segments data, such that each validator can justify completeness according to the work-report’s erasure-root.
 
 Is this done as a simplification in your JAMSNP?  Or is there a technical reason for switching from GP&#x27;s &quot;push&quot; to your &quot;pull&quot; in CE 137?
 
 In August @gav suggested this sharing (justified) DA chunks:  
-<pre><code class="">Vec&lt;Hash&gt; ++ Blob ++ Vec&lt;Hash&gt; ++ Vec&lt;SegmentChunk&gt; ++ Vec&lt;Hash&gt;
+<pre><code class=''>Vec&lt;Hash&gt; ++ Blob ++ Vec&lt;Hash&gt; ++ Vec&lt;SegmentChunk&gt; ++ Vec&lt;Hash&gt;
 
 The Vec&lt;Hash&gt; will just be complementary Merkle-node-hashes from leaf to root.  The first will contain hashes for the blob-subtree, the second for the segments subtree and the third for the super-tree.
 </code></pre>
@@ -2199,12 +2212,12 @@ which appeared to us to be &quot;push&quot; oriented and consistent with the GP&
 &gt; you have  Assurers <em>pulling</em> from Guarantors by &quot;Shard Index&quot; rather than Guarantors <em>pushing</em> to Assurers.   GP uses &quot;distribute&quot; + &quot;send&quot; vocabulary here:
 &gt; * Section 11: &quot;At this point, the work-package is erasure coded into a multitude of segments and each segment <em>distributed</em> to the associated validator who then attests to its availability through an assurance placed on-chain&quot;
 &gt; 
-&gt; * Section 14: &quot;Validators are incentivized to *<em>distribute</em>* each newly erasure-coded data chunk to the relevant validator, .... Given our work-package p, we should therefore *<em>send</em>* the corresponding work-package bundle chunk and exported segments chunks to each validator whose keys are together with similarly corresponding chunks for imported, extrinsic and exported segments data, such that each validator can justify completeness according to the work-report’s erasure-root.
+&gt; * Section 14: &quot;Validators are incentivized to **distribute** each newly erasure-coded data chunk to the relevant validator, .... Given our work-package p, we should therefore **send** the corresponding work-package bundle chunk and exported segments chunks to each validator whose keys are together with similarly corresponding chunks for imported, extrinsic and exported segments data, such that each validator can justify completeness according to the work-report’s erasure-root.
 &gt; 
 &gt; Is this done as a simplification in your JAMSNP?  Or is there a technical reason for switching from GP&#x27;s &quot;push&quot; to your &quot;pull&quot; in CE 137?
 &gt; 
 &gt; In August @gav suggested this sharing (justified) DA chunks:  
-&gt; <pre><code class="">&gt; Vec&lt;Hash&gt; ++ Blob ++ Vec&lt;Hash&gt; ++ Vec&lt;SegmentChunk&gt; ++ Vec&lt;Hash&gt;
+&gt; <pre><code class=''>&gt; Vec&lt;Hash&gt; ++ Blob ++ Vec&lt;Hash&gt; ++ Vec&lt;SegmentChunk&gt; ++ Vec&lt;Hash&gt;
 &gt; 
 &gt; The Vec&lt;Hash&gt; will just be complementary Merkle-node-hashes from leaf to root.  The first will contain hashes for the blob-subtree, the second for the segments subtree and the third for the super-tree.
 &gt; </code></pre>
@@ -2303,7 +2316,7 @@ In this case, WorkExecResult in the ASN defines panic as null and not having a b
 
 <a href="https://github.com/w3f/jamtestvectors/blob/master/codec/schema.asn#L93" target="_blank" rel="noopener">https://github.com/w3f/jamtestvectors/blob/master/codec/schema.asn#L93</a>
 
-The only one that has a specified by sequence is the &quot;ok&quot; result. So <code>&quot;panic&quot;: null</code> looks correct to me as none of the errors have byte sequences. </div>
+The only one that has a specified by sequence is the &quot;ok&quot; result. So <code>&amp;quot;panic&amp;quot;: null</code> looks correct to me as none of the errors have byte sequences. </div>
 <div class='msg edited'><time>2024-10-11 23:10</time>&ensp;<span class='u' style='color:#4977cf'>danicuki</span>: understood. A suggestion for changing this would be
 
 WorkExecResult ::= CHOICE {
@@ -2460,7 +2473,7 @@ Yes</div>
 
 I don&#x27;t understand what you mean by this</div>
 <div class='msg edited'><time>2024-10-18 11:35</time>&ensp;<span class='u' style='color:#cd8957'>gav</span>: sourabhniyogi: please read <a href="https://hackmd.io/@puaoX3mpTI-9hXSB8NeGEw/B1WUlNqvV" target="_blank" rel="noopener">the Code of Conduct effective across all public Polkadot channels</a></div>
-<div class='msg edited'><time>2024-10-18 11:36</time>&ensp;<span class='u' style='color:#cd8957'>gav</span>: &gt; This is a room for informal and inclusive conversation. It is not an opportunity to call out for a *<em>specific individual</em>* to answer arbitrary questions. Questions that are made directly to a room member not already in direct conversation with the asker will not be tolerated.</div>
+<div class='msg edited'><time>2024-10-18 11:36</time>&ensp;<span class='u' style='color:#cd8957'>gav</span>: &gt; This is a room for informal and inclusive conversation. It is not an opportunity to call out for a **specific individual** to answer arbitrary questions. Questions that are made directly to a room member not already in direct conversation with the asker will not be tolerated.</div>
 <div class='msg'><time>2024-10-18 11:37</time>&ensp;<span class='u' style='color:#cd8957'>gav</span>: If you have a question, ask it. Do not address a particular person unless as part of a pre-existing and on-topic conversation.</div>
 <div class='msg'><time>2024-10-18 11:47</time>&ensp;<span class='u' style='color:#c67452'>sourabhniyogi</span>: &gt; &lt;@gav:polkadot.io&gt; If you have a question, ask it. Do not address a particular person unless as part of a pre-existing and on-topic conversation.
 
@@ -2514,7 +2527,7 @@ Any recommendation on how a service should emit Events / Logs, for JAM Service i
 &gt; 
 &gt; (4) Is there a work_package_bundle data available so we can make sure we got the format correct conforming to 14.1.1 in GP 0.4.2 and your jam_np?
 
-The content of the *<em>codec</em>* test vectors is not supposed to be significant. These vectors are only used to test your codec encode/decode functions
+The content of the **codec** test vectors is not supposed to be significant. These vectors are only used to test your codec encode/decode functions
 <a href="https://github.com/w3f/jamtestvectors/tree/master/codec#semantic-correctness" target="_blank" rel="noopener">https://github.com/w3f/jamtestvectors/tree/master/codec#semantic-correctness</a>
 </div>
 <div class='msg'><time>2024-10-18 13:14</time>&ensp;<span class='u' style='color:#cd8957'>gav</span>: The above should all be clear from reading the GP carefully. </div>
@@ -2588,7 +2601,7 @@ It would be interesting to know at what stage are all the teams working on a jam
 
 <a href="https://github.com/polkadot-fellows/RFCs/pull/127#discussion_r1817937026" target="_blank" rel="noopener">https://github.com/polkadot-fellows/RFCs/pull/127#discussion_r1817937026</a>
 
-Basically having pre-existing L2s prove finality with *both* ETH + JAM as anchors is a winning solution.  But I&#x27;m  not sure how we get Ethereum finality into <code>accumulate</code> to feed back into <code>refine</code>&#x27;s  <code>historical_lookup</code>.
+Basically having pre-existing L2s prove finality with <em>both</em> ETH + JAM as anchors is a winning solution.  But I&#x27;m  not sure how we get Ethereum finality into <code>accumulate</code> to feed back into <code>refine</code>&#x27;s  <code>historical_lookup</code>.
 
 
 </div>
@@ -2596,7 +2609,7 @@ Basically having pre-existing L2s prove finality with *both* ETH + JAM as anchor
 &gt; 
 &gt; <a href="https://github.com/polkadot-fellows/RFCs/pull/127#discussion_r1817937026" target="_blank" rel="noopener">https://github.com/polkadot-fellows/RFCs/pull/127#discussion_r1817937026</a>
 &gt; 
-&gt; Basically having pre-existing L2s prove finality with *both* ETH + JAM as anchors is a winning solution.  But I&#x27;m  not sure how we get Ethereum finality into <code>accumulate</code> to feed back into <code>refine</code>&#x27;s  <code>historical_lookup</code>.
+&gt; Basically having pre-existing L2s prove finality with <em>both</em> ETH + JAM as anchors is a winning solution.  But I&#x27;m  not sure how we get Ethereum finality into <code>accumulate</code> to feed back into <code>refine</code>&#x27;s  <code>historical_lookup</code>.
 &gt; 
 &gt; 
 &gt; 
@@ -2714,7 +2727,7 @@ This is a concern of the service requesting the preimages, not a concern of JAM.
 
 Let me know what you think I got wrong?  Or if you have a bootstrap assembly that does it better/right, maybe that is ready for sharing?  I understand there are problems that are useful as exercises for the reader, and this is a great one, but perhaps achieving consensus on this is worth it.</div>
 <div class='msg reply'><time>2024-10-23 19:11</time>&ensp;<span class='u' style='color:#c67452'>sourabhniyogi</span>: ?  We believe the <code>Service ID</code> was necessary in your fix, but don&#x27;t see why <code>Preimage Length</code> was needed as well.  What is the reason for its inclusion in CE142?</div>
-<div class='msg reply edited'><time>2024-10-23 22:31</time>&ensp;<span class='u' style='color:#c65779'>dave</span>: The dictionary *<em>l</em>* in each service has keys of type (Hash, Preimage Length). You will want to look into this dictionary to determine if a preimage has been requested or not. Without the preimage length it&#x27;s not easy to do this (not strictly speaking impossible of course)</div>
+<div class='msg reply edited'><time>2024-10-23 22:31</time>&ensp;<span class='u' style='color:#c65779'>dave</span>: The dictionary **l** in each service has keys of type (Hash, Preimage Length). You will want to look into this dictionary to determine if a preimage has been requested or not. Without the preimage length it&#x27;s not easy to do this (not strictly speaking impossible of course)</div>
 <div class='msg reply'><time>2024-10-23 22:41</time>&ensp;<span class='u' style='color:#c65779'>dave</span>: Re the proposed bootstrap service, sounds like that would work to me. That is certainly how CE 142/143 are intended to work.</div>
 <div class='msg'><time>2024-10-24 00:34</time>&ensp;<span class='u' style='color:#7875cf'>charliewinston14</span>: I have a question about &quot;publish-tickets-no-mark-4&quot; which is &quot;Fail: Submit tickets in bad order.&quot;. Where in the grey paper can i find information about how to properly order tickets? I see &quot;in order of their implied identifier.&quot; on page 15 but unsure what that means exactly. </div>
 <div class='msg'><time>2024-10-24 00:35</time>&ensp;<span class='u' style='color:#4cbfa8'>xlchen</span>: they need to be ordered by output in ascending order. it is specified somewhere</div>
@@ -3304,7 +3317,7 @@ Generating state roots with the 31 bytes, given the lossy service storage, is no
 <div class='msg'><time>2024-11-14 07:57</time>&ensp;<span class='u' style='color:#bfaf39'>dakkk</span>: There will be a video of the today JAM implementers meetup at Bangkok? </div>
 <div class='msg'><time>2024-11-14 09:28</time>&ensp;<span class='u' style='color:#48d03d'>tomusdrw</span>: &gt; &lt;@sourabhniyogi:matrix.org&gt; Should CE 129 have 31-byte keys in the response or 32-byte keys in the response?
 &gt; 
-&gt; We believe it would be beneficial to have responses be *not* 31 bytes but instead 32 bytes, in order for a full range scan of CE129 (from 0x00...00 to 0xFF..FF) to have full 32-byte keys (and of course values) hashable into a comparable state root.   
+&gt; We believe it would be beneficial to have responses be <em>not</em> 31 bytes but instead 32 bytes, in order for a full range scan of CE129 (from 0x00...00 to 0xFF..FF) to have full 32-byte keys (and of course values) hashable into a comparable state root.   
 &gt; 
 &gt; Generating state roots with the 31 bytes, given the lossy service storage, is not possible -- but having 32 byte keys requires a tad more bookkeeping to match up with some UI like this <a href="https://trie.fluffylabs.dev/" target="_blank" rel="noopener">https://trie.fluffylabs.dev/</a>
 
@@ -3572,7 +3585,7 @@ I propose something similar for &quot;output&quot; in test vectors. Why do we ha
 
 For exemple, here:
 
-<pre><code class="">consume_authorization_once-1.json
+<pre><code class=''>consume_authorization_once-1.json
 
             &quot;reported&quot;: [
                 {
@@ -3599,12 +3612,12 @@ would it be better to put these &quot;output&quot; into ρ  on post_state?</div>
 <div class='msg'><time>2024-11-22 15:23</time>&ensp;<span class='u' style='color:#817ecb'>ycc3741</span>: Hi, I wonder wether we should sort the hash value by &quot;Lexicographical Order&quot;.</div>
 <div class='msg edited'><time>2024-11-22 20:58</time>&ensp;<span class='u' style='color:#db4dca'>celadari</span>: Hey guys, a few questions on the work report test vectors:
 
-- in the state part of the .json (<code>&quot;pre_state&quot;</code> or <code>&quot;post_state&quot;</code>) we have fields <code>bytes</code> and <code>items</code> =&gt; what do they represent in the GP ? If I go to the chapter 9,service accounts, I see <code>s</code>, <code>p</code>, <code>l</code>, <code>c</code>, <code>b</code>, <code>g</code>, <code>m</code> but I don&#x27;t see what fields they could represent. I guess I would have to parse/decode <code>bytes</code> and <code>items</code> to get <code>p</code>, <code>l</code>, <code>s</code> but I don&#x27;t see how. I feel there is something I&#x27;m not seeing. Also there are 6 fields in the .json but the GP has 7 elements.
-- I put here a question I put in a comment (just to centralize my questions): in the <code>&quot;output&quot;</code> field we have the field <code>&quot;reported&quot;</code> =&gt; what variable in the GP does it represent ?</div>
+- in the state part of the .json (<code>&amp;quot;pre_state&amp;quot;</code> or <code>&amp;quot;post_state&amp;quot;</code>) we have fields <code>bytes</code> and <code>items</code> =&gt; what do they represent in the GP ? If I go to the chapter 9,service accounts, I see <code>s</code>, <code>p</code>, <code>l</code>, <code>c</code>, <code>b</code>, <code>g</code>, <code>m</code> but I don&#x27;t see what fields they could represent. I guess I would have to parse/decode <code>bytes</code> and <code>items</code> to get <code>p</code>, <code>l</code>, <code>s</code> but I don&#x27;t see how. I feel there is something I&#x27;m not seeing. Also there are 6 fields in the .json but the GP has 7 elements.
+- I put here a question I put in a comment (just to centralize my questions): in the <code>&amp;quot;output&amp;quot;</code> field we have the field <code>&amp;quot;reported&amp;quot;</code> =&gt; what variable in the GP does it represent ?</div>
 <div class='msg'><time>2024-11-22 21:11</time>&ensp;<span class='u' style='color:#d470bf'>jaymansfield</span>: &gt; &lt;@celadari:matrix.org&gt; Hey guys, a few questions on the work report test vectors:
 &gt; 
-&gt; - in the state part of the .json (<code>&quot;pre_state&quot;</code> or <code>&quot;post_state&quot;</code>) we have fields <code>bytes</code> and <code>items</code> =&gt; what do they represent in the GP ? If I go to the chapter 9,service accounts, I see <code>s</code>, <code>p</code>, <code>l</code>, <code>c</code>, <code>b</code>, <code>g</code>, <code>m</code> but I don&#x27;t see what fields they could represent. I guess I would have to parse/decode <code>bytes</code> and <code>items</code> to get <code>p</code>, <code>l</code>, <code>s</code> but I don&#x27;t see how. I feel there is something I&#x27;m not seeing. Also there are 6 fields in the .json but the GP has 7 elements.
-&gt; - I put here a question I put in a comment (just to centralize my questions): in the <code>&quot;output&quot;</code> field we have the field <code>&quot;reported&quot;</code> =&gt; what variable in the GP does it represent ?
+&gt; - in the state part of the .json (<code>&amp;quot;pre_state&amp;quot;</code> or <code>&amp;quot;post_state&amp;quot;</code>) we have fields <code>bytes</code> and <code>items</code> =&gt; what do they represent in the GP ? If I go to the chapter 9,service accounts, I see <code>s</code>, <code>p</code>, <code>l</code>, <code>c</code>, <code>b</code>, <code>g</code>, <code>m</code> but I don&#x27;t see what fields they could represent. I guess I would have to parse/decode <code>bytes</code> and <code>items</code> to get <code>p</code>, <code>l</code>, <code>s</code> but I don&#x27;t see how. I feel there is something I&#x27;m not seeing. Also there are 6 fields in the .json but the GP has 7 elements.
+&gt; - I put here a question I put in a comment (just to centralize my questions): in the <code>&amp;quot;output&amp;quot;</code> field we have the field <code>&amp;quot;reported&amp;quot;</code> =&gt; what variable in the GP does it represent ?
 
 There is a definition of items/bytes at the start of section 9.3</div>
 <div class='msg reply'><time>2024-11-22 21:24</time>&ensp;<span class='u' style='color:#db4dca'>celadari</span>: I see, thank yoou for the answer.
@@ -3705,7 +3718,7 @@ Connecting to a running JAM node to invoke host calls is something worth conside
 <div class='msg'><time>2024-11-26 18:41</time>&ensp;<span class='u' style='color:#cd8957'>gav</span>: NOTE: There&#x27;s no Github repo open yet, since we have a monorepo together with our node impl. So the code is currently available on crates.io only.</div>
 <div class='msg reply edited'><time>2024-11-27 00:43</time>&ensp;<span class='u' style='color:#c67452'>sourabhniyogi</span>: Happily got through
 
-<pre><code class="">jam-pvm-build ./jam-bootstrap-service
+<pre><code class=''>jam-pvm-build ./jam-bootstrap-service
 jam-pvm-build ./jam-null-authorizer
 </code></pre>
 
@@ -3713,9 +3726,9 @@ and put the .pvm and rust code here for us to take a look:
 <a href="https://github.com/jam-duna/jamtestnet/tree/main/services/parity" target="_blank" rel="noopener">https://github.com/jam-duna/jamtestnet/tree/main/services/parity</a>
 
 0. Does Parity Rust JAM SDK completely phase out Jan&#x27;s polkatool?
-1. What is the recommended way to disassemble the <code>jam-pvm-build</code>- built PVM byte code ?
+1. What is the recommended way to disassemble the `jam-pvm-build`- built PVM byte code ?
 
-<pre><code class=""># cargo run -p polkatool disassemble --show-raw-bytes ~/go/src/github.com/jam-duna/jamtestnet/services/parity/jam-bootstrap-service.pvm
+<pre><code class=''># cargo run -p polkatool disassemble --show-raw-bytes ~/go/src/github.com/jam-duna/jamtestnet/services/parity/jam-bootstrap-service.pvm
 warning: /root/go/src/github.com/colorfulnotion/polkavm/Cargo.toml: unused manifest key: workspace.lints.rust.unexpected_cfgs.check-cfg
     Finished dev [unoptimized + debuginfo] target(s) in 0.05s
      Running `target/debug/polkatool disassemble --show-raw-bytes ~/jam-duna/jamtestnet/services/parity/jam-bootstrap-service.pvm`
@@ -3776,7 +3789,7 @@ thanks for sharing. Solved another doubt I had  about &quot;duplicates&quot; / &
 
 e.g.:
 
-<pre><code class="">- [not_authorized](./tiny/not_authorized-1.json) 🔴
+<pre><code class=''>- [not_authorized](./tiny/not_authorized-1.json) 🔴
   - Target core without any authorizer.
 </code></pre>
 
@@ -3916,7 +3929,7 @@ yes</div>
 <div class='msg reply'><time>2024-12-02 11:21</time>&ensp;<span class='u' style='color:#bfaf39'>dakkk</span>: I know, I was answering davxy</div>
 <div class='msg reply'><time>2024-12-02 11:21</time>&ensp;<span class='u' style='color:#bfaf39'>dakkk</span>: maybe the issue is the sorting of b; b can contain null values, how should we sort them?</div>
 <div class='msg reply'><time>2024-12-02 11:21</time>&ensp;<span class='u' style='color:#4977cf'>danicuki</span>: HK(EM(yb))</div>
-<div class='msg reply'><time>2024-12-02 11:22</time>&ensp;<span class='u' style='color:#4977cf'>danicuki</span>: <pre><code class="Elixir">Hash.keccak_256(Codec.Encoder.encode_mmr(y.accumulated_result_mmr))
+<div class='msg reply'><time>2024-12-02 11:22</time>&ensp;<span class='u' style='color:#4977cf'>danicuki</span>: <pre><code class='Elixir'>Hash.keccak_256(Codec.Encoder.encode_mmr(y.accumulated_result_mmr))
 </code></pre></div>
 <div class='msg reply'><time>2024-12-02 11:23</time>&ensp;<span class='u' style='color:#4977cf'>danicuki</span>: we don&#x27;t sort them. Just take them as they are</div>
 <div class='msg reply'><time>2024-12-02 11:23</time>&ensp;<span class='u' style='color:#4977cf'>danicuki</span>: there is nowhere in the GP specified that they should be sorted</div>
@@ -3975,7 +3988,7 @@ hey davxy thanks for this. I previously used your <code>polkajam-vectors</code> 
 Obviously if for upstream you mean the master branch, yes. This is different. At this point master is quite outdated.
 I suggest you to work with the changes in the PR or using my fork, that I try to keep updated WRT the open PRs we have upstream.
 
-I report the *<em>current</em>* values here:
+I report the **current** values here:
 
 ### Tiny
 
@@ -4028,9 +4041,9 @@ Furthermore, there are additional opcodes coming with the ZBB extension, and the
 <div class='msg'><time>2024-11-30 16:50</time>&ensp;<span class='u' style='color:#48d03d'>tomusdrw</span>: Yeah, no worries. I was just trying to figure out if it&#x27;s possible to import the service code into <a href="https://pvm.fluffylabs.dev" target="_blank" rel="noopener">PVM disassembler</a>. I think I do understand where we are at, so it&#x27;s fine and I can wait for full GP-0.5.0 migration.</div>
 <div class='msg'><time>2024-12-01 11:55</time>&ensp;<span class='u' style='color:#da5c80'>jan</span>: So we&#x27;ve recently switched to a 64-bit PVM in the GP. I haven&#x27;t got the updated the test vectors ready yet (I will have them ready soon-ish), but in case some of you are already looking to update your PVM implementations to 64-bit here are some tips to make this process easier:
 
-- *The* major change introduced with the 64-bit PVM is that the registers are now 64-bit, and in case of the most of the instructions their behavior stays essentially exactly the same, except they operate on 64-bit values instead of on 32-bit values now.
-- The instruction encoding is unchanged. Those instructions which previously took at most a 32-bit immediate value (like e.g. <code>and_imm</code>) now still can have at most a 32-bit *physical* immediate, *however* the immediate value is now sign extended to full 64-bit before being used.
-- There&#x27;s only a *single* instruction which takes a 64-bit immediate that is actually *physically* encoded in the code stream as 64-bit (<code>load_imm_64</code>)
+- <em>The</em> major change introduced with the 64-bit PVM is that the registers are now 64-bit, and in case of the most of the instructions their behavior stays essentially exactly the same, except they operate on 64-bit values instead of on 32-bit values now.
+- The instruction encoding is unchanged. Those instructions which previously took at most a 32-bit immediate value (like e.g. <code>and_imm</code>) now still can have at most a 32-bit <em>physical</em> immediate, <em>however</em> the immediate value is now sign extended to full 64-bit before being used.
+- There&#x27;s only a <em>single</em> instruction which takes a 64-bit immediate that is actually <em>physically</em> encoded in the code stream as 64-bit (<code>load_imm_64</code>)
 - There are a couple of instructions where there exists both a 64-bit variant and a 32-bit variant. (e.g. <code>add_32</code> and <code>add_64</code>) The <code>_32</code> variants work like the old 32-bit instruction from 0.4 - they ignore the upper 32-bits of the registers and use only the lower bits, but their result is <em>always</em> sign extended to full 64-bits when written to the destination register.
 - The address space is still 32-bit and memory accesses ignore the upper 32-bits of registers.
 
@@ -4246,7 +4259,7 @@ Try to update the ark-ec-vrfs dependency to revision: e491b41</div>
 
 in case anybody meet the same problem while playing around with it, you can add this patch to your local testing repo instead of updating the whole dependency chain
 
-<pre><code class="">[patch.&quot;https://github.com/w3f/fflonk&quot;]
+<pre><code class=''>[patch.&quot;https://github.com/w3f/fflonk&quot;]
 fflonk = { git = &quot;https://github.com/clearloop/fflonk&quot;, rev = &quot;1e854f35e9a65d08b11a86291405cdc95baa0a35&quot; }
 </code></pre></div>
 <div class='msg'><time>2024-12-04 07:42</time>&ensp;<span class='u' style='color:#c9419d'>davxy</span>: mmm... I know. The problem is that these crypto backends are not yet published on crates.io. And stuff may break.
@@ -4292,7 +4305,7 @@ Said that,
 - some of these bits are changed by the STF, while some others not. 
 
 This may result in data redundancy. But otherwise I had to introduce a different struct for posterior state. I found this easier.</div>
-<div class='msg'><time>2024-12-07 11:18</time>&ensp;<span class='u' style='color:#9b6fdc'>olanod</span>: Hello, don&#x27;t know if it&#x27;s of interest or too soon ... while y&#x27;all work hard on JAM implementations I&#x27;m getting interested in looking a bit higher up the stack(services) also following my interest of lower level embedded Rust(specially riscv). I&#x27;ve been toying around with a simple embedded/virtual OS that allows writing simple ink-like apps that can run on a riscv microcontroller(also linux, web and of course I also checked building against the pvm target ;)). I think I get now how to port this to run as a JAM service but the random idea I came to ask is to see if there would be interest in a *<em>&quot;pocket JAM&quot;</em>*, I&#x27;ll buy this <a href="https://de.aliexpress.com/item/1005005128298189.html?spm=a2g0o.productlist.main.11.8183CxLGCxLGyZ&amp;algo_pvid=7b0defc5-548f-44e6-96ac-ba5cd46302c2&amp;algo_exp_id=7b0defc5-548f-44e6-96ac-ba5cd46302c2-5&amp;pdp_npi=4%40dis%21EUR%2145.50%2126.39%21%21%2146.97%2127.24%21%402103917f17335688657033211e7482%2112000031770778647%21sea%21DE%210%21ABX&amp;curPageLogUid=3yHiDQ0GYa4J&amp;utparam-url=scene%3Asearch%7Cquery_from%3A" target="_blank" rel="noopener">dev kit</a> to experiment porting the os, it&#x27;s interesting that has 3 different risc-v core including one rv64gcv and a rv32emc, I feel it would have enough juice to run a light client.</div>
+<div class='msg'><time>2024-12-07 11:18</time>&ensp;<span class='u' style='color:#9b6fdc'>olanod</span>: Hello, don&#x27;t know if it&#x27;s of interest or too soon ... while y&#x27;all work hard on JAM implementations I&#x27;m getting interested in looking a bit higher up the stack(services) also following my interest of lower level embedded Rust(specially riscv). I&#x27;ve been toying around with a simple embedded/virtual OS that allows writing simple ink-like apps that can run on a riscv microcontroller(also linux, web and of course I also checked building against the pvm target ;)). I think I get now how to port this to run as a JAM service but the random idea I came to ask is to see if there would be interest in a **&quot;pocket JAM&quot;**, I&#x27;ll buy this <a href="https://de.aliexpress.com/item/1005005128298189.html?spm=a2g0o.productlist.main.11.8183CxLGCxLGyZ&amp;algo_pvid=7b0defc5-548f-44e6-96ac-ba5cd46302c2&amp;algo_exp_id=7b0defc5-548f-44e6-96ac-ba5cd46302c2-5&amp;pdp_npi=4%40dis%21EUR%2145.50%2126.39%21%21%2146.97%2127.24%21%402103917f17335688657033211e7482%2112000031770778647%21sea%21DE%210%21ABX&amp;curPageLogUid=3yHiDQ0GYa4J&amp;utparam-url=scene%3Asearch%7Cquery_from%3A" target="_blank" rel="noopener">dev kit</a> to experiment porting the os, it&#x27;s interesting that has 3 different risc-v core including one rv64gcv and a rv32emc, I feel it would have enough juice to run a light client.</div>
 <div class='msg'><time>2024-12-07 21:46</time>&ensp;<span class='u' style='color:#cd8957'>gav</span>: &gt; &lt;@davxy:matrix.org&gt; Yeah looks like GP prescribes lazy deletion of stale reports. I asked <a href="https://matrix.to/#/@gav:polkadot.io" target="_blank" rel="noopener">@gav:polkadot.io</a> for confirmation.
 &gt; Also I was considering a report stale if  H_t &gt;= ... . Looks like should be H_t &gt; ... instead. Probably I need to fix these assurances vectors.
 
@@ -4315,7 +4328,7 @@ Is there some trick that can be employed to overcome the no\_std limitation?</di
 How should non-Rust JAM implementations interface with Rust JAM SDK <code>info!</code> calls like <a href="https://github.com/jam-duna/jamtestnet/blob/main/services/parity/jam-bootstrap-service/src/main.rs#L59" target="_blank" rel="noopener">these</a> -- not talking about Windows here, just like printing stuff with caveman debugging -- is there a way?</div>
 <div class='msg edited'><time>2024-12-08 13:41</time>&ensp;<span class='u' style='color:#cd8957'>gav</span>: Yeah - there’s an additional (unofficial) host call provided by polkajam which the logging system uses if enabled.</div>
 <div class='msg'><time>2024-12-08 13:42</time>&ensp;<span class='u' style='color:#cd8957'>gav</span>: You can derive the details from the code in <code>jam-pvm-common</code> crate quite easily. Here&#x27;s the relevant snippet:</div>
-<div class='msg'><time>2024-12-08 13:42</time>&ensp;<span class='u' style='color:#cd8957'>gav</span>: <pre><code class="">	#[polkavm_import(index = 100)]
+<div class='msg'><time>2024-12-08 13:42</time>&ensp;<span class='u' style='color:#cd8957'>gav</span>: <pre><code class=''>	#[polkavm_import(index = 100)]
 	pub fn log(
 		level: u64,
 		target_ptr: *const u8,
@@ -4390,7 +4403,7 @@ For &quot;XCM has nothing to do with JAM&quot;, I had thought JAM&#x27;s transfe
 <div class='msg reply'><time>2024-12-09 18:02</time>&ensp;<span class='u' style='color:#c67452'>sourabhniyogi</span>: &gt; &lt;@gav:polkadot.io&gt; It&#x27;s not too difficult to add pure host-calls down the line since they can be polyfilled with PVM implementations, averting the need for a messy hard-fork. All that is really needed is for implementations to recognise the new host-call and charge the right gas.
 
 Understood about not adding these at the lowest level within the JAM protocol.
-<pre><code class="">ecdsa_recover=101
+<pre><code class=''>ecdsa_recover=101
 ecdsa_to_eth_address=102
 hash_blake2_128=103
 hash_blake2_256=104
@@ -4455,14 +4468,14 @@ Maybe I am misunderstanding but they are included here? <code>Announcement = len
 (b) I see little point of this other than for code deduplication. In that case if it’s a serious issue we should allow for code-importing in a more sensible way. </div>
 <div class='msg'><time>2024-12-10 00:40</time>&ensp;<span class='u' style='color:#db4dca'>celadari</span>: Hi, I would like to ask some help debugging signatures in work report tests.
 
-In <code>tiny/multiple_reports-1.json</code> (<a href="https://github.com/davxy/jam-test-vectors/blob/polkajam-vectors/reports/tiny/multiple_reports-1.json)," target="_blank" rel="noopener">https://github.com/davxy/jam-test-vectors/blob/polkajam-vectors/reports/tiny/multiple_reports-1.json),</a> our signatures are failing. *<em>Could someone with a passing test vector share the following in HexString please ?</em>*
+In <code>tiny/multiple_reports-1.json</code> (<a href="https://github.com/davxy/jam-test-vectors/blob/polkajam-vectors/reports/tiny/multiple_reports-1.json)," target="_blank" rel="noopener">https://github.com/davxy/jam-test-vectors/blob/polkajam-vectors/reports/tiny/multiple_reports-1.json),</a> our signatures are failing. **Could someone with a passing test vector share the following in HexString please ?**
 - The encoding of the first workReport
 - The hash of that encoding
 
 I post the full workReport definition in the thread to keep this message brief in the main chat.
 Thanks!</div>
 <div class='msg reply'><time>2024-12-10 00:41</time>&ensp;<span class='u' style='color:#db4dca'>celadari</span>: the report
-<pre><code class="json">{
+<pre><code class='json'>{
                 &quot;report&quot;: {
                     &quot;package_spec&quot;: {
                         &quot;hash&quot;: &quot;0x63c03371b9dad9f1c60473ec0326c970984e9c90c0b5ed90eba6ada471ba4d86&quot;,
@@ -4523,7 +4536,7 @@ Thanks!</div>
 - I tested all signatures with all public keysboth in current validators and previous validators.
 
 - I&#x27;m suspecting something is off with my workReport object.
-*<em>Can you tell me what you get in hex format on your side please booth for encoding of the work report and the hash ?</em>*</div>
+**Can you tell me what you get in hex format on your side please booth for encoding of the work report and the hash ?**</div>
 <div class='msg reply'><time>2024-12-10 13:54</time>&ensp;<span class='u' style='color:#db4dca'>celadari</span>: NEVER MIND 🙃
 error was on my side as I was parsing the test vector.
 
@@ -4541,9 +4554,9 @@ ALL GOOD NOW</div>
 <div class='msg'><time>2024-12-10 18:37</time>&ensp;<span class='u' style='color:#d470bf'>jaymansfield</span>: &gt; &lt;@danicuki:matrix.org&gt; davxy afk:  What value are you using for G_A on the high_work_report_gas-1 test? This tests seems to be over the total gas, but no error expected in the vector. The sum in work results is 10_000_000, much above the 100_000 limit (or you are using another value for G_A). 
 
 This might help: <a href="https://github.com/w3f/jamtestvectors/pull/20#issuecomment-2526203035" target="_blank" rel="noopener">https://github.com/w3f/jamtestvectors/pull/20#issuecomment-2526203035</a></div>
-<div class='msg edited'><time>2024-12-10 19:57</time>&ensp;<span class='u' style='color:#db4dca'>celadari</span>: Regarding work report guarantees test vectors (<a href="https://github.com/davxy/jam-test-vectors/blob/polkajam-vectors/codec/data/guarantees\_extrinsic.json)" target="_blank" rel="noopener">https://github.com/davxy/jam-test-vectors/blob/polkajam-vectors/codec/data/guarantees\_extrinsic.json)</a> =&gt; is it normal that <code>alpha</code> gets updated ? (field <code>&quot;auth_pools&quot;</code> is not the same in pre_state and post_state)
+<div class='msg edited'><time>2024-12-10 19:57</time>&ensp;<span class='u' style='color:#db4dca'>celadari</span>: Regarding work report guarantees test vectors (<a href="https://github.com/davxy/jam-test-vectors/blob/polkajam-vectors/codec/data/guarantees\_extrinsic.json)" target="_blank" rel="noopener">https://github.com/davxy/jam-test-vectors/blob/polkajam-vectors/codec/data/guarantees\_extrinsic.json)</a> =&gt; is it normal that <code>alpha</code> gets updated ? (field <code>&amp;quot;auth_pools&amp;quot;</code> is not the same in pre_state and post_state)
 
-I ask this because I know <code>alpha</code> should be updated using <code>phi&#x27;</code> and <code>E_G</code> but it should be done after accumulation, more precisely after computing <code>phi&#x27;</code> ?</div>
+I ask this because I know <code>alpha</code> should be updated using <code>phi&amp;#x27;</code> and <code>E_G</code> but it should be done after accumulation, more precisely after computing <code>phi&amp;#x27;</code> ?</div>
 <div class='msg'><time>2024-12-11 00:33</time>&ensp;<span class='u' style='color:#db4dca'>celadari</span>: I&#x27;m gonna put here a few questions I have regarding work report guarantees test vectors (<a href="https://github.com/davxy/jam-test-vectors/blob/polkajam-vectors/codec/data/guarantees_extrinsic.json)" target="_blank" rel="noopener">https://github.com/davxy/jam-test-vectors/blob/polkajam-vectors/codec/data/guarantees_extrinsic.json)</a></div>
 <div class='msg'><time>2024-12-11 00:35</time>&ensp;<span class='u' style='color:#db4dca'>celadari</span>: - I think there might be an issue with file <code>full/consume_authorization_once-1.json</code> because test vector passes if I don&#x27;t sort the hashes when computing super peak but fails if I do. However, if I refer to the GP 0.5.2 - equation (E.10) =&gt; hashes should be sorted to compute super peak</div>
 <div class='msg edited'><time>2024-12-11 00:38</time>&ensp;<span class='u' style='color:#db4dca'>celadari</span>: I&#x27;m actually gonna post them on the github PR, might be the right place for it</div>
@@ -4637,10 +4650,10 @@ Are you using this fork? <a href="https://github.com/davxy/asn1tools/" target="_
 
 For example, in the case of work reports, the miscellaneous field could include guarantor assignments and previous guarantor assignments. This way, if someone encounters a failing test vector, they could check whether the issue is related to these assignments or something else.
 
-*<em>What is everyone opinion on that ?</em>*</div>
+**What is everyone opinion on that ?**</div>
 <div class='msg edited'><time>2024-12-12 18:09</time>&ensp;<span class='u' style='color:#c67452'>sourabhniyogi</span>: To make our own debugging life easier and to help teams compare state with others we are extending our representation of serialized (k,v) state from just
 
-<pre><code class="">            [
+<pre><code class=''>            [
                 &quot;0x00fe00ff00ff00ff4105beb468bf2d38812fae29cac024f6bf1fd208b5adee5b&quot;,
                 &quot;0x00000000000000000020009b0000000000808628110000002810000000281c000000287333073200140a0400fffe00000000330b24330732008b11f8711014070000fffe0000000076782033090020330a0010330b0030330c00400a09140b00e0fdfe00000000480b70b704140904e0fdfe00000000330804330a04140700e0fdfe000000000a038d77208e772078108b110832003307320021842a80540a2011110550024802282915&quot;,
             ],
@@ -4658,7 +4671,7 @@ For example, in the case of work reports, the miscellaneous field could include 
 
 to (k, v, type, k\_and\_v\_metadata)
 
-<pre><code class="">            [
+<pre><code class=''>            [
                 &quot;0x00fe00ff00ff00ff4105beb468bf2d38812fae29cac024f6bf1fd208b5adee5b&quot;,
                 &quot;0x00000000000000000020009b0000000000808628110000002810000000281c000000287333073200140a0400fffe00000000330b24330732008b11f8711014070000fffe0000000076782033090020330a0010330b0030330c00400a09140b00e0fdfe00000000480b70b704140904e0fdfe00000000330804330a04140700e0fdfe000000000a038d77208e772078108b110832003307320021842a80540a2011110550024802282915&quot;,
                 &quot;account_preimage&quot;,
@@ -4692,15 +4705,15 @@ but hope to pass the reports (with new beefy root etc) and get our 64-bit life i
 
 No, what I mean is that the validate.py script relies on the asn1tools Python package. You need to use the version I shared with you, as it includes some modifications compared to the upstream version.
 </div>
-<div class='msg edited'><time>2024-12-12 20:11</time>&ensp;<span class='u' style='color:#c9419d'>davxy</span>: My 2 cents regarding the test vectors format discussion. As the conversation seems to be getting somewhat scattered, I suggest moving it to a dedicated GitHub issue. Personally, (of course) I believe that the current one is the best format for the moment, but that&#x27;s just my opinion. Naturally, *<em>everyone has an opinion</em>* and this can get fuzzy fast, especially in a chat. However, I&#x27;m not sure how effective it is in this context.
+<div class='msg edited'><time>2024-12-12 20:11</time>&ensp;<span class='u' style='color:#c9419d'>davxy</span>: My 2 cents regarding the test vectors format discussion. As the conversation seems to be getting somewhat scattered, I suggest moving it to a dedicated GitHub issue. Personally, (of course) I believe that the current one is the best format for the moment, but that&#x27;s just my opinion. Naturally, **everyone has an opinion** and this can get fuzzy fast, especially in a chat. However, I&#x27;m not sure how effective it is in this context.
 
 I plan to finalize the collection of vectors for the different STFs using current format, as we are quite close to covering the full on-chain requirements. If we find a better format later, a switch can certainly be considered. Of course, anyone is free to propose independent vectors in other formats, as Jam Duna is already doing (although would be more beneficial to remain aligned. And that is the main purpose of the GH issue)</div>
 <div class='msg reply'><time>2024-12-12 22:08</time>&ensp;<span class='u' style='color:#4977cf'>danicuki</span>: You are doing great work with the vectors! Please, don&#x27;t take any of my suggestions as complains or requirements. I trust 100% on your final judgements in doing the best for JAM implementors. And yes, any further suggestion, github issue. </div>
 <div class='msg reply'><time>2024-12-12 23:30</time>&ensp;<span class='u' style='color:#5e86de'>boymaas</span>: Personally, I appreciate the current format, as I don’t see any advantage in changing it. Any change would involve trade-offs. The current setup works well and feels intuitive. I don’t have any suggestions for improvement that would justify the effort required (for us) to adapt to a new format.</div>
 <div class='msg reply'><time>2024-12-13 05:52</time>&ensp;<span class='u' style='color:#be2950'>clearloop</span>: imo the current test vectors format are good enough for unit tests (test implementations separately)
 
-apart from the unit tests, clients may need other format for integration tests ( mb for rpc or p2p ), however, even though *<em>new formats</em>*, I believe wrapping the current test vectors&#x27; format is the best choice for efficiency &gt; &lt;</div>
-<div class='msg'><time>2024-12-12 20:22</time>&ensp;<span class='u' style='color:#c67452'>sourabhniyogi</span>: &gt; &lt;@davxy:matrix.org&gt; My 2 cents regarding the test vectors format discussion. As the conversation seems to be getting somewhat scattered, I suggest moving it to a dedicated GitHub issue. Personally, (of course) I believe that the current one is the best format for the moment, but that&#x27;s just my opinion. Naturally, *<em>everyone has an opinion</em>* and this can get fuzzy fast, especially in a chat. However, I&#x27;m not sure how effective it is in this context.
+apart from the unit tests, clients may need other format for integration tests ( mb for rpc or p2p ), however, even though **new formats**, I believe wrapping the current test vectors&#x27; format is the best choice for efficiency &gt; &lt;</div>
+<div class='msg'><time>2024-12-12 20:22</time>&ensp;<span class='u' style='color:#c67452'>sourabhniyogi</span>: &gt; &lt;@davxy:matrix.org&gt; My 2 cents regarding the test vectors format discussion. As the conversation seems to be getting somewhat scattered, I suggest moving it to a dedicated GitHub issue. Personally, (of course) I believe that the current one is the best format for the moment, but that&#x27;s just my opinion. Naturally, **everyone has an opinion** and this can get fuzzy fast, especially in a chat. However, I&#x27;m not sure how effective it is in this context.
 &gt; 
 &gt; I plan to finalize the collection of vectors for the different STFs using current format, as we are quite close to covering the full on-chain requirements. If we find a better format later, a switch can certainly be considered. Of course, anyone is free to propose independent vectors in other formats, as Jam Duna is already doing (although would be more beneficial to remain aligned. And that is the main purpose of the GH issue)
 
@@ -4713,7 +4726,7 @@ My gamma\_z (epoch root) is not matching the vector&#x27;s - may be something re
 
 gamma\_k (b):
 
-<pre><code class="">[&quot;aa2b95f7572875b0d0f186552ae745ba8222fc0b5bd456554bfe51c68938f8bc&quot;,
+<pre><code class=''>[&quot;aa2b95f7572875b0d0f186552ae745ba8222fc0b5bd456554bfe51c68938f8bc&quot;,
 &quot;0000000000000000000000000000000000000000000000000000000000000000&quot;,
 &quot;5e465beb01dbafe160ce8216047f2155dd0569f058afd52dcea601025a8d161d&quot;,
 &quot;1ecc3686b60ee3b84b6c7d321d70d5c06e9dac63a4d0a79d731b17c0d04d030d&quot;,
@@ -4722,7 +4735,7 @@ gamma\_k (b):
 </code></pre>
 my gamma_z (doesn&#x27;t match the vector):
 
-<pre><code class="">81eaf0953ed7474a81fa5445616a141c4c1f54ebd3cd8bda932bf612fc7fa41a90ce8db077f4bc5a3f71336e98a57ea8a6385289d15586c18ff7f8f5661a00bb783afe07938431c77d8cccc3585612cf3461f987e01dadfec7aefbc2aa3bb31a92e630ae2b14e758ab0960e372172203f4c9a41777dadd529971d7ab9d23ab29fe0e9c85ec450505dde7f5ac038274cf
+<pre><code class=''>81eaf0953ed7474a81fa5445616a141c4c1f54ebd3cd8bda932bf612fc7fa41a90ce8db077f4bc5a3f71336e98a57ea8a6385289d15586c18ff7f8f5661a00bb783afe07938431c77d8cccc3585612cf3461f987e01dadfec7aefbc2aa3bb31a92e630ae2b14e758ab0960e372172203f4c9a41777dadd529971d7ab9d23ab29fe0e9c85ec450505dde7f5ac038274cf
 </code></pre></div>
 <div class='msg'><time>2024-12-13 10:57</time>&ensp;<span class='u' style='color:#bfaf39'>dakkk</span>: you should use the bandersnatch padding point </div>
 <div class='msg'><time>2024-12-13 10:58</time>&ensp;<span class='u' style='color:#4977cf'>danicuki</span>: &gt; &lt;@dakkk:matrix.org&gt; you should use the bandersnatch padding point
@@ -4739,7 +4752,7 @@ What is padding point? I am not aware of this? 🤔</div>
 <div class='msg reply'><time>2024-12-13 11:11</time>&ensp;<span class='u' style='color:#bfaf39'>dakkk</span>: it depends on the ring size, it is not a fixed value</div>
 <div class='msg reply'><time>2024-12-13 12:13</time>&ensp;<span class='u' style='color:#c9419d'>davxy</span>: This is the padding value:
 
-<pre><code class="">[Ring Padding]
+<pre><code class=''>[Ring Padding]
 X: 23942223917106120326220291257397678561637131227432899006603244452561725937075
 Y: 1605027200774560580022502723165578671697794116420567297367317898913080293877
 Compressed: 0xf5399e03f2121ff4c5d33386cdc66d56a6c5132b739f753442f7bda6c7698c03
@@ -4759,7 +4772,7 @@ in this specfic situation, in <a href="https://github.com/davxy/jam-test-vectors
 
 the key:
 
-<pre><code class="">                &quot;bandersnatch&quot;: &quot;0x1ecc3686b60ee3b84b6c7d321d70d5c06e9dac63a4d0a79d731b17c0d04d030d&quot;,
+<pre><code class=''>                &quot;bandersnatch&quot;: &quot;0x1ecc3686b60ee3b84b6c7d321d70d5c06e9dac63a4d0a79d731b17c0d04d030d&quot;,
 
 </code></pre>
 
@@ -4774,15 +4787,15 @@ does not seem able to be decompressed, using <code>ark-ec-vrfs</code>.</div>
 <div class='msg edited'><time>2024-12-15 06:19</time>&ensp;<span class='u' style='color:#c9419d'>davxy</span>: <a href="https://github.com/davxy/bandersnatch-vrfs-spec" target="_blank" rel="noopener">https://github.com/davxy/bandersnatch-vrfs-spec</a></div>
 <div class='msg edited'><time>2024-12-15 07:17</time>&ensp;<span class='u' style='color:#be2950'>clearloop</span>: hi there! anybody feel weird about the tests cases (tiny) related to formula 11.23 (11. reporting)?
 
-<pre><code class="">// formula 11.23
+<pre><code class=''>// formula 11.23
 let (e, k) = (tau&#x27; - R) / E == (tau&#x27; / E) ? (eta&#x27;2, kappa&#x27;): (eta&#x27;3, lambda&#x27;)
 </code></pre>
 
-most of the test cases (tiny) are using <code>tau=14</code> in both guarantee &amp; reports, however, <code>tau=14</code> meets the case using (<code>eta&#x27;3</code>, lambda&#x27;) instead of the <code>eta&#x27;2</code> pair while the current tiny test cases are expecting the eta&#x27;2 pair to be used</div>
+most of the test cases (tiny) are using <code>tau=14</code> in both guarantee &amp; reports, however, <code>tau=14</code> meets the case using (<code>eta&amp;#x27;3</code>, lambda&#x27;) instead of the <code>eta&amp;#x27;2</code> pair while the current tiny test cases are expecting the eta&#x27;2 pair to be used</div>
 <div class='msg'><time>2024-12-15 10:50</time>&ensp;<span class='u' style='color:#5c84c9'>prematurata</span>: AFK now but check README. <code>R</code> is different for <code>tiny</code></div>
 <div class='msg'><time>2024-12-15 10:57</time>&ensp;<span class='u' style='color:#be2950'>clearloop</span>: yes but still...
 
-<pre><code class="">let (e, k) = if (14 - 4) / 12 == 14 / 12 ? (eta_2, kappa): (eta_3, lambda)
+<pre><code class=''>let (e, k) = if (14 - 4) / 12 == 14 / 12 ? (eta_2, kappa): (eta_3, lambda)
                = if 0 == 1  ? (eta_2, kappa): (eta_3, lambda)
                = (eta_3, lambda)
 </code></pre>
@@ -4839,7 +4852,7 @@ We can check it and report our findings in that new PR?  Thank you for this!</di
 Obviously, &quot;official ones&quot; would be good to have, but I&#x27;m sure they will come at the right time. </div>
 <div class='msg reply'><time>2024-12-19 20:22</time>&ensp;<span class='u' style='color:#c67452'>sourabhniyogi</span>: Spectacular!  Thank you as well!</div>
 <div class='msg reply'><time>2024-12-20 13:27</time>&ensp;<span class='u' style='color:#c67452'>sourabhniyogi</span>: Not 100% sure but tomusdrw Ivan Subotic  here are a couple of dozen opcodes that need coverage:
-<pre><code class="">LOAD_IMM_64 = 20 // 0x14
+<pre><code class=''>LOAD_IMM_64 = 20 // 0x14
 LOAD_I32 = 57    // 0x39
 LOAD_U64 = 58    // 0x3a
 STORE_IMM_IND_U64 = 73 // 0x49
@@ -4925,9 +4938,9 @@ but I imagine with Section 12 &quot;effectively done&quot; (??) its possible to 
 <div class='msg'><time>2024-12-21 16:25</time>&ensp;<span class='u' style='color:#cf723e'>wind.sixwings</span>: When reading the GP ch6, I saw that (6.18) ~ (6.20) defined 3 Signing Contexts. I would like to ask whether these 3 Signing Contexts need to be defined by the implementation team themselves or are there other official sources of definition?
 
 Another question raised by team members during the discussion is whether Signing Contexts are constant in most cases? Or will it be modified under certain circumstances?</div>
-<div class='msg reply edited'><time>2024-12-21 16:56</time>&ensp;<span class='u' style='color:#be2950'>clearloop</span>: they are just constants, see <code>Appendix I.4.4</code>
+<div class='msg reply edited'><time>2024-12-21 16:56</time>&ensp;<span class='u' style='color:#be2950'>clearloop</span>: they are just constants, see `Appendix I.4.4`
 
-<pre><code class=""># the singing context is &quot;jam_entropy&quot;
+<pre><code class=''># the singing context is &quot;jam_entropy&quot;
 X_E = $jam_entropy 
 </code></pre>
 
@@ -4970,7 +4983,7 @@ I believe your guidance on these types of questions generally would be valuable 
 <div class='msg edited'><time>2024-12-23 13:36</time>&ensp;<span class='u' style='color:#be2950'>clearloop</span>: as we can see in the jam-types spec, <a href="https://github.com/w3f/jamtestvectors/blob/master/jam-types-asn/jam-types.asn#L32," target="_blank" rel="noopener">https://github.com/w3f/jamtestvectors/blob/master/jam-types-asn/jam-types.asn#L32,</a> the bls public key has <code>144 bytes</code>, if I&#x27;m not mistaken, <code>bls\_12\_381</code> has <code>96 bytes</code> or <code>48 bytes</code> (compressed) in the public key, that this 144 bytes could be the combined version of the compressed and the uncompressed versions? if so, shall we place the compressed version ahead of the uncompressed version since it could be more frequently used?</div>
 <div class='msg edited'><time>2024-12-23 15:57</time>&ensp;<span class='u' style='color:#c9419d'>davxy</span>: copy/paste of an old reply given in the GP chan some time ago:
 
-The public key for the scheme consists of two public elements, each corresponding to one of the two groups used by BLS for pairing: G1 and G2. Specifically, it is represented as (g1 * sk, g2 * sk), where g1 is the generator of G1 and g2 is the generator of G2. Each point in G1 is compressed into 48 bytes, while each point in G2 is compressed into 96 bytes. This scheme allows both fast verification of aggregate signatures and (pairing less) single signature verification. The full scheme is detailed in this paper: <a href="https://eprint.iacr.org/2022/1611" target="_blank" rel="noopener">https://eprint.iacr.org/2022/1611</a> and is implemented by this library: <a href="https://github.com/w3f/bls." target="_blank" rel="noopener">https://github.com/w3f/bls.</a></div>
+The public key for the scheme consists of two public elements, each corresponding to one of the two groups used by BLS for pairing: G1 and G2. Specifically, it is represented as (g1 <em> sk, g2 </em> sk), where g1 is the generator of G1 and g2 is the generator of G2. Each point in G1 is compressed into 48 bytes, while each point in G2 is compressed into 96 bytes. This scheme allows both fast verification of aggregate signatures and (pairing less) single signature verification. The full scheme is detailed in this paper: <a href="https://eprint.iacr.org/2022/1611" target="_blank" rel="noopener">https://eprint.iacr.org/2022/1611</a> and is implemented by this library: <a href="https://github.com/w3f/bls." target="_blank" rel="noopener">https://github.com/w3f/bls.</a></div>
 <div class='msg'><time>2024-12-25 15:37</time>&ensp;<span class='u' style='color:#d470bf'>jaymansfield</span>: Merry Christmas everyone! As we refine and accumulate memories this season, let’s celebrate connection, innovation, and a unified vision for the future!</div>
 <div class='msg'><time>2024-12-25 16:29</time>&ensp;<span class='u' style='color:#d19a82'>terryhung</span>: Hi davxy afk , 
 Merry Christmas!
@@ -5050,16 +5063,16 @@ At Fluffy Labs, we build tools like the <a href="https://graypaper.fluffylabs.de
 Thank you for helping us improve and support the JAM community! 🚀</div>
 <div class='msg reply edited'><time>2025-01-08 09:29</time>&ensp;<span class='u' style='color:#be2950'>clearloop</span>: Thanks for your awesome work! both of the two tools are playing important roles in our development!</div>
 <div class='msg'><time>2025-01-06 11:33</time>&ensp;<span class='u' style='color:#994dd2'>tvvkk7</span>: Thanks, got it!</div>
-<div class='msg'><time>2025-01-08 04:19</time>&ensp;<span class='u' style='color:#30c84d'>clw0908</span>: Hello, I have a question regarding the *<em>codec</em>* part in *<em>jamtestvector</em><em>:  
+<div class='msg'><time>2025-01-08 04:19</time>&ensp;<span class='u' style='color:#30c84d'>clw0908</span>: Hello, I have a question regarding the **codec** part in **jamtestvector**:  
 
-I’m wondering whether the </em><em>&quot;extrinsic_hash&quot;</em>* in *<em>block.json</em>* is calculated using <a href="https://graypaper.fluffylabs.dev/#/6e1c0cd/0cc6000cf200" target="_blank" rel="noopener">*<em>GP-0.5.3 equations 5.4, 5.5, and 5.6</em><em></a>, or if it is still calculated using the older version of the function. Since the calculation method hasn&#x27;t been modified for a long time, I’d like to confirm.  
+I’m wondering whether the **&quot;extrinsic_hash&quot;** in **block.json** is calculated using <a href="https://graypaper.fluffylabs.dev/#/6e1c0cd/0cc6000cf200" target="_blank" rel="noopener">**GP-0.5.3 equations 5.4, 5.5, and 5.6**</a>, or if it is still calculated using the older version of the function. Since the calculation method hasn&#x27;t been modified for a long time, I’d like to confirm.  
 
-<a href="https://github.com/w3f/jamtestvectors/commit/7a96598b7ad7d079288a0043b0240894c9a33864#diff-81e841f65f02445b042e5186d09d489695ef99a0408535e28b72ea60b2961e61" target="_blank" rel="noopener">The commit that added block.json</a> was made on </em><em>September 18, 2024</em><em>. Since then, there have been no further modifications to </em><em>&quot;extrinsic_hash&quot;</em>*.  </div>
-<div class='msg'><time>2025-01-08 09:17</time>&ensp;<span class='u' style='color:#48d03d'>tomusdrw</span>: &gt; &lt;@clw0908:matrix.org&gt; Hello, I have a question regarding the *<em>codec</em>* part in *<em>jamtestvector</em><em>:  
+<a href="https://github.com/w3f/jamtestvectors/commit/7a96598b7ad7d079288a0043b0240894c9a33864#diff-81e841f65f02445b042e5186d09d489695ef99a0408535e28b72ea60b2961e61" target="_blank" rel="noopener">The commit that added block.json</a> was made on **September 18, 2024**. Since then, there have been no further modifications to **&quot;extrinsic_hash&quot;**.  </div>
+<div class='msg'><time>2025-01-08 09:17</time>&ensp;<span class='u' style='color:#48d03d'>tomusdrw</span>: &gt; &lt;@clw0908:matrix.org&gt; Hello, I have a question regarding the **codec** part in **jamtestvector**:  
 &gt; 
-&gt; I’m wondering whether the </em><em>&quot;extrinsic_hash&quot;</em>* in *<em>block.json</em>* is calculated using <a href="https://graypaper.fluffylabs.dev/#/6e1c0cd/0cc6000cf200" target="_blank" rel="noopener">*<em>GP-0.5.3 equations 5.4, 5.5, and 5.6</em><em></a>, or if it is still calculated using the older version of the function. Since the calculation method hasn&#x27;t been modified for a long time, I’d like to confirm.  
+&gt; I’m wondering whether the **&quot;extrinsic_hash&quot;** in **block.json** is calculated using <a href="https://graypaper.fluffylabs.dev/#/6e1c0cd/0cc6000cf200" target="_blank" rel="noopener">**GP-0.5.3 equations 5.4, 5.5, and 5.6**</a>, or if it is still calculated using the older version of the function. Since the calculation method hasn&#x27;t been modified for a long time, I’d like to confirm.  
 &gt; 
-&gt; <a href="https://github.com/w3f/jamtestvectors/commit/7a96598b7ad7d079288a0043b0240894c9a33864#diff-81e841f65f02445b042e5186d09d489695ef99a0408535e28b72ea60b2961e61" target="_blank" rel="noopener">The commit that added block.json</a> was made on </em><em>September 18, 2024</em><em>. Since then, there have been no further modifications to </em><em>&quot;extrinsic_hash&quot;</em>*.  
+&gt; <a href="https://github.com/w3f/jamtestvectors/commit/7a96598b7ad7d079288a0043b0240894c9a33864#diff-81e841f65f02445b042e5186d09d489695ef99a0408535e28b72ea60b2961e61" target="_blank" rel="noopener">The commit that added block.json</a> was made on **September 18, 2024**. Since then, there have been no further modifications to **&quot;extrinsic_hash&quot;**.  
 
 It doesn&#x27;t really matter. The codec test vectors are not meant to be semantically correct. They are just testing if you can decode the data given some schema.</div>
 <div class='msg edited'><time>2025-01-08 16:08</time>&ensp;<span class='u' style='color:#cd8957'>gav</span>: I think it&#x27;d be good to request treasury support for 2 or 3 deliberately-produced JAM (services and authorizer) SDKs, aside from the SDK produced by Parity.
@@ -5073,7 +5086,7 @@ btw may I ask are you queuing empty blocks or also have the transaction pool imp
 <div class='msg'><time>2025-01-08 17:38</time>&ensp;<span class='u' style='color:#d470bf'>jaymansfield</span>: Happy to share a glimpse of JavaJAM’s first testnet utilizing QUIC messaging. Still a lot of tweaks to go but feels good to get to this stage.</div>
 <div class='msg edited'><time>2025-01-08 18:11</time>&ensp;<span class='u' style='color:#be2950'>clearloop</span>: Hi there, we just introduced a simple general testvectors runner, please feel free to try it out!
 
-<pre><code class="">cargo install specjam
+<pre><code class=''>cargo install specjam
 specjam dummy
 </code></pre>
 
@@ -5170,7 +5183,7 @@ I noticed that the ring root values were changed, even for test vectors without 
 ❓ Can someone clarify what changed at that point in the computation of the ring root?
 
 At the moment, we are using the following code (this part is from primitives, so I can share it here in the thread)</div>
-<div class='msg reply'><time>2025-01-19 17:42</time>&ensp;<span class='u' style='color:#db4dca'>celadari</span>: <pre><code class="rust">let ring_size = public_keys.len();
+<div class='msg reply'><time>2025-01-19 17:42</time>&ensp;<span class='u' style='color:#db4dca'>celadari</span>: <pre><code class='rust'>let ring_size = public_keys.len();
     let ring_ctx = ring_context(ring_size, pcs_params_file_path)?;
     let padding_point = Public::from(ring_ctx.padding_point());
 
@@ -5203,7 +5216,7 @@ This is the version of ark-ec-vrfs but what changed because my code uses ark-ec-
 <div class='msg reply'><time>2025-01-19 19:58</time>&ensp;<span class='u' style='color:#db4dca'>celadari</span>: &gt; &lt;@vinsystems:matrix.org&gt; Also changed <a href="https://github.com/davxy/bandersnatch-vrfs-spec/blob/bdd1f4b7ccbad9227dc28c72660d438cf00b1b33/assets/example/src/main.rs#L38" target="_blank" rel="noopener">this</a> data file 
 
 What is the code you use to generate ring root commitment ?</div>
-<div class='msg reply'><time>2025-01-20 07:56</time>&ensp;<span class='u' style='color:#c457c5'>vinsystems</span>: <pre><code class="">let ring_set: Vec&lt;Public&gt; = bandersnatch_keys;
+<div class='msg reply'><time>2025-01-20 07:56</time>&ensp;<span class='u' style='color:#c457c5'>vinsystems</span>: <pre><code class=''>let ring_set: Vec&lt;Public&gt; = bandersnatch_keys;
 let verifier = Verifier::new(ring_set);
 verifier.commitment.serialize_compressed(&amp;mut proof[..]).unwrap();
 return proof;
@@ -5220,7 +5233,7 @@ Yes Im also handling padding and it&#x27;s in the &quot;ring\_set&quot; vector o
 
 - do you do like this to generate the keys ?
 
-<pre><code class="rust">let padding_point = Public::from(ring_ctx.padding_point());
+<pre><code class='rust'>let padding_point = Public::from(ring_ctx.padding_point());
 
 let mut keys: Vec&lt;Public&lt;BandersnatchSha512Ell2&gt;&gt; = Vec::new();
 for key in public_keys {
@@ -5232,7 +5245,7 @@ for key in public_keys {
 </code></pre></div>
 <div class='msg reply'><time>2025-01-21 20:28</time>&ensp;<span class='u' style='color:#c457c5'>vinsystems</span>: It&#x27;s something like (I didn&#x27;t test it): 
 
-<pre><code class="">let padding_point = Public::from(ring_ctx.padding_point());
+<pre><code class=''>let padding_point = Public::from(ring_ctx.padding_point());
 let public_keys: [u8; 32] = bandersnatch_keys;
 let mut ring_set: Vec&lt;Public&gt; = Vec::new();
 
@@ -5250,7 +5263,7 @@ let verifier = Verifier::new(ring_set);
 &gt; 
 &gt; - do you do like this to generate the keys ?
 &gt; 
-&gt; <pre><code class="rust">&gt; let padding_point = Public::from(ring_ctx.padding_point());
+&gt; <pre><code class='rust'>&gt; let padding_point = Public::from(ring_ctx.padding_point());
 &gt; 
 &gt; let mut keys: Vec&lt;Public&lt;BandersnatchSha512Ell2&gt;&gt; = Vec::new();
 &gt; for key in public_keys {
@@ -5271,7 +5284,7 @@ We have finalized the first &quot;official release&quot; of the Gray Paper Reade
 
 We believe this tool will serve as a living documentation resource even beyond the JAM Contest, supporting ongoing development and understanding of JAM.
 
-To keep the Reader freely available and open-source, we’re *<em>submitting a proposal for retroactive funding</em>* to the Polkadot Treasury.
+To keep the Reader freely available and open-source, we’re **submitting a proposal for retroactive funding** to the Polkadot Treasury.
 
 We’ve started a discussion on Polkassembly to share details about the proposal and gather feedback: <a href="https://polkadot.polkassembly.io/post/2722." target="_blank" rel="noopener">https://polkadot.polkassembly.io/post/2722.</a> Your thoughts and questions are welcome!</div>
 <div class='msg'><time>2025-01-19 19:15</time>&ensp;<span class='u' style='color:#5e86de'>boymaas</span>: Great work! ❤️ I’ve been using it with pleasure much appreciated.</div>
@@ -5501,9 +5514,9 @@ I hope those interested can give them a try, and I look forward to contributing 
 <div class='msg'><time>2025-01-29 07:50</time>&ensp;<span class='u' style='color:#bfaf39'>dakkk</span>: We talked about it in this channel in September, if I remember correctly</div>
 <div class='msg'><time>2025-02-03 11:08</time>&ensp;<span class='u' style='color:#a23bc7'>emielsebastiaan</span>: I found an error in testvectors for the <code>rem_s_64</code> instruction: 
 <a href="https://github.com/w3f/jamtestvectors/pull/3#issuecomment-2630619549" target="_blank" rel="noopener">https://github.com/w3f/jamtestvectors/pull/3#issuecomment-2630619549</a></div>
-<div class='msg edited'><time>2025-02-03 12:35</time>&ensp;<span class='u' style='color:#6f63cc'>decentration</span>: do we have a tiny const for <code>L</code> (re: 11.34)? In GP (I.4) Values it&#x27;s:
+<div class='msg edited'><time>2025-02-03 12:35</time>&ensp;<span class='u' style='color:#6f63cc'>decentration</span>: do we have a tiny const for `L` (re: 11.34)? In GP (I.4) Values it&#x27;s:
 
-<pre><code class="">L = 14, 400: The maximum age in timeslots of the lookup anchor.
+<pre><code class=''>L = 14, 400: The maximum age in timeslots of the lookup anchor.
 </code></pre></div>
 <div class='msg'><time>2025-02-03 12:47</time>&ensp;<span class='u' style='color:#cdc232'>oliver.tale-yazdi</span>: I dont think there was a value proposed for this yet, otherwise i will add it to <a href="https://docs.jamcha.in/basics/chain-spec/tiny" target="_blank" rel="noopener">https://docs.jamcha.in/basics/chain-spec/tiny</a>  
 We can probably calculate backwards from the toaster full spec (modulo any contraints)?</div>
@@ -5817,7 +5830,7 @@ Nope</div>
 <div class='msg'><time>2025-02-21 14:21</time>&ensp;<span class='u' style='color:#6f63cc'>decentration</span>: </div>
 <div class='msg'><time>2025-02-21 17:52</time>&ensp;<span class='u' style='color:#4977cf'>danicuki</span>: Hey Jammers, I have bad news for us: unfortunately our JAM Experience in Cascais proposal was rejected by the events bounties committee. If you have any idea of how we can get funded, please raise your hand! I attach for your appreciation the event proposal, as well the event bounties feedback. </div>
 <div class='msg reply'><time>2025-02-21 17:52</time>&ensp;<span class='u' style='color:#4977cf'>danicuki</span>: JAM Experience Portugal.pdf</div>
-<div class='msg reply edited'><time>2025-02-21 17:52</time>&ensp;<span class='u' style='color:#4977cf'>danicuki</span>: <pre><code class="">Hi Daniel,  Thank you for submitting your proposal, unfortunately it has been rejected. While we think that organising events which either support the implementers or wider reach of the technology, we are of the opinion that the budget and format of the event are not fitting. Regardless, we would still like to encourage you and even assist if necessary with planning a different type of event. 
+<div class='msg reply edited'><time>2025-02-21 17:52</time>&ensp;<span class='u' style='color:#4977cf'>danicuki</span>: <pre><code class=''>Hi Daniel,  Thank you for submitting your proposal, unfortunately it has been rejected. While we think that organising events which either support the implementers or wider reach of the technology, we are of the opinion that the budget and format of the event are not fitting. Regardless, we would still like to encourage you and even assist if necessary with planning a different type of event. 
 
 Please find our reasons for rejection below: 
 
@@ -5886,7 +5899,7 @@ You should use the branch called &quot;jamixir&quot;</div>
 
 We went ahead with this idea from sourabhniyogi on adding an RPC for STF validation</div>
 <div class='msg edited'><time>2025-02-23 15:02</time>&ensp;<span class='u' style='color:#cdc232'>oliver.tale-yazdi</span>: Let us know how helpful this is with validating your STF vectors. Currently our validation logic is probably too lenient, so some invalid blocks will import, but no valid block should be rejected.</div>
-<div class='msg edited'><time>2025-02-24 10:45</time>&ensp;<span class='u' style='color:#4977cf'>danicuki</span>: We are still working to setup for the JAM Experience May/25 event in Lisbon. I would ask you please to subscribe <a href="https://lu.ma/ob0n7pdy" target="_blank" rel="noopener">here</a> if you plan to come. This is very *<em>important</em>*, so we can plan better with the approximate number of people.
+<div class='msg edited'><time>2025-02-24 10:45</time>&ensp;<span class='u' style='color:#4977cf'>danicuki</span>: We are still working to setup for the JAM Experience May/25 event in Lisbon. I would ask you please to subscribe <a href="https://lu.ma/ob0n7pdy" target="_blank" rel="noopener">here</a> if you plan to come. This is very **important**, so we can plan better with the approximate number of people.
 
 As suggested by gav , we will make the event at the Parity&#x27;s office in Lisbon, less complex and more affordable.</div>
 <div class='msg'><time>2025-02-25 14:57</time>&ensp;<span class='u' style='color:#4977cf'>danicuki</span>: Trying to understand the flow of information from end-user to blockchain state in JAM, I created this &quot;step-by-step&quot; doc. I am still not 100% sure it is accurate, so any feedback is very welcome:
@@ -6052,7 +6065,7 @@ Regarding M1 submissions, my feeling is to get to 0.7 or 0.8, probably calling i
 
 Finally, I expect to introduce two additional paths for implementors to go down beyond the initial 5 milestones of the &quot;validating node&quot;:
 
-- Non-PVM-recompiler validating node: This implementation allows teams who do not wish to build a recompiler to shortcut to M5 and thus become viable network validator nodes. Basically such teams would be able to integrate with any PVM recompiler of their choice through FFI or native linking. This would come at the cost of only being able to claim *<em>HALF</em>* of each milestone prize as well as accordingly less of some other benefits. Such teams would have the possibility of eventually resubmitting M4 and M5 with their own recompiling PVM impl to claim the rest of the prizes/benefits.
+- Non-PVM-recompiler validating node: This implementation allows teams who do not wish to build a recompiler to shortcut to M5 and thus become viable network validator nodes. Basically such teams would be able to integrate with any PVM recompiler of their choice through FFI or native linking. This would come at the cost of only being able to claim **HALF** of each milestone prize as well as accordingly less of some other benefits. Such teams would have the possibility of eventually resubmitting M4 and M5 with their own recompiling PVM impl to claim the rest of the prizes/benefits.
 - Light-client implementations; these would retain M1 (dumb full node) but their own M2-M5 milestones each worth half of the regular prize, giving overall rewards at 60% of the regular recompiling, validating full-node. Milestones 2, 3 and 4 would be based on resource usage over time (CPU, storage, memory and networking) as well as synchronisation time from zero, partial synchronisation time and time to service a random basket of requests. No recompiler would be needed and resource usage expectations would likely be in line with Smoldot.</div>
 <div class='msg'><time>2025-03-02 05:06</time>&ensp;<span class='u' style='color:#cd8957'>gav</span>: None of this is decided yet and in particular we may need an incentive structure to avoid too many people switching to light-clients or getting too many low-power light-client implementations, but I do believe JAM will need a solid light-client community to be successful.</div>
 <div class='msg'><time>2025-03-03 01:04</time>&ensp;<span class='u' style='color:#4036ac'>ascriv</span>: Is there a recording somewhere of gav’s taipei jam tour talk?</div>
@@ -6081,13 +6094,13 @@ It doesn&#x27;t have transformations like in Appendix H though so it is desirabl
 They might be using some sort of pre-transform before encoding that isn&#x27;t mentioned in the GP and that forms part of C for SIMD purposes. Version 3.0.1 of reed-solomon-simd does <a href="https://github.com/AndersTrier/reed-solomon-simd/blob/74f48e20636f80c43d0e8884ff7a87669bfd8be6/src/engine/shards.rs#L36-L73" target="_blank" rel="noopener">this</a> to handle smaller shards. Maybe there&#x27;s another way to do that which is why we aren&#x27;t matching the recovery shards.</div>
 <div class='msg edited'><time>2025-03-07 13:47</time>&ensp;<span class='u' style='color:#4977cf'>danicuki</span>: Here are some updates for the JAM Experience event
 
-- The dates will be *<em>6th-7th</em>* May (it was wrongly configured in lu.ma
+- The dates will be **6th-7th** May (it was wrongly configured in lu.ma
 - The JAM Toaster visit will be in one of these two days
 - The event will be at Parity&#x27;s office - R. Serpa Pinto 12, 1200-443 Lisboa, Portugal
 - Full schedule yet to be defined, probably in the next couple of weeks.
 - We already have 35 confirmed jammers. If you didn&#x27;t register yourself, hurry up, there are only 10 places left: <a href="https://lu.ma/ob0n7pdy" target="_blank" rel="noopener">https://lu.ma/ob0n7pdy</a>
 - If you registered and won&#x27;t be able to come, please release your place for someone else
-- We will create a separate luma event for the closing Party - if you are registered in the main 2 days event, you *<em>don&#x27;t need</em>* to registry for the party.
+- We will create a separate luma event for the closing Party - if you are registered in the main 2 days event, you **don&#x27;t need** to registry for the party.
 - The party is open for all crypto community, so you can share the <a href="https://lu.ma/6monb9f9" target="_blank" rel="noopener">party link</a> with anyone might be interested in JAM.
 - ETH Lisbon is 9th-11th - Registry here: <a href="https://ethlisbon.org/" target="_blank" rel="noopener">https://ethlisbon.org/</a> for an extra couple of days together</div>
 <div class='msg'><time>2025-03-08 08:10</time>&ensp;<span class='u' style='color:#cd8957'>gav</span>: I think it would be no bad thing if anyone well-familiar with JAM&#x27;s internals happened to have a speaking slot at an event ETH Lisbon</div>
@@ -6611,7 +6624,7 @@ How would you imagine a recursive call into a program blob?</div>
 Should still fit the gp specifications I think, happy to be corrected</div>
 <div class='msg'><time>2025-03-30 17:30</time>&ensp;<span class='u' style='color:#4036ac'>ascriv</span>: This is how I ended up interpreting it so I’m particularly eager to be corrected lol</div>
 <div class='msg'><time>2025-03-30 18:32</time>&ensp;<span class='u' style='color:#cd8957'>gav</span>: The Gray Paper only states observable behaviour. The performance tests, when benchmark requirements are published, may imply certainly implementation optimisations.</div>
-<div class='msg'><time>2025-03-30 18:33</time>&ensp;<span class='u' style='color:#cd8957'>gav</span>: For M1/M2 such optimisations are not <em>required</em>, but might be sensible to do regardless.</div>
+<div class='msg'><time>2025-03-30 18:33</time>&ensp;<span class='u' style='color:#cd8957'>gav</span>: For M1/M2 such optimisations are not *required*, but might be sensible to do regardless.</div>
 <div class='msg'><time>2025-03-30 18:40</time>&ensp;<span class='u' style='color:#cd8957'>gav</span>: signal-2025-03-26-164136.mp4</div>
 <div class='msg'><time>2025-03-30 18:40</time>&ensp;<span class='u' style='color:#cd8957'>gav</span>: Almost finished!</div>
 <div class='msg'><time>2025-03-30 19:01</time>&ensp;<span class='u' style='color:#bf4233'>emilkietzman</span>: That’s amazing, can’t wait for the results. The real question is the jacuzzi ready to handle the heat!</div>
@@ -6735,7 +6748,7 @@ Or even just look at my interfaces:
 <div class='msg reply'><time>2025-04-03 16:48</time>&ensp;<span class='u' style='color:#c65779'>dave</span>: There is a length prefix on every message</div>
 <div class='msg reply'><time>2025-04-03 16:49</time>&ensp;<span class='u' style='color:#c65779'>dave</span>: There isn&#x27;t one for each block in this case. This is something I&#x27;m happy to change in the full protocol but it doesn&#x27;t seem like a big issue honestly</div>
 <div class='msg reply'><time>2025-04-03 16:51</time>&ensp;<span class='u' style='color:#c67452'>sourabhniyogi</span>: I am asking for a length prefix for each block in the array of blocks in the CE128 response.  
-<pre><code class="">&lt;-- [Block]
+<pre><code class=''>&lt;-- [Block]
 </code></pre>
 so that the boundaries between Block X and Block X + 1 are trivial to identify, and don&#x27;t require decoding the individual pieces of each block just to identify that boundary.  
 
@@ -6878,7 +6891,7 @@ coretime is not a governance model, it is a market for allocation of blockspace.
 Thank you, I’ve been thinking about PVM, and the need for coretime to be executed today is very cheap, but when we have global adhesion. who has coretime could determine what will be executed?</div>
 <div class='msg'><time>2025-04-09 16:59</time>&ensp;<span class='u' style='color:#787fdf'>erin</span>: It is a permissionless system. With both coretime and JAM whoever pays for the computation time is able to run what they would like to.</div>
 <div class='msg'><time>2025-04-09 17:02</time>&ensp;<span class='u' style='color:#b8992b'>codingsh</span>: Awesome, Perfect! </div>
-<div class='msg edited'><time>2025-04-09 19:25</time>&ensp;<span class='u' style='color:#c9419d'>davxy</span>: The ASN.1 module included with the test vectors *<em>should</em>* map one-to-one with the types defined in the GP. If you notice any discrepancies:
+<div class='msg edited'><time>2025-04-09 19:25</time>&ensp;<span class='u' style='color:#c9419d'>davxy</span>: The ASN.1 module included with the test vectors **should** map one-to-one with the types defined in the GP. If you notice any discrepancies:
 
 - The GP is the authoritative source of truth.
 - Please open an issue to report it :-)</div>
@@ -6893,7 +6906,7 @@ to do a refresh for JAM?  I did some placeholders
 <div class='msg edited'><time>2025-04-11 09:58</time>&ensp;<span class='u' style='color:#be2950'>clearloop</span>: if I&#x27;m not mistaken ,we haven&#x27;t had the test vectors for PVM integration in accumulate yet, mb ur talking about <a href="https://graypaper.fluffylabs.dev/#/68eaa1f/17b90017bb00?v=0.6.4" target="_blank" rel="noopener">https://graypaper.fluffylabs.dev/#/68eaa1f/17b90017bb00?v=0.6.4</a> ?</div>
 <div class='msg reply edited'><time>2025-04-11 10:11</time>&ensp;<span class='u' style='color:#6f63cc'>decentration</span>: hmm, but on the jam website:
 
-<pre><code class="">5. PVM instancing, execution and host-functions
+<pre><code class=''>5. PVM instancing, execution and host-functions
 </code></pre>
 
 im interpreting this as do the pvm invocation using current pvm library such as <code>jam-pvm-common</code> (in my case using an FFI)... we dont have the vectors yet, but i imagine we should be expecting them to come for M1. </div>
@@ -6947,7 +6960,7 @@ All content will be recorded and shared </div>
 
 Light clients:
 
-- download *<em>and verify</em>* block headers to stay in sync with the chain’s head. This includes the state root, which requires doing ordered accumulation, including PVM.
+- download **and verify** block headers to stay in sync with the chain’s head. This includes the state root, which requires doing ordered accumulation, including PVM.
 - verify that blocks have been finalized (which are GRANDPA finality proofs in both Polkadot+JAM).  I assume the last 28 days will be warp synced
 - request storage proofs needed to validate a transition, which is/was the purpose of 7.4.4.
 
@@ -7002,7 +7015,7 @@ None.</div>
 <div class='msg'><time>2025-04-14 09:19</time>&ensp;<span class='u' style='color:#c67452'>sourabhniyogi</span>: Ok thank you for clarifying!  Indeed, I have had a Bitcoin mind virus =)</div>
 <div class='msg'><time>2025-04-14 09:20</time>&ensp;<span class='u' style='color:#cd8957'>gav</span>: But light-clients generally have no means of knowing.</div>
 <div class='msg edited'><time>2025-04-14 09:20</time>&ensp;<span class='u' style='color:#cd8957'>gav</span>: Even re-executing the block doesn&#x27;t help here - that&#x27;s the Bitcoin mind virus. You&#x27;d have to not only re-execute the block but also re-execute all the cores (at least those that have causal-implications on the service storage you care about, which given the ability for transfers to happen in a block means, theoretically, all of them which can send messages to your service).</div>
-<div class='msg edited'><time>2025-04-14 09:22</time>&ensp;<span class='u' style='color:#cd8957'>gav</span>: To re-execute the cores, you&#x27;d need to fetch all of the DA data they require and this is obviously waaaay too much to be doing for a <em>light</em>-client. It&#x27;d take &gt; 6 seconds and then you may as well wait for GRANDPA.</div>
+<div class='msg edited'><time>2025-04-14 09:22</time>&ensp;<span class='u' style='color:#cd8957'>gav</span>: To re-execute the cores, you&#x27;d need to fetch all of the DA data they require and this is obviously waaaay too much to be doing for a *light*-client. It&#x27;d take &gt; 6 seconds and then you may as well wait for GRANDPA.</div>
 <div class='msg edited'><time>2025-04-14 09:23</time>&ensp;<span class='u' style='color:#cd8957'>gav</span>: So yeah, there&#x27;s really no way around this, and that&#x27;s by design. We want to off-load correctness entirely into the game-theoretic (staked) machinery. Not have it done by clients on the edges, light or otherwise.</div>
 <div class='msg edited'><time>2025-04-14 09:24</time>&ensp;<span class='u' style='color:#cd8957'>gav</span>: Only this way can we expect to be able to scale to the levels we need (and still not be centralised).</div>
 <div class='msg edited'><time>2025-04-14 09:27</time>&ensp;<span class='u' style='color:#cd8957'>gav</span>: One thing that we can almost certainly do, though not necessarily pre-1.0, is have GRANDPA finalize not only the block but also its posterior state-root. This should be a pretty trivial addition and would mean light-clients are able to get proofs over storage one block earlier than otherwise. Alistair is also considering introducing some other lightweight consensus over blocks produced, but not necessarily correct (i.e. not yet having passed Elves). This wouldn&#x27;t help all that much for applications which have high economic implications but could help lower apparent UI latency for lesser applications especially if the finalised information included posterior state-root rather than just the header-hash.</div>
@@ -7062,7 +7075,7 @@ Unfortunately I missed today’s call to give some updates. The event agenda (be
 <div class='msg reply'><time>2025-04-16 08:31</time>&ensp;<span class='u' style='color:#4cbfa8'>xlchen</span>: those details are crucial for others to follow. can someone update the docs? best to have some example request/response </div>
 <div class='msg reply'><time>2025-04-16 08:48</time>&ensp;<span class='u' style='color:#be2950'>clearloop</span>: I was trying to indicate these stuffs via a mock server XD, however, the panic messages of jamtop 
 
-<pre><code class="">RUST_BACKTRACE=1 jamtop --rpc ws://0.0.0.0:6789
+<pre><code class=''>RUST_BACKTRACE=1 jamtop --rpc ws://0.0.0.0:6789
 Error: Parse error: invalid type: map, expected a tuple of size 2
 </code></pre>
 seems not yet well wrapped with helpful context
@@ -7080,9 +7093,9 @@ seems not yet well wrapped with helpful context
 <div class='msg reply'><time>2025-04-16 09:17</time>&ensp;<span class='u' style='color:#4cbfa8'>xlchen</span>: any reason it is not hex encoded just like substrate rpc?</div>
 <div class='msg reply'><time>2025-04-16 09:17</time>&ensp;<span class='u' style='color:#cd8957'>gav</span>: Yeah - this is the simplest way.</div>
 <div class='msg reply edited'><time>2025-04-16 09:20</time>&ensp;<span class='u' style='color:#cd8957'>gav</span>: jip2 updated with the other clarifications.</div>
-<div class='msg'><time>2025-04-16 09:58</time>&ensp;<span class='u' style='color:#be2950'>clearloop</span>: I can see the dashboard of <code>jamtop</code> now, from my case, it has no stdout on launch, but after <code>ctrl+c</code>, the dashboard shows
+<div class='msg'><time>2025-04-16 09:58</time>&ensp;<span class='u' style='color:#be2950'>clearloop</span>: I can see the dashboard of `jamtop` now, from my case, it has no stdout on launch, but after `ctrl+c`, the dashboard shows
 
-<pre><code class="">Services: 0 total, 0 active, 0 refining, 0 acc&#x27;ing                         0                                                                                                                        20:00:00
+<pre><code class=''>Services: 0 total, 0 active, 0 refining, 0 acc&#x27;ing                         0                                                                                                                        20:00:00
 APU: 0% acc/0% xfer/100% idle;  Cores: 0%/0%/100% idle                     1                                                                                                                               0
 Processed: 0 refines/0 gas; 0 accs/0 gas; 0 memos/0 gas                    A                                                                                                                       00000000…
 D3L: 0 imports; 0 exports; 0 extrinsics/0B; 0 prov/0B                      X
@@ -7158,19 +7171,19 @@ I need to check. If not I&#x27;ll add a couple </div>
 <div class='msg reply'><time>2025-04-17 06:43</time>&ensp;<span class='u' style='color:#be2950'>clearloop</span>: <a href="https://hackmd.io/@polkadot/jip2" target="_blank" rel="noopener">https://hackmd.io/@polkadot/jip2</a></div>
 <div class='msg'><time>2025-04-17 09:11</time>&ensp;<span class='u' style='color:#4977cf'>danicuki</span>: A sneak peek of the JAM Experience event T-Shirt</div>
 <div class='msg'><time>2025-04-17 09:11</time>&ensp;<span class='u' style='color:#4977cf'>danicuki</span>: Screenshot 2025-04-17 at 10.09.52.png</div>
-<div class='msg edited'><time>2025-04-17 13:19</time>&ensp;<span class='u' style='color:#823cac'>wabkebab</span>: *<em>JAM Toaster visit &amp; JAM presence at ETHLisbon !</em>*
+<div class='msg edited'><time>2025-04-17 13:19</time>&ensp;<span class='u' style='color:#823cac'>wabkebab</span>: **JAM Toaster visit &amp; JAM presence at ETHLisbon !**
 
 Hey JAM fam!
 
-We&#x27;ve got some exciting news - Pala Labs is bringing JAM to *<em>ETHLisbon</em>* (May 9-11)! Since many JAM-ers will already be in Lisbon for the *<em>JAM Experience</em><em>, we thought: why not introduce JAM to the Ethereum crowd too?
+We&#x27;ve got some exciting news - Pala Labs is bringing JAM to **ETHLisbon** (May 9-11)! Since many JAM-ers will already be in Lisbon for the **JAM Experience**, we thought: why not introduce JAM to the Ethereum crowd too?
 
-</em><em>Quick highlights</em>*
+**Quick highlights**
 
 - A keynote session dedicated to JAM on ( tentatively) May 10
 - We&#x27;ll be having a cool JAM booth with some surprises …
 - For builders, there&#x27;s also a Smart Contract hackathon on Kusama from 9 to 11 of May
 
-*<em>Exclusive invite for JAM Implementers!</em>*
+**Exclusive invite for JAM Implementers!**
 
 We&#x27;re planning an exclusive JAM Toaster visit just for JAM implementers on 6th May, 4 to 9 PM - free transportation, toaster visit, and poolside drinks &amp; canapés.
 
@@ -7336,7 +7349,7 @@ So in theory you could add your VM there.</div>
 <div class='msg'><time>2025-04-24 10:50</time>&ensp;<span class='u' style='color:#da5c80'>jan</span>: Here&#x27;s a pastebin of the relevant code to parse them: <a href="https://pastebin.com/L2CsuVNR" target="_blank" rel="noopener">https://pastebin.com/L2CsuVNR</a></div>
 <div class='msg'><time>2025-04-24 10:59</time>&ensp;<span class='u' style='color:#da5c80'>jan</span>: Essentially the format looks like this:
 
-<pre><code class="">struct Blob {
+<pre><code class=''>struct Blob {
     magic: [u8; 4],
     version: u8,
     length: u64,
