@@ -1,20 +1,22 @@
-<!doctype html><meta charset=utf-8>
+<!doctype html><meta charset=utf-8><meta name='viewport' content='width=device-width,initial-scale=1'>
 <title>#graypaper:polkadot.io – archive</title>
 <style>
 body{margin:0 auto;max-width:75ch;font:15px/1.55 system-ui,-apple-system,'Segoe UI',Helvetica,Arial,sans-serif;background:#141414;color:#e6e6e6;padding:2rem}
 .msg{white-space:pre-wrap;margin:0.3em 0}
-.edited{opacity:0.75;font-style:italic}
 .reply{margin-left:2ch}
+.edited{opacity:0.75;font-style:italic}
 pre{background:#1e1e1e;padding:0.6em;border-radius:4px;overflow:auto}
 code{font-family:ui-monospace,monospace}
 .u{font-weight:600}
 time{color:#888}
 a{color:#9cf;text-decoration:none}
+em{font-style:italic}
+i,em:not(.allow){font-style:normal}
+@media(max-width:480px){body{padding:1rem;font-size:14px}pre{font-size:13px}}
 </style>
 <h1>#graypaper:polkadot.io</h1>
-<p><small>last updated 2025-04-24 13:55 UTC</small></p>
-<p><a href='room_log.txt'>⇩ plaintext</a>  ·  <a href='../../'>⇦ all rooms</a></p>
-<hr>
+<p><small>last updated 2025-04-24 14:02 UTC</small></p>
+<p><a href='room_log.txt'>⇩ plaintext</a> · <a href='../../'>⇦ all rooms</a></p><hr>
 <div class='msg'><time>2024-04-17 20:29</time>&ensp;<span class='u' style='color:#da6aa2'>syed</span>: <a href="https://matrix.to/#/!hyzRkDqDthePbodYFz:parity.io/$f_DMsIEcDXZegw6Sabnehzc-LrdDQkmq5MbxDDyoZxY?via=parity.io&amp;via=web3.foundation" target="_blank" rel="noopener">https://matrix.to/#/!hyzRkDqDthePbodYFz:parity.io/$f_DMsIEcDXZegw6Sabnehzc-LrdDQkmq5MbxDDyoZxY?via=parity.io&amp;via=web3.foundation</a>
 </div>
 <div class='msg'><time>2024-04-17 20:29</time>&ensp;<span class='u' style='color:#da6aa2'>syed</span>: 
@@ -350,7 +352,7 @@ vs
 <div class='msg edited'><time>2024-06-28 07:24</time>&ensp;<span class='u' style='color:#cd8957'>gav</span>: (Fixed in main)</div>
 <div class='msg'><time>2024-06-28 07:24</time>&ensp;<span class='u' style='color:#c67452'>sourabhniyogi</span>: Ok, for 7, the test vector for <code>add</code> is computing 1+2 = 3 with inputs w_7 (1) + w_8 (2) going into w_9 (3) as is easily seen here: <a href="https://github.com/koute/jamtestvectors/blob/master_pvm_initial/pvm/programs/inst_add.json#L28" target="_blank" rel="noopener">https://github.com/koute/jamtestvectors/blob/master_pvm_initial/pvm/programs/inst_add.json#L28</a>  
 but looking closely at the test vector code:
-(a) decimal 121 is hexadecimal 0x79  (so w_7 are the high order 4 bits INPUT, while the *OUTPUT* w_9 is the low order 4 bits)  
+(a) decimal 121 is hexadecimal 0x79  (so w_7 are the high order 4 bits INPUT, while the <em>OUTPUT</em> w_9 is the low order 4 bits)  
 (b) the byte following (a) is &quot;8&quot; which is the other INPUT 
 Basically r_A+r_D are together in one byte with r_B following. 
 
@@ -422,7 +424,7 @@ Threshold is gone.
 Even though reading Sassafras RFC can help (as it is a quite similar protocol), always take the GP as the source of truth for JAM.
 3. Sure thing. I&#x27;ll post here as soon as it is ready.
 4. This is a very interesting observation. Current implementation serializes 3 extra fields (part of the SNARK SRS).
-Serialization of these fields may be important **in a general application**, but here these values are constant.
+Serialization of these fields may be important *<em>in a general application</em>*, but here these values are constant.
 I will definitely get rid of these from serialized data (I&#x27;m on it). The final size will be 144 (i.e. the last 144 bytes of what you see right now)</div>
 <div class='msg'><time>2024-07-01 09:16</time>&ensp;<span class='u' style='color:#cdc232'>oliver.tale-yazdi</span>: &gt; &lt;@davxy:matrix.org&gt; sourabhniyogi:
 &gt; 
@@ -473,7 +475,7 @@ Thank you again for the great responsiveness</div>
 &gt; Even though reading Sassafras RFC can help (as it is a quite similar protocol), always take the GP as the source of truth for JAM.
 &gt; 3. Sure thing. I&#x27;ll post here as soon as it is ready.
 &gt; 4. This is a very interesting observation. Current implementation serializes 3 extra fields (part of the SNARK SRS).
-&gt; Serialization of these fields may be important **in a general application**, but here these values are constant.
+&gt; Serialization of these fields may be important *<em>in a general application</em>*, but here these values are constant.
 &gt; I will definitely get rid of these from serialized data (I&#x27;m on it). The final size will be 144 (i.e. the last 144 bytes of what you see right now)
 
 Thank you!  </div>
@@ -806,15 +808,15 @@ I have some questions, I don&#x27;t know if I should post them here or on the Ja
 
 ### Equation (59):
 
-1. **Understanding Components:**
+1. *<em>Understanding Components:</em>*
    - What are \( i_y \), \( i_r \), \( H_a \), \( H \), and \( E_U(H) \)?
 
 ### Equation (60):
 
-1. **Defining \( H_a \):**
+1. *<em>Defining \( H_a \):</em>*
    - Do we define \( H_a \) with the \( i \) from the equation &quot;let \( i = \gamma_s&#x27;[H_t]^{\circlearrow}&quot;?
 
-2. **Understanding \( H \) and \( E_U(H) \):**
+2. *<em>Understanding \( H \) and \( E_U(H) \):</em>*
    - What is \( H \) and \( E_U(H) \)?
 
 
@@ -853,15 +855,15 @@ Your interpretation of the use of the colon in subscripting is correct. </div>
 &gt; 
 &gt; ### Equation (59):
 &gt; 
-&gt; 1. **Understanding Components:**
+&gt; 1. *<em>Understanding Components:</em>*
 &gt;    - What are \( i_y \), \( i_r \), \( H_a \), \( H \), and \( E_U(H) \)?
 &gt; 
 &gt; ### Equation (60):
 &gt; 
-&gt; 1. **Defining \( H_a \):**
+&gt; 1. *<em>Defining \( H_a \):</em>*
 &gt;    - Do we define \( H_a \) with the \( i \) from the equation &quot;let \( i = \gamma_s&#x27;[H_t]^{\circlearrow}&quot;?
 &gt; 
-&gt; 2. **Understanding \( H \) and \( E_U(H) \):**
+&gt; 2. *<em>Understanding \( H \) and \( E_U(H) \):</em>*
 &gt;    - What is \( H \) and \( E_U(H) \)?
 &gt; 
 &gt; 
@@ -995,11 +997,11 @@ but I don&#x27;t believe its reasonable for teams to be implementing it independ
 <div class='msg edited'><time>2024-07-18 09:48</time>&ensp;<span class='u' style='color:#cd8957'>gav</span>: Agreed, implementation of the underlying RS EC is not something which is needed for the prize. I&#x27;d be very happy to see an high quality treasury-funded implementation for use across client implementations.</div>
 <div class='msg edited'><time>2024-07-18 10:43</time>&ensp;<span class='u' style='color:#c67452'>sourabhniyogi</span>: Before we go down that (not as resilient?!) rabbit-hole, here are two solutions:
 
-- **Solution A: Change 342:1026 to powers of 2 (e.g., 256:1024).**  Instead of using the leopard package
+- *<em>Solution A: Change 342:1026 to powers of 2 (e.g., 256:1024).</em>*  Instead of using the leopard package
 <a href="https://github.com/catid/leopard/tree/master" target="_blank" rel="noopener">https://github.com/catid/leopard/tree/master</a>
 we use the original author&#x27;s package:
 <a href="https://github.com/SianJhengLin/Fast-algorithms-of-Reed-Solomon-erasure-codes" target="_blank" rel="noopener">https://github.com/SianJhengLin/Fast-algorithms-of-Reed-Solomon-erasure-codes</a>
-- **Solution B: Change Y\_2 in GP**
+- *<em>Solution B: Change Y\_2 in GP</em>*
 This could be Y\_64, or Y\_192 as implemented by Parity here:
 <a href="https://github.com/paritytech/erasure-coding/blob/6c22e28a7402cfc75381e430483defe8189df486/src/subshard.rs#L317" target="_blank" rel="noopener">https://github.com/paritytech/erasure-coding/blob/6c22e28a7402cfc75381e430483defe8189df486/src/subshard.rs#L317</a>
 or any multiple of 64 as per the docs:
@@ -1272,7 +1274,7 @@ It has all videos of the JAM lectures, including Buenos Aries, Singapore, and Br
 &gt; Even though reading Sassafras RFC can help (as it is a quite similar protocol), always take the GP as the source of truth for JAM.
 &gt; 3. Sure thing. I&#x27;ll post here as soon as it is ready.
 &gt; 4. This is a very interesting observation. Current implementation serializes 3 extra fields (part of the SNARK SRS).
-&gt; Serialization of these fields may be important **in a general application**, but here these values are constant.
+&gt; Serialization of these fields may be important *<em>in a general application</em>*, but here these values are constant.
 &gt; I will definitely get rid of these from serialized data (I&#x27;m on it). The final size will be 144 (i.e. the last 144 bytes of what you see right now)
 
 Hi Davide,
@@ -1282,7 +1284,7 @@ I&#x27;m quoting this old message as it is related to my doubt. I have checked m
 - Just to confirm, in the test vectors &quot;input.entropy&quot; refers here to Y(H_v) of the GP, right?
 - Thus, in the test vectors we don&#x27;t verify equations (59) and (60) (parts related to ark-ec-vrfs that I asked you about last week), right?</div>
 <div class='msg edited'><time>2024-07-29 17:42</time>&ensp;<span class='u' style='color:#c9419d'>davxy</span>: - As that old message reports, the <code>input.entropy</code> **for the vest vectors** is generated in some &quot;arbitrary&quot; manner (the quoted message reports how I generated it). In a real scenario YES, it is generated as per equation (66) of the last GP release (DRAFT 0.3.1 Jul 17). In the context of the safrole test vectors,  is not really important how we generate it as <code>H_v</code> is not present at all.
-- In safrole test vectors **we don&#x27;t verify** the validity of the signatures contained within the header (i.e. H\_v and H\_s) simply because are not part of the safrole&#x27;s specific STF. These will be probably verified in some upcoming test vectors to asses block&#x27;s header validity</div>
+- In safrole test vectors *<em>we don&#x27;t verify</em>* the validity of the signatures contained within the header (i.e. H\_v and H\_s) simply because are not part of the safrole&#x27;s specific STF. These will be probably verified in some upcoming test vectors to asses block&#x27;s header validity</div>
 <div class='msg reply'><time>2024-07-29 17:52</time>&ensp;<span class='u' style='color:#db4dca'>celadari</span>: Thank you</div>
 <div class='msg edited'><time>2024-07-29 18:36</time>&ensp;<span class='u' style='color:#db4dca'>celadari</span>: Regarding &quot;recent history&quot;, why do we assign H\_r to beta\[0\] instead of assigning it to beta\[|beta| - 1\] ?
 
@@ -1463,13 +1465,13 @@ Is there anything I&#x27;m missing here? Perhaps the compilers generate a code w
 <div class='msg'><time>2024-08-07 14:18</time>&ensp;<span class='u' style='color:#c77c36'>luke_f</span>: image.png</div>
 <div class='msg edited'><time>2024-08-07 14:22</time>&ensp;<span class='u' style='color:#c77c36'>luke_f</span>: hello.
 i think there is a mistake in recent history -  equation 83
-**the subscript s is supposed to be subscript x**
+*<em>the subscript s is supposed to be subscript x</em>*
 
 since _s_ is an availability specification, that does no have a _p_ sub-component (eq 122)
 _x_, however is refinement context , that does have _p_ component that is a hash (eq 121)
 
 
-or maybe it refers to *S* subscript *h*? the work package hash?</div>
+or maybe it refers to <em>S</em> subscript <em>h</em>? the work package hash?</div>
 <div class='msg'><time>2024-08-07 17:18</time>&ensp;<span class='u' style='color:#cd8957'>gav</span>: It refers to the work package hash in the specification component. </div>
 <div class='msg'><time>2024-08-08 01:58</time>&ensp;<span class='u' style='color:#c77c36'>luke_f</span>: &gt; &lt;@gav:polkadot.io&gt; It refers to the work package hash in the specification component.
 
@@ -1510,17 +1512,17 @@ oops sorry. i must have missed one release</div>
 <div class='msg'><time>2024-08-09 14:11</time>&ensp;<span class='u' style='color:#4977cf'>danicuki</span>: In the serialization definitions, there is the variable-size prefix 29-bit natural serialization function E4∗ \se_{4*}
 
 
-But I don&#x27;t see it being used anywhere. I see only mentions to E4 (without the *) \se_4  
+But I don&#x27;t see it being used anywhere. I see only mentions to E4 (without the <em>) \se_4  
 
-Should we use \se_{4*} by default when we see \se_4 ?</div>
+Should we use \se_{4</em>} by default when we see \se_4 ?</div>
 <div class='msg reply'><time>2024-08-09 14:12</time>&ensp;<span class='u' style='color:#4977cf'>danicuki</span>: Screenshot 2024-08-09 at 15.11.50.png</div>
 <div class='msg reply'><time>2024-08-09 14:12</time>&ensp;<span class='u' style='color:#4977cf'>danicuki</span>: Screenshot 2024-08-09 at 15.12.02.png</div>
 <div class='msg'><time>2024-08-09 15:51</time>&ensp;<span class='u' style='color:#cd8957'>gav</span>: &gt; &lt;@danicuki:matrix.org&gt; In the serialization definitions, there is the variable-size prefix 29-bit natural serialization function E4∗ \se_{4*}
 &gt; 
 &gt; 
-&gt; But I don&#x27;t see it being used anywhere. I see only mentions to E4 (without the *) \se_4  
+&gt; But I don&#x27;t see it being used anywhere. I see only mentions to E4 (without the <em>) \se_4  
 &gt; 
-&gt; Should we use \se_{4*} by default when we see \se_4 ?
+&gt; Should we use \se_{4</em>} by default when we see \se_4 ?
 
 No. When you see \se_4, use \se_4. The variable-length encoding functions are not presently used. They might be used in the future but for now you obviously don’t need to implement them to build a conformant implementation. </div>
 <div class='msg'><time>2024-08-09 21:12</time>&ensp;<span class='u' style='color:#4cbfa8'>xlchen</span>: </div>
@@ -1610,7 +1612,7 @@ you&#x27;ll need to implement the host functions regardless. you&#x27;ll need to
 <div class='msg edited'><time>2024-08-18 10:07</time>&ensp;<span class='u' style='color:#cd8957'>gav</span>: i don&#x27;t understand why you&#x27;re trying to use polkavm given that even for M1 you&#x27;ll need to write your own.</div>
 <div class='msg reply'><time>2024-08-18 10:59</time>&ensp;<span class='u' style='color:#c67452'>sourabhniyogi</span>: We are implementing our own PVM interpreter of course!  We have already done so for the Appendix A instruction set and covered the tests of <a href="https://github.com/w3f/jamtestvectors/pull/3." target="_blank" rel="noopener">https://github.com/w3f/jamtestvectors/pull/3.</a>   We just need to have some similar byte code for Appendix B.  To do that, we have to assemble some byte code that has host functions, and so we only  use koute&#x27;s assembler to map some assembly code (the PR has 23 of them) into PVM byte code to test that assembler.
 
-We are *not* FFIing into koute/polkavm.  We are only using it as an *assembler* to generate byte code to implement 23 host functions of Appendix B, following koute&#x27;s assemble/disassemble tool.
+We are <em>not</em> FFIing into koute/polkavm.  We are only using it as an <em>assembler</em> to generate byte code to implement 23 host functions of Appendix B, following koute&#x27;s assemble/disassemble tool.
 
 <a href="https://github.com/w3f/jamtestvectors/pull/3#issuecomment-2257688558" target="_blank" rel="noopener">https://github.com/w3f/jamtestvectors/pull/3#issuecomment-2257688558</a>
 </div>
@@ -1900,7 +1902,7 @@ The new requirement is that any services aggressive work results (with aggressiv
 
 I understand this is in the &quot;better to implement JAM to safely crawl before JAM walks/runs&quot; region here.  But you claim running with (b)&#x27;s aggressive refinement context is unachievable because ... what?</div>
 <div class='msg reply'><time>2024-09-10 09:09</time>&ensp;<span class='u' style='color:#c67452'>sourabhniyogi</span>: Typo: (252) should have &quot;historical_lookup&quot; instead of &quot;lookup&quot;</div>
-<div class='msg reply edited'><time>2024-09-10 20:47</time>&ensp;<span class='u' style='color:#cd8957'>gav</span>: JAM (and Polkadot before it) is secure only because of Elves. Elves requires that all validators are able to audit all Work Reports *regardless of whether they’re synced to the same fork or not*. All host functions available to Refine must return exactly the same result for any node on any fork beyond the lookup-anchor. Since we cannot assume any particular state is known (even the lookup anchor block’s state, which could be very old and is likely pruned) then our host functions must be pretty much stateless. Historical lookup works only because we know, at any block up to 24 hours later, whether a preimage was known at the time and if so what it was. We manage this only with specialised data structures (in accounts) and limiting the rate at which a preimage may be supplied, removed and supplied again to avoid state blowup. This can all be discovered by a thorough read of the GP. The design would not cleanly apply to more arbitrary and general state changes such as service storage. </div>
+<div class='msg reply edited'><time>2024-09-10 20:47</time>&ensp;<span class='u' style='color:#cd8957'>gav</span>: JAM (and Polkadot before it) is secure only because of Elves. Elves requires that all validators are able to audit all Work Reports <em>regardless of whether they’re synced to the same fork or not</em>. All host functions available to Refine must return exactly the same result for any node on any fork beyond the lookup-anchor. Since we cannot assume any particular state is known (even the lookup anchor block’s state, which could be very old and is likely pruned) then our host functions must be pretty much stateless. Historical lookup works only because we know, at any block up to 24 hours later, whether a preimage was known at the time and if so what it was. We manage this only with specialised data structures (in accounts) and limiting the rate at which a preimage may be supplied, removed and supplied again to avoid state blowup. This can all be discovered by a thorough read of the GP. The design would not cleanly apply to more arbitrary and general state changes such as service storage. </div>
 <div class='msg reply'><time>2024-09-12 14:00</time>&ensp;<span class='u' style='color:#c67452'>sourabhniyogi</span>: Thank you very much for this explanation.  We will properly understand ELVES=&gt;JAM constraints to see if there is any way we could improve the JAM service developer/user experience.  </div>
 <div class='msg edited'><time>2024-08-29 11:37</time>&ensp;<span class='u' style='color:#c67452'>sourabhniyogi</span>: (160) should have $l: {\\bf r}\_l$ to match 11.1.4&#x27;s eq (121) for the hash of the payload.
 (252) should use <code>historical_lookup</code> instead of <code>lookup</code></div>
@@ -2101,7 +2103,7 @@ At present, that&#x27;s zero according to the formula.</div>
 
 In addition to the usual corrections/clarifications, this contains a couple of modest but important changes:
 - Erasure-coding is now validator-major not chunk-major: this optimizes the happy case (where you have the first 342 validator&#x27;s shares) and doesn&#x27;t really affect the general case.
-- There&#x27;s a new item in chi (privileged services) for managing always-accumulate services and how much gas they get. The three privileged services *no longer always-accumulate implicitly*.</div>
+- There&#x27;s a new item in chi (privileged services) for managing always-accumulate services and how much gas they get. The three privileged services <em>no longer always-accumulate implicitly</em>.</div>
 <div class='msg'><time>2024-09-11 07:34</time>&ensp;<span class='u' style='color:#bfaf39'>dakkk</span>: I&#x27;ve found a possible discrepancy in single-step state transition of PVM:
 
 In 214 psi_1 receives (c,k,j) + pvm_state, while in 218 psi_1 receives (c,j) + pvm_state</div>
@@ -2164,18 +2166,18 @@ So how do we fix this discrepancy? First, even if the number of instruction byte
 Second, decide what to do when the number of instruction bytes is not divisible by 8:
 a) change the <code>|c| = |k|</code> to say that the <code>|c|</code> should be rounded up to the nearest 8 (so, essentially, &quot;round_up_to_nearest(8, instruction_bytes) == bits_in_bitmask&quot;); essentially, allow the number of instructions and the number of bits in the bitmask not match, but enforce that the bitmask can have at most an &quot;extra&quot; 7 bits of padding (of which, as I&#x27;ve previously explained, only the first bit matters)
 b) delete the <code>|c| = |k|</code> (since AFAIK we always know the length of the whole **p** anyway, so the only purpose this equation serves is to add an additional constraint); essentially, allow the number of instructions and the number of bits in the bitmask not match, and not enforce anything about the bitmask&#x27;s length
-c) force the instruction bytes to be always divisible by 8, in which case we could change the encoding of the **p** code blob to something like <code>p = E(|j|) ⌢ E_1(z) ⌢ E_z (j) ⌢ E(c) ⌢ E(k)</code> (basically remove <code>E(|c|)</code>, since, again, the lengths here can be implicitly calculated from the length of **p**)
+c) force the instruction bytes to be always divisible by 8, in which case we could change the encoding of the **p** code blob to something like <code>p = E(|j|) ⌢ E_1(z) ⌢ E_z (j) ⌢ E(c) ⌢ E(k)</code> (basically remove <code>E(|c|)</code>, since, again, the lengths here can be implicitly calculated from the length of *<em>p</em>*)
 
 So I think (b) is probably not a great idea. (a) is what I currently have implemented in PolkaVM, and I don&#x27;t dislike the (c) option (It can waste up to 6 bytes, but it doesn&#x27;t need any extra validation of the sizes. so one less place for the implementations to diverge I guess). gav </div>
 <div class='msg'><time>2024-09-12 08:30</time>&ensp;<span class='u' style='color:#cd8957'>gav</span>: Firstly I don’t understand the problem of instructions not being divisible by 8. Bit strings need not be divisible by 8 either. </div>
 <div class='msg'><time>2024-09-12 08:36</time>&ensp;<span class='u' style='color:#da5c80'>jan</span>: &gt; &lt;@gav:polkadot.io&gt; Firstly I don’t understand the problem of instructions not being divisible by 8. Bit strings need not be divisible by 8 either.
 
-We have a bit in the bit mask for every instruction, right? But we can&#x27;t just encode singular bits; we need to *physically* encode them as bytes. So if we have, say, an instructions blob which only takes 2 bytes of space, then sure, theoretically we only need 2 bits in the bit mask, but practically we must encode full 8 bits because 8 bits is the lowest granularity we can store. So this is what I mean by &quot;instructions not being divisible by 8&quot;.</div>
+We have a bit in the bit mask for every instruction, right? But we can&#x27;t just encode singular bits; we need to <em>physically</em> encode them as bytes. So if we have, say, an instructions blob which only takes 2 bytes of space, then sure, theoretically we only need 2 bits in the bit mask, but practically we must encode full 8 bits because 8 bits is the lowest granularity we can store. So this is what I mean by &quot;instructions not being divisible by 8&quot;.</div>
 <div class='msg edited'><time>2024-09-12 09:03</time>&ensp;<span class='u' style='color:#da5c80'>jan</span>: The implicit &quot;remaining bits of the bitmask encoded as bytes must be zero&quot; of GP&#x27;s bit string encoding has two issues here as far as I can see:
 
 1. this being an implicit requirement can be confusing for the implementers (as we&#x27;ve seen from the questions here; it might not be entirely obvious to everyone that those should be zeros, nor whether this should be validated), so it could be worthwhile to add a clarifying footnote or something explicitly saying this so that there&#x27;s no room for confusion,
 2. for the PVM code blob specifically this breaks the decoding of the very last instruction&#x27;s skip value, _unless_ we say that the the skip calculation goes only as far as the end of the bitmask (so effectively implicitly the bitmask would have a <code>1</code> in there because it would behave as if there actually was a <code>1</code> encoded there, even though we&#x27;d physically require encoding <code>0</code>s there!)</div>
-<div class='msg'><time>2024-09-12 09:05</time>&ensp;<span class='u' style='color:#da5c80'>jan</span>: Hmm, but okay, *another* way of dealing with this could maybe be inverting the mask so that operands get a <code>1</code> and instruction opcodes get a <code>0</code> in the bitmask - *then* the zero padding would work.</div>
+<div class='msg'><time>2024-09-12 09:05</time>&ensp;<span class='u' style='color:#da5c80'>jan</span>: Hmm, but okay, *another* way of dealing with this could maybe be inverting the mask so that operands get a <code>1</code> and instruction opcodes get a <code>0</code> in the bitmask - <em>then</em> the zero padding would work.</div>
 <div class='msg edited'><time>2024-09-12 09:19</time>&ensp;<span class='u' style='color:#7664c9'>emielvanderhoek</span>: Rereading GP-0.3.6-eq:276 (encoding of bitsequence) to me seems to explicitly force leading zero’s when encoding to an octet.
 
 Example: Value [T,F,F] leads to value 1 or 0x01 (0-filled). And no other value. </div>
@@ -2183,7 +2185,7 @@ Example: Value [T,F,F] leads to value 1 or 0x01 (0-filled). And no other value. 
 
 The encoding is irrelevant from the perspective of the PVM spec.</div>
 <div class='msg'><time>2024-09-12 09:29</time>&ensp;<span class='u' style='color:#cd8957'>gav</span>: They&#x27;re totally separate concerns.</div>
-<div class='msg'><time>2024-09-12 09:32</time>&ensp;<span class='u' style='color:#cd8957'>gav</span>: I say again: the length of any sequence (including a sequence of bits) do not need to be divisible by 8. From the perspective of the spec there is *absolutely nothing special* about bit-sequences compared to any other kind of sequence.</div>
+<div class='msg'><time>2024-09-12 09:32</time>&ensp;<span class='u' style='color:#cd8957'>gav</span>: I say again: the length of any sequence (including a sequence of bits) do not need to be divisible by 8. From the perspective of the spec there is <em>absolutely nothing special</em> about bit-sequences compared to any other kind of sequence.</div>
 <div class='msg edited'><time>2024-09-12 09:34</time>&ensp;<span class='u' style='color:#cd8957'>gav</span>: There is a perfectly well-defined serialization codec. It is independent of the business logic and does not prejudice it at all.</div>
 <div class='msg'><time>2024-09-12 09:37</time>&ensp;<span class='u' style='color:#cd8957'>gav</span>: Reading what you&#x27;re saying, the only thing I can think of which might need a tweak is the skip function.</div>
 <div class='msg'><time>2024-09-12 09:37</time>&ensp;<span class='u' style='color:#cd8957'>gav</span>: image.png</div>
@@ -2206,7 +2208,7 @@ Not necessarily.</div>
 <div class='msg edited'><time>2024-09-12 09:44</time>&ensp;<span class='u' style='color:#cd8957'>gav</span>: Bit sequences are arbitrary in length and anywhere spec subscripts by an index &gt;= length is undefined regardless of what might happen to be in any particular place in a machine&#x27;s physical RAM.</div>
 <div class='msg edited'><time>2024-09-12 09:46</time>&ensp;<span class='u' style='color:#cd8957'>gav</span>: You seem to be conflating some element of (perfectly well defined) business logic with the fact that the serialization of a bit sequence of type B\_8 and value \[1, 1, 1, 1, 1, 1, 1, 0\] happens to give the same octet sequence as a bit sequence of type B\_7 and value \[1, 1, 1, 1, 1, 1, 1\].</div>
 <div class='msg edited'><time>2024-09-12 09:48</time>&ensp;<span class='u' style='color:#cd8957'>gav</span>: As I say, at present the skip function appears to be in part undefined. This is the only alteration I see the need for. And it&#x27;s just a broken function - it has nothing to do with the serialization format of sequences, or subscripting into bit sequences.</div>
-<div class='msg'><time>2024-09-12 10:03</time>&ensp;<span class='u' style='color:#da5c80'>jan</span>: Okay, sure, but the bits *are* physically there, so it needs to be defined somehow (implicitly or explicitly) how they are handled. Are they validated (enforced to be zero) or are they ignored? The protocol *will* physically transmit those bytes, so it needs to define how they&#x27;re handled (even if, again, this definition is only implicit and not explicitly written out). So I disagree that this is in any way an implementation-only concern. It&#x27;s just a matter of whether the spec defines what happens explicitly or implicitly.
+<div class='msg'><time>2024-09-12 10:03</time>&ensp;<span class='u' style='color:#da5c80'>jan</span>: Okay, sure, but the bits <em>are</em> physically there, so it needs to be defined somehow (implicitly or explicitly) how they are handled. Are they validated (enforced to be zero) or are they ignored? The protocol <em>will</em> physically transmit those bytes, so it needs to define how they&#x27;re handled (even if, again, this definition is only implicit and not explicitly written out). So I disagree that this is in any way an implementation-only concern. It&#x27;s just a matter of whether the spec defines what happens explicitly or implicitly.
 
 Like, for example, let&#x27;s take this pseudo code as an example:
 
@@ -2260,19 +2262,19 @@ It&#x27;s not as simple as that.</div>
 <div class='msg'><time>2024-09-12 10:35</time>&ensp;<span class='u' style='color:#da5c80'>jan</span>: Yes, that&#x27;s what I was trying to say. (:</div>
 <div class='msg edited'><time>2024-09-12 10:37</time>&ensp;<span class='u' style='color:#cd8957'>gav</span>: From the GP&#x27;s perspective, there are no &quot;extra bits&quot;, or more generally stated, there is no capacity beyond the length. For the sequence s = \[0, 1\], s\[2\] is undefined. If the spec ever tries to evaluate it, there is a mistake in the spec. Maybe a corresponding operation in some implementions would define some result. That&#x27;s a potential avenue for an implementation-specific optimisation perhaps, but it&#x27;s irrelevant from the perspective of asking about correct behaviour.</div>
 <div class='msg edited'><time>2024-09-12 10:40</time>&ensp;<span class='u' style='color:#cd8957'>gav</span>: To help illustrate this a bit further you&#x27;d probably want to implement an efficient bit-sequence as a <code>Vec&lt;usize&gt;</code>, implying that you&#x27;d have up to 31 &quot;extra bits&quot; on 32-bit architectures and 63 &quot;extra bits&quot; on 64-bit architectures. Clearly the spec cannot care about what architecture any given impl instance is on. Therefore it must surely be that the GP cannot possibly consider the existence of any such &quot;extra bits&quot;.</div>
-<div class='msg'><time>2024-09-12 10:41</time>&ensp;<span class='u' style='color:#da5c80'>jan</span>: Hm... but isn&#x27;t there at least one part of the spec that accesses those &quot;extra&quot; bits, namely, the <code>machine</code> hostcall defines the program as being p_z *bytes* long, so doesn&#x27;t this impliy that there *will* be extra bits in there?</div>
+<div class='msg'><time>2024-09-12 10:41</time>&ensp;<span class='u' style='color:#da5c80'>jan</span>: Hm... but isn&#x27;t there at least one part of the spec that accesses those &quot;extra&quot; bits, namely, the <code>machine</code> hostcall defines the program as being p_z <em>bytes</em> long, so doesn&#x27;t this impliy that there <em>will</em> be extra bits in there?</div>
 <div class='msg edited'><time>2024-09-12 10:41</time>&ensp;<span class='u' style='color:#cd8957'>gav</span>: Where exactly?</div>
 <div class='msg'><time>2024-09-12 10:43</time>&ensp;<span class='u' style='color:#da5c80'>jan</span>: <a href="https://graypaper.fluffylabs.dev/#WyI3YWU1MWY5MzI1IiwiMmYiLCJBY2tub3dsZWRnZW1lbnRzIixudWxsLFsiPGRpdiBjbGFzcz1cInQgbTAgeDQzIGhlIHkxY2ZjIGZmZiBmczAgZmMwIHNjMCBsczAgd3MwXCI+IiwiPGRpdiBjbGFzcz1cInQgbTAgeDE1MyBoNCB5MWNmZSBmZjIxIGZzMiBmYzAgc2MwIGxzMCB3czBcIj4iXV0=" target="_blank" rel="noopener">https://graypaper.fluffylabs.dev/#WyI3YWU1MWY5MzI1IiwiMmYiLCJBY2tub3dsZWRnZW1lbnRzIixudWxsLFsiPGRpdiBjbGFzcz1cInQgbTAgeDQzIGhlIHkxY2ZjIGZmZiBmczAgZmMwIHNjMCBsczAgd3MwXCI+IiwiPGRpdiBjbGFzcz1cInQgbTAgeDE1MyBoNCB5MWNmZSBmZjIxIGZzMiBmYzAgc2MwIGxzMCB3czBcIj4iXV0=</a></div>
 <div class='msg'><time>2024-09-12 10:43</time>&ensp;<span class='u' style='color:#cd8957'>gav</span>: ok you mean the program blob.</div>
 <div class='msg'><time>2024-09-12 10:43</time>&ensp;<span class='u' style='color:#cd8957'>gav</span>: Yes, this draws upon the exact same (deterministic) codec as before.</div>
 <div class='msg'><time>2024-09-12 10:44</time>&ensp;<span class='u' style='color:#cd8957'>gav</span>: There&#x27;s still no extra bits.</div>
 <div class='msg'><time>2024-09-12 10:44</time>&ensp;<span class='u' style='color:#cd8957'>gav</span>: Again, you&#x27;re confusing the wire format with business logic.</div>
-<div class='msg'><time>2024-09-12 10:44</time>&ensp;<span class='u' style='color:#da5c80'>jan</span>: Okay, fair enough. So in *this* case the bits should be zero to correctly decode, otherwise an error is returned?</div>
+<div class='msg'><time>2024-09-12 10:44</time>&ensp;<span class='u' style='color:#da5c80'>jan</span>: Okay, fair enough. So in <em>this</em> case the bits should be zero to correctly decode, otherwise an error is returned?</div>
 <div class='msg'><time>2024-09-12 10:45</time>&ensp;<span class='u' style='color:#cd8957'>gav</span>: The point where wire-format (the p which is passed in <code>machine</code> and passed into Phi) changes into business logic is the E function.</div>
 <div class='msg'><time>2024-09-12 10:45</time>&ensp;<span class='u' style='color:#bfaf39'>dakkk</span>: In appendix A, why the gas delta is always 0 for every instruction?</div>
 <div class='msg edited'><time>2024-09-12 10:45</time>&ensp;<span class='u' style='color:#cd8957'>gav</span>: Before, one can argue that there may be &quot;extra bits&quot; (though I&#x27;d say it&#x27;s unhelpful and unnecessary to frame it in that way). Afterwards there are most certainly not. As I say, some implementations will likely use optimized language primitives like C++&#x27;s <code>vector&lt;bool&gt;</code> in order to represent this data and there will be no such accessible-beyond-rightful-length data.</div>
 <div class='msg edited'><time>2024-09-12 10:47</time>&ensp;<span class='u' style='color:#cd8957'>gav</span>: We have not yet defined sensible gas costs - it&#x27;ll be one of the last things we do.</div>
-<div class='msg'><time>2024-09-12 10:48</time>&ensp;<span class='u' style='color:#cd8957'>gav</span>: &gt; &lt;@jan:parity.io&gt; Okay, fair enough. So in *this* case the bits should be zero to correctly decode, otherwise an error is returned?
+<div class='msg'><time>2024-09-12 10:48</time>&ensp;<span class='u' style='color:#cd8957'>gav</span>: &gt; &lt;@jan:parity.io&gt; Okay, fair enough. So in <em>this</em> case the bits should be zero to correctly decode, otherwise an error is returned?
 
 That&#x27;s implication of the math, yeah.</div>
 <div class='msg'><time>2024-09-12 10:48</time>&ensp;<span class='u' style='color:#bfaf39'>dakkk</span>: &gt; &lt;@gav:polkadot.io&gt; We have not yet defined sensible gas costs - it&#x27;ll be one of the last things we do.
@@ -2404,9 +2406,9 @@ My question is: What is the relationship between these four entry points and the
 
 Why initialize the instruction counter with the entry point? 
 Does it mean that different invocation functions execute different parts of the instruction data (bold C in GP(218))?</div>
-<div class='msg'><time>2024-09-18 02:50</time>&ensp;<span class='u' style='color:#da5c80'>jan</span>: The entry point *is* the instruction counter.</div>
+<div class='msg'><time>2024-09-18 02:50</time>&ensp;<span class='u' style='color:#da5c80'>jan</span>: The entry point <em>is</em> the instruction counter.</div>
 <div class='msg'><time>2024-09-18 02:51</time>&ensp;<span class='u' style='color:#da5c80'>jan</span>: e.g. for refine you set the instruction pointer to 5 and start execution from there</div>
-<div class='msg'><time>2024-09-18 02:57</time>&ensp;<span class='u' style='color:#da5c80'>jan</span>: To give more backround on this: the way this will work *in practice* is that the program will have 4 unconditional jump instructions at the very start, and the first 3 of those instructions will be encoded in such a way as to be padded and always take up 5 bytes of space. Hence the entry points of 0, 5, 10 and 15. This design allows for hardcoded addresses for each of the entry points without having to specify them dynamically anywhere in the protocol.</div>
+<div class='msg'><time>2024-09-18 02:57</time>&ensp;<span class='u' style='color:#da5c80'>jan</span>: To give more backround on this: the way this will work <em>in practice</em> is that the program will have 4 unconditional jump instructions at the very start, and the first 3 of those instructions will be encoded in such a way as to be padded and always take up 5 bytes of space. Hence the entry points of 0, 5, 10 and 15. This design allows for hardcoded addresses for each of the entry points without having to specify them dynamically anywhere in the protocol.</div>
 <div class='msg'><time>2024-09-18 03:03</time>&ensp;<span class='u' style='color:#da5c80'>jan</span>: (And just to be clear in case it isn&#x27;t obvious: as a PVM implementation you don&#x27;t and shouldn&#x27;t care about this, and this shouldn&#x27;t be handled in any special way on the VM level. You&#x27;re supposed to set your instruction counter to the hardcoded address of the entry point, and just start execution from there, regardless of what exactly happens to be there. The fact that there will be usually unconditional jump instructions there is just an implementation detail, and is not in any way required by the GP.)</div>
 <div class='msg'><time>2024-09-18 12:49</time>&ensp;<span class='u' style='color:#5c84c9'>prematurata</span>: I believe i found some error in the pvm appendix. 
 
@@ -2444,7 +2446,7 @@ This would be the major &quot;feature request&quot;,  in addition to:
 
 I hope by Strongly Web3&#x27;s &quot;equidistant from all teams&quot; principle, we can have multiple teams (3+) undergoing audits and not just PolkaJAM in the Q2 timeframe =).</div>
 <div class='msg'><time>2024-09-20 07:50</time>&ensp;<span class='u' style='color:#cd8957'>gav</span>: sourabhniyogi: I am happy to field specific questions on interpretation of the Gray paper. I am not happy to be managed.</div>
-<div class='msg'><time>2024-09-20 07:51</time>&ensp;<span class='u' style='color:#cd8957'>gav</span>: If you persist with this attitude, I **will ban you**. </div>
+<div class='msg'><time>2024-09-20 07:51</time>&ensp;<span class='u' style='color:#cd8957'>gav</span>: If you persist with this attitude, I *<em>will ban you</em>*. </div>
 <div class='msg'><time>2024-09-20 07:56</time>&ensp;<span class='u' style='color:#cd8957'>gav</span>: &gt; &lt;@prematurata:matrix.org&gt; <a href="https://graypaper.fluffylabs.dev/#WyI3YWU1MWY5MzI1IiwiMmQiLCJBY2tub3dsZWRnZW1lbnRzIixudWxsLFsiPGRpdiBjbGFzcz1cInQgbTAgeGE2IGhiIHkxYWEzIGZmMTYgZnMwIGZjMCBzYzAgbHMwIHdzMFwiPiIsIjxkaXYgY2xhc3M9XCJ0IG0wIHhmZCBoZCB5MWFhNCBmZjE4IGZzNSBmYzAgc2MwIGxzMCB3czBcIj4iXV0=" target="_blank" rel="noopener">https://graypaper.fluffylabs.dev/#WyI3YWU1MWY5MzI1IiwiMmQiLCJBY2tub3dsZWRnZW1lbnRzIixudWxsLFsiPGRpdiBjbGFzcz1cInQgbTAgeGE2IGhiIHkxYWEzIGZmMTYgZnMwIGZjMCBzYzAgbHMwIHdzMFwiPiIsIjxkaXYgY2xhc3M9XCJ0IG0wIHhmZCBoZCB5MWFhNCBmZjE4IGZzNSBmYzAgc2MwIGxzMCB3czBcIj4iXV0=</a> is this correct? i am referring to the 176 offset/length the validator data should be 336 bytes long.
 
 Correct - that should be 336. Will be corrected.</div>
@@ -2679,7 +2681,7 @@ yeah that&#x27;s a rename issue.</div>
 <div class='msg'><time>2024-10-10 12:57</time>&ensp;<span class='u' style='color:#73caa8'>dvladco</span>: Hi everyone, we noticed that the polkavm rust implementation charges 1 extra gas when load/store fails with out of bounds error, however we couldn’t find this described in the graypaper, is this expected behaviour?</div>
 <div class='msg reply'><time>2024-10-10 13:01</time>&ensp;<span class='u' style='color:#da5c80'>jan</span>: Do you mean that there is extra gas charged on top of the 1 gas that the instruction costs normally?
 
-If so then that&#x27;s a bug. Nevertheless, it doesn&#x27;t really matter what PolkaVM does here. PolkaVM is *not* a reference implementation of the GP; it&#x27;s just *an* implementation, so you need to remember that just because PolkaVM does something it doesn&#x27;t mean it&#x27;s correct. :P</div>
+If so then that&#x27;s a bug. Nevertheless, it doesn&#x27;t really matter what PolkaVM does here. PolkaVM is <em>not</em> a reference implementation of the GP; it&#x27;s just <em>an</em> implementation, so you need to remember that just because PolkaVM does something it doesn&#x27;t mean it&#x27;s correct. :P</div>
 <div class='msg reply'><time>2024-10-10 13:18</time>&ensp;<span class='u' style='color:#73caa8'>dvladco</span>: I understand, I was asking this because there is a PR for the <a href="https://github.com/w3f/jamtestvectors/pull/3" target="_blank" rel="noopener">jamtestvectors</a> and as I can see these are based the PolkaVM implementation, so we are also trying to validate our implementation agains these tests</div>
 <div class='msg reply'><time>2024-10-10 13:20</time>&ensp;<span class='u' style='color:#da5c80'>jan</span>: Ah, okay.</div>
 <div class='msg reply edited'><time>2024-10-10 13:20</time>&ensp;<span class='u' style='color:#73caa8'>dvladco</span>: in this case I assume a more appropriate place to ask this would be in the PR itself :)</div>
@@ -2867,12 +2869,12 @@ a is used to construct t: <a href="https://graypaper.fluffylabs.dev/#/293bf5a/2f
 <div class='msg'><time>2024-10-21 12:56</time>&ensp;<span class='u' style='color:#cd8957'>gav</span>: @room <a href="https://github.com/gavofyork/graypaper/releases/tag/v0.4.3" target="_blank" rel="noopener">0.4.3</a> is released with all the latest corrections/clarifications.</div>
 <div class='msg'><time>2024-10-22 07:22</time>&ensp;<span class='u' style='color:#bfaf39'>dakkk</span>: in export hostcall, constant W_X is not defined: <a href="https://graypaper.fluffylabs.dev/#/439ca37/31ab0031ae00" target="_blank" rel="noopener">https://graypaper.fluffylabs.dev/#/439ca37/31ab0031ae00</a></div>
 <div class='msg'><time>2024-10-22 11:14</time>&ensp;<span class='u' style='color:#73caa8'>dvladco</span>: Hello, I am struggling to understand appendix A.7 more specifically I can&#x27;t find the explanation for a bunch of variables like <code>o</code>, <code>w</code>, <code>z</code>, <code>s</code> in formula <code>260</code> and later <code>a</code>, <code>W</code>, <code>R</code>, <code>V</code>, <code>A</code> in formula <code>264</code>. I have managed to decode RAM but mainly looking at the polkavm rust implementation however I don&#x27;t understand how to decode the registers from the program code <code>p</code></div>
-<div class='msg reply'><time>2024-10-22 11:27</time>&ensp;<span class='u' style='color:#da5c80'>jan</span>: The formula (264) defines the memory map of the standard program initialization (that is: what is put at a given memory address, whether it&#x27;s initialized, whether it&#x27;s read-only/read-write, etc.). The formula (260) is essentially the standard JAM &quot;program blob&quot;. You don&#x27;t decode the registers from **p** (260); the initial values of the registers are given in (265).</div>
+<div class='msg reply'><time>2024-10-22 11:27</time>&ensp;<span class='u' style='color:#da5c80'>jan</span>: The formula (264) defines the memory map of the standard program initialization (that is: what is put at a given memory address, whether it&#x27;s initialized, whether it&#x27;s read-only/read-write, etc.). The formula (260) is essentially the standard JAM &quot;program blob&quot;. You don&#x27;t decode the registers from *<em>p</em>* (260); the initial values of the registers are given in (265).</div>
 <div class='msg reply'><time>2024-10-22 11:54</time>&ensp;<span class='u' style='color:#73caa8'>dvladco</span>: Yeah, that would make sense however I got confused by this sentance:
 &quot;We thus define the standard program code format p, which includes not only the instructions and jump table (pre-
 viously represented by the term c), but also information on the state of the ram and registers at program start&quot;</div>
 <div class='msg reply edited'><time>2024-10-22 11:56</time>&ensp;<span class='u' style='color:#73caa8'>dvladco</span>: here it says that we get registers from program code p and later in the formula 259 we have this <code>Y(p) -&gt; (c, ω, μ)?</code></div>
-<div class='msg reply'><time>2024-10-22 12:19</time>&ensp;<span class='u' style='color:#da5c80'>jan</span>: The wording here might be a little confusing as-is. The initial registers are defined as part of the standard program initialization (eq. 265), but they&#x27;re *not* explicitly part of the program blob (eq. 260). The Y in eq. 259 is meant to represent the standard program initialization, but it doesn&#x27;t necessarily mean that the values of the registers are directly extracted from **p**.</div>
+<div class='msg reply'><time>2024-10-22 12:19</time>&ensp;<span class='u' style='color:#da5c80'>jan</span>: The wording here might be a little confusing as-is. The initial registers are defined as part of the standard program initialization (eq. 265), but they&#x27;re <em>not</em> explicitly part of the program blob (eq. 260). The Y in eq. 259 is meant to represent the standard program initialization, but it doesn&#x27;t necessarily mean that the values of the registers are directly extracted from *<em>p</em>*.</div>
 <div class='msg reply edited'><time>2024-10-22 12:46</time>&ensp;<span class='u' style='color:#73caa8'>dvladco</span>: Thank you, this explanation makes sense, also formula 266 shows <code>a</code> as separate from <code>p</code>. I guess formula 259 should be something like this then <code>Y(p, a) -&gt; (c, ω, μ)?</code></div>
 <div class='msg reply'><time>2024-10-22 13:19</time>&ensp;<span class='u' style='color:#73caa8'>dvladco</span>: one more thing, formula 265 describes what are the initial registers, but I can&#x27;t find defined anywhere how to convert <code>a</code> which is a series of octets with at most Z_I elements to registers [N_R]_13</div>
 <div class='msg reply'><time>2024-10-22 13:53</time>&ensp;<span class='u' style='color:#cd8957'>gav</span>: It is |a|, the number of items in a, which should easily fit in register index 8. </div>
@@ -3538,14 +3540,14 @@ the test fails because the culprit target is not in the bad set (equation 10.5)<
 </div>
 <div class='msg edited'><time>2024-12-02 08:54</time>&ensp;<span class='u' style='color:#c457c5'>vinsystems</span>: Is it possible to have different epoch judgments in the same dispute extrinsic? </div>
 <div class='msg edited'><time>2024-12-05 11:05</time>&ensp;<span class='u' style='color:#72c147'>luke_fishman</span>: Hello, guess i am missing something.
-in <a href="https://graypaper.fluffylabs.dev/#/911af30/2c5b012c5b01" target="_blank" rel="noopener">Refine Invocation</a> we only ever call the Argument Invocation with **x = (∅, \[\])**
+in <a href="https://graypaper.fluffylabs.dev/#/911af30/2c5b012c5b01" target="_blank" rel="noopener">Refine Invocation</a> we only ever call the Argument Invocation with *<em>x = (∅, \[\])</em>*
 this then passes on through ΨM and ΨH and eventually one of the Omegas in <a href="https://graypaper.fluffylabs.dev/#/911af30/322101322101" target="_blank" rel="noopener">B.8</a> is getting called with this pair as an argument
 
 so if we only ever pass &quot;empty&quot; pair, how will the internal Omegas ever operate on non empty argument?</div>
 <div class='msg'><time>2024-12-05 11:17</time>&ensp;<span class='u' style='color:#72c147'>luke_fishman</span>: ok i think i can answer myself (sorry for the spam)
 by using a series of host calls i can progressively  &quot;fill up&quot; the context pair
 for example i could use machine =&gt; poke =&gt; peek in order to
-create a machine in the **m** dictionary, write some program into it then verify it is there using peek</div>
+create a machine in the *<em>m</em>* dictionary, write some program into it then verify it is there using peek</div>
 <div class='msg edited'><time>2024-12-05 13:05</time>&ensp;<span class='u' style='color:#c86f85'>amritj</span>: We use the paged proof hashed segments for building segment justification.
 
 The segment root is built with a constancy preprocessor that prepends &quot;$leaf&quot; to the data.
@@ -3845,7 +3847,7 @@ PR: <a href="https://github.com/gavofyork/graypaper/pull/166" target="_blank" re
 <div class='msg edited'><time>2024-12-18 14:58</time>&ensp;<span class='u' style='color:#5c84c9'>prematurata</span>: davxy afk: since youre the bandernatch god :) I have a question... <code>Hs</code> has a direct dependency on <code>Hv</code> which is included in the <code>context</code> to sign includes <code>Hv</code> as last element. (6.16 and 6.15)
 
 <code>Hv</code> seems to also depend on <code>Hs</code>.... well.. it depends on <code>Y(Hs)</code> (see 6.17) . While i know it needs to match the ticket in case we&#x27;re not in fallback mode, i believe there is some cryptography magic i didnt fully understand to know what <code>Y(Hs)</code> would be without really having Hs.... otherwise we would have a circular dependency</div>
-<div class='msg edited'><time>2024-12-18 15:01</time>&ensp;<span class='u' style='color:#5c84c9'>prematurata</span>: If i understand properly this magic should be using <code>G.4</code> with same message, privkey and **empty context** to get a RingVRF proof on which i could then apply G.5 and get the same result</div>
+<div class='msg edited'><time>2024-12-18 15:01</time>&ensp;<span class='u' style='color:#5c84c9'>prematurata</span>: If i understand properly this magic should be using <code>G.4</code> with same message, privkey and *<em>empty context</em>* to get a RingVRF proof on which i could then apply G.5 and get the same result</div>
 <div class='msg'><time>2024-12-18 15:10</time>&ensp;<span class='u' style='color:#79ca84'>alxmirap</span>: I may be able to answer that, I believe. The encoding in equations 6.15/6.16 uses the function \Epsilon_U(H), defined in Appendix C as being the full \Epsilon(H) without the H_s term (equations C.19 and C.20).
 
 I believe this encoding function was created precisely for the case of omitting this field to avoid the circular dependency.</div>
@@ -3896,7 +3898,7 @@ so we can never get w7&#x27; = HIGH</div>
 <div class='msg'><time>2024-12-19 19:24</time>&ensp;<span class='u' style='color:#cd8957'>gav</span>: The gas cost for transfer is only a placeholder. I’ll make it more sensible soon. </div>
 <div class='msg'><time>2024-12-19 19:25</time>&ensp;<span class='u' style='color:#cd8957'>gav</span>: But the g it is referring to is not the instruction gas cost on the left but the let expression above. </div>
 <div class='msg'><time>2024-12-19 19:25</time>&ensp;<span class='u' style='color:#cd8957'>gav</span>: I’ll also change the term used. </div>
-<div class='msg edited'><time>2024-12-20 09:26</time>&ensp;<span class='u' style='color:#cd8957'>gav</span>: @room Version 0.5.3 is <a href="https://github.com/gavofyork/graypaper/releases/tag/v0.5.3" target="_blank" rel="noopener">released</a>, containing quite a few corrections and clarifications. No really major changes this time, though we now have *active removal of reports on timeout*.</div>
+<div class='msg edited'><time>2024-12-20 09:26</time>&ensp;<span class='u' style='color:#cd8957'>gav</span>: @room Version 0.5.3 is <a href="https://github.com/gavofyork/graypaper/releases/tag/v0.5.3" target="_blank" rel="noopener">released</a>, containing quite a few corrections and clarifications. No really major changes this time, though we now have <em>active removal of reports on timeout</em>.</div>
 <div class='msg'><time>2024-12-21 18:53</time>&ensp;<span class='u' style='color:#be2950'>clearloop</span>: Screenshot 2024-12-22 at 01.53.11.png</div>
 <div class='msg edited'><time>2024-12-21 18:54</time>&ensp;<span class='u' style='color:#be2950'>clearloop</span>: **9.3 Account Footprint and Threshold Balance - formula (9.8)**
 
@@ -3986,13 +3988,13 @@ so... here i get stuck? where is the missing information to allow to reconstruct
 <div class='msg'><time>2025-01-02 05:31</time>&ensp;<span class='u' style='color:#30c84d'>clw0908</span>: some questions about the following opcodes:  
 135:  
 <a href="https://graypaper.fluffylabs.dev/#/6e1c0cd/27d70327e303" target="_blank" rel="noopener">https://graypaper.fluffylabs.dev/#/6e1c0cd/27d70327e303</a>  
-Since **vx** belongs to **N64**, should **vx** be mod 2^32 to ensure the input of **X4** won&#x27;t overflow?  
+Since *<em>vx</em>* belongs to *<em>N64</em><em>, should </em><em>vx</em>* be mod 2^32 to ensure the input of *<em>X4</em>* won&#x27;t overflow?  
 
 136:  
 <a href="https://graypaper.fluffylabs.dev/#/6e1c0cd/27f30327fc03" target="_blank" rel="noopener">https://graypaper.fluffylabs.dev/#/6e1c0cd/27f30327fc03</a>  
-Since **vx** belongs to **N64**, should **Z4(vx)** be replaced by **Z8(vx)**?  </div>
+Since *<em>vx</em>* belongs to *<em>N64</em><em>, should </em><em>Z4(vx)</em>* be replaced by *<em>Z8(vx)</em>*?  </div>
 <div class='msg edited'><time>2025-01-02 10:05</time>&ensp;<span class='u' style='color:#cd8957'>gav</span>: v_x belongs to N_32 - it’s constructed from at most 4 octets from the instruction data. (l_x is <code>min(…, 4)</code>)</div>
-<div class='msg'><time>2025-01-02 12:12</time>&ensp;<span class='u' style='color:#30c84d'>clw0908</span>: But the output of **X_lx**(**eq A.11**) belongs to **N_R** (**N_64**) 
+<div class='msg'><time>2025-01-02 12:12</time>&ensp;<span class='u' style='color:#30c84d'>clw0908</span>: But the output of *<em>X_lx</em><em>(</em><em>eq A.11</em><em>) belongs to </em><em>N_R</em>* (*<em>N_64</em>*) 
 <a href="https://graypaper.fluffylabs.dev/#/6e1c0cd/249501249601" target="_blank" rel="noopener">https://graypaper.fluffylabs.dev/#/6e1c0cd/249501249601</a>
 
 Did I misunderstand something?</div>
@@ -4023,7 +4025,7 @@ It’s perfectly fine to concoct programs which reuse a previous instruction’s
 <div class='msg'><time>2025-01-05 09:10</time>&ensp;<span class='u' style='color:#72c147'>luke_fishman</span>: couple of question please regarding chapter 14.4 (computation of work results)
 1. in Eq. 14.11 =&gt; definition of I(p,j) =&gt; invocation of refine =&gt; the function <a href="https://graypaper.fluffylabs.dev/#/6e1c0cd/1a87021a8702" target="_blank" rel="noopener">S</a>(import segment data) is being called with two arguments, but in <a href="https://graypaper.fluffylabs.dev/#/6e1c0cd/1b48001b4800" target="_blank" rel="noopener">14.14</a> is defined only with single (work item) argument.
 which one is it?
-2. maybe related, who/what is the bold face **s** used by the functions J and S in 14.14? where does it come from?
+2. maybe related, who/what is the bold face *<em>s</em>* used by the functions J and S in 14.14? where does it come from?
 
 
 Thank you</div>
@@ -4189,7 +4191,7 @@ What do you do when a page fault ocurrs? Do you store the lowest address to acce
 <div class='msg reply'><time>2025-01-20 12:55</time>&ensp;<span class='u' style='color:#da5c80'>jan</span>: For toplevel PVMs a page fault is no different than executing a &quot;trap&quot; instruction or any other condition which would result in a &quot;panic&quot; exit reason, and for those you don&#x27;t even need to know the address of the page that faulted.
 
 For inner PVMs (those are PVMs triggered with the <code>invoke</code> hostcall) a page fault will interrupt the execution of the inner PVM and should return the address of the page which triggered the fault.</div>
-<div class='msg reply'><time>2025-01-20 13:00</time>&ensp;<span class='u' style='color:#da5c80'>jan</span>: And in case you&#x27;re wondering, the store instructions are atomic, so for example if the inner PVM tries to write 4 bytes into the memory, and the first two bytes end up at the 2 last bytes of page N (which was already faulted) and the last two bytes end up at the 2 first bytes of page N +1 (which was not faulted) then such a write will *only* trigger a page fault with the address of the N + 1 page and memory will not be modified.</div>
+<div class='msg reply'><time>2025-01-20 13:00</time>&ensp;<span class='u' style='color:#da5c80'>jan</span>: And in case you&#x27;re wondering, the store instructions are atomic, so for example if the inner PVM tries to write 4 bytes into the memory, and the first two bytes end up at the 2 last bytes of page N (which was already faulted) and the last two bytes end up at the 2 first bytes of page N +1 (which was not faulted) then such a write will <em>only</em> trigger a page fault with the address of the N + 1 page and memory will not be modified.</div>
 <div class='msg edited'><time>2025-01-20 18:01</time>&ensp;<span class='u' style='color:#c67452'>sourabhniyogi</span>: Small Clarification question about preimages included in the genesis state (<a href="https://github.com/jam-duna/jamtestnet/blob/main/fallback/state_transitions/455223_000.json#L9C24-L9C90" target="_blank" rel="noopener">example</a>):  To be conformant to GP, should it include a matching <a href="https://graypaper.fluffylabs.dev/#/579bd12/387003387003" target="_blank" rel="noopener">a\_l</a> in the state trie _even though no preimage was ever &quot;requested&quot;_?  If so, what would (9.7) (<a href="https://graypaper.fluffylabs.dev/#/579bd12/11aa0011aa00" target="_blank" rel="noopener">GP link</a>) prescribe as its $[x]$ value?</div>
 <div class='msg'><time>2025-01-20 22:04</time>&ensp;<span class='u' style='color:#cd8957'>gav</span>: [0] perhaps?</div>
 <div class='msg'><time>2025-01-21 12:29</time>&ensp;<span class='u' style='color:#c67452'>sourabhniyogi</span>: Question on JAM DA throughput: How does the model referenced in <a href="https://graypaper.fluffylabs.dev/#/579bd12/1f90011f9001" target="_blank" rel="noopener">Sec 20</a> arrive at the distributed availability of 852MB/s?  Simplest model based on <a href="https://graypaper.fluffylabs.dev/#/579bd12/418d00418d00" target="_blank" rel="noopener">W_B=12MB</a> (max encoded work package size, derived from bandwidth considerations I think?) with 6s on guarantee and 6s on assurance yields 1MB/s per core x 341 cores = 341MB/s -- so what accounts for the difference?  </div>
@@ -4199,7 +4201,7 @@ For inner PVMs (those are PVMs triggered with the <code>invoke</code> hostcall) 
 <div class='msg'><time>2025-01-22 04:52</time>&ensp;<span class='u' style='color:#c67452'>sourabhniyogi</span>: Ok, got it -- this 2x pipelining &quot;easter egg&quot; is not obvious from GP or JAMNP.   We now see the conditions for it are carefully enabled through the ordering of assurances and guarantees on &quot;rho&quot;.   Is the idea that this performance optimization is optional for M3 &quot;Kusama performance&quot; but practically required  for M4 &quot;Polkadot performance&quot; -- yet not really part of the JAM protocol per se and thus outside of GP?  Does a hint in CE133/134 to achieve this factor of 2x make sense?</div>
 <div class='msg'><time>2025-01-23 08:47</time>&ensp;<span class='u' style='color:#cd8957'>gav</span>: Implementations are expected to author blocks in a reasonably efficient manner. Asynchrony which is possible should be exploited. This will likely be required as early as M2. </div>
 <div class='msg'><time>2025-01-23 08:50</time>&ensp;<span class='u' style='color:#cd8957'>gav</span>: We will work to provide some basic M2 test vectors demonstrating this expectation. </div>
-<div class='msg edited'><time>2025-01-23 08:52</time>&ensp;<span class='u' style='color:#be2950'>clearloop</span>: If there will be a more detailed spec for async computation provided in M2 test vectors, as we can see in the dependency graph here <a href="https://graypaper.fluffylabs.dev/#/579bd12/091b00091b00," target="_blank" rel="noopener">https://graypaper.fluffylabs.dev/#/579bd12/091b00091b00,</a> some of the state transition are just **assign** operations, that they actually not need async</div>
+<div class='msg edited'><time>2025-01-23 08:52</time>&ensp;<span class='u' style='color:#be2950'>clearloop</span>: If there will be a more detailed spec for async computation provided in M2 test vectors, as we can see in the dependency graph here <a href="https://graypaper.fluffylabs.dev/#/579bd12/091b00091b00," target="_blank" rel="noopener">https://graypaper.fluffylabs.dev/#/579bd12/091b00091b00,</a> some of the state transition are just *<em>assign</em>* operations, that they actually not need async</div>
 <div class='msg edited'><time>2025-01-23 09:11</time>&ensp;<span class='u' style='color:#cd8957'>gav</span>: For the inner aspects of state transition (block execution), asynchrony is perhaps not quite so relevant as with block authoring.</div>
 <div class='msg'><time>2025-01-23 09:12</time>&ensp;<span class='u' style='color:#cd8957'>gav</span>: There will likely need to be some to hit M3 and M4 (e.g. signature checking, inter-block Merkle root calculation).</div>
 <div class='msg'><time>2025-01-23 09:12</time>&ensp;<span class='u' style='color:#cd8957'>gav</span>: But it&#x27;s up to teams how the optimise, given the correctness-constraints of the GP.</div>
@@ -4267,7 +4269,7 @@ Thanks!
 <div class='msg edited'><time>2025-02-02 11:16</time>&ensp;<span class='u' style='color:#cd8957'>gav</span>: Version <a href="https://github.com/gavofyork/graypaper/releases/tag/v0.6.1" target="_blank" rel="noopener">0.6.1</a> is released.
 
 This is just a few small corrections and a simplification of <code>fetch</code>.</div>
-<div class='msg'><time>2025-02-03 06:12</time>&ensp;<span class='u' style='color:#30c84d'>clw0908</span>: Should **ω_A** be taken modulo **2^32** before being fed into **Χ_4**, since the input of **Χ_4** belongs to **N_32**?
+<div class='msg'><time>2025-02-03 06:12</time>&ensp;<span class='u' style='color:#30c84d'>clw0908</span>: Should *<em>ω_A</em>* be taken modulo *<em>2^32</em>* before being fed into *<em>Χ_4</em><em>, since the input of </em><em>Χ_4</em>* belongs to *<em>N_32</em>*?
 
 <a href="https://graypaper.fluffylabs.dev/#/4bb8fd2/299c0329a303" target="_blank" rel="noopener">https://graypaper.fluffylabs.dev/#/4bb8fd2/299c0329a303</a></div>
 <div class='msg'><time>2025-02-03 08:45</time>&ensp;<span class='u' style='color:#cd8957'>gav</span>: Yes, I expect so - <a href="https://matrix.to/#/@jan:parity.io" target="_blank" rel="noopener">@jan:parity.io</a>?</div>
@@ -4333,7 +4335,7 @@ Guaranteeing is a strategic endeavour, and the Gray Paper generally avoids dicta
 <div class='msg edited'><time>2025-02-06 11:50</time>&ensp;<span class='u' style='color:#cd8957'>gav</span>: Bold x is any value which satisfies the various conditions on it. You&#x27;ll find that practically speaking, there&#x27;s only one which anyone could reasonably know.</div>
 <div class='msg'><time>2025-02-06 11:54</time>&ensp;<span class='u' style='color:#cd8957'>gav</span>: It&#x27;s used specifically for extrinsics, where an extrinsic is specified in the WP as a hash/len. We assert that we know the preimage since we would not get to this part of the guarantee pipeline without knowing.</div>
 <div class='msg'><time>2025-02-06 11:55</time>&ensp;<span class='u' style='color:#cd8957'>gav</span>: Alternatively it could have been made explicit with an additional term being passed in to the Refine function and its context, but that would have just complicated the formulation.</div>
-<div class='msg'><time>2025-02-06 11:56</time>&ensp;<span class='u' style='color:#cd8957'>gav</span>: The GP isn&#x27;t about describing a node&#x27;s internal _data-logistics_; that&#x27;s an implementation-specific consideration. It only concerns outward *behaviour*.</div>
+<div class='msg'><time>2025-02-06 11:56</time>&ensp;<span class='u' style='color:#cd8957'>gav</span>: The GP isn&#x27;t about describing a node&#x27;s internal _data-logistics_; that&#x27;s an implementation-specific consideration. It only concerns outward <em>behaviour</em>.</div>
 <div class='msg'><time>2025-02-06 16:02</time>&ensp;<span class='u' style='color:#a23bc7'>emielsebastiaan</span>: &gt; &lt;@gav:polkadot.io&gt; @room : <a href="https://github.com/gavofyork/graypaper/releases/tag/v0.6.2" target="_blank" rel="noopener">v0.6.2</a> is out - contains all the latest corrections.
 
 3 PRs with pvm instruction modifications are pending review at your convenience. </div>
@@ -4361,11 +4363,11 @@ Hm, but now that I think about it we probably should make <code>void</code> not 
 <div class='msg reply'><time>2025-02-09 17:08</time>&ensp;<span class='u' style='color:#825bc4'>jay_ztc</span>: Not aware of any other than davxys work on this. Have it on my list to investigate as a potential SPOF for the network.</div>
 <div class='msg edited'><time>2025-02-09 18:55</time>&ensp;<span class='u' style='color:#c9419d'>davxy</span>: AFAIK, <code>arc-ec-vrfs</code> is currently the only implementation available. This is likely because the scheme is not standardized, thus any existing implementation should be tied to JAM.
 
-For those interested in implementing it, the details of Bandersnatch VRFs are soecified here: <a href="https://github.com/davxy/bandersnatch-vrfs-spec." target="_blank" rel="noopener">https://github.com/davxy/bandersnatch-vrfs-spec.</a> Implementing the &quot;plain&quot; VRF is **relatively** straightforward, especially with the support of a &quot;bigint&quot; library, making it a manageable task.
+For those interested in implementing it, the details of Bandersnatch VRFs are soecified here: <a href="https://github.com/davxy/bandersnatch-vrfs-spec." target="_blank" rel="noopener">https://github.com/davxy/bandersnatch-vrfs-spec.</a> Implementing the &quot;plain&quot; VRF is *<em>relatively</em>* straightforward, especially with the support of a &quot;bigint&quot; library, making it a manageable task.
 
 However, the complexity increases significantly when dealing with the ring-VRF variant. Even though it is thoroughly specified here: <a href="https://github.com/davxy/ring-proof-spec" target="_blank" rel="noopener">https://github.com/davxy/ring-proof-spec</a> , implementing it requires a library that supports the underlying SNARK framework it relies on. Since there are no official standards (only de facto ones, at best), you’ll likely need to build many things from scratch. 
 
-We have been using <a href="https://arkworks.rs/" target="_blank" rel="noopener">arkworks</a> for this, as it provides **most** of the tools necessary. That said, some additional components were developed by the W3F team and ourselves to fill in the gaps anyway.
+We have been using <a href="https://arkworks.rs/" target="_blank" rel="noopener">arkworks</a> for this, as it provides *<em>most</em>* of the tools necessary. That said, some additional components were developed by the W3F team and ourselves to fill in the gaps anyway.
 
 In summary, if someone is inclined to implement any of these components (also by building over arkworks, for example), I’m available to provide some support. Additionally, test vectors are available for validating conformance.</div>
 <div class='msg'><time>2025-02-09 19:20</time>&ensp;<span class='u' style='color:#4036ac'>ascriv</span>: Since implementing it from scratch is so challenging, it seems essentially everyone will rely on the one implementation that is available (using something like go’s FFI if they’re not implementing jam in rust), which becomes a redundancy and a failure point. It’s probably well audited and as a single point of failure still probably ok though.</div>
@@ -4437,7 +4439,7 @@ Am I clear? 😅</div>
 Specifically, the genesis state with bootstrap service 0 will have a null authorizer code hash (say, 0x12344321...) and the very first work package ${\\bf p}$ (to create a new service) will have $h=0$ and $u=0x12344321...$ to reference this null authorizer.
 
 Does that make sense?</div>
-<div class='msg'><time>2025-02-18 04:51</time>&ensp;<span class='u' style='color:#4068cd'>0xjunha</span>: Description of accumulate queue-editing function (*E*) seems outdated -  opened a PR to update it.
+<div class='msg'><time>2025-02-18 04:51</time>&ensp;<span class='u' style='color:#4068cd'>0xjunha</span>: Description of accumulate queue-editing function (<em>E</em>) seems outdated -  opened a PR to update it.
 <a href="https://github.com/gavofyork/graypaper/pull/246" target="_blank" rel="noopener">https://github.com/gavofyork/graypaper/pull/246</a></div>
 <div class='msg edited'><time>2025-02-18 05:03</time>&ensp;<span class='u' style='color:#cd8957'>gav</span>: No - having trouble interpreting this</div>
 <div class='msg edited'><time>2025-02-18 05:07</time>&ensp;<span class='u' style='color:#c67452'>sourabhniyogi</span>: Sorry -- how does Eq B.1&#x27;s first input of $\\Psi\_M$ ( which is ${\\bf p}\_{\\bf c}$) get at a work package&#x27;s authorization code?</div>
@@ -4492,7 +4494,7 @@ The s♣ formula has C#6 (s⌢ P(s))), where S is an array and P(S) is an array 
 <div class='msg'><time>2025-02-22 01:57</time>&ensp;<span class='u' style='color:#4036ac'>ascriv</span>: Is there a very rough estimate for v1.0.0? Trying to think if I can make milestone 1 by that time :v</div>
 <div class='msg'><time>2025-02-22 02:45</time>&ensp;<span class='u' style='color:#cd8957'>gav</span>: Latest estimate is by end of Q3. But will depend a lot on the outcome of Toaster and initial service development. </div>
 <div class='msg'><time>2025-02-22 03:47</time>&ensp;<span class='u' style='color:#a977d7'>ymcsabo</span>: Hi, in the gray paper section 15.2, it mentions advanced nodes and naive nodes. What are some of the examples of those two types of nodes?</div>
-<div class='msg edited'><time>2025-02-22 07:24</time>&ensp;<span class='u' style='color:#cd8957'>gav</span>: There is no clear delineation. It’s about *strategy*. Some implementations (or node configurations) may use a more sophisticated strategy for predicting the best work package to execute and guarantee. This will allow their operators to take greater rewards under some circumstances. But again, this is strategy and therefore largely out of scope for the GP. </div>
+<div class='msg edited'><time>2025-02-22 07:24</time>&ensp;<span class='u' style='color:#cd8957'>gav</span>: There is no clear delineation. It’s about <em>strategy</em>. Some implementations (or node configurations) may use a more sophisticated strategy for predicting the best work package to execute and guarantee. This will allow their operators to take greater rewards under some circumstances. But again, this is strategy and therefore largely out of scope for the GP. </div>
 <div class='msg'><time>2025-02-22 07:25</time>&ensp;<span class='u' style='color:#72c147'>luke_fishman</span>: I need some clarification regarding the advancement  of the instruction counter i in the PVM
 
 Reading <a href="https://graypaper.fluffylabs.dev/#/5f542d7/23ec0023ec00" target="_blank" rel="noopener">A.1</a> and <a href="https://graypaper.fluffylabs.dev/#/5f542d7/246600246600" target="_blank" rel="noopener">A.7</a>
@@ -4559,7 +4561,7 @@ What is the value of a_i and a_o and thus a_t:
 The order of operations in <code>new</code> is not clear, especially with the a_t and l &quot;happening in the same line&quot; here: <a href="https://graypaper.fluffylabs.dev/#/5f542d7/31b90231b902" target="_blank" rel="noopener">https://graypaper.fluffylabs.dev/#/5f542d7/31b90231b902</a></div>
 <div class='msg edited'><time>2025-02-22 15:30</time>&ensp;<span class='u' style='color:#cd8957'>gav</span>: a_t is a dependent variable whose value is implied through the (non-negotiable) definition of bold-l, which is fully defined as c and l are both fixed values. </div>
 <div class='msg edited'><time>2025-02-22 15:31</time>&ensp;<span class='u' style='color:#cd8957'>gav</span>: balance is required to be equal to this (dependent) variable. There exists only one solution to this statement. </div>
-<div class='msg edited'><time>2025-02-22 15:32</time>&ensp;<span class='u' style='color:#cd8957'>gav</span>: No specific order is *needed*. Ever. </div>
+<div class='msg edited'><time>2025-02-22 15:32</time>&ensp;<span class='u' style='color:#cd8957'>gav</span>: No specific order is <em>needed</em>. Ever. </div>
 <div class='msg edited'><time>2025-02-22 15:33</time>&ensp;<span class='u' style='color:#cd8957'>gav</span>: Ordering is a point of implementation strategy, for implementation languages which require the practitioner to specify it (ie imperative ones). </div>
 <div class='msg'><time>2025-02-22 15:36</time>&ensp;<span class='u' style='color:#cd8957'>gav</span>: Plenty of languages, like formal logic, don’t generally insist on specifying a solution in terms of ordered mutations. </div>
 <div class='msg edited'><time>2025-02-22 15:37</time>&ensp;<span class='u' style='color:#cd8957'>gav</span>: If this is a new concept, I’d suggest reading some undergrad computer science texts such as “structure and interpretation of computer programmes”. </div>
@@ -4819,10 +4821,10 @@ So how does Refine fetch the extrinsic data blobs as of 0.6.x?</div>
 &gt; But ΨR defined still has only 5 (i,p,o,i,ς): <a href="https://graypaper.fluffylabs.dev/#/85129da/2d65002d9300?v=0.6.3" target="_blank" rel="noopener">https://graypaper.fluffylabs.dev/#/85129da/2d65002d9300?v=0.6.3</a>
 
 Yes indeed: <a href="https://github.com/gavofyork/graypaper/pull/273" target="_blank" rel="noopener">https://github.com/gavofyork/graypaper/pull/273</a></div>
-<div class='msg edited'><time>2025-03-04 05:29</time>&ensp;<span class='u' style='color:#cd8957'>gav</span>: As I&#x27;ve said countless times now, the GP does not dictate the specifics of data logistics, only observable behaviour. <code>fetch</code> requires implementations to return the correct extrinsic data by virtue of the constraints placed on the return value from <code>fetch</code>. How it gets the extrinsic data is entirely implementation-specific and left as an exercise for the reader. Probably it will be supplied along with the rest of the WP by the builder, but the GP does not define this since it is not *observable behaviour*.</div>
+<div class='msg edited'><time>2025-03-04 05:29</time>&ensp;<span class='u' style='color:#cd8957'>gav</span>: As I&#x27;ve said countless times now, the GP does not dictate the specifics of data logistics, only observable behaviour. <code>fetch</code> requires implementations to return the correct extrinsic data by virtue of the constraints placed on the return value from <code>fetch</code>. How it gets the extrinsic data is entirely implementation-specific and left as an exercise for the reader. Probably it will be supplied along with the rest of the WP by the builder, but the GP does not define this since it is not <em>observable behaviour</em>.</div>
 <div class='msg edited'><time>2025-03-04 05:32</time>&ensp;<span class='u' style='color:#cd8957'>gav</span>: Your question betrays a presupposition that the formalisms in the GP are 1:1 mappable to some implementation code. That may sometimes be the case but certainly not always.</div>
 <div class='msg edited'><time>2025-03-04 05:33</time>&ensp;<span class='u' style='color:#cd8957'>gav</span>: e.g. We are able to use formalisms in mathematics such as <code>let H(return_value) = input_value</code>. This does not map 1:1 with (procedural) code, because it would imply the ability to make a reverse hash, for which no general solution is known.</div>
-<div class='msg'><time>2025-03-04 05:36</time>&ensp;<span class='u' style='color:#cd8957'>gav</span>: It works in the GP because it is describing *what* we wish to see, not *how* it must be delivered.</div>
+<div class='msg'><time>2025-03-04 05:36</time>&ensp;<span class='u' style='color:#cd8957'>gav</span>: It works in the GP because it is describing <em>what</em> we wish to see, not <em>how</em> it must be delivered.</div>
 <div class='msg'><time>2025-03-04 05:36</time>&ensp;<span class='u' style='color:#cd8957'>gav</span>: In the case of implementing the &quot;impossible&quot; reverse hash function, it is fine because implementations are allowed to &quot;cheat&quot; and use external knowledge (such as DA contents or data arriving over the network) in order to arrive at the answer.</div>
 <div class='msg'><time>2025-03-04 05:40</time>&ensp;<span class='u' style='color:#cd8957'>gav</span>: Implementing the GP is a puzzle and intentionally so. There may be different ways of solving the puzzle. This diversity can help deliver a resilient, even anti-fragile, network. Don&#x27;t expect a perfectly described path to implementation. You&#x27;ll need to use your brain.</div>
 <div class='msg edited'><time>2025-03-04 05:41</time>&ensp;<span class='u' style='color:#cd8957'>gav</span>: Ahh, in fact the wrapping is superfluous there; I&#x27;ll accept a PR which removes it from the host functions.</div>
@@ -4867,7 +4869,7 @@ Also in new, a is missing the p component which should presumably be {}</div>
 <div class='msg'><time>2025-03-08 08:16</time>&ensp;<span class='u' style='color:#cd8957'>gav</span>: regular l is an dependent field.</div>
 <div class='msg edited'><time>2025-03-08 08:18</time>&ensp;<span class='u' style='color:#cd8957'>gav</span>: No idea what you&#x27;re talking about. s\* and s are both in <code>\N_S</code>. the comparison is just a simple numeric one. If you work the logic through, it would be taken if <code>omega_7 in { s,  2^64-1 }</code>.</div>
 <div class='msg'><time>2025-03-08 14:45</time>&ensp;<span class='u' style='color:#825bc4'>jay_ztc</span>: Thanks for the response! I&#x27;m not sure I&#x27;m following though? &#x27;t&#x27; is referencing an account, and I only see &#x27;l&#x27; used in the accounts context when referring to the lookup dict? It would make sense if the metadata returned by the info host call contains some metadata about preimages, maybe just the keys even -&gt; but I&#x27;m assuming that would be represented as K{t}_l in the spec if that were the case...</div>
-<div class='msg'><time>2025-03-08 15:02</time>&ensp;<span class='u' style='color:#825bc4'>jay_ztc</span>: Thanks for clarifying! Wasn&#x27;t sure if an account being able to selectively target its *s* vs. *d* context was a valid use case. Also was getting hung up on this being a more verbose way to get to &#x27;a&#x27; than in the previous host call (lookup) -&gt; but I see the intermediate value used when querying the storage, so the verbosity makes sense there.</div>
+<div class='msg'><time>2025-03-08 15:02</time>&ensp;<span class='u' style='color:#825bc4'>jay_ztc</span>: Thanks for clarifying! Wasn&#x27;t sure if an account being able to selectively target its <em>s</em> vs. <em>d</em> context was a valid use case. Also was getting hung up on this being a more verbose way to get to &#x27;a&#x27; than in the previous host call (lookup) -&gt; but I see the intermediate value used when querying the storage, so the verbosity makes sense there.</div>
 <div class='msg edited'><time>2025-03-08 20:35</time>&ensp;<span class='u' style='color:#d470bf'>jaymansfield</span>: Hello. For the bless and assign host calls, what should happen if a non-privileged service tries to execute it? Panic or HUH? The GP doesn’t really specify.</div>
 <div class='msg'><time>2025-03-10 13:25</time>&ensp;<span class='u' style='color:#825bc4'>jay_ztc</span>: Happy Monday folks. In the &#x27;new&#x27; host function-&gt; the GP doesn&#x27;t specify what should happen if the preimage blob length is above the valid range required by the account spec (N_l = 2^32). There is a related case where this type of behavior is specified-&gt; In the bless host call the GP specifies a &#x27;WHO&#x27; exit when the values aren&#x27;t within the valid N_s range. Curious to hear what the guidance is here, happy to open a PR if needed.
 
@@ -4959,7 +4961,7 @@ If my conclusion is correct, is this overspending allowed by design?</div>
 <div class='msg'><time>2025-03-19 10:00</time>&ensp;<span class='u' style='color:#cd8957'>gav</span>: &gt; then we would be overspending the provided gas limit
 
 No.</div>
-<div class='msg'><time>2025-03-19 10:01</time>&ensp;<span class='u' style='color:#cd8957'>gav</span>: W* is the *accumulatable* WRs; we don&#x27;t accumulate all of them if the gas limit doesn&#x27;t allow.</div>
+<div class='msg'><time>2025-03-19 10:01</time>&ensp;<span class='u' style='color:#cd8957'>gav</span>: W* is the <em>accumulatable</em> WRs; we don&#x27;t accumulate all of them if the gas limit doesn&#x27;t allow.</div>
 <div class='msg edited'><time>2025-03-19 10:03</time>&ensp;<span class='u' style='color:#cd8957'>gav</span>: As for always-accumulate services, see (12.20) - there&#x27;s always enough gas to accumulate those in addition to the usual amount for each core.</div>
 <div class='msg'><time>2025-03-19 10:08</time>&ensp;<span class='u' style='color:#cd8957'>gav</span>: There&#x27;s an additional note placed on G_T in definitions advising to account for the always-accumulate services, but because of (12.20) G_T formally only places a lower-limit on the amount of gas used; if there&#x27;s more always-accumulate gas than would fit into G_T, we run &quot;over&quot; G_T and honour the always-accumulate gas.</div>
 <div class='msg'><time>2025-03-19 11:29</time>&ensp;<span class='u' style='color:#5e86de'>boymaas</span>: Thank you, gav . I am going to take another look later today. I was aware of 12.20 with the addition of the always accumulate services. I was imagining a scenario where we could get a set of accumulatable WRs whose total gas consumption would be more than Gₐ * C. Where fe an immediate WR, would resolve a bunch of queued WRs. In a tiny network setup with 2 cores for example. Since g is used to select a subset of the accumulable WRs I though it could eat into the reserve for the always accumulate services.</div>
@@ -5015,7 +5017,7 @@ I guess both questions/remarks are wrong and that Service3 needs to be indeed ge
 <div class='msg'><time>2025-03-20 17:08</time>&ensp;<span class='u' style='color:#da5c80'>jan</span>: Indeed, as Gav said, we will most likely add a way for the parent VM to fetch this information in an efficient manner. It&#x27;s on my TODO list; we just don&#x27;t want to spec it before implementing it to make sure the performance is good.</div>
 <div class='msg edited'><time>2025-03-20 18:34</time>&ensp;<span class='u' style='color:#c67452'>sourabhniyogi</span>: That&#x27;s totally great.  A <code>page-manifest</code>  host function call of both (A) what pages MUST be exported because it was written to (a &quot;dirty bit&quot; per page) and (B) what page MUST be imported because it was read from (a &quot;accessed&quot; bit per page) appears necessary for programmers to not have to think much about how their child &quot;guest program&quot; uses memory and the parent CoreVM service will need this manifest to poke and peek pages so the programmer doesn&#x27;t have to.
 
-But since guest programs will vary widely in terms of how many &quot;accessed&quot; and &quot;dirty&quot; bits they get before they hit some refine gas limit OR the W\_M=3072 (12MB) limit on imported+exported segments which applies across ALL the VMs, parent and child, it seems the builder should be able to run with the whole 2^32 VMs always fully loaded ... and *then* use this bookkeeper to dump work packages out right before it runs out of gas or hit the W_M, to effectively break up long running computations into work packages that the guarantors can legit handle in accordance with JAM spec.   We would thus want &quot;builder&quot; mode refining (having tens of thousands maybe the 1MM page) and &quot;guarantor&quot; model refining (W\_M) working on just the subset the builder wants.  Is that the way to think about designing this host function?  How do performance considerations figure in?</div>
+But since guest programs will vary widely in terms of how many &quot;accessed&quot; and &quot;dirty&quot; bits they get before they hit some refine gas limit OR the W\_M=3072 (12MB) limit on imported+exported segments which applies across ALL the VMs, parent and child, it seems the builder should be able to run with the whole 2^32 VMs always fully loaded ... and <em>then</em> use this bookkeeper to dump work packages out right before it runs out of gas or hit the W_M, to effectively break up long running computations into work packages that the guarantors can legit handle in accordance with JAM spec.   We would thus want &quot;builder&quot; mode refining (having tens of thousands maybe the 1MM page) and &quot;guarantor&quot; model refining (W\_M) working on just the subset the builder wants.  Is that the way to think about designing this host function?  How do performance considerations figure in?</div>
 <div class='msg edited'><time>2025-03-20 18:37</time>&ensp;<span class='u' style='color:#cd8957'>gav</span>: They&#x27;re all variable. See C.6</div>
 <div class='msg edited'><time>2025-03-20 18:42</time>&ensp;<span class='u' style='color:#cd8957'>gav</span>: 1. WIs for services 1, 2 and 3 would be executed in the same batch. From the perspective of each they would be executed under the same prior state. If #3 inspected the state of #2 it would see its prior state; if #2 inspected #3, it would also see #3&#x27;s prior state.
 2. No. #3 would not (necessarily) see the storage change.</div>
@@ -5040,9 +5042,9 @@ Take <a href="https://graypaper.fluffylabs.dev/#/68eaa1f/2fc8002fca00?v=0.6.4" t
 <div class='msg'><time>2025-03-21 14:55</time>&ensp;<span class='u' style='color:#cd8957'>gav</span>: You’ll need to utilise the preimage lookup map. </div>
 <div class='msg'><time>2025-03-21 14:57</time>&ensp;<span class='u' style='color:#994dd2'>tvvkk7</span>: Much appreciated </div>
 <div class='msg'><time>2025-03-21 22:19</time>&ensp;<span class='u' style='color:#db4dca'>celadari</span>: Hi guys, small questions:  
-- Is ε(tₐ, tᵦ, tₜ, tᵧ, tₘ, tₒ, tᵢ) used in the definition of the host call function info Ωᵢ the same encoding as **𝐚 ∼ 𝓔₈(𝐚ᵦ, 𝐚ᵧ, 𝐚ₘ, 𝐚ₒ) ∼ 𝓔₄(𝐚ᵢ)**?
-- Perhaps there&#x27;s something I don&#x27;t see, but in equation A.43 we define **u = ρ − max(ρ′, 0)**.  
-  If ρ′ is negative, then **u = ρ**, which means the gas doesn&#x27;t change.  
+- Is ε(tₐ, tᵦ, tₜ, tᵧ, tₘ, tₒ, tᵢ) used in the definition of the host call function info Ωᵢ the same encoding as *<em>𝐚 ∼ 𝓔₈(𝐚ᵦ, 𝐚ᵧ, 𝐚ₘ, 𝐚ₒ) ∼ 𝓔₄(𝐚ᵢ)</em><em>?
+- Perhaps there&#x27;s something I don&#x27;t see, but in equation A.43 we define </em><em>u = ρ − max(ρ′, 0)</em><em>.  
+  If ρ′ is negative, then </em><em>u = ρ</em>*, which means the gas doesn&#x27;t change.  
   So the service would have run code, but the gas stays the same — is that correct?  
   If so, is that the intended behavior?</div>
 <div class='msg reply edited'><time>2025-03-22 04:56</time>&ensp;<span class='u' style='color:#be2950'>clearloop</span>: may I ask if this is part of the new PVM tests or the stf of accumulation? I see everybody is talking about this however we haven&#x27;t met this yet 😅</div>
@@ -5051,9 +5053,9 @@ Take <a href="https://graypaper.fluffylabs.dev/#/68eaa1f/2fc8002fca00?v=0.6.4" t
 <div class='msg reply'><time>2025-03-22 09:02</time>&ensp;<span class='u' style='color:#db4dca'>celadari</span>: Sorry actually you were asking about the first question or the second question ?</div>
 <div class='msg reply'><time>2025-03-22 09:06</time>&ensp;<span class='u' style='color:#be2950'>clearloop</span>: sry I&#x27;m just curious about the host call part, I&#x27;m now updating our PVM tests while I don&#x27;t see tests with host calls, so I assume it belongs to the accumulation stf?</div>
 <div class='msg'><time>2025-03-22 05:55</time>&ensp;<span class='u' style='color:#cd8957'>gav</span>: &gt; &lt;@celadari:matrix.org&gt; Hi guys, small questions:  
-&gt; - Is ε(tₐ, tᵦ, tₜ, tᵧ, tₘ, tₒ, tᵢ) used in the definition of the host call function info Ωᵢ the same encoding as **𝐚 ∼ 𝓔₈(𝐚ᵦ, 𝐚ᵧ, 𝐚ₘ, 𝐚ₒ) ∼ 𝓔₄(𝐚ᵢ)**?
-&gt; - Perhaps there&#x27;s something I don&#x27;t see, but in equation A.43 we define **u = ρ − max(ρ′, 0)**.  
-&gt;   If ρ′ is negative, then **u = ρ**, which means the gas doesn&#x27;t change.  
+&gt; - Is ε(tₐ, tᵦ, tₜ, tᵧ, tₘ, tₒ, tᵢ) used in the definition of the host call function info Ωᵢ the same encoding as *<em>𝐚 ∼ 𝓔₈(𝐚ᵦ, 𝐚ᵧ, 𝐚ₘ, 𝐚ₒ) ∼ 𝓔₄(𝐚ᵢ)</em><em>?
+&gt; - Perhaps there&#x27;s something I don&#x27;t see, but in equation A.43 we define </em><em>u = ρ − max(ρ′, 0)</em><em>.  
+&gt;   If ρ′ is negative, then </em><em>u = ρ</em>*, which means the gas doesn&#x27;t change.  
 &gt;   So the service would have run code, but the gas stays the same — is that correct?  
 &gt;   If so, is that the intended behavior?
 
@@ -5345,7 +5347,7 @@ So roughly size = speed*coherence</div>
 <div class='msg'><time>2025-04-01 11:09</time>&ensp;<span class='u' style='color:#cd8957'>gav</span>: decentralisation implies size, but not the other way around.</div>
 <div class='msg edited'><time>2025-04-01 11:10</time>&ensp;<span class='u' style='color:#cd8957'>gav</span>: so, if you keep a system small (in order to keep it fast and coherent we might presume), you&#x27;ll not be able to decentralise nor will you be able to scale out.</div>
 <div class='msg'><time>2025-04-01 11:11</time>&ensp;<span class='u' style='color:#cd8957'>gav</span>: i&#x27;d argue that by introducing such decoherence you do not have a fully coherent state.</div>
-<div class='msg'><time>2025-04-01 11:13</time>&ensp;<span class='u' style='color:#cd8957'>gav</span>: however there may be ways to make the system *apparently* coherent, or dynamically rebalance the speed and/or coherence in order to optimise all three at any given time. </div>
+<div class='msg'><time>2025-04-01 11:13</time>&ensp;<span class='u' style='color:#cd8957'>gav</span>: however there may be ways to make the system <em>apparently</em> coherent, or dynamically rebalance the speed and/or coherence in order to optimise all three at any given time. </div>
 <div class='msg'><time>2025-04-01 11:35</time>&ensp;<span class='u' style='color:#4036ac'>ascriv</span>: &gt; &lt;@gav:polkadot.io&gt; or speed * size * coherence = 1
 
 Or size*coherence ~ speed, with more speed of info travel you can get bigger or more coherent, no?</div>
@@ -5462,7 +5464,7 @@ Is this correct? If so, why is that? Also, in this context, it is very easy to i
 <div class='msg edited'><time>2025-04-18 15:24</time>&ensp;<span class='u' style='color:#825bc4'>jay_ztc</span>: That&#x27;s how I approached in my reasoning as well, do you think this change is likely? No worries if its too early to tell- just curious. Might end up tabling this in my impl.</div>
 <div class='msg'><time>2025-04-18 15:30</time>&ensp;<span class='u' style='color:#da5c80'>jan</span>: Can&#x27;t give you a 100% answer at this point, but it is possible. In general the plan for the final gas cost model is to charge gas only at the beginning of the basic blocks (because charging per instruction is very inefficient), so now if you allow entry points anywhere this potentially complicates the gas metering implementation. Unfortunately disallowing them doesn&#x27;t necessarily alleviate the problem because you still need to allow entry after page faults, and since memory accesses are so common we don&#x27;t want to make memory access instructions into basic block terminators.</div>
 <div class='msg edited'><time>2025-04-18 15:35</time>&ensp;<span class='u' style='color:#825bc4'>jay_ztc</span>: Thanks for clarifying, this is really helpful. I don&#x27;t have enough context yet to form an opinion on the tradeoffs between allowing inner-instances being able to resume right after pageFault vs requiring them to restart/rollback to the start of a basic block.</div>
-<div class='msg'><time>2025-04-18 15:37</time>&ensp;<span class='u' style='color:#da5c80'>jan</span>: Although we *need* some limitation when it comes to entry points, because without any restrictions you could e.g. jump into the middle of an instruction, and depending on the particular bytes used that might actually be a valid instruction. Supporting this in practice would be a nightmare in any other implementation that isn&#x27;t a naive slow interpreter, so at very least jumping in the middle of instructions is something that we definitely do *not* want to support.</div>
+<div class='msg'><time>2025-04-18 15:37</time>&ensp;<span class='u' style='color:#da5c80'>jan</span>: Although we <em>need</em> some limitation when it comes to entry points, because without any restrictions you could e.g. jump into the middle of an instruction, and depending on the particular bytes used that might actually be a valid instruction. Supporting this in practice would be a nightmare in any other implementation that isn&#x27;t a naive slow interpreter, so at very least jumping in the middle of instructions is something that we definitely do <em>not</em> want to support.</div>
 <div class='msg edited'><time>2025-04-18 15:38</time>&ensp;<span class='u' style='color:#825bc4'>jay_ztc</span>: *context as far as the programs/usage of programs on top of JAM</div>
 <div class='msg'><time>2025-04-18 15:39</time>&ensp;<span class='u' style='color:#da5c80'>jan</span>: Unfortunately it&#x27;s impossible to require a restart at the start of a basic block as that&#x27;d screw up the program state.</div>
 <div class='msg'><time>2025-04-18 15:39</time>&ensp;<span class='u' style='color:#da5c80'>jan</span>: The already executed part of the basic block might have modified memory or registers in a way that is irreversible.</div>
@@ -5524,7 +5526,7 @@ edit: &#x27;program termination&#x27; -&gt; &#x27;basic block&#x27; (brain fart)
 <div class='msg edited'><time>2025-04-22 13:20</time>&ensp;<span class='u' style='color:#825bc4'>jay_ztc</span>: jumps target indexes in w (basic block index set), which is calculated by applying the skip-length function to each opcode index in the k bitmask\*-&gt; so this would result in a jump target of the 24th octet (our &#x27;invalid&#x27; instruction).
 
 edit: *additionally, k always includes offset=0 (c[0])</div>
-<div class='msg'><time>2025-04-22 13:30</time>&ensp;<span class='u' style='color:#825bc4'>jay_ztc</span>: actually, looks like both branch &amp; jump use the &#x27;beginning of basic blocks&#x27; collection, *w* (which itself uses the skip-length).</div>
+<div class='msg'><time>2025-04-22 13:30</time>&ensp;<span class='u' style='color:#825bc4'>jay_ztc</span>: actually, looks like both branch &amp; jump use the &#x27;beginning of basic blocks&#x27; collection, <em>w</em> (which itself uses the skip-length).</div>
 <div class='msg'><time>2025-04-22 13:37</time>&ensp;<span class='u' style='color:#825bc4'>jay_ztc</span>: Didn&#x27;t intend for this chat to continue into your off-hours, my apologies. Don&#x27;t worry about looking at this tonight especially given its a non-urgent corner case.</div>
 <div class='msg edited'><time>2025-04-22 14:32</time>&ensp;<span class='u' style='color:#5dd07c'>knight1205</span>: Here: <a href="https://graypaper.fluffylabs.dev/#/68eaa1f/1bcb011b1702?v=0.6.4" target="_blank" rel="noopener">https://graypaper.fluffylabs.dev/#/68eaa1f/1bcb011b1702?v=0.6.4</a>
 
