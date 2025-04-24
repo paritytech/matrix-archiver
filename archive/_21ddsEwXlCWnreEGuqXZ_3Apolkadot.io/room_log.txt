@@ -1,5 +1,5 @@
 # room: #graypaper:polkadot.io
-# exported: 2025-04-23T03:27:23Z
+# exported: 2025-04-24T03:29:26Z
 2024-04-17 20:29 syed: https://matrix.to/#/!hyzRkDqDthePbodYFz:parity.io/$f_DMsIEcDXZegw6Sabnehzc-LrdDQkmq5MbxDDyoZxY?via=parity.io&via=web3.foundation
 
 2024-04-17 20:29 syed: 
@@ -9837,6 +9837,35 @@ In Eqn 14.14 and 14.15 we are using b which is defined as all the segments expor
 and then we are calculating it's merkle root and comparing with segment root of some previously exported segments of any work package. 
 
 Is this what it implies? As segments exported from a work package leads to different segment roots, then in that case how can it be same as segment root of all the segments (from all wps)?
+  ↳ 2025-04-23 16:45 knight1205: David Emett: Can you please clarify on this?
+  ↳ 2025-04-23 16:50 dave: In S and J, M(s) = L(r) means s is the sequence of segments with the specified root
+  ↳ 2025-04-23 16:53 knight1205: but it is specified as all the segments exported by all the work packages exporting a segment. is this right? or this?
+
+> s is the sequence of segments with the specified root
+
+
+  ↳ 2025-04-23 16:53 dave: Not sure where you're getting that from?
+  ↳ 2025-04-23 16:54 knight1205: according to 0.6.5:
+
+  ↳ 2025-04-23 16:54 knight1205: image.png
+  ↳ 2025-04-23 16:54 knight1205: ```
+Note that while S and J are both formulated using the
+inner term b (all segments exported by all work-packages
+exporting a segment to be imported)
+```
+ 
+  ↳ 2025-04-23 16:59 dave: Hmm not sure about the wording of that sentence. The point there is that if a work-package A is importing a single segment exported by work-package B, you do not need to fetch _all_ of the segments exported by B
+  ↳ 2025-04-23 17:00 dave: You only need to fetch the segment you care about, plus the corresponding proof segment
+  ↳ 2025-04-23 17:00 knight1205: got it. thanks for the clarification. Though I am still not sure about the wordings.
+  ↳ 2025-04-23 17:01 dave: Yeah I think that wording could be improved
+  ↳ 2025-04-23 19:42 mkchung: For CE140 justification: j++[b]++T(s,i,H), what exactly does the s in T(s, i, H) denote? Is it really the raw exported segment shards for the entire workpakge at given shard index? Without hashing the s term, the co-path in T(s, i, H) would grow linearly as the number of exports increases & each DA would need to store its sibling's entire "raw exported segment shards" as part of the co-path proof? 
+  ↳ 2025-04-23 19:44 mkchung: Let's say there are 100 exported segments for a given workpackage, can you provide an estimated justification size for requesting just one segment?  I'm estimating the justification to be somewhere around  66~410435 byte in tiny setting(where validator=6, W_P=1026) and around 297~3866 bytes in full setting(where validator=1023, W_P=6). Does my estimate look reasonable to you?
+  ↳ 2025-04-23 20:33 jaymansfield: "s is the full sequence of segment shards with the given shard index."
+  ↳ 2025-04-23 20:33 jaymansfield: The CE140 justification basically allows you to first calculate the segment root, which is then used to validate the erasure root
+  ↳ 2025-04-23 22:02 mkchung: That's for the recepient/consumer of a CE140 justification. But the burden of producing such proof seems to fall on DA?
+
+if you were the "generator" of  CE140 justification(i.e someone requested the justification from you), wouldn't you also need to fetch the raw "s" from your sibling's just to provide a co-path to the segment shard that you are responsible to store?
+  ↳ 2025-04-23 22:03 mkchung: I think I'm confused as why "S" not being hashed before building the segments root
 2025-04-22 14:32 knight1205: * Here: https://graypaper.fluffylabs.dev/#/68eaa1f/1bcb011b1702?v=0.6.4
 
 In Eqn 14.14 and 14.15 we are using s (now b) which is defined as all the segments exported by all work packages, 
@@ -9851,3 +9880,204 @@ Wondering why there is no a_l adjustment similar to [12.40](https://graypaper.fl
 2025-04-22 20:21 sourabhniyogi: * Another quick request: Would you mind assigning `provide` a number like 17 or 27, and perhaps starting historical\_lookup at 32 or 64 or 128? That would leave a bit of space between the two big groups of host functions for "one more".
 
 Wondering why there is no a\_l adjustment similar to [12.40](https://graypaper.fluffylabs.dev/#/68eaa1f/18a50118a501?v=0.6.4) for this new `provide`-based preimage submission -- I would expect a\_l to have the accumulate's timeslot.  How could this `provide`d preimage be followed by a `forget` and by which service?
+2025-04-23 13:24 jay_ztc: Jan Bujak:  I found this very helpful post of yours in a thread from last September. Do you think holding off on implementing sbrk is still relevant advice? Do you have any new thoughts since this message was posted that you can share?
+  ↳ 2025-04-23 13:27 jay_ztc: for some reason, matrix isn't showing the original post-> so I'm reposing here::
+
+https://matrix.to/#/!ddsEwXlCWnreEGuqXZ:polkadot.io/$_RkIlMDNZrROw_6WDXpbllO2VSbjY1FNTIfDjVZhhdw?via=polkadot.io&via=matrix.org&via=parity.io
+
+Memory allocation/deallocation handling is still a work-in-progress, and it's possible the sbrk instruction will get modified and/or removed. I'd suggest you temporarily skip it and focus on other parts of JAM and/or PVM.
+
+If you're interested in some history as to why sbrk is there then let me give you some background.
+
+Historically I designed PolkaVM (on which PVM in the GP is based on) to be a VM which is as "powerful" as WASM VMs (so it can completely replace our current WASM-based executor in Polkadot 1.0 and our WASM-based smart contracts VM) while being as simple as possible to implement, and without sacrificing any performance.
+So this is where the idea for the sbrk came from (which is similar to what WASM has): the VM maintains a heap pointer, and the guest program can use sbrk to query that pointer and/or to bump it up. And every time it crosses a page boundary the VM allocates new memory for the program.
+
+So this design has numerous benefits. First, it's very simple to use as a guest program (pseudo code):
+```
+// Get a pointer to the new allocation.
+let pointer = sbrk(0);
+// Actually allocate it.
+if sbrk(size) != 0 {
+    // Allocation succeeded.
+    // Now `pointer` points to `size` bytes you can use.
+}
+```
+
+This is also great for use cases like e.g. tiny smart contracts which can use this as directly as an allocator without having to bring a heavyweight allocator of their own (which would consume a lot of space).
+
+Secondly, it's simple to implement in the VM, something like that (pseudo code again):
+```
+fn sbrk(size) -> Pointer {
+    if size == 0 {
+        // The guest wants to know the current heap pointer.
+        return current_heap_pointer;
+    }
+
+    // The guest wants to allocate.
+    let new_heap_pointer = current_heap_pointer + size;
+    if new_heap_pointer > max_heap_pointer {
+        // Allocation failed.
+        return 0;
+    }
+
+
+    let next_page_boundary = align_to_page_size(current_heap_pointer);
+    if new_heap_pointer > next_page_boundary {
+        allocate_new_pages(next_page_boundary..align_to_page_size(new_heap_pointer));
+    }
+
+    current_heap_pointer += size;
+    return current_heap_pointer;
+```
+
+And this (along with the memory map I came up with, which is what we now call "standard program initialization") also makes in very easy to write an interpreter for this, because when handling loads/stores from memory you only have to do something like this:
+```
+fn load_value32(address) -> value {
+    if address >= stack_address && address + 4 <= stack_address_end {
+        return stack[address - stack_address];
+    } else if address >= rw_data_address && address + 4 <= align_to_page_size(current_heap_pointer) {
+        return rw_data[address - stack_address];
+    } else if address >= ro_data_address && address + 4 <= ro_data_address_end {
+        return ro_data[address - stack_address];
+    } else {
+        // Address is inaccessible.
+        return Err;
+    }
+}
+```
+
+It's cheap, fast, and doesn't require any crazy data structures and doesn't require any handling of corner cases (for example, accesses which could read both from the stack and from RW data don't have to be handled, because they're impossible by definition; the interpreter can just keep them in separate arrays, and call it a day).
+
+So that's how (any why) it was originally designed, but then came JAM and changed things. (: (Again, remember, I started working on this before JAM, and some things were just grandfathered into JAM.)
+
+What JAM introduces is a concept of inner VMs (see machine, peek, poke, invoke and expunge host functions in section B.8 of the GP) where one VM can spawn another VM, and as it is currently designed those inner VMs are extremely flexible and have completely free-form memories and are dynamically paged.
+What this essentially means is that all of those nice properties of sbrk that I've listed - simple and easy to implement, fast, doesn't require fancy data structures - they all now go out of the window!
+
+So we will probably be replacing sbrk with something else that's more appropriate for the more flexible inner VM model. And unfortunately also most likely orders of magnitude harder to implement (at least if you want to reach at least the half-speed milestone), but it is what it is. I'm still finishing some other stuff up, but I'll most likely be working on this soon-ish. (If any of you have any good and/or crazy ideas feel free to message me!)
+2025-04-23 13:27 jay_ztc: * reposting below for context::
+
+https://matrix.to/#/!ddsEwXlCWnreEGuqXZ:polkadot.io/$\_RkIlMDNZrROw\_6WDXpbllO2VSbjY1FNTIfDjVZhhdw?via=polkadot.io&via=matrix.org&via=parity.io
+
+Memory allocation/deallocation handling is still a work-in-progress, and it's possible the sbrk instruction will get modified and/or removed. I'd suggest you temporarily skip it and focus on other parts of JAM and/or PVM.
+
+If you're interested in some history as to why sbrk is there then let me give you some background.
+
+Historically I designed PolkaVM (on which PVM in the GP is based on) to be a VM which is as "powerful" as WASM VMs (so it can completely replace our current WASM-based executor in Polkadot 1.0 and our WASM-based smart contracts VM) while being as simple as possible to implement, and without sacrificing any performance.
+So this is where the idea for the sbrk came from (which is similar to what WASM has): the VM maintains a heap pointer, and the guest program can use sbrk to query that pointer and/or to bump it up. And every time it crosses a page boundary the VM allocates new memory for the program.
+
+So this design has numerous benefits. First, it's very simple to use as a guest program (pseudo code):
+
+```
+// Get a pointer to the new allocation.
+let pointer = sbrk(0);
+// Actually allocate it.
+if sbrk(size) != 0 {
+    // Allocation succeeded.
+    // Now `pointer` points to `size` bytes you can use.
+}
+```
+
+This is also great for use cases like e.g. tiny smart contracts which can use this as directly as an allocator without having to bring a heavyweight allocator of their own (which would consume a lot of space).
+
+Secondly, it's simple to implement in the VM, something like that (pseudo code again):
+
+```
+fn sbrk(size) -> Pointer {
+    if size == 0 {
+        // The guest wants to know the current heap pointer.
+        return current_heap_pointer;
+    }
+
+    // The guest wants to allocate.
+    let new_heap_pointer = current_heap_pointer + size;
+    if new_heap_pointer > max_heap_pointer {
+        // Allocation failed.
+        return 0;
+    }
+
+
+    let next_page_boundary = align_to_page_size(current_heap_pointer);
+    if new_heap_pointer > next_page_boundary {
+        allocate_new_pages(next_page_boundary..align_to_page_size(new_heap_pointer));
+    }
+
+    current_heap_pointer += size;
+    return current_heap_pointer;
+```
+
+And this (along with the memory map I came up with, which is what we now call "standard program initialization") also makes in very easy to write an interpreter for this, because when handling loads/stores from memory you only have to do something like this:
+
+```
+fn load_value32(address) -> value {
+    if address >= stack_address && address + 4 <= stack_address_end {
+        return stack[address - stack_address];
+    } else if address >= rw_data_address && address + 4 <= align_to_page_size(current_heap_pointer) {
+        return rw_data[address - stack_address];
+    } else if address >= ro_data_address && address + 4 <= ro_data_address_end {
+        return ro_data[address - stack_address];
+    } else {
+        // Address is inaccessible.
+        return Err;
+    }
+}
+```
+
+It's cheap, fast, and doesn't require any crazy data structures and doesn't require any handling of corner cases (for example, accesses which could read both from the stack and from RW data don't have to be handled, because they're impossible by definition; the interpreter can just keep them in separate arrays, and call it a day).
+
+So that's how (any why) it was originally designed, but then came JAM and changed things. (: (Again, remember, I started working on this before JAM, and some things were just grandfathered into JAM.)
+
+What JAM introduces is a concept of inner VMs (see machine, peek, poke, invoke and expunge host functions in section B.8 of the GP) where one VM can spawn another VM, and as it is currently designed those inner VMs are extremely flexible and have completely free-form memories and are dynamically paged.
+What this essentially means is that all of those nice properties of sbrk that I've listed - simple and easy to implement, fast, doesn't require fancy data structures - they all now go out of the window!
+
+So we will probably be replacing sbrk with something else that's more appropriate for the more flexible inner VM model. And unfortunately also most likely orders of magnitude harder to implement (at least if you want to reach at least the half-speed milestone), but it is what it is. I'm still finishing some other stuff up, but I'll most likely be working on this soon-ish. (If any of you have any good and/or crazy ideas feel free to message me!)
+2025-04-23 15:22 celadari: Hello,
+
+I have a question regarding the `eject` host function, specifically about the condition described here: https://graypaper.fluffylabs.dev/#/68eaa1f/328e03329103?v=0.6.4.
+
+I want to confirm my understanding:
+Does it mean that in order for a caller `s` to successfully eject account `d`, the `codeHash` of account `d` must be equal to the service index of the caller `s` ?
+
+Thanks in advance for the clarification!
+  ↳ 2025-04-23 15:23 celadari: To be more precise:
+
+  ↳ 2025-04-23 15:23 celadari: image.png
+2025-04-23 18:58 charliewinston14: Hello. Two questions about availability assurances.
+
+1. Should these be sent out every slot even if the bitfield didn’t change from the previous distribution?
+
+
+2. For an assurer to say a core is available in their assurance bitfield, does that mean they have access to just their shard matching their validator index, or are they saying they have access to ALL shards for a given core?
+
+2025-04-23 18:59 charliewinston14: * Hello. Two questions about availability assurances.
+
+1. Should these be sent out every slot even if the bitfield didn’t change from the previous distribution?
+2. For an assurer to say a core is available in their assurance bitfield, does that mean they have access to just the shards matching their validator index, or are they saying they have access to ALL shards for a given core?
+2025-04-23 19:02 sourabhniyogi: 1. Yes, its critical that they are since assurances are anchored to a header hash. The only exception is if the entire bitfield is zero, in which case I don't believe there is a point to do so unless some reward exists for liveness when all cores are idle (which would be sad but possible!)
+2. Just their shards matching their validator index.  If they had access to ALL the shards, that would be too much in the large!  
+2025-04-23 19:03 sourabhniyogi: * 1. Yes, its critical that they are since assurances are anchored to a header hash. The only exception is if the entire bitfield is zero, in which case I don't believe there is a point to do so unless some reward exists for liveness when all cores are idle (which would be sad but possible!)
+2. Just their shards matching their validator index.  If they had access to ALL the shards, that would be too much in the large!  But of course they can do whatever they want, and they might be one of the guarantors.
+2025-04-23 19:04 vinsystems: Hi, question about the accumulate `transfer = 11` function. 
+
+When Service A sends an amount X to Service B, a deferred transfer (i.e. `s: A, d: B, a: X, m: ..., g: ...`) is created and the amount to be sent [is substracted](https://graypaper.fluffylabs.dev/#/68eaa1f/325702325b02?v=0.6.4) from the Service A. 
+
+But I cannot find in the GP where it says to update the balance of the receiver (service B).
+
+I thought that it was done when [all the deferred effects of the transfers are applied](https://graypaper.fluffylabs.dev/#/68eaa1f/17a00417a004?v=0.6.4), but the `on_transfer` functions only modify the subject's account storage.
+  ↳ 2025-04-23 19:21 sourabhniyogi: https://graypaper.fluffylabs.dev/#/cc517d7/2fe2002fe200?v=0.6.5
+  ↳ 2025-04-23 19:28 vinsystems: Thanks! ☺️ 
+2025-04-23 19:05 vinsystems: * Hi, question about the accumulate `transfer = 11` function.
+
+When Service A sends an amount X to Service B, a deferred transfer (i.e. `s: A, d: B, a: X, m: ..., g: ...`) is created and the amount to be sent [is substracted](https://graypaper.fluffylabs.dev/#/68eaa1f/325702325b02?v=0.6.4) from the Service's A balance.
+
+But I cannot find in the GP where it says to update the balance of the receiver (service B).
+
+I thought that it was done when [all the deferred effects of the transfers are applied](https://graypaper.fluffylabs.dev/#/68eaa1f/17a00417a004?v=0.6.4), but the `on_transfer` functions only modify the subject's account storage.
+2025-04-23 19:31 sourabhniyogi: * 1. Yes, its critical that they are since assurances are anchored to the immediate parent header hash. The only exception is if the entire bitfield is zero, in which case I don't believe there is a point to submitting an assurance unless some reward exists for liveness when all cores are idle (which would be sad ... but possible!)
+2. Just their shards matching their validator index.  If they had access to ALL the shards, that would be too much in the large!  But of course they can do whatever they want, and they might be one of the guarantors.
+2025-04-23 19:35 celadari: * Hello,
+I have a question regarding the eject host function, specifically about the condition described here: https://graypaper.fluffylabs.dev/#/68eaa1f/328e03329103?v=0.6.4.
+I want to confirm my understanding:
+Does it mean that in order for a caller s to successfully eject account d, the codeHash of account d must be equal to the (hash) service index of the caller s ?
+Thanks in advance for the clarification!
+
+2025-04-23 20:34 jaymansfield: * The CE140 justification basically allows you to first calculate the segment root for a given segment index, which is then used to validate the erasure root
