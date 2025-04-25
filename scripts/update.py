@@ -2,18 +2,18 @@
 # -*- coding: utf-8 -*-
 """
 Archive one-or-many public Matrix rooms.
-Creates archive/<slug>/{index.html, room_log.txt}
+
+Creates
+    archive/<slug>/{index.html, room_log.txt}
 and a root index.html listing all rooms by their human titles.
 """
 
-# ─── std-lib ──────────────────────────────────────────────────────────
+# ── std-lib ────────────────────────────────────────────────────────────
 import os, sys, json, subprocess, shlex, hashlib, colorsys, logging, re, html
 import collections, pathlib, urllib.parse
-from datetime import datetime, timezone
+from   datetime   import datetime, timezone
 
-# ════════════════════════════════════════════════
-# ░░  CONFIG  ░░
-# ════════════════════════════════════════════════
+# ═════════════════════════════════  CONFIG  ════════════════════════════
 HS        = os.environ["MATRIX_HS"]
 USER_ID   = os.environ["MATRIX_USER"]
 TOKEN     = os.environ["MATRIX_TOKEN"]
@@ -31,9 +31,7 @@ logging.basicConfig(level=logging.INFO,
                     format="%(levelname)s: %(message)s", stream=sys.stderr)
 os.environ["NIO_LOG_LEVEL"] = "error"
 
-# ════════════════════════════════════════════════
-# ░░  matrix-commander creds  ░░
-# ════════════════════════════════════════════════
+# ══════════  matrix-commander creds  ═══════════════════════════════════
 cred_file = pathlib.Path("mc_creds.json")
 store_dir = pathlib.Path("store"); store_dir.mkdir(exist_ok=True)
 if not cred_file.exists():
@@ -46,9 +44,7 @@ if not cred_file.exists():
     }))
 CRED = ["--credentials", str(cred_file), "--store", str(store_dir)]
 
-# ════════════════════════════════════════════════
-# ░░  helpers  ░░
-# ════════════════════════════════════════════════
+# ═══════════════════════  tiny helpers  ═══════════════════════════════
 def run(cmd, timeout=None) -> str:
     res = subprocess.run(cmd, text=True, capture_output=True, timeout=timeout)
     if res.returncode:
@@ -76,7 +72,7 @@ _re_mdlink = re.compile(r'\[([^\]]+?)\]\((https?://[^\s)]+)\)')
 _re_rawurl = re.compile(r'(?<!["\'>])(https?://[^\s<]+)')
 _re_fence  = re.compile(r'```(\w+)?\n([\s\S]*?)```', re.MULTILINE)
 _re_inline = re.compile(r'`([^`\n]+?)`')
-_re_italic = re.compile(r'(?<!\S)\*([^*\n]+?)\*(?!\S)')   # only *foo*
+_re_italic = re.compile(r'(?<!\S)\*([^*\n]+?)\*(?!\S)')   # *foo* only
 
 def md_links(t:str)->str:
     t = _re_mdlink.sub(lambda m:
@@ -105,12 +101,11 @@ def fmt_body(body:str)->str:
         html_out.append(md_links(chunk))
     return "".join(html_out)
 
-# ════════════════════════════════════════════════
-# ░░  archiver  ░░
-# ════════════════════════════════════════════════
+# ════════════════════════  archiver  ══════════════════════════════════
 def archive(room:str):
     logging.info("room %s", room)
-    cfg = json.loads(cred_file.read_text()); cfg.update(room_id=room,default_room=room)
+
+    cfg=json.loads(cred_file.read_text()); cfg.update(room_id=room,default_room=room)
     cred_file.write_text(json.dumps(cfg))
 
     rdir = pathlib.Path("archive")/slug(room)
@@ -120,7 +115,6 @@ def archive(room:str):
         try: run(["matrix-commander",*CRED,*cmd])
         except subprocess.CalledProcessError: pass
 
-    # title
     title=room
     try:
         info=next(json_lines(run(["matrix-commander",*CRED,"--room",room,
@@ -143,7 +137,6 @@ def archive(room:str):
         else:
             originals[ev["event_id"]] = ev
 
-    # apply last edit
     for eid,msg in originals.items():
         if eid in edits:
             rep=edits[eid]
@@ -156,15 +149,14 @@ def archive(room:str):
     if not events: return None
 
     # threading
-    byid={e["event_id"]:e for e in events}
-    threads=collections.defaultdict(list)
+    byid,threads={e["event_id"]:e for e in events},collections.defaultdict(list)
     for e in events:
         rel=e["content"].get("m.relates_to",{})
         if rel.get("rel_type")=="m.thread":
             threads[rel["event_id"]].append(e["event_id"])
     roots=[e for e in events if e["event_id"] not in {c for kids in threads.values() for c in kids}]
 
-    # plain text
+    # plain-text
     stamp=datetime.utcnow().strftime("%Y-%m-%d %H:%M UTC")
     plain=[f"# room: {title}",f"# exported: {stamp}"]
     def pl(ev,lvl):
@@ -178,28 +170,24 @@ def archive(room:str):
 
     # html
     last=datetime.utcnow().strftime("%Y-%m-%d %H:%M UTC")
+    style=f"""
+<style>
+body{{margin:0 auto;max-width:75ch;font:15px/1.55 system-ui,-apple-system,'Segoe UI',Helvetica,Arial,sans-serif;
+     background:#141414;color:#e6e6e6;padding:2rem}}
+@media(max-width:480px){{body{{padding:1rem;font-size:14px}} pre{{font-size:13px}}}}
+.msg{{white-space:pre-wrap;margin:.3em 0}}
+.reply{{margin-left:2ch}}
+.edited{{opacity:.65;font-style:italic;font-size:.9em}}
+pre{{background:#1e1e1e;padding:.6em;border-radius:4px;overflow:auto}}
+code{{font-family:ui-monospace,monospace}}
+.u{{font-weight:600}}
+.ts,a.ts{{color:#888;text-decoration:none}}
+a.ts:hover{{color:#ccc}}
+em{{font-style:italic}}
+</style>"""
     html_lines=[
         "<!doctype html><meta charset=utf-8><meta name=viewport content='width=device-width,initial-scale=1'>",
-        f"<title>{html.escape(title)} – archive</title>",
-        """
-<style>
-body{margin:0 auto;max-width:75ch;font:15px/1.55 system-ui,-apple-system,'Segoe UI',Helvetica,Arial,sans-serif;
-     background:#141414;color:#e6e6e6;padding:2rem}
-.msg{white-space:pre-wrap;margin:.3em 0}
-.reply{margin-left:2ch}
-.edited{opacity:.65;font-style:italic;font-size:.9em}
-pre{background:#1e1e1e;padding:.6em;border-radius:4px;overflow:auto}
-code{font-family:ui-monospace,monospace}
-.u{font-weight:600}
-time{color:#888}
-a{color:#9cf;text-decoration:none}
-i,em{font-style:normal}         /* reset */
-em{font-style:italic}
-@media(max-width:480px){
- body{padding:1rem;font-size:14px}
- pre{font-size:13px}
-}
-</style>""",
+        f"<title>{html.escape(title)} – archive</title>", style,
         f"<h1>{html.escape(title)}</h1>",
         f"<p><small>last updated {last}</small></p>",
         "<p><a href='room_log.txt'>⇩ plaintext</a> · <a href='../../'>⇦ all rooms</a></p>",
@@ -208,10 +196,12 @@ em{font-style:italic}
     def add(ev,lvl):
         cls="msg"+(" reply" if lvl else "")
         body=fmt_body(ev['content'].get('body',''))
-        if ev.get("_edited"):
-            body+= ' <span class="edited">(edited)</span>'
+        if ev.get("_edited"): body+=' <span class="edited">(edited)</span>'
+        eid=ev['event_id']
+        ts_link = f"<a class='ts' href='https://matrix.to/#/{room}/{eid}' target='_blank'>" \
+                  f"{when(ev).strftime('%Y-%m-%d %H:%M')}</a>"
         html_lines.append(f"<div class='{cls}'>"
-                          f"<time>{when(ev).strftime('%Y-%m-%d %H:%M')}</time>&ensp;"
+                          f"{ts_link}&ensp;"
                           f"<span class='u' style='color:{rich_color(ev['sender'])}'>"
                           f"{nice_user(ev['sender'])}</span>: {body}</div>")
     for r in roots:
@@ -223,9 +213,7 @@ em{font-style:italic}
     logging.info("  wrote → %s", rdir)
     return title, room, slug(room)
 
-# ════════════════════════════════════════════════
-# ░░  main  ░░
-# ════════════════════════════════════════════════
+# ═════════════════════════════  main  ═════════════════════════════════
 pathlib.Path("archive").mkdir(exist_ok=True)
 (pathlib.Path("archive/index.html")).unlink(missing_ok=True)
 
@@ -239,15 +227,19 @@ for rid in ROOMS:
 
 meta.sort(key=lambda t:t[0].lower())
 listing="\n".join(
-    f"<li><a href='archive/{s}/index.html'>{html.escape(t)}</a><br><small>{html.escape(r)}</small></li>"
+    f"<li><a href='archive/{s}/index.html'>{html.escape(t)}</a>"
+    f"<br><small>{html.escape(r)}</small></li>"
     for t,r,s in meta)
 
 landing=f"""<!doctype html><meta charset=utf-8><meta name=viewport content='width=device-width,initial-scale=1'>
 <title>Archived rooms</title>
-<style>body{{margin:0 auto;max-width:65ch;font:16px/1.55 system-ui,-apple-system,'Segoe UI',Helvetica,Arial,sans-serif;
-       background:#141414;color:#e6e6e6;padding:2rem}}a{{color:#9cf;text-decoration:none}}</style>
-<h1>Archived rooms</h1><ul>{listing}</ul>
-"""
+<style>
+body{{margin:0 auto;max-width:65ch;font:16px/1.55 system-ui,-apple-system,'Segoe UI',Helvetica,Arial,sans-serif;
+     background:#141414;color:#e6e6e6;padding:2rem}}
+a{{color:#9cf;text-decoration:none}}
+@media(max-width:480px){{body{{padding:1rem;font-size:15px}}}}
+</style>
+<h1>Archived rooms</h1><ul>{listing}</ul>"""
 pathlib.Path("index.html").write_text(landing, encoding="utf-8")
 logging.info("root index.html regenerated ✓")
 
