@@ -20,7 +20,7 @@ em{font-style:italic}
 }
 </style>
 <h1>#jam:polkadot.io</h1>
-<p><small>last updated 2025-04-24 14:41 UTC</small></p>
+<p><small>last updated 2025-04-25 03:28 UTC</small></p>
 <p><a href='room_log.txt'>⇩ plaintext</a> · <a href='../../'>⇦ all rooms</a></p>
 <hr>
 <div class='msg'><time>2024-04-20 02:08</time>&ensp;<span class='u' style='color:#d0709e'>johnjiao123</span>: </div>
@@ -7380,3 +7380,8 @@ struct Export {
 }
 </code></pre></div>
 <div class='msg'><time>2025-04-24 11:01</time>&ensp;<span class='u' style='color:#da5c80'>jan</span>: It&#x27;s somewhat similar to how <code>.wasm</code> blobs look internally. Basically it&#x27;s a preset header + list of sections where each section has an ID and a length, the sections must always be given in order (so you don&#x27;t have to write a loop to parse this format because e.g. you always know that memory config section must <em>always</em> come before the ro data section, etc.), there is a list of imports and exports (so unlike the JAM blob the imports and exports are <em>not</em> hardcoded), and it also supports debug info (which the JAM blobs don&#x27;t).</div>
+<div class='msg'><time>2025-04-24 18:24</time>&ensp;<span class='u' style='color:#787fdf'>erin</span>: hello all, I&#x27;ve created hosted archives of the JAM and graypaper chats with plaintext versions also available at <a href="https://paritytech.github.io/matrix-archiver/" target="_blank" rel="noopener">https://paritytech.github.io/matrix-archiver/</a>
+
+there are a few quality of life improvements still to be done but any feedback or comments are welcome if you find this useful. This is also now linked on the jamcha.in site.</div>
+<div class='msg'><time>2025-04-24 18:25</time>&ensp;<span class='u' style='color:#787fdf'>erin</span>: These are updated daily at ~3am UTC.</div>
+<div class='msg'><time>2025-04-24 18:29</time>&ensp;<span class='u' style='color:#787fdf'>erin</span>: Other JAM-related channels are welcome to be archived - they need to be unencrypted and world-readable (history available to &quot;Anyone&quot;). Please open an issue <a href="https://github.com/paritytech/matrix-archiver" target="_blank" rel="noopener">here</a> with the internal room ID if you wish to archive a channel. <span class="edited">(edited)</span></div>

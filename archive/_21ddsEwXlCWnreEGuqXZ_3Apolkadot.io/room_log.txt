@@ -1,5 +1,5 @@
 # room: #graypaper:polkadot.io
-# exported: 2025-04-24 14:42 UTC
+# exported: 2025-04-25 03:28 UTC
 2024-04-17 20:29 syed: https://matrix.to/#/!hyzRkDqDthePbodYFz:parity.io/$f_DMsIEcDXZegw6Sabnehzc-LrdDQkmq5MbxDDyoZxY?via=parity.io&via=web3.foundation
 
 2024-04-17 20:29 syed: 
@@ -5568,6 +5568,7 @@ exporting a segment to be imported)
 
 if you were the "generator" of  CE140 justification(i.e someone requested the justification from you), wouldn't you also need to fetch the raw "s" from your sibling's just to provide a co-path to the segment shard that you are responsible to store?
   ↳ 2025-04-23 22:03 mkchung: I think I'm confused as why "S" not being hashed before building the segments root
+  ↳ 2025-04-24 16:52 jaymansfield: No you only need to know what was returned from CE137 originally. You are providing a path to a root for a list of shards with an index, not for all shards of a given segment. Refer back to s\_clubs in your availability specifier. [edited]
 2025-04-22 18:33 sourabhniyogi: We have found our development life has improved with the "metadata" attached to preimages, specifically when the preimage is for service code, because we can then have tools show that metadata as strings like "fib" and "gameoflife".   Can we get the same for workpackages+bundles so that we can attach metadata like "fib(93)", "gameoflife(314)", or should that be in the payload as a mere convention?
 2025-04-22 19:56 sourabhniyogi: Another quick request: Would you mind assigning `provide` a number like 17 or 27, and perhaps starting historical\_lookup at 32 or 64 or 128? That would leave a bit of space between the two big groups of host functions for "one more".
  [edited]
@@ -5660,6 +5661,10 @@ Thanks in advance for the clarification!
 
   ↳ 2025-04-23 15:23 celadari: image.png
   ↳ 2025-04-24 13:47 haikoschol: sourabhniyogi: was that reaction a "yes" or a "i'm wondering about that too" or a "yay, equations!!1!"? 🤔 
+  ↳ 2025-04-24 15:12 haikoschol: KwickBit - Charles-Edouard LADARI: it's not the hash though, it's the (32 octet) encoding of the service index, right?
+  ↳ 2025-04-24 15:14 celadari: By 32 octet i meaning we add 0s before the last 4 octets of the service index ? 🤔
+  ↳ 2025-04-24 15:44 haikoschol: i think so
+  ↳ 2025-04-24 15:45 haikoschol: it won't incidentally turn out to be the hash of some code, so the code hash field needs to have been set with `upgrade` to this value before i reckon
 2025-04-23 18:58 charliewinston14: Hello. Two questions about availability assurances.
 
 1. Should these be sent out every slot even if the bitfield didn’t change from the previous distribution?
@@ -5676,3 +5681,24 @@ I thought that it was done when [all the deferred effects of the transfers are a
   ↳ 2025-04-23 19:21 sourabhniyogi: https://graypaper.fluffylabs.dev/#/cc517d7/2fe2002fe200?v=0.6.5
   ↳ 2025-04-23 19:28 vinsystems: Thanks! ☺️ 
 2025-04-24 04:40 jan: We are going to remove the sbrk instruction and replace it with a hostcall soon.
+2025-04-24 17:28 ascriv: How is the serialization of the storage dictionary (a_s) of a service account in (D.2) not lossy? The key (I thought) is not the hash of the value unlike the preimage lookup. I’m definitely missing something or we are losing the last 4 bytes of the keys [edited]
+  ↳ 2025-04-24 17:53 prasad-kumkar: I think the point is we don’t need to store the full a_s keys, they’re only used to look up values when the key is already known
+  ↳ 2025-04-24 18:43 dakkk: keys are hash, a collision is very unlikely
+2025-04-24 18:30 erin: hello all, I've created hosted archives of the JAM and graypaper chats with plaintext versions also available at https://paritytech.github.io/matrix-archiver/
+
+there are a few quality of life improvements still to be done but any feedback or comments are welcome if you find this useful. This is also now linked on the jamcha.in site.
+
+These are updated daily at ~3am UTC.
+Other JAM-related channels are welcome to be archived - they need to be unencrypted and world-readable (history available to "Anyone"). Please open an issue [here](https://github.com/paritytech/matrix-archiver) with the internal room ID if you wish to archive a channel. [edited]
+2025-04-24 18:41 ascriv: > <@prasad-kumkar:matrix.org> I think the point is we don’t need to store the full a_s keys, they’re only used to look up values when the key is already known
+
+I don’t completely follow, should we just be comparing first 28 bytes when doing lookups? What about when two keys only differ in the last 4 bytes?
+2025-04-24 18:46 tomusdrw: erin: would you consider adding `<a name="{element-msg-id}"></a>` to the `<time>` in html mode? That would allow linking to a specific message, which I think would be pretty cool. [edited]
+  ↳ 2025-04-24 18:46 erin: yeah, that's one of the QoL features in the pipeline :)
+  ↳ 2025-04-24 18:47 erin: others may include "jump to bottom" and perhaps pagination, though i kinda like the big raw log style (feedback again welcome here).
+  ↳ 2025-04-24 18:54 tomusdrw: afaict it's 220kB gzipped for 1y+ worth of content. My guess is that adding JS pagination to this with a modern framework would start to pay off only after 2 more years :D [edited]
+  ↳ 2025-04-24 18:55 erin: i'll worry about it later then 😂
+  ↳ 2025-04-24 18:55 erin: it's just static html generated by a python script at the moment
+2025-04-24 18:54 ascriv: > <@dakkk:matrix.org> keys are hash, a collision is very unlikely
+
+So state serialization being lossless isn’t important, it just needs to be extremely unlikely to collide 

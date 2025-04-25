@@ -1,5 +1,5 @@
 # room: #jam:polkadot.io
-# exported: 2025-04-24 14:41 UTC
+# exported: 2025-04-25 03:28 UTC
 2024-04-20 02:08 johnjiao123: 
 2024-04-20 02:09 johnjiao123: 
 2024-05-30 21:48 nradko: Hey everyone,
@@ -7405,3 +7405,8 @@ struct Export {
 }
 ```
 2025-04-24 11:01 jan: It's somewhat similar to how `.wasm` blobs look internally. Basically it's a preset header + list of sections where each section has an ID and a length, the sections must always be given in order (so you don't have to write a loop to parse this format because e.g. you always know that memory config section must *always* come before the ro data section, etc.), there is a list of imports and exports (so unlike the JAM blob the imports and exports are *not* hardcoded), and it also supports debug info (which the JAM blobs don't).
+2025-04-24 18:24 erin: hello all, I've created hosted archives of the JAM and graypaper chats with plaintext versions also available at https://paritytech.github.io/matrix-archiver/
+
+there are a few quality of life improvements still to be done but any feedback or comments are welcome if you find this useful. This is also now linked on the jamcha.in site.
+2025-04-24 18:25 erin: These are updated daily at ~3am UTC.
+2025-04-24 18:29 erin: Other JAM-related channels are welcome to be archived - they need to be unencrypted and world-readable (history available to "Anyone"). Please open an issue [here](https://github.com/paritytech/matrix-archiver) with the internal room ID if you wish to archive a channel. [edited]

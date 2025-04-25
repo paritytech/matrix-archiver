@@ -20,7 +20,7 @@ em{font-style:italic}
 }
 </style>
 <h1>#graypaper:polkadot.io</h1>
-<p><small>last updated 2025-04-24 14:42 UTC</small></p>
+<p><small>last updated 2025-04-25 03:28 UTC</small></p>
 <p><a href='room_log.txt'>⇩ plaintext</a> · <a href='../../'>⇦ all rooms</a></p>
 <hr>
 <div class='msg'><time>2024-04-17 20:29</time>&ensp;<span class='u' style='color:#da6aa2'>syed</span>: <a href="https://matrix.to/#/!hyzRkDqDthePbodYFz:parity.io/$f_DMsIEcDXZegw6Sabnehzc-LrdDQkmq5MbxDDyoZxY?via=parity.io&amp;via=web3.foundation" target="_blank" rel="noopener">https://matrix.to/#/!hyzRkDqDthePbodYFz:parity.io/$f_DMsIEcDXZegw6Sabnehzc-LrdDQkmq5MbxDDyoZxY?via=parity.io&amp;via=web3.foundation</a>
@@ -5568,6 +5568,7 @@ exporting a segment to be imported)
 
 if you were the &quot;generator&quot; of  CE140 justification(i.e someone requested the justification from you), wouldn&#x27;t you also need to fetch the raw &quot;s&quot; from your sibling&#x27;s just to provide a co-path to the segment shard that you are responsible to store?</div>
 <div class='msg reply'><time>2025-04-23 22:03</time>&ensp;<span class='u' style='color:#c377dd'>mkchung</span>: I think I&#x27;m confused as why &quot;S&quot; not being hashed before building the segments root</div>
+<div class='msg reply'><time>2025-04-24 16:52</time>&ensp;<span class='u' style='color:#d470bf'>jaymansfield</span>: No you only need to know what was returned from CE137 originally. You are providing a path to a root for a list of shards with an index, not for all shards of a given segment. Refer back to s\_clubs in your availability specifier. <span class="edited">(edited)</span></div>
 <div class='msg'><time>2025-04-22 18:33</time>&ensp;<span class='u' style='color:#c67452'>sourabhniyogi</span>: We have found our development life has improved with the &quot;metadata&quot; attached to preimages, specifically when the preimage is for service code, because we can then have tools show that metadata as strings like &quot;fib&quot; and &quot;gameoflife&quot;.   Can we get the same for workpackages+bundles so that we can attach metadata like &quot;fib(93)&quot;, &quot;gameoflife(314)&quot;, or should that be in the payload as a mere convention?</div>
 <div class='msg'><time>2025-04-22 19:56</time>&ensp;<span class='u' style='color:#c67452'>sourabhniyogi</span>: Another quick request: Would you mind assigning <code>provide</code> a number like 17 or 27, and perhaps starting historical\_lookup at 32 or 64 or 128? That would leave a bit of space between the two big groups of host functions for &quot;one more&quot;.
  <span class="edited">(edited)</span></div>
@@ -5657,6 +5658,10 @@ Thanks in advance for the clarification!
 </div>
 <div class='msg reply'><time>2025-04-23 15:23</time>&ensp;<span class='u' style='color:#db4dca'>celadari</span>: image.png</div>
 <div class='msg reply'><time>2025-04-24 13:47</time>&ensp;<span class='u' style='color:#4a49d8'>haikoschol</span>: sourabhniyogi: was that reaction a &quot;yes&quot; or a &quot;i&#x27;m wondering about that too&quot; or a &quot;yay, equations!!1!&quot;? 🤔 </div>
+<div class='msg reply'><time>2025-04-24 15:12</time>&ensp;<span class='u' style='color:#4a49d8'>haikoschol</span>: KwickBit - Charles-Edouard LADARI: it&#x27;s not the hash though, it&#x27;s the (32 octet) encoding of the service index, right?</div>
+<div class='msg reply'><time>2025-04-24 15:14</time>&ensp;<span class='u' style='color:#db4dca'>celadari</span>: By 32 octet i meaning we add 0s before the last 4 octets of the service index ? 🤔</div>
+<div class='msg reply'><time>2025-04-24 15:44</time>&ensp;<span class='u' style='color:#4a49d8'>haikoschol</span>: i think so</div>
+<div class='msg reply'><time>2025-04-24 15:45</time>&ensp;<span class='u' style='color:#4a49d8'>haikoschol</span>: it won&#x27;t incidentally turn out to be the hash of some code, so the code hash field needs to have been set with <code>upgrade</code> to this value before i reckon</div>
 <div class='msg'><time>2025-04-23 18:58</time>&ensp;<span class='u' style='color:#7875cf'>charliewinston14</span>: Hello. Two questions about availability assurances.
 
 1. Should these be sent out every slot even if the bitfield didn’t change from the previous distribution?
@@ -5673,3 +5678,24 @@ I thought that it was done when <a href="https://graypaper.fluffylabs.dev/#/68ea
 <div class='msg reply'><time>2025-04-23 19:21</time>&ensp;<span class='u' style='color:#c67452'>sourabhniyogi</span>: <a href="https://graypaper.fluffylabs.dev/#/cc517d7/2fe2002fe200?v=0.6.5" target="_blank" rel="noopener">https://graypaper.fluffylabs.dev/#/cc517d7/2fe2002fe200?v=0.6.5</a></div>
 <div class='msg reply'><time>2025-04-23 19:28</time>&ensp;<span class='u' style='color:#c457c5'>vinsystems</span>: Thanks! ☺️ </div>
 <div class='msg'><time>2025-04-24 04:40</time>&ensp;<span class='u' style='color:#da5c80'>jan</span>: We are going to remove the sbrk instruction and replace it with a hostcall soon.</div>
+<div class='msg'><time>2025-04-24 17:28</time>&ensp;<span class='u' style='color:#4036ac'>ascriv</span>: How is the serialization of the storage dictionary (a_s) of a service account in (D.2) not lossy? The key (I thought) is not the hash of the value unlike the preimage lookup. I’m definitely missing something or we are losing the last 4 bytes of the keys <span class="edited">(edited)</span></div>
+<div class='msg reply'><time>2025-04-24 17:53</time>&ensp;<span class='u' style='color:#cb735c'>prasad-kumkar</span>: I think the point is we don’t need to store the full a_s keys, they’re only used to look up values when the key is already known</div>
+<div class='msg reply'><time>2025-04-24 18:43</time>&ensp;<span class='u' style='color:#bfaf39'>dakkk</span>: keys are hash, a collision is very unlikely</div>
+<div class='msg'><time>2025-04-24 18:30</time>&ensp;<span class='u' style='color:#787fdf'>erin</span>: hello all, I&#x27;ve created hosted archives of the JAM and graypaper chats with plaintext versions also available at <a href="https://paritytech.github.io/matrix-archiver/" target="_blank" rel="noopener">https://paritytech.github.io/matrix-archiver/</a>
+
+there are a few quality of life improvements still to be done but any feedback or comments are welcome if you find this useful. This is also now linked on the jamcha.in site.
+
+These are updated daily at ~3am UTC.
+Other JAM-related channels are welcome to be archived - they need to be unencrypted and world-readable (history available to &quot;Anyone&quot;). Please open an issue <a href="https://github.com/paritytech/matrix-archiver" target="_blank" rel="noopener">here</a> with the internal room ID if you wish to archive a channel. <span class="edited">(edited)</span></div>
+<div class='msg'><time>2025-04-24 18:41</time>&ensp;<span class='u' style='color:#4036ac'>ascriv</span>: &gt; &lt;@prasad-kumkar:matrix.org&gt; I think the point is we don’t need to store the full a_s keys, they’re only used to look up values when the key is already known
+
+I don’t completely follow, should we just be comparing first 28 bytes when doing lookups? What about when two keys only differ in the last 4 bytes?</div>
+<div class='msg'><time>2025-04-24 18:46</time>&ensp;<span class='u' style='color:#48d03d'>tomusdrw</span>: erin: would you consider adding <code>&amp;lt;a name=&amp;quot;{element-msg-id}&amp;quot;&amp;gt;&amp;lt;/a&amp;gt;</code> to the <code>&amp;lt;time&amp;gt;</code> in html mode? That would allow linking to a specific message, which I think would be pretty cool. <span class="edited">(edited)</span></div>
+<div class='msg reply'><time>2025-04-24 18:46</time>&ensp;<span class='u' style='color:#787fdf'>erin</span>: yeah, that&#x27;s one of the QoL features in the pipeline :)</div>
+<div class='msg reply'><time>2025-04-24 18:47</time>&ensp;<span class='u' style='color:#787fdf'>erin</span>: others may include &quot;jump to bottom&quot; and perhaps pagination, though i kinda like the big raw log style (feedback again welcome here).</div>
+<div class='msg reply'><time>2025-04-24 18:54</time>&ensp;<span class='u' style='color:#48d03d'>tomusdrw</span>: afaict it&#x27;s 220kB gzipped for 1y+ worth of content. My guess is that adding JS pagination to this with a modern framework would start to pay off only after 2 more years :D <span class="edited">(edited)</span></div>
+<div class='msg reply'><time>2025-04-24 18:55</time>&ensp;<span class='u' style='color:#787fdf'>erin</span>: i&#x27;ll worry about it later then 😂</div>
+<div class='msg reply'><time>2025-04-24 18:55</time>&ensp;<span class='u' style='color:#787fdf'>erin</span>: it&#x27;s just static html generated by a python script at the moment</div>
+<div class='msg'><time>2025-04-24 18:54</time>&ensp;<span class='u' style='color:#4036ac'>ascriv</span>: &gt; &lt;@dakkk:matrix.org&gt; keys are hash, a collision is very unlikely
+
+So state serialization being lossless isn’t important, it just needs to be extremely unlikely to collide </div>
