@@ -1,5 +1,5 @@
 # room: #jam:polkadot.io
-# exported: 2025-04-25 12:26 UTC
+# exported: 2025-04-26 03:23 UTC
 2024-04-20 02:08 johnjiao123: 
 2024-04-20 02:09 johnjiao123: 
 2024-05-30 21:48 nradko: Hey everyone,
@@ -2281,6 +2281,21 @@ The beefy signatures aren’t likely to be aggregated on-chain.
   ↳ 2025-04-24 10:16 knight1205: Any updates to this? Till now we only have pull protocol. I guess each assurer have to request chunks when it receives report? 
 
 Shouldn't the guarantor itself ensure that each validator receives chunk when it is erasure coded as per GP?
+  ↳ 2025-04-25 13:12 knight1205: David Emett: Do you have any updates on this?
+  ↳ 2025-04-25 13:15 dave: Almost certainly there will be a push protocol in the final network protocol. Not intending to change SNP though.
+  ↳ 2025-04-25 13:16 knight1205: Alright. Thanks for the confirmation.
+  ↳ 2025-04-25 15:51 knight1205: David Emett: Could you please elaborate on how is shard index mapped to a particular validator at time of distribution? Like which particular validator will recive which particular shard?
+  ↳ 2025-04-25 15:54 dave: Hmm good question, not sure if this is documented anywhere!
+  ↳ 2025-04-25 16:07 dave: So shard index = ((core index * systematic threshold) + val index) % num vals, will add this to the SNP doc
+  ↳ 2025-04-25 16:08 dave: core index meaning the core the package was refined on
+  ↳ 2025-04-25 16:09 dave: systematic threshold meaning the minimum number of shards required to reconstruct, this is 342 with the "full" params, 2 with the "tiny" params
+  ↳ 2025-04-25 16:34 dave: I've added a section to the SNP doc covering this, see https://github.com/zdave-parity/jam-np/blob/main/simple.md
+  ↳ 2025-04-25 16:34 dave: ("Shard assignment" section)
+  ↳ 2025-04-25 17:36 jaymansfield: Oh good to know! I previously assumed shard index = validator index.
+  ↳ 2025-04-25 17:37 knight1205: Thanks a ton!!
+  ↳ 2025-04-25 17:53 knight1205: >shard index = validator index
+
+in that case few initial nodes will receive too many requests to handle, and they will form most traffic for an epoch for responding to them.
 2024-10-11 14:26 dave: AFAIK Gav does not intend to include this initial "simple" network protocol in the Gray Paper; only the full network protocol will be included, once it has been defined
 2024-10-11 14:27 dave: So as far as the simple protocol is concerned, the linked repo can be considered definitive
 2024-10-11 15:25 oliver.tale-yazdi: > <@dave:parity.io> I've uploaded a more fleshed out definition of the "simple" network protocol for JAM here: https://github.com/zdave-parity/jam-np/blob/main/simple.md
