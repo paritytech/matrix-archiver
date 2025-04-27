@@ -1,5 +1,5 @@
 # room: #jam:polkadot.io
-# exported: 2025-04-26 03:23 UTC
+# exported: 2025-04-27 03:28 UTC
 2024-04-20 02:08 johnjiao123: 
 2024-04-20 02:09 johnjiao123: 
 2024-05-30 21:48 nradko: Hey everyone,
@@ -7425,3 +7425,7 @@ struct Export {
 there are a few quality of life improvements still to be done but any feedback or comments are welcome if you find this useful. This is also now linked on the jamcha.in site.
 2025-04-24 18:25 erin: These are updated daily at ~3am UTC.
 2025-04-24 18:29 erin: Other JAM-related channels are welcome to be archived - they need to be unencrypted and world-readable (history available to "Anyone"). Please open an issue [here](https://github.com/paritytech/matrix-archiver) with the internal room ID if you wish to archive a channel. [edited]
+2025-04-26 14:17 clearloop: just found that the archiver is even easier than matrix to search chat history lmao, hope we can integrate more sources into the static site asap
+
+it even supports links to messages, threads with paddings, great work, direct and efficient [edited]
+  ↳ 2025-04-26 14:23 erin: thank you!

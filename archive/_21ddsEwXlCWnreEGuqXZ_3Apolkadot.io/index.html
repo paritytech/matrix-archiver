@@ -18,7 +18,7 @@ a:hover{color:#90caf9}
 em{font-style:italic}
 </style>
 <h1>#graypaper:polkadot.io</h1>
-<p><small>last updated 2025-04-26 03:23 UTC</small></p>
+<p><small>last updated 2025-04-27 03:29 UTC</small></p>
 <p><a href='room_log.txt'>⇩ plaintext</a> · <a href='../../'>⇦ all rooms</a></p>
 <hr>
 <div class='msg'><a class='ts' href='https://matrix.to/#/!ddsEwXlCWnreEGuqXZ:polkadot.io/$G0deSwnlYlCrSn5lIFL__hi6bgWVITql5VyahU4bzpI' target='_blank'>2024-04-17 20:29</a>&ensp;<span class='u' style='color:#da6aa2'>syed</span>: <a href="https://matrix.to/#/!hyzRkDqDthePbodYFz:parity.io/$f_DMsIEcDXZegw6Sabnehzc-LrdDQkmq5MbxDDyoZxY?via=parity.io&amp;via=web3.foundation" rel="noopener" target="_blank">https://matrix.to/#/!hyzRkDqDthePbodYFz:parity.io/$f_DMsIEcDXZegw6Sabnehzc-LrdDQkmq5MbxDDyoZxY?via=parity.io&amp;via=web3.foundation</a>
@@ -5715,3 +5715,6 @@ Here in <a href="https://graypaper.fluffylabs.dev/#/cc517d7/1c32011c3801?v=0.6.5
 
 I am not sure what it is trying to imply.</div>
 <div class='msg reply'><a class='ts' href='https://matrix.to/#/!ddsEwXlCWnreEGuqXZ:polkadot.io/$fxUu9WxIFk5g-8eHtOj3KZoavNPKLIBgNPDfUvKF3dA' target='_blank'>2025-04-25 16:13</a>&ensp;<span class='u' style='color:#c65779'>dave</span>: See my reply in the &quot;Let&#x27;s JAM&quot; channel.</div>
+<div class='msg'><a class='ts' href='https://matrix.to/#/!ddsEwXlCWnreEGuqXZ:polkadot.io/$L65EhbWUqm9_4qtwMntz-ugCNruU905fdugJa4LHFUo' target='_blank'>2025-04-26 17:40</a>&ensp;<span class='u' style='color:#4036ac'>ascriv</span>: For the function definition (D.4), it seems like k could  have (much) fewer than 248 bits, e.g. in the case where there are many elements of the preimage lookup for any service account. Since in this case the keys for all of these in the serialized state will have the same first 8 bytes, so by the time we are computing the leaf value for one of these keys we will have cleaved off at least 64 bits, leaving fewer than 192 bits for k, if I understand correctly  </div>
+<div class='msg'><a class='ts' href='https://matrix.to/#/!ddsEwXlCWnreEGuqXZ:polkadot.io/$TK37WcWt_mgbGgL38cRhvKpF6bIpHzq2Mr_07oc7ekA' target='_blank'>2025-04-26 17:40</a>&ensp;<span class='u' style='color:#4036ac'>ascriv</span>: Should we be padding with zeroes in such cases to compute bits(k)…248?</div>
+<div class='msg'><a class='ts' href='https://matrix.to/#/!ddsEwXlCWnreEGuqXZ:polkadot.io/$tpG2pIm3IerNWDENeS6PaESU-bWc75oV_c2q48GbODo' target='_blank'>2025-04-26 17:47</a>&ensp;<span class='u' style='color:#4036ac'>ascriv</span>: Ah, nevermind. This is why we also have the key in the rhs of the map, so we remember the original non-cleaved key</div>

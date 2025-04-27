@@ -1,5 +1,5 @@
 # room: #graypaper:polkadot.io
-# exported: 2025-04-26 03:23 UTC
+# exported: 2025-04-27 03:29 UTC
 2024-04-17 20:29 syed: https://matrix.to/#/!hyzRkDqDthePbodYFz:parity.io/$f_DMsIEcDXZegw6Sabnehzc-LrdDQkmq5MbxDDyoZxY?via=parity.io&via=web3.foundation
 
 2024-04-17 20:29 syed: 
@@ -5720,3 +5720,6 @@ Here in [GP](https://graypaper.fluffylabs.dev/#/cc517d7/1c32011c3801?v=0.6.5):
 
 I am not sure what it is trying to imply.
   ↳ 2025-04-25 16:13 dave: See my reply in the "Let's JAM" channel.
+2025-04-26 17:40 ascriv: For the function definition (D.4), it seems like k could  have (much) fewer than 248 bits, e.g. in the case where there are many elements of the preimage lookup for any service account. Since in this case the keys for all of these in the serialized state will have the same first 8 bytes, so by the time we are computing the leaf value for one of these keys we will have cleaved off at least 64 bits, leaving fewer than 192 bits for k, if I understand correctly  
+2025-04-26 17:40 ascriv: Should we be padding with zeroes in such cases to compute bits(k)…248?
+2025-04-26 17:47 ascriv: Ah, nevermind. This is why we also have the key in the rhs of the map, so we remember the original non-cleaved key
