@@ -18,7 +18,7 @@ a:hover{color:#90caf9}
 em{font-style:italic}
 </style>
 <h1>#jam:polkadot.io</h1>
-<p><small>last updated 2025-04-27 03:28 UTC</small></p>
+<p><small>last updated 2025-04-28 03:30 UTC</small></p>
 <p><a href='room_log.txt'>⇩ plaintext</a> · <a href='../../'>⇦ all rooms</a></p>
 <hr>
 <div class='msg'><a class='ts' href='https://matrix.to/#/!wBOJlzaOULZOALhaRh:polkadot.io/$we4SYXTHwmKn094X9Zs_7mWUOoUVh4icvVdxD83RZfs' target='_blank'>2024-04-20 02:08</a>&ensp;<span class='u' style='color:#d0709e'>johnjiao123</span>: </div>
@@ -7402,3 +7402,10 @@ there are a few quality of life improvements still to be done but any feedback o
 
 it even supports links to messages, threads with paddings, great work, direct and efficient <span class="edited">(edited)</span></div>
 <div class='msg reply'><a class='ts' href='https://matrix.to/#/!wBOJlzaOULZOALhaRh:polkadot.io/$UdC_hsXtHsa_eS3A_f_12yWFH7zR9GpyaA6YB6UYDy4' target='_blank'>2025-04-26 14:23</a>&ensp;<span class='u' style='color:#787fdf'>erin</span>: thank you!</div>
+<div class='msg'><a class='ts' href='https://matrix.to/#/!wBOJlzaOULZOALhaRh:polkadot.io/$eHVieXlcGdFejlwuWy17ptpAXcI_ZmyK0ugQbQHjF44' target='_blank'>2025-04-27 21:59</a>&ensp;<span class='u' style='color:#6f63cc'>decentration</span>: Just working on the pvm implementation i just want to confirm with what is the minimum requirement for M1... in the article (<a href="https://hackmd.io/@polkadot/jamprize)" rel="noopener" target="_blank">https://hackmd.io/@polkadot/jamprize)</a> it references PVM for M3 but not M1. 
+
+1. Is it enough to expose the JAM host-function interface while stubbing the RISC-V runtime?
+2. Or do we already need full RISC-V sandbox execution (load blob -&gt; run -&gt; trap -&gt; return ephemerals) in M1?
+3. If execution is required, may we rely on an existing impl such as PolkaVM as a temporary backend and postpone a custom PVM to M3?
+4. Alternatively, is all PVM work evaluated only from M3 onward?
+5. And, is there a difference between M1 and MN1? <span class="edited">(edited)</span></div>

@@ -1,5 +1,5 @@
 # room: #jam:polkadot.io
-# exported: 2025-04-27 03:28 UTC
+# exported: 2025-04-28 03:30 UTC
 2024-04-20 02:08 johnjiao123: 
 2024-04-20 02:09 johnjiao123: 
 2024-05-30 21:48 nradko: Hey everyone,
@@ -7429,3 +7429,10 @@ there are a few quality of life improvements still to be done but any feedback o
 
 it even supports links to messages, threads with paddings, great work, direct and efficient [edited]
   ↳ 2025-04-26 14:23 erin: thank you!
+2025-04-27 21:59 decentration: Just working on the pvm implementation i just want to confirm with what is the minimum requirement for M1... in the article (https://hackmd.io/@polkadot/jamprize) it references PVM for M3 but not M1. 
+
+1. Is it enough to expose the JAM host-function interface while stubbing the RISC-V runtime?
+2. Or do we already need full RISC-V sandbox execution (load blob -> run -> trap -> return ephemerals) in M1?
+3. If execution is required, may we rely on an existing impl such as PolkaVM as a temporary backend and postpone a custom PVM to M3?
+4. Alternatively, is all PVM work evaluated only from M3 onward?
+5. And, is there a difference between M1 and MN1? [edited]
