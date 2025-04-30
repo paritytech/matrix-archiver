@@ -1,5 +1,5 @@
 # room: #graypaper:polkadot.io
-# exported: 2025-04-30 12:57 UTC
+# exported: 2025-04-30 13:03 UTC
 2024-04-17 20:29 syed: https://matrix.to/#/!hyzRkDqDthePbodYFz:parity.io/$f_DMsIEcDXZegw6Sabnehzc-LrdDQkmq5MbxDDyoZxY?via=parity.io&via=web3.foundation
 
 2024-04-17 20:29 syed: 
@@ -5763,3 +5763,4 @@ light inspection reveals the following warning: Error with Permissions-Policy he
 
 https://paritytech.github.io/matrix-archiver/ 
 2025-04-30 12:48 erin: ah thanks for flagging, I'll check on it right away
+2025-04-30 12:58 erin: It's now fixed - sorry about that. Looks like the archival process timed out, could have been due to a slow github runner. I've increased the timeout to something quite high now so it should (hopefully) not happen again.
