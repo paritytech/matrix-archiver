@@ -32,7 +32,7 @@ jobs:
           MATRIX_ROOMS:  ${{ secrets.MATRIX_ROOMS }}
           # optional tunables
           LISTEN_MODE: "all"        # or tail / once
-          TIMEOUT:     "120"
+          TIMEOUT:     "1200"
           TAIL_N:      "20000"
 
       - name: commit artefacts
