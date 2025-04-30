@@ -1,5 +1,5 @@
 # room: #graypaper:polkadot.io
-# exported: 2025-04-28 03:30 UTC
+# exported: 2025-04-30 12:57 UTC
 2024-04-17 20:29 syed: https://matrix.to/#/!hyzRkDqDthePbodYFz:parity.io/$f_DMsIEcDXZegw6Sabnehzc-LrdDQkmq5MbxDDyoZxY?via=parity.io&via=web3.foundation
 
 2024-04-17 20:29 syed: 
@@ -5569,6 +5569,10 @@ exporting a segment to be imported)
 if you were the "generator" of  CE140 justification(i.e someone requested the justification from you), wouldn't you also need to fetch the raw "s" from your sibling's just to provide a co-path to the segment shard that you are responsible to store?
   ↳ 2025-04-23 22:03 mkchung: I think I'm confused as why "S" not being hashed before building the segments root
   ↳ 2025-04-24 16:52 jaymansfield: No you only need to know what was returned from CE137 originally. You are providing a path to a root for a list of shards with an index, not for all shards of a given segment. Refer back to s\_clubs in your availability specifier. [edited]
+  ↳ 2025-04-28 15:46 dave: Sorry, missed these messages earlier. s is the full sequence of segments shards with the given shard index yes. These are all provided in CE 137 (the `[Segment Shard]`), you should not need to request data from another node to handle a CE 140 request. [edited]
+  ↳ 2025-04-28 15:47 dave: FWIW the segments root is _not_ involved here, the justifications returned by CE 140 are justifications from the returned segment shards to the erasure root
+  ↳ 2025-04-28 15:52 dave: As Jason says look at s_clubs
+  ↳ 2025-04-28 15:53 dave: I've opened a PR to (hopefully) improve the wording: https://github.com/gavofyork/graypaper/pull/345
 2025-04-22 18:33 sourabhniyogi: We have found our development life has improved with the "metadata" attached to preimages, specifically when the preimage is for service code, because we can then have tools show that metadata as strings like "fib" and "gameoflife".   Can we get the same for workpackages+bundles so that we can attach metadata like "fib(93)", "gameoflife(314)", or should that be in the payload as a mere convention?
 2025-04-22 19:56 sourabhniyogi: Another quick request: Would you mind assigning `provide` a number like 17 or 27, and perhaps starting historical\_lookup at 32 or 64 or 128? That would leave a bit of space between the two big groups of host functions for "one more".
  [edited]
@@ -5723,3 +5727,39 @@ I am not sure what it is trying to imply.
 2025-04-26 17:40 ascriv: For the function definition (D.4), it seems like k could  have (much) fewer than 248 bits, e.g. in the case where there are many elements of the preimage lookup for any service account. Since in this case the keys for all of these in the serialized state will have the same first 8 bytes, so by the time we are computing the leaf value for one of these keys we will have cleaved off at least 64 bits, leaving fewer than 192 bits for k, if I understand correctly  
 2025-04-26 17:40 ascriv: Should we be padding with zeroes in such cases to compute bits(k)…248?
 2025-04-26 17:47 ascriv: Ah, nevermind. This is why we also have the key in the rhs of the map, so we remember the original non-cleaved key
+2025-04-28 07:58 kianenigma: I noticed from (latex) comments in https://github.com/gavofyork/graypaper/pull/285 that the encoding of the new statistics state components vary between u16, u32, and u64. Yet, in the state serialization section, they are not covered: https://graypaper.fluffylabs.dev/#/cc517d7/39dd0139e901?v=0.6.5 
+
+Is this something that is not finalized yet, or are they mentioned in another section and I am missing it? 
+
+For example, I could guess that gas always serialized as u64 but didn't have a prior reference to know e.g. extrinsic count is encoded as u16.
+2025-04-28 09:31 gav: The state serialisation for the latter two components is the general (variable size integer) encoding.  [edited]
+2025-04-28 16:07 prasad-kumkar: Should argument `a` from [argument invocation function](https://graypaper.fluffylabs.dev/#/cc517d7/2c05022c0702?v=0.6.5) be encoded with p before passing in [program initialization function](https://graypaper.fluffylabs.dev/#/cc517d7/2b64022b6402?v=0.6.5), as its being decoding from `p` as described in [A.37](https://graypaper.fluffylabs.dev/#/cc517d7/2bb1022bc102?v=0.6.5) ? As noted:
+
+> Given some p which is appropriately encoded together with some argument data a, we can define program code c, registers ω and ram μ through the standard initialization decoder function Y [edited]
+2025-04-28 19:14 ascriv: Should we expect to be able to handle bad blocks for M1? Or are all blocks presumed valid?
+  ↳ 2025-04-28 19:25 jay_ztc: +"handle forks" to this question [edited]
+  ↳ 2025-04-28 21:07 xlchen: IMO M1 is just STF, state in, new state out. there is no concept of a block chain to be considered
+  ↳ 2025-04-28 21:10 xlchen: so you should detect if a block is bad (purely using the provided input state), but no need to care about forks because it is stateless
+2025-04-28 21:09 davxy: > <@ascriv:matrix.org> Should we expect to be able to handle bad blocks for M1? Or are all blocks presumed valid?
+
+Be prepared for bad blocks. A lot of bad blocks :)
+2025-04-29 13:22 qinwenwang: JAM Gray Paper Chinese Version has been updated to 0.6.5 accordingly https://www.lollipop.builders/JAM-Graypaper-Chinese.pdf
+2025-04-29 18:41 jay_ztc: Curious why the state serialization of preimage availabilities specifies that the preimage hash should be hashed? Instead of serializing the preimage hash itself, like in the preimage serialization?
+
+https://graypaper.fluffylabs.dev/#/cc517d7/397202397202?v=0.6.5
+
+Edit: wording [edited]
+2025-04-30 02:39 ascriv: Maybe for super extra care in having no collisions?
+2025-04-30 02:44 xlchen: I asked the same question before
+2025-04-30 02:45 ascriv: I have a question also about state serialization:
+
+For pending reports serialization, is it the case that the segment count in (11.5) should be serialized using the general natural number encoding? In fact , since E is not subscripted in C(10), shouldn’t all naturals in the work report be encoded in the general way?
+2025-04-30 02:51 ascriv: But, if we’re going with naturals that are subscripted (like gas values) should always be encoded in the non general way (that seems to be convention?), does that mean the gas values in core and service statistics should not be generally encoded? [edited]
+2025-04-30 10:01 jimboj21: I see in 12.20 that P is a return value. From what I can see it is not defined here but is a returned by the accumulation invokable pvm instance. However it does not appear that psi_a function signature has been updated to reflect this 
+2025-04-30 10:07 jimboj21: 
+2025-04-30 12:47 jay_ztc: Anyone else having trouble with the archives site? Only seeing the title: "Archived Rooms"
+
+light inspection reveals the following warning: Error with Permissions-Policy header: Unrecognized feature: 'interest-cohort'.
+
+https://paritytech.github.io/matrix-archiver/ 
+2025-04-30 12:48 erin: ah thanks for flagging, I'll check on it right away

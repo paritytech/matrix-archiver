@@ -1,5 +1,5 @@
 # room: #jam:polkadot.io
-# exported: 2025-04-28 03:30 UTC
+# exported: 2025-04-30 12:56 UTC
 2024-04-20 02:08 johnjiao123: 
 2024-04-20 02:09 johnjiao123: 
 2024-05-30 21:48 nradko: Hey everyone,
@@ -7436,3 +7436,32 @@ it even supports links to messages, threads with paddings, great work, direct an
 3. If execution is required, may we rely on an existing impl such as PolkaVM as a temporary backend and postpone a custom PVM to M3?
 4. Alternatively, is all PVM work evaluated only from M3 onward?
 5. And, is there a difference between M1 and MN1? [edited]
+  ↳ 2025-04-28 06:58 subotic: You need a working PVM for M1 (accumulate needs the PVM). For M1 and M2 it can be an interpreter, while from M3 on it needs to be more performant and thus recompiler based. There are different paths described in the linked HackMD, and from what I understand, an original PVM is needed for the first milestone for all paths, as you cannot import a block without.
+2025-04-28 13:36 wabkebab: **JAM _action_ next week**
+
+The following week comes with a packed JAM schedule. JAM Experience, Toaster visit and ETHLisbon JAM weekend (booth and keynote during ETHLisbon) will keep you engaged for the whole week.
+
+For those who have not confirmed their presence on the Toaster visit, please sign up on the following link: https://lu.ma/jamtoastervisit
+
+Limited spots! [edited]
+2025-04-28 14:01 jay_ztc: Hi Mila | Pala Labs , hope you're doing well. Are you able to share if registration approvals for the toaster tour have started to be processed yet? My teammate & I still see our registration as pending.
+  ↳ 2025-04-28 14:49 milawords: Hi Jay | ZTC thanks for reaching out. We will review all outstanding registrations today and tomorrow. [edited]
+2025-04-28 15:07 milawords: Your support needed: JAM’s first official sponsorship; JAM Booth at ETHLisbon
+
+Dear Implementers,
+
+We are excited to organise JAM’s first official sponsorship of an Ethereum conference - the JAM booth at ETHLisbon.
+
+We would love your support in representing JAM at the booth as you are the faces behind JAM. You won’t need to be there the entire time but rather flexible time slots based on your availability.
+
+As a thank you, we are organising a dinner for everyone who helps with the booth. It will be a great opportunity to meet the Pala Labs team and discuss how we can better support JAM implementers moving forward.
+
+Please feel free to reach out to me directly and looking forward to hearing from you!
+
+Mila
+
+2025-04-28 15:39 oliverb: Mila | Pala Labs: Hi - hope you're well. Have you invited Parity people to this separately? I know you probably want lots of non-Parity people as well but happy to help spread the message internally...
+2025-04-28 23:47 sourabhniyogi: Here is a JAM Implementer Dune Dashboard Proof-of-Concept 
+ https://dune.com/substrate/jamtestnet
+Earlier thought we should log all of JAMSNP activity but after thinking about what was really important to a implementer leaderboard and M3 performance, ended up at the above instead -- hope we can discuss how to make this really work next week!
+2025-04-29 13:18 dave: FYI A small behavioural change has been made to SNP. Previously the SNP spec stated that validators should _not_ announce preimages to each other. This has been changed to state the opposite: validators _should_ announce preimages to each other. See https://github.com/zdave-parity/jam-np/commit/ebc6139eb89dfaa49f5fa12a5a0abdc1af0bd578. The wire protocol is unchanged.
