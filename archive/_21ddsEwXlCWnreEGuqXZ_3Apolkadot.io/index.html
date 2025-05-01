@@ -18,7 +18,7 @@ a:hover{color:#90caf9}
 em{font-style:italic}
 </style>
 <h1>#graypaper:polkadot.io</h1>
-<p><small>last updated 2025-04-30 13:03 UTC</small></p>
+<p><small>last updated 2025-05-01 03:33 UTC</small></p>
 <p><a href='room_log.txt'>⇩ plaintext</a> · <a href='../../'>⇦ all rooms</a></p>
 <hr>
 <div class='msg'><a class='ts' href='#$G0deSwnlYlCrSn5lIFL__hi6bgWVITql5VyahU4bzpI'>#</a> <a class='ts' name='$G0deSwnlYlCrSn5lIFL__hi6bgWVITql5VyahU4bzpI' href='https://matrix.to/#/!ddsEwXlCWnreEGuqXZ:polkadot.io/$G0deSwnlYlCrSn5lIFL__hi6bgWVITql5VyahU4bzpI' target='_blank'>2024-04-17 20:29</a>&ensp;<span class='u' style='color:#da6aa2'>syed</span>: <a href="https://matrix.to/#/!hyzRkDqDthePbodYFz:parity.io/$f_DMsIEcDXZegw6Sabnehzc-LrdDQkmq5MbxDDyoZxY?via=parity.io&amp;via=web3.foundation" rel="noopener" target="_blank">https://matrix.to/#/!hyzRkDqDthePbodYFz:parity.io/$f_DMsIEcDXZegw6Sabnehzc-LrdDQkmq5MbxDDyoZxY?via=parity.io&amp;via=web3.foundation</a>
@@ -5759,3 +5759,72 @@ light inspection reveals the following warning: Error with Permissions-Policy he
 <a href="https://paritytech.github.io/matrix-archiver/" rel="noopener" target="_blank">https://paritytech.github.io/matrix-archiver/</a> </div>
 <div class='msg'><a class='ts' href='#$mDJxoxY3uGOKDAtSi5tXkYCoBE0Ddy8ejxAR5tnanb8'>#</a> <a class='ts' name='$mDJxoxY3uGOKDAtSi5tXkYCoBE0Ddy8ejxAR5tnanb8' href='https://matrix.to/#/!ddsEwXlCWnreEGuqXZ:polkadot.io/$mDJxoxY3uGOKDAtSi5tXkYCoBE0Ddy8ejxAR5tnanb8' target='_blank'>2025-04-30 12:48</a>&ensp;<span class='u' style='color:#787fdf'>erin</span>: ah thanks for flagging, I&#x27;ll check on it right away</div>
 <div class='msg'><a class='ts' href='#$qehTlqyx4MnxXozCspL3i5DYStUvtfp6OGQp1BuNiGg'>#</a> <a class='ts' name='$qehTlqyx4MnxXozCspL3i5DYStUvtfp6OGQp1BuNiGg' href='https://matrix.to/#/!ddsEwXlCWnreEGuqXZ:polkadot.io/$qehTlqyx4MnxXozCspL3i5DYStUvtfp6OGQp1BuNiGg' target='_blank'>2025-04-30 12:58</a>&ensp;<span class='u' style='color:#787fdf'>erin</span>: It&#x27;s now fixed - sorry about that. Looks like the archival process timed out, could have been due to a slow github runner. I&#x27;ve increased the timeout to something quite high now so it should (hopefully) not happen again.</div>
+<div class='msg'><a class='ts' href='#$xP3ybMT-pEjaT3nrtUXofCjVBJLL3g9v5TMPhmV6yns'>#</a> <a class='ts' name='$xP3ybMT-pEjaT3nrtUXofCjVBJLL3g9v5TMPhmV6yns' href='https://matrix.to/#/!ddsEwXlCWnreEGuqXZ:polkadot.io/$xP3ybMT-pEjaT3nrtUXofCjVBJLL3g9v5TMPhmV6yns' target='_blank'>2025-04-30 13:15</a>&ensp;<span class='u' style='color:#825bc4'>jay_ztc</span>: &lt;del&gt;Validators won&#x27;t be able to get the preimage hash itself from the serialized state-&gt; Instead they will need to refer to the block extrinsics right? (for any newly-requested, not yet provided preimage).&lt;/del&gt;
+
+What if instead of hashing, we stack the length octets on top of our preimage hash octets? Basically instead of concatenating bytes, we add each of the 4 length octets to each of the first 4 hash octets, and use the result as our state-key?
+
+I&#x27;m thinking if we can avoid the hash operation while meeting the same requirements- we can lessen our perf overhead
+
+edit: wording (duplication)
+edit: strikethrough not-really-relevent edge case of validator requesting state from another validator for reconstruction <span class="edited">(edited)</span></div>
+<div class='msg reply'><a class='ts' href='#$QdVjlzpnpNqQ8MD5UxdtY0MEUYoBQUZKF9bd7_g9wM4'>#</a> <a class='ts' name='$QdVjlzpnpNqQ8MD5UxdtY0MEUYoBQUZKF9bd7_g9wM4' href='https://matrix.to/#/!ddsEwXlCWnreEGuqXZ:polkadot.io/$QdVjlzpnpNqQ8MD5UxdtY0MEUYoBQUZKF9bd7_g9wM4' target='_blank'>2025-04-30 13:16</a>&ensp;<span class='u' style='color:#825bc4'>jay_ztc</span>: For context, this was the post from David Emett in Oct 2024:
+
+2024-10-31 22:29 dave: The preimage hash is passed in to eg solicit directly, it&#x27;s trivial to pass in almost-colliding hashes. As the trie key construction function doesn&#x27;t preserve all hash bits, these almost-colliding hashes could actually collide in the trie if they are not hashed beforehand
+</div>
+<div class='msg reply'><a class='ts' href='#$Lt5P_67xSb_O8J8i0UVqpV4JdVqsoT7we3niWKX4_js'>#</a> <a class='ts' name='$Lt5P_67xSb_O8J8i0UVqpV4JdVqsoT7we3niWKX4_js' href='https://matrix.to/#/!ddsEwXlCWnreEGuqXZ:polkadot.io/$Lt5P_67xSb_O8J8i0UVqpV4JdVqsoT7we3niWKX4_js' target='_blank'>2025-04-30 13:23</a>&ensp;<span class='u' style='color:#c65779'>dave</span>: &gt; &lt;@jay_ztc:matrix.org&gt; Validators won&#x27;t be able to get the preimage hash itself from the serialized state-&gt; Instead they will need to refer to the block extrinsics right? (for any newly-requested, not yet provided preimage).
+&gt; 
+&gt; What if instead of hashing, we stack the length octets on top of our preimage hash octets? Basically instead of concatenating bytes, we add each of the 4 length octets to each of the first 4 hash octets, and use the result as our state-key?
+&gt; 
+&gt; I&#x27;m thinking if we can avoid the hash operation while meeting the same requirements- we can lessen our perf overhead
+&gt; 
+&gt; edit: wording (duplication)
+
+Maybe I&#x27;m not understanding but it seems trivial to generate collisions with this scheme. The requested hash and length are almost unconstrained (the length is somewhat constrained by required deposit I think)</div>
+<div class='msg reply'><a class='ts' href='#$YApv-TslSYP6UeF3AOAvSSvO8vNcnYcG9rcvt6BSpA8'>#</a> <a class='ts' name='$YApv-TslSYP6UeF3AOAvSSvO8vNcnYcG9rcvt6BSpA8' href='https://matrix.to/#/!ddsEwXlCWnreEGuqXZ:polkadot.io/$YApv-TslSYP6UeF3AOAvSSvO8vNcnYcG9rcvt6BSpA8' target='_blank'>2025-04-30 13:24</a>&ensp;<span class='u' style='color:#825bc4'>jay_ztc</span>: doh! of course, thank you</div>
+<div class='msg'><a class='ts' href='#$NWuVidQh_vUFbWTV2jUcncOBG9Xgf0WX7qG43NoZeYY'>#</a> <a class='ts' name='$NWuVidQh_vUFbWTV2jUcncOBG9Xgf0WX7qG43NoZeYY' href='https://matrix.to/#/!ddsEwXlCWnreEGuqXZ:polkadot.io/$NWuVidQh_vUFbWTV2jUcncOBG9Xgf0WX7qG43NoZeYY' target='_blank'>2025-04-30 13:24</a>&ensp;<span class='u' style='color:#825bc4'>jay_ztc</span>: </div>
+<div class='msg'><a class='ts' href='#$xFPaKl4yEBhR1Cj-FdKv13gmrmA50_K3lyxAt-wnplo'>#</a> <a class='ts' name='$xFPaKl4yEBhR1Cj-FdKv13gmrmA50_K3lyxAt-wnplo' href='https://matrix.to/#/!ddsEwXlCWnreEGuqXZ:polkadot.io/$xFPaKl4yEBhR1Cj-FdKv13gmrmA50_K3lyxAt-wnplo' target='_blank'>2025-04-30 14:20</a>&ensp;<span class='u' style='color:#72c147'>luke_fishman</span>: has anyone passes the latest accumulate test vector <code>same_code_different_services-1</code>
+
+in the <code>pre-state</code> there are 2 services: 1729, 1730
+1730 has no &quot;blob&quot; i.e service code
+
+in the <code>post-state</code> service 1730 is removed, only service 1729 remains
+
+i am currently clueless as to how that might have happend
+
+- it could not have ejected itself - since it has no code
+- as far as i can tell, it is not removed from <code>d&amp;#x27;</code>  in <a href="https://graypaper.fluffylabs.dev/#/cc517d7/17fe01170102?v=0.6.5" rel="noopener" target="_blank">12.17</a>
+
+how else can it be removed?
+
+davxy  could you advise? <span class="edited">(edited)</span></div>
+<div class='msg'><a class='ts' href='#$rh2BbwEB2hJoDGt2_AvFVVO-ty7UrSTxSTFdRO97amM'>#</a> <a class='ts' name='$rh2BbwEB2hJoDGt2_AvFVVO-ty7UrSTxSTFdRO97amM' href='https://matrix.to/#/!ddsEwXlCWnreEGuqXZ:polkadot.io/$rh2BbwEB2hJoDGt2_AvFVVO-ty7UrSTxSTFdRO97amM' target='_blank'>2025-04-30 14:21</a>&ensp;<span class='u' style='color:#4281bb'>jimboj21</span>: Luke | Jamixir: I am also stuck trying to get this working currently</div>
+<div class='msg'><a class='ts' href='#$yvWNEG49KbuybCrslow6LbaYdFAb26qeiU56GNVnvpo'>#</a> <a class='ts' name='$yvWNEG49KbuybCrslow6LbaYdFAb26qeiU56GNVnvpo' href='https://matrix.to/#/!ddsEwXlCWnreEGuqXZ:polkadot.io/$yvWNEG49KbuybCrslow6LbaYdFAb26qeiU56GNVnvpo' target='_blank'>2025-04-30 14:21</a>&ensp;<span class='u' style='color:#4281bb'>jimboj21</span>: and dont see why it is happening yet</div>
+<div class='msg'><a class='ts' href='#$rukKX10Fs-WrRW6VaxwkoI0KotbTes9aO0b1JGG0D_w'>#</a> <a class='ts' name='$rukKX10Fs-WrRW6VaxwkoI0KotbTes9aO0b1JGG0D_w' href='https://matrix.to/#/!ddsEwXlCWnreEGuqXZ:polkadot.io/$rukKX10Fs-WrRW6VaxwkoI0KotbTes9aO0b1JGG0D_w' target='_blank'>2025-04-30 14:22</a>&ensp;<span class='u' style='color:#72c147'>luke_fishman</span>: good to know I&#x27;m not alone on this</div>
+<div class='msg'><a class='ts' href='#$OreqhekM1LcMwT6lb8Bq8mbCDmK3RLLaMJLSKGqj8ug'>#</a> <a class='ts' name='$OreqhekM1LcMwT6lb8Bq8mbCDmK3RLLaMJLSKGqj8ug' href='https://matrix.to/#/!ddsEwXlCWnreEGuqXZ:polkadot.io/$OreqhekM1LcMwT6lb8Bq8mbCDmK3RLLaMJLSKGqj8ug' target='_blank'>2025-04-30 15:45</a>&ensp;<span class='u' style='color:#a23bc7'>emielsebastiaan</span>: Seems to be addressed in <a href="https://github.com/gavofyork/graypaper/pull/348" rel="noopener" target="_blank">https://github.com/gavofyork/graypaper/pull/348</a>
+And thus likely published in next release of GP (0.6.6).</div>
+<div class='msg'><a class='ts' href='#$tonnObxKNyRkWsSXtb4qXVmmEF5TcP9P1hOXSmmTbYU'>#</a> <a class='ts' name='$tonnObxKNyRkWsSXtb4qXVmmEF5TcP9P1hOXSmmTbYU' href='https://matrix.to/#/!ddsEwXlCWnreEGuqXZ:polkadot.io/$tonnObxKNyRkWsSXtb4qXVmmEF5TcP9P1hOXSmmTbYU' target='_blank'>2025-04-30 15:46</a>&ensp;<span class='u' style='color:#a23bc7'>emielsebastiaan</span>: Minor text change near equation: 12.20: change p -&gt; i
+PR: <a href="https://github.com/gavofyork/graypaper/pull/351" rel="noopener" target="_blank">https://github.com/gavofyork/graypaper/pull/351</a></div>
+<div class='msg'><a class='ts' href='#$B5acgZoeIxYUB3XSc7HKpyjuT4ohq05j3Oa91yPGEL4'>#</a> <a class='ts' name='$B5acgZoeIxYUB3XSc7HKpyjuT4ohq05j3Oa91yPGEL4' href='https://matrix.to/#/!ddsEwXlCWnreEGuqXZ:polkadot.io/$B5acgZoeIxYUB3XSc7HKpyjuT4ohq05j3Oa91yPGEL4' target='_blank'>2025-04-30 15:48</a>&ensp;<span class='u' style='color:#a23bc7'>emielsebastiaan</span>: Some suggested changes to the provide host function: <a href="https://github.com/gavofyork/graypaper/pull/352" rel="noopener" target="_blank">https://github.com/gavofyork/graypaper/pull/352</a>
+Fixes: 1) setting registers, 2) setting bold_d (service dictionary)
+
+</div>
+<div class='msg'><a class='ts' href='#$N7GnHNO5F_dZYo5iUqp1pDsaIhtFcqnuN1gxLEJb2zo'>#</a> <a class='ts' name='$N7GnHNO5F_dZYo5iUqp1pDsaIhtFcqnuN1gxLEJb2zo' href='https://matrix.to/#/!ddsEwXlCWnreEGuqXZ:polkadot.io/$N7GnHNO5F_dZYo5iUqp1pDsaIhtFcqnuN1gxLEJb2zo' target='_blank'>2025-04-30 18:04</a>&ensp;<span class='u' style='color:#c67452'>sourabhniyogi</span>: The new 0.6.5 gas parameter x\_g in the operand is serialized in <a href="https://graypaper.fluffylabs.dev/#/cc517d7/385f02385f02?v=0.6.5" rel="noopener" target="_blank">C.29</a> not with E\_8 but with <a href="https://graypaper.fluffylabs.dev/#/cc517d7/37a10037a100?v=0.6.5" rel="noopener" target="_blank">C.6</a>, unlike the others that use E\_8 (see C.23, C.26, C.28) -- is this a typo or intended?  Why not make them consistent in one direction or the other? <span class="edited">(edited)</span></div>
+<div class='msg'><a class='ts' href='#$FayM9lGzvOmMsrF8Sis8SCsEtnGLu0FhOyB5Jvy--6E'>#</a> <a class='ts' name='$FayM9lGzvOmMsrF8Sis8SCsEtnGLu0FhOyB5Jvy--6E' href='https://matrix.to/#/!ddsEwXlCWnreEGuqXZ:polkadot.io/$FayM9lGzvOmMsrF8Sis8SCsEtnGLu0FhOyB5Jvy--6E' target='_blank'>2025-04-30 19:28</a>&ensp;<span class='u' style='color:#cd8957'>gav</span>: All these encodings will be revisited in due course before 0.7.0 (there’s an issue on the 0.6 milestone page) but until then assume your reading is correct.</div>
+<div class='msg'><a class='ts' href='#$6LRRxVYbuk1Yp3UymyqfexziIhYJXa3NchMhTE9-jAY'>#</a> <a class='ts' name='$6LRRxVYbuk1Yp3UymyqfexziIhYJXa3NchMhTE9-jAY' href='https://matrix.to/#/!ddsEwXlCWnreEGuqXZ:polkadot.io/$6LRRxVYbuk1Yp3UymyqfexziIhYJXa3NchMhTE9-jAY' target='_blank'>2025-04-30 20:21</a>&ensp;<span class='u' style='color:#c9419d'>davxy</span>: &gt; &lt;@luke_fishman:matrix.org&gt; has anyone passes the latest accumulate test vector <code>same_code_different_services-1</code>
+&gt; 
+&gt; in the <code>pre-state</code> there are 2 services: 1729, 1730
+&gt; 1730 has no &quot;blob&quot; i.e service coed
+&gt; 
+&gt; 
+&gt; in the <code>post-state</code> service 1730 is removes, only service 1729 remains
+&gt; 
+&gt; i am currently clueless to how that might have happend
+&gt; - it could not have ejected itself - since it has no code
+&gt; - as far as i can tell, it is not removed from <code>d&amp;#x27;</code>  in <a href="https://graypaper.fluffylabs.dev/#/cc517d7/17fe01170102?v=0.6.5" rel="noopener" target="_blank">12.17</a>
+&gt; 
+&gt; how else can it be removed?
+&gt; 
+&gt; davxy  could you advice?
+&gt; 
+
+I&#x27;ll have a look</div>

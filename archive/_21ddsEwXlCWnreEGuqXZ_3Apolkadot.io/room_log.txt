@@ -1,5 +1,5 @@
 # room: #graypaper:polkadot.io
-# exported: 2025-04-30 13:03 UTC
+# exported: 2025-05-01 03:33 UTC
 2024-04-17 20:29 syed: https://matrix.to/#/!hyzRkDqDthePbodYFz:parity.io/$f_DMsIEcDXZegw6Sabnehzc-LrdDQkmq5MbxDDyoZxY?via=parity.io&via=web3.foundation
 
 2024-04-17 20:29 syed: 
@@ -5764,3 +5764,72 @@ light inspection reveals the following warning: Error with Permissions-Policy he
 https://paritytech.github.io/matrix-archiver/ 
 2025-04-30 12:48 erin: ah thanks for flagging, I'll check on it right away
 2025-04-30 12:58 erin: It's now fixed - sorry about that. Looks like the archival process timed out, could have been due to a slow github runner. I've increased the timeout to something quite high now so it should (hopefully) not happen again.
+2025-04-30 13:15 jay_ztc: <del>Validators won't be able to get the preimage hash itself from the serialized state-> Instead they will need to refer to the block extrinsics right? (for any newly-requested, not yet provided preimage).</del>
+
+What if instead of hashing, we stack the length octets on top of our preimage hash octets? Basically instead of concatenating bytes, we add each of the 4 length octets to each of the first 4 hash octets, and use the result as our state-key?
+
+I'm thinking if we can avoid the hash operation while meeting the same requirements- we can lessen our perf overhead
+
+edit: wording (duplication)
+edit: strikethrough not-really-relevent edge case of validator requesting state from another validator for reconstruction [edited]
+  ↳ 2025-04-30 13:16 jay_ztc: For context, this was the post from David Emett in Oct 2024:
+
+2024-10-31 22:29 dave: The preimage hash is passed in to eg solicit directly, it's trivial to pass in almost-colliding hashes. As the trie key construction function doesn't preserve all hash bits, these almost-colliding hashes could actually collide in the trie if they are not hashed beforehand
+
+  ↳ 2025-04-30 13:23 dave: > <@jay_ztc:matrix.org> Validators won't be able to get the preimage hash itself from the serialized state-> Instead they will need to refer to the block extrinsics right? (for any newly-requested, not yet provided preimage).
+> 
+> What if instead of hashing, we stack the length octets on top of our preimage hash octets? Basically instead of concatenating bytes, we add each of the 4 length octets to each of the first 4 hash octets, and use the result as our state-key?
+> 
+> I'm thinking if we can avoid the hash operation while meeting the same requirements- we can lessen our perf overhead
+> 
+> edit: wording (duplication)
+
+Maybe I'm not understanding but it seems trivial to generate collisions with this scheme. The requested hash and length are almost unconstrained (the length is somewhat constrained by required deposit I think)
+  ↳ 2025-04-30 13:24 jay_ztc: doh! of course, thank you
+2025-04-30 13:24 jay_ztc: 
+2025-04-30 14:20 luke_fishman: has anyone passes the latest accumulate test vector `same_code_different_services-1`
+
+in the `pre-state` there are 2 services: 1729, 1730
+1730 has no "blob" i.e service code
+
+in the `post-state` service 1730 is removed, only service 1729 remains
+
+i am currently clueless as to how that might have happend
+
+- it could not have ejected itself - since it has no code
+- as far as i can tell, it is not removed from `d'`  in [12.17](https://graypaper.fluffylabs.dev/#/cc517d7/17fe01170102?v=0.6.5)
+
+how else can it be removed?
+
+davxy  could you advise? [edited]
+2025-04-30 14:21 jimboj21: Luke | Jamixir: I am also stuck trying to get this working currently
+2025-04-30 14:21 jimboj21: and dont see why it is happening yet
+2025-04-30 14:22 luke_fishman: good to know I'm not alone on this
+2025-04-30 15:45 emielsebastiaan: Seems to be addressed in https://github.com/gavofyork/graypaper/pull/348
+And thus likely published in next release of GP (0.6.6).
+2025-04-30 15:46 emielsebastiaan: Minor text change near equation: 12.20: change p -> i
+PR: https://github.com/gavofyork/graypaper/pull/351
+2025-04-30 15:48 emielsebastiaan: Some suggested changes to the provide host function: https://github.com/gavofyork/graypaper/pull/352
+Fixes: 1) setting registers, 2) setting bold_d (service dictionary)
+
+
+2025-04-30 18:04 sourabhniyogi: The new 0.6.5 gas parameter x\_g in the operand is serialized in [C.29](https://graypaper.fluffylabs.dev/#/cc517d7/385f02385f02?v=0.6.5) not with E\_8 but with [C.6](https://graypaper.fluffylabs.dev/#/cc517d7/37a10037a100?v=0.6.5), unlike the others that use E\_8 (see C.23, C.26, C.28) -- is this a typo or intended?  Why not make them consistent in one direction or the other? [edited]
+2025-04-30 19:28 gav: All these encodings will be revisited in due course before 0.7.0 (there’s an issue on the 0.6 milestone page) but until then assume your reading is correct.
+2025-04-30 20:21 davxy: > <@luke_fishman:matrix.org> has anyone passes the latest accumulate test vector `same_code_different_services-1`
+> 
+> in the `pre-state` there are 2 services: 1729, 1730
+> 1730 has no "blob" i.e service coed
+> 
+> 
+> in the `post-state` service 1730 is removes, only service 1729 remains
+> 
+> i am currently clueless to how that might have happend
+> - it could not have ejected itself - since it has no code
+> - as far as i can tell, it is not removed from `d'`  in [12.17](https://graypaper.fluffylabs.dev/#/cc517d7/17fe01170102?v=0.6.5)
+> 
+> how else can it be removed?
+> 
+> davxy  could you advice?
+> 
+
+I'll have a look
