@@ -1,5 +1,5 @@
 # room: #graypaper:polkadot.io
-# exported: 2025-05-01 03:33 UTC
+# exported: 2025-05-02 03:30 UTC
 2024-04-17 20:29 syed: https://matrix.to/#/!hyzRkDqDthePbodYFz:parity.io/$f_DMsIEcDXZegw6Sabnehzc-LrdDQkmq5MbxDDyoZxY?via=parity.io&via=web3.foundation
 
 2024-04-17 20:29 syed: 
@@ -5833,3 +5833,21 @@ Fixes: 1) setting registers, 2) setting bold_d (service dictionary)
 > 
 
 I'll have a look
+2025-05-01 04:23 clw0908: Some questions about [A.36](https://graypaper.fluffylabs.dev/#/cc517d7/2b63022b6302?v=0.6.5), [A.37](https://graypaper.fluffylabs.dev/#/cc517d7/2bc1022bc102?v=0.6.5), and [A.43](https://graypaper.fluffylabs.dev/#/cc517d7/2cb8012cb801?v=0.6.5):  
+ 
+In A.43, **p** is the program blob of a service, and **a** is the serialized arguments from `refine` or `accumulate` (on-transfer).  
+ 
+So how can **p** include **a** in A.37?  
+ 
+Since A.36 only checks whether there exists a **c**, **o**, **w**, `z`, `s` (excluding **a**) that satisfies A.37, does this mean we don’t have to care whether **a** exists in **p**?
+2025-05-01 07:54 gav: Bold a should be in that list
+  ↳ 2025-05-01 07:59 prasad-kumkar: Should a be concatenated to p before passing in A36 ? https://github.com/gavofyork/graypaper/pull/350 [edited]
+2025-05-01 08:00 gav: 
+2025-05-01 08:03 gav: Hmm. Looks like bold a getting added into that concatenation is a typo. 
+2025-05-01 08:04 gav: Bold a is not a part of the program blob 
+2025-05-01 08:06 prasad-kumkar: then shall **a** be passed as a function argument to Y?
+2025-05-01 08:12 gav: Yes indeed. 
+  ↳ 2025-05-01 08:16 prasad-kumkar: Okay thank you! I’ll update #350 (https://github.com/gavofyork/graypaper/pull/350) to reflect the change if that’s okay 🙂
+2025-05-01 20:01 ascriv: For instruction 104, doesn’t this actually get the trailing (not leading) zeros as it’s defined? For example if wA is 0x1, B_8 will be 1 followed by 0s, and so the formula will evaluate to 0, when it should be 63 [edited]
+2025-05-01 20:06 ascriv: We should be using the big endian representation of wA in 104-107 unless I’m mistaken 
+2025-05-01 22:48 ascriv: Made a pr www.github.com/gavofyork/graypaper/pull/357 [edited]

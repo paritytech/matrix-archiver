@@ -1,5 +1,5 @@
 # room: #jam:polkadot.io
-# exported: 2025-05-01 03:33 UTC
+# exported: 2025-05-02 03:30 UTC
 2024-04-20 02:08 johnjiao123: 
 2024-04-20 02:09 johnjiao123: 
 2024-05-30 21:48 nradko: Hey everyone,
@@ -7464,4 +7464,16 @@ Mila
 2025-04-28 23:47 sourabhniyogi: Here is a JAM Implementer Dune Dashboard Proof-of-Concept 
  https://dune.com/substrate/jamtestnet
 Earlier thought we should log all of JAMSNP activity but after thinking about what was really important to a implementer leaderboard and M3 performance, ended up at the above instead -- hope we can discuss how to make this really work next week!
+  ↳ 2025-05-01 20:29 jaymansfield: This is cool. Will be very useful once we can test on standardized hardware (toaster for example). 
+  ↳ 2025-05-01 20:29 jaymansfield: For the analytics to be a valid comparison, we'd need some standard test cases defined for each. For example block authoring we need to all be including the same items in the block (same number of tickets, assurances, etc) otherwise the completion times would not be comparable
 2025-04-29 13:18 dave: FYI A small behavioural change has been made to SNP. Previously the SNP spec stated that validators should _not_ announce preimages to each other. This has been changed to state the opposite: validators _should_ announce preimages to each other. See https://github.com/zdave-parity/jam-np/commit/ebc6139eb89dfaa49f5fa12a5a0abdc1af0bd578. The wire protocol is unchanged.
+2025-05-01 11:55 danicuki: I will present JAM at ETHLisbon next week. Open for ideas of things to share with the ETH community. It will be a 30min talk. Since we still don’t have a full stack running node in Jamixir, I won’t be able to make a quick demo. But I can easily add video snippets / screen recordings to my presentation if anyone sends it to me. 
+2025-05-01 11:58 gav: I expect we can provide a Linux binary for a PolkaJAM testnet if desired. 
+2025-05-01 16:59 sourabhniyogi: We desire a "how to run DOOM with the PolkaJAM testnet" workshop (which we should all like to replace the PolkaJAM part with our own ASAP of course!), which can dual as a "how to sell JAM in a world of mind viruses".    It is a very good conversation starter as to what really really is going on since most people are naturally like "oh yeah? but what about ethproofs/zkVM/SP1/...?"   Must this be public?
+2025-05-01 17:16 danicuki: We still have a Workshop slot available on May 7th. If gav or anyone else in the PolkaJAM team could give this DOOM on JAM workshop , I can use it on my presentation at ETHLisbon (and other scheduled talks to come). 
+2025-05-01 17:25 sourabhniyogi: That would be terrific.  We have enough stuff to transform https://docs.jamcha.in into a more direct competitor of https://docs.succinct.xyz/docs/sp1/getting-started/quickstart (this is the "competitor" I know and understand, probably you all have others) and similar -- Not sure if this transformation should be done by JAM implementers in community-driven way (any binary should be able to replace or compose with the other) OR from W3F+Parity central. 
+
+A little push and coordination to turn that "OR" into an "AND" would go a long way?
+
+Our 2-core testnet can do 12-16 hours processing thousands of fib/fib2/gameoflife/megatron WPs (486 work packages per hour) and then something bad happens =(  but its not very sexy to lookat relative to DOOM =) [edited]
+2025-05-01 20:30 jaymansfield: 
