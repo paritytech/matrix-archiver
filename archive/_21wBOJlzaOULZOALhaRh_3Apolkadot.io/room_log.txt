@@ -1,5 +1,5 @@
 # room: #jam:polkadot.io
-# exported: 2025-05-02 03:30 UTC
+# exported: 2025-05-03 03:27 UTC
 2024-04-20 02:08 johnjiao123: 
 2024-04-20 02:09 johnjiao123: 
 2024-05-30 21:48 nradko: Hey everyone,
@@ -7477,3 +7477,12 @@ A little push and coordination to turn that "OR" into an "AND" would go a long w
 
 Our 2-core testnet can do 12-16 hours processing thousands of fib/fib2/gameoflife/megatron WPs (486 work packages per hour) and then something bad happens =(  but its not very sexy to lookat relative to DOOM =) [edited]
 2025-05-01 20:30 jaymansfield: 
+2025-05-02 10:17 gav: jambrains guys: https://github.com/JamBrains/jam-docs/pull/39
+2025-05-02 10:19 gav: Note that we use PVM, short for Polkadot Virtual Machine, to mean the ISA specification which JAM implementors implement. PolkaVM, on the other hand, is the first implementation of it (and indeed what it was pretty much entirely derived from), currently developed under the Parity umbrella (but historically a side project of Jan). [edited]
+2025-05-02 10:41 gav: They're confusingly similar (ugh), but I'm not sure that JAM Virtual Machine/JVM would be much less confusing ;)
+2025-05-02 10:42 clearloop: JAM VM (JVM) is too similar to JavaVM (JVM)
+2025-05-02 10:42 xlchen: our PVM module is currently named PolkaVM. I guess we need to rename it to avoid confusion 
+2025-05-02 11:10 danicuki: JⱯM - pushing to the limit... 😖
+2025-05-02 11:38 oliver.tale-yazdi: Thanks for the clear up. I was actually unter the impression that they meant the same 😅  
+Cisco put one review comment and then I can subsequently rename the page to PVM
+2025-05-02 15:34 jaymansfield: Think we all may have did that 😀

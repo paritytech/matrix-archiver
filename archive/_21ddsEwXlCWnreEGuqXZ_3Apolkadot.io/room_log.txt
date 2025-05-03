@@ -1,5 +1,5 @@
 # room: #graypaper:polkadot.io
-# exported: 2025-05-02 03:30 UTC
+# exported: 2025-05-03 03:27 UTC
 2024-04-17 20:29 syed: https://matrix.to/#/!hyzRkDqDthePbodYFz:parity.io/$f_DMsIEcDXZegw6Sabnehzc-LrdDQkmq5MbxDDyoZxY?via=parity.io&via=web3.foundation
 
 2024-04-17 20:29 syed: 
@@ -5851,3 +5851,18 @@ Since A.36 only checks whether there exists a **c**, **o**, **w**, `z`, `s` (exc
 2025-05-01 20:01 ascriv: For instruction 104, doesn’t this actually get the trailing (not leading) zeros as it’s defined? For example if wA is 0x1, B_8 will be 1 followed by 0s, and so the formula will evaluate to 0, when it should be 63 [edited]
 2025-05-01 20:06 ascriv: We should be using the big endian representation of wA in 104-107 unless I’m mistaken 
 2025-05-01 22:48 ascriv: Made a pr www.github.com/gavofyork/graypaper/pull/357 [edited]
+2025-05-02 08:51 gav: Merged a fix
+2025-05-02 11:16 danicuki: I am a bit confused about the terminology used in CE 139/140 (https://docs.jamcha.in/knowledge/advanced/simple-networking/spec#ce-139140-segment-shard-request):
+the GP specifies very well the concept of "segment". It doesn't use the word "shard" - are they the same concept? Also, CE139 define 12 bytes segment shards. But the GP segment sizes are 684 bytes. Where do 12 comes from? Where are shards defined in the GP? 
+2025-05-02 11:19 gav: segments are 4104 bytes and can be reconstructed by 342 validators each presenting their 12 byte *shard* (and its index)
+2025-05-02 12:29 danicuki: > <@gav:polkadot.io> segments are 4104 bytes and can be reconstructed by 342 validators each presenting their 12 byte *shard* (and its index)
+
+Thanks. Then In tiny testnets (6 nodes, 2 cores) each shard has 2052 bytes? So shard size is 4104 / [number of cores]?
+2025-05-02 12:36 gav: Yes indeed. 
+2025-05-02 15:51 sourabhniyogi: image.png
+2025-05-02 15:52 sourabhniyogi: You might find the above useful (if you spot an error, please advise!)
+2025-05-02 17:21 jaymansfield: Hey all. With having M2 pretty much complete at this point I'm now trying to wrap my head around how to build the required  recompiler. Based on my research so far, it looks like I could generate RISC-V machine code, add an ELF header, then use a linker to produce the final ELF file, and finally execute that ELF (somehow) as a background process. Am I heading in the right direction, or am I way off and should just wait for Jan’s talk?
+2025-05-02 17:23 jan: Nope. My talk next week should contain the bare basics that should let you get started on writing one.
+2025-05-02 17:25 jaymansfield: Alright I'll hold off for now. I'm no longer going to be able to make it to jam experience so I really hope this is available to watch online afterwards
+2025-05-02 17:26 jan: I will also share the slides so even if you can't watch the talk they should be useful.
+2025-05-02 17:26 jaymansfield: Thanks!
