@@ -1,5 +1,5 @@
 # room: #graypaper:polkadot.io
-# exported: 2025-05-03 03:27 UTC
+# exported: 2025-05-04 03:33 UTC
 2024-04-17 20:29 syed: https://matrix.to/#/!hyzRkDqDthePbodYFz:parity.io/$f_DMsIEcDXZegw6Sabnehzc-LrdDQkmq5MbxDDyoZxY?via=parity.io&via=web3.foundation
 
 2024-04-17 20:29 syed: 
@@ -5866,3 +5866,42 @@ Thanks. Then In tiny testnets (6 nodes, 2 cores) each shard has 2052 bytes? So s
 2025-05-02 17:25 jaymansfield: Alright I'll hold off for now. I'm no longer going to be able to make it to jam experience so I really hope this is available to watch online afterwards
 2025-05-02 17:26 jan: I will also share the slides so even if you can't watch the talk they should be useful.
 2025-05-02 17:26 jaymansfield: Thanks!
+2025-05-03 17:09 ascriv: State serialization is lossy, specifically in regards to the keys of the storage dictionary of service accounts. I’m a bit confused why this isn’t important. Are we not expected to be able to fully recover a serialized state in the case that the storage dictionary is non empty? State serialization is lossless everywhere else, so it seems odd. [edited]
+2025-05-03 17:47 jaymansfield: I don’t think it’s something really meant to be reversed. Also storage items are not the only thing suffering from this. There are cases where preimage lookups are also not recoverable (if the preimage isn’t known). If it’s just been solicited through a host call and not included in a block yet you wouldn’t know the full hash of it either by looking at the lookup state key [edited]
+2025-05-03 20:02 davxy: As I wrote in the GH discussion. Storage keys are lossy from the host perspective. When a service requires to read (or write) a service key it gives to the host the full unhashes key. The host then computes the state key (as per D.2) and gives (or writes) the data. Host doesn't need to keep track of the full key as it doesn't need it [edited]
+2025-05-03 20:19 jaymansfield: I understand the process you suggested, but doesn't it go against the GP? It defines the preimage and storage lookup dictionaries as having 32 byte keys with a key format of H(E4(s∗)⌢ µko ⋅⋅⋅+kz). If we were to support state keys instead for these since they are not all reversible the logic in the GP is invalid in a few spots
+2025-05-03 20:22 davxy: 31 bytes https://github.com/gavofyork/graypaper/pull/356
+2025-05-03 20:24 ascriv: I think Jason is talking about the definition in the service account (9.3), but I think it’s still correct, however implementations will likely not have an actual struct which maps 32 octet strings to blobs, and instead opt for 31 octet strings (the state key) 
+2025-05-03 20:25 ascriv: But even  that implementation would still follow gp, functionally 
+2025-05-03 20:26 davxy: To process our vectors you need to support construction of the state using state keys
+  ↳ 2025-05-03 22:30 jaymansfield: Ok thank you. Will make the updates to be able to support this
+2025-05-03 20:27 jaymansfield: > <@davxy:matrix.org> 31 bytes https://github.com/gavofyork/graypaper/pull/356
+
+I was referring to the preimage lookup dictionary and storage dictionary in delta. GP shows key is H.
+2025-05-03 20:31 ascriv: That’s still true, it’s just to process davxys test vectors you can’t have an implementation which works with the full storage keys, instead working with the state key versions of the storage keys. GP doesn’t say your internal representation of service accounts must match the one in (9.3)  [edited]
+2025-05-03 20:32 ascriv: An implementation might has a_s mapping 31 byte strings to blobs and still be faithful to gp 
+2025-05-03 20:33 ascriv: Just need to make sure it serializes correctly, does key existence checks correctly, etc 
+2025-05-03 20:35 ascriv: But correct me if I’m wrong @davxy 
+2025-05-03 20:43 davxy: I see your problem. IIUC you are talking about constructing the Dictionaries with the preimage full hash from the raw KV state.
+- For the preimage you can. Just hash the value.
+- For the preimage lookup dictionary you can just if you already have the corresponding preimage in the KV
+- For services you can't recover the unhashed service key
+
+Yeah, the vectors assume that you use the state keys as your dictionary keys [edited]
+2025-05-03 20:58 cisco: I'm also really confused by this. I guess the encodings will be revised in 0.7.0 but I would like to know how they are right now if possible
+2025-05-03 21:04 rustybot: > <@davxy:matrix.org> I see your problem. IIUC you are talking about construct some Dictionary with the preimage full hash from the raw KV state.
+> - For the preimage you can. Just hash the value.
+> - For the preimage lookup dictionary you can just if you already have the corresponding preimage in the KV
+> - For services you can't recover the unhashed service key
+> 
+> Yeah, the vectors assume that you use the state keys as your dictionary keys
+
+I’d also like to add that, to support warp sync (i.e., syncing from a finalized state rather than from genesis), you'll receive the raw key-value state keys. Not sure if this is already specified by JAM SNP
+2025-05-03 21:21 ascriv: > <@davxy:matrix.org> I see your problem. IIUC you are talking about construct some Dictionary with the preimage full hash from the raw KV state.
+> - For the preimage you can. Just hash the value.
+> - For the preimage lookup dictionary you can just if you already have the corresponding preimage in the KV
+> - For services you can't recover the unhashed service key
+> 
+> Yeah, the vectors assume that you use the state keys as your dictionary keys
+
+I think (very) technically speaking, an implementation which relies on state keys for storage does not actually implement the gp, because of the extraordinarily unlikely outcome of a state key collision when checking existence of a key. this is probably not even worth mentioning due to the likelihood but thought it was interesting 
