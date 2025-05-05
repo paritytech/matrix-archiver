@@ -18,7 +18,7 @@ a:hover{color:#90caf9}
 em{font-style:italic}
 </style>
 <h1>#graypaper:polkadot.io</h1>
-<p><small>last updated 2025-05-04 03:33 UTC</small></p>
+<p><small>last updated 2025-05-05 03:31 UTC</small></p>
 <p><a href='room_log.txt'>⇩ plaintext</a> · <a href='../../'>⇦ all rooms</a></p>
 <hr>
 <div class='msg'><a class='ts' href='#$G0deSwnlYlCrSn5lIFL__hi6bgWVITql5VyahU4bzpI'>#</a> <a class='ts' name='$G0deSwnlYlCrSn5lIFL__hi6bgWVITql5VyahU4bzpI' href='https://matrix.to/#/!ddsEwXlCWnreEGuqXZ:polkadot.io/$G0deSwnlYlCrSn5lIFL__hi6bgWVITql5VyahU4bzpI' target='_blank'>2024-04-17 20:29</a>&ensp;<span class='u' style='color:#da6aa2'>syed</span>: <a href="https://matrix.to/#/!hyzRkDqDthePbodYFz:parity.io/$f_DMsIEcDXZegw6Sabnehzc-LrdDQkmq5MbxDDyoZxY?via=parity.io&amp;via=web3.foundation" rel="noopener" target="_blank">https://matrix.to/#/!hyzRkDqDthePbodYFz:parity.io/$f_DMsIEcDXZegw6Sabnehzc-LrdDQkmq5MbxDDyoZxY?via=parity.io&amp;via=web3.foundation</a>
@@ -5900,3 +5900,7 @@ I’d also like to add that, to support warp sync (i.e., syncing from a finalize
 &gt; Yeah, the vectors assume that you use the state keys as your dictionary keys
 
 I think (very) technically speaking, an implementation which relies on state keys for storage does not actually implement the gp, because of the extraordinarily unlikely outcome of a state key collision when checking existence of a key. this is probably not even worth mentioning due to the likelihood but thought it was interesting </div>
+<div class='msg'><a class='ts' href='#$9gnCW4fA2UOlK_7eDdeYl0HvMLeNihPF4x8it2dV5LE'>#</a> <a class='ts' name='$9gnCW4fA2UOlK_7eDdeYl0HvMLeNihPF4x8it2dV5LE' href='https://matrix.to/#/!ddsEwXlCWnreEGuqXZ:polkadot.io/$9gnCW4fA2UOlK_7eDdeYl0HvMLeNihPF4x8it2dV5LE' target='_blank'>2025-05-04 09:33</a>&ensp;<span class='u' style='color:#bc5896'>greywolve</span>: In the last point, do you mean for storage keys you can&#x27;t recover the unhashed storage key? It&#x27;s only the storage dict that would have state keys? (since we can recover the rest) <span class="edited">(edited)</span></div>
+<div class='msg'><a class='ts' href='#$J0BfNDavA1d1opcR6YdGWIBubZu-ZOUtS9S_UZ3_Zj4'>#</a> <a class='ts' name='$J0BfNDavA1d1opcR6YdGWIBubZu-ZOUtS9S_UZ3_Zj4' href='https://matrix.to/#/!ddsEwXlCWnreEGuqXZ:polkadot.io/$J0BfNDavA1d1opcR6YdGWIBubZu-ZOUtS9S_UZ3_Zj4' target='_blank'>2025-05-04 13:09</a>&ensp;<span class='u' style='color:#4036ac'>ascriv</span>: &gt; &lt;@cisco:parity.io&gt; I&#x27;m also really confused by this. I guess the encodings will be revised in 0.7.0 but I would like to know how they are right now if possible
+
+If you look at (C.24) it explains how to serialize work reports which I previously overlooked</div>

@@ -1,5 +1,5 @@
 # room: #jam:polkadot.io
-# exported: 2025-05-04 03:32 UTC
+# exported: 2025-05-05 03:31 UTC
 2024-04-20 02:08 johnjiao123: 
 2024-04-20 02:09 johnjiao123: 
 2024-05-30 21:48 nradko: Hey everyone,
@@ -7488,3 +7488,10 @@ Cisco put one review comment and then I can subsequently rename the page to PVM
 2025-05-02 15:34 jaymansfield: Think we all may have did that 😀
 2025-05-03 20:23 sourabhniyogi: erin: arkadiy David Emett  Would one of you (who is around at the Lisbon meeting) like to lead a "workshop" discussion on structured logging + jamsnp + docs.jamcha.in along these lines  https://x.com/byteboro/status/1902037543274553631 -- I can scribe / orchestrate with you as much or as little as you'd like ?
 2025-05-03 21:41 dave: Sure, I'd be happy to do that
+2025-05-04 06:53 clearloop: Hope there will be record for the events and the workshops! I'm not able to join the events since my visa has not been approved yet 🥲
+2025-05-04 13:28 boymaas: Hey danicuki | Jamixir , we are already in your hometown since two days :-) Nice place. I have a question: is there still a small slot available for a short presentation of 5 to 10 minutes on JamZig?
+2025-05-04 16:50 danicuki: > <@boymaas:matrix.org> Hey danicuki | Jamixir , we are already in your hometown since two days :-) Nice place. I have a question: is there still a small slot available for a short presentation of 5 to 10 minutes on JamZig?
+
+Sure! 
+2025-05-04 16:50 danicuki: ima_bf46e03.jpeg
+2025-05-04 16:51 danicuki: JAM Experience - all set! 

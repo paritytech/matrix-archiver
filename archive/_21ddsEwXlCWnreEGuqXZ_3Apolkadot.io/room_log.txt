@@ -1,5 +1,5 @@
 # room: #graypaper:polkadot.io
-# exported: 2025-05-04 03:33 UTC
+# exported: 2025-05-05 03:31 UTC
 2024-04-17 20:29 syed: https://matrix.to/#/!hyzRkDqDthePbodYFz:parity.io/$f_DMsIEcDXZegw6Sabnehzc-LrdDQkmq5MbxDDyoZxY?via=parity.io&via=web3.foundation
 
 2024-04-17 20:29 syed: 
@@ -5905,3 +5905,7 @@ I’d also like to add that, to support warp sync (i.e., syncing from a finalize
 > Yeah, the vectors assume that you use the state keys as your dictionary keys
 
 I think (very) technically speaking, an implementation which relies on state keys for storage does not actually implement the gp, because of the extraordinarily unlikely outcome of a state key collision when checking existence of a key. this is probably not even worth mentioning due to the likelihood but thought it was interesting 
+2025-05-04 09:33 greywolve: In the last point, do you mean for storage keys you can't recover the unhashed storage key? It's only the storage dict that would have state keys? (since we can recover the rest) [edited]
+2025-05-04 13:09 ascriv: > <@cisco:parity.io> I'm also really confused by this. I guess the encodings will be revised in 0.7.0 but I would like to know how they are right now if possible
+
+If you look at (C.24) it explains how to serialize work reports which I previously overlooked
