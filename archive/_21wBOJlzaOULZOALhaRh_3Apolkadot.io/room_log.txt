@@ -1,5 +1,5 @@
 # room: #jam:polkadot.io
-# exported: 2025-05-05 03:31 UTC
+# exported: 2025-05-06 03:29 UTC
 2024-04-20 02:08 johnjiao123: 
 2024-04-20 02:09 johnjiao123: 
 2024-05-30 21:48 nradko: Hey everyone,
@@ -5824,6 +5824,12 @@ Work packages can declare a prerequisite work package. This will be enforced for
   ↳ 2025-02-20 05:56 gav: > <@alice_und_bob:matrix.org> hm, so who decides on the ordering of the processing of work packages (or the resulting accumulations) in cases where there is no path-dependence constraining it?
 
 Refine is asynchronous, stateless and really has no order. 
+  ↳ 2025-05-05 16:09 alice_und_bob: hey, coming back to this question. 
+
+I try to understand who eventually determines to order of WP accumulation.
+
+Let's say WPs don't define a pre-requisite other WP, is the order then determined in the accumulate stage from the leader?
+  ↳ 2025-05-05 20:08 gav: It’s determined by the service’s Accumulate logic. From JAM’s perspective there is no order. Because it doesn’t impose any kind of sequence or loop like transactive systems.  [edited]
 2025-02-17 23:46 sourabhniyogi: Does anyone have a  polkatool or JAM Rust SDK built "null authorizer" which matches https://x.com/the_seraya/status/1891521159209824381 that we can basically standardize on amongst ourselves
   ↳ 2025-02-17 23:50 dave: See https://crates.io/crates/jam-null-authorizer, though I'm not sure if the build is reproducible or not, so not sure if you will get the same hash every time
   ↳ 2025-02-18 00:04 sourabhniyogi: The latest "0.1.12" looks to have not changed in the last couple of months, thank you!  https://github.com/jam-duna/jamtestnet/blob/main/services/parity/jam-null-authorizer/src/main.rs
@@ -7495,3 +7501,26 @@ Cisco put one review comment and then I can subsequently rename the page to PVM
 Sure! 
 2025-05-04 16:50 danicuki: ima_bf46e03.jpeg
 2025-05-04 16:51 danicuki: JAM Experience - all set! 
+2025-05-05 15:36 sourabhniyogi: JAM Doom replication:
+ https://www.youtube.com/watch?v=ltWMjg2EHS8
+  ↳ 2025-05-05 15:48 clearloop: just watched 5 times to confirm that wu ignored the second enemy 
+2025-05-05 15:55 ascriv: Unwatchable 
+2025-05-05 16:10 alice_und_bob: hey, coming back to this question --> https://matrix.to/#/!wBOJlzaOULZOALhaRh:polkadot.io/$tMICwJ4QJLhbaG4P0gH7DyDM8j67XmiHbs\_dheO\_hGM?via=polkadot.io&via=matrix.org&via=parity.io
+
+I try to understand who eventually determines to order of WP accumulation.
+
+Let's say a WP doesn't define a pre-requisite other WP, is the order then determined in the accumulate stage from the leader? [edited]
+2025-05-05 17:16 krystian50: 
+Hi everyone!
+At Fluffy Labs, we’ve recently kicked off a new project aimed at searching though JAM resources.
+
+It already includes a few features:
+    •    Integration with the JAM Channels Archive (thanks to erin !)
+    •    Integration with the Graypaper
+    •    A few search options to explore the data
+
+We’re still in the early development phase and actively experimenting, so the UI is evolving quickly - features may appear and disappear. If you have any feedback, we’d love to hear it!
+
+tomusdrw , mateuszsikora and hey_im_stas will be at JAM Experience, so feel free to give them the feedback directly 🙂
+
+🔎  https://search.fluffylabs.dev

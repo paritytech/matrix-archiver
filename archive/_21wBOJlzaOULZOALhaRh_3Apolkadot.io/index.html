@@ -18,7 +18,7 @@ a:hover{color:#90caf9}
 em{font-style:italic}
 </style>
 <h1>#jam:polkadot.io</h1>
-<p><small>last updated 2025-05-05 03:31 UTC</small></p>
+<p><small>last updated 2025-05-06 03:29 UTC</small></p>
 <p><a href='room_log.txt'>⇩ plaintext</a> · <a href='../../'>⇦ all rooms</a></p>
 <hr>
 <div class='msg'><a class='ts' href='#$we4SYXTHwmKn094X9Zs_7mWUOoUVh4icvVdxD83RZfs'>#</a> <a class='ts' name='$we4SYXTHwmKn094X9Zs_7mWUOoUVh4icvVdxD83RZfs' href='https://matrix.to/#/!wBOJlzaOULZOALhaRh:polkadot.io/$we4SYXTHwmKn094X9Zs_7mWUOoUVh4icvVdxD83RZfs' target='_blank'>2024-04-20 02:08</a>&ensp;<span class='u' style='color:#d0709e'>johnjiao123</span>: </div>
@@ -5803,6 +5803,12 @@ Work packages can declare a prerequisite work package. This will be enforced for
 <div class='msg reply'><a class='ts' href='#$cvtF6o_BxGcHmQ2Rbp_QDXPr-XuaRx76zeCsoDoedtw'>#</a> <a class='ts' name='$cvtF6o_BxGcHmQ2Rbp_QDXPr-XuaRx76zeCsoDoedtw' href='https://matrix.to/#/!wBOJlzaOULZOALhaRh:polkadot.io/$cvtF6o_BxGcHmQ2Rbp_QDXPr-XuaRx76zeCsoDoedtw' target='_blank'>2025-02-20 05:56</a>&ensp;<span class='u' style='color:#cd8957'>gav</span>: &gt; &lt;@alice_und_bob:matrix.org&gt; hm, so who decides on the ordering of the processing of work packages (or the resulting accumulations) in cases where there is no path-dependence constraining it?
 
 Refine is asynchronous, stateless and really has no order. </div>
+<div class='msg reply'><a class='ts' href='#$ooxUrh_q3o8vlqdYG2OrZi9eT05GJju-ACmRcOMyjaM'>#</a> <a class='ts' name='$ooxUrh_q3o8vlqdYG2OrZi9eT05GJju-ACmRcOMyjaM' href='https://matrix.to/#/!wBOJlzaOULZOALhaRh:polkadot.io/$ooxUrh_q3o8vlqdYG2OrZi9eT05GJju-ACmRcOMyjaM' target='_blank'>2025-05-05 16:09</a>&ensp;<span class='u' style='color:#ae40b7'>alice_und_bob</span>: hey, coming back to this question. 
+
+I try to understand who eventually determines to order of WP accumulation.
+
+Let&#x27;s say WPs don&#x27;t define a pre-requisite other WP, is the order then determined in the accumulate stage from the leader?</div>
+<div class='msg reply'><a class='ts' href='#$dCtPw5RabpC55sTHOiBTt3BW5oLufUp4AmUMEDUOjeE'>#</a> <a class='ts' name='$dCtPw5RabpC55sTHOiBTt3BW5oLufUp4AmUMEDUOjeE' href='https://matrix.to/#/!wBOJlzaOULZOALhaRh:polkadot.io/$dCtPw5RabpC55sTHOiBTt3BW5oLufUp4AmUMEDUOjeE' target='_blank'>2025-05-05 20:08</a>&ensp;<span class='u' style='color:#cd8957'>gav</span>: It’s determined by the service’s Accumulate logic. From JAM’s perspective there is no order. Because it doesn’t impose any kind of sequence or loop like transactive systems.  <span class="edited">(edited)</span></div>
 <div class='msg'><a class='ts' href='#$ZXN0F7f7QlGV-4G8MM7onJT9aib4zlOaIvtZ7PDSY2k'>#</a> <a class='ts' name='$ZXN0F7f7QlGV-4G8MM7onJT9aib4zlOaIvtZ7PDSY2k' href='https://matrix.to/#/!wBOJlzaOULZOALhaRh:polkadot.io/$ZXN0F7f7QlGV-4G8MM7onJT9aib4zlOaIvtZ7PDSY2k' target='_blank'>2025-02-17 23:46</a>&ensp;<span class='u' style='color:#c67452'>sourabhniyogi</span>: Does anyone have a  polkatool or JAM Rust SDK built &quot;null authorizer&quot; which matches <a href="https://x.com/the_seraya/status/1891521159209824381" rel="noopener" target="_blank">https://x.com/the_seraya/status/1891521159209824381</a> that we can basically standardize on amongst ourselves</div>
 <div class='msg reply'><a class='ts' href='#$oJs_EsQdk0oJjWO2jq56NldgoKqeroXPR9iW28qPs3c'>#</a> <a class='ts' name='$oJs_EsQdk0oJjWO2jq56NldgoKqeroXPR9iW28qPs3c' href='https://matrix.to/#/!wBOJlzaOULZOALhaRh:polkadot.io/$oJs_EsQdk0oJjWO2jq56NldgoKqeroXPR9iW28qPs3c' target='_blank'>2025-02-17 23:50</a>&ensp;<span class='u' style='color:#c65779'>dave</span>: See <a href="https://crates.io/crates/jam-null-authorizer," rel="noopener" target="_blank">https://crates.io/crates/jam-null-authorizer,</a> though I&#x27;m not sure if the build is reproducible or not, so not sure if you will get the same hash every time</div>
 <div class='msg reply'><a class='ts' href='#$TJwEinUZDhM20L_VyondwVZJju3wKW7ghzb9CtgBYmU'>#</a> <a class='ts' name='$TJwEinUZDhM20L_VyondwVZJju3wKW7ghzb9CtgBYmU' href='https://matrix.to/#/!wBOJlzaOULZOALhaRh:polkadot.io/$TJwEinUZDhM20L_VyondwVZJju3wKW7ghzb9CtgBYmU' target='_blank'>2025-02-18 00:04</a>&ensp;<span class='u' style='color:#c67452'>sourabhniyogi</span>: The latest &quot;0.1.12&quot; looks to have not changed in the last couple of months, thank you!  <a href="https://github.com/jam-duna/jamtestnet/blob/main/services/parity/jam-null-authorizer/src/main.rs" rel="noopener" target="_blank">https://github.com/jam-duna/jamtestnet/blob/main/services/parity/jam-null-authorizer/src/main.rs</a>
@@ -7468,3 +7474,26 @@ Cisco put one review comment and then I can subsequently rename the page to PVM<
 Sure! </div>
 <div class='msg'><a class='ts' href='#$dqF3v1bSd35xxMcrxhXmJIbeYD-t5Qqfg0S6h7mfuuw'>#</a> <a class='ts' name='$dqF3v1bSd35xxMcrxhXmJIbeYD-t5Qqfg0S6h7mfuuw' href='https://matrix.to/#/!wBOJlzaOULZOALhaRh:polkadot.io/$dqF3v1bSd35xxMcrxhXmJIbeYD-t5Qqfg0S6h7mfuuw' target='_blank'>2025-05-04 16:50</a>&ensp;<span class='u' style='color:#4977cf'>danicuki</span>: ima_bf46e03.jpeg</div>
 <div class='msg'><a class='ts' href='#$iNHwc5noBfDGvkRrwbukvbSRQLsH5ZCoTKmCyGn14UM'>#</a> <a class='ts' name='$iNHwc5noBfDGvkRrwbukvbSRQLsH5ZCoTKmCyGn14UM' href='https://matrix.to/#/!wBOJlzaOULZOALhaRh:polkadot.io/$iNHwc5noBfDGvkRrwbukvbSRQLsH5ZCoTKmCyGn14UM' target='_blank'>2025-05-04 16:51</a>&ensp;<span class='u' style='color:#4977cf'>danicuki</span>: JAM Experience - all set! </div>
+<div class='msg'><a class='ts' href='#$_CvD-JafGnjA2GanyV-INkGndP2JzF9Si2Mtjaxwjh8'>#</a> <a class='ts' name='$_CvD-JafGnjA2GanyV-INkGndP2JzF9Si2Mtjaxwjh8' href='https://matrix.to/#/!wBOJlzaOULZOALhaRh:polkadot.io/$_CvD-JafGnjA2GanyV-INkGndP2JzF9Si2Mtjaxwjh8' target='_blank'>2025-05-05 15:36</a>&ensp;<span class='u' style='color:#c67452'>sourabhniyogi</span>: JAM Doom replication:
+ <a href="https://www.youtube.com/watch?v=ltWMjg2EHS8" rel="noopener" target="_blank">https://www.youtube.com/watch?v=ltWMjg2EHS8</a></div>
+<div class='msg reply'><a class='ts' href='#$U2J3yjOAyBFm6jos-jvJd8wEkDcnAjFwRDzixucsCTA'>#</a> <a class='ts' name='$U2J3yjOAyBFm6jos-jvJd8wEkDcnAjFwRDzixucsCTA' href='https://matrix.to/#/!wBOJlzaOULZOALhaRh:polkadot.io/$U2J3yjOAyBFm6jos-jvJd8wEkDcnAjFwRDzixucsCTA' target='_blank'>2025-05-05 15:48</a>&ensp;<span class='u' style='color:#be2950'>clearloop</span>: just watched 5 times to confirm that wu ignored the second enemy </div>
+<div class='msg'><a class='ts' href='#$HbYBnDHN1vInyGkh55s5-aMWv7iodKvf9JW_FcTzijA'>#</a> <a class='ts' name='$HbYBnDHN1vInyGkh55s5-aMWv7iodKvf9JW_FcTzijA' href='https://matrix.to/#/!wBOJlzaOULZOALhaRh:polkadot.io/$HbYBnDHN1vInyGkh55s5-aMWv7iodKvf9JW_FcTzijA' target='_blank'>2025-05-05 15:55</a>&ensp;<span class='u' style='color:#4036ac'>ascriv</span>: Unwatchable </div>
+<div class='msg'><a class='ts' href='#$Cp8MZE9kNh49imONv3yEsCOJOrV6wh2ANm5woBOaKTA'>#</a> <a class='ts' name='$Cp8MZE9kNh49imONv3yEsCOJOrV6wh2ANm5woBOaKTA' href='https://matrix.to/#/!wBOJlzaOULZOALhaRh:polkadot.io/$Cp8MZE9kNh49imONv3yEsCOJOrV6wh2ANm5woBOaKTA' target='_blank'>2025-05-05 16:10</a>&ensp;<span class='u' style='color:#ae40b7'>alice_und_bob</span>: hey, coming back to this question --&gt; <a href="https://matrix.to/#/!wBOJlzaOULZOALhaRh:polkadot.io/$tMICwJ4QJLhbaG4P0gH7DyDM8j67XmiHbs\_dheO\_hGM?via=polkadot.io&amp;via=matrix.org&amp;via=parity.io" rel="noopener" target="_blank">https://matrix.to/#/!wBOJlzaOULZOALhaRh:polkadot.io/$tMICwJ4QJLhbaG4P0gH7DyDM8j67XmiHbs\_dheO\_hGM?via=polkadot.io&amp;via=matrix.org&amp;via=parity.io</a>
+
+I try to understand who eventually determines to order of WP accumulation.
+
+Let&#x27;s say a WP doesn&#x27;t define a pre-requisite other WP, is the order then determined in the accumulate stage from the leader? <span class="edited">(edited)</span></div>
+<div class='msg'><a class='ts' href='#$5vja9apUYq-IpJo2ycyEIQq_3_fZ7XPDaxwAQCnC1kY'>#</a> <a class='ts' name='$5vja9apUYq-IpJo2ycyEIQq_3_fZ7XPDaxwAQCnC1kY' href='https://matrix.to/#/!wBOJlzaOULZOALhaRh:polkadot.io/$5vja9apUYq-IpJo2ycyEIQq_3_fZ7XPDaxwAQCnC1kY' target='_blank'>2025-05-05 17:16</a>&ensp;<span class='u' style='color:#49aebc'>krystian50</span>: 
+Hi everyone!
+At Fluffy Labs, we’ve recently kicked off a new project aimed at searching though JAM resources.
+
+It already includes a few features:
+    •    Integration with the JAM Channels Archive (thanks to erin !)
+    •    Integration with the Graypaper
+    •    A few search options to explore the data
+
+We’re still in the early development phase and actively experimenting, so the UI is evolving quickly - features may appear and disappear. If you have any feedback, we’d love to hear it!
+
+tomusdrw , mateuszsikora and hey_im_stas will be at JAM Experience, so feel free to give them the feedback directly 🙂
+
+🔎  <a href="https://search.fluffylabs.dev" rel="noopener" target="_blank">https://search.fluffylabs.dev</a></div>

@@ -1,5 +1,5 @@
 # room: #graypaper:polkadot.io
-# exported: 2025-05-05 03:31 UTC
+# exported: 2025-05-06 03:30 UTC
 2024-04-17 20:29 syed: https://matrix.to/#/!hyzRkDqDthePbodYFz:parity.io/$f_DMsIEcDXZegw6Sabnehzc-LrdDQkmq5MbxDDyoZxY?via=parity.io&via=web3.foundation
 
 2024-04-17 20:29 syed: 
@@ -5909,3 +5909,26 @@ I think (very) technically speaking, an implementation which relies on state key
 2025-05-04 13:09 ascriv: > <@cisco:parity.io> I'm also really confused by this. I guess the encodings will be revised in 0.7.0 but I would like to know how they are right now if possible
 
 If you look at (C.24) it explains how to serialize work reports which I previously overlooked
+2025-05-05 09:57 gav: The segment-count field (in the availability specifier set) is encoded as a 2-byte fixed length integer.
+2025-05-05 10:00 gav: This is missing the point.
+2025-05-05 10:01 gav: Nowhere in the GP does it tell you (how) to store the state. [edited]
+2025-05-05 10:01 gav: It only specifies how to *recognise* a valid state. [edited]
+2025-05-05 10:02 gav: And in fact this is done via the Merkle root, which (under reasonable assumptions) identifies a single state. But (obviously) it's lossy in so much as it impossible to reconstruct a potentially multi-gigabyte state from a 32 byte quantity. [edited]
+2025-05-05 10:03 gav: Implementations are free to store state however they choose. GP takes pains not to specify this; it's one of the very many implementation details. GP only specifies how to recognise a valid block. [edited]
+2025-05-05 10:06 gav: Of course when we want to provide test vectors for incomplete portions of the protocol, then we may need to make judgement calls on exactly what data an implementation has available. That's a bit unfortunate and may coerce implementations into particular design patterns. Note that __implementations need not be able to pass the test vectors__. They must only pass the conformance tests, which will test in line with the GP not any internal data structures we might assume implementations have within.
+2025-05-05 10:07 gav: Test vectors are provided only in so much as they might *help* teams.
+2025-05-05 10:08 gav: If you're talking about a possible collision of the 32nd byte of a hash (or even the 27th byte), then the GP implicitly assumes it is impossible. [edited]
+2025-05-05 10:10 gav: Always remember: GP only specifies behaviour, not mechanism. [edited]
+2025-05-05 10:12 gav: The change made to characterise state keys as 31 bytes in the GP should make no practical difference to behaviour; it's there to ensure that W3F's test vectors have something concrete to point at in the GP.
+2025-05-05 11:21 rustybot: Since GP defines the service storage dictionary key as the full hash, an implementation is free to use the full hash (9.3) as the dictionary key. If this implementation supports warp sync, as outlined in CE129, it receives a sequence of KV items with 31-byte state keys (as per D.1). But now this implementation cannot construct its service dictionary properly (as it uses full hashes), and may fail to process subsequent blocks. This happens because host calls will pass full hashes, but they've  padded the keys received from another node, causing mismatches. The likelihood of such a mismatch is pretty high.
+
+Doesn't this suggest that implementations aiming to support warp sync need to use 31-byte state keys for their dictionaries? [edited]
+2025-05-05 11:41 ascriv: This is my understanding as well, but interested to hear others opinions  [edited]
+2025-05-05 11:43 ascriv: The last few bytes of the keys are not present in the serialized state so warp sync and full storage key implementations must not be compatible  [edited]
+2025-05-05 14:09 gav: Yes, warp-sync is not (yet) within the behavioural description of the GP. [edited]
+2025-05-05 14:14 gav: [GP v0.6.6](https://github.com/gavofyork/graypaper/releases/tag/v0.6.6) is released.
+  ↳ 2025-05-06 00:56 jaymansfield: There might be a typo in I(p,j) where it checks the output size of the refine calls. I'm assuming it should be checking if the size is greater then WR rather then smaller
+2025-05-05 14:16 gav: It's not quite the 0.7.0 I had wanted prior to the JAM XP, but it's now getting [quite close](https://github.com/gavofyork/graypaper/milestone/3).
+2025-05-05 14:17 gav: There are a few small changes here in line with the 0.6 milestone, but the most impactful is the alteration to `fetch`, which now works across the different invocations and averts the need for unavoidable unbounded RAM allocations. [edited]
+2025-05-05 14:18 gav: `fetch` also changed to allow on-chain entropy to be inspected in Accumulate/OnTransfer, and, in the future, off-chain entropy to be inspected in Refinement.
+2025-05-05 14:18 gav: It is now possible to introspect the chain's parameters, allowing for chain-agnostic PVM code.
