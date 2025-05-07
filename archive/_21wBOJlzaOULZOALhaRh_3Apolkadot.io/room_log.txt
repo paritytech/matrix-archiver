@@ -1,5 +1,5 @@
 # room: #jam:polkadot.io
-# exported: 2025-05-06 03:29 UTC
+# exported: 2025-05-07 03:30 UTC
 2024-04-20 02:08 johnjiao123: 
 2024-04-20 02:09 johnjiao123: 
 2024-05-30 21:48 nradko: Hey everyone,
@@ -5830,6 +5830,9 @@ I try to understand who eventually determines to order of WP accumulation.
 
 Let's say WPs don't define a pre-requisite other WP, is the order then determined in the accumulate stage from the leader?
   ↳ 2025-05-05 20:08 gav: It’s determined by the service’s Accumulate logic. From JAM’s perspective there is no order. Because it doesn’t impose any kind of sequence or loop like transactive systems.  [edited]
+  ↳ 2025-05-06 08:18 alice_und_bob: so let's say there is a bunch of refined workitems/workresults that reach the service's accumulate logic with no defined order.
+
+Is the accumulate stage eventually executed by the leader? Is it the leader who would pick an order if it is not otherwise given? [edited]
 2025-02-17 23:46 sourabhniyogi: Does anyone have a  polkatool or JAM Rust SDK built "null authorizer" which matches https://x.com/the_seraya/status/1891521159209824381 that we can basically standardize on amongst ourselves
   ↳ 2025-02-17 23:50 dave: See https://crates.io/crates/jam-null-authorizer, though I'm not sure if the build is reproducible or not, so not sure if you will get the same hash every time
   ↳ 2025-02-18 00:04 sourabhniyogi: The latest "0.1.12" looks to have not changed in the last couple of months, thank you!  https://github.com/jam-duna/jamtestnet/blob/main/services/parity/jam-null-authorizer/src/main.rs
@@ -7524,3 +7527,32 @@ We’re still in the early development phase and actively experimenting, so the 
 tomusdrw , mateuszsikora and hey_im_stas will be at JAM Experience, so feel free to give them the feedback directly 🙂
 
 🔎  https://search.fluffylabs.dev
+2025-05-06 08:22 kianenigma: order within the WPs of the same service, or of different services?
+
+Within the same service, it is up to the accumulate code. Each service is accumulated just once during each block. It receives all possibly parallel refines as input, and has to decide what to do with them, and in which order. [edited]
+2025-05-06 08:24 alice_und_bob: what I understand is that there can be an unordered set of WPs reaching the (same) service. So the accumulate logic is confronted with an unordered set. But somehow an order needs to be chosen. What I try to get down to is if the order can be set arbitrarily by the leader or how the order is eventually chosen
+2025-05-06 08:25 gav: The block builder has no relevance. 
+2025-05-06 08:26 alice_und_bob: I have an unordered set of WPs. How is the eventual order of accumulation decided? If it is decided by the service, how does it decide the order of the unordered set? And on which machine (set of machines) does this happen?
+2025-05-06 08:27 gav: It isn’t
+2025-05-06 08:27 gav: Accumulation happens on all full nodes. 
+2025-05-06 08:28 gav: And as Kian says, service code executes once per accumulation round, being given access to all work results. 
+2025-05-06 08:28 gav: It is up to that code to do something with them. 
+2025-05-06 08:28 alice_und_bob: so when the service iterates through the set, it has to pick its own ordering logic? e.g. asc by wp hash?
+2025-05-06 08:29 gav: In principle it could be a commutative operation. 
+2025-05-06 08:29 gav: Eg addition. Order in that case wouldn’t matter.  [edited]
+2025-05-06 08:29 gav: If some sequential processing were needed, then it could randomise the processing order  [edited]
+2025-05-06 08:30 gav: > <@alice_und_bob:matrix.org> so when the service iterates through the set, it has to pick its own ordering logic? e.g. asc by wp hash?
+
+Yes
+2025-05-06 08:31 alice_und_bob: okay, I guess my confusion was coming from the assumption of having a transaction-based system; while a service can in principle be transactionless.
+
+but any transaction-based service will pick an ordering-mechanism.
+
+Does the service have access to randomness provided by JAM? [edited]
+2025-05-06 08:39 gav: It does as of 0.6.6. 
+2025-05-06 15:18 rick: Hi All -- I'll be on a panel at Decentralized Lugano on Thursday.
+
+Will also be around on the 9th and 10th for ethDAM. 
+
+ If anyone is attending either event please reach out, would love to meet in person. 
+2025-05-06 17:14 erin: Reminder for anyone in Lisbon, event link for tomorrow: https://lu.ma/6monb9f9
