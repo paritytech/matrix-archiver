@@ -1,5 +1,5 @@
 # room: #graypaper:polkadot.io
-# exported: 2025-05-07 03:30 UTC
+# exported: 2025-05-08 03:31 UTC
 2024-04-17 20:29 syed: https://matrix.to/#/!hyzRkDqDthePbodYFz:parity.io/$f_DMsIEcDXZegw6Sabnehzc-LrdDQkmq5MbxDDyoZxY?via=parity.io&via=web3.foundation
 
 2024-04-17 20:29 syed: 
@@ -5932,3 +5932,11 @@ Doesn't this suggest that implementations aiming to support warp sync need to us
 2025-05-05 14:17 gav: There are a few small changes here in line with the 0.6 milestone, but the most impactful is the alteration to `fetch`, which now works across the different invocations and averts the need for unavoidable unbounded RAM allocations. [edited]
 2025-05-05 14:18 gav: `fetch` also changed to allow on-chain entropy to be inspected in Accumulate/OnTransfer, and, in the future, off-chain entropy to be inspected in Refinement.
 2025-05-05 14:18 gav: It is now possible to introspect the chain's parameters, allowing for chain-agnostic PVM code.
+2025-05-07 17:30 sigsigsigsigsig: hi gang
+2025-05-07 17:30 sigsigsigsigsig: coming back to jam, struggling to find the black on white version of the updated pdf could anyone help?
+2025-05-07 17:31 sigsigsigsigsig: this one is gnarly to print 😁
+2025-05-07 17:31 sigsigsigsigsig: would be most grateful 🙏
+2025-05-07 17:31 oliver.tale-yazdi: there are three versions here https://jamcha.in/spec
+2025-05-07 17:32 sigsigsigsigsig: Oliver Tale-Yazdi: amazing, thankyou!! 😍
+2025-05-07 17:33 sigsigsigsigsig: will think of you while i'm enjoying reading it in the uk sun 😁 💕
+2025-05-07 17:33 sigsigsigsigsig: gotta get it while it's hot here! ☔️

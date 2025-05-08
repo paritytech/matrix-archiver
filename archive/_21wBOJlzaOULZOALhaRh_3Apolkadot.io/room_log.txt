@@ -1,5 +1,5 @@
 # room: #jam:polkadot.io
-# exported: 2025-05-07 03:30 UTC
+# exported: 2025-05-08 03:30 UTC
 2024-04-20 02:08 johnjiao123: 
 2024-04-20 02:09 johnjiao123: 
 2024-05-30 21:48 nradko: Hey everyone,
@@ -7556,3 +7556,22 @@ Will also be around on the 9th and 10th for ethDAM.
 
  If anyone is attending either event please reach out, would love to meet in person. 
 2025-05-06 17:14 erin: Reminder for anyone in Lisbon, event link for tomorrow: https://lu.ma/6monb9f9
+2025-05-07 13:57 kianenigma: Jan Bujak I missed your recompiler talk this morning, would it be possible for you to share the slides here or in a JAM chat to be able to save it for later? thanks!
+2025-05-07 16:27 jan: talk_recomp.pdf
+2025-05-07 16:27 jan: Yes, that was the plan. Here are the slides.
+2025-05-07 16:41 dave: The HackMD for JAM "TART" brainstorming is here: https://hackmd.io/@zdave/rJts9T_lxl. This is all about gathering and visualisation of statistics/events/etc from testnets running on the JAM toaster. Please comment there if there's some data you'd like to see exposed, if you have ideas on how to visualise things, etc.
+2025-05-07 22:08 danicuki: > <@kianenigma:parity.io> Jan Bujak I missed your recompiler talk this morning, would it be possible for you to share the slides here or in a JAM chat to be able to save it for later? thanks!
+
+We have the recording that will be available soon on the JAM Community YouTube channel. 
+2025-05-07 22:10 danicuki: Thank you everyone for coming to JAM Experience. I hope you all had a great time in Lisbon. Enjoy the rest of your stay and have a safe trip back home. See you soon! 
+2025-05-07 22:13 danicuki: Those others who have slides, please share them here and I will organize to make them publicly available somewhere 
+2025-05-07 22:16 sourabhniyogi: Thank you for organizing JAMXP and everyone who made the visit to the Polkadot Palace so special -- nothing beats meeting people in real life and getting each other psyched about Polkadot/JAM's future together!
+
+https://docs.google.com/presentation/d/13YUumFSMPXT8085GwwVe0YCoOVjjCaBm/edit?slide=id.g353759b2ff6_0_18#slide=id.g353759b2ff6_0_18
+2025-05-07 22:17 jay_ztc: Thank you for arranging the event!  danicuki | Jamixir:  It was great to meet the community of builders. jamstatus.xyz
+2025-05-07 23:10 sourabhniyogi: gav: If you can kindly post the PolkaJAM binary \[Mac binary ok,  Linux whenever ready?\] along with any needed instructions about how to launch it with our own implementations in a tiny testnet targeting 0.6.6 and beyond (something like `jam -spec tiny -v 5 --quic-port 9900 --rpc-port 10800 -start-time +2025-05-08 00:05:56`), this will kick off a lot of us basically doing the same (and probably adapting "flags" pseudo standards to match to keep us sane)!  
+
+With not too much luck, I believe we can have a tiny multiclient testnet this month.  
+
+We definitely want to kick ourselves into high gear by matching PolkaJAM linear recompilation with doom demo before the start of Summer =). [edited]
+2025-05-07 23:26 jaymansfield: Does this break any clean-room implementer rules? Since I wasn’t able to make jam experience I’m not really sure what was discussed there regarding this. If it is confirmed to be allowed within the rules, I’d be willing to share a binary of mine that has all of M2 implemented (except grandpa) but obviously will wait for official confirmation [edited]
