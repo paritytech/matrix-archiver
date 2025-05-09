@@ -1,5 +1,5 @@
 # room: #graypaper:polkadot.io
-# exported: 2025-05-08 03:31 UTC
+# exported: 2025-05-09 03:31 UTC
 2024-04-17 20:29 syed: https://matrix.to/#/!hyzRkDqDthePbodYFz:parity.io/$f_DMsIEcDXZegw6Sabnehzc-LrdDQkmq5MbxDDyoZxY?via=parity.io&via=web3.foundation
 
 2024-04-17 20:29 syed: 
@@ -5940,3 +5940,4 @@ Doesn't this suggest that implementations aiming to support warp sync need to us
 2025-05-07 17:32 sigsigsigsigsig: Oliver Tale-Yazdi: amazing, thankyou!! 😍
 2025-05-07 17:33 sigsigsigsigsig: will think of you while i'm enjoying reading it in the uk sun 😁 💕
 2025-05-07 17:33 sigsigsigsigsig: gotta get it while it's hot here! ☔️
+2025-05-08 14:32 ascriv: The fifth component of the yield invocation in (B.2) should be a hash but it’s a work package. Assuming that’s a typo?

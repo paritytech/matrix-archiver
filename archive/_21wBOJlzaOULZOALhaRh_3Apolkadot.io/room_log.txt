@@ -1,5 +1,5 @@
 # room: #jam:polkadot.io
-# exported: 2025-05-08 03:30 UTC
+# exported: 2025-05-09 03:30 UTC
 2024-04-20 02:08 johnjiao123: 
 2024-04-20 02:09 johnjiao123: 
 2024-05-30 21:48 nradko: Hey everyone,
@@ -7575,3 +7575,14 @@ With not too much luck, I believe we can have a tiny multiclient testnet this mo
 
 We definitely want to kick ourselves into high gear by matching PolkaJAM linear recompilation with doom demo before the start of Summer =). [edited]
 2025-05-07 23:26 jaymansfield: Does this break any clean-room implementer rules? Since I wasn’t able to make jam experience I’m not really sure what was discussed there regarding this. If it is confirmed to be allowed within the rules, I’d be willing to share a binary of mine that has all of M2 implemented (except grandpa) but obviously will wait for official confirmation [edited]
+2025-05-08 07:04 subotic: Hey Jan Bujak, thank you very much for slides. Would have been great to talk to you again in person. I hope some other time. The slides are very much appreciated and really helpful. Many questions that I had are now resolved and even questions that I didn't know that I had :). Thank you very much! ❤️👍️
+2025-05-08 08:23 danicuki: gav: could you share your presentation slides? I would like to use some of the content for my talk at ETH Lisbon tomorrow. Tks!
+2025-05-08 09:37 gav: Right now the binary is targeted towards 0.6.5, but I'll put the mac single-node and tiny-testnet binaries on the GP release page. [edited]
+2025-05-08 09:37 gav: Maybe one of the linux people can upload their pair of binaries there too
+2025-05-08 09:38 gav: If anyone else wants to share, please send a link and I'll upload to the GP page. I'd say 0.6.5 minimum for now to reduce leg work.
+2025-05-08 09:49 clearloop: we'd like to share spacejam binaries but it is currently at 0.6.4, also the network part was a fast implementation so worried about if it contains too many bugs > <
+
+willing join it after connecting to PolkaVM successfully!
+2025-05-08 10:32 clearloop: may I ask if it is possible to checkout a tag or branch for 0.6.5 in the test vectors repo ? davxy 
+2025-05-08 14:22 danicuki: Anyone who has photos or videos from the event, please share them here: https://drive.google.com/drive/folders/1SLDSDjSDkVs-qoiDyRO0R0UHY9aw4ur5?usp=sharing
+2025-05-08 21:14 xlchen: any plans for M2 testvectors?
