@@ -1,5 +1,5 @@
 # room: #graypaper:polkadot.io
-# exported: 2025-05-09 03:31 UTC
+# exported: 2025-05-10 03:28 UTC
 2024-04-17 20:29 syed: https://matrix.to/#/!hyzRkDqDthePbodYFz:parity.io/$f_DMsIEcDXZegw6Sabnehzc-LrdDQkmq5MbxDDyoZxY?via=parity.io&via=web3.foundation
 
 2024-04-17 20:29 syed: 
@@ -5573,6 +5573,27 @@ if you were the "generator" of  CE140 justification(i.e someone requested the ju
   ↳ 2025-04-28 15:47 dave: FWIW the segments root is _not_ involved here, the justifications returned by CE 140 are justifications from the returned segment shards to the erasure root
   ↳ 2025-04-28 15:52 dave: As Jason says look at s_clubs
   ↳ 2025-04-28 15:53 dave: I've opened a PR to (hopefully) improve the wording: https://github.com/gavofyork/graypaper/pull/345
+  ↳ 2025-05-09 10:35 knight1205: Hi David Emett ,
+
+Sorry to disturb you again.
+
+[Here](https://graypaper.fluffylabs.dev/#/9a08063/1b33021b3c02?v=0.6.6), in S function we are fetching all the segments whose root / wp hash is present in imports. Is this function returning segments grouped based on segment root or just simply list of segment?
+
+Coz, current definition implies its just list of segments, however in Refine Invocation, we are passing list of list of segments [here](https://graypaper.fluffylabs.dev/#/9a08063/2e5f012e6401?v=0.6.6).
+
+if the latter is true, then, I think in eqn itself there must be change for more clarity.
+
+Please correct me if I understand this wrong.
+  ↳ 2025-05-09 11:09 dave: Bold b is the complete list of segments with the given root, or exported by the work-package with the given hash
+  ↳ 2025-05-09 11:09 dave: This is what the M(b) = L(r) bit means
+  ↳ 2025-05-09 11:32 knight1205: that i got, but after that we are picking nth segment from b and building a list. but in psi R list of list of segment is expected. 
+  ↳ 2025-05-09 12:05 dave: Ah I see what you mean now, sorry. The refine call for each work item has access to the imports for _all_ work items. So the list-of-list-of-segments is [S(w) for w in p_w]
+  ↳ 2025-05-09 12:06 dave: I believe there is an error in the definition of I(p,j); this says S(w) is passed in rather than the above
+  ↳ 2025-05-09 12:07 knight1205: yes 
+  ↳ 2025-05-09 12:07 knight1205: that's confusing
+  ↳ 2025-05-09 12:09 dave: I'll push a PR to the GP repo to address this
+  ↳ 2025-05-09 12:16 knight1205: Raised [Issue #377](https://github.com/gavofyork/graypaper/issues/377).
+  ↳ 2025-05-09 12:26 dave: Thanks for reporting, I've pushed a fix here https://github.com/gavofyork/graypaper/pull/378
 2025-04-22 18:33 sourabhniyogi: We have found our development life has improved with the "metadata" attached to preimages, specifically when the preimage is for service code, because we can then have tools show that metadata as strings like "fib" and "gameoflife".   Can we get the same for workpackages+bundles so that we can attach metadata like "fib(93)", "gameoflife(314)", or should that be in the payload as a mere convention?
 2025-04-22 19:56 sourabhniyogi: Another quick request: Would you mind assigning `provide` a number like 17 or 27, and perhaps starting historical\_lookup at 32 or 64 or 128? That would leave a bit of space between the two big groups of host functions for "one more".
  [edited]
@@ -5941,3 +5962,6 @@ Doesn't this suggest that implementations aiming to support warp sync need to us
 2025-05-07 17:33 sigsigsigsigsig: will think of you while i'm enjoying reading it in the uk sun 😁 💕
 2025-05-07 17:33 sigsigsigsigsig: gotta get it while it's hot here! ☔️
 2025-05-08 14:32 ascriv: The fifth component of the yield invocation in (B.2) should be a hash but it’s a work package. Assuming that’s a typo?
+2025-05-09 09:43 gav: Yes. https://github.com/gavofyork/graypaper/pull/376
+2025-05-09 16:14 ascriv: The third state key constructor in (D.1) only uses the first 27 bytes of h, but each usage of that constructor sends 31 bytes. I think e.g. for the storage dictionary we should use k0…23, and similar the next 2. This wouldn’t change functionality but as far as I can tell we are sending 4 extraneous bytes in each of them  [edited]
+2025-05-10 01:15 ascriv: also I saw that we changed the arguments for the argument invocation in the accumulation definition (B.9) to include just the length of operand tuples array, instead of the full array. is this intentional? is it also intentional that we've left off any subscript for E, and thus we use the general natural encoding for t and s?

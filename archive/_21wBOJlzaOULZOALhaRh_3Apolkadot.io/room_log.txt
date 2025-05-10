@@ -1,5 +1,5 @@
 # room: #jam:polkadot.io
-# exported: 2025-05-09 03:30 UTC
+# exported: 2025-05-10 03:27 UTC
 2024-04-20 02:08 johnjiao123: 
 2024-04-20 02:09 johnjiao123: 
 2024-05-30 21:48 nradko: Hey everyone,
@@ -7586,3 +7586,55 @@ willing join it after connecting to PolkaVM successfully!
 2025-05-08 10:32 clearloop: may I ask if it is possible to checkout a tag or branch for 0.6.5 in the test vectors repo ? davxy 
 2025-05-08 14:22 danicuki: Anyone who has photos or videos from the event, please share them here: https://drive.google.com/drive/folders/1SLDSDjSDkVs-qoiDyRO0R0UHY9aw4ur5?usp=sharing
 2025-05-08 21:14 xlchen: any plans for M2 testvectors?
+  ↳ 2025-05-09 04:02 clearloop: ref https://github.com/w3f/jamtestvectors/issues/41
+2025-05-09 12:09 arkadiy: We've created a repo for the JIPs:
+https://github.com/polkadot-fellows/JIPs
+2025-05-09 12:09 arkadiy: gav: Could you publish the RPC spec there?
+2025-05-09 12:10 arkadiy: There's also a common chain spec file format proposal:
+https://github.com/polkadot-fellows/JIPs/pull/1
+2025-05-09 12:27 jan: Here are polkajam binaries (+ some of the tooling) for you to play around:
+
+macOS (aarch64):
+https://drive.google.com/file/d/1VzCbIUA7RYmsVD8VZwoSnfjgRXlE9b8D/view?usp=sharing
+
+macOS (x86_64):
+https://drive.google.com/file/d/1OnbpSWeMVA1LrUk6y3Td-Vp4AIjQP9Q7/view?usp=sharing
+
+Linux:
+https://drive.google.com/file/d/1q_v-YoVUd21ZHKWQcFGlLgR04H5n2uB-/view?usp=sharing
+
+Windows:
+https://drive.google.com/file/d/1Op1ZNUVsy-ek5PUwHUwQANE2MUHXyQr3/view?usp=sharing
+
+Please do let us know if they are any problems with them. (Also, Windows binaries are untested and unsupported; I cross-compiled them because I could in case someone finds them useful, but we only intend to "support" Linux and macOS binaries as no one at Parity uses Windows) [edited]
+  ↳ 2025-05-09 12:35 oliver.tale-yazdi: `VmEngine(EngineInitializationFailed(Error(Owned("failed to initialize Linux sandbox: not all required userfaultfd features are available; you need to update your Linux kernel to version 6.8 or newer"))))`  
+I guess this is expected? Or can i disable the sandbox?
+  ↳ 2025-05-09 12:46 rotarur: Did you try update your kernel? 
+  ↳ 2025-05-09 12:47 jan: This is expected. What's your Linux kernel version?
+  ↳ 2025-05-09 12:48 jan: you can check it with `uname -a`
+  ↳ 2025-05-09 12:49 oliver.tale-yazdi: `5.10.0-32` 😅 okay I will nuke the server.  
+But it is not possible to run it without sandbox?
+  ↳ 2025-05-09 12:50 jan: You can run it with the interpreter, in which case it doesn't need a newer kernel.
+  ↳ 2025-05-09 12:52 jan: IIRC, there should be a command line argument to do it
+  ↳ 2025-05-09 14:02 davxy: Aside from referencing the GP, perhaps we should explicitly list the tools and node versions in the package?
+I assume we'll be publishing updated versions quite often.
+For example, we recently integrated gas charging for host calls, and I’m assuming the shared binary doesn’t yet include that.
+  ↳ 2025-05-09 17:38 jan: I've updated the binaries. Changelog:
+
+- macOS binaries were added
+- chain ID was removed from app protocol, as this is not (yet?) part of the spec
+- gas is now charged for the host calls
+  ↳ 2025-05-09 21:07 sourabhniyogi: This is awesome --  Ok attempting first contact with PolkaJam "--dev-validator 0..4" , with us as "--dev-validator 5" being 1/6, we need to get at where the genesis block is written (its headerhash \[0259fbe9\])  and all the pub keys of the 6 validators so as to get through the "alpn" connectivity matching continuing to "SAN mismatch: expected e42haz57snrm7sy5vqrrafursptelydco76gltk6uaexzu4o6z4aa, got [egxdzq3l6mlws7rvweuyeajlg4dszlgyj7hdt3vs2byluzyz3pgaa]" type errors [edited]
+  ↳ 2025-05-09 21:12 sourabhniyogi: https://github.com/polkadot-fellows/JIPs/pull/1
+  ↳ 2025-05-09 21:13 sourabhniyogi: says "Note that this does not contain a valid header or state for brevity." so where do we find the full jip-4 chainspec/genesis block+state? 
+
+I tried looking around the dirs of `-c` + `-d` but nothing obvious appeared:
+ ```
+./polkajam -d /tmp/d0 -c /tmp/c0 --chain dev --parameters tiny run  --dev-validator 0 --rpc-port=19800 &
+./polkajam -d /tmp/d1 -c /tmp/c1 --chain dev --parameters tiny run  --dev-validator 1 --rpc-port=19801 &
+./polkajam -d /tmp/d2 -c /tmp/c2 --chain dev --parameters tiny run  --dev-validator 2 --rpc-port=19802 &
+./polkajam -d /tmp/d3 -c /tmp/c3 --chain dev --parameters tiny run  --dev-validator 3 --rpc-port=19803 &
+./polkajam -d /tmp/d4 -c /tmp/c4 --chain dev --parameters tiny run  --dev-validator 4 --rpc-port=19804 &
+ [edited]
+2025-05-09 14:30 danicuki: 10MB binary for PolkaJAM? Impressive! Can I try to run it on my old Atari?
+2025-05-09 14:40 clearloop: and 4 MB of the 10MB could be rocksdb if using it ... while we are surprised by the compact binary of polkajam, polkajam guys may confused about why our binaries are larger than 10 MB 🥲 [edited]
