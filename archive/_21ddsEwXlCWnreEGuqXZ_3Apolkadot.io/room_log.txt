@@ -1,5 +1,5 @@
 # room: #graypaper:polkadot.io
-# exported: 2025-05-10 03:28 UTC
+# exported: 2025-05-11 03:31 UTC
 2024-04-17 20:29 syed: https://matrix.to/#/!hyzRkDqDthePbodYFz:parity.io/$f_DMsIEcDXZegw6Sabnehzc-LrdDQkmq5MbxDDyoZxY?via=parity.io&via=web3.foundation
 
 2024-04-17 20:29 syed: 
@@ -5965,3 +5965,7 @@ Doesn't this suggest that implementations aiming to support warp sync need to us
 2025-05-09 09:43 gav: Yes. https://github.com/gavofyork/graypaper/pull/376
 2025-05-09 16:14 ascriv: The third state key constructor in (D.1) only uses the first 27 bytes of h, but each usage of that constructor sends 31 bytes. I think e.g. for the storage dictionary we should use k0…23, and similar the next 2. This wouldn’t change functionality but as far as I can tell we are sending 4 extraneous bytes in each of them  [edited]
 2025-05-10 01:15 ascriv: also I saw that we changed the arguments for the argument invocation in the accumulation definition (B.9) to include just the length of operand tuples array, instead of the full array. is this intentional? is it also intentional that we've left off any subscript for E, and thus we use the general natural encoding for t and s?
+2025-05-10 13:47 ascriv: https://github.com/gavofyork/graypaper/pull/380
+https://github.com/gavofyork/graypaper/pull/381
+
+draft fixes for the above two issues [edited]

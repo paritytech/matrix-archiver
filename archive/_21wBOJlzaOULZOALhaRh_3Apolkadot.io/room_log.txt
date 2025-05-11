@@ -1,5 +1,5 @@
 # room: #jam:polkadot.io
-# exported: 2025-05-10 03:27 UTC
+# exported: 2025-05-11 03:31 UTC
 2024-04-20 02:08 johnjiao123: 
 2024-04-20 02:09 johnjiao123: 
 2024-05-30 21:48 nradko: Hey everyone,
@@ -7597,11 +7597,14 @@ https://github.com/polkadot-fellows/JIPs/pull/1
 macOS (aarch64):
 https://drive.google.com/file/d/1VzCbIUA7RYmsVD8VZwoSnfjgRXlE9b8D/view?usp=sharing
 
-macOS (x86_64):
+macOS (x86\_64):
 https://drive.google.com/file/d/1OnbpSWeMVA1LrUk6y3Td-Vp4AIjQP9Q7/view?usp=sharing
 
-Linux:
-https://drive.google.com/file/d/1q_v-YoVUd21ZHKWQcFGlLgR04H5n2uB-/view?usp=sharing
+Linux (x86_64):
+https://drive.google.com/file/d/1q\_v-YoVUd21ZHKWQcFGlLgR04H5n2uB-/view?usp=sharing
+
+Linux (aarch64):
+https://drive.google.com/file/d/1Oj1AICgG6ZDpv7stC6xXkwfyMfXqY4Ko/view?usp=sharing
 
 Windows:
 https://drive.google.com/file/d/1Op1ZNUVsy-ek5PUwHUwQANE2MUHXyQr3/view?usp=sharing
@@ -7624,17 +7627,43 @@ For example, we recently integrated gas charging for host calls, and I’m assum
 - macOS binaries were added
 - chain ID was removed from app protocol, as this is not (yet?) part of the spec
 - gas is now charged for the host calls
-  ↳ 2025-05-09 21:07 sourabhniyogi: This is awesome --  Ok attempting first contact with PolkaJam "--dev-validator 0..4" , with us as "--dev-validator 5" being 1/6, we need to get at where the genesis block is written (its headerhash \[0259fbe9\])  and all the pub keys of the 6 validators so as to get through the "alpn" connectivity matching continuing to "SAN mismatch: expected e42haz57snrm7sy5vqrrafursptelydco76gltk6uaexzu4o6z4aa, got [egxdzq3l6mlws7rvweuyeajlg4dszlgyj7hdt3vs2byluzyz3pgaa]" type errors [edited]
+  ↳ 2025-05-09 21:07 sourabhniyogi: This is awesome --  Ok attempting first contact with PolkaJam "--dev-validator 0..4" , with us as "--dev-validator 5" being 1/6! [edited]
   ↳ 2025-05-09 21:12 sourabhniyogi: https://github.com/polkadot-fellows/JIPs/pull/1
-  ↳ 2025-05-09 21:13 sourabhniyogi: says "Note that this does not contain a valid header or state for brevity." so where do we find the full jip-4 chainspec/genesis block+state? 
+  ↳ 2025-05-09 21:13 sourabhniyogi: What are the dev seeds for `--dev-validator 0` through `--dev-validator 5`
 
-I tried looking around the dirs of `-c` + `-d` but nothing obvious appeared:
- ```
+```
 ./polkajam -d /tmp/d0 -c /tmp/c0 --chain dev --parameters tiny run  --dev-validator 0 --rpc-port=19800 &
 ./polkajam -d /tmp/d1 -c /tmp/c1 --chain dev --parameters tiny run  --dev-validator 1 --rpc-port=19801 &
 ./polkajam -d /tmp/d2 -c /tmp/c2 --chain dev --parameters tiny run  --dev-validator 2 --rpc-port=19802 &
-./polkajam -d /tmp/d3 -c /tmp/c3 --chain dev --parameters tiny run  --dev-validator 3 --rpc-port=19803 &
-./polkajam -d /tmp/d4 -c /tmp/c4 --chain dev --parameters tiny run  --dev-validator 4 --rpc-port=19804 &
- [edited]
+...
+```
+
+I believe knowing this will enable us to achieve first contact =) [edited]
+  ↳ 2025-05-10 07:02 dave: I believe they should match the keys here https://docs.jamcha.in/basics/dev-accounts
+  ↳ 2025-05-10 07:02 dave: So dev validator 0 is alice, 1 is bob, and so on
+  ↳ 2025-05-10 09:04 sourabhniyogi: will triple check!
+
+  ↳ 2025-05-10 09:12 sourabhniyogi: Where is this "Inserts the keys for the validator into the keystore before running." described for `--dev-validator` in `./polkajam help run` going? [I was expecting these dev seeds to go `.config/polkajam/dev/keys` but no luck]
 2025-05-09 14:30 danicuki: 10MB binary for PolkaJAM? Impressive! Can I try to run it on my old Atari?
 2025-05-09 14:40 clearloop: and 4 MB of the 10MB could be rocksdb if using it ... while we are surprised by the compact binary of polkajam, polkajam guys may confused about why our binaries are larger than 10 MB 🥲 [edited]
+2025-05-10 09:04 sourabhniyogi: Thank you for posting the `polkajam` binaries!  I believe this `polkajam` binary creates a model for how all our binaries should work at a minimum down to flag interfaces, and probably a lot of us will follow almost all of the polkajam flags model.  It shouldn't restrict our binaries from having other flags as we like of course, but some early conventions would help a lot.
+
+Notes/Ideas/Questions:
+
+- We should have a standardized way of doing fuzz testing of refine (work bundle since its self-contained) and accumulate (exactly [traces](https://github.com/davxy/jam-test-vectors/pull/45)) with flags as an input, and supporting both .json and .bin as per w3f jamtestvectors
+- Having a flag for _optional_ pvm execute trace generation for the above in standardized form programmatically comparable will be enormously valuable to see when implementations differ on pvm traces - pc, step, gas, registers cover 99% of this -- the first diff is enough.  (Its what people have asked each other for, most commonly, usually for fixing host function implementations).  Since refine pvm traces can get super huge, a "show only on every N steps" flag parameter would be excellent to have as well.  I think this flag should be an output file destination with a line of JSON for each step separated by newlines where "diff" does all the work.
+- Having `polkajam-testnet` be _multiclient_ with a testnet config would be wonderful.   Can we make it open source or should we start rolling our own opensource `jamtestnet`?
+- Having clarity on the timing of the first authored block's slot would help a lot!  What is the testnet wide approach to this if its not a flag?
+- Having each client with verbosity control flags standardized (warn, info, debug, trace) would support the above, with jamtestnet having the same verbosity flag passed into each client.
+- Running the client with `--dev-validator` (eg `./polkajam --temp --chain dev --parameters tiny run  --dev-validator 2 --rpc-port=19802`) should follow "Inserts the keys for the validator into the keystore before running." and put 32 byte seed into the same place ( `.config/{client}/dev/keys/`) in a way that can scale from `tiny` to `full`
+- Perhaps each client can have unique multiclient seeds instead of the Alice/Bob/... "dev seeds" as [here](https://docs.jamcha.in/basics/dev-accounts) using the name we registered [here](https://jamcha.in/clients).  This could be used for JAM TART `sender_id`?
+- Having "jamxyz -V" show the GP version we are using as a convention probably will save us all a lot of grief.  Similarly, we should NOT have our binaries all be named `jam` but something in obvious relation to our team name (jamduna, jambrains, jamixir etc.) starting when we publish it.  An optional git commit should help a lot as well!
+- Could stub `-t, --telemetry` https://hackmd.io/@polkadot/jip3 as a flag even though its under design, and similarly for any other "we definitely expect to have this" (refine/accumulate/auth testing, benchmarking) sections so we stub it all out and then have our own short flags for other things, since there are only so many letters in the alphabet ;) [edited]
+2025-05-10 10:26 boymaas: Thank you, Jan. If possible, could we also have a Linux aarch64 version?
+2025-05-10 10:53 danicuki: I will start uploading videos to our YouTube Channel:
+https://www.youtube.com/@PolkadotJAM
+
+Already added many media files to our open github repo:
+https://github.com/jamixir/jam-media/ (you can PR there as well with any relevant media you would like to share)
+2025-05-10 14:32 jan: Added a link to my original post.
+2025-05-10 14:33 boymaas: Thank you Jan Bujak 🚀
