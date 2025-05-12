@@ -1,5 +1,5 @@
 # room: #graypaper:polkadot.io
-# exported: 2025-05-11 03:31 UTC
+# exported: 2025-05-12 03:32 UTC
 2024-04-17 20:29 syed: https://matrix.to/#/!hyzRkDqDthePbodYFz:parity.io/$f_DMsIEcDXZegw6Sabnehzc-LrdDQkmq5MbxDDyoZxY?via=parity.io&via=web3.foundation
 
 2024-04-17 20:29 syed: 
@@ -5969,3 +5969,11 @@ Doesn't this suggest that implementations aiming to support warp sync need to us
 https://github.com/gavofyork/graypaper/pull/381
 
 draft fixes for the above two issues [edited]
+2025-05-11 17:10 gav: > <@ascriv:matrix.org> also I saw that we changed the arguments for the argument invocation in the accumulation definition (B.9) to include just the length of operand tuples array, instead of the full array. is this intentional? is it also intentional that we've left off any subscript for E, and thus we use the general natural encoding for t and s?
+
+All intentional 
+2025-05-11 17:11 gav: Passing the whole vector will become unsound when gas cost inflates with accessible memory. The point of these changes is to support sound service code and thus ensure that baseline gas costs are fixed over all inputs. Memos and work results must now be `fetch`ed as needed.  [edited]
+2025-05-11 19:08 jan: To expand on the rationale here - we've been doing research/running experiments on how to come up with a secure gas cost model we can use in a permissionless environment like JAM, and it has been increasingly clear that minimizing the amount of memory that is accessible to the programs is important to keep the gas costs of the memory instructions in check. In general the more memory you have accessible the easier it gets to trigger cache misses, which makes the the worst case, well, worse, for memory access instructions, potentially up to *several hundred times* more costly (compared to the average case) if you can access the whole ~4GB worth of address space. So if we can do something while needing less memory, even if that ends up being slightly more computationally inefficient, it will still be a net win considering the gas costs.
+2025-05-12 01:56 ascriv: https://github.com/gavofyork/graypaper/pull/387
+
+various fetch nits
