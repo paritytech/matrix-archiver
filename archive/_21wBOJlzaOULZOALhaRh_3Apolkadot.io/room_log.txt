@@ -1,5 +1,5 @@
 # room: #jam:polkadot.io
-# exported: 2025-05-12 03:31 UTC
+# exported: 2025-05-13 03:30 UTC
 2024-04-20 02:08 johnjiao123: 
 2024-04-20 02:09 johnjiao123: 
 2024-05-30 21:48 nradko: Hey everyone,
@@ -7667,3 +7667,5 @@ Already added many media files to our open github repo:
 https://github.com/jamixir/jam-media/ (you can PR there as well with any relevant media you would like to share)
 2025-05-10 14:32 jan: Added a link to my original post.
 2025-05-10 14:33 boymaas: Thank you Jan Bujak 🚀
+2025-05-12 15:48 james.wilson: Hey guys! Just curious; is there any summary of which teams are currently implementing the JAM spec (and in which languages)? I'm curious to know if there's any interesting space that hasn't been covered already :) 
+2025-05-12 15:49 dave: Hey, there's a list of teams here: https://graypaper.com/clients/, not sure how up-to-date it is

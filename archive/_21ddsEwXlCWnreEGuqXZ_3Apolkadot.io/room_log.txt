@@ -1,5 +1,5 @@
 # room: #graypaper:polkadot.io
-# exported: 2025-05-12 03:32 UTC
+# exported: 2025-05-13 03:31 UTC
 2024-04-17 20:29 syed: https://matrix.to/#/!hyzRkDqDthePbodYFz:parity.io/$f_DMsIEcDXZegw6Sabnehzc-LrdDQkmq5MbxDDyoZxY?via=parity.io&via=web3.foundation
 
 2024-04-17 20:29 syed: 
@@ -5977,3 +5977,7 @@ All intentional
 2025-05-12 01:56 ascriv: https://github.com/gavofyork/graypaper/pull/387
 
 various fetch nits
+2025-05-12 19:56 ascriv: For this message, can we assume that (w_s)_l is added for each r in w_r ? so if len(w_r) = 2, the b component for R(c) is 2 * (w_s)_l ?
+2025-05-12 19:57 ascriv: For this equation *
+2025-05-12 19:58 ascriv: (assuming there's one work report for that core)
+2025-05-12 21:22 gav: No, this is an oversight. (w_s)_l should only be counted once. Feel free to open an issue.
