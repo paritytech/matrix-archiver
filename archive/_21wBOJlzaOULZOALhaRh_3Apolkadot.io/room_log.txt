@@ -1,5 +1,5 @@
 # room: #jam:polkadot.io
-# exported: 2025-05-13 03:30 UTC
+# exported: 2025-05-14 03:30 UTC
 2024-04-20 02:08 johnjiao123: 
 2024-04-20 02:09 johnjiao123: 
 2024-05-30 21:48 nradko: Hey everyone,
@@ -7669,3 +7669,22 @@ https://github.com/jamixir/jam-media/ (you can PR there as well with any relevan
 2025-05-10 14:33 boymaas: Thank you Jan Bujak 🚀
 2025-05-12 15:48 james.wilson: Hey guys! Just curious; is there any summary of which teams are currently implementing the JAM spec (and in which languages)? I'm curious to know if there's any interesting space that hasn't been covered already :) 
 2025-05-12 15:49 dave: Hey, there's a list of teams here: https://graypaper.com/clients/, not sure how up-to-date it is
+2025-05-13 12:35 johnnyb42: Hey, everyone! I've just started learning JAM and trying to understand the possible applications. Especially real-time scenarios.
+
+I've heard about CoreVM and continuous computation without having to worry about the internals of JAM, but I'm still not entirely sure what level of real time I can expect.
+
+Let's say I have a sensor that publishes data at 10 Hz. I want to process this data using a some service on JAM cores.
+
+1) Is there any way I can deliver and process data at this rate in the core? Or am I limited by the fact that the data have to go through DA, be registered in a work-package, and only then enter the core (in 6 s timeslot)?
+
+2) If I pay for several cores, can I parallelize, say, the proccessing data flow of hundreds of MB/s and do it with the same frequency 10 Hz? Or am I limited by the fact that the cores have to generate work-reports, which have to go through the Accumulate stage, etc — that is, I need to wait for the next timeslot? So, additional cores != now I can quickly process a large data in one Refine stage and get the result right away.
+
+3) So did I understand correctly that the cores are isolated from each other at the Refine stage and they can only computate their own piece of data (specified in the work-package)?
+2025-05-13 16:25 dave: I'll do my best to answer these...
+
+1. It's certainly possible to process 10 Hz data, the more important questions are (a) how much data and (b) what are the latency requirements. Currently a JAM core can accept ~12MB of input data per 6-second slot, so ~2MB/s. Regarding latency, accumulation should typically occur 12-18 seconds after submission of a work-package. If you want to wait for finality, you will typically need to wait an additional 20-30 seconds. There may be protocol changes in the future to improve latency.
+
+2. Yes, JAM is explicitly designed to support scaling in this way: in theory _every_ JAM core could execute a particular service's refine function in one time slot. Hundreds of MB/s would require many cores but should be feasible with the current JAM parameters. Note that when parallelising in this way, your accumulate function will see the results of each refine and be able to combine them together however you see fit, but the refine executions on each core are independent.
+
+3. Yes, the cores are isolated from each other during the refine stage. Each core can access only its own package's extrinsic and imported data. Each core/package can output ~48kB of data to the accumulate stage, and ~12MB to DA. The accumulate stage sees the ~48kB output from every package/core and is free to combine this data however it likes, though note that there is much less accumulate gas available in total than refine gas as accumulate is always executed on every validator.
+2025-05-13 16:36 dave: To clarify the latency point a bit: JAM is pipelined, so although there will be quite a few 6-second periods between a work-package submission and the results of this work-package being finalized, a new work-package can be pushed into the pipeline on every core every 6-second slot. Your accumulate function will execute every 6-second slot with whatever new refine outputs are available.
