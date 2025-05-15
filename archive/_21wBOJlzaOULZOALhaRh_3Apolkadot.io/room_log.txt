@@ -1,5 +1,5 @@
 # room: #jam:polkadot.io
-# exported: 2025-05-14 03:30 UTC
+# exported: 2025-05-15 03:30 UTC
 2024-04-20 02:08 johnjiao123: 
 2024-04-20 02:09 johnjiao123: 
 2024-05-30 21:48 nradko: Hey everyone,
@@ -7644,6 +7644,8 @@ I believe knowing this will enable us to achieve first contact =) [edited]
   ↳ 2025-05-10 09:04 sourabhniyogi: will triple check!
 
   ↳ 2025-05-10 09:12 sourabhniyogi: Where is this "Inserts the keys for the validator into the keystore before running." described for `--dev-validator` in `./polkajam help run` going? [I was expecting these dev seeds to go `.config/polkajam/dev/keys` but no luck]
+  ↳ 2025-05-14 05:54 shwchg: David Emett Jan Bujak Is there an official chainspec file available for use?
+I attempted to generate one myself, but it couldn't be decoded by your binary.
 2025-05-09 14:30 danicuki: 10MB binary for PolkaJAM? Impressive! Can I try to run it on my old Atari?
 2025-05-09 14:40 clearloop: and 4 MB of the 10MB could be rocksdb if using it ... while we are surprised by the compact binary of polkajam, polkajam guys may confused about why our binaries are larger than 10 MB 🥲 [edited]
 2025-05-10 09:04 sourabhniyogi: Thank you for posting the `polkajam` binaries!  I believe this `polkajam` binary creates a model for how all our binaries should work at a minimum down to flag interfaces, and probably a lot of us will follow almost all of the polkajam flags model.  It shouldn't restrict our binaries from having other flags as we like of course, but some early conventions would help a lot.
@@ -7688,3 +7690,66 @@ Let's say I have a sensor that publishes data at 10 Hz. I want to process this d
 
 3. Yes, the cores are isolated from each other during the refine stage. Each core can access only its own package's extrinsic and imported data. Each core/package can output ~48kB of data to the accumulate stage, and ~12MB to DA. The accumulate stage sees the ~48kB output from every package/core and is free to combine this data however it likes, though note that there is much less accumulate gas available in total than refine gas as accumulate is always executed on every validator.
 2025-05-13 16:36 dave: To clarify the latency point a bit: JAM is pipelined, so although there will be quite a few 6-second periods between a work-package submission and the results of this work-package being finalized, a new work-package can be pushed into the pipeline on every core every 6-second slot. Your accumulate function will execute every 6-second slot with whatever new refine outputs are available.
+2025-05-14 04:19 tony_lollipop: 
+2025-05-14 05:28 tony_lollipop: Is there any guide documents for the polkajam-repl tool?
+2025-05-14 05:56 tony_lollipop: Hi, Jan
+Is there any guide document about polkajam-repl? We wonder how to load, start, debug a JAM service with it.
+2025-05-14 07:59 danicuki: For those who came to JAM Experience Lisbon, your feedback is really important. Please, give us 5 minutes to fill this feedback form?
+
+https://docs.google.com/forms/d/e/1FAIpQLSeJPAATC6Y76RNvvUWo4KHzZqeC4zIkyyb8T9ng_6L5fE0UPQ/viewform
+2025-05-14 08:38 johnnyb42: Thanks for the explanation! 
+
+So, I can only send *new* data only once per 6-second timeslot, right? I mean, if new data comes more often and I need to process it right away (in a dozen milliseconds) to get the result, I can't do it in the core. Or am I missing something?
+2025-05-14 08:41 dave: Right, if you need milliseconds of latency then JAM is not suitable
+2025-05-14 08:45 ascriv: I wonder if it’s possible to mathematically prove some sort of latency lower bound within some reasonable (secure, decentralized etc) regime/model of blockchain
+2025-05-14 08:46 boymaas: We are experimenting with the repl to create a very simple service and send a work package to it. This is not trivial since we do not have access to any source code. For example, we are struggling with the initial step of loading the simplest service. We are trying:
+
+```
+t+0 0> boot-create-service 0x5edc11abc426e8906bd52de205d3c57ea7fbcbbb9a5780e29eee69cb14c47ea3
+Integer parse error: invalid digit found in string
+t+0 0>
+```
+
+If anyone could provide a simple walkthrough on creating a service with a code hash, including how to provide the code preimage, set a null authorizer, and send a work package, it would save us a lot of time figuring out the basics.
+
+Another error we are encountering is using jamt to deploy a service to a local devnet. We receive an indication that the max-refine-code-size is missing there. 🤔 [edited]
+2025-05-14 10:19 bkchr: This is not completely true. It really depends on what latency you are interested in. Are you talking about latency until finality or work package getting guaranteed? Yeah, milliseconds are not possible. However, it depends on your economical requirements. It is maybe enough to trust the guy building the work package and this guy could give you the result in milliseconds. You just need to be aware that later in the process it can be found out that this guy was lieing to you and then you would need to revert stuff.
+
+Simple example, if I gonna buy a coke for 3 euro. The terminal can directly trust the server that accepts it, because no one will scam you for 3 euro. If I'm buying a TV for 3K, maybe I should wait for work package being guaranteed. If I'm buying a house, I should clearly wait for finality :) 
+2025-05-14 10:29 johnnyb42: Yes, I thought about this too, these considerations also need to be kept in mind.
+
+I'm thinking more about technical latency here, how much can be squeezed out of the protocol so that it still makes sense to use it.
+2025-05-14 11:00 gav: -h/help can be helpful. Otherwise, I’m afraid these tools don’t (yet) come with user support :) [edited]
+2025-05-14 11:17 gav: FWIW `jamt` will have (has already?) distributed source code.  [edited]
+2025-05-14 11:20 boymaas: We already realized that user support would be limited. 😁 We have found the source for `jamt`. For others working on it, it can be obtained using `cargo clone`. It seems we need to keep fiddling until we get it to work.
+2025-05-14 12:25 davxy: Something worth keeping an eye on: https://github.com/PolkadotOpenSourceGrants/apply/pull/14
+Especially useful as a future reference point for other potential implementations 
+2025-05-14 14:04 ascriv: Hmm.. until that server or system is handling coke purchases worldwide, then there would be incentives to hack? Or maybe we could have a federated system of work package builders  [edited]
+2025-05-14 17:40 danicuki: > <@kianenigma:parity.io> Jan Bujak I missed your recompiler talk this morning, would it be possible for you to share the slides here or in a JAM chat to be able to save it for later? thanks!
+
+https://youtu.be/iXsng4YCDQg?si=-wOBXhLKHnYxO5nA the first minutes got lost in the recording, but it doesn’t compromise to understand the full presentation. 
+2025-05-14 18:30 sourabhniyogi: We updated our jamduna binary to more or less match the polkajam binary in terms of having the same flags, and hope other teams will do the same.
+
+For us to make first contact with PolkaJAM we need the PolkaJAM JIP-4 chainspec, and the following Quic TLS nitty gritty nailed down:
+
+- Using polkajam's "Best final block: 0x0259fbe9b7dd6f3c..." output from running `./polkajam -d /tmp/d0 -c /tmp/c0 --chain dev --parameters tiny run  --dev-validator 0 --rpc-port=19800` we spoofed the ALPN protocol string 0259fbe9, which got the polkajam instance opening a connection to our jamduna instance and the TLS cert's `ed25519_public` key indeed match the [dev accounts](https://docs.jamcha.in/basics/dev-accounts)
+- However, the peerIDs/SANs/dns\_alt\_names do not, which you can see varying --dev-validator from 0 to 5
+"This node is e3r2oc62zwfj3crnuifuvsxvbtlzetk4o5qyhetkhagsc2fgl2oka@127.0.0.1:40000"
+"This node is ecjn4brac2kgu25kiykefww6p6ai7noueo6p5af5tnwjgra4eisya@127.0.0.1:40001"
+..
+"This node is ede7gocrx5435my626w74zmwejyzqw3wvuvwtnzu4sz2lwib4kxaa@127.0.0.1:40005"
+none of which match up with the `dns_alt_name` of https://docs.jamcha.in/basics/dev-accounts.
+- The UP0 handshake process errors out with "invalid peer certificate" errors, we speculate, due to the SAN issues.
+I put together a `go test -run TestPolkajam`  case [here](https://github.com/jam-duna/jamtestnet/tree/main/client)
+
+We can publish our binary with our own chainspec.json but strongly prefer that we get the above first contact + nitty gritty worked out!  Can you assist on this? [edited]
+  ↳ 2025-05-14 19:31 dave: Will take a look tomorrow. The SAN is supposed to be a very simple translation of the public key, almost certainly a trivial bug somewhere...
+  ↳ 2025-05-15 01:01 sourabhniyogi: Here are the 2  sort-of-competing formats:
+
+1. https://github.com/jam-duna/jamtestnet/blob/main/tiny-00000000.json
+2. https://github.com/jam-duna/jamtestnet/blob/main/chainspec.json
+
+Is there some consensus or advice on which one implementers should target -- 1 is very M1-implementer friendly, 2 is very extensible, but not quite sure what implementers should do with the bootnodes attributes
+2025-05-15 02:56 sourabhniyogi: Published jamduna binaries:
+
+https://github.com/jam-duna/jamtestnet/releases/tag/0.6.6.1

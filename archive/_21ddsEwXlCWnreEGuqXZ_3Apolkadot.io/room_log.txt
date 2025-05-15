@@ -1,5 +1,5 @@
 # room: #graypaper:polkadot.io
-# exported: 2025-05-14 03:31 UTC
+# exported: 2025-05-15 03:31 UTC
 2024-04-17 20:29 syed: https://matrix.to/#/!hyzRkDqDthePbodYFz:parity.io/$f_DMsIEcDXZegw6Sabnehzc-LrdDQkmq5MbxDDyoZxY?via=parity.io&via=web3.foundation
 
 2024-04-17 20:29 syed: 
@@ -5985,3 +5985,4 @@ various fetch nits
 2025-05-13 10:35 greywolve: Also applies the the preimages/preimage lookups, 4 bytes less
 2025-05-13 10:49 greywolve: Ahh someone already opened a [PR](https://github.com/gavofyork/graypaper/pull/380/files) for this :)
 2025-05-13 14:34 ascriv: Yes me 👋
+2025-05-14 14:06 decentration: Are there existing conformance vectors available for validating the entire serialized state, including all chapters, after it has been merkleized into a single state root?
