@@ -1,5 +1,5 @@
 # room: #jam:polkadot.io
-# exported: 2025-05-15 03:30 UTC
+# exported: 2025-05-16 03:31 UTC
 2024-04-20 02:08 johnjiao123: 
 2024-04-20 02:09 johnjiao123: 
 2024-05-30 21:48 nradko: Hey everyone,
@@ -7741,8 +7741,7 @@ For us to make first contact with PolkaJAM we need the PolkaJAM JIP-4 chainspec,
 none of which match up with the `dns_alt_name` of https://docs.jamcha.in/basics/dev-accounts.
 - The UP0 handshake process errors out with "invalid peer certificate" errors, we speculate, due to the SAN issues.
 I put together a `go test -run TestPolkajam`  case [here](https://github.com/jam-duna/jamtestnet/tree/main/client)
-
-We can publish our binary with our own chainspec.json but strongly prefer that we get the above first contact + nitty gritty worked out!  Can you assist on this? [edited]
+Can you assist on this? [edited]
   ↳ 2025-05-14 19:31 dave: Will take a look tomorrow. The SAN is supposed to be a very simple translation of the public key, almost certainly a trivial bug somewhere...
   ↳ 2025-05-15 01:01 sourabhniyogi: Here are the 2  sort-of-competing formats:
 
@@ -7750,6 +7749,86 @@ We can publish our binary with our own chainspec.json but strongly prefer that w
 2. https://github.com/jam-duna/jamtestnet/blob/main/chainspec.json
 
 Is there some consensus or advice on which one implementers should target -- 1 is very M1-implementer friendly, 2 is very extensible, but not quite sure what implementers should do with the bootnodes attributes
+  ↳ 2025-05-15 10:38 dave: Support for 2 will likely be required for running on the toaster
+  ↳ 2025-05-15 10:40 dave: Bootnodes can probably be ignored for now; you can just connect to the validators specified in the state. On a long-running network, the genesis validator nodes would not be expected to be up still, hence the provision of separate bootnodes that you can use to sync the chain and acquire the latest validator set etc
+  ↳ 2025-05-15 12:22 dave: I'm not sure how the SAN stuff on docs.jamcha.in has been computed. The computation was not specified particularly precisely in the SNP doc, so I'm guessing the computation used for docs.jamcha.in was slightly different to what we have. I've updated the SNP doc to include a precise definition, which should match what PolkaJam does (although I might have made a mistake :)
+  ↳ 2025-05-15 12:22 dave: https://github.com/zdave-parity/jam-np/commit/222139da2a2393e142c921c7699dd90569c04d33
+  ↳ 2025-05-15 13:55 shwchg: David Emett: I got our SAN matches, but still have the ALPN mismatch problem
+
+```
+2025-05-15 21:43:21 Chain ID: dev
+2025-05-15 21:43:21 Config dir: /home/shawn/.config/polkajam/dev
+2025-05-15 21:43:21 Data dir: /tmp/.tmpQ5NxZG
+2025-05-15 21:43:21 Reading state...
+2025-05-15 21:43:21 Writing genesis block.
+2025-05-15 21:43:21 Best final block: 0x0259fbe9b7dd6f3c...
+```
+
+I saw your log of genesis block is 0x0259fbe9b7dd6f3c... ?
+so we adjust our ALPN to
+
+```
+alpn=jamnp-s/0/0259fbe9 
+alpn_builder=jamnp-s/0/0259fbe9/builder
+```
+
+but still got
+
+```
+"CRYPTO_ERROR 0x178 (remote): peer doesn't support any known protocol"
+``` [edited]
+  ↳ 2025-05-15 14:15 dave: If you run `polkajam` under `env RUST_LOG=jam_node::net=trace` you should get a log message printed containing the expected application protocol
+  ↳ 2025-05-15 14:15 dave: Something like:
+
+    2025-05-15 15:13:41 main TRACE jam_node::net  Using application protocol jamnp-s/0/0259fbe9
+  ↳ 2025-05-15 14:16 dave: This is what I got running `polkajam` just now. Seems to match what you expect, so I guess some deeper debugging required.
+  ↳ 2025-05-15 14:19 dave: I guess one possibility is that you have a newline character at the end of your protocol string or something like this?
+  ↳ 2025-05-15 14:26 shwchg: ```
+2025-05-15 22:24:01 main TRACE jam_node::net  Using application protocol jamnp-s/0/dev/0259fbe9
+```
+  ↳ 2025-05-15 14:27 dave: Ah. This was fixed very recently on the polkajam branch, I thought the latest release included this change
+  ↳ 2025-05-15 14:29 shwchg: ok!
+If possible, please let us know whether you can use our chainspec file or genesis STF file. 
+if you can provide one for us to use, that would work as well.
+  ↳ 2025-05-15 14:29 dave: AFAICT the binaries most recently posted by Jan have this change
+  ↳ 2025-05-15 14:29 dave: Linux binaries here: https://drive.google.com/file/d/1q_v-YoVUd21ZHKWQcFGlLgR04H5n2uB-/view
+  ↳ 2025-05-15 14:30 shwchg: oh ok! let me try it
+  ↳ 2025-05-15 14:30 dave: If you have a chainspec file you should be able to use it with `--chain <path-to-chainspec-file>`
+  ↳ 2025-05-15 14:32 dave: It's possible to generate one with `polkajam gen-spec` though the input to that is not really documented yet! 😅
+  ↳ 2025-05-15 14:32 sourabhniyogi: Can you post the chainspec for `dev` in a gist matching up with 0259fbe9 in whatever form?  Or should we do CE128+CE129 basically after first contact?
+  ↳ 2025-05-15 14:33 dave: Yeah I'll do that, give me a few mins...
+  ↳ 2025-05-15 14:49 dave: https://gist.github.com/zdave-parity/72eb9cfe07756d2c0c13c3064600190d
+  ↳ 2025-05-15 14:49 dave: You can make `dev-spec.json` from `dev-config.json` with `polkajam gen-spec dev-config.json dev-spec.json`
+  ↳ 2025-05-15 14:50 dave: We'll hopefully document the `dev-config.json` format at some point, but hopefully it should be fairly self-explanatory [edited]
+  ↳ 2025-05-15 14:51 dave: `dev-spec.json` should match JIP-4 (https://github.com/polkadot-fellows/JIPs/pull/1), pass to `polkajam` like: `polkajam --chain dev-spec.json`
+  ↳ 2025-05-15 14:55 dave: `dev-config.json` is quite limited in what it can control; most of the state is just fixed by `gen-spec`. In particular, `gen-spec` always includes a null authorizer (https://crates.io/crates/jam-null-authorizer) and a bootstrap service (https://crates.io/crates/jam-bootstrap-service)
+  ↳ 2025-05-15 14:55 sourabhniyogi: Thank you!  We'll check it out and report back soon!
+  ↳ 2025-05-15 15:24 shwchg: David Emett: 
+Is it possible to provide a more detailed explanation of the TLS handshake? We encountered the following issue in our implementation:
+```
+from polkajam
+2025-05-15 22:36:18 tokio-runtime-worker DEBUG jam_node::net  [::ffff:127.0.0.1]:35615: Incoming connection failed: the cryptographic handshake failed: error 42: invalid peer certificate: UnhandledCriticalExtension
+
+from us
+WARN [05-15|22:36:18.072] sendQuicBytes-length                     peerID=2 err="CRYPTO_ERROR 0x12a (remote): invalid peer certificate: UnhandledCriticalExtension" code=0 msgLen=73 
+```
+
+It’s possible that some verification checks have been added or removed by us or by you.
+  ↳ 2025-05-15 15:26 dave: Hmm this means you have some extension in your certificate that is marked critical but is not understood by polkajam
+  ↳ 2025-05-15 15:26 dave: At the moment the only extension we expect is the SubjectAlternativeName extension
+  ↳ 2025-05-15 15:31 shwchg: ok! thanks!
+I will remove the verification from our side for now
+  ↳ 2025-05-15 15:31 dave: I think this is coming from our implementation, not yours
+  ↳ 2025-05-15 15:32 dave: You need to remove whatever extension you have from your certificate, or mark it as non-critical
+  ↳ 2025-05-15 15:34 dave: Possibly we could be more lenient here
+  ↳ 2025-05-15 15:39 shwchg: I removed some extensions, and it looks like the connection was successful.
+We’ll start trying to sync with your node.
+If we encounter any issues, we’ll reach out to you.
+Thanks for your response!
+  ↳ 2025-05-15 15:40 dave: Nice!
 2025-05-15 02:56 sourabhniyogi: Published jamduna binaries:
 
 https://github.com/jam-duna/jamtestnet/releases/tag/0.6.6.1
+2025-05-15 07:25 prematurata: is the repl interface shown in some of the jam sessions public? looking forward building a repl interface that matches the same commands/args to keep compatibility
+2025-05-15 10:36 dave: We've released a binary here. Source will be released at the same time as polkajam.
+2025-05-15 14:26 shwchg: 
