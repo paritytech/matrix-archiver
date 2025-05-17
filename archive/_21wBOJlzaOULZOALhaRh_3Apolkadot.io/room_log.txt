@@ -1,5 +1,5 @@
 # room: #jam:polkadot.io
-# exported: 2025-05-16 03:31 UTC
+# exported: 2025-05-17 03:29 UTC
 2024-04-20 02:08 johnjiao123: 
 2024-04-20 02:09 johnjiao123: 
 2024-05-30 21:48 nradko: Hey everyone,
@@ -7826,9 +7826,81 @@ We’ll start trying to sync with your node.
 If we encounter any issues, we’ll reach out to you.
 Thanks for your response!
   ↳ 2025-05-15 15:40 dave: Nice!
+  ↳ 2025-05-16 07:42 shwchg: David Emett: 
+Did you support to use the genesis block to do the block request?
+  ↳ 2025-05-16 07:44 dave: There is no genesis block, only a genesis header
+  ↳ 2025-05-16 08:38 shwchg: so the only way to catch up is using direction = 1 ? [edited]
+  ↳ 2025-05-16 08:52 dave: Sorry I think I misunderstood the original question. I think you should be able to request "ascending" starting from the genesis header
+  ↳ 2025-05-16 08:52 dave: You can't request the block with the genesis header itself though as there is no such block
+  ↳ 2025-05-16 09:00 shwchg: ok I see!
+
+one more question
+are you guys using the same stream for all of the request?
+
+I got this
+How do you determine a peer's poor rating?
+```
+2025-05-16 16:54:48 tokio-runtime-worker TRACE jam_node::net::peer_manager  ede7gocrx5435my626w74zmwejyzqw3wvuvwtnzu4sz2lwib4kxaa@127.0.0.1:58178: New incoming connection
+2025-05-16 16:54:48 tokio-runtime-worker TRACE jam_node::net::peer_manager::peer  ede7gocrx5435my626w74zmwejyzqw3wvuvwtnzu4sz2lwib4kxaa@127.0.0.1:40005: Disconnecting: Poor rating
+```
+  ↳ 2025-05-16 09:07 shwchg: the good news is we got the up0 handshake success and got the new block header!
+  ↳ 2025-05-16 09:32 dave: > <@shwchg:matrix.org> ok I see!
+> 
+> one more question
+> are you guys using the same stream for all of the request?
+> 
+> I got this
+> How do you determine a peer's poor rating?
+> ```
+> 2025-05-16 16:54:48 tokio-runtime-worker TRACE jam_node::net::peer_manager  ede7gocrx5435my626w74zmwejyzqw3wvuvwtnzu4sz2lwib4kxaa@127.0.0.1:58178: New incoming connection
+> 2025-05-16 16:54:48 tokio-runtime-worker TRACE jam_node::net::peer_manager::peer  ede7gocrx5435my626w74zmwejyzqw3wvuvwtnzu4sz2lwib4kxaa@127.0.0.1:40005: Disconnecting: Poor rating
+> ```
+
+Poor rating is likely to be caused by not following the protocol. We're planning to change this behaviour so we don't disconnect so aggressively, but obviously protocol bugs should be fixed. The first time a peer is disconnected the QUIC "reason phrase" should contain an error message
+  ↳ 2025-05-16 09:33 dave: The protocol bug could be on our side of course 😅
+  ↳ 2025-05-16 09:35 dave: Re "using the same stream for all requests": we use streams as described in the SNP doc, so generally a separate stream for each request
+  ↳ 2025-05-16 09:36 dave: Note that the block announcement stream is an exception to this: it is stateful and should be kept open
+  ↳ 2025-05-16 09:40 shwchg: we get `Application error 0x4 (remote)` from our log
+
+and got this from yours
+```
+2025-05-16 17:25:23 tokio-runtime-worker ERROR jam_node::sync  Failed to receive Block: Stream half closed error: Half stream killed
+2025-05-16 17:25:23 tokio-runtime-worker TRACE jam_node::net::peer_manager::peer  ede7gocrx5435my626w74zmwejyzqw3wvuvwtnzu4sz2lwib4kxaa@127.0.0.1:40005: Disconnecting: Misbehaviour: network i/o failed: timed out (5000ms)
+2025-05-16 17:25:23 tokio-runtime-worker TRACE jam_node::net::peer_manager  ede7gocrx5435my626w74zmwejyzqw3wvuvwtnzu4sz2lwib4kxaa@127.0.0.1:54499: New incoming connection
+2025-05-16 17:25:23 tokio-runtime-worker TRACE jam_node::net::peer_manager::peer  ede7gocrx5435my626w74zmwejyzqw3wvuvwtnzu4sz2lwib4kxaa@127.0.0.1:40005: Disconnecting: Poor rating
+```
+
+and I didn't see our node pop in this kind of log (I guess this is from the server side?)
+```
+2025-05-16 17:25:18 tokio-runtime-worker TRACE jam_node::net  e3r2oc62zwfj3crnuifuvsxvbtlzetk4o5qyhetkhagsc2fgl2oka@127.0.0.1:40000: Opening BlockRequest stream
+```
+  ↳ 2025-05-16 09:41 shwchg: Maybe we could standardize some error codes
+would that be helpful?
+  ↳ 2025-05-16 10:01 dave: It looks like polkajam requested a block then there was a timeout reading it from the stream. Probably we shouldn't disconnect in this case, but I would look into what's going on there anyway
+  ↳ 2025-05-16 10:05 dave: > <@shwchg:matrix.org> Maybe we could standardize some error codes
+> would that be helpful?
+
+Yes I think we will include error codes in the network protocol eventually. QUIC supports a "reason phrase" on connection close, which polkajam fills with a human-readable error message. I would recommend printing this in your logs
+  ↳ 2025-05-16 10:09 shwchg: because we fail to request the block from the other node
+I will look for the reason
+  ↳ 2025-05-16 10:11 dave: You shouldn't announce blocks before you have them yourself
+  ↳ 2025-05-16 10:11 dave: And have verified them
+  ↳ 2025-05-16 10:12 dave: We could maybe relax the verification requirement for validator<->validator connections
+  ↳ 2025-05-16 10:20 shwchg: yes! let me check it
+thank you!
+  ↳ 2025-05-16 10:44 shwchg: Is there a way to get the logs related to stream dispatch or incoming bytes?
+  ↳ 2025-05-16 10:51 dave: I think RUST_LOG=trace will give you everything. We use Quinn for QUIC which produces a lot of logs, not sure exactly what as I haven't yet spent much time looking through them
 2025-05-15 02:56 sourabhniyogi: Published jamduna binaries:
 
 https://github.com/jam-duna/jamtestnet/releases/tag/0.6.6.1
 2025-05-15 07:25 prematurata: is the repl interface shown in some of the jam sessions public? looking forward building a repl interface that matches the same commands/args to keep compatibility
 2025-05-15 10:36 dave: We've released a binary here. Source will be released at the same time as polkajam.
 2025-05-15 14:26 shwchg: 
+2025-05-16 14:05 davxy: @room
+
+After reviewing the open issues related to compatibility with GP-0.6.5, I've tagged the test vectors for version 0.6.5.
+Everyone is welcome to try them out and report any issues they encounter.
+We'll begin integrating 0.6.6 shortly.
+From now on, all changes between tags will be listed in the changelog explicitly.
+
+https://github.com/davxy/jam-test-vectors/releases/tag/v0.6.5

@@ -18,7 +18,7 @@ a:hover{color:#90caf9}
 em{font-style:italic}
 </style>
 <h1>#jam:polkadot.io</h1>
-<p><small>last updated 2025-05-16 03:31 UTC</small></p>
+<p><small>last updated 2025-05-17 03:29 UTC</small></p>
 <p><a href='room_log.txt'>⇩ plaintext</a> · <a href='../../'>⇦ all rooms</a></p>
 <hr>
 <div class='msg'><a class='ts' href='#$we4SYXTHwmKn094X9Zs_7mWUOoUVh4icvVdxD83RZfs'>#</a> <a class='ts' name='$we4SYXTHwmKn094X9Zs_7mWUOoUVh4icvVdxD83RZfs' href='https://matrix.to/#/!wBOJlzaOULZOALhaRh:polkadot.io/$we4SYXTHwmKn094X9Zs_7mWUOoUVh4icvVdxD83RZfs' target='_blank'>2024-04-20 02:08</a>&ensp;<span class='u' style='color:#d0709e'>johnjiao123</span>: </div>
@@ -7792,9 +7792,77 @@ We’ll start trying to sync with your node.
 If we encounter any issues, we’ll reach out to you.
 Thanks for your response!</div>
 <div class='msg reply'><a class='ts' href='#$LZk0Qigc8HeEHXaDCnBCDmN3ALV0Zp7uGbRnEONUT5g'>#</a> <a class='ts' name='$LZk0Qigc8HeEHXaDCnBCDmN3ALV0Zp7uGbRnEONUT5g' href='https://matrix.to/#/!wBOJlzaOULZOALhaRh:polkadot.io/$LZk0Qigc8HeEHXaDCnBCDmN3ALV0Zp7uGbRnEONUT5g' target='_blank'>2025-05-15 15:40</a>&ensp;<span class='u' style='color:#c65779'>dave</span>: Nice!</div>
+<div class='msg reply'><a class='ts' href='#$53cnYvCp4Nal0Iik8CbkIFQOwaxOx9GXbWFd-3PwVlc'>#</a> <a class='ts' name='$53cnYvCp4Nal0Iik8CbkIFQOwaxOx9GXbWFd-3PwVlc' href='https://matrix.to/#/!wBOJlzaOULZOALhaRh:polkadot.io/$53cnYvCp4Nal0Iik8CbkIFQOwaxOx9GXbWFd-3PwVlc' target='_blank'>2025-05-16 07:42</a>&ensp;<span class='u' style='color:#5adda3'>shwchg</span>: David Emett: 
+Did you support to use the genesis block to do the block request?</div>
+<div class='msg reply'><a class='ts' href='#$SACvDjzlwJCMDlGY9HiMgoqtoVXQe5QQ7iXlGaVvOYY'>#</a> <a class='ts' name='$SACvDjzlwJCMDlGY9HiMgoqtoVXQe5QQ7iXlGaVvOYY' href='https://matrix.to/#/!wBOJlzaOULZOALhaRh:polkadot.io/$SACvDjzlwJCMDlGY9HiMgoqtoVXQe5QQ7iXlGaVvOYY' target='_blank'>2025-05-16 07:44</a>&ensp;<span class='u' style='color:#c65779'>dave</span>: There is no genesis block, only a genesis header</div>
+<div class='msg reply'><a class='ts' href='#$vu442WQcMiH5yCbQ_v86wDtJXcPu30omPV6aO4zd3zs'>#</a> <a class='ts' name='$vu442WQcMiH5yCbQ_v86wDtJXcPu30omPV6aO4zd3zs' href='https://matrix.to/#/!wBOJlzaOULZOALhaRh:polkadot.io/$vu442WQcMiH5yCbQ_v86wDtJXcPu30omPV6aO4zd3zs' target='_blank'>2025-05-16 08:38</a>&ensp;<span class='u' style='color:#5adda3'>shwchg</span>: so the only way to catch up is using direction = 1 ? <span class="edited">(edited)</span></div>
+<div class='msg reply'><a class='ts' href='#$wfQJ29l07SyluAVdE94dVz7KLhVl25_gv44YTh6wsHQ'>#</a> <a class='ts' name='$wfQJ29l07SyluAVdE94dVz7KLhVl25_gv44YTh6wsHQ' href='https://matrix.to/#/!wBOJlzaOULZOALhaRh:polkadot.io/$wfQJ29l07SyluAVdE94dVz7KLhVl25_gv44YTh6wsHQ' target='_blank'>2025-05-16 08:52</a>&ensp;<span class='u' style='color:#c65779'>dave</span>: Sorry I think I misunderstood the original question. I think you should be able to request &quot;ascending&quot; starting from the genesis header</div>
+<div class='msg reply'><a class='ts' href='#$gLrUQW7r2jg09vI9_hF0YP9WzIz50hazuQqt7RqQI5Y'>#</a> <a class='ts' name='$gLrUQW7r2jg09vI9_hF0YP9WzIz50hazuQqt7RqQI5Y' href='https://matrix.to/#/!wBOJlzaOULZOALhaRh:polkadot.io/$gLrUQW7r2jg09vI9_hF0YP9WzIz50hazuQqt7RqQI5Y' target='_blank'>2025-05-16 08:52</a>&ensp;<span class='u' style='color:#c65779'>dave</span>: You can&#x27;t request the block with the genesis header itself though as there is no such block</div>
+<div class='msg reply'><a class='ts' href='#$yP9k4Oi4QhyhIAlzEfqEIlmVlH10HM1PB7m7m42hPiA'>#</a> <a class='ts' name='$yP9k4Oi4QhyhIAlzEfqEIlmVlH10HM1PB7m7m42hPiA' href='https://matrix.to/#/!wBOJlzaOULZOALhaRh:polkadot.io/$yP9k4Oi4QhyhIAlzEfqEIlmVlH10HM1PB7m7m42hPiA' target='_blank'>2025-05-16 09:00</a>&ensp;<span class='u' style='color:#5adda3'>shwchg</span>: ok I see!
+
+one more question
+are you guys using the same stream for all of the request?
+
+I got this
+How do you determine a peer&#x27;s poor rating?
+<pre><code class=''>2025-05-16 16:54:48 tokio-runtime-worker TRACE jam_node::net::peer_manager  ede7gocrx5435my626w74zmwejyzqw3wvuvwtnzu4sz2lwib4kxaa@127.0.0.1:58178: New incoming connection
+2025-05-16 16:54:48 tokio-runtime-worker TRACE jam_node::net::peer_manager::peer  ede7gocrx5435my626w74zmwejyzqw3wvuvwtnzu4sz2lwib4kxaa@127.0.0.1:40005: Disconnecting: Poor rating
+</code></pre></div>
+<div class='msg reply'><a class='ts' href='#$9D8e_zrdB3ttA2cfDlYwdhI5rghQEfYKC-leKo1PUV4'>#</a> <a class='ts' name='$9D8e_zrdB3ttA2cfDlYwdhI5rghQEfYKC-leKo1PUV4' href='https://matrix.to/#/!wBOJlzaOULZOALhaRh:polkadot.io/$9D8e_zrdB3ttA2cfDlYwdhI5rghQEfYKC-leKo1PUV4' target='_blank'>2025-05-16 09:07</a>&ensp;<span class='u' style='color:#5adda3'>shwchg</span>: the good news is we got the up0 handshake success and got the new block header!</div>
+<div class='msg reply'><a class='ts' href='#$bvb31Bi30V-a1tnH1uwmM6LAbN4ZYlccpDEOoWAfFk0'>#</a> <a class='ts' name='$bvb31Bi30V-a1tnH1uwmM6LAbN4ZYlccpDEOoWAfFk0' href='https://matrix.to/#/!wBOJlzaOULZOALhaRh:polkadot.io/$bvb31Bi30V-a1tnH1uwmM6LAbN4ZYlccpDEOoWAfFk0' target='_blank'>2025-05-16 09:32</a>&ensp;<span class='u' style='color:#c65779'>dave</span>: &gt; &lt;@shwchg:matrix.org&gt; ok I see!
+&gt; 
+&gt; one more question
+&gt; are you guys using the same stream for all of the request?
+&gt; 
+&gt; I got this
+&gt; How do you determine a peer&#x27;s poor rating?
+&gt; <pre><code class=''>&gt; 2025-05-16 16:54:48 tokio-runtime-worker TRACE jam_node::net::peer_manager  ede7gocrx5435my626w74zmwejyzqw3wvuvwtnzu4sz2lwib4kxaa@127.0.0.1:58178: New incoming connection
+&gt; 2025-05-16 16:54:48 tokio-runtime-worker TRACE jam_node::net::peer_manager::peer  ede7gocrx5435my626w74zmwejyzqw3wvuvwtnzu4sz2lwib4kxaa@127.0.0.1:40005: Disconnecting: Poor rating
+&gt; </code></pre>
+
+Poor rating is likely to be caused by not following the protocol. We&#x27;re planning to change this behaviour so we don&#x27;t disconnect so aggressively, but obviously protocol bugs should be fixed. The first time a peer is disconnected the QUIC &quot;reason phrase&quot; should contain an error message</div>
+<div class='msg reply'><a class='ts' href='#$7JGFNqUyxqBsryBP8XEYX0wTgMH-iZTj7bBaWbYzoqg'>#</a> <a class='ts' name='$7JGFNqUyxqBsryBP8XEYX0wTgMH-iZTj7bBaWbYzoqg' href='https://matrix.to/#/!wBOJlzaOULZOALhaRh:polkadot.io/$7JGFNqUyxqBsryBP8XEYX0wTgMH-iZTj7bBaWbYzoqg' target='_blank'>2025-05-16 09:33</a>&ensp;<span class='u' style='color:#c65779'>dave</span>: The protocol bug could be on our side of course 😅</div>
+<div class='msg reply'><a class='ts' href='#$s3k4EZ2z_85bMQmDubxYSocZmV9NxQ0TyXEx6bi_VN4'>#</a> <a class='ts' name='$s3k4EZ2z_85bMQmDubxYSocZmV9NxQ0TyXEx6bi_VN4' href='https://matrix.to/#/!wBOJlzaOULZOALhaRh:polkadot.io/$s3k4EZ2z_85bMQmDubxYSocZmV9NxQ0TyXEx6bi_VN4' target='_blank'>2025-05-16 09:35</a>&ensp;<span class='u' style='color:#c65779'>dave</span>: Re &quot;using the same stream for all requests&quot;: we use streams as described in the SNP doc, so generally a separate stream for each request</div>
+<div class='msg reply'><a class='ts' href='#$gxYXcX71w63zi9d1IthFTXGnudoM-2caOi6_mRP_U1U'>#</a> <a class='ts' name='$gxYXcX71w63zi9d1IthFTXGnudoM-2caOi6_mRP_U1U' href='https://matrix.to/#/!wBOJlzaOULZOALhaRh:polkadot.io/$gxYXcX71w63zi9d1IthFTXGnudoM-2caOi6_mRP_U1U' target='_blank'>2025-05-16 09:36</a>&ensp;<span class='u' style='color:#c65779'>dave</span>: Note that the block announcement stream is an exception to this: it is stateful and should be kept open</div>
+<div class='msg reply'><a class='ts' href='#$A47K98lzI7SUHD_LSPb6kgLkoJqVaTD1Heo1Qi2Ga8c'>#</a> <a class='ts' name='$A47K98lzI7SUHD_LSPb6kgLkoJqVaTD1Heo1Qi2Ga8c' href='https://matrix.to/#/!wBOJlzaOULZOALhaRh:polkadot.io/$A47K98lzI7SUHD_LSPb6kgLkoJqVaTD1Heo1Qi2Ga8c' target='_blank'>2025-05-16 09:40</a>&ensp;<span class='u' style='color:#5adda3'>shwchg</span>: we get <code>Application error 0x4 (remote)</code> from our log
+
+and got this from yours
+<pre><code class=''>2025-05-16 17:25:23 tokio-runtime-worker ERROR jam_node::sync  Failed to receive Block: Stream half closed error: Half stream killed
+2025-05-16 17:25:23 tokio-runtime-worker TRACE jam_node::net::peer_manager::peer  ede7gocrx5435my626w74zmwejyzqw3wvuvwtnzu4sz2lwib4kxaa@127.0.0.1:40005: Disconnecting: Misbehaviour: network i/o failed: timed out (5000ms)
+2025-05-16 17:25:23 tokio-runtime-worker TRACE jam_node::net::peer_manager  ede7gocrx5435my626w74zmwejyzqw3wvuvwtnzu4sz2lwib4kxaa@127.0.0.1:54499: New incoming connection
+2025-05-16 17:25:23 tokio-runtime-worker TRACE jam_node::net::peer_manager::peer  ede7gocrx5435my626w74zmwejyzqw3wvuvwtnzu4sz2lwib4kxaa@127.0.0.1:40005: Disconnecting: Poor rating
+</code></pre>
+
+and I didn&#x27;t see our node pop in this kind of log (I guess this is from the server side?)
+<pre><code class=''>2025-05-16 17:25:18 tokio-runtime-worker TRACE jam_node::net  e3r2oc62zwfj3crnuifuvsxvbtlzetk4o5qyhetkhagsc2fgl2oka@127.0.0.1:40000: Opening BlockRequest stream
+</code></pre></div>
+<div class='msg reply'><a class='ts' href='#$jBQiJ7lZM1tNFlocKM0Sb43fINew6LU11_3EsdAc3_w'>#</a> <a class='ts' name='$jBQiJ7lZM1tNFlocKM0Sb43fINew6LU11_3EsdAc3_w' href='https://matrix.to/#/!wBOJlzaOULZOALhaRh:polkadot.io/$jBQiJ7lZM1tNFlocKM0Sb43fINew6LU11_3EsdAc3_w' target='_blank'>2025-05-16 09:41</a>&ensp;<span class='u' style='color:#5adda3'>shwchg</span>: Maybe we could standardize some error codes
+would that be helpful?</div>
+<div class='msg reply'><a class='ts' href='#$3TUGR_tqaTFyGs3rCyoUC7tNcOS98Ro1xMUyu4iCUAY'>#</a> <a class='ts' name='$3TUGR_tqaTFyGs3rCyoUC7tNcOS98Ro1xMUyu4iCUAY' href='https://matrix.to/#/!wBOJlzaOULZOALhaRh:polkadot.io/$3TUGR_tqaTFyGs3rCyoUC7tNcOS98Ro1xMUyu4iCUAY' target='_blank'>2025-05-16 10:01</a>&ensp;<span class='u' style='color:#c65779'>dave</span>: It looks like polkajam requested a block then there was a timeout reading it from the stream. Probably we shouldn&#x27;t disconnect in this case, but I would look into what&#x27;s going on there anyway</div>
+<div class='msg reply'><a class='ts' href='#$5JULltGAKUtxfR54cyulHsyZWDzfJlQSI3d7TMKKpVA'>#</a> <a class='ts' name='$5JULltGAKUtxfR54cyulHsyZWDzfJlQSI3d7TMKKpVA' href='https://matrix.to/#/!wBOJlzaOULZOALhaRh:polkadot.io/$5JULltGAKUtxfR54cyulHsyZWDzfJlQSI3d7TMKKpVA' target='_blank'>2025-05-16 10:05</a>&ensp;<span class='u' style='color:#c65779'>dave</span>: &gt; &lt;@shwchg:matrix.org&gt; Maybe we could standardize some error codes
+&gt; would that be helpful?
+
+Yes I think we will include error codes in the network protocol eventually. QUIC supports a &quot;reason phrase&quot; on connection close, which polkajam fills with a human-readable error message. I would recommend printing this in your logs</div>
+<div class='msg reply'><a class='ts' href='#$cjq6f0P1R8dp_V9aajkiWGBx26oaJKWlPTjD6hzfF-0'>#</a> <a class='ts' name='$cjq6f0P1R8dp_V9aajkiWGBx26oaJKWlPTjD6hzfF-0' href='https://matrix.to/#/!wBOJlzaOULZOALhaRh:polkadot.io/$cjq6f0P1R8dp_V9aajkiWGBx26oaJKWlPTjD6hzfF-0' target='_blank'>2025-05-16 10:09</a>&ensp;<span class='u' style='color:#5adda3'>shwchg</span>: because we fail to request the block from the other node
+I will look for the reason</div>
+<div class='msg reply'><a class='ts' href='#$ANS0WmLCNQAnh8JnlaEoAAiMsLu0VDbsAQW8RHLrpE0'>#</a> <a class='ts' name='$ANS0WmLCNQAnh8JnlaEoAAiMsLu0VDbsAQW8RHLrpE0' href='https://matrix.to/#/!wBOJlzaOULZOALhaRh:polkadot.io/$ANS0WmLCNQAnh8JnlaEoAAiMsLu0VDbsAQW8RHLrpE0' target='_blank'>2025-05-16 10:11</a>&ensp;<span class='u' style='color:#c65779'>dave</span>: You shouldn&#x27;t announce blocks before you have them yourself</div>
+<div class='msg reply'><a class='ts' href='#$R-Ov8bvzYmUQKSbV9FMyPbs9D_amFHmAAjgxpio7U8U'>#</a> <a class='ts' name='$R-Ov8bvzYmUQKSbV9FMyPbs9D_amFHmAAjgxpio7U8U' href='https://matrix.to/#/!wBOJlzaOULZOALhaRh:polkadot.io/$R-Ov8bvzYmUQKSbV9FMyPbs9D_amFHmAAjgxpio7U8U' target='_blank'>2025-05-16 10:11</a>&ensp;<span class='u' style='color:#c65779'>dave</span>: And have verified them</div>
+<div class='msg reply'><a class='ts' href='#$tGvVqdVmpeJc7DnUlr8nYsae6ElowxvWsfIPZxak2t8'>#</a> <a class='ts' name='$tGvVqdVmpeJc7DnUlr8nYsae6ElowxvWsfIPZxak2t8' href='https://matrix.to/#/!wBOJlzaOULZOALhaRh:polkadot.io/$tGvVqdVmpeJc7DnUlr8nYsae6ElowxvWsfIPZxak2t8' target='_blank'>2025-05-16 10:12</a>&ensp;<span class='u' style='color:#c65779'>dave</span>: We could maybe relax the verification requirement for validator&lt;-&gt;validator connections</div>
+<div class='msg reply'><a class='ts' href='#$5zJKces41H1eEwis1ydHp0ef-5d5s0yYfdVTJEW-NUA'>#</a> <a class='ts' name='$5zJKces41H1eEwis1ydHp0ef-5d5s0yYfdVTJEW-NUA' href='https://matrix.to/#/!wBOJlzaOULZOALhaRh:polkadot.io/$5zJKces41H1eEwis1ydHp0ef-5d5s0yYfdVTJEW-NUA' target='_blank'>2025-05-16 10:20</a>&ensp;<span class='u' style='color:#5adda3'>shwchg</span>: yes! let me check it
+thank you!</div>
+<div class='msg reply'><a class='ts' href='#$6Dg5DHye_mctc4SFroZHHE3Wv_-BEw8LrFZFONx7gkU'>#</a> <a class='ts' name='$6Dg5DHye_mctc4SFroZHHE3Wv_-BEw8LrFZFONx7gkU' href='https://matrix.to/#/!wBOJlzaOULZOALhaRh:polkadot.io/$6Dg5DHye_mctc4SFroZHHE3Wv_-BEw8LrFZFONx7gkU' target='_blank'>2025-05-16 10:44</a>&ensp;<span class='u' style='color:#5adda3'>shwchg</span>: Is there a way to get the logs related to stream dispatch or incoming bytes?</div>
+<div class='msg reply'><a class='ts' href='#$2LntTB0j70AXpGpVWOwnTmcWPxhcMKuhbXqO84ArCFU'>#</a> <a class='ts' name='$2LntTB0j70AXpGpVWOwnTmcWPxhcMKuhbXqO84ArCFU' href='https://matrix.to/#/!wBOJlzaOULZOALhaRh:polkadot.io/$2LntTB0j70AXpGpVWOwnTmcWPxhcMKuhbXqO84ArCFU' target='_blank'>2025-05-16 10:51</a>&ensp;<span class='u' style='color:#c65779'>dave</span>: I think RUST_LOG=trace will give you everything. We use Quinn for QUIC which produces a lot of logs, not sure exactly what as I haven&#x27;t yet spent much time looking through them</div>
 <div class='msg'><a class='ts' href='#$n2UjV3O_QvR2_TB-_xVfsnaY97ztF3KJiyucfp-VVYc'>#</a> <a class='ts' name='$n2UjV3O_QvR2_TB-_xVfsnaY97ztF3KJiyucfp-VVYc' href='https://matrix.to/#/!wBOJlzaOULZOALhaRh:polkadot.io/$n2UjV3O_QvR2_TB-_xVfsnaY97ztF3KJiyucfp-VVYc' target='_blank'>2025-05-15 02:56</a>&ensp;<span class='u' style='color:#c67452'>sourabhniyogi</span>: Published jamduna binaries:
 
 <a href="https://github.com/jam-duna/jamtestnet/releases/tag/0.6.6.1" rel="noopener" target="_blank">https://github.com/jam-duna/jamtestnet/releases/tag/0.6.6.1</a></div>
 <div class='msg'><a class='ts' href='#$sAFJjnl6adtSmQnCeI1mXn5TqrMjbRRCFtAplP_DyqA'>#</a> <a class='ts' name='$sAFJjnl6adtSmQnCeI1mXn5TqrMjbRRCFtAplP_DyqA' href='https://matrix.to/#/!wBOJlzaOULZOALhaRh:polkadot.io/$sAFJjnl6adtSmQnCeI1mXn5TqrMjbRRCFtAplP_DyqA' target='_blank'>2025-05-15 07:25</a>&ensp;<span class='u' style='color:#5c84c9'>prematurata</span>: is the repl interface shown in some of the jam sessions public? looking forward building a repl interface that matches the same commands/args to keep compatibility</div>
 <div class='msg'><a class='ts' href='#$WLaLHnYt-2s_TfjL0tAMNwysEzModWYSwDg59nJpngQ'>#</a> <a class='ts' name='$WLaLHnYt-2s_TfjL0tAMNwysEzModWYSwDg59nJpngQ' href='https://matrix.to/#/!wBOJlzaOULZOALhaRh:polkadot.io/$WLaLHnYt-2s_TfjL0tAMNwysEzModWYSwDg59nJpngQ' target='_blank'>2025-05-15 10:36</a>&ensp;<span class='u' style='color:#c65779'>dave</span>: We&#x27;ve released a binary here. Source will be released at the same time as polkajam.</div>
 <div class='msg'><a class='ts' href='#$eKu-HDd3m5KBWOjSe6tWNsrmlfzXCHIJCbzuqxBIKQ4'>#</a> <a class='ts' name='$eKu-HDd3m5KBWOjSe6tWNsrmlfzXCHIJCbzuqxBIKQ4' href='https://matrix.to/#/!wBOJlzaOULZOALhaRh:polkadot.io/$eKu-HDd3m5KBWOjSe6tWNsrmlfzXCHIJCbzuqxBIKQ4' target='_blank'>2025-05-15 14:26</a>&ensp;<span class='u' style='color:#5adda3'>shwchg</span>: </div>
+<div class='msg'><a class='ts' href='#$pewTm4EFpQhvoXUysvwHCs5pUuQdkDGuOMHBodVa0LY'>#</a> <a class='ts' name='$pewTm4EFpQhvoXUysvwHCs5pUuQdkDGuOMHBodVa0LY' href='https://matrix.to/#/!wBOJlzaOULZOALhaRh:polkadot.io/$pewTm4EFpQhvoXUysvwHCs5pUuQdkDGuOMHBodVa0LY' target='_blank'>2025-05-16 14:05</a>&ensp;<span class='u' style='color:#c9419d'>davxy</span>: @room
+
+After reviewing the open issues related to compatibility with GP-0.6.5, I&#x27;ve tagged the test vectors for version 0.6.5.
+Everyone is welcome to try them out and report any issues they encounter.
+We&#x27;ll begin integrating 0.6.6 shortly.
+From now on, all changes between tags will be listed in the changelog explicitly.
+
+<a href="https://github.com/davxy/jam-test-vectors/releases/tag/v0.6.5" rel="noopener" target="_blank">https://github.com/davxy/jam-test-vectors/releases/tag/v0.6.5</a></div>

@@ -1,5 +1,5 @@
 # room: #graypaper:polkadot.io
-# exported: 2025-05-16 03:32 UTC
+# exported: 2025-05-17 03:29 UTC
 2024-04-17 20:29 syed: https://matrix.to/#/!hyzRkDqDthePbodYFz:parity.io/$f_DMsIEcDXZegw6Sabnehzc-LrdDQkmq5MbxDDyoZxY?via=parity.io&via=web3.foundation
 
 2024-04-17 20:29 syed: 
@@ -5996,3 +5996,6 @@ https://github.com/jam-duna/jamtestnet/blob/main/data/generic/state_transitions/
 https://github.com/davxy/jam-test-vectors/pull/45 
 and you can attempt the "reports" as well, which I imagine we'll get team convergence on very soon...
 2025-05-15 20:35 jan: The primary function of the `fallthrough` instruction is to allow jumps into code which otherwise you wouldn't be able to jump into, as it starts a new basic block, and only jumps to the beginning of basic blocks are allowed. But otherwise yes, it just goes to the next instruction.
+2025-05-16 21:05 greywolve: In the state [constructor function for service account state keys](https://graypaper.fluffylabs.dev/#/9a08063/3b5d003b6400?v=0.6.6) wouldn't a representation like  \[i, 0, n0, 0, n1, 0, n2, 0, n3, 0, 0 ... \] make identifying the different types of keys more robust? In that case the second byte would be unique for each of them. (regular, service, preimage, preimage lookup, storage)
+
+(note, assuming preimage lookup lengths are > 0 and \< max(uint32) -1, but it's still unique for the other four at least) [edited]
