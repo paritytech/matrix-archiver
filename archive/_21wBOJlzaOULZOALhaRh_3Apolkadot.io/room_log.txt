@@ -1,5 +1,5 @@
 # room: #jam:polkadot.io
-# exported: 2025-05-17 03:29 UTC
+# exported: 2025-05-18 03:33 UTC
 2024-04-20 02:08 johnjiao123: 
 2024-04-20 02:09 johnjiao123: 
 2024-05-30 21:48 nradko: Hey everyone,
@@ -7904,3 +7904,5 @@ We'll begin integrating 0.6.6 shortly.
 From now on, all changes between tags will be listed in the changelog explicitly.
 
 https://github.com/davxy/jam-test-vectors/releases/tag/v0.6.5
+2025-05-17 14:02 sourabhniyogi: image.png
+2025-05-17 14:04 sourabhniyogi: First contact successful, thank you David Emett Jan Bujak for all your help and posting the binaries.  In a 5 Polkajam + 1 jamduna tiny testnet, we can import Polkajam-authored blocks and Polkajam can import jamduna-authored blocks.
