@@ -1,5 +1,5 @@
 # room: #jam:polkadot.io
-# exported: 2025-05-18 03:33 UTC
+# exported: 2025-05-19 03:34 UTC
 2024-04-20 02:08 johnjiao123: 
 2024-04-20 02:09 johnjiao123: 
 2024-05-30 21:48 nradko: Hey everyone,
@@ -7890,6 +7890,33 @@ I will look for the reason
 thank you!
   ↳ 2025-05-16 10:44 shwchg: Is there a way to get the logs related to stream dispatch or incoming bytes?
   ↳ 2025-05-16 10:51 dave: I think RUST_LOG=trace will give you everything. We use Quinn for QUIC which produces a lot of logs, not sure exactly what as I haven't yet spent much time looking through them
+  ↳ 2025-05-18 06:05 sourabhniyogi: Can you explain the semantics of this error, or Polkajam's [temporal] requirement for incoming tickets 
+
+```
+2025-05-18 05:56:24 Error processing incoming ticket: finality lagging (final: 1969160, curr: 1969164)
+```
+
+  ↳ 2025-05-18 06:27 sourabhniyogi: We moved our ticket sending operation to the 5th phase of the epoch to avoid the above and I gather from 
+
+```
+2025-05-18 06:23:18 Error processing incoming ticket: current node is not the proxy for the ticket
+```
+
+it means all implementations _must_ do the proxying of CE131/132, check?
+ [edited]
+  ↳ 2025-05-18 12:11 dave: Yes you should implement the proxying stuff described in the SNP doc. Without this the tickets aren't really anonymous, kind of defeating the point of Safrole.
+  ↳ 2025-05-18 12:14 dave: > <@sourabhniyogi:matrix.org> Can you explain the semantics of this error, or Polkajam's [temporal] requirement for incoming tickets 
+> 
+> ```
+> 2025-05-18 05:56:24 Error processing incoming ticket: finality lagging (final: 1969160, curr: 1969164)
+> ```
+> 
+
+The timing requirements are described in the SNP doc, though with the really short epochs we have with the "tiny" params some of the constants need adjusting. Will post these later.
+  ↳ 2025-05-18 22:59 sourabhniyogi: image.png
+  ↳ 2025-05-18 23:00 sourabhniyogi: An explanation would be useful -- it was simple to change to send tickets on phase 4/5 and get 131/132 working. 
+
+
 2025-05-15 02:56 sourabhniyogi: Published jamduna binaries:
 
 https://github.com/jam-duna/jamtestnet/releases/tag/0.6.6.1
@@ -7906,3 +7933,51 @@ From now on, all changes between tags will be listed in the changelog explicitly
 https://github.com/davxy/jam-test-vectors/releases/tag/v0.6.5
 2025-05-17 14:02 sourabhniyogi: image.png
 2025-05-17 14:04 sourabhniyogi: First contact successful, thank you David Emett Jan Bujak for all your help and posting the binaries.  In a 5 Polkajam + 1 jamduna tiny testnet, we can import Polkajam-authored blocks and Polkajam can import jamduna-authored blocks.
+2025-05-18 16:08 stsoen: I have studied Gray Paper closely, I have also scrutinized all the comments in the issues in https://github.com/gavofyork/graypaper
+
+Further, I was confused by this mention of XCMP in the context of JAM here: https://wiki.polkadot.network/learn/learn-jam-chain/#:~:text=run%20excessively%20long.-,XCMP,%C2%B6,-Moving%20on%20to
+
+And I have a question. I understand that JAM cores should be able to communicate with each other in asynchronous mode. So I assumed that JAM would use XCMv2 and higher versions.
+
+But how will the cores actually communicate with each other?
+2025-05-18 17:05 gav: Cores don’t communicate. 
+2025-05-18 17:06 gav: Services and things which run on top of them may interoperate/communicate. 
+2025-05-18 17:06 gav: Cores are stateless and isolated with the exception of D3L access. 
+2025-05-18 20:56 stsoen: gav Thank you very much! I would really appreciate it if you could help me clarify this:
+
+Do I understand correctly that a service running in core1 can communicate with a service running in core2?
+
+Will there be some framework to connect services and dApps to each other?
+
+For example, I am considering this kind of usecase:
+- core1 is running a perp protocol (similar to Hyperliquid) or a lending protocol. Dedicating all processes related to their engine in a separate Core allows more speed for platform computation.
+- core2 launched a oracle protocol, whose participants (e.g. providers/reporters/oracles etc) provide price feeds and are responsible for correct calculation of clearing prices based on on-chain and off-chain data sources. 
+- core3 launched a service that holds an auction for liquidator bots (OEV extraction and maximization of profit from liquidations). In addition, it can also run auctions for the best acquiring transactions (like CoW, UnswapX, 1inch Fusion etc).
+
+Will these cores be able to exchange prices and positions information with each other? Or should the connection method for services running in different cores be developed separately?
+
+For example: core1 and core3 receive data from core2, then core3 interacts with positions ( liquidate them) in core1
+2025-05-18 20:58 xlchen: core is like cpu core, we don't usually talk about communication between cpu cores during application development. instead, IPC mechanism will be used for that, e.g. XCMP
+2025-05-18 20:59 xlchen: and an app can be multi core, or sharing a core with other apps etc
+2025-05-18 21:00 xlchen: and like PC, a core can't really send a message to another core. it is done via register or memory. same thing here
+2025-05-18 21:02 stsoen: Thank you!
+
+In that case, can different services running in different cores communicate with each other in any standardized way?
+
+For example, as in the case I described above, when different services/protocols are created by different developers
+2025-05-18 21:03 xlchen: services can send token + memo to other services. this is defined by GP
+2025-05-18 21:10 stsoen: Do you mean Authorize token that includes opaque data that are included in the work package? Or do you mean a token as a ticker?
+
+I'm interested in whether any data can be transferred between different services in different cores as messages or something similar (like price feeds).
+2025-05-18 21:11 xlchen: by token I mean DOT. basically the answer is yes. how depends on the exact use case
+2025-05-18 21:15 stsoen: Thanks for the clarification! So, does JAM have any built-in native protocol for inter-service messaging similar to how it is implemented in XCM?
+2025-05-18 21:16 xlchen: I already said, service can send DOT token + a memo message to other services for message passing
+2025-05-18 21:19 stsoen: So JAM will use a DOT or other native token for JAM, right? Because it looks like it should be some kind of basic gas token for the ecosystem. 
+
+And let's say a minimum amount of DOT (0.00001 for example) can be used to transfer information between services (in memo)?
+2025-05-18 21:19 xlchen: DOT is the native token / gas token
+2025-05-18 21:23 xlchen: I think it is possible to send 0 DOT and still attach a message with it but someone need to read the GP to confirm [edited]
+2025-05-18 21:30 gav: > <@xlchen:matrix.org> I think it is possible to send 0 DOT and still attack a message with it but someone need to read the GP to confirm
+
+Indeed it is. 
+2025-05-18 21:52 stsoen: Am I correct in understanding that spam exclusion will occur during the Auditing and Judging process?
