@@ -1,5 +1,5 @@
 # room: #jam:polkadot.io
-# exported: 2025-05-19 03:34 UTC
+# exported: 2025-05-20 03:31 UTC
 2024-04-20 02:08 johnjiao123: 
 2024-04-20 02:09 johnjiao123: 
 2024-05-30 21:48 nradko: Hey everyone,
@@ -7917,6 +7917,25 @@ The timing requirements are described in the SNP doc, though with the really sho
   ↳ 2025-05-18 23:00 sourabhniyogi: An explanation would be useful -- it was simple to change to send tickets on phase 4/5 and get 131/132 working. 
 
 
+  ↳ 2025-05-19 23:01 dave: https://github.com/zdave-parity/jam-np/commit/ec45e7ce0e0c1e239b2d7c123f6f688f06a40b00
+  ↳ 2025-05-19 23:03 dave: Not sure what you mean by phase 4/5 but hopefully that change makes sense; for the "tiny" network it means each wait is basically just one slot instead of minutes...
+  ↳ 2025-05-19 23:47 sourabhniyogi: Will incorporate (by phase 4/5 I just meant the 4th/5th slot of the epoch) - thank you!
+
+We have all the different weights 2+4, 3+3, 4+2, 1+5, 5+1 working well in fallback+safrole-- so now have to get into the real work of work packages.
+
+I'm having a hard time getting polkajam to recognize our chainspec -- it appears to basically ignore our input and continue to use `dev` no matter what
+
+```
+# ./polkajam --chain k.json --temp run --dev-validator 3 --rpc-port=19803
+2025-05-19 23:45:02 Chain ID: dev
+2025-05-19 23:45:02 Config dir: /root/.config/polkajam/dev
+2025-05-19 23:45:02 Data dir: /tmp/.tmphmRvKD
+2025-05-19 23:45:02 Reading state...
+2025-05-19 23:45:02 Writing genesis block.
+2025-05-19 23:45:02 Best final block: 0x0259fbe9b7dd6f3c...
+```
+
+Is there some other requirement I've missed?
 2025-05-15 02:56 sourabhniyogi: Published jamduna binaries:
 
 https://github.com/jam-duna/jamtestnet/releases/tag/0.6.6.1
@@ -7981,3 +8000,115 @@ And let's say a minimum amount of DOT (0.00001 for example) can be used to trans
 
 Indeed it is. 
 2025-05-18 21:52 stsoen: Am I correct in understanding that spam exclusion will occur during the Auditing and Judging process?
+2025-05-19 08:27 gav: > <@stsoen:matrix.org> Am I correct in understanding that spam exclusion will occur during the Auditing and Judging process?
+
+Spam exclusion? 
+2025-05-19 08:28 gav: Perhaps you’re under the misapprehension that JAM processes transactions?
+2025-05-19 08:29 gav: (Zero-value transfers still must be processed and thus still cost gas - this is not a spam vector)
+2025-05-19 09:51 danicuki: I know it may be boring, but spending 5 minutes filling this feedback form will really help us to organize more events like JAM Experience. We had only 15% of attendees filling it. Thanks for your help: 
+https://forms.gle/dK1xPhx3rBZq8gpg9 
+2025-05-19 12:00 stsoen: 
+2025-05-19 12:01 stsoen: I’m considering the following situation:
+
+- There is a certain service1 that performs some important functionality, which, for example, makes it a target for an attacker.
+- It is mentioned that JAM has ultra-low gas costs, so the attack shouldn't become expensive.
+- service2, running on top of core2, starts sending a huge number of DOT tokens to service1 in the form of separate chunks (since the token has to be sent from somewhere and delivered somewhere, right? A token transfer from one address to another can be called a transaction, correct? I don't know how else to refer to transactions between cores other than as transactions).
+- This service1 starts receiving a lot of incoming zero-value DOT transactions from service2, and it has to include them in the work package, which interferes with other ongoing processes.
+
+Situations that have occurred, for example with Inscriptions, clearly demonstrated that even high-performance networks can experience significant issues due to something trivial and temporary.
+
+And I’m trying to understand where the filtering of such malicious coordinated spam will happen. Will this be prevented at the Authorizer level? Or will it be rejected on-chain during work packages validation? [edited]
+2025-05-19 12:37 dave: > zero-value DOT transactions from service2, and it has to include them in the work package
+
+This is a misunderstanding. Any transfers triggered by service2's accumulate function are "paid for" out of service2's accumulation gas limit and are handled as part of block execution. They are not included in service1's work packages or anything like this.
+2025-05-19 15:01 dvdplas: Our team would like to ensure the developer experience for JAM application builders is as best as it can be when the first hackathons will be held.
+
+What would be the first service, apart from CoreChains, that devs most probably want to build on top of?
+
+Is it expected that more devs build services or applications on top of an existing service?
+
+  ↳ 2025-05-19 17:33 kianenigma: a good staring point for this would be to look at JAM SDK aka https://docs.rs/jam-pvm-common/latest/jam_pvm_common/ and try it out
+2025-05-19 15:07 stsoen: Service 1 receives tokens, albeit zero-value and with a memo message. It should change its state, right?
+2025-05-19 15:08 dave: That's totally up to what service 1 does in its on-transfer function. It might just ignore the memo.
+2025-05-19 15:11 stsoen: All of my questions are specifically about the ability to pass messages between services running in different cores. 
+Accordingly, if a service can ignore certain memos - it needs to include the allowed whitelist of memos that it considers correct and available for processing, right? [edited]
+2025-05-19 15:13 dave: If you write a service which expects to be sent memos from other services, I expect you would document the expected format of these memos yes. Not sure if that's what you mean.
+2025-05-19 15:14 stsoen: Yes, that's what I meant, thank you! It's similar to administration with creating allowed domains and allowed requests/commands [edited]
+2025-05-19 15:22 dave: FWIW I wouldn't think about services running on or being assigned to particular cores. Services are somewhat orthogonal to cores. You will be able to buy core time and submit work-packages using this core time which run any services you like. Of course what effect these work-packages have is up to the author of the service code. You will be able to create services without paying for any core time, leaving it to some other party to pay for core time and submit work-packages.
+2025-05-19 15:26 sourabhniyogi: stsoen@Lollipop: If you want one service A to communicate with another service B, you can design a mailboxing system *outside* the transfer memo process, where 
+(a) Service A writes (using the host function `write`) into a certain set of keys designated for B 
+(b) Service B reads (using the host function `read`) from the above set of keys from Service A's storage
+(and in the reverse direction.) JAM does not impose constraints on service A + B on how to do this except that the `write` and `read` could only be in the `accumulate` invocation of the service.  So for the services `refine` operation done in core, the content of what is written in these keys have to be output in work results.   This requires some degree of getting used to but I would recommend you just jump in and just write your service A and B to explore this -- the testnets are basically ready for experimentalists to post work packages and see this kind of messaging happen.
+
+You could imagine a bunch of interoperable services having a structured way of doing this, and perhaps a JIP could and should be devised specifically for this purpose, informed by HRMP's Queues or something else.  There are no real constraints for this, and it doesn't have to be put into XCM/XCMP formats/protocols -- you are free to just work directly with writes and reads.  With some luck, you'll have "here is how we did inter-service messaging" story to report back with. 
+2025-05-19 15:28 stsoen: For some reason, I got the impression that different Cores may have machines (servers/nodes) with different characteristics. For example, some core might include machines with simplified specs for performing basic tasks. And some cores might have machines with powerful GPUs and TEE chips for handling highly specialized, resource-intensive tasks. (TEE for RISC-V is currently under development, but given the openness of RISC-V, this will require separate specifications)
+
+Or is this incorrect, and all cores will have the same set of hardware?
+
+
+2025-05-19 15:33 gav: > <@dvdplas:matrix.org> Our team would like to ensure the developer experience for JAM application builders is as best as it can be when the first hackathons will be held.
+> 
+> What would be the first service, apart from CoreChains, that devs most probably want to build on top of?
+> 
+> Is it expected that more devs build services or applications on top of an existing service?
+> 
+
+CoreVM quite possibly, but maybe there will be other more transaction-orientated services. 
+2025-05-19 15:36 gav: It is incorrect. Cores are homogeneous and fungible. They have a specific and fixed amount of I/O bandwidth and processing power specified in 6-second intervals.  [edited]
+2025-05-19 15:38 stsoen: So all Cores have the same hardware requirements? 
+
+And if I want to get Core AI-oriented computing - I can't deploy GPU-based nodes there? [edited]
+2025-05-19 15:38 gav: The hardware *requirement* for a core isn’t really a thing. 
+2025-05-19 15:39 gav: JAM guarantees correctness of all of the compute which is done on its cores. Exactly what the hardware requirements were for any given core varies and in some sense is unknowable.  [edited]
+2025-05-19 15:40 gav: However the theoretical specifications of its cores are well-defined. 
+2025-05-19 15:41 gav: There is no affordance to increase the capabilities of individual cores. This is a basic implication of the JAM correctness mechanism, where any validator may be called upon to audit any piece of work. 
+2025-05-19 15:42 gav: In the future we may see JAM instances whose cores are more substantial than that which the GP presently defines. For example we may introduce a GPU invocation host call. 
+2025-05-19 15:42 gav: This might be quite helpful for AI inference workloads. 
+2025-05-19 15:44 gav: It won’t be part of 1.0 but it could make it into eg 2.0, however it must be balanced against making all validator nodes’ hardware & running costs substantially higher. 
+2025-05-19 15:44 gav: The running costs imply a baseline pricing for core time. For an economy around JAM to be sustainable, pricing and costs must be aligned with each other. 
+2025-05-19 15:45 gav: If validator costs double, then Coretime revenue must also double or the system is not economically sound.  [edited]
+2025-05-19 15:51 gav: For this reason cloud compute services (where different servers provide different capabilities) don’t make an ideal point of comparison.
+2025-05-19 15:53 stsoen: Yes, that's exactly the problem with modern cloud computing: modern tasks, due to poor optimization, require such a huge amount of resources that the cost of renting hardware either breaks the economics or makes the product unnecessarily expensive.
+
+That's why I'm impressed with the RISC-V integration, because maybe it will finally allow for a more rational treatment of optimization capabilities. And maybe it will make processes more optimized instead of constant power inflation with loss of process execution quality due to bloated libraries and frameworks.
+2025-05-19 22:33 sourabhniyogi: Can someone publish the { bootstrap, null_authorizer, ... } services included in polkajam genesis state (and compilation Makefile, if it exists)?  Goal is to test multi-client workpackage submissions.   We can then retire our [bootstrap](https://github.com/colorfulnotion/polkavm/tree/dev/services/bootstrap) and [null authorizer](https://github.com/colorfulnotion/polkavm/tree/dev/services/null_authorizer) -- this way there is just one `dev` JIP-4 chain spec for multi-client tiny testnet setups and process to create new services.
+2025-05-19 22:34 dave: These are published on crates.io: https://crates.io/crates/jam-null-authorizer, https://crates.io/crates/jam-bootstrap-service
+2025-05-19 22:35 jan: Regarding the possibility of JAM having GPU compute capabilities built-in - as Gav alluded there is a _possibility_ of it being part of JAM 2.0, but I would suggest to not get too excited for now. It would require significant design work and most likely some major changes/improvements to the protocol, as GPU compute is _fundamentally_ very different than CPU compute. You can't really guarantee determinism with GPUs (even a different version of the same GPU driver can make your GPU kernels produce different results!), gas metering is pretty much impossible, and for e.g. workloads like AI the I/O requirements are _extreme_ so without at least some support for having a ton (_gigabytes_) of persistent local data (for storing the weights pinned to the same core) across blocks it would be so insanely expensive that practically it'd be completely useless.
+
+If you're interested in decentralized GPU compute there are people currently doing some pioneering work on it here: https://www.primeintellect.ai/blog/intellect-2
+
+So _if_ we're going to do GPU compute on JAM it would probably be _something_ like that, except we would try to make it as general purpose as possible instead of just hardcoding it to a single type of workload. Just as we took the fundamental mechanism of what makes parachains possible from Polkadot and now with JAM we've generalized it so that you can implement parachains _on top_ of JAM, we could maybe also generalize what the prime intellect people are doing for GPU compute. But, again, this would require significant design work to be practical/economical.
+
+That said, of course you could have an _offchain_ GPU compute provider and use JAM as-is to facilitate that/buy GPU compute time on it even _today_. [edited]
+2025-05-19 22:35 dave: Not sure if they're up-to-date
+2025-05-19 22:35 dave: They can be built into a PVM binary using https://crates.io/crates/jam-pvm-build
+2025-05-19 22:38 dave: The JIP-4 chainspec I posted before (https://gist.github.com/zdave-parity/72eb9cfe07756d2c0c13c3064600190d) contains this null authorizer and bootstrap service, though possibly more recent versions than currently released on crates.io
+2025-05-19 22:43 sourabhniyogi: The repo/source for both are in https://github.com/paritytech/polkajam only and thus invisible?  Is it possible to move these out of closed source `polkajam` and into open source `jam-services` ?
+2025-05-19 22:48 dave: You can fetch the source from crates.io using something like this https://crates.io/crates/cargo-clone
+2025-05-19 22:49 jan: You can also create a dummy project, and use `cargo add` + `cargo vendor` to download the sources without any extra tools.
+2025-05-19 22:55 dave: I've updated the SNP doc so that it makes sense for eg "tiny" network parameters, see https://github.com/zdave-parity/jam-np/commit/ec45e7ce0e0c1e239b2d7c123f6f688f06a40b00
+2025-05-19 22:57 dave: This isn't intended to change anything in the "full" 1023-validator parameters case, but hopefully avoids guesswork in other cases
+2025-05-19 22:59 dave: In particular the ticket distribution timing is now based on the epoch length and so should make sense with the really short epochs you get with the tiny params
+2025-05-19 23:08 jaymansfield: Does the published polkajam binary use these settings already?
+2025-05-19 23:08 dave: Yes it should do
+2025-05-19 23:56 sourabhniyogi: Is there some `polkajam`  env variable that reveals that `polkajam` is (or is not) reading the `--chain k.json` input of `./polkajam --chain k.json --temp run --dev-validator 3 --rpc-port=19803\` -- we cannot get it to read our JIP-4 chainspec =( [edited]
+2025-05-20 00:16 jaymansfield: I noticed if —dev-validator is set it ignores —chain and always defaults to dev instead. Would be nice if they could be used together though. [edited]
+2025-05-20 00:29 sourabhniyogi: How do we supply a seed manually then?
+2025-05-20 00:32 dave: `--dev-validator` forces `--chain dev` yeah, this is documented in `--help`. Guess it would be useful for it to only change the default.
+2025-05-20 00:39 dave: Not sure it's actually possible to load the keys for a dev validator without `--dev-validator` as they are unfortunately not derived from the seed in the same way as the on-disk seeds generated by `gen-keys`! Might be a good idea to fix this, though I expect many teams have implemented the dev validator key stuff so this could be fairly disruptive
+2025-05-20 00:43 dave: The difference is that on-disk seeds are hashed to produce different seeds for Ed25519 and Bandersnatch, to avoid any issues that could arise from using the same seed for both. This hashing is not currently done for the dev validator keys.
+2025-05-20 00:45 dave: I'll put together a fix for this tomorrow anyway and release some new binaries.
+2025-05-20 00:50 dave: I'll also document how key seeds are currently handled by PolkaJam; guess this can go in a JIP. The extra hashing goes like `ed25519_seed = blake2b(personal = b"polkajam-ed25519", seed_from_file); bandersnatch_seed = blake2b(personal = b"polkajam-bsnatch", seed_from_file)`
+2025-05-20 00:51 sourabhniyogi: Terrific!  FYI we also could not get polkajam to parse your provided `dev-spec.json` [here](https://gist.github.com/zdave-parity/72eb9cfe07756d2c0c13c3064600190d) which can serve a a controlled test case?
+
+```
+# ./polkajam --chain chainspecs/dev-spec.json run 
+
+thread 'main' panicked at crates/cli/src/lib.rs:81:58:
+Error loading chain spec file: "Error decoding genesis_header: Could not decode `Header::epoch_mark`:\n\tCould not decode `Option::Some(T)`:\n\t\tCould not decode `NextEpochDescriptor::validators`:\n\t\t\tCould not decode `EpochKeySet::bandersnatch`:\n\t\t\t\tCould not decode `Public.0`:\n\t\t\t\t\tNot enough data to fill buffer\n"
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+Aborted (core dumped)
+```
+2025-05-20 00:51 dave: If you're keen it should be possible to `gen-keys` a bunch of keys and generate a chainspec using these
+2025-05-20 00:53 dave: Ah. I might have made the mistake of testing this with `--dev-validator` 😅, will look into tomorrow
+2025-05-20 02:13 jaymansfield: JavaJAM now works running alongside polkajam nodes and they can import each others blocks (safrole and fallback) 😀
