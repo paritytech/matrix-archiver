@@ -1,5 +1,5 @@
 # room: #graypaper:polkadot.io
-# exported: 2025-05-20 03:31 UTC
+# exported: 2025-05-21 03:31 UTC
 2024-04-17 20:29 syed: https://matrix.to/#/!hyzRkDqDthePbodYFz:parity.io/$f_DMsIEcDXZegw6Sabnehzc-LrdDQkmq5MbxDDyoZxY?via=parity.io&via=web3.foundation
 
 2024-04-17 20:29 syed: 
@@ -5999,3 +5999,17 @@ and you can attempt the "reports" as well, which I imagine we'll get team conver
 2025-05-16 21:05 greywolve: In the state [constructor function for service account state keys](https://graypaper.fluffylabs.dev/#/9a08063/3b5d003b6400?v=0.6.6) wouldn't a representation like  \[i, 0, n0, 0, n1, 0, n2, 0, n3, 0, 0 ... \] make identifying the different types of keys more robust? In that case the second byte would be unique for each of them. (regular, service, preimage, preimage lookup, storage)
 
 (note, assuming preimage lookup lengths are > 0 and \< max(uint32) -2, but it's still unique for the other four at least) [edited]
+2025-05-20 04:51 jtxmp: 
+2025-05-20 09:19 gav: Not sure how you mean "more robust" - could you give an example of it not being robust? [edited]
+2025-05-20 20:28 greywolve: Maybe more robust was the wrong way to phrase it, more like make a collision impossible, though that's just a nit since right now it's quite unlikely there would ever be a collision.
+
+I just meant with that representation, service state keys and preimage meta state keys have the second byte as always 0, and always > 1  respectively, so they can never collide then.
+
+Eg. if x can be any byte.
+
+```
+[255,  0   ...] // service keys
+[x,   >1   ...] // preimage meta keys  
+```
+
+But this probably doesn't make much difference in practice I guess. [edited]

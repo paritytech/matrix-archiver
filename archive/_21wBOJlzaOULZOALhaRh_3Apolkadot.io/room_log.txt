@@ -1,5 +1,5 @@
 # room: #jam:polkadot.io
-# exported: 2025-05-20 03:31 UTC
+# exported: 2025-05-21 03:31 UTC
 2024-04-20 02:08 johnjiao123: 
 2024-04-20 02:09 johnjiao123: 
 2024-05-30 21:48 nradko: Hey everyone,
@@ -8111,4 +8111,79 @@ Aborted (core dumped)
 ```
 2025-05-20 00:51 dave: If you're keen it should be possible to `gen-keys` a bunch of keys and generate a chainspec using these
 2025-05-20 00:53 dave: Ah. I might have made the mistake of testing this with `--dev-validator` 😅, will look into tomorrow
+  ↳ 2025-05-20 05:00 shwchg: David Emett: 
+Could you please explain more about how to use jamt?
+For example, how do you choose the TCP port, and how do the parameters work?
+```
+~/Desktop/colorfulnotion/jam/bin/polkajam_bin$ ./jamt create-service <some hex bytecode> 1000000 
+Bootstrap service #0 identifies as jam-bootstrap-service v0.1.21 by Parity Technologies <admin@parity.io>
+Work package submitted at slot 1997397. Monitoring...
+Service eeeb3531 created at slot 1997398
+Providing service code...
+Submitted. Waiting for provision...
+Service code provided at slot 1997399
+```
+  ↳ 2025-05-20 05:14 shwchg: and we got this 
+```
+thread 'tokio-runtime-worker' panicked at crates/node/src/lib.rs:131:27:
+not implemented
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+thread 'tokio-runtime-worker' panicked at crates/node/src/lib.rs:131:27:
+not implemented
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+thread 'tokio-runtime-worker' panicked at crates/node/src/lib.rs:131:27:
+not implemented
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+```
+Can u also help me check this?
+  ↳ 2025-05-20 18:41 dave: `jamt` uses RPC, as defined in JIP-2. The RPC endpoint is specified with `--rpc`. `--help` should cover usage. If you have any specific questions that aren't answered by `--help` feel free to ask in this channel.
 2025-05-20 02:13 jaymansfield: JavaJAM now works running alongside polkajam nodes and they can import each others blocks (safrole and fallback) 😀
+2025-05-20 07:37 emielsebastiaan: > <@dave:parity.io> I'll put together a fix for this tomorrow anyway and release some new binaries.
+
+Will this release based on GP-0.6.6?
+2025-05-20 09:15 gav: No - I'm going to prioritise getting GP to 0.7 over bring the codebase/vectors up to 0.6.6
+2025-05-20 18:25 dave: Sorry just got around to looking at this. You currently need to specify the chain parameters separately as they are not included in the spec, so `./polkajam --parameters=tiny --chain chainspecs/dev-spec.json run` should work.
+  ↳ 2025-05-20 18:41 sourabhniyogi: Ah, but is there a way to get the `dev-validator` input working with it though?
+
+```
+./polkajam --parameters=tiny --chain chainspecs/jamduna-spec.json run --dev-validator 3
+```
+
+This is what we are hoping will be possible in your next binary push
+
+In the meantime, we are using the `jamt create-service` to get some work packages using the `dev` bootstrap, and we believe that polkajam CE134 is not sending a `WorkPackageBundle` but merely a `WorkPackage`... because what `polkajam` sends is basically decodable as a `WorkPackage` but not a `WorkPackageBundle` -- could this be a temp solution you've employed or do you think we have our `WorkPackageBundle` decoding concepts wrong when there are 0 extrinsics and 0 justifications?  We are not aware of any testvectors for `WorkPackageBundle`.
+
+PS We have been able to import polkajam-authored blocks with guarantees (from this `jamt create-service` way of triggering CE133/134) followed by assurances -- the CE142/143 situation is bottlenecked by a basic need for pvm execution logs from accumulate.  [edited]
+  ↳ 2025-05-20 18:44 dave: Auditing protocols are not currently enabled in PolkaJam releases, this is probably the issue
+  ↳ 2025-05-20 18:45 dave: I'll drop the `unimplemented()` and just make PolkaJam close these streams immediately for now
+  ↳ 2025-05-20 19:17 sourabhniyogi: https://github.com/davxy/jam-test-vectors/pull/45#issuecomment-2895537979
+  ↳ 2025-05-20 20:38 dave: > <@sourabhniyogi:matrix.org> Ah, but is there a way to get the `dev-validator` input working with it though?
+> 
+> ```
+> ./polkajam --parameters=tiny --chain chainspecs/jamduna-spec.json run --dev-validator 3
+> ```
+> This is what we are hoping will be possible in your next binary push
+> 
+> In the meantime, we are using the `jamt create-service` to get some work packages using the `dev` bootstrap, and we believe that polkajam CE134 is not sending a `WorkPackageBundle` but merely a `WorkPackage`... because what `polkajam` sends is basically decodable as a `WorkPackage` but not a `WorkPackageBundle` -- could this be a temp solution you've employed or do you think we have our `WorkPackageBundle` decoding concepts wrong when there are 0 extrinsics and 0 justifications?  We are not aware of any testvectors for `WorkPackageBundle`.
+> 
+> PS We have been able to import polkajam-authored blocks with guarantees (from this `jamt create-service` way of triggering CE133/134) followed by assurances, .. and are checking what's up with our CE137/CE142 life now.  
+
+Yes, binaries coming soon that should make the dev-validator stuff work. Re CE134 I believe our implementation matches the SNP doc. The bundle encoding is as in the GP, note that a number of the lists in the bundle are not length-prefixed, instead having their length implied by the work-package. See 14.15 in the GP and note that lists are only length-prefixed when there is a ↕ symbol in front
+  ↳ 2025-05-20 21:21 sourabhniyogi: Hmm -- for a WP with 0 extrinsics, 0 imported segments and thus 0 justifications, for the J term of the work package bundle described in  [14.14](https://graypaper.fluffylabs.dev/#/9a08063/1b43021b4302?v=0.6.6) where there _is_ a  ↕ symbol, do you get _one_ 0x00 byte after the work package a per [C.8](https://graypaper.fluffylabs.dev/#/9a08063/394401394401?v=0.6.6) in the work package bundle?  
+
+Understand about the extrinsic lengths and imported segments implied by the WP items, but some bundle codec test cases here would go a long way.
+  ↳ 2025-05-20 21:24 dave: The ↕ symbol in 14.14 is on each justification. There is no ↕ symbol on the list of justifications, the number of justifications is implied by the work-package
+  ↳ 2025-05-20 21:25 dave: Agree it would be great to have bundle test vectors
+  ↳ 2025-05-20 21:25 sourabhniyogi: Ah got it -- thank you!
+  ↳ 2025-05-21 02:04 sourabhniyogi: Your latest binary enabled polkajam to use our chainspec, we can now do things with our bootstrap/null_authorizer/... etc -- thank you again.
+
+Also, we were able to address the WorkPackage/Bundle decoding problem so CE133/134 are happy together... now need to get refine+accumulate alignment.  
+2025-05-20 21:31 dave: New release of PolkaJam here: https://github.com/paritytech/polkajam-releases/releases/tag/manual-2025-05-20. This has the requested change to the `--dev-validator` flag; it will now no longer override an explicitly provided `--chain` option
+2025-05-20 21:32 dave: Nightly builds of PolkaJam should now be automatically created and uploaded here: https://github.com/paritytech/polkajam-releases/releases
+2025-05-20 21:34 dave: The GP version implemented is now shown by `./polkajam --version`
+2025-05-20 23:30 jaymansfield: > <@dave:parity.io> Nightly builds of PolkaJam should now be automatically created and uploaded here: https://github.com/paritytech/polkajam-releases/releases
+
+Should we use the same repo for issues? I’ve had polkajam crash a few times while running. 
+2025-05-20 23:33 dave: Yes feel free to open issues there
