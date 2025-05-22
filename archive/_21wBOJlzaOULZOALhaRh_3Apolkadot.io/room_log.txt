@@ -1,5 +1,5 @@
 # room: #jam:polkadot.io
-# exported: 2025-05-21 03:31 UTC
+# exported: 2025-05-22 03:31 UTC
 2024-04-20 02:08 johnjiao123: 
 2024-04-20 02:09 johnjiao123: 
 2024-05-30 21:48 nradko: Hey everyone,
@@ -8180,6 +8180,15 @@ Understand about the extrinsic lengths and imported segments implied by the WP i
   ↳ 2025-05-21 02:04 sourabhniyogi: Your latest binary enabled polkajam to use our chainspec, we can now do things with our bootstrap/null_authorizer/... etc -- thank you again.
 
 Also, we were able to address the WorkPackage/Bundle decoding problem so CE133/134 are happy together... now need to get refine+accumulate alignment.  
+  ↳ 2025-05-22 01:21 mkchung: Could we have a codec test vector for WorkPackageBundle?
+
+Also, if a WorkPackage contains multiple WorkItems, and only some of them include imported segments or justifications — should the "S" (imported segments) and "J" (justifications) fields omit entries for WorkItems that don’t have any, or should "J" still be encoded as empty for those items given the  ↕?
+
+In the following example, workItem_1 is the authorization item (which has no importedSegment or justification):
+https://gist.github.com/mkchungs/ee6ec72a8ab9d0ee98904a926a427840
+The bundle codec is encoded without workItem_1 in "S" and "J".
+
+Can we expect the WorkPackageBundle JSON test vector to follow a similar format to Option 1?
 2025-05-20 21:31 dave: New release of PolkaJam here: https://github.com/paritytech/polkajam-releases/releases/tag/manual-2025-05-20. This has the requested change to the `--dev-validator` flag; it will now no longer override an explicitly provided `--chain` option
 2025-05-20 21:32 dave: Nightly builds of PolkaJam should now be automatically created and uploaded here: https://github.com/paritytech/polkajam-releases/releases
 2025-05-20 21:34 dave: The GP version implemented is now shown by `./polkajam --version`
@@ -8187,3 +8196,111 @@ Also, we were able to address the WorkPackage/Bundle decoding problem so CE133/1
 
 Should we use the same repo for issues? I’ve had polkajam crash a few times while running. 
 2025-05-20 23:33 dave: Yes feel free to open issues there
+2025-05-21 06:51 clearloop: on connecting polkajam,
+
+```
+ polkajam --chain dev run -d 0 --dev-validator 0  
+```
+
+I got
+
+```
+// this error is from spacejam
+2025-05-21T06:34:29.224367Z ERROR transport::verifier: invalid certificate: expected e3r2oc62zwfj3crnuifuvsxvbtlzetk4o5qyhetkhagsc2fgl2oka, got ehnvcppgow2sc2yvdvdicu3ynonsteflxdxrehjr2ybekdc2z3iuq
+```
+
+`e3r2oc62zwfj3crnuifuvsxvbtlzetk4o5qyhetkhagsc2fgl2oka` is defined in the [dev-spec](https://gist.github.com/zdave-parity/72eb9cfe07756d2c0c13c3064600190d) indeed, however I got `ehnvcppgow2sc2yvdvdicu3ynonsteflxdxrehjr2ybekdc2z3iuq` via extracting & encoding the ed25519 public key from the received cert, (which is matched with \[0; 32\] as seed for ed25519 keypair)
+
+anybody knows where `e3r2oc...` comes from? also, if I want to specify a peer-id for polkajam, I'll get
+
+```
+polkajam --chain dev run -d 0 --dev-validator 0  --peer-id  ehnvcppgow2sc2yvdvdicu3ynonsteflxdxrehjr2ybekdc2z3iuq
+error: invalid value 'ehnvcppgow2sc2yvdvdicu3ynonsteflxdxrehjr2ybekdc2z3iuq' for '--peer-id <PEER_ID>': Non-zero trailing bits
+
+For more information, try '--help'.
+```
+
+version: `polkajam-nightly-2025-05-21`
+
+---
+
+my current strategy is disable the check and allow alt_name mismatched with the parsed dns name, anybody met this 'problem' as well? [edited]
+  ↳ 2025-05-21 08:38 dave: I recently added a section to the SNP doc which precisely defines how the alt-name should be derived: https://github.com/zdave-parity/jam-np/blob/main/simple.md#alternative-name
+  ↳ 2025-05-21 08:42 clearloop: thanks! I had ignored this formula since I thought I have already implemented it correctly > <
+2025-05-21 07:52 dvdplas: What I have in mind:
+1. Scaffold a new CoreVM app template, ready to build
+- Is there a name for apps build on top of CoreVM?
+2. Launch JAM locally (either deploys the CoreVm app automatically to JAM, like added to the genesis or separately:)
+- Is there the plan for zombienet to support JAM?
+3. Deploy the CoreVM app and interact with it.
+- Is there an example somewhere of interacting with an app build on top of CoreVM?
+
+This will be added to the Pop CLI: https://github.com/r0gue-io/pop-cli
+2025-05-21 07:52 gav: 1. “Guest” is the current term used. 
+2025-05-21 07:53 gav: 2. Not as far as I know. 
+2025-05-21 07:53 gav: 3. CoreVM doesn’t presently support input. Right now we’re just about finished getting it into a releasable shape. Input could come quite soon after, but it’s not especially trivial.  [edited]
+2025-05-21 08:05 dvdplas: Thanks for your response. I will closely follow the developments around JAM and continue the conversation when we get closer to the first hackathon in November. Our team is super motivated to build the tooling so that devs can successfully build CoreVM guests (or any other desired service app) and enjoy the required developer experience.
+
+Daan | R0GUE
+2025-05-21 08:33 jan: For tooling you might want to check out this repository: https://github.com/paritytech/polkaports
+
+This is where we're working on a work-in-progress CoreVM SDK, and we already have a prototype toolchain for building C programs (that's how we've been porting Quake to CoreVM). In the future we also plan to add support for other languages and libraries, e.g. C++, Rust, Go, Python, etc. If you're interested in collaborating you're welcome to do so.
+2025-05-21 08:59 prematurata: Hello all about state deserialization how could you properly deserialize `a_s` given that the write host call accepts an arbitrary `ko ... kz` from registers 7 and 8 to define the storage key along with the service index and the merklization fn T only uses 27 bytes of such key that gets further reduces when going through the C fn?
+2025-05-21 09:04 ascriv: > <@prematurata:matrix.org> Hello all about state deserialization how could you properly deserialize `a_s` given that the write host call accepts an arbitrary `ko ... kz` from registers 7 and 8 to define the storage key along with the service index and the merklization fn T only uses 27 bytes of such key that gets further reduces when going through the C fn?
+
+Yes, you can’t recover the full key when deserializing
+2025-05-21 09:04 ascriv: You can only recover 23 bytes actually 
+2025-05-21 09:05 ascriv: But it’s still possible to have an implementation which is GP conformant even with this restriction 
+2025-05-21 09:07 prematurata: i was more worried about testing the implementation given that my impl should "start" from the same state of someone elses implementation
+2025-05-21 09:08 prematurata: if i am unable to reconstruct original from "merklized" which apparently is being used by different "testing suites"
+2025-05-21 09:08 ascriv: Yes that “warp sync” ability might require you to rejigger some aspects of your impl, I also had to
+2025-05-21 09:10 prematurata: I wonder if we can do any better considering that `a_s` seems to be the only one that is impossible to fully 'recover'
+2025-05-21 09:23 dakkk: I would suggest to add the missing part of the key in the beginning of the value; this is a minor edit but it solve the issue. Something like this:
+
+C(s, E4 (2**32 − 1) ⌢ k0...27 ) ↦ k23...32 ⌢ v
+2025-05-21 09:41 greywolve: But the traces assume your storage keys are just state keys, but that is certainly another way to do it :)
+2025-05-21 09:53 prematurata: correct but this alone prevents anyone from taking the state + block and verify outcome.
+
+Basically right now in order to verify block N you need to have applied yourself the previous blocks where the storage keys required by N were written 
+
+ [edited]
+2025-05-21 10:06 greywolve: Not entirely true, see this [comment](https://github.com/davxy/jam-test-vectors/pull/45#issuecomment-2848736219).
+2025-05-21 10:50 jaymansfield: > <@prematurata:matrix.org> I wonder if we can do any better considering that `a_s` seems to be the only one that is impossible to fully 'recover'
+
+You also can’t recover the preimage historical lookup key if you dont have possession of the preimage itself.
+2025-05-21 11:02 jaymansfield: > <@prematurata:matrix.org> correct but this alone prevents anyone from taking the state + block and verify outcome.
+> 
+> Basically right now in order to verify block N you need to have applied yourself the previous blocks where the storage keys required by N were written 
+> 
+> 
+
+State+block is all you really need a few of us have made this work already. You’ll just have to rework your internal storage to use state keys instead of relying on the original values. 
+2025-05-21 11:05 prematurata: thanks for the info but isnt that different from what the gp states
+2025-05-21 11:05 prematurata: especially for the write and read host callse
+2025-05-21 11:06 prematurata: if the implementation is meant to use state key there to fetch/store the data, i guess GP should also state that
+2025-05-21 11:09 faiz_871: Can someone please clarify how the data is encoded before signing and then distributing a work report to other nodes?
+
+  ↳ 2025-05-21 11:14 jaymansfield: Which data are you referring too? The work report itself?
+  ↳ 2025-05-21 11:22 faiz_871: Yeah we have to make signature using work report  and core\_index  [edited]
+2025-05-21 11:13 ascriv: > <@prematurata:matrix.org> if the implementation is meant to use state key there to fetch/store the data, i guess GP should also state that
+
+Your impl’s representation of state does not have to match the GP representation. In fact it can’t, if it supports warp sync
+2025-05-21 11:18 prematurata: otherwise the end result would be that we have 2 almost identical impl in terms of behavior. 1 is following GP but makes it impossible to rebuild state from `trace`, the other is not following GP but produces same results as 1.
+
+the only gotcha i can see about using the second solution (besides being out of spec from what GP states) is that it creates another possible hash collision point.
+
+One of which is reducing `k` from 32 bytes to 27 and then 23 and then using this as key for read/write where multiple hashed keys. N
+
+not trying to be picky here but 23 bytes collision between `warp client` and ` full client`... how hard can they be to do?
+2025-05-21 11:31 gav: Yes, a change was made fairly recently removing a secondary hash.  [edited]
+2025-05-21 11:32 gav: It is true that 5 bytes of the service storage key don't make it into the state merkle tree key. [edited]
+2025-05-21 11:33 gav: 
+2025-05-21 11:35 gav: But with a secondary hash, between the initial 5 byte removal and the second 4 byte removal, there should still be 27 bytes of entropy in the final key. That's not the case at present, and most likely needs to be fixed.
+2025-05-21 11:39 gav: https://github.com/gavofyork/graypaper/issues/403
+2025-05-21 12:28 prematurata: another solution would be to re-add the keys before the value. You don't lose entropy and allow warp/full impl to behave exacty the same
+2025-05-21 12:29 prematurata: @gav ^^
+2025-05-21 12:49 gav: Yeah true. It’s just a little more storage, and there’s UB in the case of a collision, which is quite a bit more likely with only 23 bytes of entropy. We’d need to define which of two colliding keys took precedence.  [edited]
+2025-05-21 18:05 nicholasonchain: Are there any way to fetch `block` and C(1)-C(15) `state` from header hash in polkajam binaries?
+2025-05-21 18:05 nicholasonchain: We would to see polkajam support new JIP-2 methods to fetch a block and one or more of C(1)-C(15) state by header hash to support basic explorer -- is this possible?
+2025-05-21 19:15 dave: Certainly possible, can't promise a time frame though these things should be easy to add
+2025-05-21 21:34 sourabhniyogi: Is there an env variable to turn on pvm trace execution logs in `polkajam` to compare with our own binaries logs, e.g something like [this](https://github.com/jam-duna/jamtestnet/blob/main/traces/reports-l0/00000003.log#L2-L3135)?
