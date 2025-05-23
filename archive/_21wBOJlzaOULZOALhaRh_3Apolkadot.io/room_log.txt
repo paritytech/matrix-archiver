@@ -1,5 +1,5 @@
 # room: #jam:polkadot.io
-# exported: 2025-05-22 03:31 UTC
+# exported: 2025-05-23 03:31 UTC
 2024-04-20 02:08 johnjiao123: 
 2024-04-20 02:09 johnjiao123: 
 2024-05-30 21:48 nradko: Hey everyone,
@@ -5394,6 +5394,7 @@ i find it hard to follow / understand what mapping are needed to be maintained
   ↳ 2025-01-26 17:21 dave: 3. Build bundle and exported segments, erasure code both, calculate the root from the shards as per the GP. For importing a segment you need the erasure root of the WP that exported it, not the root of the WP that is importing it, so there is no circularity there
 2025-01-26 18:14 luke_jamixir: So the WP that exported it, do I get it's erasure root from the corrodponding WR (on chain, accumulated already) or? 
 2025-01-26 18:54 dave: Yes, you will need to get it from the WR. The assumption is that nodes will maintain a database mapping SR to ER, which they will do by monitoring WRs that are included on chain
+  ↳ 2025-05-22 11:43 dvladco: Do we also need to keep a mapping of work-report hash to segment-root? in case the import segment is referenced by work-report hash? Also to me it looks like these dictionaries are part of the state, is there a plan to add this in the state, or is this a minor implementation detail?
 2025-01-26 19:33 tomusdrw: FYI: I've built a web app to encode/decode JAM objects: https://papi.fluffylabs.dev it's a fork of an amazing papi-console, so most of the credit should go there - I just plugged in the JAM codec. Hope you'll find it useful. [edited]
 2025-01-27 00:51 luke_jamixir: > <@dave:parity.io> Yes, you will need to get it from the WR. The assumption is that nodes will maintain a database mapping SR to ER, which they will do by monitoring WRs that are included on chain
 
@@ -8227,6 +8228,31 @@ version: `polkajam-nightly-2025-05-21`
 my current strategy is disable the check and allow alt_name mismatched with the parsed dns name, anybody met this 'problem' as well? [edited]
   ↳ 2025-05-21 08:38 dave: I recently added a section to the SNP doc which precisely defines how the alt-name should be derived: https://github.com/zdave-parity/jam-np/blob/main/simple.md#alternative-name
   ↳ 2025-05-21 08:42 clearloop: thanks! I had ignored this formula since I thought I have already implemented it correctly > <
+  ↳ 2025-05-22 11:58 clearloop: any ideas about
+
+```
+ede7gocrx5435my626w74zmwejyzqw3wvuvwtnzu4sz2lwib4kxaa@127.0.0.1:40005: Disconnecting: Misbehaviour: Malformed jam_node::sync::message::Announce: Could not decode `Announce::header`:                                           
+        Could not decode `Header::parent`:         
+                Could not decode `HeaderHash.0`:   
+                        Not enough data to fill buffer          
+```
+
+we're communicating with the latest polkajam node on osx, for the `up0` steps in spacejam:
+
+1. send \[0\] to open the stream ✅
+2. wait for the handshake from polkajam ✅
+3. send the handshake from spacejam to polkajam ❌
+
+the handshake message from spacejam follows \[length, encoded\_handshake\], but it seems polkajam is trying to decode the handshake from spacejam as a block announcement
+
+if we skip handshake and enter the announcement loop, we'll get
+
+```
+DEBUG jam_node::net::peer_manager  ede7gocrx5435my626w74zmwejyzqw3wvuvwtnzu4sz2lwib4kxaa@127.0.0.1:55443: Static(BlockAnnouncement) stream closed: First receive killed (Dropped) by local, then transmit killed (Dropped) by local
+DEBUG jam_node::net::peer_manager  ede7gocrx5435my626w74zmwejyzqw3wvuvwtnzu4sz2lwib4kxaa@127.0.0.1:55443: Peer disconnected with reason: Unknown: stream reset by peer: error 1                               
+``` [edited]
+  ↳ 2025-05-22 12:11 clearloop: or we need to embed this handshake in connection level, but we can decode handshake from polkajam in the stream of up0 )) [edited]
+  ↳ 2025-05-22 14:04 dave: FWIW you should do (2) and (3) concurrently, and you should only do (1) if you are the one that opened the stream. But I don't think either of these is your issue 😅
 2025-05-21 07:52 dvdplas: What I have in mind:
 1. Scaffold a new CoreVM app template, ready to build
 - Is there a name for apps build on top of CoreVM?
@@ -8304,3 +8330,21 @@ not trying to be picky here but 23 bytes collision between `warp client` and ` f
 2025-05-21 18:05 nicholasonchain: We would to see polkajam support new JIP-2 methods to fetch a block and one or more of C(1)-C(15) state by header hash to support basic explorer -- is this possible?
 2025-05-21 19:15 dave: Certainly possible, can't promise a time frame though these things should be easy to add
 2025-05-21 21:34 sourabhniyogi: Is there an env variable to turn on pvm trace execution logs in `polkajam` to compare with our own binaries logs, e.g something like [this](https://github.com/jam-duna/jamtestnet/blob/main/traces/reports-l0/00000003.log#L2-L3135)?
+  ↳ 2025-05-22 10:12 jan: Force the interpreter backend and set `RUST_LOG=polkavm=trace`
+  ↳ 2025-05-22 12:53 sourabhniyogi: Awesome -- any way to get the registers to appear at least some of the time, or other options?
+
+```
+2025-05-22 20:22:42 tokio-runtime-worker DEBUG polkavm::interpreter  Compiling block:
+2025-05-22 20:22:42 tokio-runtime-worker DEBUG polkavm::interpreter    [4]: 8206: charge_gas
+2025-05-22 20:22:42 tokio-runtime-worker DEBUG polkavm::interpreter    [5]: 8206: sp = sp + 0xfffffffffffffd00
+2025-05-22 20:22:42 tokio-runtime-worker DEBUG polkavm::interpreter    [6]: 8210: u64 [sp + 0x2f8] = ra
+2025-05-22 20:22:42 tokio-runtime-worker DEBUG polkavm::interpreter    [7]: 8214: u64 [sp + 0x2f0] = s0
+2025-05-22 20:22:42 tokio-runtime-worker DEBUG polkavm::interpreter    [8]: 8218: u64 [sp + 0x2e8] = s1
+2025-05-22 20:22:42 tokio-runtime-worker DEBUG polkavm::interpreter    [9]: 8222: i32 s0 = a0 + 0
+2025-05-22 20:22:42 tokio-runtime-worker DEBUG polkavm::interpreter    [10]: 8224: jump 9459 if s0 == 0
+2025-05-22 20:22:42 tokio-runtime-worker TRACE polkavm::interpreter::raw_handlers    -> resolved to fallthrough
+2025-05-22 20:22:42 tokio-runtime-worker TRACE polkavm::interpreter::raw_handlers  [4]: charge_gas: 6 (49999999 -> 49999993)
+```
+2025-05-22 13:34 dave: Proposal for a standard secret key derivation method here: https://github.com/polkadot-fellows/JIPs/blob/c888a85736b18261b848224a5e242e6a42f8e4ff/JIP-5.md. We're planning to make PolkaJam follow this method. Note that we intend to use the same method for deriving keys from on-disk seed files as for deriving the "dev chain" validator keys. Currently different methods are used which means for example it is not currently possible to use an on-disk seed file for a dev chain validator.
+
+This change _will_ cause breakage, in particular the dev account keys listed here will change: https://docs.jamcha.in/basics/dev-accounts. The new dev account keys are listed in the "test vectors" section at the bottom of the linked doc. Apologies for any hassle this causes, hopefully this change will make things simpler and easier in the long run though!
