@@ -1,5 +1,5 @@
 # room: #jam:polkadot.io
-# exported: 2025-05-23 03:31 UTC
+# exported: 2025-05-24 03:28 UTC
 2024-04-20 02:08 johnjiao123: 
 2024-04-20 02:09 johnjiao123: 
 2024-05-30 21:48 nradko: Hey everyone,
@@ -8348,3 +8348,9 @@ not trying to be picky here but 23 bytes collision between `warp client` and ` f
 2025-05-22 13:34 dave: Proposal for a standard secret key derivation method here: https://github.com/polkadot-fellows/JIPs/blob/c888a85736b18261b848224a5e242e6a42f8e4ff/JIP-5.md. We're planning to make PolkaJam follow this method. Note that we intend to use the same method for deriving keys from on-disk seed files as for deriving the "dev chain" validator keys. Currently different methods are used which means for example it is not currently possible to use an on-disk seed file for a dev chain validator.
 
 This change _will_ cause breakage, in particular the dev account keys listed here will change: https://docs.jamcha.in/basics/dev-accounts. The new dev account keys are listed in the "test vectors" section at the bottom of the linked doc. Apologies for any hassle this causes, hopefully this change will make things simpler and easier in the long run though!
+2025-05-23 12:00 ascriv: Are the alt names still accurate in http://docs.jamcha.in/basics/dev-accounts ? Cant reproduce the alt name for Alice using the alt name formula in the SNP  [edited]
+2025-05-23 12:50 oliver.tale-yazdi: They have been reported wrong by Dave last week while he extended the spec to be more explicit. I will remove them for now to avoid confusion until fixed. Thanks for the ping here :) [edited]
+2025-05-23 17:31 ascriv: for integrating with the polkajam-testnet, to receive assurances/guarantees/tickets/etc, are we meant to impersonate one of the existing validators (e.g. alice) when doing the TLS handshake? 
+2025-05-23 19:06 dave: It depends on the chainspec you're using. If you're using the one I uploaded then yes, the validators for that use the "well-known" alice/bob/etc keys and you should use one of these for your validator. If you want some of the validators to be polkajam then you should launch polkajam instances manually using --chain and --dev-validator N. polkajam-testnet will launch polkajam instances for all the validator nodes; things will not work properly if you then launch your own validator as it will necessarily have the same ID as one of the polkajam ones
+2025-05-23 22:45 mkchung: besides key derivation, is blake2b "personal" being used for any other hashing operation, like codec or justifications?
+2025-05-23 23:23 dave: I've changed the proposal to no longer use Blake2 personalisation as some Blake2 libraries don't support this; see the latest version of the PR here https://github.com/polkadot-fellows/JIPs/pull/2/files

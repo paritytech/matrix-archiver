@@ -1,5 +1,5 @@
 # room: #graypaper:polkadot.io
-# exported: 2025-05-23 03:31 UTC
+# exported: 2025-05-24 03:29 UTC
 2024-04-17 20:29 syed: https://matrix.to/#/!hyzRkDqDthePbodYFz:parity.io/$f_DMsIEcDXZegw6Sabnehzc-LrdDQkmq5MbxDDyoZxY?via=parity.io&via=web3.foundation
 
 2024-04-17 20:29 syed: 
@@ -6014,3 +6014,6 @@ Eg. if x can be any byte.
 
 But this probably doesn't make much difference in practice I guess. [edited]
 2025-05-21 11:02 faiz_871: 
+2025-05-23 22:23 ascriv: Screenshot 2025-05-23 at 11.23.50 PM.png
+2025-05-23 22:24 ascriv: for sbrk, if wA happens to be 0, then N_x..+wA = {}, which is a subset of every set. so there is no x which satisfies the conditions, meaning sbrk is undefined
+2025-05-23 22:24 ascriv: should we define sbrk for the case when wA = 0?
