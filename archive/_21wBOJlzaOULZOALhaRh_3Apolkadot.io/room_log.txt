@@ -1,5 +1,5 @@
 # room: #jam:polkadot.io
-# exported: 2025-05-24 03:28 UTC
+# exported: 2025-05-25 03:34 UTC
 2024-04-20 02:08 johnjiao123: 
 2024-04-20 02:09 johnjiao123: 
 2024-05-30 21:48 nradko: Hey everyone,
@@ -8354,3 +8354,7 @@ This change _will_ cause breakage, in particular the dev account keys listed her
 2025-05-23 19:06 dave: It depends on the chainspec you're using. If you're using the one I uploaded then yes, the validators for that use the "well-known" alice/bob/etc keys and you should use one of these for your validator. If you want some of the validators to be polkajam then you should launch polkajam instances manually using --chain and --dev-validator N. polkajam-testnet will launch polkajam instances for all the validator nodes; things will not work properly if you then launch your own validator as it will necessarily have the same ID as one of the polkajam ones
 2025-05-23 22:45 mkchung: besides key derivation, is blake2b "personal" being used for any other hashing operation, like codec or justifications?
 2025-05-23 23:23 dave: I've changed the proposal to no longer use Blake2 personalisation as some Blake2 libraries don't support this; see the latest version of the PR here https://github.com/polkadot-fellows/JIPs/pull/2/files
+2025-05-24 18:26 ascriv: > <@dave:parity.io> Nightly builds of PolkaJam should now be automatically created and uploaded here: https://github.com/paritytech/polkajam-releases/releases
+
+should we tag each release with what version of GP it proports to implement? or can we assume it's always on head of main of the graypaper repo?
+2025-05-24 18:31 dave: It's certainly not always up to date with the GP. They're not currently tagged but you can see the GP version by running `polkajam --version` [edited]
