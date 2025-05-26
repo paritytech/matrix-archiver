@@ -1,5 +1,5 @@
 # room: #jam:polkadot.io
-# exported: 2025-05-25 03:34 UTC
+# exported: 2025-05-26 03:33 UTC
 2024-04-20 02:08 johnjiao123: 
 2024-04-20 02:09 johnjiao123: 
 2024-05-30 21:48 nradko: Hey everyone,
@@ -8358,3 +8358,8 @@ This change _will_ cause breakage, in particular the dev account keys listed her
 
 should we tag each release with what version of GP it proports to implement? or can we assume it's always on head of main of the graypaper repo?
 2025-05-24 18:31 dave: It's certainly not always up to date with the GP. They're not currently tagged but you can see the GP version by running `polkajam --version` [edited]
+2025-05-25 21:10 oliver.tale-yazdi: I integrated the JIP-5 changes now here, if other teams want to compare the DNS alt name: https://docs.jamcha.in/basics/dev-accounts
+2025-05-25 23:24 jaymansfield: > <@sourabhniyogi:matrix.org> JAM Doom replication:
+>  https://www.youtube.com/watch?v=ltWMjg2EHS8
+
+Is there a tutorial anywhere on how to do this with our PVMs?
