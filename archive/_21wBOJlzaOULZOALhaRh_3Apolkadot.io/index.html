@@ -18,7 +18,7 @@ a:hover{color:#90caf9}
 em{font-style:italic}
 </style>
 <h1>#jam:polkadot.io</h1>
-<p><small>last updated 2025-05-26 03:33 UTC</small></p>
+<p><small>last updated 2025-05-27 03:31 UTC</small></p>
 <p><a href='room_log.txt'>⇩ plaintext</a> · <a href='../../'>⇦ all rooms</a></p>
 <hr>
 <div class='msg'><a class='ts' href='#$we4SYXTHwmKn094X9Zs_7mWUOoUVh4icvVdxD83RZfs'>#</a> <a class='ts' name='$we4SYXTHwmKn094X9Zs_7mWUOoUVh4icvVdxD83RZfs' href='https://matrix.to/#/!wBOJlzaOULZOALhaRh:polkadot.io/$we4SYXTHwmKn094X9Zs_7mWUOoUVh4icvVdxD83RZfs' target='_blank'>2024-04-20 02:08</a>&ensp;<span class='u' style='color:#d0709e'>johnjiao123</span>: </div>
@@ -8310,3 +8310,17 @@ should we tag each release with what version of GP it proports to implement? or 
 &gt;  <a href="https://www.youtube.com/watch?v=ltWMjg2EHS8" rel="noopener" target="_blank">https://www.youtube.com/watch?v=ltWMjg2EHS8</a>
 
 Is there a tutorial anywhere on how to do this with our PVMs?</div>
+<div class='msg'><a class='ts' href='#$5YUfZ0-0h_LEpnN0YYB4D-TMSdsmVdOdT-Cjy0Y6V5U'>#</a> <a class='ts' name='$5YUfZ0-0h_LEpnN0YYB4D-TMSdsmVdOdT-Cjy0Y6V5U' href='https://matrix.to/#/!wBOJlzaOULZOALhaRh:polkadot.io/$5YUfZ0-0h_LEpnN0YYB4D-TMSdsmVdOdT-Cjy0Y6V5U' target='_blank'>2025-05-26 08:52</a>&ensp;<span class='u' style='color:#be2950'>clearloop</span>: confused about how to send handshake of up0 to polkajam
+
+1. if sending the handshake after received up0 stream, polkajam will close the connection via failed to parse block announcement, ideally, it should parse the handshake data of up0 but not block announcement at the beginning
+2. if not sending handshake data, polkajam will reset the connection again and again
+3. we can read the handshake data from polkajam correctly</div>
+<div class='msg reply'><a class='ts' href='#$Tnp8AxZsYNkLxtsSKFp9a1Nd8knVcBkDusr86G2D66w'>#</a> <a class='ts' name='$Tnp8AxZsYNkLxtsSKFp9a1Nd8knVcBkDusr86G2D66w' href='https://matrix.to/#/!wBOJlzaOULZOALhaRh:polkadot.io/$Tnp8AxZsYNkLxtsSKFp9a1Nd8knVcBkDusr86G2D66w' target='_blank'>2025-05-26 09:30</a>&ensp;<span class='u' style='color:#be2950'>clearloop</span>: interesting, just caught it, we do have problem in encoding however it&#x27;s in handshake data but not block announcement
+ <span class="edited">(edited)</span></div>
+<div class='msg'><a class='ts' href='#$KDZ31ke0_HMu8dTBBuTK_L6msfV0pYIzMlh6KxiKJH8'>#</a> <a class='ts' name='$KDZ31ke0_HMu8dTBBuTK_L6msfV0pYIzMlh6KxiKJH8' href='https://matrix.to/#/!wBOJlzaOULZOALhaRh:polkadot.io/$KDZ31ke0_HMu8dTBBuTK_L6msfV0pYIzMlh6KxiKJH8' target='_blank'>2025-05-26 10:12</a>&ensp;<span class='u' style='color:#dc865f'>interweb_</span>: The code is available for:
+official: <a href="https://github.com/paritytech/polkavm/tree/master/examples" rel="noopener" target="_blank">https://github.com/paritytech/polkavm/tree/master/examples</a>
+doom: <a href="https://github.com/clw8998/jam\_doom" rel="noopener" target="_blank">https://github.com/clw8998/jam\_doom</a>
+quake: <a href="https://github.com/paritytech/polkaports/blob/master/apps/quake/README.md" rel="noopener" target="_blank">https://github.com/paritytech/polkaports/blob/master/apps/quake/README.md</a>
+I have not seen any tutorial for getting started...  <span class="edited">(edited)</span></div>
+<div class='msg'><a class='ts' href='#$80inyV5RGJcS5bR0wplRg-_nDd5asLzq9V4mHUojJQc'>#</a> <a class='ts' name='$80inyV5RGJcS5bR0wplRg-_nDd5asLzq9V4mHUojJQc' href='https://matrix.to/#/!wBOJlzaOULZOALhaRh:polkadot.io/$80inyV5RGJcS5bR0wplRg-_nDd5asLzq9V4mHUojJQc' target='_blank'>2025-05-26 15:39</a>&ensp;<span class='u' style='color:#c37c5d'>ericki</span>: GM Jammers!
+I was wondering if there are any implementoooors based in Berlin? We have around Protocolberg (18th June) a side event where Jam devs were requested to join (as speakers or to hangout for networking). <span class="edited">(edited)</span></div>
