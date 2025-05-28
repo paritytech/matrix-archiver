@@ -1,5 +1,5 @@
 # room: #graypaper:polkadot.io
-# exported: 2025-05-27 03:31 UTC
+# exported: 2025-05-28 03:32 UTC
 2024-04-17 20:29 syed: https://matrix.to/#/!hyzRkDqDthePbodYFz:parity.io/$f_DMsIEcDXZegw6Sabnehzc-LrdDQkmq5MbxDDyoZxY?via=parity.io&via=web3.foundation
 
 2024-04-17 20:29 syed: 
@@ -6019,3 +6019,6 @@ But this probably doesn't make much difference in practice I guess. [edited]
 2025-05-23 22:24 ascriv: should we define sbrk for the case when wA = 0?
 2025-05-24 16:53 gav: Well remove `sbrk` pretty soon I believe, wdyt [Jan Bujak](https://matrix.to/#/@jan:parity.io)?
 2025-05-24 20:31 jan: Indeed. We will be removing `sbrk` and replacing it with a host call, so I wouldn't waste any effort on handling corner cases with the current `sbrk`.
+2025-05-27 15:23 danicuki: Screenshot 2025-05-27 at 16.23.14.png
+2025-05-27 15:23 danicuki: How should I interpret host call "read" and o = 0 and l = 0? 
+2025-05-27 15:24 danicuki: is this a panic?

@@ -1,5 +1,5 @@
 # room: #jam:polkadot.io
-# exported: 2025-05-27 03:31 UTC
+# exported: 2025-05-28 03:31 UTC
 2024-04-20 02:08 johnjiao123: 
 2024-04-20 02:09 johnjiao123: 
 2024-05-30 21:48 nradko: Hey everyone,
@@ -7508,6 +7508,7 @@ Sure!
 2025-05-05 15:36 sourabhniyogi: JAM Doom replication:
  https://www.youtube.com/watch?v=ltWMjg2EHS8
   ↳ 2025-05-05 15:48 clearloop: just watched 5 times to confirm that wu ignored the second enemy 
+  ↳ 2025-05-27 12:45 sourabhniyogi: For doom, yes [this](https://github.com/clw8998/jam_doom) is our write up (from  @www ) .  Note that this is *not* submitting WPs so its not accurate to say "JAM is running DOOM" but that "PVM is running DOOM".   I believe the world deserves the true "JAM is running DOOM" tutorial showing how to actually break it up into WPs, and we don't actually know how to do that cleanly.    
 2025-05-05 15:55 ascriv: Unwatchable 
 2025-05-05 16:10 alice_und_bob: hey, coming back to this question --> https://matrix.to/#/!wBOJlzaOULZOALhaRh:polkadot.io/$tMICwJ4QJLhbaG4P0gH7DyDM8j67XmiHbs\_dheO\_hGM?via=polkadot.io&via=matrix.org&via=parity.io
 
@@ -8377,3 +8378,62 @@ quake: https://github.com/paritytech/polkaports/blob/master/apps/quake/README.md
 I have not seen any tutorial for getting started...  [edited]
 2025-05-26 15:39 ericki: GM Jammers!
 I was wondering if there are any implementoooors based in Berlin? We have around Protocolberg (18th June) a side event where Jam devs were requested to join (as speakers or to hangout for networking). [edited]
+2025-05-27 07:32 tony_lollipop: We use the jamt like next to use the customized bootstrap service:
+./jamt -b 858108b6 create-service ../jam-counter-service 111 "jam-counter-service5"
+
+But we got error:
+error: invalid value '858108b6' for '--bootstrap-service-id <BOOTSTRAP_SERVICE_ID>': invalid digit found in string
+
+The "858108b6" is the new bootstrap service We just deployed:
+$ ./jamt create-service ../jam-bootstrap-service 1 "jam-bootstrap-service2"
+Bootstrap service #0 identifies as jam-bootstrap-service v0.1.21 by Parity Technologies <admin@parity.io>
+Work package submitted at slot 2099563. Monitoring...
+Service 858108b6 created at slot 2099565
+Providing service code...
+Submitted. Waiting for provision...
+Service code provided at slot 2099566
+
+Could someone help us? Thanks!
+  ↳ 2025-05-27 07:57 clearloop: ```
+invalid digit found in string
+```
+
+It's a parsing issue, idk, maybe `8588108b6` could not be parsed as service id, which should be u32
+  ↳ 2025-05-27 15:18 dave: FWIW we've fixed the parsing of this option to use hex, in line with other service ID args. This change will be included in tonight's PolkaJam release [edited]
+2025-05-27 08:11 clearloop: May I ask if the traces test vectors are aligned with polkajam?
+
+we can pass all fallback/safrole traces test vectors (including state root calculation), but we calculate different state root comparing with polkajam for the genesis state, `polkajam(0x566a95e5ae04266c715387e8f6db64aaa446afa9f168f2bb7fac96082a443bd7), spacejam(0x9718becbd5e5ed6885bc115fa0e287691be55fb382f64f12030435fb050745af)`
+
+1. we are using genesis state in https://gist.github.com/zdave-parity/72eb9cfe07756d2c0c13c3064600190d
+2. the version of polkajam is nightly-2025-05-27
+3. parameters used in polkajam is being like `polkajam -p=tiny -c=dev run -d 0 --dev-validator 0`
+2025-05-27 08:27 tony_lollipop: We now change the service id into decimal mode, and got another error:
+$ ./jamt  --bootstrap-service-id 2239826102 create-service ../jam-counter-service 111 "jam-counter-service5" 
+2025-05-27 08:18:31 Fatal error: Bootstrap service metadata not found
+2025-05-27 13:41 emielsebastiaan: https://x.com/thekusamarian/status/1927347226331717649?s=46&t=ThX7Y87rr1MIKyk6af4OXg
+2025-05-27 13:44 emielsebastiaan: How many fps?
+2025-05-27 14:34 clearloop: localnet.mp4
+2025-05-27 14:34 clearloop: SpaceJam now can author & sync blocks with PolkaJam  👾
+2025-05-27 14:40 dave: `jamt` currently requires the bootstrap service code blob to contain metadata in the format described here: https://github.com/polkadot-fellows/JIPs/pull/3
+  ↳ 2025-05-28 00:53 tony_lollipop: image.png
+  ↳ 2025-05-28 00:53 tony_lollipop: David, Thanks for your kindly reply. I have one more question. Do you mean we should change the Cargo.toml for the customized bootstrap service with our own information in the [package] as the picture:
+
+2025-05-27 15:06 gav: 24
+2025-05-27 15:15 dave: FYI tonight's PolkaJam build will contain this change. I've updated the dev chainspec gist to reflect the new dev chain validator keys: https://gist.github.com/zdave-parity/72eb9cfe07756d2c0c13c3064600190d
+2025-05-27 15:47 jimboj21: I unfortunately will not be able to make protocolBerg this year, but maybe some of the Gossamer team will be there Kyrylo Pisariev | Gossamer | CS 
+2025-05-27 21:02 interweb_: I have a simple rpc client in js. 
+```
+console.log
+    Received best block: {
+      header_hash: [
+        202, 175,  36, 124, 104, 125, 165,
+        140,  60,  27, 121, 252, 207,  22,
+        109, 156,  50, 116, 107,  45,  28,
+        101, 200, 231, 111, 238,  52, 210,
+        240, 205,  84, 162
+      ],
+      slot: 2107741
+    }
+```
+I am able to get bestBlock, but subscribeBestBlock is not responding. It is implemented?
+2025-05-28 01:50 mkchung: Could you confirm whether Polkajam is encoding the availability specifier exactly like u = M\_B (\[|x| x \<− T\[b*, s*\]\]) specified in GP 14.16?? It seems we’re actually seeing justifications of the form M\_B (\[|x| x \<− T\[s*, b*\]\]) from polkajam binaries. [edited]
