@@ -1,5 +1,5 @@
 # room: #jam:polkadot.io
-# exported: 2025-05-28 03:31 UTC
+# exported: 2025-05-29 03:32 UTC
 2024-04-20 02:08 johnjiao123: 
 2024-04-20 02:09 johnjiao123: 
 2024-05-30 21:48 nradko: Hey everyone,
@@ -8418,6 +8418,7 @@ $ ./jamt  --bootstrap-service-id 2239826102 create-service ../jam-counter-servic
   ↳ 2025-05-28 00:53 tony_lollipop: image.png
   ↳ 2025-05-28 00:53 tony_lollipop: David, Thanks for your kindly reply. I have one more question. Do you mean we should change the Cargo.toml for the customized bootstrap service with our own information in the [package] as the picture:
 
+  ↳ 2025-05-28 17:02 dave: I assume you're using the published `jam-pvm-build` crate to build this service? I believe the currently published crates use the SCALE codec rather than the codec defined in the gray paper. Unfortunately this means that the PVM binaries produced are not compatible with the nightly polkajam builds; these now use the GP codec. I'll see what I can do about getting updated versions of the SDK crates released, which should fix this issue.
 2025-05-27 15:06 gav: 24
 2025-05-27 15:15 dave: FYI tonight's PolkaJam build will contain this change. I've updated the dev chainspec gist to reflect the new dev chain validator keys: https://gist.github.com/zdave-parity/72eb9cfe07756d2c0c13c3064600190d
 2025-05-27 15:47 jimboj21: I unfortunately will not be able to make protocolBerg this year, but maybe some of the Gossamer team will be there Kyrylo Pisariev | Gossamer | CS 
@@ -8437,3 +8438,37 @@ console.log
 ```
 I am able to get bestBlock, but subscribeBestBlock is not responding. It is implemented?
 2025-05-28 01:50 mkchung: Could you confirm whether Polkajam is encoding the availability specifier exactly like u = M\_B (\[|x| x \<− T\[b*, s*\]\]) specified in GP 14.16?? It seems we’re actually seeing justifications of the form M\_B (\[|x| x \<− T\[s*, b*\]\]) from polkajam binaries. [edited]
+  ↳ 2025-05-28 11:35 dave: Looks to me like we've got it backwards in PolkaJam! Thanks for reporting, will let you know when this is fixed
+  ↳ 2025-05-28 12:28 sourabhniyogi: We would like to achieve erasure coding alignment by checking that we can generate the same 6 shards as that of the CE137 responses of a guarantor from a 5 polkajam+1 jamduna tiny network.  We collected it [here](https://github.com/jam-duna/jamtestnet/blob/main/erasurecoding/test_segment_shards_tiny_polkajam.json) and attempted our total guess at what we believe is a  unnecessary-but-compliant transformation [here](https://github.com/jam-duna/jamtestnet/blob/main/erasurecoding/src/lib.rs#L31-L41) and failed.   Previously, we attempted to achieve alignment with [this](https://github.com/davxy/jam-test-vectors/tree/erasure_coding/erasure_conding) but now that we have live `polkajam` binaries to achieve alignment with I think we should nail the tiny encoding/decoding transformation down with [reed_solomon_simd 3.0.1](https://docs.rs/reed-solomon-simd/3.0.1/reed_solomon_simd/) -- how do you recommend we proceed?
+  ↳ 2025-05-28 12:46 jaymansfield: I tried test_segment_shards_tiny_polkajam.json and get a different result as well. Here is what I end up with: https://gist.github.com/jaymansfield/af6cb7d1bdd8092402e9bc2112c102b6
+  ↳ 2025-05-28 12:51 dave: Are you saying you have matched davxy's test vectors now or no? I would recommend getting those matching first if not
+  ↳ 2025-05-28 13:01 jaymansfield: I don't think anyone was able to match those
+  ↳ 2025-05-28 14:51 sourabhniyogi: No one was able to (that we know of) and @davxy s  PR was closed.  but we assume polkajam is surely self consistent with encoding / decoding work package bundles — and that it’s best if we just spell out the package we all ffi into , write the tiny specific pseudocode that matches polkajam s presumably GP compliant encoding/decoding and get verifiable auditable bundles correct in a multi client testnet.   
+  ↳ 2025-05-28 14:53 dave: I think we should focus on getting the test vectors matching first; these should match what PolkaJam does
+  ↳ 2025-05-28 14:55 dave: Doesn't look like the EC test vectors include bundle encoding/decoding. This is somewhat orthogonal to EC, I agree it would be helpful to have test vectors for this
+  ↳ 2025-05-28 15:27 sourabhniyogi: Ok davxy I think its time to revisit https://github.com/davxy/jam-test-vectors/pull/28 and get tiny+polkajam compliant clear
+  ↳ 2025-05-28 15:28 sourabhniyogi: Can we reopen this PR and get a test case that is exactly what polkajam does and (a) get specific about package (b) get specific about tiny transforms?
+  ↳ 2025-05-28 16:37 sourabhniyogi: Would you be able to supply a change to 
+https://github.com/jam-duna/jamtestnet/blob/main/erasurecoding/src/lib.rs#L32-L41
+that does work with https://gist.github.com/jaymansfield/af6cb7d1bdd8092402e9bc2112c102b6 
+  ↳ 2025-05-28 17:07 davxy: I'll be working on it over the next few days and will leave a note here as soon as I pick it back up
+  ↳ 2025-05-28 17:07 dave: We've pushed a fix for this, should be in tonight's build
+  ↳ 2025-05-28 21:08 jaymansfield: I actually got a bit further on this today. I can now encode and get the same result as polkajam (but im still working on decode). This was a big help: https://github.com/davxy/jam-test-vectors/pull/28#issuecomment-2706094497
+  ↳ 2025-05-28 21:08 jaymansfield: I'll write up a few details after finishing on what I had to change to make it work
+  ↳ 2025-05-29 02:53 sourabhniyogi: https://github.com/davxy/jam-test-vectors/pull/63/files
+https://hackmd.io/@sourabhniyogi/jam-appendixh-tiny
+2025-05-28 07:07 tony_lollipop: 
+2025-05-28 15:32 stsoen: Does anyone have the presentation that Gav gave yesterday at ETH Prague? I would be very grateful if someone could share it as a file (not the video, but the presentation itself)
+2025-05-28 17:06 rustybot: 
+2025-05-28 19:16 davxy: 🚧 Progress Update on Block Import Test Vectors ([#45](https://github.com/davxy/jam-test-vectors/pull/45))
+
+Several teams have now successfully processed the test vectors designed to exercise the block import procedure.  
+This marks an important milestone, as these vectors use the format planned for the upcoming M1 conformance testing tool. They also start to test PVM and host call implementations - thought still in a relatively straightforward way.
+
+It's great to see implementors gradually getting on the same page as they work through these vectors as a practical support to the GP. Your feedback has also been invaluable in helping us improve the quality of the vectors - some issues on our side would have gone unnoticed without it.
+
+We're currently proposing three classes of vectors. You can find details in the [README](https://github.com/davxy/jam-test-vectors/blob/traces/traces/README.md). I invite more implementors giving them a look.
+
+In the coming days, we'll be proposing increasingly complex scenarios to exercise additional host calls. [edited]
+2025-05-28 21:22 kianenigma: re-posting this issue form a few days ago I opened in test vectors repo in case anyone else knows the answer: https://github.com/w3f/jamtestvectors/issues/48
+2025-05-29 03:10 clearloop: anybody knows what's the format of the preimages in the accumulate test vectors? we can not deblob them with standard program format nor program format, as I hacked the binary, I can see the header of it is debug-info which is not specified in graypaper 😅 [edited]
