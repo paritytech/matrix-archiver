@@ -1,5 +1,5 @@
 # room: #jam:polkadot.io
-# exported: 2025-05-29 03:32 UTC
+# exported: 2025-05-30 03:32 UTC
 2024-04-20 02:08 johnjiao123: 
 2024-04-20 02:09 johnjiao123: 
 2024-05-30 21:48 nradko: Hey everyone,
@@ -8457,6 +8457,16 @@ that does work with https://gist.github.com/jaymansfield/af6cb7d1bdd8092402e9bc2
   ↳ 2025-05-28 21:08 jaymansfield: I'll write up a few details after finishing on what I had to change to make it work
   ↳ 2025-05-29 02:53 sourabhniyogi: https://github.com/davxy/jam-test-vectors/pull/63/files
 https://hackmd.io/@sourabhniyogi/jam-appendixh-tiny
+  ↳ 2025-05-29 14:33 jaymansfield: Ok I am now able to encode/decode the EC output from polkajam and get the same result, as well as the old EC vectors in the closed PR.
+
+I’m not sure if it fully follows the GP. Two main things:
+
+1. The GP defines the data blob input into erasure coding to be d ∈ Y684k, but in the erasure coded work package sent from polkajam was erasure coded at length 272 (the exact bytes of the WP). I would have expected this needed to be padded with zeros to match the 684 in the GP spec. Without padding I get the same result. If I pad the work package bytes to a multiple of 684 the recovery shards are different and no longer match. Hopefully someone from Parity can comment on which is correct.
+2. I removed split, join, unzip, lace from the GP and started fresh. Just calculated number of expected pairs, then extracted each 2-byte pair from the same position across the original shards. Each of these pair groups were erasure coded, and then combined each set of results afterwards. I did not get the same results using the exact helper functions in the GP, but can now match polkajam. [edited]
+  ↳ 2025-05-29 15:01 sourabhniyogi: Here, similar to sbrk, a public implementation (in Rust) of the exact encoding / decoding transformations to cover the 272, 4104 etc in tiny AND full would be best. The "get the same result" would shift from trivial usage of erasure coding packages to being able to author and verify justifications in CE137/138/139/140, which are much more substantive.
+  ↳ 2025-05-29 15:04 jaymansfield: Wish I could help with the rust part, but all the transformations I did were done in my implementations language prior to calling the rust library which basically only calls reed_solomon_simd::encode().
+  ↳ 2025-05-29 15:07 sourabhniyogi: Do you see any point to the transformations?  I do not.
+  ↳ 2025-05-30 02:04 mkchung: Hey David Emett : so far we have NOT seen any release getting published in the last 48+hrs. Is the nightly release actually running? 
 2025-05-28 07:07 tony_lollipop: 
 2025-05-28 15:32 stsoen: Does anyone have the presentation that Gav gave yesterday at ETH Prague? I would be very grateful if someone could share it as a file (not the video, but the presentation itself)
 2025-05-28 17:06 rustybot: 
@@ -8471,4 +8481,80 @@ We're currently proposing three classes of vectors. You can find details in the 
 
 In the coming days, we'll be proposing increasingly complex scenarios to exercise additional host calls. [edited]
 2025-05-28 21:22 kianenigma: re-posting this issue form a few days ago I opened in test vectors repo in case anyone else knows the answer: https://github.com/w3f/jamtestvectors/issues/48
+  ↳ 2025-05-29 12:16 dave: GP definition seems reasonable to me. By my reading the PolkaJam source matches the GP, and this is what is used to generate the test vectors. So don't know what's going on there.
+  ↳ 2025-05-29 12:21 dave: Looking at the `preimage-not-needed` cases, I believe these cover invalid blocks: it is not permitted to include a preimage in the extrinsic unless it has been requested. Not sure what "post_state" is meant to indicate in this case.
+  ↳ 2025-05-29 12:26 dave: Note that it _is_ possible to include a preimage in the extrinsic that does not get integrated: integration occurs after accumulation, and accumulation may `forget` the preimage
 2025-05-29 03:10 clearloop: anybody knows what's the format of the preimages in the accumulate test vectors? we can not deblob them with standard program format nor program format, as I hacked the binary, I can see the header of it is debug-info which is not specified in graypaper 😅 [edited]
+  ↳ 2025-05-29 04:27 clearloop: e.g.
+
+```
+G\0\u{c}test-service\u{6}0.1.21\nApache-2.0\u{1}%Parity Technologies <admin@parity.io>\u{8}0\0\0\0\0\u{1}\0\0 \0/home/davxy/.cargo/registry/src/index.crates.io-6f17d22bba15001f/jam-codec-0.1.0/src/codec.rsunsafe precondition(s) violated: ptr::write requires that the pointer argument is aligned and non-nullunsafe precondition(s) violated: ptr::add requires that the address calculation does not overflowassertion failed: new_len <= self.capacity()/home/davxy/.rustup/toolchains/nightly-2024-11-01-x86_64-unknown-linux-gnu/lib/rustlib/src/rust/library/alloc/src/vec/mod.rscalled `Result::unwrap()` on an `Err` value/mnt/ssd/develop/jam/polkajam/crates/jam-pvm-common/src/mem.rsunsafe precondition(s) violated: ptr::copy_nonoverlapping requires that both pointer arguments are aligned and non-null and the specified memory ranges do not overlapunsafe precondition(s) violated: ptr::read requires that the pointer argument is aligned and non-nullunsafe precondition(s) violated: ptr::add requires that the address calculation does not overflowunsafe precondition(s) violated: ptr::sub_ptr requires `self >= origin`unsafe precondition(s) violated: slice::from_raw_parts requires the pointer to be aligned and non-null, and the total size of the slice not to exceed `isize::MAX`/home/davxy/ ...
+```
+
+or if this is metadata but it is prefixed with length 71 [edited]
+  ↳ 2025-05-29 06:31 clearloop: it's indeed metadata, works after fixing my Y function
+  ↳ 2025-05-29 07:31 greywolve: yeah we ran into this too, was just the metadata
+  ↳ 2025-05-29 07:33 greywolve: specified [here](https://graypaper.fluffylabs.dev/#/9a08063/109a01109a01?v=0.6.6).
+2025-05-29 12:28 arjanz: 
+2025-05-29 12:30 arjanz: When we wanted to use the `dev-spec.json` exported from `polkajam` as genesis, we ran into some issues with the is-authorized invocation (B.1).
+
+After some trial and error we found that the arguments supplied to the is-authorized invocation seems to be in a different format than GP 0.6.5 specifies.
+
+We would expect serialization of the WorkPackage and core\_index as Varint, but that always results in a panic. However, when we change the arguments and add a serialised `Vec<u8>` in front containing the auth params en modify the core\_index from `VarInt` to a `u16`, the is-authorized invocation is successful. The signature in the jam-null-authorizer service code also hints this structure:
+
+```rust
+impl jam_pvm_common::Authorizer for Authorizer {
+	fn is_authorized(param: AuthParam, package: WorkPackage, core_index: CoreIndex) -> AuthOutput {
+		info!(
+			"Null Authorizer, [{core_index}], {} gas, {param} param, {} token",
+			gas(),
+			package.authorization
+		);
+		if package.authorization.0 != param.0 {
+			panic!("Authorization failed")
+		}
+		let m = String::from_utf8_lossy(&package.authorization);
+		alloc::format!("Auth=<{m}>").as_bytes().to_vec().into()
+	}
+}
+```
+
+Is our assumption correct that the is-authorized arguments of `polkajam` currently deviates from GP 0.6.5? [edited]
+2025-05-29 12:43 davxy: > <@arjanz:matrix.org> When we wanted to use the `dev-spec.json` exported from `polkajam` as genesis, we ran into some issues with the is-authorized invocation (B.1). 
+> 
+> After some trial and error we found that the arguments supplied to the is-authorized invocation seems to be in a different format then GP 0.6.5 specifies. 
+> 
+> We would expect serialization of the WorkPackage and core_index as Varint, but that always results in a panic. However, when we change the arguments and add a serialised `Vec<u8>` in front containing the auth params en modify the core_index from `VarInt` to a `u16`, the is-authorized invocation is successful. The signature in the jam-null-authorizer service code also hints this structure:
+> 
+> ```rust
+> impl jam_pvm_common::Authorizer for Authorizer {
+> 	fn is_authorized(param: AuthParam, package: WorkPackage, core_index: CoreIndex) -> AuthOutput {
+> 		info!(
+> 			"Null Authorizer, [{core_index}], {} gas, {param} param, {} token",
+> 			gas(),
+> 			package.authorization
+> 		);
+> 		if package.authorization.0 != param.0 {
+> 			panic!("Authorization failed")
+> 		}
+> 		let m = String::from_utf8_lossy(&package.authorization);
+> 		alloc::format!("Auth=<{m}>").as_bytes().to_vec().into()
+> 	}
+> }
+> ```
+> 
+> Is our assumption correct that the is-authorized arguments of `polkajam` currently deviates from GP 0.6.5?
+
+Currently akf, but looks you are right. Do you mind open an issue in the vectors repo? (my fork pls)
+2025-05-29 12:50 arjanz: Sure thing: https://github.com/davxy/jam-test-vectors/issues/64
+2025-05-29 14:06 interweb_: For RPC API, is there any more detail? 
+I found https://hackmd.io/@polkadot/jip2#JIP-2-Node-RPC but there is no way to get account balances using the api?
+2025-05-29 14:14 dave: I assume you mean service balance? This is included in the data returned by `serviceData`
+2025-05-29 15:28 interweb_: Thanks, that helped me!
+2025-05-29 17:53 sourabhniyogi: Jan Bujak: What is (or will be) the idiomatic way of allocating heap in a parent JAM service in a Rust program (which I presume maps into SBRK now, and \[somehow\] its host function replacement in the future) vs a child guest program?
+
+I think I'm looking for a recipe like "When building { JAM Services / guest programs }, don't do `static mut OUTPUT_BUFFER: [u8; 32] = [0; 32];` ( because __ ), do `let mut buffer = Box::new([0u8; 32]);` ( because __ ) and then you will see ___" 
+
+As we adjusted our little toy JAM services to map into your `sbrk` recommendation, we ended up moving our bits of memory so they happened to be in the "heap" ... and we'd like to get this done properly now -- what is the way (or ways) we should do this now vs later? [edited]
+2025-05-29 22:43 sourabhniyogi: I'd like to get the "Simple Transfers" in sec 20.2.2 coded up and ready for Toaster testing, ideally with the 1.4MM TPS claims backed out in a way that can be presented to US States like Wyoming Stable Token Commission or Texas BlockChain Council (see also 1553 ) How can we develop a plan for this? [edited]
+2025-05-29 22:50 tsaf325: Just to give a little context, Thanks to the Texas Blockchain Council, I met two representatives from the Texas banking association who are looking into how Texas banks can stay competitive in the banking landscape with stablecoin adoption. I would like to outreach to them with some more info about how Polkadot can play a role in this. 

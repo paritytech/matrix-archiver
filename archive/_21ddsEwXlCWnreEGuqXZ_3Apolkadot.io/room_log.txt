@@ -1,5 +1,5 @@
 # room: #graypaper:polkadot.io
-# exported: 2025-05-29 03:32 UTC
+# exported: 2025-05-30 03:32 UTC
 2024-04-17 20:29 syed: https://matrix.to/#/!hyzRkDqDthePbodYFz:parity.io/$f_DMsIEcDXZegw6Sabnehzc-LrdDQkmq5MbxDDyoZxY?via=parity.io&via=web3.foundation
 
 2024-04-17 20:29 syed: 
@@ -6022,3 +6022,22 @@ But this probably doesn't make much difference in practice I guess. [edited]
 2025-05-27 15:23 danicuki: Screenshot 2025-05-27 at 16.23.14.png
 2025-05-27 15:23 danicuki: How should I interpret host call "read" and o = 0 and l = 0? 
 2025-05-27 15:24 danicuki: is this a panic?
+2025-05-29 09:26 gav: No.
+2025-05-29 09:27 gav: \<anything> ...+ 0 is the empty range [edited]
+2025-05-29 09:28 gav: So N_{anything ...+ 0} is {}
+2025-05-29 09:28 gav: And {} is the subset-or-equal of all sets. [edited]
+2025-05-29 09:34 gav: @room [GP version 0.6.7](https://github.com/gavofyork/graypaper/releases/tag/v0.6.7) released
+2025-05-29 09:35 gav: Several smaller alterations here. [edited]
+2025-05-29 09:36 gav: This completes almost all of the 0.6 milestone, with the rest just being the sweep of numeric encodings and some tidying to the underlying latex. [edited]
+2025-05-29 09:37 gav: There could be some additional corrections/tweaks once we see this stuff implemented, so there will likely be one or two more releases on the 0.6 series before we move to 0.7. [edited]
+2025-05-29 09:38 gav: One interesting thing which was added is [the ability for cores to be owned by services](https://github.com/gavofyork/graypaper/pull/393)
+2025-05-29 12:23 ascriv: Screenshot 2025-05-29 at 1.23.45 PM.png
+2025-05-29 12:24 ascriv: I think 12.22 in 0.6.7 needs to pass the additional 3 U parameters we added [edited]
+2025-05-29 12:27 ascriv: from privileged services (chi) presumably
+2025-05-29 12:29 ascriv: oh nevermind, actually chi just needs to be expanded and placed at the end [edited]
+2025-05-29 12:31 ascriv: 
+2025-05-29 12:32 ascriv: 
+2025-05-29 14:07 ascriv: Screenshot 2025-05-29 at 3.07.37 PM.png
+2025-05-29 14:09 ascriv: this part of bless in 0.6.7 should probably be E^-1_4#([u_a+4i...+4] for i in N_C) ? [edited]
+2025-05-29 14:12 ascriv: and I guess now we don't need to validate that each of them is in the range of a valid service index, because they're limited to 4 bytes [edited]
+2025-05-30 00:38 jaymansfield: Is there any documentation on the extra RPC methods that jamt uses? I noticed it uses a couple additional things on top of JIP-2, like a subscribeSyncStatus method and expects a few extra variables in the parameters object for example. I'm trying to make it work with one of my nodes.
