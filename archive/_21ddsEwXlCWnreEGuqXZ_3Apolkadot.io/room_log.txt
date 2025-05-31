@@ -1,5 +1,5 @@
 # room: #graypaper:polkadot.io
-# exported: 2025-05-30 03:32 UTC
+# exported: 2025-05-31 03:31 UTC
 2024-04-17 20:29 syed: https://matrix.to/#/!hyzRkDqDthePbodYFz:parity.io/$f_DMsIEcDXZegw6Sabnehzc-LrdDQkmq5MbxDDyoZxY?via=parity.io&via=web3.foundation
 
 2024-04-17 20:29 syed: 
@@ -6041,3 +6041,18 @@ But this probably doesn't make much difference in practice I guess. [edited]
 2025-05-29 14:09 ascriv: this part of bless in 0.6.7 should probably be E^-1_4#([u_a+4i...+4] for i in N_C) ? [edited]
 2025-05-29 14:12 ascriv: and I guess now we don't need to validate that each of them is in the range of a valid service index, because they're limited to 4 bytes [edited]
 2025-05-30 00:38 jaymansfield: Is there any documentation on the extra RPC methods that jamt uses? I noticed it uses a couple additional things on top of JIP-2, like a subscribeSyncStatus method and expects a few extra variables in the parameters object for example. I'm trying to make it work with one of my nodes.
+2025-05-30 10:45 gav: https://github.com/gavofyork/graypaper/pull/413
+2025-05-30 11:14 gav: https://github.com/gavofyork/graypaper/pull/415
+2025-05-30 11:34 arkadiy: https://github.com/polkadot-fellows/JIPs/pull/7
+As for the chain parameters, these will most likely be changed to match the on-chain data return by the `fetch` function here:
+https://graypaper.fluffylabs.dev/#/7e6ff6a/32f800324e01?v=0.6.7
+2025-05-30 11:55 jaymansfield: > <@arkadiy:parity.io> https://github.com/polkadot-fellows/JIPs/pull/7
+> As for the chain parameters, these will most likely be changed to match the on-chain data return by the `fetch` function here:
+> https://graypaper.fluffylabs.dev/#/7e6ff6a/32f800324e01?v=0.6.7
+
+Thank you.
+2025-05-30 16:47 subotic: Sorry, if this is trivial. The GP mentions an explicit halt instruction [here](https://graypaper.fluffylabs.dev/#/7e6ff6a/0acc010ad001?v=0.6.7), which I don't see defined in Appendix A. Am I missing something?
+2025-05-30 16:49 subotic: ah, brain fog. the djump thingy. sorry for the noise. [edited]
+2025-05-30 19:44 jaymansfield: From the jamt source code I noticed that for the statistics and service related rpc subscriptions that it expects their responses to always first include the header hash and slot #. I don't think this is mentioned anywhere in JIP-2. For example under subscribeStatistics it just says "Notification type: Blob", but in reality it looks like the notifications need to include Header hash, slot and then the blob. Are you able to confirm?
+2025-05-30 19:49 arkadiy: Yes, I guess we need to update the spec here David Emett 
+2025-05-30 19:53 dave: Yeah I think there are a few updates needed to JIP-2, will review and update next week
