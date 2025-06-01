@@ -1,5 +1,5 @@
 # room: #jam:polkadot.io
-# exported: 2025-05-31 03:30 UTC
+# exported: 2025-06-01 03:44 UTC
 2024-04-20 02:08 johnjiao123: 
 2024-04-20 02:09 johnjiao123: 
 2024-05-30 21:48 nradko: Hey everyone,
@@ -8602,3 +8602,57 @@ Not sure this will help at all, but 32, when compact encoded, is indeed a single
 2025-05-30 15:06 gav: Yes some service/parachain could help coordinate this. 
 2025-05-30 19:04 gav: The Parity JAM SDK version 0.1.22 is released on crates.io; it should be in line with GP 0.6.5
 2025-05-30 19:05 gav: It includes most of the CoreVM development stuff (but not yet Builder or Monitor - these will come soon). It also includes the CoreVM Doom binary. [edited]
+2025-05-31 08:05 clearloop: as I can see in crates the codec seems migrated to jam-codec correctly now! finally can try building the test-service!
+
+however, I met some bugs on decoding the manifest of program, caused by the unwraps in the builder https://docs.rs/jam-pvm-builder/0.1.22/src/jam\_pvm\_builder/lib.rs.html#168-172, opened an issue on https://github.com/paritytech/polkajam-releases/issues/2 not sure if it is the correct place
+ [edited]
+2025-05-31 08:10 rustybot: > <@clearloop:matrix.org> as I can see in crates the codec seems migrated to jam-codec correctly now! finally can try building the test-service!
+> 
+> however, I met some bugs on decoding the manifest of program, caused by the unwraps in the builder https://docs.rs/jam-pvm-builder/0.1.22/src/jam_pvm_builder/lib.rs.html#168-172, opened a issue on https://github.com/paritytech/polkajam-releases/issues/2 not sure if it is the correct place
+> 
+
+What service you're trying to build?
+  ↳ 2025-05-31 08:15 clearloop: still, the [test-service](https://github.com/davxy/jam-test-vectors/blob/master/accumulate/test-service/Cargo.toml) in accumulate tests 😅, it does not have author field and license fields so triggered the unwrap panics
+
+I've been guessing the encoding of AccumulateItem in the test vectors from yesterday, so I'm now trying to replace the binary with a program built with certain params )) [edited]
+  ↳ 2025-05-31 08:31 clearloop: The cache management looks weird as well, could not find the build cache, after updating the deps from 0.1.21 to 0.1.22, it re-compiles the previous dependencies, and failed to sync with the new dependencies, that I have to move it out of the workspace then compile it
+
+I can build binary now but still have no clue where is the cache, the program re-compiles everything on each time running `jam-pvm-build` [edited]
+  ↳ 2025-05-31 08:51 clearloop: I guess the cache management problem could be caused by 
+
+https://docs.rs/jam-pvm-builder/0.1.22/src/jam_pvm_builder/lib.rs.html#250
+
+```
+jam-pvm-build
+🪤 PVM module type: Service
+🎯 Target name: riscv64emac-unknown-none-polkavm
+ℹ️ `rustup` and toolchain installed. Continuing build process...
+
+thread 'main' panicked at /Users/clearloop/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/jam-pvm-builder-0.1.22/src/lib.rs:168:70:
+called `Result::unwrap()` on an `Err` value: Error("EOF while parsing a value", line: 1, column: 0)
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+```
+
+I got this problem with jam-pvm-build 0.1.22, seems like it's translating built the files with the cache built by the previous 0.1.21 toolchain
+  ↳ 2025-05-31 08:53 clearloop: seems like there is a cache management problem as well
+2025-05-31 08:52 rustybot: Mmm Cargo.toml needs to updated with the required fields for metadata. Ty for reporting
+2025-05-31 08:52 clearloop: 
+2025-05-31 08:53 clearloop: idk how to ref the message from thread, but seems there is a cache management problem as well
+2025-05-31 08:55 rustybot: And perhaps the builder also needs being more informative when the metadata can't be built because of missing info
+2025-05-31 08:55 clearloop: I guess the cache management problem could be caused by 
+
+https://docs.rs/jam-pvm-builder/0.1.22/src/jam_pvm_builder/lib.rs.html#250
+
+```
+jam-pvm-build
+🪤 PVM module type: Service
+🎯 Target name: riscv64emac-unknown-none-polkavm
+ℹ️ `rustup` and toolchain installed. Continuing build process...
+
+thread 'main' panicked at /Users/clearloop/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/jam-pvm-builder-0.1.22/src/lib.rs:168:70:
+called `Result::unwrap()` on an `Err` value: Error("EOF while parsing a value", line: 1, column: 0)
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+```
+
+I got this problem with jam-pvm-build 0.1.22, seems like it's translating built the files with the cache built by the previous 0.1.21 toolchain
+2025-05-31 09:10 clearloop: okay it's caused by <del>jam-pvm-build is using temp\_dir and the temp\_dir is not cleaned after the build, however on the following build, it seems re-used part of the temp\_dir</del> workspace problem, the jam-pvm-builder failed to read the manifest using cargo read-manifest [edited]

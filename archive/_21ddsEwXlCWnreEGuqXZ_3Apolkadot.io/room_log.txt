@@ -1,5 +1,5 @@
 # room: #graypaper:polkadot.io
-# exported: 2025-05-31 03:31 UTC
+# exported: 2025-06-01 03:44 UTC
 2024-04-17 20:29 syed: https://matrix.to/#/!hyzRkDqDthePbodYFz:parity.io/$f_DMsIEcDXZegw6Sabnehzc-LrdDQkmq5MbxDDyoZxY?via=parity.io&via=web3.foundation
 
 2024-04-17 20:29 syed: 
@@ -6056,3 +6056,4 @@ Thank you.
 2025-05-30 19:44 jaymansfield: From the jamt source code I noticed that for the statistics and service related rpc subscriptions that it expects their responses to always first include the header hash and slot #. I don't think this is mentioned anywhere in JIP-2. For example under subscribeStatistics it just says "Notification type: Blob", but in reality it looks like the notifications need to include Header hash, slot and then the blob. Are you able to confirm?
 2025-05-30 19:49 arkadiy: Yes, I guess we need to update the spec here David Emett 
 2025-05-30 19:53 dave: Yeah I think there are a few updates needed to JIP-2, will review and update next week
+2025-05-31 22:08 greywolve: For the disputes extrinsic verdict's age, does using the prior state's slot, active and archived validators imply that in the first block of a new epoch a verdict can have an age of 2 epochs back? Eg, we're in the first slot of epoch 3 (slot 36), at that point the prior state is in epoch 2 (slot 35), and our verdict has an age of 1 which is valid. 2 is also valid, but we couldn't at this point have an age of 3. [edited]

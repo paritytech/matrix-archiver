@@ -18,7 +18,7 @@ a:hover{color:#90caf9}
 em{font-style:italic}
 </style>
 <h1>#jam:polkadot.io</h1>
-<p><small>last updated 2025-05-31 03:30 UTC</small></p>
+<p><small>last updated 2025-06-01 03:44 UTC</small></p>
 <p><a href='room_log.txt'>⇩ plaintext</a> · <a href='../../'>⇦ all rooms</a></p>
 <hr>
 <div class='msg'><a class='ts' href='#$we4SYXTHwmKn094X9Zs_7mWUOoUVh4icvVdxD83RZfs'>#</a> <a class='ts' name='$we4SYXTHwmKn094X9Zs_7mWUOoUVh4icvVdxD83RZfs' href='https://matrix.to/#/!wBOJlzaOULZOALhaRh:polkadot.io/$we4SYXTHwmKn094X9Zs_7mWUOoUVh4icvVdxD83RZfs' target='_blank'>2024-04-20 02:08</a>&ensp;<span class='u' style='color:#d0709e'>johnjiao123</span>: </div>
@@ -8542,3 +8542,55 @@ Not sure this will help at all, but 32, when compact encoded, is indeed a single
 <div class='msg'><a class='ts' href='#$96I1zIEjW2QgPzdKp4OVrKTFVgGIg9pfGCAiwix9DlQ'>#</a> <a class='ts' name='$96I1zIEjW2QgPzdKp4OVrKTFVgGIg9pfGCAiwix9DlQ' href='https://matrix.to/#/!wBOJlzaOULZOALhaRh:polkadot.io/$96I1zIEjW2QgPzdKp4OVrKTFVgGIg9pfGCAiwix9DlQ' target='_blank'>2025-05-30 15:06</a>&ensp;<span class='u' style='color:#cd8957'>gav</span>: Yes some service/parachain could help coordinate this. </div>
 <div class='msg'><a class='ts' href='#$c2HRpLo9aq2XcW9KaykUFMpn6PQImzPetUmLrKphxmA'>#</a> <a class='ts' name='$c2HRpLo9aq2XcW9KaykUFMpn6PQImzPetUmLrKphxmA' href='https://matrix.to/#/!wBOJlzaOULZOALhaRh:polkadot.io/$c2HRpLo9aq2XcW9KaykUFMpn6PQImzPetUmLrKphxmA' target='_blank'>2025-05-30 19:04</a>&ensp;<span class='u' style='color:#cd8957'>gav</span>: The Parity JAM SDK version 0.1.22 is released on crates.io; it should be in line with GP 0.6.5</div>
 <div class='msg'><a class='ts' href='#$LbWkXa_UPyC1mJWLNSeeuHkaFrujv_N00BPKFOnGlSY'>#</a> <a class='ts' name='$LbWkXa_UPyC1mJWLNSeeuHkaFrujv_N00BPKFOnGlSY' href='https://matrix.to/#/!wBOJlzaOULZOALhaRh:polkadot.io/$LbWkXa_UPyC1mJWLNSeeuHkaFrujv_N00BPKFOnGlSY' target='_blank'>2025-05-30 19:05</a>&ensp;<span class='u' style='color:#cd8957'>gav</span>: It includes most of the CoreVM development stuff (but not yet Builder or Monitor - these will come soon). It also includes the CoreVM Doom binary. <span class="edited">(edited)</span></div>
+<div class='msg'><a class='ts' href='#$OjXPQowKgVsHKiDids17HVegX39Q6fyPQRX2XRTZwqI'>#</a> <a class='ts' name='$OjXPQowKgVsHKiDids17HVegX39Q6fyPQRX2XRTZwqI' href='https://matrix.to/#/!wBOJlzaOULZOALhaRh:polkadot.io/$OjXPQowKgVsHKiDids17HVegX39Q6fyPQRX2XRTZwqI' target='_blank'>2025-05-31 08:05</a>&ensp;<span class='u' style='color:#be2950'>clearloop</span>: as I can see in crates the codec seems migrated to jam-codec correctly now! finally can try building the test-service!
+
+however, I met some bugs on decoding the manifest of program, caused by the unwraps in the builder <a href="https://docs.rs/jam-pvm-builder/0.1.22/src/jam\_pvm\_builder/lib.rs.html#168-172," rel="noopener" target="_blank">https://docs.rs/jam-pvm-builder/0.1.22/src/jam\_pvm\_builder/lib.rs.html#168-172,</a> opened an issue on <a href="https://github.com/paritytech/polkajam-releases/issues/2" rel="noopener" target="_blank">https://github.com/paritytech/polkajam-releases/issues/2</a> not sure if it is the correct place
+ <span class="edited">(edited)</span></div>
+<div class='msg'><a class='ts' href='#$x_3JDoP6lg-NLScCXwpkGT8CJzx8Th5WYBZmgqAQV_Y'>#</a> <a class='ts' name='$x_3JDoP6lg-NLScCXwpkGT8CJzx8Th5WYBZmgqAQV_Y' href='https://matrix.to/#/!wBOJlzaOULZOALhaRh:polkadot.io/$x_3JDoP6lg-NLScCXwpkGT8CJzx8Th5WYBZmgqAQV_Y' target='_blank'>2025-05-31 08:10</a>&ensp;<span class='u' style='color:#b332c3'>rustybot</span>: &gt; &lt;@clearloop:matrix.org&gt; as I can see in crates the codec seems migrated to jam-codec correctly now! finally can try building the test-service!
+&gt; 
+&gt; however, I met some bugs on decoding the manifest of program, caused by the unwraps in the builder <a href="https://docs.rs/jam-pvm-builder/0.1.22/src/jam_pvm_builder/lib.rs.html#168-172," rel="noopener" target="_blank">https://docs.rs/jam-pvm-builder/0.1.22/src/jam_pvm_builder/lib.rs.html#168-172,</a> opened a issue on <a href="https://github.com/paritytech/polkajam-releases/issues/2" rel="noopener" target="_blank">https://github.com/paritytech/polkajam-releases/issues/2</a> not sure if it is the correct place
+&gt; 
+
+What service you&#x27;re trying to build?</div>
+<div class='msg reply'><a class='ts' href='#$FVoi5ZSpos7q8ayUxJbTj85T4eP_vsIJE7EQjb5L5ck'>#</a> <a class='ts' name='$FVoi5ZSpos7q8ayUxJbTj85T4eP_vsIJE7EQjb5L5ck' href='https://matrix.to/#/!wBOJlzaOULZOALhaRh:polkadot.io/$FVoi5ZSpos7q8ayUxJbTj85T4eP_vsIJE7EQjb5L5ck' target='_blank'>2025-05-31 08:15</a>&ensp;<span class='u' style='color:#be2950'>clearloop</span>: still, the <a href="https://github.com/davxy/jam-test-vectors/blob/master/accumulate/test-service/Cargo.toml" rel="noopener" target="_blank">test-service</a> in accumulate tests 😅, it does not have author field and license fields so triggered the unwrap panics
+
+I&#x27;ve been guessing the encoding of AccumulateItem in the test vectors from yesterday, so I&#x27;m now trying to replace the binary with a program built with certain params )) <span class="edited">(edited)</span></div>
+<div class='msg reply'><a class='ts' href='#$SMWIBoF71dPWHxUNFDvKym6Oczh-a97vepmSE0e-KhA'>#</a> <a class='ts' name='$SMWIBoF71dPWHxUNFDvKym6Oczh-a97vepmSE0e-KhA' href='https://matrix.to/#/!wBOJlzaOULZOALhaRh:polkadot.io/$SMWIBoF71dPWHxUNFDvKym6Oczh-a97vepmSE0e-KhA' target='_blank'>2025-05-31 08:31</a>&ensp;<span class='u' style='color:#be2950'>clearloop</span>: The cache management looks weird as well, could not find the build cache, after updating the deps from 0.1.21 to 0.1.22, it re-compiles the previous dependencies, and failed to sync with the new dependencies, that I have to move it out of the workspace then compile it
+
+I can build binary now but still have no clue where is the cache, the program re-compiles everything on each time running <code>jam-pvm-build</code> <span class="edited">(edited)</span></div>
+<div class='msg reply'><a class='ts' href='#$j6DTcOZSPvMK0XYALrCJ7k9mtIrrd9rFu33-nNbkeXI'>#</a> <a class='ts' name='$j6DTcOZSPvMK0XYALrCJ7k9mtIrrd9rFu33-nNbkeXI' href='https://matrix.to/#/!wBOJlzaOULZOALhaRh:polkadot.io/$j6DTcOZSPvMK0XYALrCJ7k9mtIrrd9rFu33-nNbkeXI' target='_blank'>2025-05-31 08:51</a>&ensp;<span class='u' style='color:#be2950'>clearloop</span>: I guess the cache management problem could be caused by 
+
+<a href="https://docs.rs/jam-pvm-builder/0.1.22/src/jam_pvm_builder/lib.rs.html#250" rel="noopener" target="_blank">https://docs.rs/jam-pvm-builder/0.1.22/src/jam_pvm_builder/lib.rs.html#250</a>
+
+<pre><code class=''>jam-pvm-build
+🪤 PVM module type: Service
+🎯 Target name: riscv64emac-unknown-none-polkavm
+ℹ️ `rustup` and toolchain installed. Continuing build process...
+
+thread &#x27;main&#x27; panicked at /Users/clearloop/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/jam-pvm-builder-0.1.22/src/lib.rs:168:70:
+called `Result::unwrap()` on an `Err` value: Error(&quot;EOF while parsing a value&quot;, line: 1, column: 0)
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+</code></pre>
+
+I got this problem with jam-pvm-build 0.1.22, seems like it&#x27;s translating built the files with the cache built by the previous 0.1.21 toolchain</div>
+<div class='msg reply'><a class='ts' href='#$MFaQLWaDZhGNAzsQtrnvRoOs3a7o2N_Z-PFb4E30oFA'>#</a> <a class='ts' name='$MFaQLWaDZhGNAzsQtrnvRoOs3a7o2N_Z-PFb4E30oFA' href='https://matrix.to/#/!wBOJlzaOULZOALhaRh:polkadot.io/$MFaQLWaDZhGNAzsQtrnvRoOs3a7o2N_Z-PFb4E30oFA' target='_blank'>2025-05-31 08:53</a>&ensp;<span class='u' style='color:#be2950'>clearloop</span>: seems like there is a cache management problem as well</div>
+<div class='msg'><a class='ts' href='#$Ye8b-0zHCFQ-fyph5b2W_17j6c5dA0s1GWRLVxZgxhY'>#</a> <a class='ts' name='$Ye8b-0zHCFQ-fyph5b2W_17j6c5dA0s1GWRLVxZgxhY' href='https://matrix.to/#/!wBOJlzaOULZOALhaRh:polkadot.io/$Ye8b-0zHCFQ-fyph5b2W_17j6c5dA0s1GWRLVxZgxhY' target='_blank'>2025-05-31 08:52</a>&ensp;<span class='u' style='color:#b332c3'>rustybot</span>: Mmm Cargo.toml needs to updated with the required fields for metadata. Ty for reporting</div>
+<div class='msg'><a class='ts' href='#$2qLdMrAPzmhfQfVruxlEgueJc5F0ewXD3uPE4kcYbRI'>#</a> <a class='ts' name='$2qLdMrAPzmhfQfVruxlEgueJc5F0ewXD3uPE4kcYbRI' href='https://matrix.to/#/!wBOJlzaOULZOALhaRh:polkadot.io/$2qLdMrAPzmhfQfVruxlEgueJc5F0ewXD3uPE4kcYbRI' target='_blank'>2025-05-31 08:52</a>&ensp;<span class='u' style='color:#be2950'>clearloop</span>: </div>
+<div class='msg'><a class='ts' href='#$bwgd1XoVd81hYJrzsoXQkteCrGrQvb7yuO3geD8jfoQ'>#</a> <a class='ts' name='$bwgd1XoVd81hYJrzsoXQkteCrGrQvb7yuO3geD8jfoQ' href='https://matrix.to/#/!wBOJlzaOULZOALhaRh:polkadot.io/$bwgd1XoVd81hYJrzsoXQkteCrGrQvb7yuO3geD8jfoQ' target='_blank'>2025-05-31 08:53</a>&ensp;<span class='u' style='color:#be2950'>clearloop</span>: idk how to ref the message from thread, but seems there is a cache management problem as well</div>
+<div class='msg'><a class='ts' href='#$1dbC-RW71q3hY7srnIScXe765duAkws30DgkQb4F5-g'>#</a> <a class='ts' name='$1dbC-RW71q3hY7srnIScXe765duAkws30DgkQb4F5-g' href='https://matrix.to/#/!wBOJlzaOULZOALhaRh:polkadot.io/$1dbC-RW71q3hY7srnIScXe765duAkws30DgkQb4F5-g' target='_blank'>2025-05-31 08:55</a>&ensp;<span class='u' style='color:#b332c3'>rustybot</span>: And perhaps the builder also needs being more informative when the metadata can&#x27;t be built because of missing info</div>
+<div class='msg'><a class='ts' href='#$UEPk4gEN5w83v9rVAOj7r2rUoif0iL-f5LgDbCvQ7RI'>#</a> <a class='ts' name='$UEPk4gEN5w83v9rVAOj7r2rUoif0iL-f5LgDbCvQ7RI' href='https://matrix.to/#/!wBOJlzaOULZOALhaRh:polkadot.io/$UEPk4gEN5w83v9rVAOj7r2rUoif0iL-f5LgDbCvQ7RI' target='_blank'>2025-05-31 08:55</a>&ensp;<span class='u' style='color:#be2950'>clearloop</span>: I guess the cache management problem could be caused by 
+
+<a href="https://docs.rs/jam-pvm-builder/0.1.22/src/jam_pvm_builder/lib.rs.html#250" rel="noopener" target="_blank">https://docs.rs/jam-pvm-builder/0.1.22/src/jam_pvm_builder/lib.rs.html#250</a>
+
+<pre><code class=''>jam-pvm-build
+🪤 PVM module type: Service
+🎯 Target name: riscv64emac-unknown-none-polkavm
+ℹ️ `rustup` and toolchain installed. Continuing build process...
+
+thread &#x27;main&#x27; panicked at /Users/clearloop/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/jam-pvm-builder-0.1.22/src/lib.rs:168:70:
+called `Result::unwrap()` on an `Err` value: Error(&quot;EOF while parsing a value&quot;, line: 1, column: 0)
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+</code></pre>
+
+I got this problem with jam-pvm-build 0.1.22, seems like it&#x27;s translating built the files with the cache built by the previous 0.1.21 toolchain</div>
+<div class='msg'><a class='ts' href='#$Xv8kVtarPaC3deZfdiErrPeiZOek9rFHjAjzwbGEaTs'>#</a> <a class='ts' name='$Xv8kVtarPaC3deZfdiErrPeiZOek9rFHjAjzwbGEaTs' href='https://matrix.to/#/!wBOJlzaOULZOALhaRh:polkadot.io/$Xv8kVtarPaC3deZfdiErrPeiZOek9rFHjAjzwbGEaTs' target='_blank'>2025-05-31 09:10</a>&ensp;<span class='u' style='color:#be2950'>clearloop</span>: okay it&#x27;s caused by &lt;del&gt;jam-pvm-build is using temp\_dir and the temp\_dir is not cleaned after the build, however on the following build, it seems re-used part of the temp\_dir&lt;/del&gt; workspace problem, the jam-pvm-builder failed to read the manifest using cargo read-manifest <span class="edited">(edited)</span></div>
