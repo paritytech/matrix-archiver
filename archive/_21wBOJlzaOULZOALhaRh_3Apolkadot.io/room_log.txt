@@ -1,5 +1,5 @@
 # room: #jam:polkadot.io
-# exported: 2025-06-01 03:44 UTC
+# exported: 2025-06-02 03:37 UTC
 2024-04-20 02:08 johnjiao123: 
 2024-04-20 02:09 johnjiao123: 
 2024-05-30 21:48 nradko: Hey everyone,
@@ -8487,6 +8487,24 @@ Is there a setup step we have missed?  What is it?
 Looks like there's a release here built this morning: https://github.com/paritytech/polkajam-releases/releases/tag/nightly-2025-05-30
   ↳ 2025-05-30 11:35 sourabhniyogi: Ok, got the latest release --  The 2025-05-30 has the same "AuthorizationLacking" (and 50/50 when we get the wp, we report back "getAuthorizeCode: Authorization code(fa75..60b6)not found") [edited]
   ↳ 2025-05-30 11:36 sourabhniyogi: image.png
+  ↳ 2025-06-01 17:54 jaymansfield: Were you able to get around this? Facing the same issue. 2025-06-01 13:52:48 tokio-runtime-worker ERROR jam_node::chain::guarantors::guarantor  Failed to validate work package: in-core error: AuthorizationLacking
+  ↳ 2025-06-01 21:14 sourabhniyogi: We backtracked from using
+
+(a) polkajam chainspec with jamt submitting a new service to polkajam bootstrap services
+
+
+to just
+
+
+(b) jamduna chainspec with our own test submitting to our bootstrap service with "new/write/transfer" (same as what happens in assurances/orderedaccumulation)
+
+We now have identical work reports EXCEPT for the erasureroot (so.. no workreporthash signature matching =(), so if there are 2/3 of polkajam it goes |E\_G|=1 => |E\_A|=5 (or 6) => |E\_P| = 1 for the new services.  BUT this implies that if we replicate your EC transformations (or figure out what they should REALLY be), you/we can get to the promised land.  
+
+Are you posting your binaries? [edited]
+  ↳ 2025-06-01 21:41 jaymansfield: Thanks I might take the same route as you in the meantime then until it’s resolved and use my own spec and WP publisher. I do have jamt sending directly to my node, but same issue still with the WP authorizer not matching the ones in the dev chainspec. I’ll publish a binary early this week I have been pretty focused on polkajam compatibility and forgot I was going to post one. 
+  ↳ 2025-06-02 01:14 sourabhniyogi: Ok, I replicated your result using your tip (2):
+
+https://github.com/jam-duna/jamtestnet/tree/main/erasurecoding
 2025-05-28 07:07 tony_lollipop: 
 2025-05-28 15:32 stsoen: Does anyone have the presentation that Gav gave yesterday at ETH Prague? I would be very grateful if someone could share it as a file (not the video, but the presentation itself)
 2025-05-28 17:06 rustybot: 
@@ -8656,3 +8674,10 @@ note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
 
 I got this problem with jam-pvm-build 0.1.22, seems like it's translating built the files with the cache built by the previous 0.1.21 toolchain
 2025-05-31 09:10 clearloop: okay it's caused by <del>jam-pvm-build is using temp\_dir and the temp\_dir is not cleaned after the build, however on the following build, it seems re-used part of the temp\_dir</del> workspace problem, the jam-pvm-builder failed to read the manifest using cargo read-manifest [edited]
+2025-06-01 07:16 sourabhniyogi: We finally managed to get our first workpackage authorized/guaranteed/assured/accumulated (spoofing bundle verification, unnecessarily, to get |E\_A|=5 to 6), not with jamt with polkajam chainspec but with jamduna chainspec using our bootstrap service.  However, we had to add the following hack due to what we think is a polkajam 0.6.5-specific bug: Polkajam (at 0.6.5) appears to be be using a slightly off encoding of "a" (argument inputs) in authorization in its standard program initialization -- instead of [E(p,c)](https://graypaper.fluffylabs.dev/#/cc517d7/2c58032c5803?v=0.6.5) (p=the work package , c=varint core index), it appears to have an extra few bytes for "c".
+
+We found this by seeing `a1 = 0x10c` (r8=268) in polkajam pvm trace of the authorization execution with a 265-byte work package (which polkajam reported back in its CE135 work report), indicating that for some reason it encodes "c" with 3 bytes.  If we are going to be at 0.6.5 for most-to-all of June (useful for multiclient testnet construction), this is worth a quick fix.  We coped by adding a couple extra bytes to match the 3 bytes, though its [E\_2(c)](https://graypaper.fluffylabs.dev/#/7e6ff6a/2eb6002eb600?v=0.6.7) now.
+
+Is there some ideathat we should target 0.6.5 in early June and 0.6.7 in late June or something like that? [edited]
+2025-06-01 08:06 gav: Thanks - we’ll take a look into the encoding. 
+2025-06-01 08:06 gav: As for versions, I don’t expect it to be too long to implement 0.6.7 and cut 0.6.8 with any needed changes.   [edited]
