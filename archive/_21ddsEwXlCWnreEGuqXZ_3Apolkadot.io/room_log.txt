@@ -1,5 +1,5 @@
 # room: #graypaper:polkadot.io
-# exported: 2025-06-02 03:37 UTC
+# exported: 2025-06-03 03:33 UTC
 2024-04-17 20:29 syed: https://matrix.to/#/!hyzRkDqDthePbodYFz:parity.io/$f_DMsIEcDXZegw6Sabnehzc-LrdDQkmq5MbxDDyoZxY?via=parity.io&via=web3.foundation
 
 2024-04-17 20:29 syed: 
@@ -6061,3 +6061,11 @@ Thank you.
 I would like to double-check a question regarding the recompiler.
 Is the implementation language restricted to JAM, to the same language set, or are other programming languages also permitted?
 2025-06-01 19:25 charliewinston14: For the wonky disputes, is it exactly 1/3 or 1/3+?
+2025-06-02 06:48 davxy: > <@charliewinston14:matrix.org> For the wonky disputes, is it exactly 1/3 or 1/3+?
+
+Exactly . Otherwise, it would logically include the 2V/3 + 1 case - which isn't wonky, but rather the good case
+2025-06-02 07:14 davxy: > <@davxy:matrix.org> Exactly . Otherwise, it would logically include the 2V/3 + 1 case - which isn't wonky, but rather the good case
+
+Just to elaborate. The purpose of this expression is to concisely capture the condition in which a supermajority cannot be reached for either outcome
+2025-06-02 11:47 ascriv: Screenshot 2025-06-02 at 2.47.21 PM.png
+2025-06-02 11:48 ascriv: for the state serialization, can't we get away with omitting a_o and a_i since they are derivable from other components of the serialized state?

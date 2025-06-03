@@ -1,5 +1,5 @@
 # room: #jam:polkadot.io
-# exported: 2025-06-02 03:37 UTC
+# exported: 2025-06-03 03:33 UTC
 2024-04-20 02:08 johnjiao123: 
 2024-04-20 02:09 johnjiao123: 
 2024-05-30 21:48 nradko: Hey everyone,
@@ -8505,6 +8505,26 @@ Are you posting your binaries? [edited]
   ↳ 2025-06-02 01:14 sourabhniyogi: Ok, I replicated your result using your tip (2):
 
 https://github.com/jam-duna/jamtestnet/tree/main/erasurecoding
+  ↳ 2025-06-02 13:32 sourabhniyogi: Erasure root matches now, see this gist
+https://gist.github.com/sourabhniyogi/6430caee2cff365ff6e51dcff115fb86
+  ↳ 2025-06-02 13:45 sourabhniyogi: Notes:
+* we did not see the bClub <=> sClub swap fix yet.  
+* For CE133, having 0 extrinsics still requires sending in a 4 byte 0 message length
+  ↳ 2025-06-02 13:46 sourabhniyogi: ```
+--> [Extrinsic] (Message size should equal sum of extrinsic data lengths)
+```
+
+  ↳ 2025-06-02 19:25 sourabhniyogi: David Emett: It appears you reversed the ordering of the path (awesome, thank you!) but not bClub / sClub ?   See https://gist.github.com/sourabhniyogi/6430caee2cff365ff6e51dcff115fb86#file-polkajam-wp-match-log-L602-L623) for how we currently have sClub first then bClub where we are able to match erasure roots and, amazingly enough, verify Justifications with your path ordering from CE137 against the the erasure root.  
+  ↳ 2025-06-02 20:57 dave: sourabhniyogi: AFAIK we've swapped around the bundle-shard & segments-shard hashes to match the GP. This fix was in the nightly-2025-05-30 release. I'm not sure what you mean by the "ordering of the path"?
+  ↳ 2025-06-02 22:06 mkchung: @David Emett:
+
+From GP 0.6.7 (§14.17) https://graypaper.fluffylabs.dev/#/7e6ff6a/1c3b011c4c01?v=0.6.7 (or GP 0.6.5 §14.16 https://graypaper.fluffylabs.dev/#/cc517d7/1cb1001cb100?v=0.6.5), we expect the erasure root to be built with leaves of (bClub ++ sClub). NOT (sClub ++ bClub)
+  ↳ 2025-06-02 22:07 mkchung: Based on May 30th PolkaJam binary, I believe PolkaJam is still using (sClub, bClub) as leaves to construct the erasure root -- which deviates from the either GP specification.  It appears that justification ordering has been reversed/swapped to validate an erasure root built using (sClub, bClub) as leaves. But we are expecting (1) the erasure root to be built using (bClub, sClub) and (2) justification paths to match that (bClub, sClub)'s erasure root.
+  ↳ 2025-06-02 22:08 dave: Oh I see, possibly we missed that in the change. Will take a look.
+  ↳ 2025-06-02 22:18 dave: Seems the change didn't actually swap things around, sorry. It refactored things so that the order was determined in one place, but the actual swapping of the order doesn't appear to have been done 🙃
+  ↳ 2025-06-02 22:23 dave: Should actually be fixed in tonight's build 🤞 Apologies!
+  ↳ 2025-06-03 01:40 jaymansfield: Are you able to share the chainspec file used with that WPB? [edited]
+  ↳ 2025-06-03 01:46 sourabhniyogi: https://github.com/jam-duna/jamtestnet/blob/main/chainspecs/jamduna-spec.json
 2025-05-28 07:07 tony_lollipop: 
 2025-05-28 15:32 stsoen: Does anyone have the presentation that Gav gave yesterday at ETH Prague? I would be very grateful if someone could share it as a file (not the video, but the presentation itself)
 2025-05-28 17:06 rustybot: 
@@ -8674,10 +8694,17 @@ note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
 
 I got this problem with jam-pvm-build 0.1.22, seems like it's translating built the files with the cache built by the previous 0.1.21 toolchain
 2025-05-31 09:10 clearloop: okay it's caused by <del>jam-pvm-build is using temp\_dir and the temp\_dir is not cleaned after the build, however on the following build, it seems re-used part of the temp\_dir</del> workspace problem, the jam-pvm-builder failed to read the manifest using cargo read-manifest [edited]
-2025-06-01 07:16 sourabhniyogi: We finally managed to get our first workpackage authorized/guaranteed/assured/accumulated (spoofing bundle verification, unnecessarily, to get |E\_A|=5 to 6), not with jamt with polkajam chainspec but with jamduna chainspec using our bootstrap service.  However, we had to add the following hack due to what we think is a polkajam 0.6.5-specific bug: Polkajam (at 0.6.5) appears to be be using a slightly off encoding of "a" (argument inputs) in authorization in its standard program initialization -- instead of [E(p,c)](https://graypaper.fluffylabs.dev/#/cc517d7/2c58032c5803?v=0.6.5) (p=the work package , c=varint core index), it appears to have an extra few bytes for "c".
+2025-06-01 07:16 sourabhniyogi: We finally managed to get our first workpackage authorized/guaranteed/assured/accumulated, not with jamt with polkajam chainspec but with jamduna chainspec using our bootstrap service.  However, we had to add the following hack due to what we think is a polkajam 0.6.5-specific bug: Polkajam (at 0.6.5) appears to be be using a slightly off encoding of "a" (argument inputs) in authorization in its standard program initialization -- instead of [E(p,c)](https://graypaper.fluffylabs.dev/#/cc517d7/2c58032c5803?v=0.6.5) (p=the work package , c=varint core index), it appears to have an extra few bytes for "c".
 
 We found this by seeing `a1 = 0x10c` (r8=268) in polkajam pvm trace of the authorization execution with a 265-byte work package (which polkajam reported back in its CE135 work report), indicating that for some reason it encodes "c" with 3 bytes.  If we are going to be at 0.6.5 for most-to-all of June (useful for multiclient testnet construction), this is worth a quick fix.  We coped by adding a couple extra bytes to match the 3 bytes, though its [E\_2(c)](https://graypaper.fluffylabs.dev/#/7e6ff6a/2eb6002eb600?v=0.6.7) now.
 
 Is there some ideathat we should target 0.6.5 in early June and 0.6.7 in late June or something like that? [edited]
 2025-06-01 08:06 gav: Thanks - we’ll take a look into the encoding. 
 2025-06-01 08:06 gav: As for versions, I don’t expect it to be too long to implement 0.6.7 and cut 0.6.8 with any needed changes.   [edited]
+2025-06-02 14:29 sourabhniyogi: We are able to get jamduna guarantor work reports to match work reports from polkajam guarantors, specifically erasure roots.  This was enabled by a critical tip from Jason | JavaJAM  [here](https://paritytech.github.io/matrix-archiver/archive/_21wBOJlzaOULZOALhaRh_3Apolkadot.io/index.html#$Xn4h_YKcAp0dHw6sNMYmwO6IcAFUE2AxaQ59u0FwDXs) to match Polkajam's erasure coding as observed in CE137 responses 
+(which doesn't follow Appendix H exactly) using [this inefficient implementation](https://github.com/jam-duna/jamtestnet/blob/7c85551b9d454fded58418454f7ebf526bc28f5e/erasurecoding/src/lib.rs#L22-L37).
+
+Since I imagine most of us will FFI into [reed-solomon-simd/3.0.1](https://docs.rs/reed-solomon-simd/3.0.1/reed_solomon_simd/), I think its imperative to clean up details in Appendix H with a matching efficient Rust reference implementation with any required transformations -- perhaps scheduling the polkajam fix as of a certain version would be useful so we can do it in sync?  
+
+By Rule 1, we do not see a problem with just publishing an efficient reference Rust implementation 
+of any actually required transformations, a confirmation would be useful.  We would appreciate an explanation of why these transformations  are actually required.
