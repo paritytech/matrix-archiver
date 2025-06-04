@@ -1,5 +1,5 @@
 # room: #graypaper:polkadot.io
-# exported: 2025-06-03 03:33 UTC
+# exported: 2025-06-04 03:34 UTC
 2024-04-17 20:29 syed: https://matrix.to/#/!hyzRkDqDthePbodYFz:parity.io/$f_DMsIEcDXZegw6Sabnehzc-LrdDQkmq5MbxDDyoZxY?via=parity.io&via=web3.foundation
 
 2024-04-17 20:29 syed: 
@@ -6069,3 +6069,85 @@ Exactly . Otherwise, it would logically include the 2V/3 + 1 case - which isn't 
 Just to elaborate. The purpose of this expression is to concisely capture the condition in which a supermajority cannot be reached for either outcome
 2025-06-02 11:47 ascriv: Screenshot 2025-06-02 at 2.47.21 PM.png
 2025-06-02 11:48 ascriv: for the state serialization, can't we get away with omitting a_o and a_i since they are derivable from other components of the serialized state?
+2025-06-03 11:35 greywolve: Doesn't changing storage keys [here](https://graypaper.fluffylabs.dev/#/7e6ff6a/103301103301?v=0.6.7) from H -> Y mean that implementers are not free to choose how they represent storage keys in the storage dict? Ie we'd have to ensure that we all have the same length for our chosen key representation.
+
+Seems to contradict [with the new paragraph](https://graypaper.fluffylabs.dev/#/7e6ff6a/3b1f033b2403?v=0.6.7) in the state serialization section. [edited]
+2025-06-03 11:48 dave: The change from H->Y was just to avoid hashing the keys twice. They are still hashed by the C function (see https://graypaper.fluffylabs.dev/#/7e6ff6a/3b6c003b7d00?v=0.6.7).
+2025-06-03 11:51 greywolve: But does that mean you're forced to use the C function as your representation?
+2025-06-03 11:51 dave: Yes, this is pretty much required anyway to implement warp sync
+2025-06-03 12:00 greywolve: I wonder if that wouldn't make more sense as Y_31 then since you're pretty much forced to have that key length to get the same footprint
+2025-06-03 12:02 dave: The output of the C function is now Y_31, maybe I'm misunderstanding
+2025-06-03 12:03 greywolve: I mean for the storage keys definition. Y -> Y , vs Y\_31 -> Y , since you're forced to use C [edited]
+2025-06-03 12:06 dave: Not sure I understand. The service storage stuff is only one part of the trie
+2025-06-03 12:10 greywolve: Sorry I'm probably not being clear.
+
+For [this definition.](https://graypaper.fluffylabs.dev/#/7e6ff6a/103301103301?v=0.6.7) Y\_31 -> Y .
+
+Wouldn't you dict always have 31 byte keys? [edited]
+2025-06-03 12:12 greywolve: Or does Y there represent the original key. Ie the f[ootprint for storage](https://graypaper.fluffylabs.dev/#/7e6ff6a/117b01117b01?v=0.6.7) is done based on the length of the original key [edited]
+2025-06-03 12:37 greywolve: Seems like this is the case if I'm reading this correctly, so to calculate the balance now you need to know the length of the original raw key
+2025-06-03 13:01 dave: Yes for the footprint calculation the original key is used. This is intentional even though the storage backend should really only store the 31-byte output of the C function
+2025-06-03 13:03 dave: Note that you should always have the original key at hand when inserting/removing/updating such a value, even if the original key is not kept in the underlying storage (which it really shouldn't be)
+2025-06-03 13:05 dave: Re accessing the service storage see the read/write host calls, which no longer hash the key: https://graypaper.fluffylabs.dev/#/7e6ff6a/333800331602?v=0.6.7
+2025-06-03 13:05 greywolve: Thanks! That clears it up :)
+2025-06-03 13:54 prematurata: I've a question about 0.6.7. I noticed storage keys for service account changed in type from hash to generic "blob". the read and write host calls still refer/use hashes so is it an overlook or is it really meant to be generic blob? 
+2025-06-03 14:01 greywolve: If you read just above I asked a similar question, and those host calls no longer hash the key it seems.
+2025-06-03 14:02 prematurata: ha
+2025-06-03 14:02 dave: Could you link the relevant bit of the GP? Possibly something was missed in the update.
+2025-06-03 14:03 prematurata: i was looking at 0.6.6 for the host calls 
+2025-06-03 14:03 prematurata: my bad
+2025-06-03 14:26 prematurata: So if I understand properly warp supporting implmenetations should be a bit offspec compared to GP's write and read and use the `C` key instead of "plain" 
+2025-06-03 14:29 greywolve: Given [this](https://graypaper.fluffylabs.dev/#/7e6ff6a/3b1f033b2403?v=0.6.7), I guess maybe not off spec per say. Ie it's better to not store plain keys. [edited]
+2025-06-03 14:30 basedafdev: 
+2025-06-03 14:31 prematurata: yeah I read that. but on the other side the read host call (for example) math says that **k** should be \in K(a_s)
+2025-06-03 14:31 greywolve: Yeah I guess it's not clear to me that you're forced to use C, and that in the service account footprint calculation the storage key is actually the original key [edited]
+2025-06-03 14:32 prematurata: but actually we would need to do C(s*, E4(2**232-1) ^ k) \in K(a_s**)
+2025-06-03 14:32 prematurata: well thanks formatting :)
+2025-06-03 14:33 prematurata: yeah basically read and write imply you have access to original keys
+2025-06-03 14:33 prematurata: but on the other side that paragraph somehow says "well yeah you can use `C` hashes instead of original keys"
+2025-06-03 14:35 prematurata: but if this is the way it was conceived. And it looks like it is... It bugs me cause `C(....)` is a subset of `Y` so not exactly the same 
+2025-06-03 14:36 prematurata: couldnt we just use Y31 like you suggested  as keys in storage and go through `C` in read and write?
+2025-06-03 14:38 greywolve: I don't think you can use Y_31 as the key in the service definition because that definition is referring to the original key, not C(original_key)
+2025-06-03 14:38 greywolve: (i.e the footprint now uses the original key length, so it's gone from stateless to stateful)
+2025-06-03 14:39 greywolve: so it's a bit fiddly I guess to express
+2025-06-03 14:40 greywolve: For footprint calculation purposes it's Y -> Y, but for the purpose of storing the key in state it's Y_31 -> Y [edited]
+2025-06-03 14:43 prematurata: well apart to know the length is the original really needed?
+2025-06-03 14:43 greywolve: Doesn't seem like it
+2025-06-03 15:05 dave: No. Practically speaking all implementations should support warp sync. For the later milestones, particularly the ones involving networking, this will be required. This is effectively required by some of the current test vectors I believe, though I don't know if it will be required for M1 conformance testing. There is an implicit assumption here that the C function is injective, which it obviously isn't really. In _practice_ it is because it is impractical to find a collision.
+2025-06-03 15:08 dave: So while you could argue that an implementation which only stores the output of the C function and not the original keys is not really compliant with the GP, we explicitly allow and will ultimately require this behaviour
+2025-06-03 15:10 prematurata: thanks for clarifying. I was just wondering why not using C directly in read and write instead  [edited]
+2025-06-03 15:10 dave: The service storage stuff is only one part of the trie
+2025-06-03 15:11 dave: Not sure it would make sense to use C there
+2025-06-03 15:13 dave: The keys would go through C again as part of State Merklization
+2025-06-03 15:26 greywolve: Wouldn't there still be a problem with warp sync and preimage meta keys, since you can only reconstruct those completely if you have the preimage extrinsics that are going to be solicited aswell? Are details on that still being worked out? [edited]
+2025-06-03 15:27 dave: You are not intended to reconstruct anything. This is why I said "the storage backend should really only store the 31-byte output of the C function"
+2025-06-03 15:30 greywolve: So the same principle should apply to all the service dicts in theory for warp sync?
+2025-06-03 15:31 greywolve: (ie , storage, preimage lookup, preimage meta)
+2025-06-03 15:32 dave: So the bottom layer of your storage stack should probably have get/set functions which take a 31-byte key. Warp sync, which will use the state request protocol defined here https://github.com/zdave-parity/jam-np/blob/main/simple.md#ce-129-state-request, should just fill in the bottom layer with the exact keys/values received over the network. That layer shouldn't care what bits of state these keys/values correspond to [edited]
+2025-06-03 15:33 greywolve: Completely understood for storage, just wondering about preimage meta in particular
+2025-06-03 15:33 dave: Not sure I understand the question, sorry. There's nothing special about that vs any other bit of state really
+2025-06-03 15:37 dave: For Merklization there is just one Y_31 -> Y dictionary. All the various bits of state get placed into this single dictionary in accordance with the C function.
+2025-06-03 15:37 greywolve: I think this [comment from davxy](https://github.com/davxy/jam-test-vectors/pull/45#issuecomment-2848736219) sums it up.
+2025-06-03 15:38 dave: In practice you should store this single dictionary rather than the nicely structured state as otherwise you will be unable to implement warp sync
+2025-06-03 15:41 dave: I don't think you should be doing any "deserialization" as Davide calls it. I think the point of his comment is that in some cases doing such deserialization is somewhat possible, but it really should not be necessary. If you find yourself needing to do it then either you are misunderstanding something or there is an issue with the GP that needs to be fixed.
+2025-06-03 15:42 greywolve: Right rereading it now I understand your point more
+2025-06-03 15:43 dave: "Deserialization" might be useful for tooling of course, the current stance is that it is just not in general possible
+2025-06-03 15:45 ascriv: We do need to deserialize the other parts of the merkilized state though for warp sync right?
+2025-06-03 15:45 dave: No!
+2025-06-03 15:46 greywolve: I'm also a bit confused because how would you update your state then if you don't deserialize it?
+2025-06-03 15:46 greywolve: I understand the dicts, sure
+2025-06-03 15:46 dave: Warp sync should just be a case of taking the Y_31 -> Y dictionary you get using the State request protocol and sticking that as-is into the bottom layer of your storage stack
+2025-06-03 15:47 dave: You can read/write bits of state by computing C(...) and then using this as a key into the underlying storage dictionary
+2025-06-03 15:47 dave: At no point do you need an inverse of C
+2025-06-03 15:49 ascriv: But to do the operations in the GP we need to have a representation of state that is not just key->bytes no?
+2025-06-03 15:50 greywolve: We are talking about. eg 1-16
+2025-06-03 15:50 greywolve: Fully understand that you won't need to deserialize any of the service dicts
+2025-06-03 15:51 dave: No, all operations in the GP should be expressible in terms of get/set on the state. This is what this paragraph https://graypaper.fluffylabs.dev/#/7e6ff6a/3b1f033b2403?v=0.6.7 is talking about; enumeration of dictionaries for example is not required anywhere in the GP
+2025-06-03 15:52 greywolve: Ahh I guess there's a difference between deserialize, and decode?
+2025-06-03 15:52 greywolve: You don't mean you don't need to decode the other parts of the state, naturally
+2025-06-03 15:53 dave: You are of course free to deserialize bits of the underlying dictionary if you think this will for example help with performance. In general you can do whatever you like in your implementation provided the observed behaviour is the same. The point here is more that a compliant implementation will not need to perform any deserialization.
+2025-06-03 15:54 dave: Yes I'm just talking about the keys here. You will need to decode the values. Sorry if I caused any confusion with that.
+2025-06-03 15:55 dave: The value decoding should be trivial
+2025-06-03 15:55 greywolve: Yeah that makes complete sense
+2025-06-03 15:55 ascriv: Oh. Yeah not the keys 
+2025-06-03 15:55 greywolve: You shouldn't ever need to deserialize keys , 100%

@@ -1,5 +1,5 @@
 # room: #jam:polkadot.io
-# exported: 2025-06-03 03:33 UTC
+# exported: 2025-06-04 03:34 UTC
 2024-04-20 02:08 johnjiao123: 
 2024-04-20 02:09 johnjiao123: 
 2024-05-30 21:48 nradko: Hey everyone,
@@ -7938,6 +7938,13 @@ I'm having a hard time getting polkajam to recognize our chainspec -- it appears
 ```
 
 Is there some other requirement I've missed?
+  ↳ 2025-06-03 07:38 knight1205: Hi David Emett ,
+
+I had a few questions:
+
+1. Certificate validation happens on both sides right when a client node connects to a server (mTLS) or only on client side (TLS). And in particular when each node's client has to initiate connection to other node's server. In my case I don't seem to get direct access to client's certificate on server node using quic library.
+2. In jamnp, it's mentioned that cert is required and needs to be self signed, but need not be verified. But self signed certificates throw error.
+3. Also, will there be CA certs as mentioned in jamcha docs? as for now we are just providing SAN as per snp. [edited]
 2025-05-15 02:56 sourabhniyogi: Published jamduna binaries:
 
 https://github.com/jam-duna/jamtestnet/releases/tag/0.6.6.1
@@ -8525,6 +8532,19 @@ From GP 0.6.7 (§14.17) https://graypaper.fluffylabs.dev/#/7e6ff6a/1c3b011c4c01?
   ↳ 2025-06-02 22:23 dave: Should actually be fixed in tonight's build 🤞 Apologies!
   ↳ 2025-06-03 01:40 jaymansfield: Are you able to share the chainspec file used with that WPB? [edited]
   ↳ 2025-06-03 01:46 sourabhniyogi: https://github.com/jam-duna/jamtestnet/blob/main/chainspecs/jamduna-spec.json
+  ↳ 2025-06-03 17:59 sourabhniyogi: Is there a way to get polkajam to report back
+(a) the 6 sclubs when guaranteeing
+(b) its core index, or maybe all 6 validator  core assignments as they switch
+We need some visibility into (a) for getting erasure roots for WPs with exported segments.   For (b), we have found both our impl and polkajam rejecting each other WPs due to not being on the same core just often enough to believe we have our core rotation algorithm slightly wrong.  `Failed to validate work package: invalid core: 1 not in [0]` Or maybe we want R to be a higher number somehow. [edited]
+  ↳ 2025-06-03 18:07 sourabhniyogi: (c) for any "Bad Justification" errors that you generate (we see them CE141 [ok!] but also for for CE128 [why, we cannot explain..]), can we get a bit more in the logs (the raw justification you think you got). 
+
+In general, you have excellent logs for us to work with, and other implementers are likely to follow them and get just as "fussy" =)
+  ↳ 2025-06-03 18:27 dave: Re core rotation there are some test vectors for the shuffle, worth checking that you match these if you haven't yet
+  ↳ 2025-06-03 18:30 dave: For (a) I assume you have the segment EC test vectors matching now? So the question is about the merkle roots computed from the segment shards?
+  ↳ 2025-06-03 18:34 dave: Will look into logs later, agree it would be helpful to have trace logs for some of these things
+  ↳ 2025-06-03 20:18 sourabhniyogi: Yes, we have the shuffle test vector passing, the old davxy EC test vector for the 4104 segment encoding/decoding (theres only one!), as well as real CE137 + CE138 responses decoding back to the bundle EC decoding (BUT only when there aren't any segments).  
+
+So yes, for (a) we mean the CDT merkle root computed from the segment shards EC encoding, which is next level.  
 2025-05-28 07:07 tony_lollipop: 
 2025-05-28 15:32 stsoen: Does anyone have the presentation that Gav gave yesterday at ETH Prague? I would be very grateful if someone could share it as a file (not the video, but the presentation itself)
 2025-05-28 17:06 rustybot: 
@@ -8708,3 +8728,85 @@ Since I imagine most of us will FFI into [reed-solomon-simd/3.0.1](https://docs.
 
 By Rule 1, we do not see a problem with just publishing an efficient reference Rust implementation 
 of any actually required transformations, a confirmation would be useful.  We would appreciate an explanation of why these transformations  are actually required.
+2025-06-03 07:56 interweb_: I am subscribing to statistics, and I can't find the starting point to decode the `value` array. Could someone please point me to the docs/ref implementation? [edited]
+2025-06-03 07:56 interweb_: image.png
+2025-06-03 07:58 interweb_: Where I have looked:
+- https://github.com/w3f/jamtestvectors/blob/master/statistics/statistics.asn
+- https://hackmd.io/@polkadot/jip2
+- https://github.com/gavofyork/graypaper/blob/b499b22b82804ce2e60c719d621320b513196415/text/statistics.tex#L36
+2025-06-03 09:12 dave: See the C(13)-> bit in Appendix D of the GP
+2025-06-03 10:24 ascriv: Has anyone done the exercise of scoping out what building a minimal actually useful end-user product powered by jam might look like (e.g. email)? Maybe assuming we’ve already built the middleware required for building apps using regular programming languages etc  [edited]
+2025-06-03 12:58 shwchg: Jan Bujak:
+we have a work item with this code
+
+```
+     :                          @0
+     0: 28 0d 00 00 00           jump @3
+      :                          @1
+     5: 28 13 00 00 00           jump @4
+      :                          @2
+    10: 28 f9 02                 jump @87
+      :                          @3 [export #0: 'refine']
+    13: c8 87 07                 a0 = a0 + a1
+    16: 95 77 e0                 a0 = a0 + 0xffffffffffffffe0
+    19: 33 08 20                 a1 = 0x20
+    22: 32 00                    ret
+```
+
+but ran into error code 4 in your implementation during refine process [edited]
+2025-06-03 13:00 shwchg: Is there anything we’ve missed?
+2025-06-03 13:02 clearloop: looks like `polkavm::interpreter` charges gas for unexecuted instructions (mb in pre-compiling ?) in https://github.com/davxy/stuff/blob/6f03f00ed8e0847c8be44b68e5cf6c0323a61ba0/pvm-traces/process\_one\_immediate\_report-1.log#L82-L114, if this is expected? [edited]
+2025-06-03 13:04 jan: OOB error is only returned from `peek`/`poke` hostcalls, so I'm confused what you're actually asking about here, as this is code for a toplevel service, and it doesn't even do anything.
+  ↳ 2025-06-03 13:13 shwchg: we are passing the pu value into accumulate by using the work results
+  ↳ 2025-06-03 13:13 jan: ...I'm afraid that still doesn't tell me anything :P
+  ↳ 2025-06-03 13:15 shwchg: because the log didn't show anything about the refine process even I enable the pvm log during refine this item
+  ↳ 2025-06-03 13:15 shwchg: it just came back with the error code 4
+  ↳ 2025-06-03 13:18 shwchg: I am expecting it will show
+```
+Resolving arbitrary jump: 0
+```
+but it didn't [edited]
+  ↳ 2025-06-03 16:05 sourabhniyogi: Pardon -- Our bad, we incorrectly interpreted polkajam 0.6.5 work result error codes with 0.6.6 work result error codes, so it wasn't an OOB but "BAD", which we're checking why  this would be.   [edited]
+  ↳ 2025-06-03 21:13 sourabhniyogi: Polkajam seems to be able to absorb our code's preimages (because it authors blocks with |E\_P|=1, upon CE142/143 which we validate happily) after using our bootstrap service (new=>write=>transfer), but not fetch it upon demand in a later WP, returning back with BAD.
+
+I tried using CE129 to inspect the whole state (0x0000 ... 0xFFFF..FF) to check if polkajam's preimage was in state, but got this:
+
+```
+2025-06-03 14:00:54 tokio-runtime-worker WARN jam_node::chain::state_db  Missing value hash in range proof: [195, 153, 202, 58, 128, 172, 64, 203, 177, 7, 182, 55, 32, 87, 42, 16, 130, 38, 16, 128, 135, 156, 111, 71, 70, 163, 203, 188, 191, 146, 112, 140]
+```
+
+Is CE129 supposed to be usable in this way yet?
+
+We coped by putting our { fib, auth\_copy } services in our genesis state for now.
+
+We are able to get a few work packages guaranteed, assured, accumulated (one that creates a new service, another that exports a segment), but any WP that imports the exported segment \[ by (wph, index) \] reliably reports back:
+
+````
+2025-06-03 13:54:51 tokio-runtime-worker ERROR ```
+jam_node::chain::guarantors::guarantor  Failed to process package 0xe6420b365310d562...: Import error: Import not found: root Direct(0x590a50a6d3899507...), index 0
+````
+
+In addition, for any WP that exports a segment, we do not get the same segments root or erasure root.  But, if we have no exported segments from our WPs, we get matching erasure roots. [edited]
+2025-06-03 13:04 jan: PolkaVM charges gas per basic block, not per instruction.
+  ↳ 2025-06-03 13:06 clearloop: if this also means, that in a block, there is a jump instruction in the middle, even if we jump to other blocks at that point, we still charge the gas of the entire block?
+  ↳ 2025-06-03 13:06 jan: You can't have a jump instruction in the middle of a basic block.
+  ↳ 2025-06-03 13:08 clearloop: I got you! however, still don't get why block 3644-3653 charges gas even though, we should jump to 5326 from 3491 
+
+---
+
+3491 -> jump to 5326
+
+compiling block { 3644-3653 } \<--- why this happens
+
+block {5326 ...} [edited]
+  ↳ 2025-06-03 13:09 jan: It's not charging gas.
+  ↳ 2025-06-03 13:10 jan: "compiling" means that it just compiled the block, and not that it was executed
+  ↳ 2025-06-03 13:11 clearloop: thank you!, I'll keep digging other parts! 
+
+our implementation has a 66 gas diff for each of the test vectors in accumulate 😂
+  ↳ 2025-06-03 13:15 jan: Note that technically even if your implementation charges gas per instruction and not per basic block the final gas amount should still be the same as long as it finishes successfully (that is, if no basic block is interrupted in the middle by e.g. accessing inaccessible memory then whether you charge gas per instruction or per basic block won't make a difference)
+  ↳ 2025-06-03 13:23 clearloop: yes we can execute successfully, start/end at the same pc, storage matches, however we take less 66 gas for each of the test vectors...
+
+we are charging host calls per 10 gas as defined in the docs, that the only thing I can do is comparing instructions one by one now to debug it )))
+  ↳ 2025-06-03 13:53 clearloop: hmm, I assume I forgot to sync gas at sort of invocation interactions, debugging the instructions is endless ...
+  ↳ 2025-06-03 18:18 sourabhniyogi: Is there some way to get a dump of all the registers out of polkajam, prior or after the execution of each compiled block.  
