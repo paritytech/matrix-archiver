@@ -1,5 +1,5 @@
 # room: #jam:polkadot.io
-# exported: 2025-06-04 03:34 UTC
+# exported: 2025-06-05 03:33 UTC
 2024-04-20 02:08 johnjiao123: 
 2024-04-20 02:09 johnjiao123: 
 2024-05-30 21:48 nradko: Hey everyone,
@@ -7945,6 +7945,31 @@ I had a few questions:
 1. Certificate validation happens on both sides right when a client node connects to a server (mTLS) or only on client side (TLS). And in particular when each node's client has to initiate connection to other node's server. In my case I don't seem to get direct access to client's certificate on server node using quic library.
 2. In jamnp, it's mentioned that cert is required and needs to be self signed, but need not be verified. But self signed certificates throw error.
 3. Also, will there be CA certs as mentioned in jamcha docs? as for now we are just providing SAN as per snp. [edited]
+  ↳ 2025-06-04 13:46 knight1205: sourabhniyogi David Emett do let me know about this.
+  ↳ 2025-06-04 13:49 dave: Certificates should be presented and checked by both sides yes. Some QUIC libraries do not provide a good way of accessing the "client" certificate; this is one reason we're using quinn rather than for example s2n-quic in PolkaJam.
+  ↳ 2025-06-04 13:52 dave: At most one connection should be opened between a pair of nodes, there shouldn't be a connection opened in each direction. In the case of validator-validator connections the SNP doc provides a rule for deciding which validator should initiate the connection
+  ↳ 2025-06-04 13:55 dave: What do you mean by "self signed certificates throw error"? If you mean in your QUIC implementation then yes by default that is likely the case. SNP requires some overriding of the certificate handling as it does not use certificates in the normal way.
+  ↳ 2025-06-04 14:03 dave: No there won't be CA certs or anything like this. Certificates are only really used because that's what TLS uses. We don't really use any of their features. In SNP peers are identified by their Ed25519 key which is verified by the TLS handshake signature, all the certificate really does is provide this key. The purpose of the DNS alt name stuff is to fit in with libraries which allow an expected server name to be provided; the DNS name stuff allows an expected Ed25519 key to be placed here.
+  ↳ 2025-06-04 14:07 knight1205: Thanks, will look into this. 
+  ↳ 2025-06-04 14:07 dave: > <@sourabhniyogi:matrix.org> Will incorporate (by phase 4/5 I just meant the 4th/5th slot of the epoch) - thank you!
+> 
+> We have all the different weights 2+4, 3+3, 4+2, 1+5, 5+1 working well in fallback+safrole-- so now have to get into the real work of work packages.
+> 
+> I'm having a hard time getting polkajam to recognize our chainspec -- it appears to basically ignore our input and continue to use `dev` no matter what
+> 
+> ```
+> # ./polkajam --chain k.json --temp run --dev-validator 3 --rpc-port=19803
+> 2025-05-19 23:45:02 Chain ID: dev
+> 2025-05-19 23:45:02 Config dir: /root/.config/polkajam/dev
+> 2025-05-19 23:45:02 Data dir: /tmp/.tmphmRvKD
+> 2025-05-19 23:45:02 Reading state...
+> 2025-05-19 23:45:02 Writing genesis block.
+> 2025-05-19 23:45:02 Best final block: 0x0259fbe9b7dd6f3c...
+> ```
+> 
+> Is there some other requirement I've missed?
+
+Think I missed this message before, sorry. This was probably because the --dev-validator argument used to override the --chain argument. I assume this is working for you now, let me know if this is not the case...
 2025-05-15 02:56 sourabhniyogi: Published jamduna binaries:
 
 https://github.com/jam-duna/jamtestnet/releases/tag/0.6.6.1
@@ -8545,6 +8570,25 @@ In general, you have excellent logs for us to work with, and other implementers 
   ↳ 2025-06-03 20:18 sourabhniyogi: Yes, we have the shuffle test vector passing, the old davxy EC test vector for the 4104 segment encoding/decoding (theres only one!), as well as real CE137 + CE138 responses decoding back to the bundle EC decoding (BUT only when there aren't any segments).  
 
 So yes, for (a) we mean the CDT merkle root computed from the segment shards EC encoding, which is next level.  
+  ↳ 2025-06-05 00:57 mkchung: Hello David Emett,
+
+We can confirm that Jamduna now has fully compatible CE-137 & CE-138 against PolkaJam’s 2025-06-03 nightly (yay!). However, we are unable to arrive at the same exports_root even with just one segment.
+
+Here’s a Gist with W3F’s test vector as a preliminary test case:
+https://gist.github.com/mkchungs/e9c31a55a2e7f5ee212b53bf70a88f63
+
+Could you double-check whether your CDT implementation is using the “leaf” prefix as shown in (E.1) of GP 0.6.7? See
+https://graypaper.fluffylabs.dev/#/7e6ff6a/3c7f013c9501?v=0.6.7
+
+Since there’s only one leaf (exportedSegmentCnt = 1) in this case and the root should be that hashed leaf itself, can you share how you arrived at 0x3cad…c9243? Our result by computing
+```
+Blake2Hash(“leaf” || segment) 
+```
+is 0x0931…a53cf.
+
+Perhaps polkajam's cdt implementation is using different prefix? Not sure...
+
+  ↳ 2025-06-05 01:25 dave: Seems like polkajam is padding the list of segment hashes H("leaf" || segment) with zero hashes up to a multiple of the proof page size (64). Agree this does not match the GP.
 2025-05-28 07:07 tony_lollipop: 
 2025-05-28 15:32 stsoen: Does anyone have the presentation that Gav gave yesterday at ETH Prague? I would be very grateful if someone could share it as a file (not the video, but the presentation itself)
 2025-05-28 17:06 rustybot: 
@@ -8787,6 +8831,9 @@ jam_node::chain::guarantors::guarantor  Failed to process package 0xe6420b365310
 ````
 
 In addition, for any WP that exports a segment, we do not get the same segments root or erasure root.  But, if we have no exported segments from our WPs, we get matching erasure roots. [edited]
+  ↳ 2025-06-04 10:00 dave: Re CE 129 we don't use that for anything at the moment AFAIK so wouldn't be surprised if it had bugs. For a preimage to be usable in refine the block that introduced it must have been finalized. We haven't yet enabled our finality implementation so currently blocks are just finalized after a few slots. Possibly you are falling foul of this? [edited]
+  ↳ 2025-06-04 10:06 sourabhniyogi: ah, will use that "it must have been finalized." and see if that does the trick
+  ↳ 2025-06-04 10:11 dave: See the stuff in the GP around the "lookup anchor" and the historical-lookup function
 2025-06-03 13:04 jan: PolkaVM charges gas per basic block, not per instruction.
   ↳ 2025-06-03 13:06 clearloop: if this also means, that in a block, there is a jump instruction in the middle, even if we jump to other blocks at that point, we still charge the gas of the entire block?
   ↳ 2025-06-03 13:06 jan: You can't have a jump instruction in the middle of a basic block.
@@ -8810,3 +8857,11 @@ our implementation has a 66 gas diff for each of the test vectors in accumulate 
 we are charging host calls per 10 gas as defined in the docs, that the only thing I can do is comparing instructions one by one now to debug it )))
   ↳ 2025-06-03 13:53 clearloop: hmm, I assume I forgot to sync gas at sort of invocation interactions, debugging the instructions is endless ...
   ↳ 2025-06-03 18:18 sourabhniyogi: Is there some way to get a dump of all the registers out of polkajam, prior or after the execution of each compiled block.  
+  ↳ 2025-06-04 06:29 jan: No. Only the registers changed by the program are printed out, and some of the source registers depending on the instruction.
+2025-06-04 07:26 subotic: 
+2025-06-04 08:20 davxy: New batch of import traces: [PR #70](https://github.com/davxy/jam-test-vectors/pull/70)
+
+(Currently exercises the happy paths for preimages `solicit` and `forget`) [edited]
+2025-06-04 18:11 jimboj21: So I am working on a pvm issue for reports-l0 00000003.json, and i am a bit confused about the blob. I pass all current accumulation test vectors, and when i plug in this 00000003.json blob to one of those tests the pvm panics. Even though I wouldnt expect it to pass the stf I would expect it to still execute. There isnt any different in how to process/store the primages in the reports-l0 tests is there? Has anyone else had any issues processing the blob?
+
+Given other teams execute okay I imagine not, but inspecting the blob it seems odd to me (for example the first 10 bytes of the program blob for me are: [40 67 105 0 0 40 127 118 0 0] which does not actually align with my bitmask I read. So multiple points of confusion here. If someone could confirm the first 10 bytes of the actual program code against mine that would be great, to make sure I have the right data at least. I havent run into issues with blob parsing in yet so I am a bit confused as to why I might be now (or I am just missing something on how to handle it) so thought i would shoot a message here to see if anyone has any info/could check those bytes

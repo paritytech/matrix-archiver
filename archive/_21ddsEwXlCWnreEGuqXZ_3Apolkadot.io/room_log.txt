@@ -1,5 +1,5 @@
 # room: #graypaper:polkadot.io
-# exported: 2025-06-04 03:34 UTC
+# exported: 2025-06-05 03:34 UTC
 2024-04-17 20:29 syed: https://matrix.to/#/!hyzRkDqDthePbodYFz:parity.io/$f_DMsIEcDXZegw6Sabnehzc-LrdDQkmq5MbxDDyoZxY?via=parity.io&via=web3.foundation
 
 2024-04-17 20:29 syed: 
@@ -6151,3 +6151,12 @@ Wouldn't you dict always have 31 byte keys? [edited]
 2025-06-03 15:55 greywolve: Yeah that makes complete sense
 2025-06-03 15:55 ascriv: Oh. Yeah not the keys 
 2025-06-03 15:55 greywolve: You shouldn't ever need to deserialize keys , 100%
+2025-06-04 15:27 yu2c: I came across two related definitions:
+
+B, defined as [a service-indexed commitment to the accumulation output](https://graypaper.fluffylabs.dev/#/7e6ff6a/178300178300?v=0.6.7), and
+
+θ ( theta ), currently defined as [the block’s accumulation-output sequence](https://graypaper.fluffylabs.dev/#/7e6ff6a/0f08020f2102?v=0.6.7).
+
+I initially thought they referred to the same thing( sequence ), but I noticed that B is defined as a set while θ is defined as a sequence.
+
+Am I missing some distinction here, or are they meant to serve different purposes despite the similarity?
