@@ -18,7 +18,7 @@ a:hover{color:#90caf9}
 em{font-style:italic}
 </style>
 <h1>#jam:polkadot.io</h1>
-<p><small>last updated 2025-06-05 03:33 UTC</small></p>
+<p><small>last updated 2025-06-06 03:33 UTC</small></p>
 <p><a href='room_log.txt'>⇩ plaintext</a> · <a href='../../'>⇦ all rooms</a></p>
 <hr>
 <div class='msg'><a class='ts' href='#$we4SYXTHwmKn094X9Zs_7mWUOoUVh4icvVdxD83RZfs'>#</a> <a class='ts' name='$we4SYXTHwmKn094X9Zs_7mWUOoUVh4icvVdxD83RZfs' href='https://matrix.to/#/!wBOJlzaOULZOALhaRh:polkadot.io/$we4SYXTHwmKn094X9Zs_7mWUOoUVh4icvVdxD83RZfs' target='_blank'>2024-04-20 02:08</a>&ensp;<span class='u' style='color:#d0709e'>johnjiao123</span>: </div>
@@ -8529,6 +8529,24 @@ is 0x0931…a53cf.
 Perhaps polkajam&#x27;s cdt implementation is using different prefix? Not sure...
 </div>
 <div class='msg reply'><a class='ts' href='#$WxDZhb4L2yDgUP72UgDKWxJHY8oUvIvvkSUJM2QtSns'>#</a> <a class='ts' name='$WxDZhb4L2yDgUP72UgDKWxJHY8oUvIvvkSUJM2QtSns' href='https://matrix.to/#/!wBOJlzaOULZOALhaRh:polkadot.io/$WxDZhb4L2yDgUP72UgDKWxJHY8oUvIvvkSUJM2QtSns' target='_blank'>2025-06-05 01:25</a>&ensp;<span class='u' style='color:#c65779'>dave</span>: Seems like polkajam is padding the list of segment hashes H(&quot;leaf&quot; || segment) with zero hashes up to a multiple of the proof page size (64). Agree this does not match the GP.</div>
+<div class='msg reply'><a class='ts' href='#$u3afEqYU2D6aAf8zSxfJXKi2XR3IxYTJvK4I2wNZdc8'>#</a> <a class='ts' name='$u3afEqYU2D6aAf8zSxfJXKi2XR3IxYTJvK4I2wNZdc8' href='https://matrix.to/#/!wBOJlzaOULZOALhaRh:polkadot.io/$u3afEqYU2D6aAf8zSxfJXKi2XR3IxYTJvK4I2wNZdc8' target='_blank'>2025-06-05 18:13</a>&ensp;<span class='u' style='color:#c377dd'>mkchung</span>: thanks for the clue! can we expect a nightly fix on this?</div>
+<div class='msg reply'><a class='ts' href='#$qaY3jhscgMDQWg_Lc7l-PgBQrjemLtxESS7ufXc_i6w'>#</a> <a class='ts' name='$qaY3jhscgMDQWg_Lc7l-PgBQrjemLtxESS7ufXc_i6w' href='https://matrix.to/#/!wBOJlzaOULZOALhaRh:polkadot.io/$qaY3jhscgMDQWg_Lc7l-PgBQrjemLtxESS7ufXc_i6w' target='_blank'>2025-06-05 18:15</a>&ensp;<span class='u' style='color:#c377dd'>mkchung</span>: At the meantime, Im able to match polkajam&#x27;s cdt root by padding to 64. will do a bit more tessting
+<pre><code class=''> go test -v -run TestPolkajam64ExportsRoot
+=== RUN   TestPolkajam64ExportsRoot
+Level 0: [Branch: 0x3cad...dc9243]
+Level 1: [Branch: 0x8325...b2a8e7]  [Branch: 0xcc1c...57daee]
+Level 2: [Branch: 0x197f...2f2905]  [Branch: 0x57ff...80a67d]  [Branch: 0x57ff...80a67d]  [Branch: 0x57ff...80a67d]
+Level 3: [Branch: 0x212e...d305a2]  [Branch: 0x68a3...acd894]  [Branch: 0x68a3...acd894]  [Branch: 0x68a3...acd894]  [Branch: 0x68a3...acd894]  [Branch: 0x68a3...acd894]  [Branch: 0x68a3...acd894]  [Branch: 0x68a3...acd894]
+Level 4: [Branch: 0x4079...924f6b]  [Branch: 0x68da...34b426]  [Branch: 0x68da...34b426]  [Branch: 0x68da...34b426]  [Branch: 0x68da...34b426]  [Branch: 0x68da...34b426]  [Branch: 0x68da...34b426]  [Branch: 0x68da...34b426]  [Branch: 0x68da...34b426]  [Branch: 0x68da...34b426]  [Branch: 0x68da...34b426]  [Branch: 0x68da...34b426]  [Branch: 0x68da...34b426]  [Branch: 0x68da...34b426]  [Branch: 0x68da...34b426]  [Branch: 0x68da...34b426]
+Level 5: [Branch: 0x33c8...1d9093]  [Branch: 0xd8ce...bf049e]  [Branch: 0xd8ce...bf049e]  [Branch: 0xd8ce...bf049e]  [Branch: 0xd8ce...bf049e]  [Branch: 0xd8ce...bf049e]  [Branch: 0xd8ce...bf049e]  [Branch: 0xd8ce...bf049e]  [Branch: 0xd8ce...bf049e]  [Branch: 0xd8ce...bf049e]  [Branch: 0xd8ce...bf049e]  [Branch: 0xd8ce...bf049e]  [Branch: 0xd8ce...bf049e]  [Branch: 0xd8ce...bf049e]  [Branch: 0xd8ce...bf049e]  [Branch: 0xd8ce...bf049e]  [Branch: 0xd8ce...bf049e]  [Branch: 0xd8ce...bf049e]  [Branch: 0xd8ce...bf049e]  [Branch: 0xd8ce...bf049e]  [Branch: 0xd8ce...bf049e]  [Branch: 0xd8ce...bf049e]  [Branch: 0xd8ce...bf049e]  [Branch: 0xd8ce...bf049e]  [Branch: 0xd8ce...bf049e]  [Branch: 0xd8ce...bf049e]  [Branch: 0xd8ce...bf049e]  [Branch: 0xd8ce...bf049e]  [Branch: 0xd8ce...bf049e]  [Branch: 0xd8ce...bf049e]  [Branch: 0xd8ce...bf049e]  [Branch: 0xd8ce...bf049e]
+Level 6: [Leaf: 0x0931...9a53cf]  [Leaf: H0]  [Leaf: H0]  [Leaf: H0]  [Leaf: H0]  [Leaf: H0]  [Leaf: H0]  [Leaf: H0]  [Leaf: H0]  [Leaf: H0]  [Leaf: H0]  [Leaf: H0]  [Leaf: H0]  [Leaf: H0]  [Leaf: H0]  [Leaf: H0]  [Leaf: H0]  [Leaf: H0]  [Leaf: H0]  [Leaf: H0]  [Leaf: H0]  [Leaf: H0]  [Leaf: H0]  [Leaf: H0]  [Leaf: H0]  [Leaf: H0]  [Leaf: H0]  [Leaf: H0]  [Leaf: H0]  [Leaf: H0]  [Leaf: H0]  [Leaf: H0]  [Leaf: H0]  [Leaf: H0]  [Leaf: H0]  [Leaf: H0]  [Leaf: H0]  [Leaf: H0]  [Leaf: H0]  [Leaf: H0]  [Leaf: H0]  [Leaf: H0]  [Leaf: H0]  [Leaf: H0]  [Leaf: H0]  [Leaf: H0]  [Leaf: H0]  [Leaf: H0]  [Leaf: H0]  [Leaf: H0]  [Leaf: H0]  [Leaf: H0]  [Leaf: H0]  [Leaf: H0]  [Leaf: H0]  [Leaf: H0]  [Leaf: H0]  [Leaf: H0]  [Leaf: H0]  [Leaf: H0]  [Leaf: H0]  [Leaf: H0]  [Leaf: H0]  [Leaf: H0]
+CDT root with 1 leaves: 0x3cad8b17c454b16bbc6ee84ea73a3c4b979568523f2c5d615a91e211fadc9243
+--- PASS: TestPolkajam64ExportsRoot (0.00s)
+</code></pre>
+</div>
+<div class='msg reply'><a class='ts' href='#$ZgjSN2gnKuHgDY-FwkgyMs-ohEXBm6r9L6dznf3YVm8'>#</a> <a class='ts' name='$ZgjSN2gnKuHgDY-FwkgyMs-ohEXBm6r9L6dznf3YVm8' href='https://matrix.to/#/!wBOJlzaOULZOALhaRh:polkadot.io/$ZgjSN2gnKuHgDY-FwkgyMs-ohEXBm6r9L6dznf3YVm8' target='_blank'>2025-06-05 19:25</a>&ensp;<span class='u' style='color:#c65779'>dave</span>: &gt; &lt;@mkchung:matrix.org&gt; thanks for the clue! can we expect a nightly fix on this?
+
+I&#x27;m looking into a fix</div>
 <div class='msg'><a class='ts' href='#$xMXuHR8N0571p_-34KfIXE1mMmiCIwg5LbaMOJ7l24s'>#</a> <a class='ts' name='$xMXuHR8N0571p_-34KfIXE1mMmiCIwg5LbaMOJ7l24s' href='https://matrix.to/#/!wBOJlzaOULZOALhaRh:polkadot.io/$xMXuHR8N0571p_-34KfIXE1mMmiCIwg5LbaMOJ7l24s' target='_blank'>2025-05-28 07:07</a>&ensp;<span class='u' style='color:#d88e6a'>tony_lollipop</span>: </div>
 <div class='msg'><a class='ts' href='#$G_lrzHOnf3HFNCLmz9xpJ_kOfToYNXTSLC_VBme5mf0'>#</a> <a class='ts' name='$G_lrzHOnf3HFNCLmz9xpJ_kOfToYNXTSLC_VBme5mf0' href='https://matrix.to/#/!wBOJlzaOULZOALhaRh:polkadot.io/$G_lrzHOnf3HFNCLmz9xpJ_kOfToYNXTSLC_VBme5mf0' target='_blank'>2025-05-28 15:32</a>&ensp;<span class='u' style='color:#3e9d41'>stsoen</span>: Does anyone have the presentation that Gav gave yesterday at ETH Prague? I would be very grateful if someone could share it as a file (not the video, but the presentation itself)</div>
 <div class='msg'><a class='ts' href='#$qhcpX4Wa06uDA2BzfvMF1tinMXx-TNmBo3TAlhvT4f0'>#</a> <a class='ts' name='$qhcpX4Wa06uDA2BzfvMF1tinMXx-TNmBo3TAlhvT4f0' href='https://matrix.to/#/!wBOJlzaOULZOALhaRh:polkadot.io/$qhcpX4Wa06uDA2BzfvMF1tinMXx-TNmBo3TAlhvT4f0' target='_blank'>2025-05-28 17:06</a>&ensp;<span class='u' style='color:#b332c3'>rustybot</span>: </div>
@@ -8796,3 +8814,84 @@ we are charging host calls per 10 gas as defined in the docs, that the only thin
 <div class='msg'><a class='ts' href='#$C9sxlJW5YHc5sBRD9LZ5d23RtiYZesTIghImaDzagV4'>#</a> <a class='ts' name='$C9sxlJW5YHc5sBRD9LZ5d23RtiYZesTIghImaDzagV4' href='https://matrix.to/#/!wBOJlzaOULZOALhaRh:polkadot.io/$C9sxlJW5YHc5sBRD9LZ5d23RtiYZesTIghImaDzagV4' target='_blank'>2025-06-04 18:11</a>&ensp;<span class='u' style='color:#4281bb'>jimboj21</span>: So I am working on a pvm issue for reports-l0 00000003.json, and i am a bit confused about the blob. I pass all current accumulation test vectors, and when i plug in this 00000003.json blob to one of those tests the pvm panics. Even though I wouldnt expect it to pass the stf I would expect it to still execute. There isnt any different in how to process/store the primages in the reports-l0 tests is there? Has anyone else had any issues processing the blob?
 
 Given other teams execute okay I imagine not, but inspecting the blob it seems odd to me (for example the first 10 bytes of the program blob for me are: [40 67 105 0 0 40 127 118 0 0] which does not actually align with my bitmask I read. So multiple points of confusion here. If someone could confirm the first 10 bytes of the actual program code against mine that would be great, to make sure I have the right data at least. I havent run into issues with blob parsing in yet so I am a bit confused as to why I might be now (or I am just missing something on how to handle it) so thought i would shoot a message here to see if anyone has any info/could check those bytes</div>
+<div class='msg'><a class='ts' href='#$whVcYvEWbJ54M_yBFJlc9PlllybdkAfGIYy102pvakU'>#</a> <a class='ts' name='$whVcYvEWbJ54M_yBFJlc9PlllybdkAfGIYy102pvakU' href='https://matrix.to/#/!wBOJlzaOULZOALhaRh:polkadot.io/$whVcYvEWbJ54M_yBFJlc9PlllybdkAfGIYy102pvakU' target='_blank'>2025-06-05 12:24</a>&ensp;<span class='u' style='color:#dc865f'>interweb_</span>: in jam-test-vectors I see some problem with validating codec:
+
+<pre><code class='bash'> codec % python validate.py
+* Validating:  data/work_package.json
+* Validating:  data/guarantees_extrinsic.json
+* Validating:  data/tickets_extrinsic.json
+* Validating:  data/block.json
+Traceback (most recent call last):
+  File &quot;~/jam-test-vectors/codec/validate.py&quot;, line 15, in &lt;module&gt;
+    validate(schema, path)
+  File &quot;~/jam-test-vectors/jam-types-asn/utils.py&quot;, line 52, in validate
+    decoded = schema.decode(schema_name, json_bytes, check_constraints=True)
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File &quot;~/jam-test-vectors/venv/lib/python3.11/site-packages/asn1tools/compiler.py&quot;, line 167, in decode
+    decoded = type_.decode(data)
+              ^^^^^^^^^^^^^^^^^^
+  File &quot;~/jam-test-vectors/venv/lib/python3.11/site-packages/asn1tools/codecs/jer.py&quot;, line 523, in decode
+    return self._type.decode(json.loads(data.decode(&#x27;utf-8&#x27;)))
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File &quot;~/rust/jam-test-vectors/venv/lib/python3.11/site-packages/asn1tools/codecs/jer.py&quot;, line 86, in decode
+    value = member.decode(data[name])
+            ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File &quot;~/jam-test-vectors/venv/lib/python3.11/site-packages/asn1tools/codecs/jer.py&quot;, line 86, in decode
+    value = member.decode(data[name])
+            ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File &quot;~/jam-test-vectors/venv/lib/python3.11/site-packages/asn1tools/codecs/jer.py&quot;, line 288, in decode
+    for element_data in data:
+TypeError: &#x27;NoneType&#x27; object is not iterable
+</code></pre>
+
+I see the json has:
+
+<pre><code class='json'> &quot;tickets_mark&quot;: null,
+</code></pre>
+
+and the defn is:
+
+<pre><code class='asn'>tickets-mark       TicketsMark OPTIONAL,
+</code></pre>
+
+Should I raise an issue on github for this ? <span class="edited">(edited)</span></div>
+<div class='msg'><a class='ts' href='#$YWn1_DMkP6-p-mPS0afTP1X5U359X2U7odj5rofjOQ4'>#</a> <a class='ts' name='$YWn1_DMkP6-p-mPS0afTP1X5U359X2U7odj5rofjOQ4' href='https://matrix.to/#/!wBOJlzaOULZOALhaRh:polkadot.io/$YWn1_DMkP6-p-mPS0afTP1X5U359X2U7odj5rofjOQ4' target='_blank'>2025-06-05 13:39</a>&ensp;<span class='u' style='color:#b332c3'>rustybot</span>: &gt; &lt;@interweb_:matrix.org&gt; in jam-test-vectors I see some problem with codec:
+&gt; <pre><code class='bash'>&gt;  codec % python validate.py
+&gt; * Validating:  data/work_package.json
+&gt; * Validating:  data/guarantees_extrinsic.json
+&gt; * Validating:  data/tickets_extrinsic.json
+&gt; * Validating:  data/block.json
+&gt; Traceback (most recent call last):
+&gt;   File &quot;~/jam-test-vectors/codec/validate.py&quot;, line 15, in &lt;module&gt;
+&gt;     validate(schema, path)
+&gt;   File &quot;~/jam-test-vectors/jam-types-asn/utils.py&quot;, line 52, in validate
+&gt;     decoded = schema.decode(schema_name, json_bytes, check_constraints=True)
+&gt;               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+&gt;   File &quot;~/jam-test-vectors/venv/lib/python3.11/site-packages/asn1tools/compiler.py&quot;, line 167, in decode
+&gt;     decoded = type_.decode(data)
+&gt;               ^^^^^^^^^^^^^^^^^^
+&gt;   File &quot;~/jam-test-vectors/venv/lib/python3.11/site-packages/asn1tools/codecs/jer.py&quot;, line 523, in decode
+&gt;     return self._type.decode(json.loads(data.decode(&#x27;utf-8&#x27;)))
+&gt;            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+&gt;   File &quot;~/rust/jam-test-vectors/venv/lib/python3.11/site-packages/asn1tools/codecs/jer.py&quot;, line 86, in decode
+&gt;     value = member.decode(data[name])
+&gt;             ^^^^^^^^^^^^^^^^^^^^^^^^^
+&gt;   File &quot;~/jam-test-vectors/venv/lib/python3.11/site-packages/asn1tools/codecs/jer.py&quot;, line 86, in decode
+&gt;     value = member.decode(data[name])
+&gt;             ^^^^^^^^^^^^^^^^^^^^^^^^^
+&gt;   File &quot;~/jam-test-vectors/venv/lib/python3.11/site-packages/asn1tools/codecs/jer.py&quot;, line 288, in decode
+&gt;     for element_data in data:
+&gt; TypeError: &#x27;NoneType&#x27; object is not iterable
+&gt; </code></pre>
+&gt; 
+&gt; I see the json has: 
+&gt; <pre><code class='json'>&gt;  &quot;tickets_mark&quot;: null,
+&gt; </code></pre>
+&gt; 
+&gt; and the defn is:
+&gt; <pre><code class='asn'>&gt; tickets-mark       TicketsMark OPTIONAL,
+&gt; </code></pre>
+&gt; Should I raise an issue on github for this ?
+
+Are you using this fork of asn1tools? <a href="https://github.com/davxy/asn1tools/" rel="noopener" target="_blank">https://github.com/davxy/asn1tools/</a> </div>
+<div class='msg'><a class='ts' href='#$Wu4z5tQt-ovdrS99sK_ux-ZCKWZckiPSd-AP2dYj9mE'>#</a> <a class='ts' name='$Wu4z5tQt-ovdrS99sK_ux-ZCKWZckiPSd-AP2dYj9mE' href='https://matrix.to/#/!wBOJlzaOULZOALhaRh:polkadot.io/$Wu4z5tQt-ovdrS99sK_ux-ZCKWZckiPSd-AP2dYj9mE' target='_blank'>2025-06-05 13:41</a>&ensp;<span class='u' style='color:#dc865f'>interweb_</span>: </div>

@@ -1,5 +1,5 @@
 # room: #graypaper:polkadot.io
-# exported: 2025-06-05 03:34 UTC
+# exported: 2025-06-06 03:34 UTC
 2024-04-17 20:29 syed: https://matrix.to/#/!hyzRkDqDthePbodYFz:parity.io/$f_DMsIEcDXZegw6Sabnehzc-LrdDQkmq5MbxDDyoZxY?via=parity.io&via=web3.foundation
 
 2024-04-17 20:29 syed: 
@@ -6160,3 +6160,7 @@ B, defined as [a service-indexed commitment to the accumulation output](https://
 I initially thought they referred to the same thing( sequence ), but I noticed that B is defined as a set while θ is defined as a sequence.
 
 Am I missing some distinction here, or are they meant to serve different purposes despite the similarity?
+2025-06-05 10:03 gav: Theta is presently defined as being an item within the set B, effectively making it a set. This doesn’t quite work since Theta is elsewhere defined to be a sequence. B should in fact be a sequence and the combinator in Delta_+ should be concatenation rather than union.
+2025-06-05 10:03 gav: Feel free to make an issue or a PR. 
+2025-06-05 13:39 prematurata: typo? https://graypaper.fluffylabs.dev/#/7e6ff6a/33cc0233cc02?v=0.6.7
+2025-06-05 13:40 prematurata: (the `v` part)

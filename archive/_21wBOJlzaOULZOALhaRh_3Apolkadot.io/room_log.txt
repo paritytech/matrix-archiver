@@ -1,5 +1,5 @@
 # room: #jam:polkadot.io
-# exported: 2025-06-05 03:33 UTC
+# exported: 2025-06-06 03:33 UTC
 2024-04-20 02:08 johnjiao123: 
 2024-04-20 02:09 johnjiao123: 
 2024-05-30 21:48 nradko: Hey everyone,
@@ -8589,6 +8589,25 @@ is 0x0931…a53cf.
 Perhaps polkajam's cdt implementation is using different prefix? Not sure...
 
   ↳ 2025-06-05 01:25 dave: Seems like polkajam is padding the list of segment hashes H("leaf" || segment) with zero hashes up to a multiple of the proof page size (64). Agree this does not match the GP.
+  ↳ 2025-06-05 18:13 mkchung: thanks for the clue! can we expect a nightly fix on this?
+  ↳ 2025-06-05 18:15 mkchung: At the meantime, Im able to match polkajam's cdt root by padding to 64. will do a bit more tessting
+```
+ go test -v -run TestPolkajam64ExportsRoot
+=== RUN   TestPolkajam64ExportsRoot
+Level 0: [Branch: 0x3cad...dc9243]
+Level 1: [Branch: 0x8325...b2a8e7]  [Branch: 0xcc1c...57daee]
+Level 2: [Branch: 0x197f...2f2905]  [Branch: 0x57ff...80a67d]  [Branch: 0x57ff...80a67d]  [Branch: 0x57ff...80a67d]
+Level 3: [Branch: 0x212e...d305a2]  [Branch: 0x68a3...acd894]  [Branch: 0x68a3...acd894]  [Branch: 0x68a3...acd894]  [Branch: 0x68a3...acd894]  [Branch: 0x68a3...acd894]  [Branch: 0x68a3...acd894]  [Branch: 0x68a3...acd894]
+Level 4: [Branch: 0x4079...924f6b]  [Branch: 0x68da...34b426]  [Branch: 0x68da...34b426]  [Branch: 0x68da...34b426]  [Branch: 0x68da...34b426]  [Branch: 0x68da...34b426]  [Branch: 0x68da...34b426]  [Branch: 0x68da...34b426]  [Branch: 0x68da...34b426]  [Branch: 0x68da...34b426]  [Branch: 0x68da...34b426]  [Branch: 0x68da...34b426]  [Branch: 0x68da...34b426]  [Branch: 0x68da...34b426]  [Branch: 0x68da...34b426]  [Branch: 0x68da...34b426]
+Level 5: [Branch: 0x33c8...1d9093]  [Branch: 0xd8ce...bf049e]  [Branch: 0xd8ce...bf049e]  [Branch: 0xd8ce...bf049e]  [Branch: 0xd8ce...bf049e]  [Branch: 0xd8ce...bf049e]  [Branch: 0xd8ce...bf049e]  [Branch: 0xd8ce...bf049e]  [Branch: 0xd8ce...bf049e]  [Branch: 0xd8ce...bf049e]  [Branch: 0xd8ce...bf049e]  [Branch: 0xd8ce...bf049e]  [Branch: 0xd8ce...bf049e]  [Branch: 0xd8ce...bf049e]  [Branch: 0xd8ce...bf049e]  [Branch: 0xd8ce...bf049e]  [Branch: 0xd8ce...bf049e]  [Branch: 0xd8ce...bf049e]  [Branch: 0xd8ce...bf049e]  [Branch: 0xd8ce...bf049e]  [Branch: 0xd8ce...bf049e]  [Branch: 0xd8ce...bf049e]  [Branch: 0xd8ce...bf049e]  [Branch: 0xd8ce...bf049e]  [Branch: 0xd8ce...bf049e]  [Branch: 0xd8ce...bf049e]  [Branch: 0xd8ce...bf049e]  [Branch: 0xd8ce...bf049e]  [Branch: 0xd8ce...bf049e]  [Branch: 0xd8ce...bf049e]  [Branch: 0xd8ce...bf049e]  [Branch: 0xd8ce...bf049e]
+Level 6: [Leaf: 0x0931...9a53cf]  [Leaf: H0]  [Leaf: H0]  [Leaf: H0]  [Leaf: H0]  [Leaf: H0]  [Leaf: H0]  [Leaf: H0]  [Leaf: H0]  [Leaf: H0]  [Leaf: H0]  [Leaf: H0]  [Leaf: H0]  [Leaf: H0]  [Leaf: H0]  [Leaf: H0]  [Leaf: H0]  [Leaf: H0]  [Leaf: H0]  [Leaf: H0]  [Leaf: H0]  [Leaf: H0]  [Leaf: H0]  [Leaf: H0]  [Leaf: H0]  [Leaf: H0]  [Leaf: H0]  [Leaf: H0]  [Leaf: H0]  [Leaf: H0]  [Leaf: H0]  [Leaf: H0]  [Leaf: H0]  [Leaf: H0]  [Leaf: H0]  [Leaf: H0]  [Leaf: H0]  [Leaf: H0]  [Leaf: H0]  [Leaf: H0]  [Leaf: H0]  [Leaf: H0]  [Leaf: H0]  [Leaf: H0]  [Leaf: H0]  [Leaf: H0]  [Leaf: H0]  [Leaf: H0]  [Leaf: H0]  [Leaf: H0]  [Leaf: H0]  [Leaf: H0]  [Leaf: H0]  [Leaf: H0]  [Leaf: H0]  [Leaf: H0]  [Leaf: H0]  [Leaf: H0]  [Leaf: H0]  [Leaf: H0]  [Leaf: H0]  [Leaf: H0]  [Leaf: H0]  [Leaf: H0]
+CDT root with 1 leaves: 0x3cad8b17c454b16bbc6ee84ea73a3c4b979568523f2c5d615a91e211fadc9243
+--- PASS: TestPolkajam64ExportsRoot (0.00s)
+```
+
+  ↳ 2025-06-05 19:25 dave: > <@mkchung:matrix.org> thanks for the clue! can we expect a nightly fix on this?
+
+I'm looking into a fix
 2025-05-28 07:07 tony_lollipop: 
 2025-05-28 15:32 stsoen: Does anyone have the presentation that Gav gave yesterday at ETH Prague? I would be very grateful if someone could share it as a file (not the video, but the presentation itself)
 2025-05-28 17:06 rustybot: 
@@ -8865,3 +8884,90 @@ we are charging host calls per 10 gas as defined in the docs, that the only thin
 2025-06-04 18:11 jimboj21: So I am working on a pvm issue for reports-l0 00000003.json, and i am a bit confused about the blob. I pass all current accumulation test vectors, and when i plug in this 00000003.json blob to one of those tests the pvm panics. Even though I wouldnt expect it to pass the stf I would expect it to still execute. There isnt any different in how to process/store the primages in the reports-l0 tests is there? Has anyone else had any issues processing the blob?
 
 Given other teams execute okay I imagine not, but inspecting the blob it seems odd to me (for example the first 10 bytes of the program blob for me are: [40 67 105 0 0 40 127 118 0 0] which does not actually align with my bitmask I read. So multiple points of confusion here. If someone could confirm the first 10 bytes of the actual program code against mine that would be great, to make sure I have the right data at least. I havent run into issues with blob parsing in yet so I am a bit confused as to why I might be now (or I am just missing something on how to handle it) so thought i would shoot a message here to see if anyone has any info/could check those bytes
+2025-06-05 12:24 interweb_: in jam-test-vectors I see some problem with validating codec:
+
+```bash
+ codec % python validate.py
+* Validating:  data/work_package.json
+* Validating:  data/guarantees_extrinsic.json
+* Validating:  data/tickets_extrinsic.json
+* Validating:  data/block.json
+Traceback (most recent call last):
+  File "~/jam-test-vectors/codec/validate.py", line 15, in <module>
+    validate(schema, path)
+  File "~/jam-test-vectors/jam-types-asn/utils.py", line 52, in validate
+    decoded = schema.decode(schema_name, json_bytes, check_constraints=True)
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "~/jam-test-vectors/venv/lib/python3.11/site-packages/asn1tools/compiler.py", line 167, in decode
+    decoded = type_.decode(data)
+              ^^^^^^^^^^^^^^^^^^
+  File "~/jam-test-vectors/venv/lib/python3.11/site-packages/asn1tools/codecs/jer.py", line 523, in decode
+    return self._type.decode(json.loads(data.decode('utf-8')))
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "~/rust/jam-test-vectors/venv/lib/python3.11/site-packages/asn1tools/codecs/jer.py", line 86, in decode
+    value = member.decode(data[name])
+            ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "~/jam-test-vectors/venv/lib/python3.11/site-packages/asn1tools/codecs/jer.py", line 86, in decode
+    value = member.decode(data[name])
+            ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "~/jam-test-vectors/venv/lib/python3.11/site-packages/asn1tools/codecs/jer.py", line 288, in decode
+    for element_data in data:
+TypeError: 'NoneType' object is not iterable
+```
+
+I see the json has:
+
+```json
+ "tickets_mark": null,
+```
+
+and the defn is:
+
+```asn
+tickets-mark       TicketsMark OPTIONAL,
+```
+
+Should I raise an issue on github for this ? [edited]
+2025-06-05 13:39 rustybot: > <@interweb_:matrix.org> in jam-test-vectors I see some problem with codec:
+> ```bash
+>  codec % python validate.py
+> * Validating:  data/work_package.json
+> * Validating:  data/guarantees_extrinsic.json
+> * Validating:  data/tickets_extrinsic.json
+> * Validating:  data/block.json
+> Traceback (most recent call last):
+>   File "~/jam-test-vectors/codec/validate.py", line 15, in <module>
+>     validate(schema, path)
+>   File "~/jam-test-vectors/jam-types-asn/utils.py", line 52, in validate
+>     decoded = schema.decode(schema_name, json_bytes, check_constraints=True)
+>               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+>   File "~/jam-test-vectors/venv/lib/python3.11/site-packages/asn1tools/compiler.py", line 167, in decode
+>     decoded = type_.decode(data)
+>               ^^^^^^^^^^^^^^^^^^
+>   File "~/jam-test-vectors/venv/lib/python3.11/site-packages/asn1tools/codecs/jer.py", line 523, in decode
+>     return self._type.decode(json.loads(data.decode('utf-8')))
+>            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+>   File "~/rust/jam-test-vectors/venv/lib/python3.11/site-packages/asn1tools/codecs/jer.py", line 86, in decode
+>     value = member.decode(data[name])
+>             ^^^^^^^^^^^^^^^^^^^^^^^^^
+>   File "~/jam-test-vectors/venv/lib/python3.11/site-packages/asn1tools/codecs/jer.py", line 86, in decode
+>     value = member.decode(data[name])
+>             ^^^^^^^^^^^^^^^^^^^^^^^^^
+>   File "~/jam-test-vectors/venv/lib/python3.11/site-packages/asn1tools/codecs/jer.py", line 288, in decode
+>     for element_data in data:
+> TypeError: 'NoneType' object is not iterable
+> ```
+> 
+> I see the json has: 
+> ```json
+>  "tickets_mark": null,
+> ```
+> 
+> and the defn is:
+> ```asn
+> tickets-mark       TicketsMark OPTIONAL,
+> ```
+> Should I raise an issue on github for this ?
+
+Are you using this fork of asn1tools? https://github.com/davxy/asn1tools/ 
+2025-06-05 13:41 interweb_: 
