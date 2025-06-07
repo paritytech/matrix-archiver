@@ -1,5 +1,5 @@
 # room: #jam:polkadot.io
-# exported: 2025-06-06 03:33 UTC
+# exported: 2025-06-07 03:32 UTC
 2024-04-20 02:08 johnjiao123: 
 2024-04-20 02:09 johnjiao123: 
 2024-05-30 21:48 nradko: Hey everyone,
@@ -8608,6 +8608,21 @@ CDT root with 1 leaves: 0x3cad8b17c454b16bbc6ee84ea73a3c4b979568523f2c5d615a91e2
   ↳ 2025-06-05 19:25 dave: > <@mkchung:matrix.org> thanks for the clue! can we expect a nightly fix on this?
 
 I'm looking into a fix
+  ↳ 2025-06-06 18:05 dave: Fixes for this and a few related issues pending code review, they will likely be in a release some time next week
+  ↳ 2025-06-06 19:45 mkchung: Hello David Emett,
+
+For your upcoming release next week, are you encoding pageProof's L₆(s,i) in GP § 14.11 using the “↕” length discriminator (here: https://graypaper.fluffylabs.dev/#/7e6ff6a/1b2b021b2d02?v=0.6.7)? 
+  ↳ 2025-06-06 19:46 mkchung: I'm wondering if that would be part of your fixes as well
+  ↳ 2025-06-06 19:49 dave: Yeah that's one of the other fixes
+  ↳ 2025-06-06 19:50 dave: The proofs are also currently ordered the wrong way
+  ↳ 2025-06-06 19:59 mkchung: Can you provide a bit of details on which proofs are being ordered "incorrectly" as of the 2025-06-05-nightly release? Are you talking about CE 139/140 specifically? For disclosure, I have to reverse our co-path ordering for CE137/CE138 in order to be compatible with current polkajam. But that may be an issue on our side
+  ↳ 2025-06-06 20:03 dave: I believe proofs to the erasure root as in CE 137/138 are generated/checked as per the GP/SNP spec. If you disagree please let me know! The proofs that are currently backwards are those in the proof pages and the import proofs in work-package bundles. [edited]
+  ↳ 2025-06-06 20:05 dave: By my reading of the GP all proofs are supposed to be from the root down to the leaf
+  ↳ 2025-06-06 20:08 dave: Re CE 139/140 I don't believe polkajam currently uses CE 140. It will respond to it but I wouldn't be surprised if the response is not currently correct 😅
+  ↳ 2025-06-06 20:11 mkchung: https://graypaper.fluffylabs.dev/#/7e6ff6a/3ca0013ca101?v=0.6.7
+
+I believe you are absolutely correct. But just find it weird as root has to be to compute from bottom to top anyway
+  ↳ 2025-06-07 00:19 dave: Fixes should be in tonight's build.
 2025-05-28 07:07 tony_lollipop: 
 2025-05-28 15:32 stsoen: Does anyone have the presentation that Gav gave yesterday at ETH Prague? I would be very grateful if someone could share it as a file (not the video, but the presentation itself)
 2025-05-28 17:06 rustybot: 

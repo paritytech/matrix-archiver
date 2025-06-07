@@ -1,5 +1,5 @@
 # room: #graypaper:polkadot.io
-# exported: 2025-06-06 03:34 UTC
+# exported: 2025-06-07 03:32 UTC
 2024-04-17 20:29 syed: https://matrix.to/#/!hyzRkDqDthePbodYFz:parity.io/$f_DMsIEcDXZegw6Sabnehzc-LrdDQkmq5MbxDDyoZxY?via=parity.io&via=web3.foundation
 
 2024-04-17 20:29 syed: 
@@ -6164,3 +6164,17 @@ Am I missing some distinction here, or are they meant to serve different purpose
 2025-06-05 10:03 gav: Feel free to make an issue or a PR. 
 2025-06-05 13:39 prematurata: typo? https://graypaper.fluffylabs.dev/#/7e6ff6a/33cc0233cc02?v=0.6.7
 2025-06-05 13:40 prematurata: (the `v` part)
+2025-06-06 11:03 dvladco: In the [accumulate invocation](https://graypaper.fluffylabs.dev/#/7e6ff6a/2fdb012fdb01?v=0.6.7) we pass the new timeslot `τ′` which according to eq. 6.1 is equivalent to `H_t` however later in the accumulation invocation we use `H_t` explicitly. Is there any reason for that? and why not use `t` which in equivalent to `H_t`?
+2025-06-06 11:21 prematurata: https://graypaper.fluffylabs.dev/#/7e6ff6a/37f70137fc01?v=0.6.7 can someone help me understand the last part of the check where codehash (d_c ->32bytes) is compared to a 32  bit number (x_s -> Service Index ) encoded into 32 byte? [edited]
+2025-06-06 11:22 prematurata: how is that suppoused to work in a real scenario
+2025-06-06 11:55 tomusdrw: > <@prematurata:matrix.org> https://graypaper.fluffylabs.dev/#/7e6ff6a/37f70137fc01?v=0.6.7 can someone help me understand the last part of the check where codehash (d_c ->32bytes) is compared to a 32  bit number (x_s -> Service Index ) encoded into 32 byte?
+
+The service updates it code hash to this value, which indicates it's ready to be ejected. There can be only one preimage left for the ejected account, presumably some kind of tombstone.
+2025-06-06 12:31 prematurata: ah ok
+2025-06-06 12:31 prematurata: tkz
+2025-06-06 18:13 gav: > <@tomusdrw:matrix.org> The service updates it code hash to this value, which indicates it's ready to be ejected. There can be only one preimage left for the ejected account, presumably some kind of tombstone.
+
+They preimage with be the most recent code since the new code hash has no preimage it cannot possibly be removed after the upgrade to a zombie (or, obviously, before)
+2025-06-06 22:06 ascriv: Screenshot 2025-06-07 at 1.06.27 AM.png
+2025-06-06 22:06 ascriv: for 0.6.7 I noticed that we have serialization components for theta and beta_B in C(16) and C(3) respectively, but the state definition only has B_H and no theta [edited]
+2025-06-06 22:08 ascriv: why does it seem that we are storing some things which aren't considered part of the state?
