@@ -1,5 +1,5 @@
 # room: #jam:polkadot.io
-# exported: 2025-06-07 03:32 UTC
+# exported: 2025-06-08 03:38 UTC
 2024-04-20 02:08 johnjiao123: 
 2024-04-20 02:09 johnjiao123: 
 2024-05-30 21:48 nradko: Hey everyone,
@@ -8892,6 +8892,9 @@ we are charging host calls per 10 gas as defined in the docs, that the only thin
   ↳ 2025-06-03 13:53 clearloop: hmm, I assume I forgot to sync gas at sort of invocation interactions, debugging the instructions is endless ...
   ↳ 2025-06-03 18:18 sourabhniyogi: Is there some way to get a dump of all the registers out of polkajam, prior or after the execution of each compiled block.  
   ↳ 2025-06-04 06:29 jan: No. Only the registers changed by the program are printed out, and some of the source registers depending on the instruction.
+  ↳ 2025-06-07 22:45 jaymansfield: > <@jan:parity.io> PolkaVM charges gas per basic block, not per instruction.
+
+Is it expected then that everyone charges per block and not per instruction? Otherwise on all non-successful invocations (accessing bad memory, etc) our work results gas used will differ.
 2025-06-04 07:26 subotic: 
 2025-06-04 08:20 davxy: New batch of import traces: [PR #70](https://github.com/davxy/jam-test-vectors/pull/70)
 
@@ -8986,3 +8989,13 @@ Should I raise an issue on github for this ? [edited]
 
 Are you using this fork of asn1tools? https://github.com/davxy/asn1tools/ 
 2025-06-05 13:41 interweb_: 
+2025-06-07 17:05 jaymansfield: If anyone is interested in comparing compatibility and cross testing with more JAM implementations, I've released 0.6.5 binaries for JavaJAM. https://github.com/javajamio/javajam-releases 
+2025-06-07 21:38 sourabhniyogi: Jan Bujak: We have gotten knee-deep into linear recompilation work following [your Recompilers 101](https://www.youtube.com/watch?v=iXsng4YCDQg), now doing pvm byte  => X86\_64  recompiles (in Go) and gotten 80 pvm instructions to pass in compiler mode.
+
+Some questions:
+
+1. What X86 registers can we safely "clobber", if any?
+2. In many cases, our PoC implementation maps a single PVM instruction to 2-8 x86\_64 instructions and I'd like to check that the larger cases (5-8) are sensible.   Some of these larger cases appear necessary to cover the "inst\_{divide,rem}\*\_by\_zero" situations and we're wondering if we're off track?
+3. Does it make sense to have a  battery of pvm-to-x86 target outputs as public test vectors for M3 linear recompilation?  Or, can we see polkatool's "recompiled x86\_64" output somehow, block by block, or across an entire disassembled .pvm file to check for cases where we are doing a few too many x86\_64 instructions per PVM Instruction?  How do we do this if so?
+4. there are many PVM opcodes (ROT\_R\_64\_IMM, MUL\_UPPER\_S\_S, COUNT\_SET\_BITS\_32, SIGN\_EXTEND\_16, REVERSE\_BYTES ...) that do not yet have a simple test case in the [pvm test vectors](https://github.com/w3f/jamtestvectors/pull/3) like [inst\_add\_64](https://github.com/koute/jamtestvectors/blob/master_pvm_initial/pvm/programs/inst_add_64.json) (powering both interpreter and compiler testing) -- is this something we should expect from you or should we be on our own for this?
+5. Generically, for different recompiler efforts, if in the end, we had exactly one public "best" way to map each PVM instruction to some number of x86\_64 instructions, how do you expect PVM executions (excluding host function calls) to actually differ?   If you expect they will differ very little to none, why not have a single open-source high-performance C recompiler that maps into this "best" way per architecture (starting with x86_64) that we all build and FFI into just like w3f bls+bandersnatch libs? [edited]
