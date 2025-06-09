@@ -1,5 +1,5 @@
 # room: #jam:polkadot.io
-# exported: 2025-06-08 03:38 UTC
+# exported: 2025-06-09 03:37 UTC
 2024-04-20 02:08 johnjiao123: 
 2024-04-20 02:09 johnjiao123: 
 2024-05-30 21:48 nradko: Hey everyone,
@@ -8895,6 +8895,7 @@ we are charging host calls per 10 gas as defined in the docs, that the only thin
   ↳ 2025-06-07 22:45 jaymansfield: > <@jan:parity.io> PolkaVM charges gas per basic block, not per instruction.
 
 Is it expected then that everyone charges per block and not per instruction? Otherwise on all non-successful invocations (accessing bad memory, etc) our work results gas used will differ.
+  ↳ 2025-06-08 11:26 gav: This will be made clear under “gas costs” in 0.7 series.  [edited]
 2025-06-04 07:26 subotic: 
 2025-06-04 08:20 davxy: New batch of import traces: [PR #70](https://github.com/davxy/jam-test-vectors/pull/70)
 
@@ -8999,3 +9000,7 @@ Some questions:
 3. Does it make sense to have a  battery of pvm-to-x86 target outputs as public test vectors for M3 linear recompilation?  Or, can we see polkatool's "recompiled x86\_64" output somehow, block by block, or across an entire disassembled .pvm file to check for cases where we are doing a few too many x86\_64 instructions per PVM Instruction?  How do we do this if so?
 4. there are many PVM opcodes (ROT\_R\_64\_IMM, MUL\_UPPER\_S\_S, COUNT\_SET\_BITS\_32, SIGN\_EXTEND\_16, REVERSE\_BYTES ...) that do not yet have a simple test case in the [pvm test vectors](https://github.com/w3f/jamtestvectors/pull/3) like [inst\_add\_64](https://github.com/koute/jamtestvectors/blob/master_pvm_initial/pvm/programs/inst_add_64.json) (powering both interpreter and compiler testing) -- is this something we should expect from you or should we be on our own for this?
 5. Generically, for different recompiler efforts, if in the end, we had exactly one public "best" way to map each PVM instruction to some number of x86\_64 instructions, how do you expect PVM executions (excluding host function calls) to actually differ?   If you expect they will differ very little to none, why not have a single open-source high-performance C recompiler that maps into this "best" way per architecture (starting with x86_64) that we all build and FFI into just like w3f bls+bandersnatch libs? [edited]
+  ↳ 2025-06-08 16:41 subotic: Hey sourabhniyogi, if you are adventurous, here is an open PR with a few more test vectors for some of the mentioned instructions:
+https://github.com/paritytech/polkavm/pull/258
+2025-06-08 09:58 olanod: You know what next cool actually useful "demo" could be? self-hosting, CoreVM running cargo/rustc to compile itself. What would it take? filesystem ✅️, multi-threading ❎️ , wizzardy to get rustc happily compiling to PVM ❓️ 
+2025-06-08 12:05 ascriv: @gav you mentioned in your Mr shift interview you wish you had made polkadot privacy-first from the beginning. Are there plans to make jam with privacy as the default?

@@ -1,5 +1,5 @@
 # room: #graypaper:polkadot.io
-# exported: 2025-06-08 03:38 UTC
+# exported: 2025-06-09 03:37 UTC
 2024-04-17 20:29 syed: https://matrix.to/#/!hyzRkDqDthePbodYFz:parity.io/$f_DMsIEcDXZegw6Sabnehzc-LrdDQkmq5MbxDDyoZxY?via=parity.io&via=web3.foundation
 
 2024-04-17 20:29 syed: 
@@ -6179,3 +6179,4 @@ They preimage with be the most recent code since the new code hash has no preima
 2025-06-06 22:06 ascriv: for 0.6.7 I noticed that we have serialization components for theta and beta_B in C(16) and C(3) respectively, but the state definition only has B_H and no theta [edited]
 2025-06-06 22:08 ascriv: why does it seem that we are storing some things which aren't considered part of the state?
 2025-06-07 15:26 gav: Yes indeed - that’s a typo and should be beta and theta. 
+2025-06-08 19:48 prematurata: can we please reconsider adding storage key length inside the state merklization value ? It should make the "restore from merklized state" easier. like massively easier to implement.  [edited]
