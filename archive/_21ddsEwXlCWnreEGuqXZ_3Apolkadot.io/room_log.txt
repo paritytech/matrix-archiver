@@ -1,5 +1,5 @@
 # room: #graypaper:polkadot.io
-# exported: 2025-06-09 03:37 UTC
+# exported: 2025-06-10 03:35 UTC
 2024-04-17 20:29 syed: https://matrix.to/#/!hyzRkDqDthePbodYFz:parity.io/$f_DMsIEcDXZegw6Sabnehzc-LrdDQkmq5MbxDDyoZxY?via=parity.io&via=web3.foundation
 
 2024-04-17 20:29 syed: 
@@ -6180,3 +6180,23 @@ They preimage with be the most recent code since the new code hash has no preima
 2025-06-06 22:08 ascriv: why does it seem that we are storing some things which aren't considered part of the state?
 2025-06-07 15:26 gav: Yes indeed - that’s a typo and should be beta and theta. 
 2025-06-08 19:48 prematurata: can we please reconsider adding storage key length inside the state merklization value ? It should make the "restore from merklized state" easier. like massively easier to implement.  [edited]
+2025-06-09 08:42 ascriv: Screenshot 2025-06-09 at 11.42.47 AM.png
+2025-06-09 08:43 ascriv: Screenshot 2025-06-09 at 11.43.00 AM.png
+2025-06-09 08:43 ascriv: What is the utility of having item markers like E_4(2^32-1) if we set fire to it with a hash when making the state key?
+2025-06-09 08:47 ascriv: I thought they were useful for prefix search too
+2025-06-09 11:59 prematurata: none i can see indeed 
+2025-06-09 15:59 oliver.tale-yazdi: Looking at the [`dev-spec.json`](https://gist.github.com/zdave-parity/72eb9cfe07756d2c0c13c3064600190d) from David Emett makes me think that something is off:  
+There is a key `00fe00ff00ff00ff93528801297aa9d5702c0d1b92efacb77f07cddd9edd28`, which *looks* like the preimage key for Service 0, but without that hash function applied. Otherwise this key must be an opaque service key, which would be odd to exactly collide with this pattern. 
+2025-06-09 16:00 dave: That `dev-spec.json` doesn't have these latest state changes applied, they're not implemented in PolkaJam yet
+2025-06-09 16:01 dave: Re this, it's still important to not have the different C(s, ...) cases collide
+2025-06-09 16:02 dave: I think it's assumed impossible to request a preimage of length eg 2^32-1 as AIUI you need a deposit proportional to the requested length
+2025-06-09 16:04 oliver.tale-yazdi: I think not having this hash function makes the keys easier understandable, as you can prefix-match on them. I added some tool for this here https://docs.jamcha.in/advanced/storage/keys , but it fails for `C(s, ..)` because of that hash function.  
+So there is no way to determine whether something is a Service Preimage, Service Storage or Service Preimage Lookup key. All the other C 1-16 and C(255, s) work fine.
+2025-06-09 16:04 dave: The hash was added/moved to improve the security margin, see https://github.com/gavofyork/graypaper/issues/403
+2025-06-09 16:06 dave: It's true that you can't currently reverse the key mapping done by the C() function
+2025-06-09 16:13 ascriv: > <@dave:parity.io> Re this, it's still important to not have the different C(s, ...) cases collide
+
+If it’s just about collisions, we could make the item marker only 1 byte instead of 4. But I think more importantly we can no longer do nice prefix search as @[Oliver Tale-Yazdi] pointed out 
+2025-06-09 16:15 ascriv: I presumed that was exactly why we had 4 byte long item markers, so that, interleaved with the 4 byte service index, we have a prefix we can search with 
+2025-06-09 16:23 yu2c: Does [\\mathcal{E}\_M](https://graypaper.fluffylabs.dev/#/7e6ff6a/3b40013b5801?v=0.6.7), serialization of merkle mountain range, have a formal definition somewhere in the graypaper? I couldn’t find where this notation is explicitly defined. [edited]
+2025-06-09 20:01 greywolve: See equation E.9 :)

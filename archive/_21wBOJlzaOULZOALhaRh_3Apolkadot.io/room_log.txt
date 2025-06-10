@@ -1,5 +1,5 @@
 # room: #jam:polkadot.io
-# exported: 2025-06-09 03:37 UTC
+# exported: 2025-06-10 03:34 UTC
 2024-04-20 02:08 johnjiao123: 
 2024-04-20 02:09 johnjiao123: 
 2024-05-30 21:48 nradko: Hey everyone,
@@ -8623,6 +8623,8 @@ For your upcoming release next week, are you encoding pageProof's L₆(s,i) in G
 
 I believe you are absolutely correct. But just find it weird as root has to be to compute from bottom to top anyway
   ↳ 2025-06-07 00:19 dave: Fixes should be in tonight's build.
+  ↳ 2025-06-09 21:58 mkchung: Thanks for sharing the binary. we are now have the same erasureRoot & exportRoot using **nightly-2025-06-09** for exports_counts up to 128!  Will do more testing and confirm whether both clients agree on same pageProofSegment for any arbitrary segment_count
+  ↳ 2025-06-09 22:55 dave: Great, thanks for the update!
 2025-05-28 07:07 tony_lollipop: 
 2025-05-28 15:32 stsoen: Does anyone have the presentation that Gav gave yesterday at ETH Prague? I would be very grateful if someone could share it as a file (not the video, but the presentation itself)
 2025-05-28 17:06 rustybot: 
@@ -8991,16 +8993,57 @@ Should I raise an issue on github for this ? [edited]
 Are you using this fork of asn1tools? https://github.com/davxy/asn1tools/ 
 2025-06-05 13:41 interweb_: 
 2025-06-07 17:05 jaymansfield: If anyone is interested in comparing compatibility and cross testing with more JAM implementations, I've released 0.6.5 binaries for JavaJAM. https://github.com/javajamio/javajam-releases 
-2025-06-07 21:38 sourabhniyogi: Jan Bujak: We have gotten knee-deep into linear recompilation work following [your Recompilers 101](https://www.youtube.com/watch?v=iXsng4YCDQg), now doing pvm byte  => X86\_64  recompiles (in Go) and gotten 80 pvm instructions to pass in compiler mode.
+2025-06-07 21:38 sourabhniyogi: Jan Bujak: We have gotten knee-deep into linear recompilation work following [your Recompilers 101](https://www.youtube.com/watch?v=iXsng4YCDQg), now doing pvm byte  => X86\_64  recompiles (in Go) and gotten 180 pvm testcases to pass in compiler mode.
 
 Some questions:
 
 1. What X86 registers can we safely "clobber", if any?
 2. In many cases, our PoC implementation maps a single PVM instruction to 2-8 x86\_64 instructions and I'd like to check that the larger cases (5-8) are sensible.   Some of these larger cases appear necessary to cover the "inst\_{divide,rem}\*\_by\_zero" situations and we're wondering if we're off track?
 3. Does it make sense to have a  battery of pvm-to-x86 target outputs as public test vectors for M3 linear recompilation?  Or, can we see polkatool's "recompiled x86\_64" output somehow, block by block, or across an entire disassembled .pvm file to check for cases where we are doing a few too many x86\_64 instructions per PVM Instruction?  How do we do this if so?
-4. there are many PVM opcodes (ROT\_R\_64\_IMM, MUL\_UPPER\_S\_S, COUNT\_SET\_BITS\_32, SIGN\_EXTEND\_16, REVERSE\_BYTES ...) that do not yet have a simple test case in the [pvm test vectors](https://github.com/w3f/jamtestvectors/pull/3) like [inst\_add\_64](https://github.com/koute/jamtestvectors/blob/master_pvm_initial/pvm/programs/inst_add_64.json) (powering both interpreter and compiler testing) -- is this something we should expect from you or should we be on our own for this?
-5. Generically, for different recompiler efforts, if in the end, we had exactly one public "best" way to map each PVM instruction to some number of x86\_64 instructions, how do you expect PVM executions (excluding host function calls) to actually differ?   If you expect they will differ very little to none, why not have a single open-source high-performance C recompiler that maps into this "best" way per architecture (starting with x86_64) that we all build and FFI into just like w3f bls+bandersnatch libs? [edited]
+4. there are many PVM opcodes (ROT\_R\_64\_IMM, MUL\_UPPER\_S\_S, COUNT\_SET\_BITS\_32, SIGN\_EXTEND\_16, REVERSE\_BYTES ...) that do not yet have a simple test case in the [pvm test vectors](https://github.com/w3f/jamtestvectors/pull/3) like [inst\_add\_64](https://github.com/koute/jamtestvectors/blob/master_pvm_initial/pvm/programs/inst_add_64.json) (powering both interpreter and recompiler testing) -- is this something we should expect from you or should we be on our own for this?
+5. Generically, for different recompiler efforts, if in the end, we had exactly one public "best" way to map each PVM instruction to some number of x86\_64 instructions, how do you expect PVM executions (excluding host function calls) to actually differ?   If you expect they will differ very little to none, why not have a single open-source high-performance C recompiler that maps into this "best" way per architecture (starting with x86\_64) that we all build and FFI into just like w3f bls+bandersnatch libs? [edited]
   ↳ 2025-06-08 16:41 subotic: Hey sourabhniyogi, if you are adventurous, here is an open PR with a few more test vectors for some of the mentioned instructions:
 https://github.com/paritytech/polkavm/pull/258
+  ↳ 2025-06-09 06:06 jan: 1. Depends on how you're sandboxing. Read up on: https://en.wikipedia.org/wiki/X86_calling_conventions#System_V_AMD64_ABI
+
+In general it's possible to clobber all of them as long as you're careful.
+
+2. Yes, some PVM instructions will require multiple AMD64 instructions, e.g. multiplication and division definitely are one of the bigger ones because the semantics don't map 1-to-1.
+
+3. In general I'd probably consider copy-pasting the exact assembly generated by PolkaVM to be against the rules of the JAM prize. It's fine to borrow general techniques as long as they're documented in isolation (e.g. my gas metering trick I've shown on the slides), but you shouldn't copy-paste exactly what PolkaVM is doing.
+
+The only extra tests we will need are performance tests that will measure how fast your recompiled code runs, regardless of what assembly you emit (this is just an implementation detail).
+
+4. Yes, as Ivan mentioned he made a PR adding more simple tests for those. I'll merge it eventually when I get some time (sorry for the delay Ivan Subotic !)
+
+  ↳ 2025-06-09 12:22 sourabhniyogi: So the primary competition on M3 is on how PolkaVM maps to X86 and its all intended to be secret, and we don't have to generate the same answer.  What are some initial benchmarks for us to use to see if we are 5%, 10%, 25%, 50%, 75%, of PolkaVM that we can run ourselves this summer?  We would like to know if we should do this in Go at all to get to 70%.  
+  ↳ 2025-06-09 12:24 jan: At very least you can run DOOM and see if you can hit 60 FPS.
+  ↳ 2025-06-09 12:24 jan: Getting good execution performance should be easier; more challenging will be getting the recompilation performance high enough.
+  ↳ 2025-06-09 12:28 jan: I have plans to eventually create a PVM harness for benchmarking. Fluffy Labs guys started one here so I'll probably contribute there: https://github.com/FluffyLabs/pvm-test-harness
+
+Feel free to integrate your PVM there.
+  ↳ 2025-06-09 12:31 jan: (Integration into such a harness will most likely be required for the M3+ milestones, as I certainly ain't gonna benchmark each PVM implementation manually.)
 2025-06-08 09:58 olanod: You know what next cool actually useful "demo" could be? self-hosting, CoreVM running cargo/rustc to compile itself. What would it take? filesystem ✅️, multi-threading ❎️ , wizzardy to get rustc happily compiling to PVM ❓️ 
 2025-06-08 12:05 ascriv: @gav you mentioned in your Mr shift interview you wish you had made polkadot privacy-first from the beginning. Are there plans to make jam with privacy as the default?
+2025-06-09 07:10 ascriv: I think it could be a good idea to launch JAM with some example products to show the capabilities, like how the Wii came with Wii sports. Thoughts?
+2025-06-09 07:53 dvladco: Hello, can someone check the `same_code_different_services` test vector for accumulation? for service with id `1730` the fields `bytes` and `items` seem to have wrong values since there is no storage items or preimages for that service. Is it a bug in the test vector or am I missing something?
+  ↳ 2025-06-09 07:56 clearloop: as you can see the hash of the two preimages are the same, that it's related to the shared preimage part, you can find it in GP
+  ↳ 2025-06-09 08:01 dvladco: Yes I noticed that code_hash is the same, but the preimages for 1730 is empty, can one service access the preimages of another?
+  ↳ 2025-06-09 08:05 clearloop: while it is shared preimages, the bytes and items can be calculated from the shared one
+  ↳ 2025-06-09 08:09 dvladco: ok thank you, I will look more into the shared preimages
+  ↳ 2025-06-09 08:12 greywolve: Which section is the shared preimages part? 
+  ↳ 2025-06-09 08:18 clearloop: I can't recall it clearly...but it's somewhere closed to the arguments of the accumulation, there is a formula, re-composing the account params
+  ↳ 2025-06-09 09:26 dvladco: I don't see the arguments being recomposed, we just pass the state: `let (n, o, t, C, u) = ∆+(g, W∗, (χ, δ, ι, φ), χg )`
+  ↳ 2025-06-09 09:27 dvladco: Also I was thinking, does it make sense to charge a service for the storage items that it doesn't store?
+  ↳ 2025-06-09 10:56 dvladco: davxy: can you also take a look at this test vector?
+  ↳ 2025-06-09 11:49 davxy: I will, but if you want to be sure I don't forget, please open an issue in the repo.
+2025-06-09 19:07 danicuki: Hello, I have a doubt about CE 142: Preimage announcement and CE 143.
+
+When preimage is announced (CE-142), how does the receiving node knows which port it should connect to call CE-143? It knows the calling node IP, but doesn't know the port this node is listening on for CE calls.  [edited]
+  ↳ 2025-06-09 19:08 dave: It should use the same connection
+  ↳ 2025-06-09 19:09 danicuki: but didn't CE-142 close the connection after complete?  [edited]
+  ↳ 2025-06-09 19:09 dave: No, you're confusing streams and connections
+  ↳ 2025-06-09 19:11 dave: I'll add some text to clarify this. The intended behaviour is that if for example a non-validator node connects to a validator to submit a preimage, it will announce the preimage using CE 142 and then keep the connection open until the preimage is requested (presumably giving up after some reasonable timeout)
+2025-06-09 19:12 dave: 
+2025-06-09 23:19 sourabhniyogi: image.png
+2025-06-09 23:19 sourabhniyogi: Super happy to report that we have 2+2+2 JAM tiny testnet doing fallback+safrole between polkajam, javajam and jamduna at 0.6.5 AND matching erasure roots + exports roots between 3 different client guarantors, with the latest binaries from polkajam + javajam.  See  [Makefile](https://github.com/jam-duna/jamtestnet/blob/main/Makefile).  Published an [updated jamduna binary](https://github.com/jam-duna/jamtestnet/releases/tag/0.6.5.3) (only for implementers trying to do the same =)). [edited]
