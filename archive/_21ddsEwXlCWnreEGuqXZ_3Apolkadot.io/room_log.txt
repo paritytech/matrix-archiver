@@ -1,5 +1,5 @@
 # room: #graypaper:polkadot.io
-# exported: 2025-06-10 03:35 UTC
+# exported: 2025-06-11 03:35 UTC
 2024-04-17 20:29 syed: https://matrix.to/#/!hyzRkDqDthePbodYFz:parity.io/$f_DMsIEcDXZegw6Sabnehzc-LrdDQkmq5MbxDDyoZxY?via=parity.io&via=web3.foundation
 
 2024-04-17 20:29 syed: 
@@ -6200,3 +6200,10 @@ If it’s just about collisions, we could make the item marker only 1 byte inste
 2025-06-09 16:15 ascriv: I presumed that was exactly why we had 4 byte long item markers, so that, interleaved with the 4 byte service index, we have a prefix we can search with 
 2025-06-09 16:23 yu2c: Does [\\mathcal{E}\_M](https://graypaper.fluffylabs.dev/#/7e6ff6a/3b40013b5801?v=0.6.7), serialization of merkle mountain range, have a formal definition somewhere in the graypaper? I couldn’t find where this notation is explicitly defined. [edited]
 2025-06-09 20:01 greywolve: See equation E.9 :)
+2025-06-10 11:42 gav: It is about collisions.
+2025-06-10 11:44 gav: Some care is needed; at present it should be secure and I see little opportunity to "optimize" here. a\_s and a\_l are relatively unconstrained, giving an attacker a vector for engineering a collision. [edited]
+2025-06-10 11:46 gav: In particular, if only a single byte were used for the discriminator for a\_s, then a key could conceivably be engineered within a\_s which caused a collision with a properly chosen hash of economically feasible length in a\_l. [edited]
+2025-06-10 11:47 gav: This would then need to be managed by altering the key-formula for a_l (e.g. by adding an additional discriminator).
+2025-06-10 11:49 gav: Right now we avoid this extra discriminator by ensuring that there can be no engineered collisions between a_s & a_l by effectively namespacing through those first four bytes of the key-formulae.
+2025-06-10 11:50 gav: I don't have an especially strong preference for this though - design-wise it's a bit of a hangover from when we didn't do the hashing at all and it made sense to make the database keys easily reversible. [edited]
+2025-06-10 11:52 gav: (To make this truly secure we should really add a requirement that no entries in a\_l may have lengths >= 2^32-2 - without this then we rely solely on economic properties to avoid a collision, and while such properties are reasonable to assume on a public mainnet, they may not be on e.g. a testnet or a permissioned network) [edited]

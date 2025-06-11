@@ -1,5 +1,5 @@
 # room: #jam:polkadot.io
-# exported: 2025-06-10 03:34 UTC
+# exported: 2025-06-11 03:34 UTC
 2024-04-20 02:08 johnjiao123: 
 2024-04-20 02:09 johnjiao123: 
 2024-05-30 21:48 nradko: Hey everyone,
@@ -9047,3 +9047,43 @@ When preimage is announced (CE-142), how does the receiving node knows which por
 2025-06-09 19:12 dave: 
 2025-06-09 23:19 sourabhniyogi: image.png
 2025-06-09 23:19 sourabhniyogi: Super happy to report that we have 2+2+2 JAM tiny testnet doing fallback+safrole between polkajam, javajam and jamduna at 0.6.5 AND matching erasure roots + exports roots between 3 different client guarantors, with the latest binaries from polkajam + javajam.  See  [Makefile](https://github.com/jam-duna/jamtestnet/blob/main/Makefile).  Published an [updated jamduna binary](https://github.com/jam-duna/jamtestnet/releases/tag/0.6.5.3) (only for implementers trying to do the same =)). [edited]
+2025-06-10 18:12 sourabhniyogi: Some questions, mostly concerning getting robustness in pursuing the above:
+
+1. Getting 3 clients to accept a work package with CE133/134 requires some degree of luck (with R=4 anyway), as we frequently get this:
+
+```
+2025-06-10 10:37:33 tokio-runtime-worker ERROR jam_node::chain::guarantors::guarantor  Failed to validate work package: invalid core: 1 not in [0]
+```
+
+indicating we're not on the same page on _when_ our clients are supposed to rotate exactly, causing us to check what [GP 11.3](https://graypaper.fluffylabs.dev/#/7e6ff6a/14f70114f701?v=0.6.7) says exactly about client behavior on exactly when validator switch their core beyond "Every block, each core has 3 validators uniquely assigned to guarantee work reports for it." -- is there something we've missed?   Is there a way to get visibility on the instant when a `polkajam` node switches its core assignment to as to respond with "invalid core: {} not in {}"?
+
+2. For starting up a testnet where there might be 5-10 seconds between the first client launching and the last, its valuable for every client to wait to author a block until some specific time, so as to allow time to launch, peer, etc and not author right away -- is there some way to do this with `polkajam`?
+3. We are able to have WPs with imported segments specified by export root (woohoo!)
+
+```
+2025-06-09 18:40:04 tokio-runtime-worker TRACE jam_node::chain::exec::in_core  fetched segment 0xeb390c02e701e9c3... for spec ImportSpec { root: Direct(0x0931694d2f7f25ea...), index: 0 }; lookup: None
+```
+
+but not by work package hash still:
+
+```
+2025-06-10 10:30:31 tokio-runtime-worker ERROR jam_node::chain::guarantors::guarantor  Failed to process package 0x58a40e64c7ccdab7...: Import error: Import not found: root Direct(""), index 0
+```
+
+is this expected?
+
+4. Is this a problem:
+
+```
+2025-06-10 10:24:48 tokio-runtime-worker ERROR authoring  Error authoring block: Authoring is lagging behind the best block slot
+``` [edited]
+  ↳ 2025-06-10 18:43 jaymansfield: I've seen #1/#4 multiple times as well. For #1 in JavaJAM there is no real timing to rotation. I do core assignment calculations in real-time when a WP arrives to see if it should be accepted or not, but since its based off best block there definitely could be timing issues if the WP is sent while a node is still processing a block [edited]
+  ↳ 2025-06-10 19:05 sourabhniyogi: We must have missed something in GP concerning "its based off best block"-- where is this
+  ↳ 2025-06-10 19:10 jaymansfield: Actually looking back that may have been an assumption of mine. Hopefully someone can clarify.
+  ↳ 2025-06-11 00:27 dave: 1. I think reasonable behaviour would be to start accepting work-packages for a rotation 1 slot before the rotation actually starts, and stop accepting when the rotation ends. polkajam does not quite do this at the moment, its transitions currently occur one slot earlier. I thought we had changed this but apparently not. I'll push a change tomorrow to adjust this.
+  ↳ 2025-06-11 00:28 dave: 2. Don't understand why this is necessary. Clients that are late to start should be able to sync any blocks they missed and quickly get to a point where they can do useful things?
+  ↳ 2025-06-11 00:29 dave: 3. Not sure how well this has been tested. I believe it's _supposed_ to work.
+  ↳ 2025-06-11 00:34 dave: 4. Looks like polkajam can produce this error if a block is produced too early. I think we're possibly supposed to avoid importing blocks which are produced too early, don't think we have any logic for this at the moment though
+  ↳ 2025-06-11 00:38 dave: FWIW I think currently we require a work-package to have been made available before we allow importing its exports in any way. It should be possible to reduce this latency in the happy case, by requesting the segments from the guarantors directly. There is currently no protocol defined for doing this.
+  ↳ 2025-06-11 00:45 dave: Looking at the logs you posted it looks like the block published at 16:18:29 should not have been published until 16:18:30. It's reasonable to start authoring a bit before the slot time, but if you finish early you should wait for the slot before announcing. FWIW, for simplicitly, polkajam currently doesn't even start authoring until the slot time is reached
+  ↳ 2025-06-11 00:47 dave: polkajam at least just bases core assignments on wall-clock time.
