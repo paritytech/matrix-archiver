@@ -1,5 +1,5 @@
 # room: #jam:polkadot.io
-# exported: 2025-06-11 03:34 UTC
+# exported: 2025-06-12 03:33 UTC
 2024-04-20 02:08 johnjiao123: 
 2024-04-20 02:09 johnjiao123: 
 2024-05-30 21:48 nradko: Hey everyone,
@@ -9087,3 +9087,48 @@ is this expected?
   ↳ 2025-06-11 00:38 dave: FWIW I think currently we require a work-package to have been made available before we allow importing its exports in any way. It should be possible to reduce this latency in the happy case, by requesting the segments from the guarantors directly. There is currently no protocol defined for doing this.
   ↳ 2025-06-11 00:45 dave: Looking at the logs you posted it looks like the block published at 16:18:29 should not have been published until 16:18:30. It's reasonable to start authoring a bit before the slot time, but if you finish early you should wait for the slot before announcing. FWIW, for simplicitly, polkajam currently doesn't even start authoring until the slot time is reached
   ↳ 2025-06-11 00:47 dave: polkajam at least just bases core assignments on wall-clock time.
+  ↳ 2025-06-11 04:48 sourabhniyogi: 1. Much appreciated! Any logging you add on at the start (1 slot before) and at the end, we will match the logging as well as this suggested behavior, thank you.
+2. When nodes author a block in their block prior to peering with everyone in the grid (esp with polkajam nodes), we end up with forks.   We can cope by using `at`, no worries
+3. Ok - don't believe it works yet -- we adjusted to exported segment root
+4. Alright -- will adjust (a) when we submit a work package to be after its imports are made available, and (b) when we announce a block to be after the slot time is reached.   I think (b) is reasonable but question (a) as I'd expect pipelining WPs with prereqs in refine-accumulate to be a serious priority.
+
+Is it possible to slip in a fix for E(p,c) along with 1 reported [here](https://paritytech.github.io/matrix-archiver/archive/_21wBOJlzaOULZOALhaRh_3Apolkadot.io/index.html#$45Z1ZHd5_sjqHnlNeil6Gxo4qi43X1km5n65JARQ1II)?  We cannot get authorization pvm to match with `jamt create-service` (but otherwise match on everything else in the work report!) due to the slight byte mismatch [edited]
+  ↳ 2025-06-11 09:41 sourabhniyogi: We managed to get { 1, 2, 3, 10, 31, 32, 33,  63, 64, 65, 127, 128, 129, 255, 256, 257,  511, 512, 513, 1023, 1024 } segments to match up with polkajam's export segment roots + erasure roots.   
+
+We need a battery of work package bundles to test how the import/export process match up with correct work reports and expected CE137/138/139  responses.  There are many different ways we could approach this, but in the end I believe we want jam binaries be able to take in a fixed self-contained bundle and output xyz, in the same way we want to be able to take the "state transitions" for accumulate.   For simplicity, I would set `historical-lookup` aside for another day and treat refine to be 100% stateless.   Do you have an opinion on what xyz should be?
+
+I believe if we design xyz with some foresight, we'll save ourselves massive debugging time later, not unlike the situation with pvm trace logging. [edited]
+  ↳ 2025-06-11 09:43 dave: 1. There aren't good spots for such log messages as we just determine the acceptable cores when a WP arrives; no code runs when the actual transitions happen
+  ↳ 2025-06-11 09:48 dave: 2. Forks need to be handled and should be resolved as more blocks are authored?
+  ↳ 2025-06-11 09:52 dave: Will take a look at the E(p,c) thing.
+  ↳ 2025-06-11 09:55 sourabhniyogi: We will use `at` for 2, don't worry about it.  We use old school stuff like ansible playbooks and can't wait to see how 1023 nodes in the toaster will work with forks all being handled with grandpa. [edited]
+  ↳ 2025-06-11 09:57 dave: FWIW if a node is reasonably sure it is behind the head of the chain it should probably avoid authoring a block. It should be able to determine this based on the slots announced by peers, before any blocks are downloaded. Obviously still possible to get forks...
+  ↳ 2025-06-11 10:02 dave: > <@sourabhniyogi:matrix.org> We managed to get { 1, 2, 3, 10, 31, 32, 33,  63, 64, 65, 127, 128, 129, 255, 256, 257,  511, 512, 513, 1023, 1024 } segments to match up with polkajam's export segment roots + erasure roots.   
+> 
+> We need a battery of work package bundles to test how the import/export process match up with correct work reports and expected CE137/138/139  responses.  There are many different ways we could approach this, but in the end I believe we want jam binaries be able to take in a fixed self-contained bundle and output xyz, in the same way we want to be able to take the "state transitions" for accumulate.   For simplicity, I would set `historical-lookup` aside for another day and treat refine to be 100% stateless.   Do you have an opinion on what xyz should be?
+> 
+> I believe if we design xyz with some foresight, we'll save ourselves massive debugging time later, not unlike the situation with pvm trace logging.
+
+This sort of thing will be handled by the fuzzing/conformance testing tool davxy is working on. Can't comment on input/ouput formats yet, but likely they will just be binary encoded using the GP codec.
+  ↳ 2025-06-11 12:27 dave: I agree the current behaviour of polkajam does not match the GP. It seems that we currently include the authorization config blob from the work-package (p_p) at the start of the argument blob, followed by the package and the core. We also encode the core index with E_2 AFAICT rather than E. This stuff has been reworked in GP 0.6.6, which we're currently implementing. We likely won't fix the 0.6.5 behaviour, instead well just move forward with 0.6.6.
+  ↳ 2025-06-11 14:53 jaymansfield: This helped, thanks! "Authoring is lagging" error is now gone for me after tweaking my block creation/announcement time.
+  ↳ 2025-06-11 18:40 sourabhniyogi: We used your clue to get jamt Authorization PVM correct, so we can use jamt create-service and polkajam spec to submit WPs now -- thank you for the hint! [edited]
+  ↳ 2025-06-11 23:25 sourabhniyogi: Ok, we looked into replicating this idea of "no code runs when the actual transitions happen" but in [reports](https://github.com/w3f/jamtestvectors/blob/26016ac6ca25cca9baecf90c233fc661d65283c3/reports/README.md?plain=1#L103) there is a ["Unexpected guarantor for work report core." test vector](https://github.com/w3f/jamtestvectors/blob/26016ac6ca25cca9baecf90c233fc661d65283c3/reports/tiny/wrong_assignment-1.json) where we thought it necessary to recompute core-validator assignments for each guarantee based on the guarantees slot.  How can you have "no code runs when the actual transitions happen" and properly validate guarantees included in the block without computing a validator-core assignment based on each guarantees slot?
+
+Is it that you have one  on-demand computation when WPs are received (based on "Wall clock" time) and a separate computation when Guarantees are validated (based on the guarantee slot)?
+
+Is the blocks time slot relevant at all?  It seems the first sentence of 11.3 should be "Every slot, each core has 3 validators.. " rather than "Every block, ..." [edited]
+  ↳ 2025-06-11 23:31 sourabhniyogi: What time slot a guarantee core-validator assignement is supposed to be validated against -- is it the wall clock time or the time slot in the guarantee?  (We assumed the latter.)
+
+What does the first guarantor (the validator receiving CE133) do to compute the guarantee's time slot exactly -- is it the time of receiving the WP, when it starts refining, when it completes, or something else still?
+
+It seems to me the only place we could possibly want to be using the wall clock time is the time when a WP is received.    [edited]
+  ↳ 2025-06-12 00:42 dave: > Is the blocks time slot relevant at all? It seems the first sentence of 11.3 should be "Every slot, each core has 3 validators.. " rather than "Every block, ..."
+
+Yes, that's probably true; there are two possible sets of validators for a core from the perspective of including guarantees in a block, as you can include a guarantee using the previous rotation
+  ↳ 2025-06-12 00:46 dave: For verifying a guarantee included in a block you should use the slot in the guarantee. AFAIK the only way in which the validity of a block depends on the wall-clock time is that the block's time-slot must not be in the future: "A block may only be regarded as valid once the time-
+slot index Ht is in the past" (Section 5)
+  ↳ 2025-06-12 00:59 dave: A guarantee's time slot is only relevant for determining the rotation and hence what the validator assignments are. As a guarantor constructing a guarantee, you should set the time slot to one in which you and the other guarantors you shared the package with are assigned to the core. This slot should be close to the current slot (as otherwise you would presumably have refused to process the work-package), but may be slightly in the future.
+  ↳ 2025-06-12 01:01 dave: The wall-clock time should be used to determine whether or not to accept a work-package from a builder or another guarantor, but shouldn't really be used for anything else.
+2025-06-11 12:31 ascriv: Can we expect the next polkajam release to be compliant with 0.6.7 or later since 0.6.7 is out already?
+2025-06-11 13:13 dave: We're working on 0.6.6 at the moment. Don't have an exact ETA for a build. There aren't many changes though so hopefully shouldn't be long.

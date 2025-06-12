@@ -1,5 +1,5 @@
 # room: #graypaper:polkadot.io
-# exported: 2025-06-11 03:35 UTC
+# exported: 2025-06-12 03:34 UTC
 2024-04-17 20:29 syed: https://matrix.to/#/!hyzRkDqDthePbodYFz:parity.io/$f_DMsIEcDXZegw6Sabnehzc-LrdDQkmq5MbxDDyoZxY?via=parity.io&via=web3.foundation
 
 2024-04-17 20:29 syed: 
@@ -6207,3 +6207,7 @@ If it’s just about collisions, we could make the item marker only 1 byte inste
 2025-06-10 11:49 gav: Right now we avoid this extra discriminator by ensuring that there can be no engineered collisions between a_s & a_l by effectively namespacing through those first four bytes of the key-formulae.
 2025-06-10 11:50 gav: I don't have an especially strong preference for this though - design-wise it's a bit of a hangover from when we didn't do the hashing at all and it made sense to make the database keys easily reversible. [edited]
 2025-06-10 11:52 gav: (To make this truly secure we should really add a requirement that no entries in a\_l may have lengths >= 2^32-2 - without this then we rely solely on economic properties to avoid a collision, and while such properties are reasonable to assume on a public mainnet, they may not be on e.g. a testnet or a permissioned network) [edited]
+2025-06-11 09:48 ascriv: Does the cleanroom rule apply also to all things related to networking, or not since it’s sort of external to GP?
+2025-06-11 10:05 dave: Networking stuff will eventually be included in the GP so I assume the clean room rule applies
+2025-06-11 23:52 sourabhniyogi: Should the first sentence of 11.3 [here](https://graypaper.fluffylabs.dev/#/7e6ff6a/14f70114f701?v=0.6.7) be "Every slot, each core has 3 validators.. " rather than "Every block, each core has 3 validators .."
+2025-06-12 03:20 xlchen: not every slot have a block, and a slot could have multiple blocks 
