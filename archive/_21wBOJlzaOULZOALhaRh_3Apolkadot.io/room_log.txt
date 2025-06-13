@@ -1,5 +1,5 @@
 # room: #jam:polkadot.io
-# exported: 2025-06-12 03:33 UTC
+# exported: 2025-06-13 03:34 UTC
 2024-04-20 02:08 johnjiao123: 
 2024-04-20 02:09 johnjiao123: 
 2024-05-30 21:48 nradko: Hey everyone,
@@ -9130,5 +9130,68 @@ Yes, that's probably true; there are two possible sets of validators for a core 
 slot index Ht is in the past" (Section 5)
   ↳ 2025-06-12 00:59 dave: A guarantee's time slot is only relevant for determining the rotation and hence what the validator assignments are. As a guarantor constructing a guarantee, you should set the time slot to one in which you and the other guarantors you shared the package with are assigned to the core. This slot should be close to the current slot (as otherwise you would presumably have refused to process the work-package), but may be slightly in the future.
   ↳ 2025-06-12 01:01 dave: The wall-clock time should be used to determine whether or not to accept a work-package from a builder or another guarantor, but shouldn't really be used for anything else.
+  ↳ 2025-06-12 12:44 jaymansfield: Theres a bug somewhere that can cause the polkajam nodes to crash (completely shutdown and need to be started again):  2025-06-11 11:18:36 tokio-runtime-worker ERROR jam_node  Finality task returned an error: Chain error: State(MissingBlock)
+2025-06-11 11:18:39 main ERROR jam_cli  Error: Chain error: State(MissingBlock)  
+  ↳ 2025-06-13 01:11 mkchung: Does polkajam support CE134 with non-empty Segments-Root Mappings? so far Ive not seen CE134Resp from polkajam with Segments-Root Mappings. Also for sharing workpackage that contains importSegments with polkajam binary via 134. I got the following errors WITH or WITHOUT including Segments-Root Mappings
+
+```
+Disconnecting: Misbehaviour: Malformed jam_node::availability::net::protocol::SegmentsRequest: Could not decode `SegmentsRequest::erasure_root`:
+	Could not decode `ErasureRoot.0`:
+		Not enough data to fill buffer
+```
+  ↳ 2025-06-13 01:15 mkchung: However, sending a work package that "requires" importSegments to the PolkaJam binary via CE133—and relying on PolkaJam to perform the CE134 step—appears to work, although the segment-root mappings come back empty from CE134resp. not exactly sure why. [edited]
 2025-06-11 12:31 ascriv: Can we expect the next polkajam release to be compliant with 0.6.7 or later since 0.6.7 is out already?
 2025-06-11 13:13 dave: We're working on 0.6.6 at the moment. Don't have an exact ETA for a build. There aren't many changes though so hopefully shouldn't be long.
+2025-06-12 11:59 interweb_: Poss related: https://github.com/davxy/jam-test-vectors/issues/39
+
+When decoding `statistics/tiny/stats_with_epoch_change-1.bin`
+Is there any error in the definition of any of these fields for statistics?
+
+At offset 1644 we see the `02` for GuaranteesExtrinsic: count: 2
+At offset 1915 we see the `01` for WorkResults: count: 1
+  ↳ 2025-06-12 11:59 interweb_: image.png
+  ↳ 2025-06-12 11:59 interweb_: Between these offsets we are not able to decode the bin into expected json
+
+```bash
+[DEBUG] offset 1644: readGuaranteesExtrinsic: count: 2
+[DEBUG] offset 1645: readGuaranteesExtrinsic: i: 0
+[DEBUG] offset 1645: readReportGuarantee
+[DEBUG] offset 1645: readWorkReport
+[DEBUG] offset 1645: readWorkPackageSpec
+[DEBUG] offset 1745-1746: readWorkPackageSpec: exportsCount: 0
+[DEBUG] offset 1747: readRefineContext
+[DEBUG] offset 1747-1778: readRefineContext: anchor: 0x0000000000000000000000000000000000000000000000000000000000000000
+[DEBUG] offset 1779-1810: readRefineContext: stateRoot: 0x0000000000000000000000000000000000000000000000000000000000000000
+[DEBUG] offset 1811-1842: readRefineContext: beefyRoot: 0x0000000000000000000000000000000000000000000000000000000000000000
+[DEBUG] offset 1843-1874: readRefineContext: lookupAnchor: 0x0000000000000000000000000000000000000000000000000000000000000000
+[DEBUG] offset 1875-1878: readRefineContext: lookupAnchorSlot: 0
+[DEBUG] offset 1879: readPrerequisites: count: 0
+[DEBUG] offset 1879-1879: readRefineContext: prerequisites: []
+[DEBUG] offset 1747-1879: readRefineContext: context: {
+  "anchor": "0x0000000000000000000000000000000000000000000000000000000000000000",
+  "state_root": "0x0000000000000000000000000000000000000000000000000000000000000000",
+  "beefy_root": "0x0000000000000000000000000000000000000000000000000000000000000000",
+  "lookup_anchor": "0x0000000000000000000000000000000000000000000000000000000000000000",
+  "lookup_anchor_slot": 0,
+  "prerequisites": []
+}
+[DEBUG] offset 1880-1881: readWorkReport: coreIndex: 0
+[DEBUG] offset 1882-1913: readWorkReport: authorizerHash: 0x0000000000000000000000000000000000000000000000000000000000000000
+[WARN]  offset 1914: readCompactInt: mode: 0
+[DEBUG] offset 1914-1914: readWorkReport: len: 0
+[DEBUG] offset 1915: readWorkReport: authOutput: 0x
+
+
+HERE: we have reached offset 1915, but we still need to read one octet to get the count of results... so I'm expect one more 00, before we hit 01
+
+
+[DEBUG] printNextBytes: next 128 bytes: 
+01000000000000000000000000000000 - [  1   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0] - 1 - 1 - 1
+00000000000000000000000000000000 - [  0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0] - 0 - 0 - 0
+00000000000000000000000000000000 - [  0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0] - 0 - 0 - 0
+00000000000000000000000000000000 - [  0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0] - 0 - 0 - 0
+00000000000000000000000000000000 - [  0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0] - 0 - 0 - 0
+00000000000000000002000000000000 - [  0   0   0   0   0   0   0   0   0   2   0   0   0   0   0   0] - 0 - 0 - 0
+00000000000000000000000000000000 - [  0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0] - 0 - 0 - 0
+
+```

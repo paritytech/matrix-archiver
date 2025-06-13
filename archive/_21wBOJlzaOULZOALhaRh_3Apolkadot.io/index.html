@@ -18,7 +18,7 @@ a:hover{color:#90caf9}
 em{font-style:italic}
 </style>
 <h1>#jam:polkadot.io</h1>
-<p><small>last updated 2025-06-12 03:33 UTC</small></p>
+<p><small>last updated 2025-06-13 03:34 UTC</small></p>
 <p><a href='room_log.txt'>⇩ plaintext</a> · <a href='../../'>⇦ all rooms</a></p>
 <hr>
 <div class='msg'><a class='ts' href='#$we4SYXTHwmKn094X9Zs_7mWUOoUVh4icvVdxD83RZfs'>#</a> <a class='ts' name='$we4SYXTHwmKn094X9Zs_7mWUOoUVh4icvVdxD83RZfs' href='https://matrix.to/#/!wBOJlzaOULZOALhaRh:polkadot.io/$we4SYXTHwmKn094X9Zs_7mWUOoUVh4icvVdxD83RZfs' target='_blank'>2024-04-20 02:08</a>&ensp;<span class='u' style='color:#d0709e'>johnjiao123</span>: </div>
@@ -9050,5 +9050,66 @@ Yes, that&#x27;s probably true; there are two possible sets of validators for a 
 slot index Ht is in the past&quot; (Section 5)</div>
 <div class='msg reply'><a class='ts' href='#$cnjkfxLz1hkVhjIXQ1oC-MjDue-3Q7QC5I4Xr-7VYAE'>#</a> <a class='ts' name='$cnjkfxLz1hkVhjIXQ1oC-MjDue-3Q7QC5I4Xr-7VYAE' href='https://matrix.to/#/!wBOJlzaOULZOALhaRh:polkadot.io/$cnjkfxLz1hkVhjIXQ1oC-MjDue-3Q7QC5I4Xr-7VYAE' target='_blank'>2025-06-12 00:59</a>&ensp;<span class='u' style='color:#c65779'>dave</span>: A guarantee&#x27;s time slot is only relevant for determining the rotation and hence what the validator assignments are. As a guarantor constructing a guarantee, you should set the time slot to one in which you and the other guarantors you shared the package with are assigned to the core. This slot should be close to the current slot (as otherwise you would presumably have refused to process the work-package), but may be slightly in the future.</div>
 <div class='msg reply'><a class='ts' href='#$T_gF_j805LhGcUs7lmXnXS87GSKaW00ztf74nC7XNSw'>#</a> <a class='ts' name='$T_gF_j805LhGcUs7lmXnXS87GSKaW00ztf74nC7XNSw' href='https://matrix.to/#/!wBOJlzaOULZOALhaRh:polkadot.io/$T_gF_j805LhGcUs7lmXnXS87GSKaW00ztf74nC7XNSw' target='_blank'>2025-06-12 01:01</a>&ensp;<span class='u' style='color:#c65779'>dave</span>: The wall-clock time should be used to determine whether or not to accept a work-package from a builder or another guarantor, but shouldn&#x27;t really be used for anything else.</div>
+<div class='msg reply'><a class='ts' href='#$eNBhG1biCJ3Nj-veoRFshJ3Y16QoQ0-hZ8fd6EhWzCU'>#</a> <a class='ts' name='$eNBhG1biCJ3Nj-veoRFshJ3Y16QoQ0-hZ8fd6EhWzCU' href='https://matrix.to/#/!wBOJlzaOULZOALhaRh:polkadot.io/$eNBhG1biCJ3Nj-veoRFshJ3Y16QoQ0-hZ8fd6EhWzCU' target='_blank'>2025-06-12 12:44</a>&ensp;<span class='u' style='color:#d470bf'>jaymansfield</span>: Theres a bug somewhere that can cause the polkajam nodes to crash (completely shutdown and need to be started again):  2025-06-11 11:18:36 tokio-runtime-worker ERROR jam_node  Finality task returned an error: Chain error: State(MissingBlock)
+2025-06-11 11:18:39 main ERROR jam_cli  Error: Chain error: State(MissingBlock)  </div>
+<div class='msg reply'><a class='ts' href='#$vYEQvItdTsjP27NDV7BGRKk_Q0s_XrAP2tEi_WEhhvA'>#</a> <a class='ts' name='$vYEQvItdTsjP27NDV7BGRKk_Q0s_XrAP2tEi_WEhhvA' href='https://matrix.to/#/!wBOJlzaOULZOALhaRh:polkadot.io/$vYEQvItdTsjP27NDV7BGRKk_Q0s_XrAP2tEi_WEhhvA' target='_blank'>2025-06-13 01:11</a>&ensp;<span class='u' style='color:#c377dd'>mkchung</span>: Does polkajam support CE134 with non-empty Segments-Root Mappings? so far Ive not seen CE134Resp from polkajam with Segments-Root Mappings. Also for sharing workpackage that contains importSegments with polkajam binary via 134. I got the following errors WITH or WITHOUT including Segments-Root Mappings
+
+<pre><code class=''>Disconnecting: Misbehaviour: Malformed jam_node::availability::net::protocol::SegmentsRequest: Could not decode `SegmentsRequest::erasure_root`:
+	Could not decode `ErasureRoot.0`:
+		Not enough data to fill buffer
+</code></pre></div>
+<div class='msg reply'><a class='ts' href='#$Ej6ojsdhj1am_PLQi80RVd0kbSmn_4JWoJ63CPG3feA'>#</a> <a class='ts' name='$Ej6ojsdhj1am_PLQi80RVd0kbSmn_4JWoJ63CPG3feA' href='https://matrix.to/#/!wBOJlzaOULZOALhaRh:polkadot.io/$Ej6ojsdhj1am_PLQi80RVd0kbSmn_4JWoJ63CPG3feA' target='_blank'>2025-06-13 01:15</a>&ensp;<span class='u' style='color:#c377dd'>mkchung</span>: However, sending a work package that &quot;requires&quot; importSegments to the PolkaJam binary via CE133—and relying on PolkaJam to perform the CE134 step—appears to work, although the segment-root mappings come back empty from CE134resp. not exactly sure why. <span class="edited">(edited)</span></div>
 <div class='msg'><a class='ts' href='#$jFQfxRJKS2rQ1Jpnv3Zx4Vsgb2PCpAqjoY8XN4cKKfg'>#</a> <a class='ts' name='$jFQfxRJKS2rQ1Jpnv3Zx4Vsgb2PCpAqjoY8XN4cKKfg' href='https://matrix.to/#/!wBOJlzaOULZOALhaRh:polkadot.io/$jFQfxRJKS2rQ1Jpnv3Zx4Vsgb2PCpAqjoY8XN4cKKfg' target='_blank'>2025-06-11 12:31</a>&ensp;<span class='u' style='color:#4036ac'>ascriv</span>: Can we expect the next polkajam release to be compliant with 0.6.7 or later since 0.6.7 is out already?</div>
 <div class='msg'><a class='ts' href='#$rCGNqRfru4I3sXuOiElj_ZK_g8TrADKMzFYTcVOp5mE'>#</a> <a class='ts' name='$rCGNqRfru4I3sXuOiElj_ZK_g8TrADKMzFYTcVOp5mE' href='https://matrix.to/#/!wBOJlzaOULZOALhaRh:polkadot.io/$rCGNqRfru4I3sXuOiElj_ZK_g8TrADKMzFYTcVOp5mE' target='_blank'>2025-06-11 13:13</a>&ensp;<span class='u' style='color:#c65779'>dave</span>: We&#x27;re working on 0.6.6 at the moment. Don&#x27;t have an exact ETA for a build. There aren&#x27;t many changes though so hopefully shouldn&#x27;t be long.</div>
+<div class='msg'><a class='ts' href='#$fy9iqOPyn9W1GOQp-txyHhJpgigidNWfNBCm0LRuhhc'>#</a> <a class='ts' name='$fy9iqOPyn9W1GOQp-txyHhJpgigidNWfNBCm0LRuhhc' href='https://matrix.to/#/!wBOJlzaOULZOALhaRh:polkadot.io/$fy9iqOPyn9W1GOQp-txyHhJpgigidNWfNBCm0LRuhhc' target='_blank'>2025-06-12 11:59</a>&ensp;<span class='u' style='color:#dc865f'>interweb_</span>: Poss related: <a href="https://github.com/davxy/jam-test-vectors/issues/39" rel="noopener" target="_blank">https://github.com/davxy/jam-test-vectors/issues/39</a>
+
+When decoding <code>statistics/tiny/stats_with_epoch_change-1.bin</code>
+Is there any error in the definition of any of these fields for statistics?
+
+At offset 1644 we see the <code>02</code> for GuaranteesExtrinsic: count: 2
+At offset 1915 we see the <code>01</code> for WorkResults: count: 1</div>
+<div class='msg reply'><a class='ts' href='#$geoi7Ll-JuIedDEEWfrqmFMbQ05hqzgWFXOy1jYU3u0'>#</a> <a class='ts' name='$geoi7Ll-JuIedDEEWfrqmFMbQ05hqzgWFXOy1jYU3u0' href='https://matrix.to/#/!wBOJlzaOULZOALhaRh:polkadot.io/$geoi7Ll-JuIedDEEWfrqmFMbQ05hqzgWFXOy1jYU3u0' target='_blank'>2025-06-12 11:59</a>&ensp;<span class='u' style='color:#dc865f'>interweb_</span>: image.png</div>
+<div class='msg reply'><a class='ts' href='#$9lJbTESzlpMoP_PFEGBkGEufQ828-7CUDoA90gaPh2I'>#</a> <a class='ts' name='$9lJbTESzlpMoP_PFEGBkGEufQ828-7CUDoA90gaPh2I' href='https://matrix.to/#/!wBOJlzaOULZOALhaRh:polkadot.io/$9lJbTESzlpMoP_PFEGBkGEufQ828-7CUDoA90gaPh2I' target='_blank'>2025-06-12 11:59</a>&ensp;<span class='u' style='color:#dc865f'>interweb_</span>: Between these offsets we are not able to decode the bin into expected json
+
+<pre><code class='bash'>[DEBUG] offset 1644: readGuaranteesExtrinsic: count: 2
+[DEBUG] offset 1645: readGuaranteesExtrinsic: i: 0
+[DEBUG] offset 1645: readReportGuarantee
+[DEBUG] offset 1645: readWorkReport
+[DEBUG] offset 1645: readWorkPackageSpec
+[DEBUG] offset 1745-1746: readWorkPackageSpec: exportsCount: 0
+[DEBUG] offset 1747: readRefineContext
+[DEBUG] offset 1747-1778: readRefineContext: anchor: 0x0000000000000000000000000000000000000000000000000000000000000000
+[DEBUG] offset 1779-1810: readRefineContext: stateRoot: 0x0000000000000000000000000000000000000000000000000000000000000000
+[DEBUG] offset 1811-1842: readRefineContext: beefyRoot: 0x0000000000000000000000000000000000000000000000000000000000000000
+[DEBUG] offset 1843-1874: readRefineContext: lookupAnchor: 0x0000000000000000000000000000000000000000000000000000000000000000
+[DEBUG] offset 1875-1878: readRefineContext: lookupAnchorSlot: 0
+[DEBUG] offset 1879: readPrerequisites: count: 0
+[DEBUG] offset 1879-1879: readRefineContext: prerequisites: []
+[DEBUG] offset 1747-1879: readRefineContext: context: {
+  &quot;anchor&quot;: &quot;0x0000000000000000000000000000000000000000000000000000000000000000&quot;,
+  &quot;state_root&quot;: &quot;0x0000000000000000000000000000000000000000000000000000000000000000&quot;,
+  &quot;beefy_root&quot;: &quot;0x0000000000000000000000000000000000000000000000000000000000000000&quot;,
+  &quot;lookup_anchor&quot;: &quot;0x0000000000000000000000000000000000000000000000000000000000000000&quot;,
+  &quot;lookup_anchor_slot&quot;: 0,
+  &quot;prerequisites&quot;: []
+}
+[DEBUG] offset 1880-1881: readWorkReport: coreIndex: 0
+[DEBUG] offset 1882-1913: readWorkReport: authorizerHash: 0x0000000000000000000000000000000000000000000000000000000000000000
+[WARN]  offset 1914: readCompactInt: mode: 0
+[DEBUG] offset 1914-1914: readWorkReport: len: 0
+[DEBUG] offset 1915: readWorkReport: authOutput: 0x
+
+
+HERE: we have reached offset 1915, but we still need to read one octet to get the count of results... so I&#x27;m expect one more 00, before we hit 01
+
+
+[DEBUG] printNextBytes: next 128 bytes: 
+01000000000000000000000000000000 - [  1   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0] - 1 - 1 - 1
+00000000000000000000000000000000 - [  0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0] - 0 - 0 - 0
+00000000000000000000000000000000 - [  0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0] - 0 - 0 - 0
+00000000000000000000000000000000 - [  0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0] - 0 - 0 - 0
+00000000000000000000000000000000 - [  0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0] - 0 - 0 - 0
+00000000000000000002000000000000 - [  0   0   0   0   0   0   0   0   0   2   0   0   0   0   0   0] - 0 - 0 - 0
+00000000000000000000000000000000 - [  0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0] - 0 - 0 - 0
+
+</code></pre></div>
