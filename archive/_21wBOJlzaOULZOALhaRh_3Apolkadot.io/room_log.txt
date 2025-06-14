@@ -1,5 +1,5 @@
 # room: #jam:polkadot.io
-# exported: 2025-06-13 03:34 UTC
+# exported: 2025-06-14 03:31 UTC
 2024-04-20 02:08 johnjiao123: 
 2024-04-20 02:09 johnjiao123: 
 2024-05-30 21:48 nradko: Hey everyone,
@@ -9195,3 +9195,11 @@ HERE: we have reached offset 1915, but we still need to read one octet to get th
 00000000000000000000000000000000 - [  0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0] - 0 - 0 - 0
 
 ```
+2025-06-13 05:02 hitchhooker: Is the current networking plan to drop IPv4 routes completely, or just map them in IPv6 format (e.g., ::ffff:192.0.2.1) and use them as a fallback? Dropping IPv4 and gossip simultaneously seems like quite a radical move in terms of resiliency (IPv6 transit routes are much more centralized among fewer ISPs, with many requiring BGP communities set for blackholing at the /128 level for peering due to DDoS). 
+
+Also, has there been any consideration of using QUIC multipath (https://datatracker.ietf.org/doc/draft-ietf-quic-multipath/) for improved resiliency in JAM-NPs?
+2025-06-13 07:50 dave: You can use an IPv4 address by mapping it into IPv6 as you say. It's not intended to be IPv6-only. I'm not sure what you mean by dropping gossip; a few things are gossiped (eg blocks and preimages).
+2025-06-13 07:59 dave: The S in JAMNP-S stands for simple; it's intended to be a basic protocol to get things going. It will be replaced by a more fully-featured protocol eventually. We can consider supporting eg multipath at that point. [edited]
+2025-06-13 08:09 dave: > <@dave:parity.io> You can use an IPv4 address by mapping it into IPv6 as you say. It's not intended to be IPv6-only. I'm not sure what you mean by dropping gossip; a few things are gossiped (eg blocks and preimages).
+
+That said it is only currently possible to set one address for a validator, this may need changing. Haven't given it much thought at this point.

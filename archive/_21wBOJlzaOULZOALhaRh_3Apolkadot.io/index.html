@@ -18,7 +18,7 @@ a:hover{color:#90caf9}
 em{font-style:italic}
 </style>
 <h1>#jam:polkadot.io</h1>
-<p><small>last updated 2025-06-13 03:34 UTC</small></p>
+<p><small>last updated 2025-06-14 03:31 UTC</small></p>
 <p><a href='room_log.txt'>⇩ plaintext</a> · <a href='../../'>⇦ all rooms</a></p>
 <hr>
 <div class='msg'><a class='ts' href='#$we4SYXTHwmKn094X9Zs_7mWUOoUVh4icvVdxD83RZfs'>#</a> <a class='ts' name='$we4SYXTHwmKn094X9Zs_7mWUOoUVh4icvVdxD83RZfs' href='https://matrix.to/#/!wBOJlzaOULZOALhaRh:polkadot.io/$we4SYXTHwmKn094X9Zs_7mWUOoUVh4icvVdxD83RZfs' target='_blank'>2024-04-20 02:08</a>&ensp;<span class='u' style='color:#d0709e'>johnjiao123</span>: </div>
@@ -9113,3 +9113,11 @@ HERE: we have reached offset 1915, but we still need to read one octet to get th
 00000000000000000000000000000000 - [  0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0] - 0 - 0 - 0
 
 </code></pre></div>
+<div class='msg'><a class='ts' href='#$c1BIZ2UftTsz-lqY4GcZuYQ3aYDT3qhV3et6a3WgNr4'>#</a> <a class='ts' name='$c1BIZ2UftTsz-lqY4GcZuYQ3aYDT3qhV3et6a3WgNr4' href='https://matrix.to/#/!wBOJlzaOULZOALhaRh:polkadot.io/$c1BIZ2UftTsz-lqY4GcZuYQ3aYDT3qhV3et6a3WgNr4' target='_blank'>2025-06-13 05:02</a>&ensp;<span class='u' style='color:#2979b3'>hitchhooker</span>: Is the current networking plan to drop IPv4 routes completely, or just map them in IPv6 format (e.g., ::ffff:192.0.2.1) and use them as a fallback? Dropping IPv4 and gossip simultaneously seems like quite a radical move in terms of resiliency (IPv6 transit routes are much more centralized among fewer ISPs, with many requiring BGP communities set for blackholing at the /128 level for peering due to DDoS). 
+
+Also, has there been any consideration of using QUIC multipath (<a href="https://datatracker.ietf.org/doc/draft-ietf-quic-multipath/)" rel="noopener" target="_blank">https://datatracker.ietf.org/doc/draft-ietf-quic-multipath/)</a> for improved resiliency in JAM-NPs?</div>
+<div class='msg'><a class='ts' href='#$KtMPDcSTNOtGR2Lc90LzHTo1rxKyTr-DgANczUldz-4'>#</a> <a class='ts' name='$KtMPDcSTNOtGR2Lc90LzHTo1rxKyTr-DgANczUldz-4' href='https://matrix.to/#/!wBOJlzaOULZOALhaRh:polkadot.io/$KtMPDcSTNOtGR2Lc90LzHTo1rxKyTr-DgANczUldz-4' target='_blank'>2025-06-13 07:50</a>&ensp;<span class='u' style='color:#c65779'>dave</span>: You can use an IPv4 address by mapping it into IPv6 as you say. It&#x27;s not intended to be IPv6-only. I&#x27;m not sure what you mean by dropping gossip; a few things are gossiped (eg blocks and preimages).</div>
+<div class='msg'><a class='ts' href='#$yI3r4w2mc-foTFJrmwXIT7VQReM3KtKtHgLkRmshSCI'>#</a> <a class='ts' name='$yI3r4w2mc-foTFJrmwXIT7VQReM3KtKtHgLkRmshSCI' href='https://matrix.to/#/!wBOJlzaOULZOALhaRh:polkadot.io/$yI3r4w2mc-foTFJrmwXIT7VQReM3KtKtHgLkRmshSCI' target='_blank'>2025-06-13 07:59</a>&ensp;<span class='u' style='color:#c65779'>dave</span>: The S in JAMNP-S stands for simple; it&#x27;s intended to be a basic protocol to get things going. It will be replaced by a more fully-featured protocol eventually. We can consider supporting eg multipath at that point. <span class="edited">(edited)</span></div>
+<div class='msg'><a class='ts' href='#$yIpT3X1ronOog48g5wMZWX108Hr595dk98EXe8_osv4'>#</a> <a class='ts' name='$yIpT3X1ronOog48g5wMZWX108Hr595dk98EXe8_osv4' href='https://matrix.to/#/!wBOJlzaOULZOALhaRh:polkadot.io/$yIpT3X1ronOog48g5wMZWX108Hr595dk98EXe8_osv4' target='_blank'>2025-06-13 08:09</a>&ensp;<span class='u' style='color:#c65779'>dave</span>: &gt; &lt;@dave:parity.io&gt; You can use an IPv4 address by mapping it into IPv6 as you say. It&#x27;s not intended to be IPv6-only. I&#x27;m not sure what you mean by dropping gossip; a few things are gossiped (eg blocks and preimages).
+
+That said it is only currently possible to set one address for a validator, this may need changing. Haven&#x27;t given it much thought at this point.</div>

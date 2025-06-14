@@ -1,5 +1,5 @@
 # room: #graypaper:polkadot.io
-# exported: 2025-06-13 03:34 UTC
+# exported: 2025-06-14 03:32 UTC
 2024-04-17 20:29 syed: https://matrix.to/#/!hyzRkDqDthePbodYFz:parity.io/$f_DMsIEcDXZegw6Sabnehzc-LrdDQkmq5MbxDDyoZxY?via=parity.io&via=web3.foundation
 
 2024-04-17 20:29 syed: 
@@ -6211,3 +6211,13 @@ If it’s just about collisions, we could make the item marker only 1 byte inste
 2025-06-11 10:05 dave: Networking stuff will eventually be included in the GP so I assume the clean room rule applies
 2025-06-11 23:52 sourabhniyogi: Should the first sentence of 11.3 [here](https://graypaper.fluffylabs.dev/#/7e6ff6a/14f70114f701?v=0.6.7) be "Every slot, each core has 3 validators.. " rather than "Every block, each core has 3 validators .."
 2025-06-12 03:20 xlchen: not every slot have a block, and a slot could have multiple blocks 
+2025-06-13 13:31 sourabhniyogi: We would like to see [Provide a more optimal EC parameterization for work bundles](https://github.com/gavofyork/graypaper/issues/97) get moved up to 0.7 (so we can work on it this summer rather than the fall) -- as we are finding that erasure encoding / decoding with 1K-3K imported/exported segments is disruptively time-consuming.  Possible?
+
+Or, I'm missing something basic [here](https://github.com/jam-duna/jamtestnet/blob/main/erasurecoding/src/lib.rs#L29-L44) to match up with davxy 's new [Erasure coding test vectors](https://github.com/davxy/jam-test-vectors/pull/74) and would like someone to provide the trick to get the efficiency of just having [1 encode call rather than k](https://github.com/davxy/jam-test-vectors/pull/74#issuecomment-2962400563)? [edited]
+  ↳ 2025-06-13 13:43 clearloop: I remember parity has this erasure-coding repo https://github.com/paritytech/erasure-coding, wouldn't this be helpful? since in the jam prize page it says we can use erasure-coding library as primitives directly
+  ↳ 2025-06-13 14:32 jaymansfield: If theres no way to reduce the k encode calls to just one, you can try doing them in parallel rather than sequentially. It significantly reduced encoding time for me after doing that. Although would be faster still to just do a single call if possible.
+  ↳ 2025-06-13 16:36 sourabhniyogi: The efficiency we want is that encoding+decoding of 3072 segments coming back from 342+ CE138 responses form 12MB+ work package bundle is done in well under 1s using up 1/16 of resources as aimed for here 
+https://graypaper.fluffylabs.dev/#/7e6ff6a/202501202501?v=0.6.7
+
+It is surely doable, we just have to actually do it.  I think a solution between "tiny" (V=6, C=2) and "full" (V=1023, C=341) should be pursued so that N teams can pursue parallelization of requests/responses ( and various politeness concerns ) within the Toaster in pairs or something like that. [edited]
+  ↳ 2025-06-13 16:46 dave: FWIW the full network protocol will provide a way of fetching bundles/segments directly from guarantors, as a fast path. The less fast path which is possible now is to request the shards containing original data, in which case reconstruction is just concatenation. If you need to do full reconstruction of segments it should still be possible to have only a single call into the EC library _if_ the shard indices are the same for every segment. If they're not then I'm not sure how efficiently reconstruction can be done.
