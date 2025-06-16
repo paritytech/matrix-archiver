@@ -1,5 +1,5 @@
 # room: #graypaper:polkadot.io
-# exported: 2025-06-15 03:38 UTC
+# exported: 2025-06-16 03:38 UTC
 2024-04-17 20:29 syed: https://matrix.to/#/!hyzRkDqDthePbodYFz:parity.io/$f_DMsIEcDXZegw6Sabnehzc-LrdDQkmq5MbxDDyoZxY?via=parity.io&via=web3.foundation
 
 2024-04-17 20:29 syed: 
@@ -6221,3 +6221,6 @@ https://graypaper.fluffylabs.dev/#/7e6ff6a/202501202501?v=0.6.7
 
 It is surely doable, we just have to actually do it.  I think a solution between "tiny" (V=6, C=2) and "full" (V=1023, C=341) should be pursued so that N teams can pursue parallelization of requests/responses ( and various politeness concerns ) within the Toaster in pairs or something like that. [edited]
   ↳ 2025-06-13 16:46 dave: FWIW the full network protocol will provide a way of fetching bundles/segments directly from guarantors, as a fast path. The less fast path which is possible now is to request the shards containing original data, in which case reconstruction is just concatenation. If you need to do full reconstruction of segments it should still be possible to have only a single call into the EC library _if_ the shard indices are the same for every segment. If they're not then I'm not sure how efficiently reconstruction can be done.
+2025-06-15 07:15 ascriv: The header has a parent hash and prior state root. We need to guarantee the posterior state root of the parent block equals this prior state root. Does this mean implementations must also keep track of the posterior state roots along with headers? Otherwise it seems naively that an incoming header could point to any ancestral header as its parent 
+2025-06-15 08:59 gav: Implementations will need to be able to determine the posterior state root for any block they retain in their chain which could serve as a parent. 
+2025-06-15 09:00 gav: The fork-choice rule and finality ensure that this set cannot grow indefinitely (and thus that a new block cannot have a non-recent parent).  [edited]
