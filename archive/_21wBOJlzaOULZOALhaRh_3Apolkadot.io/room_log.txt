@@ -1,5 +1,5 @@
 # room: #jam:polkadot.io
-# exported: 2025-06-16 03:37 UTC
+# exported: 2025-06-17 03:34 UTC
 2024-04-20 02:08 johnjiao123: 
 2024-04-20 02:09 johnjiao123: 
 2024-05-30 21:48 nradko: Hey everyone,
@@ -9203,3 +9203,16 @@ Also, has there been any consideration of using QUIC multipath (https://datatrac
 2025-06-13 08:09 dave: > <@dave:parity.io> You can use an IPv4 address by mapping it into IPv6 as you say. It's not intended to be IPv6-only. I'm not sure what you mean by dropping gossip; a few things are gossiped (eg blocks and preimages).
 
 That said it is only currently possible to set one address for a validator, this may need changing. Haven't given it much thought at this point.
+2025-06-16 13:48 prematurata: hey @davxy can you tell a bit more about the dev validators metadata you using? i see  0x00000000000000000000ffff7f000001 40 9c .... and 40 is being incrementedd
+2025-06-16 14:17 interweb_: is there any update to the https://hackmd.io/@polkadot/jip2 Node RPC Spec?
+Does it have a formal github repo perhaps?
+
+Is anyone implementing this for their nodes? I am making progress on a jam explorer... but the json-rpc data does not seem to match the GP [edited]
+  ↳ 2025-06-16 15:00 jaymansfield: https://github.com/polkadot-fellows/JIPs
+  ↳ 2025-06-16 15:03 jaymansfield: There's an open PR with some changes but I don't think even it is fully up to date yet. I've noticed jamt and jamtop require some other differences not documented yet but easy to determine them from the jam tools.
+  ↳ 2025-06-16 16:44 interweb_: It seems the blob response from the rpc does not match the formats in jamtestvectors...
+  ↳ 2025-06-16 16:46 interweb_: We can decode all jamtestvectors/codec and statistics examples
+2025-06-16 20:24 davxy: > <@prematurata:matrix.org> hey @davxy can you tell a bit more about the dev validators metadata you using? i see  0x00000000000000000000ffff7f000001 40 9c .... and 40 is being incrementedd
+
+Where exactly? If you're referring to the test vectors, it's mostly dummy data
+2025-06-16 21:26 prematurata: I think it was the traces data
