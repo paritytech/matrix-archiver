@@ -1,5 +1,5 @@
 # room: #graypaper:polkadot.io
-# exported: 2025-06-17 03:35 UTC
+# exported: 2025-06-18 03:34 UTC
 2024-04-17 20:29 syed: https://matrix.to/#/!hyzRkDqDthePbodYFz:parity.io/$f_DMsIEcDXZegw6Sabnehzc-LrdDQkmq5MbxDDyoZxY?via=parity.io&via=web3.foundation
 
 2024-04-17 20:29 syed: 
@@ -6229,3 +6229,27 @@ It is surely doable, we just have to actually do it.  I think a solution between
 
 I wrote a rationale issue on the topic https://github.com/gavofyork/graypaper/issues/436  [edited]
 2025-06-16 20:00 gav: Replied. 
+2025-06-17 11:44 greywolve: What is the new state serialization for privileged services? I see this isn't yet updated in the [GP](https://graypaper.fluffylabs.dev/#/7e6ff6a/3b4e023b5302?v=0.6.7).
+
+Is it reasonable to assume it's going to be something like:
+
+```
+E4(χm, χv) ⌢ E(χa) ⌢ E(χg) 
+```
+
+
+2025-06-17 14:45 gav: Yes something like this. 
+2025-06-17 15:45 gav: Is it not?
+2025-06-17 15:45 gav: image.png
+2025-06-17 15:46 gav: This is in equation D.2, GP `main`
+2025-06-17 15:46 dakkk: X\_a is a list, so D.2 is wrong [edited]
+2025-06-17 15:48 gav: No it's not:)
+2025-06-17 15:48 gav: See equation C.15
+2025-06-17 15:51 dakkk: The equation defining X_a is 9.9, and it says X_a is a list; I don't understand why C.15 should be involved
+2025-06-17 16:26 gav: chi_a is indeed a sequence. The serialisation function used is defined in multiple parts, depending on the domain.  [edited]
+2025-06-17 16:27 gav: If the domain is a sequence, then C.15 comes into effect. 
+2025-06-17 16:59 dakkk: E_4 doesn't rewrite to E, so if the argument is a sequence, it shouldn't be rewritten as E_4(a1) ^ E_4(a2) ...; btw it's just a matter of formalism
+2025-06-17 17:02 gav: Not sure what you mean. 
+2025-06-17 17:03 gav: E_4 indeed is not expressed in terms of E under any argument domain.
+2025-06-17 17:04 gav: Regardless it is well defined for sequence domains, multiple arguments and tuples (all of them in terms of itself).  [edited]
+2025-06-17 20:17 greywolve: Does that mean the `#` [here for E_8](https://graypaper.fluffylabs.dev/#/7e6ff6a/357001357701?v=0.6.7) is redundant ?

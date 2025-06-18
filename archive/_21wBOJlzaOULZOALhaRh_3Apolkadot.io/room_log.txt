@@ -1,5 +1,5 @@
 # room: #jam:polkadot.io
-# exported: 2025-06-17 03:34 UTC
+# exported: 2025-06-18 03:33 UTC
 2024-04-20 02:08 johnjiao123: 
 2024-04-20 02:09 johnjiao123: 
 2024-05-30 21:48 nradko: Hey everyone,
@@ -9140,6 +9140,20 @@ Disconnecting: Misbehaviour: Malformed jam_node::availability::net::protocol::Se
 		Not enough data to fill buffer
 ```
   ↳ 2025-06-13 01:15 mkchung: However, sending a work package that "requires" importSegments to the PolkaJam binary via CE133—and relying on PolkaJam to perform the CE134 step—appears to work, although the segment-root mappings come back empty from CE134resp. not exactly sure why. [edited]
+  ↳ 2025-06-17 21:05 mkchung: David Emett
+Apologies for the ping—just wanted to check if you saw my previous message?
+
+We’ve published our latest binary here: https://github.com/jam-duna/jamtestnet/releases/tag/0.6.5.4
+
+we are now fully compatible with CE133/137/138/139 and have generally improved our compatibility after changing our core rotation logic. However, I don’t believe Polkajam currently supports workpackages containing importSegments in CE134. Can you confirm?
+  ↳ 2025-06-18 00:20 dave: > <@mkchung:matrix.org> David Emett
+> Apologies for the ping—just wanted to check if you saw my previous message?
+> 
+> We’ve published our latest binary here: https://github.com/jam-duna/jamtestnet/releases/tag/0.6.5.4
+> 
+> we are now fully compatible with CE133/137/138/139 and have generally improved our compatibility after changing our core rotation logic. However, I don’t believe Polkajam currently supports workpackages containing importSegments in CE134. Can you confirm?
+
+Hey, on holiday at the moment. Possibly Ivan can help with this.
 2025-06-11 12:31 ascriv: Can we expect the next polkajam release to be compliant with 0.6.7 or later since 0.6.7 is out already?
 2025-06-11 13:13 dave: We're working on 0.6.6 at the moment. Don't have an exact ETA for a build. There aren't many changes though so hopefully shouldn't be long.
 2025-06-12 11:59 interweb_: Poss related: https://github.com/davxy/jam-test-vectors/issues/39
@@ -9212,7 +9226,20 @@ Is anyone implementing this for their nodes? I am making progress on a jam explo
   ↳ 2025-06-16 15:03 jaymansfield: There's an open PR with some changes but I don't think even it is fully up to date yet. I've noticed jamt and jamtop require some other differences not documented yet but easy to determine them from the jam tools.
   ↳ 2025-06-16 16:44 interweb_: It seems the blob response from the rpc does not match the formats in jamtestvectors...
   ↳ 2025-06-16 16:46 interweb_: We can decode all jamtestvectors/codec and statistics examples
+  ↳ 2025-06-17 14:39 interweb_: I can see the request / response between jamtop and the node with a proxy. The response does not seem to be encoded per the GP so I have asked the question [here](https://github.com/paritytech/polkajam-releases/issues/3)
 2025-06-16 20:24 davxy: > <@prematurata:matrix.org> hey @davxy can you tell a bit more about the dev validators metadata you using? i see  0x00000000000000000000ffff7f000001 40 9c .... and 40 is being incrementedd
 
 Where exactly? If you're referring to the test vectors, it's mostly dummy data
 2025-06-16 21:26 prematurata: I think it was the traces data
+2025-06-17 07:20 basedafdev: Hi davxy:  how should we handle STF execution for the genesis_00000000.json trace test vectors? The block header’s extrinsic hash is a ZERO hash given an empty extrinsic, which seems inconsistent since in 00000001.json, an empty extrinsic results in a defined (non-zero) hash.
+2025-06-17 07:24 greywolve: I assume that's because it's the genesis block
+2025-06-17 07:31 greywolve: But I guess maybe it should have the same empty extrinsic hash, thinking about it more
+2025-06-17 07:35 basedafdev: The reason I ask is that we’re parsing the genesis file by starting with the empty pre-state in that file and executing the STF for the genesis block, but this violates the header’s extrinsics check (among other things), but if we're expected to just save the block & post state as is then that makes life easy [edited]
+2025-06-17 08:33 prematurata: it is somehow related to my question above. the genesis header + pre state given in those files are not providing everything needed to compute the same post state. 
+
+
+2025-06-17 10:31 davxy: > <@basedafdev:matrix.org> Hi davxy:  how should we handle STF execution for the genesis_00000000.json trace test vectors? The block header’s extrinsic hash is a ZERO hash given an empty extrinsic, which seems inconsistent since in 00000001.json, an empty extrinsic results in a defined (non-zero) hash.
+
+I'll remove 000..0.bin and replace it with an explicit genesis.bin, which aligns better with the JIP specifications
+  ↳ 2025-06-17 11:57 basedafdev: thanks 🙏
+2025-06-17 12:10 ricardo.rius: 
