@@ -1,5 +1,5 @@
 # room: #graypaper:polkadot.io
-# exported: 2025-06-18 03:34 UTC
+# exported: 2025-06-19 03:35 UTC
 2024-04-17 20:29 syed: https://matrix.to/#/!hyzRkDqDthePbodYFz:parity.io/$f_DMsIEcDXZegw6Sabnehzc-LrdDQkmq5MbxDDyoZxY?via=parity.io&via=web3.foundation
 
 2024-04-17 20:29 syed: 
@@ -6253,3 +6253,22 @@ E4(χm, χv) ⌢ E(χa) ⌢ E(χg)
 2025-06-17 17:03 gav: E_4 indeed is not expressed in terms of E under any argument domain.
 2025-06-17 17:04 gav: Regardless it is well defined for sequence domains, multiple arguments and tuples (all of them in terms of itself).  [edited]
 2025-06-17 20:17 greywolve: Does that mean the `#` [here for E_8](https://graypaper.fluffylabs.dev/#/7e6ff6a/357001357701?v=0.6.7) is redundant ?
+2025-06-18 05:12 gav: Yes, not just the hash but also the concatenation operator above. Feel free to make a PR or issue.
+2025-06-18 10:38 greywolve: Does the [new service host call](https://graypaper.fluffylabs.dev/#/7e6ff6a/36ad0336b903?v=0.6.7) imply that no service id, even genesis services, should be less than 256?
+2025-06-18 10:46 gav: It implies that no new services can be less than 256 (or greater than 2^32-256)
+2025-06-18 10:47 gav: Genesis state is necessarily trusted and so doesn’t have these constraints.  [edited]
+2025-06-18 10:48 gav: However the state merklisation is done to allow a genesis service at 0. 
+2025-06-18 11:02 greywolve: State serialization question: How does one tell the difference between a preimage meta state key for a freshly solicited preimage, and a storage state key?
+
+I know the preimage meta value will be the encoded empty list, ie 0, but a storage key could have the same value. [edited]
+2025-06-18 11:03 gav: Who says you can?
+2025-06-18 11:03 gav: The only thing which we aim to achieve with Merklisation is security (non-collision) and speed.
+2025-06-18 11:04 gav: The ability to introspect/interpret merklised keys is not a priority. [edited]
+2025-06-18 11:05 greywolve: I understand that, but I surely need to know which map to put a given key in when I import a trace, for example [edited]
+2025-06-18 11:05 gav: Nope.
+2025-06-18 11:06 gav: That's simply not a given.
+2025-06-18 11:06 gav: It would imply requiring that which I've already said isn't a priority.
+2025-06-18 11:06 greywolve: Ah right
+2025-06-18 11:07 oliver.tale-yazdi: I think many implementations use KV lookup, in which case you dont need to invert them. IMHO it is still possible to not use KV Db by inverting all keys that can be inverted and then doing some special handling for the service keys that cannot be inverted. Also since only three key kinds cannot be inverted and they are used from host-calls that tell you the kind of the key. You can check this unofficial key table here https://docs.jamcha.in/advanced/storage/keys
+2025-06-18 11:09 gav: If the lack of merklised-key-interpretability turns out to be an issue in usage, it's something fairly easy to fix (by including metadata in the value).
+2025-06-18 11:09 gav: But right now the assumption is that it's an unneeded pessimisation.

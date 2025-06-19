@@ -1,5 +1,5 @@
 # room: #jam:polkadot.io
-# exported: 2025-06-18 03:33 UTC
+# exported: 2025-06-19 03:34 UTC
 2024-04-20 02:08 johnjiao123: 
 2024-04-20 02:09 johnjiao123: 
 2024-05-30 21:48 nradko: Hey everyone,
@@ -9154,6 +9154,52 @@ we are now fully compatible with CE133/137/138/139 and have generally improved o
 > we are now fully compatible with CE133/137/138/139 and have generally improved our compatibility after changing our core rotation logic. However, I don’t believe Polkajam currently supports workpackages containing importSegments in CE134. Can you confirm?
 
 Hey, on holiday at the moment. Possibly Ivan can help with this.
+  ↳ 2025-06-18 08:25 igankevich: > 12025-06-10 10:37:33 tokio-runtime-worker ERROR jam\_node::chain::guarantors::guarantor  Failed to validate work package: invalid core: 1 not in \[0\]
+
+If you _occasionally_ see this error when you submit work package from a builder, then it _might_ be an indicator that an epoch change occurs while the package is in transit between the builder and the guarantor.
+
+One way to fix that is for the builder to switch the rotation for which the package is built _shortly after_ the guarantor switches the rotation for which it accepts work packages. You might also want to accept packages for the next rotation shortly before the switch occurs and stop accepting them for the current rotation shortly before the next rotation switch. Then this error should disappear.
+
+I'm a bit hesitant to share the exact amount of overlap between rotation acceptance periods that we use because I realized that our current values are way to big for a rotation that spans only 4 slots. Let's just say that you probably shouldn't build the package for the current rotation if it's less than one slot away from the next one...
+
+> 12025-06-10 10:30:31 tokio-runtime-worker ERROR jam\_node::chain::guarantors::guarantor  Failed to process package 0x58a40e64c7ccdab7...: Import error: Import not found: root Direct(""), index 0
+
+Referencing by package hash should work. I wonder why it prints the hash as an empty string? Is it all zeroes?
+
+> the segment-root mappings come back empty from CE134resp
+
+Hmm... CE134 response doesn't have any mappings :)
+
+If you see "fetched segment ... for spec ..." in the logs, this means that the segment-root was added to SR mapping that will go into CE134 message. [edited]
+  ↳ 2025-06-18 18:48 mkchung: ```
+Segments-Root = [u8; 32]
+Segments-Root Mappings = len++[Work-Package Hash ++ Segments-Root]
+Work-Package Bundle = As in GP
+
+Guarantor -> Guarantor
+
+--> Core Index ++ Segments-Root Mappings
+--> Work-Package Bundle
+--> FIN
+<-- Work-Report Hash ++ Ed25519 Signature
+<-- FIN
+```
+
+Regarding the “Guarantor (polkajam) → Guarantor (jamduna)” direction, we’ve consistently observed that the request from polkajam is missing the [Work-Package Hash ++ Segments-Root] portion, even when the shared package includes importSegments. In such cases, I would have expected non-empty Segments-Root Mappings from polkajam.
+
+Additionally, in the opposite direction—“Guarantor (jamduna) → Guarantor (polkajam)”—when we share a work package that includes Segments-Root Mappings, our CE134 submission is rejected with error code 1, likely due to the issue you mentioned:
+```
+2025-06-18 11:30:53 tokio-runtime-worker ERROR jam_node::chain::guarantors::guarantor  Failed to validate work package: invalid core: 0 not in [1]
+2025-06-18 11:30:53 tokio-runtime-worker ERROR jam_node::chain::guarantors::stream_receiver  failed to receive WorkPackageSharing: tokio error
+```
+
+We’ll adjust our submission approach based on your suggestion. However, Im curious why do we _never_ receive non-empty Segments-Root Mappings in the “Guarantor (polkajam) → Guarantor (jamduna)” direction, even when the work package clearly contains segment imports?
+
+
+The null case in  “Guarantor (jamduna) → Guarantor (polkajam)” direction is caused by trying to match polkajam's behavior -- i.e. not sending "Segments-Root Mappings" even though there probably should be one:
+```
+12025-06-10 10:30:31 tokio-runtime-worker ERROR jam_node::chain::guarantors::guarantor Failed to process package 0x58a40e64c7ccdab7...: Import error: Import not found: root Direct(""), index 0
+```
 2025-06-11 12:31 ascriv: Can we expect the next polkajam release to be compliant with 0.6.7 or later since 0.6.7 is out already?
 2025-06-11 13:13 dave: We're working on 0.6.6 at the moment. Don't have an exact ETA for a build. There aren't many changes though so hopefully shouldn't be long.
 2025-06-12 11:59 interweb_: Poss related: https://github.com/davxy/jam-test-vectors/issues/39
@@ -9243,3 +9289,10 @@ Where exactly? If you're referring to the test vectors, it's mostly dummy data
 I'll remove 000..0.bin and replace it with an explicit genesis.bin, which aligns better with the JIP specifications
   ↳ 2025-06-17 11:57 basedafdev: thanks 🙏
 2025-06-17 12:10 ricardo.rius: 
+2025-06-18 15:23 clearloop: I just found `polkajam` even has this log 👀
+
+```
+eled3vb5nse3n7cii6ybvtms5s2bdwvlkivc7cnwa33oatby4txka@127.0.0.1:40005: Connection from peer with our ID!
+```
+
+seriously I'm not sure what to do if meet this in production ... [edited]
