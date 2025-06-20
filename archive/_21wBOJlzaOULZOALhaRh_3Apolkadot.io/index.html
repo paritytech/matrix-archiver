@@ -18,7 +18,7 @@ a:hover{color:#90caf9}
 em{font-style:italic}
 </style>
 <h1>#jam:polkadot.io</h1>
-<p><small>last updated 2025-06-19 03:34 UTC</small></p>
+<p><small>last updated 2025-06-20 03:33 UTC</small></p>
 <p><a href='room_log.txt'>⇩ plaintext</a> · <a href='../../'>⇦ all rooms</a></p>
 <hr>
 <div class='msg'><a class='ts' href='#$we4SYXTHwmKn094X9Zs_7mWUOoUVh4icvVdxD83RZfs'>#</a> <a class='ts' name='$we4SYXTHwmKn094X9Zs_7mWUOoUVh4icvVdxD83RZfs' href='https://matrix.to/#/!wBOJlzaOULZOALhaRh:polkadot.io/$we4SYXTHwmKn094X9Zs_7mWUOoUVh4icvVdxD83RZfs' target='_blank'>2024-04-20 02:08</a>&ensp;<span class='u' style='color:#d0709e'>johnjiao123</span>: </div>
@@ -9116,6 +9116,17 @@ We’ll adjust our submission approach based on your suggestion. However, Im cur
 The null case in  “Guarantor (jamduna) → Guarantor (polkajam)” direction is caused by trying to match polkajam&#x27;s behavior -- i.e. not sending &quot;Segments-Root Mappings&quot; even though there probably should be one:
 <pre><code class=''>12025-06-10 10:30:31 tokio-runtime-worker ERROR jam_node::chain::guarantors::guarantor Failed to process package 0x58a40e64c7ccdab7...: Import error: Import not found: root Direct(&quot;&quot;), index 0
 </code></pre></div>
+<div class='msg reply'><a class='ts' href='#$Gh8ND-H9fz7uMJRf-1Vo3qCZwqncLPGLec11SCOQ3DA'>#</a> <a class='ts' name='$Gh8ND-H9fz7uMJRf-1Vo3qCZwqncLPGLec11SCOQ3DA' href='https://matrix.to/#/!wBOJlzaOULZOALhaRh:polkadot.io/$Gh8ND-H9fz7uMJRf-1Vo3qCZwqncLPGLec11SCOQ3DA' target='_blank'>2025-06-19 09:43</a>&ensp;<span class='u' style='color:#35a646'>igankevich</span>: &gt; the request from polkajam is missing the [Work-Package Hash ++ Segments-Root] portion, even when the shared package includes importSegments.
+
+Polkajam only sends mappings for the imports that use work package hash to reference the segments. For imports referenced by segment-root the mapping between the work package hash and the segment-root is not sent because (1) guarantors can query the segments from DA via segment-root, there is no need to know work package hash to do that, (2) multiple work packages might produce segments with the same root, so the mapping is not bijective.
+
+If you see log message <code>fetched segment ... for spec ... lookup Some(...)</code> with non-<code>None</code> lookup, then the mapping from the message will be sent to the guarantors.
+
+&gt; trying to match polkajam&#x27;s behavior -- i.e. not sending &quot;Segments-Root Mappings&quot; even though there probably should be one:
+
+The log message says that there is an import with zero segment-root. It comes directly from the work item rather than from segment-root mapping.
+
+As far as I can tell from the current code any additional/unexpected mapping shouldn&#x27;t really break anything, it will simply be ignored by Polkajam. I think this is what is happening here.</div>
 <div class='msg'><a class='ts' href='#$jFQfxRJKS2rQ1Jpnv3Zx4Vsgb2PCpAqjoY8XN4cKKfg'>#</a> <a class='ts' name='$jFQfxRJKS2rQ1Jpnv3Zx4Vsgb2PCpAqjoY8XN4cKKfg' href='https://matrix.to/#/!wBOJlzaOULZOALhaRh:polkadot.io/$jFQfxRJKS2rQ1Jpnv3Zx4Vsgb2PCpAqjoY8XN4cKKfg' target='_blank'>2025-06-11 12:31</a>&ensp;<span class='u' style='color:#4036ac'>ascriv</span>: Can we expect the next polkajam release to be compliant with 0.6.7 or later since 0.6.7 is out already?</div>
 <div class='msg'><a class='ts' href='#$rCGNqRfru4I3sXuOiElj_ZK_g8TrADKMzFYTcVOp5mE'>#</a> <a class='ts' name='$rCGNqRfru4I3sXuOiElj_ZK_g8TrADKMzFYTcVOp5mE' href='https://matrix.to/#/!wBOJlzaOULZOALhaRh:polkadot.io/$rCGNqRfru4I3sXuOiElj_ZK_g8TrADKMzFYTcVOp5mE' target='_blank'>2025-06-11 13:13</a>&ensp;<span class='u' style='color:#c65779'>dave</span>: We&#x27;re working on 0.6.6 at the moment. Don&#x27;t have an exact ETA for a build. There aren&#x27;t many changes though so hopefully shouldn&#x27;t be long.</div>
 <div class='msg'><a class='ts' href='#$fy9iqOPyn9W1GOQp-txyHhJpgigidNWfNBCm0LRuhhc'>#</a> <a class='ts' name='$fy9iqOPyn9W1GOQp-txyHhJpgigidNWfNBCm0LRuhhc' href='https://matrix.to/#/!wBOJlzaOULZOALhaRh:polkadot.io/$fy9iqOPyn9W1GOQp-txyHhJpgigidNWfNBCm0LRuhhc' target='_blank'>2025-06-12 11:59</a>&ensp;<span class='u' style='color:#dc865f'>interweb_</span>: Poss related: <a href="https://github.com/davxy/jam-test-vectors/issues/39" rel="noopener" target="_blank">https://github.com/davxy/jam-test-vectors/issues/39</a>
@@ -9210,3 +9221,14 @@ I&#x27;ll remove 000..0.bin and replace it with an explicit genesis.bin, which a
 </code></pre>
 
 seriously I&#x27;m not sure what to do if meet this in production ... <span class="edited">(edited)</span></div>
+<div class='msg'><a class='ts' href='#$oIOx4Cduj4p58h59WiLas2jNl2RiFoXGu1Hl-v37c8s'>#</a> <a class='ts' name='$oIOx4Cduj4p58h59WiLas2jNl2RiFoXGu1Hl-v37c8s' href='https://matrix.to/#/!wBOJlzaOULZOALhaRh:polkadot.io/$oIOx4Cduj4p58h59WiLas2jNl2RiFoXGu1Hl-v37c8s' target='_blank'>2025-06-19 06:03</a>&ensp;<span class='u' style='color:#be2950'>clearloop</span>: <a href="https://x.com/spacejamapp/status/1935578763670282643" rel="noopener" target="_blank">https://x.com/spacejamapp/status/1935578763670282643</a>
+
+just released the spacejam binaries at graypaper 0.6.5 👾, also introduced a testnet manager which is similar to <code>polkajam-testnet</code> but with customized config, see <a href="https://github.com/spacejamapp/specjam/blob/0.6.5/testnet.toml" rel="noopener" target="_blank">https://github.com/spacejamapp/specjam/blob/0.6.5/testnet.toml</a> if helps! <span class="edited">(edited)</span></div>
+<div class='msg'><a class='ts' href='#$-HomlWmeIZdPo8dZfjbMwByjCQeD4L7hT1Xye3YXk_U'>#</a> <a class='ts' name='$-HomlWmeIZdPo8dZfjbMwByjCQeD4L7hT1Xye3YXk_U' href='https://matrix.to/#/!wBOJlzaOULZOALhaRh:polkadot.io/$-HomlWmeIZdPo8dZfjbMwByjCQeD4L7hT1Xye3YXk_U' target='_blank'>2025-06-19 17:06</a>&ensp;<span class='u' style='color:#c457c5'>vinsystems</span>: Hi! The block import traces for M1 will be in tiny or in full mode?</div>
+<div class='msg'><a class='ts' href='#$Jj8dUqEo3ESaPLRHyGzrGcmiwpPq9lg2q29zsb9F9SM'>#</a> <a class='ts' name='$Jj8dUqEo3ESaPLRHyGzrGcmiwpPq9lg2q29zsb9F9SM' href='https://matrix.to/#/!wBOJlzaOULZOALhaRh:polkadot.io/$Jj8dUqEo3ESaPLRHyGzrGcmiwpPq9lg2q29zsb9F9SM' target='_blank'>2025-06-19 17:13</a>&ensp;<span class='u' style='color:#c9419d'>davxy</span>: I&#x27;ve opened a PR with test vectors for GP v0.6.6.
+I encourage all teams to try them out.
+If you&#x27;d like to discuss the proposal, please comment directly in the PR.
+
+<a href="https://github.com/davxy/jam-test-vectors/pull/82" rel="noopener" target="_blank">https://github.com/davxy/jam-test-vectors/pull/82</a>
+
+**These vectors should be compatible with what you can expect in the next PolkaJam nightly release**</div>

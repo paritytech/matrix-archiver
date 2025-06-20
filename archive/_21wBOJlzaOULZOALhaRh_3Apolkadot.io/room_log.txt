@@ -1,5 +1,5 @@
 # room: #jam:polkadot.io
-# exported: 2025-06-19 03:34 UTC
+# exported: 2025-06-20 03:33 UTC
 2024-04-20 02:08 johnjiao123: 
 2024-04-20 02:09 johnjiao123: 
 2024-05-30 21:48 nradko: Hey everyone,
@@ -9200,6 +9200,17 @@ The null case in  “Guarantor (jamduna) → Guarantor (polkajam)” direction i
 ```
 12025-06-10 10:30:31 tokio-runtime-worker ERROR jam_node::chain::guarantors::guarantor Failed to process package 0x58a40e64c7ccdab7...: Import error: Import not found: root Direct(""), index 0
 ```
+  ↳ 2025-06-19 09:43 igankevich: > the request from polkajam is missing the [Work-Package Hash ++ Segments-Root] portion, even when the shared package includes importSegments.
+
+Polkajam only sends mappings for the imports that use work package hash to reference the segments. For imports referenced by segment-root the mapping between the work package hash and the segment-root is not sent because (1) guarantors can query the segments from DA via segment-root, there is no need to know work package hash to do that, (2) multiple work packages might produce segments with the same root, so the mapping is not bijective.
+
+If you see log message `fetched segment ... for spec ... lookup Some(...)` with non-`None` lookup, then the mapping from the message will be sent to the guarantors.
+
+> trying to match polkajam's behavior -- i.e. not sending "Segments-Root Mappings" even though there probably should be one:
+
+The log message says that there is an import with zero segment-root. It comes directly from the work item rather than from segment-root mapping.
+
+As far as I can tell from the current code any additional/unexpected mapping shouldn't really break anything, it will simply be ignored by Polkajam. I think this is what is happening here.
 2025-06-11 12:31 ascriv: Can we expect the next polkajam release to be compliant with 0.6.7 or later since 0.6.7 is out already?
 2025-06-11 13:13 dave: We're working on 0.6.6 at the moment. Don't have an exact ETA for a build. There aren't many changes though so hopefully shouldn't be long.
 2025-06-12 11:59 interweb_: Poss related: https://github.com/davxy/jam-test-vectors/issues/39
@@ -9296,3 +9307,14 @@ eled3vb5nse3n7cii6ybvtms5s2bdwvlkivc7cnwa33oatby4txka@127.0.0.1:40005: Connectio
 ```
 
 seriously I'm not sure what to do if meet this in production ... [edited]
+2025-06-19 06:03 clearloop: https://x.com/spacejamapp/status/1935578763670282643
+
+just released the spacejam binaries at graypaper 0.6.5 👾, also introduced a testnet manager which is similar to `polkajam-testnet` but with customized config, see https://github.com/spacejamapp/specjam/blob/0.6.5/testnet.toml if helps! [edited]
+2025-06-19 17:06 vinsystems: Hi! The block import traces for M1 will be in tiny or in full mode?
+2025-06-19 17:13 davxy: I've opened a PR with test vectors for GP v0.6.6.
+I encourage all teams to try them out.
+If you'd like to discuss the proposal, please comment directly in the PR.
+
+https://github.com/davxy/jam-test-vectors/pull/82
+
+**These vectors should be compatible with what you can expect in the next PolkaJam nightly release**
