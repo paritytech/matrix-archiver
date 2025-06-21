@@ -1,5 +1,5 @@
 # room: #jam:polkadot.io
-# exported: 2025-06-20 03:33 UTC
+# exported: 2025-06-21 03:32 UTC
 2024-04-20 02:08 johnjiao123: 
 2024-04-20 02:09 johnjiao123: 
 2024-05-30 21:48 nradko: Hey everyone,
@@ -9318,3 +9318,10 @@ If you'd like to discuss the proposal, please comment directly in the PR.
 https://github.com/davxy/jam-test-vectors/pull/82
 
 **These vectors should be compatible with what you can expect in the next PolkaJam nightly release**
+2025-06-20 07:51 faiz_871: Could someone please help me understand the exact meaning of this notation?
+Justification = [0 ++ Hash OR 1 ++ Hash ++ Hash]
+Justification = [0 ++ Hash OR 1 ++ Hash ++ Hash OR 2 ++ Segment Shard]
+
+I'm trying to interpret what each part signifies.
+2025-06-20 10:12 clearloop: hope polkajam can update `jam-pvm-common`(+ jam toolchains) on crates.io for `GP-0.6.6`, which would be helpful for debugging the [test vectors for GP-0.6.6](https://github.com/davxy/jam-test-vectors/pull/82) [edited]
+2025-06-20 21:42 boymaas: Does anyone here have an opinion on whether it would be feasible to have a very simple community JAM testnet running somewhere around  November, given that some teams have their nodes somewhat M2 ready?

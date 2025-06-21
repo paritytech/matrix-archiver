@@ -1,5 +1,5 @@
 # room: #graypaper:polkadot.io
-# exported: 2025-06-20 03:34 UTC
+# exported: 2025-06-21 03:32 UTC
 2024-04-17 20:29 syed: https://matrix.to/#/!hyzRkDqDthePbodYFz:parity.io/$f_DMsIEcDXZegw6Sabnehzc-LrdDQkmq5MbxDDyoZxY?via=parity.io&via=web3.foundation
 
 2024-04-17 20:29 syed: 
@@ -6272,3 +6272,15 @@ I know the preimage meta value will be the encoded empty list, ie 0, but a stora
 2025-06-18 11:07 oliver.tale-yazdi: I think many implementations use KV lookup, in which case you dont need to invert them. IMHO it is still possible to not use KV Db by inverting all keys that can be inverted and then doing some special handling for the service keys that cannot be inverted. Also since only three key kinds cannot be inverted and they are used from host-calls that tell you the kind of the key. You can check this unofficial key table here https://docs.jamcha.in/advanced/storage/keys
 2025-06-18 11:09 gav: If the lack of merklised-key-interpretability turns out to be an issue in usage, it's something fairly easy to fix (by including metadata in the value).
 2025-06-18 11:09 gav: But right now the assumption is that it's an unneeded pessimisation.
+2025-06-20 07:40 clearloop: I'm feeling it's necessary to weaken the usage of chain parameters, since in the context of jam, the parameters should be the same in the stable production network finally if I'm not mistaken, that the parameters is more like for the node development usage, it should not trouble the app/service developers of jam, ideally, they will never reach this concept since it increases the complexity of their development
+
+EDITED: just got the purpose via https://github.com/gavofyork/graypaper/issues/186 [edited]
+2025-06-20 09:21 ascriv: (C.16) says that the validator index for each credential in the guarantees extrinsic (11.23) should be generically serialized, but in order to comply with the test vectors (for condition (5.4)), I had to serialize the validator indices with E_2. Which is correct? [edited]
+2025-06-20 10:05 gav: > <@ascriv:matrix.org> (C.16) says that the validator index for each credential in the guarantees extrinsic (11.23) should be generically serialized, but in order to comply with the test vectors (for condition (5.4)), I had to serialize the validator indices with E_2. Which is correct?
+
+The GP should be corrected so that the term `a` (credential) is serialized with a fixed-length validator index.
+2025-06-20 10:06 gav: Feel free to make an issue or a PR.
+2025-06-20 20:14 ascriv: 
+2025-06-20 20:19 ascriv: > <@gav:polkadot.io> Feel free to make an issue or a PR.
+
+https://github.com/gavofyork/graypaper/pull/440
