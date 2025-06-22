@@ -1,5 +1,5 @@
 # room: #graypaper:polkadot.io
-# exported: 2025-06-21 03:32 UTC
+# exported: 2025-06-22 03:39 UTC
 2024-04-17 20:29 syed: https://matrix.to/#/!hyzRkDqDthePbodYFz:parity.io/$f_DMsIEcDXZegw6Sabnehzc-LrdDQkmq5MbxDDyoZxY?via=parity.io&via=web3.foundation
 
 2024-04-17 20:29 syed: 
@@ -6284,3 +6284,8 @@ The GP should be corrected so that the term `a` (credential) is serialized with 
 2025-06-20 20:19 ascriv: > <@gav:polkadot.io> Feel free to make an issue or a PR.
 
 https://github.com/gavofyork/graypaper/pull/440
+2025-06-21 09:35 ascriv: For handling time, a naive approach which pings ntp servers during block validation will probably take >10ms on average which is too long. Could do periodic syncing during downtime but I feel like that technically wouldn’t be gp compliant. Could rely on system time but also prob not gp compliant  [edited]
+2025-06-21 09:38 ascriv: Should we have a recommended configuration or should we leave solving this problem up to the implementers? 
+2025-06-21 10:37 gav: There’s nothing uncompliant about periodic time syncing providing you have good reason to believe the machine’s internal clock isn’t going to be totally mad. 
+2025-06-21 10:40 gav: The GP assumes common-clock - it makes no assertions about how this is achieved. I’d have thought impls will generally expect system clock to be correct and the problem will thus generally be left to the node’s sysadmin. 
+2025-06-21 18:19 sourabhniyogi: Nitpick suggestion: make fetch case 8 [here](https://graypaper.fluffylabs.dev/#/7e6ff6a/32a50132a501?v=0.6.7) match up exactly with the implied authorizer p\_a preimage [here](https://graypaper.fluffylabs.dev/#/7e6ff6a/1bad011bad01?v=0.6.7) -- prefer 14.10 change instead of fetch. [edited]

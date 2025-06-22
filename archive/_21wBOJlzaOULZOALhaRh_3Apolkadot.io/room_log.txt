@@ -1,5 +1,5 @@
 # room: #jam:polkadot.io
-# exported: 2025-06-21 03:32 UTC
+# exported: 2025-06-22 03:39 UTC
 2024-04-20 02:08 johnjiao123: 
 2024-04-20 02:09 johnjiao123: 
 2024-05-30 21:48 nradko: Hey everyone,
@@ -9325,3 +9325,13 @@ Justification = [0 ++ Hash OR 1 ++ Hash ++ Hash OR 2 ++ Segment Shard]
 I'm trying to interpret what each part signifies.
 2025-06-20 10:12 clearloop: hope polkajam can update `jam-pvm-common`(+ jam toolchains) on crates.io for `GP-0.6.6`, which would be helpful for debugging the [test vectors for GP-0.6.6](https://github.com/davxy/jam-test-vectors/pull/82) [edited]
 2025-06-20 21:42 boymaas: Does anyone here have an opinion on whether it would be feasible to have a very simple community JAM testnet running somewhere around  November, given that some teams have their nodes somewhat M2 ready?
+2025-06-21 05:03 gav: I would push to get a testnet under way as soon as 0.7.0 is out (which should be very soon now). 
+2025-06-21 05:04 gav: It’ll inevitably need some restarts since we’ll no doubt find incompatibilities between the implementations and the GP.  [edited]
+2025-06-21 05:06 clearloop: curious about would it be under tiny parameters or full parameters
+2025-06-21 06:10 gav: Probably somewhere in between. 
+2025-06-21 08:06 boymaas: That is good news and makes sense. Looking forward to it 
+2025-06-21 17:34 i35359595: Hi, is anyone working on rust implementation? My team would like to start digging into it.
+2025-06-21 18:25 gav: > <@i35359595:matrix.org> Hi, is anyone working on rust implementation? My team would like to start digging into it.
+
+In fact 8 teams are each working on their own rust implementation! You can see which teams have declared themselves on https://graypaper.com/clients/
+2025-06-21 19:00 i35359595: Perfect, now there'll be 9 :)
