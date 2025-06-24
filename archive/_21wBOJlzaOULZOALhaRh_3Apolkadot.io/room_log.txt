@@ -1,5 +1,5 @@
 # room: #jam:polkadot.io
-# exported: 2025-06-23 03:40 UTC
+# exported: 2025-06-24 03:35 UTC
 2024-04-20 02:08 johnjiao123: 
 2024-04-20 02:09 johnjiao123: 
 2024-05-30 21:48 nradko: Hey everyone,
@@ -7970,6 +7970,10 @@ I had a few questions:
 > Is there some other requirement I've missed?
 
 Think I missed this message before, sorry. This was probably because the --dev-validator argument used to override the --chain argument. I assume this is working for you now, let me know if this is not the case...
+  ↳ 2025-06-23 13:08 knight1205: David Emett: can you please share what all fields/extensions are required to be set while building certificates? 
+
+Currently, while connecting to Polkajam, I am encountering errors: InvalidForName, ServerNameMustContainOneHostName.
+  ↳ 2025-06-24 01:48 dave: You just need the alternative name extension, with a single DNS name as defined in the SNP doc
 2025-05-15 02:56 sourabhniyogi: Published jamduna binaries:
 
 https://github.com/jam-duna/jamtestnet/releases/tag/0.6.6.1
@@ -9211,6 +9215,28 @@ If you see log message `fetched segment ... for spec ... lookup Some(...)` with 
 The log message says that there is an import with zero segment-root. It comes directly from the work item rather than from segment-root mapping.
 
 As far as I can tell from the current code any additional/unexpected mapping shouldn't really break anything, it will simply be ignored by Polkajam. I think this is what is happening here.
+  ↳ 2025-06-23 18:29 mkchung: Also what flag should we use if we want to run the latest `polkajam` bin (2025-06-23-nightly) with a different chainspec in `tiny` setting?  
+
+We used to run `polkajam` with cmd like:
+
+```
+./polkajam --chain chainspecs/jamduna-spec.json  --parameters tiny run  --temp --dev-validator 1
+```
+
+We are now seeing errors:
+```
+error: unrecognized subcommand 'parameters'
+Usage: polkajam [OPTIONS] <COMMAND>
+```
+
+And 
+```
+thread 'main' panicked at crates/cli/src/lib.rs:98:22:
+Error loading chain spec file: "Missing or invalid 'protocol_parameters' field"
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+```
+
+Not sure how to set the  "protocol_parameters" flag. can you advise?
 2025-06-11 12:31 ascriv: Can we expect the next polkajam release to be compliant with 0.6.7 or later since 0.6.7 is out already?
 2025-06-11 13:13 dave: We're working on 0.6.6 at the moment. Don't have an exact ETA for a build. There aren't many changes though so hopefully shouldn't be long.
 2025-06-12 11:59 interweb_: Poss related: https://github.com/davxy/jam-test-vectors/issues/39
@@ -9318,11 +9344,11 @@ If you'd like to discuss the proposal, please comment directly in the PR.
 https://github.com/davxy/jam-test-vectors/pull/82
 
 **These vectors should be compatible with what you can expect in the next PolkaJam nightly release**
-2025-06-20 07:51 faiz_871: Could someone please help me understand the exact meaning of this notation?
-Justification = [0 ++ Hash OR 1 ++ Hash ++ Hash]
-Justification = [0 ++ Hash OR 1 ++ Hash ++ Hash OR 2 ++ Segment Shard]
+2025-06-20 07:51 faiz_871: David Emett  Could you please help me understand the exact meaning of this notation?
+Justification = \[0 ++ Hash OR 1 ++ Hash ++ Hash\]
+Justification = \[0 ++ Hash OR 1 ++ Hash ++ Hash OR 2 ++ Segment Shard\]
 
-I'm trying to interpret what each part signifies.
+I'm trying to interpret what each part signifies. [edited]
 2025-06-20 10:12 clearloop: hope polkajam can update `jam-pvm-common`(+ jam toolchains) on crates.io for `GP-0.6.6`, which would be helpful for debugging the [test vectors for GP-0.6.6](https://github.com/davxy/jam-test-vectors/pull/82) [edited]
 2025-06-20 21:42 boymaas: Does anyone here have an opinion on whether it would be feasible to have a very simple community JAM testnet running somewhere around  November, given that some teams have their nodes somewhat M2 ready?
 2025-06-21 05:03 gav: I would push to get a testnet under way as soon as 0.7.0 is out (which should be very soon now). 
@@ -9335,3 +9361,9 @@ I'm trying to interpret what each part signifies.
 
 In fact 8 teams are each working on their own rust implementation! You can see which teams have declared themselves on https://graypaper.com/clients/
 2025-06-21 19:00 i35359595: Perfect, now there'll be 9 :)
+2025-06-23 07:13 subotic: Hey guys, I'm trying to debug a problem that we have with accumulate, specifically with `accumulate_ready_queued_reports-1.json` test vector. When our VM is initialized, then I see that the contents of the first read-only section has something like this as it's contents: 
+```/home/davxy/.cargo/registry/src/index.crates.io-6f17d22bba15001f/jam-codec-0.1.0/src/codec.rsunsafe precondition(s) violated: ptr::write requires that the pointer argument is aligned and non-nullunsafe precondition(s) violated: ptr::add requires that the address calculation does not overflowassertion failed: new_len <= self.capacity()/home/davxy/.rustup/toolchains/nightly-2024-11-01-x86_64-unknown-linux-gnu/lib/rustlib/src/rust/library/alloc/src/vec/mod.rscalled `Result::unwrap()` on an `Err` value/mnt/ssd/develop/jam/polkajam/crates/jam-pvm-common/src/mem.rsunsafe precondition(s) violated: ptr::copy_nonoverlapping requires that both pointer arguments are aligned and non-null and the specified memory ranges do not overlapunsafe precondition(s) violated: ptr::read requires that the pointer argument is aligned and non-nullunsafe precondition(s) violated: ptr::add requires that the address calculation does not overflowunsafe precondition(s) violated: ptr::sub_ptr requires `self >= origin`unsafe precondition(s) violated: slice::from_raw_parts requires the pointer to be aligned and non-null, and the total size of the slice not to exceed 
+```/home/davxy/.rustup/toolchains/nightly-2024-11-01-x86_64-unknown-linux-gnu/lib/rustlib/src/rust/library/alloc/src/slice.rs/home/davxy/.rustup/toolchains/nightly-2024-11-01-x86_64-unknown-linux-gnu/lib/rustlib/src/rust/library/core/src/iter/traits/accum.rsErrorOutOfBoundsIndexUnknownStorageFullBadCoreNoCashGasLimit ...```
+Does this seem right, or is this the metadata from formula (9.4) that managed to sneak in? Any help is appreciated.
+  ↳ 2025-06-23 07:19 jan: This looks like normal RO data to me.
+  ↳ 2025-06-23 07:20 subotic: Thanks for confirming 👍️

@@ -18,7 +18,7 @@ a:hover{color:#90caf9}
 em{font-style:italic}
 </style>
 <h1>#jam:polkadot.io</h1>
-<p><small>last updated 2025-06-23 03:40 UTC</small></p>
+<p><small>last updated 2025-06-24 03:35 UTC</small></p>
 <p><a href='room_log.txt'>⇩ plaintext</a> · <a href='../../'>⇦ all rooms</a></p>
 <hr>
 <div class='msg'><a class='ts' href='#$we4SYXTHwmKn094X9Zs_7mWUOoUVh4icvVdxD83RZfs'>#</a> <a class='ts' name='$we4SYXTHwmKn094X9Zs_7mWUOoUVh4icvVdxD83RZfs' href='https://matrix.to/#/!wBOJlzaOULZOALhaRh:polkadot.io/$we4SYXTHwmKn094X9Zs_7mWUOoUVh4icvVdxD83RZfs' target='_blank'>2024-04-20 02:08</a>&ensp;<span class='u' style='color:#d0709e'>johnjiao123</span>: </div>
@@ -7927,6 +7927,10 @@ I had a few questions:
 &gt; Is there some other requirement I&#x27;ve missed?
 
 Think I missed this message before, sorry. This was probably because the --dev-validator argument used to override the --chain argument. I assume this is working for you now, let me know if this is not the case...</div>
+<div class='msg reply'><a class='ts' href='#$BJ8Zb-2q8jkdGyWwAI1yQGcbb42FaSKj9-h4IwBISG4'>#</a> <a class='ts' name='$BJ8Zb-2q8jkdGyWwAI1yQGcbb42FaSKj9-h4IwBISG4' href='https://matrix.to/#/!wBOJlzaOULZOALhaRh:polkadot.io/$BJ8Zb-2q8jkdGyWwAI1yQGcbb42FaSKj9-h4IwBISG4' target='_blank'>2025-06-23 13:08</a>&ensp;<span class='u' style='color:#5dd07c'>knight1205</span>: David Emett: can you please share what all fields/extensions are required to be set while building certificates? 
+
+Currently, while connecting to Polkajam, I am encountering errors: InvalidForName, ServerNameMustContainOneHostName.</div>
+<div class='msg reply'><a class='ts' href='#$-XXyAZ5XcSluihlbIwwK8QDEdtfn7DlKuWppTGF35vE'>#</a> <a class='ts' name='$-XXyAZ5XcSluihlbIwwK8QDEdtfn7DlKuWppTGF35vE' href='https://matrix.to/#/!wBOJlzaOULZOALhaRh:polkadot.io/$-XXyAZ5XcSluihlbIwwK8QDEdtfn7DlKuWppTGF35vE' target='_blank'>2025-06-24 01:48</a>&ensp;<span class='u' style='color:#c65779'>dave</span>: You just need the alternative name extension, with a single DNS name as defined in the SNP doc</div>
 <div class='msg'><a class='ts' href='#$n2UjV3O_QvR2_TB-_xVfsnaY97ztF3KJiyucfp-VVYc'>#</a> <a class='ts' name='$n2UjV3O_QvR2_TB-_xVfsnaY97ztF3KJiyucfp-VVYc' href='https://matrix.to/#/!wBOJlzaOULZOALhaRh:polkadot.io/$n2UjV3O_QvR2_TB-_xVfsnaY97ztF3KJiyucfp-VVYc' target='_blank'>2025-05-15 02:56</a>&ensp;<span class='u' style='color:#c67452'>sourabhniyogi</span>: Published jamduna binaries:
 
 <a href="https://github.com/jam-duna/jamtestnet/releases/tag/0.6.6.1" rel="noopener" target="_blank">https://github.com/jam-duna/jamtestnet/releases/tag/0.6.6.1</a></div>
@@ -9127,6 +9131,25 @@ If you see log message <code>fetched segment ... for spec ... lookup Some(...)</
 The log message says that there is an import with zero segment-root. It comes directly from the work item rather than from segment-root mapping.
 
 As far as I can tell from the current code any additional/unexpected mapping shouldn&#x27;t really break anything, it will simply be ignored by Polkajam. I think this is what is happening here.</div>
+<div class='msg reply'><a class='ts' href='#$ver1_Tpz6LJnTrvbRFTd-ANzxvVdeee1fHf0BYuS0VY'>#</a> <a class='ts' name='$ver1_Tpz6LJnTrvbRFTd-ANzxvVdeee1fHf0BYuS0VY' href='https://matrix.to/#/!wBOJlzaOULZOALhaRh:polkadot.io/$ver1_Tpz6LJnTrvbRFTd-ANzxvVdeee1fHf0BYuS0VY' target='_blank'>2025-06-23 18:29</a>&ensp;<span class='u' style='color:#c377dd'>mkchung</span>: Also what flag should we use if we want to run the latest <code>polkajam</code> bin (2025-06-23-nightly) with a different chainspec in <code>tiny</code> setting?  
+
+We used to run <code>polkajam</code> with cmd like:
+
+<pre><code class=''>./polkajam --chain chainspecs/jamduna-spec.json  --parameters tiny run  --temp --dev-validator 1
+</code></pre>
+
+We are now seeing errors:
+<pre><code class=''>error: unrecognized subcommand &#x27;parameters&#x27;
+Usage: polkajam [OPTIONS] &lt;COMMAND&gt;
+</code></pre>
+
+And 
+<pre><code class=''>thread &#x27;main&#x27; panicked at crates/cli/src/lib.rs:98:22:
+Error loading chain spec file: &quot;Missing or invalid &#x27;protocol_parameters&#x27; field&quot;
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+</code></pre>
+
+Not sure how to set the  &quot;protocol_parameters&quot; flag. can you advise?</div>
 <div class='msg'><a class='ts' href='#$jFQfxRJKS2rQ1Jpnv3Zx4Vsgb2PCpAqjoY8XN4cKKfg'>#</a> <a class='ts' name='$jFQfxRJKS2rQ1Jpnv3Zx4Vsgb2PCpAqjoY8XN4cKKfg' href='https://matrix.to/#/!wBOJlzaOULZOALhaRh:polkadot.io/$jFQfxRJKS2rQ1Jpnv3Zx4Vsgb2PCpAqjoY8XN4cKKfg' target='_blank'>2025-06-11 12:31</a>&ensp;<span class='u' style='color:#4036ac'>ascriv</span>: Can we expect the next polkajam release to be compliant with 0.6.7 or later since 0.6.7 is out already?</div>
 <div class='msg'><a class='ts' href='#$rCGNqRfru4I3sXuOiElj_ZK_g8TrADKMzFYTcVOp5mE'>#</a> <a class='ts' name='$rCGNqRfru4I3sXuOiElj_ZK_g8TrADKMzFYTcVOp5mE' href='https://matrix.to/#/!wBOJlzaOULZOALhaRh:polkadot.io/$rCGNqRfru4I3sXuOiElj_ZK_g8TrADKMzFYTcVOp5mE' target='_blank'>2025-06-11 13:13</a>&ensp;<span class='u' style='color:#c65779'>dave</span>: We&#x27;re working on 0.6.6 at the moment. Don&#x27;t have an exact ETA for a build. There aren&#x27;t many changes though so hopefully shouldn&#x27;t be long.</div>
 <div class='msg'><a class='ts' href='#$fy9iqOPyn9W1GOQp-txyHhJpgigidNWfNBCm0LRuhhc'>#</a> <a class='ts' name='$fy9iqOPyn9W1GOQp-txyHhJpgigidNWfNBCm0LRuhhc' href='https://matrix.to/#/!wBOJlzaOULZOALhaRh:polkadot.io/$fy9iqOPyn9W1GOQp-txyHhJpgigidNWfNBCm0LRuhhc' target='_blank'>2025-06-12 11:59</a>&ensp;<span class='u' style='color:#dc865f'>interweb_</span>: Poss related: <a href="https://github.com/davxy/jam-test-vectors/issues/39" rel="noopener" target="_blank">https://github.com/davxy/jam-test-vectors/issues/39</a>
@@ -9232,11 +9255,11 @@ If you&#x27;d like to discuss the proposal, please comment directly in the PR.
 <a href="https://github.com/davxy/jam-test-vectors/pull/82" rel="noopener" target="_blank">https://github.com/davxy/jam-test-vectors/pull/82</a>
 
 **These vectors should be compatible with what you can expect in the next PolkaJam nightly release**</div>
-<div class='msg'><a class='ts' href='#$Jl5AG25WbL6GeCsxDLmyW4ksMw0it4bLKFKIFWoAGEc'>#</a> <a class='ts' name='$Jl5AG25WbL6GeCsxDLmyW4ksMw0it4bLKFKIFWoAGEc' href='https://matrix.to/#/!wBOJlzaOULZOALhaRh:polkadot.io/$Jl5AG25WbL6GeCsxDLmyW4ksMw0it4bLKFKIFWoAGEc' target='_blank'>2025-06-20 07:51</a>&ensp;<span class='u' style='color:#4772c5'>faiz_871</span>: Could someone please help me understand the exact meaning of this notation?
-Justification = [0 ++ Hash OR 1 ++ Hash ++ Hash]
-Justification = [0 ++ Hash OR 1 ++ Hash ++ Hash OR 2 ++ Segment Shard]
+<div class='msg'><a class='ts' href='#$Jl5AG25WbL6GeCsxDLmyW4ksMw0it4bLKFKIFWoAGEc'>#</a> <a class='ts' name='$Jl5AG25WbL6GeCsxDLmyW4ksMw0it4bLKFKIFWoAGEc' href='https://matrix.to/#/!wBOJlzaOULZOALhaRh:polkadot.io/$Jl5AG25WbL6GeCsxDLmyW4ksMw0it4bLKFKIFWoAGEc' target='_blank'>2025-06-20 07:51</a>&ensp;<span class='u' style='color:#4772c5'>faiz_871</span>: David Emett  Could you please help me understand the exact meaning of this notation?
+Justification = \[0 ++ Hash OR 1 ++ Hash ++ Hash\]
+Justification = \[0 ++ Hash OR 1 ++ Hash ++ Hash OR 2 ++ Segment Shard\]
 
-I&#x27;m trying to interpret what each part signifies.</div>
+I&#x27;m trying to interpret what each part signifies. <span class="edited">(edited)</span></div>
 <div class='msg'><a class='ts' href='#$mthfG0D2gH2HQoPeBCR-muEB1xgHFDc2UDYH7QzHfp4'>#</a> <a class='ts' name='$mthfG0D2gH2HQoPeBCR-muEB1xgHFDc2UDYH7QzHfp4' href='https://matrix.to/#/!wBOJlzaOULZOALhaRh:polkadot.io/$mthfG0D2gH2HQoPeBCR-muEB1xgHFDc2UDYH7QzHfp4' target='_blank'>2025-06-20 10:12</a>&ensp;<span class='u' style='color:#be2950'>clearloop</span>: hope polkajam can update <code>jam-pvm-common</code>(+ jam toolchains) on crates.io for <code>GP-0.6.6</code>, which would be helpful for debugging the <a href="https://github.com/davxy/jam-test-vectors/pull/82" rel="noopener" target="_blank">test vectors for GP-0.6.6</a> <span class="edited">(edited)</span></div>
 <div class='msg'><a class='ts' href='#$HZ63k5LKXs4n0ESIp_5VCTv9ye8nvnPj6MY-AVEYoQU'>#</a> <a class='ts' name='$HZ63k5LKXs4n0ESIp_5VCTv9ye8nvnPj6MY-AVEYoQU' href='https://matrix.to/#/!wBOJlzaOULZOALhaRh:polkadot.io/$HZ63k5LKXs4n0ESIp_5VCTv9ye8nvnPj6MY-AVEYoQU' target='_blank'>2025-06-20 21:42</a>&ensp;<span class='u' style='color:#5e86de'>boymaas</span>: Does anyone here have an opinion on whether it would be feasible to have a very simple community JAM testnet running somewhere around  November, given that some teams have their nodes somewhat M2 ready?</div>
 <div class='msg'><a class='ts' href='#$1n-NNa7R6-Lq79pQUv-ga6YPRQ05nE5kZMyj67OgPYQ'>#</a> <a class='ts' name='$1n-NNa7R6-Lq79pQUv-ga6YPRQ05nE5kZMyj67OgPYQ' href='https://matrix.to/#/!wBOJlzaOULZOALhaRh:polkadot.io/$1n-NNa7R6-Lq79pQUv-ga6YPRQ05nE5kZMyj67OgPYQ' target='_blank'>2025-06-21 05:03</a>&ensp;<span class='u' style='color:#cd8957'>gav</span>: I would push to get a testnet under way as soon as 0.7.0 is out (which should be very soon now). </div>
@@ -9249,3 +9272,9 @@ I&#x27;m trying to interpret what each part signifies.</div>
 
 In fact 8 teams are each working on their own rust implementation! You can see which teams have declared themselves on <a href="https://graypaper.com/clients/" rel="noopener" target="_blank">https://graypaper.com/clients/</a></div>
 <div class='msg'><a class='ts' href='#$Q08MplMgYTGIhqM42uFr-P68nqiQN1GOZwVq0P4eHDw'>#</a> <a class='ts' name='$Q08MplMgYTGIhqM42uFr-P68nqiQN1GOZwVq0P4eHDw' href='https://matrix.to/#/!wBOJlzaOULZOALhaRh:polkadot.io/$Q08MplMgYTGIhqM42uFr-P68nqiQN1GOZwVq0P4eHDw' target='_blank'>2025-06-21 19:00</a>&ensp;<span class='u' style='color:#9480cd'>i35359595</span>: Perfect, now there&#x27;ll be 9 :)</div>
+<div class='msg'><a class='ts' href='#$u48yj1w319zDyfR-o7Xh9DWwBIvdknjNcOaMbc4aHM0'>#</a> <a class='ts' name='$u48yj1w319zDyfR-o7Xh9DWwBIvdknjNcOaMbc4aHM0' href='https://matrix.to/#/!wBOJlzaOULZOALhaRh:polkadot.io/$u48yj1w319zDyfR-o7Xh9DWwBIvdknjNcOaMbc4aHM0' target='_blank'>2025-06-23 07:13</a>&ensp;<span class='u' style='color:#bcd429'>subotic</span>: Hey guys, I&#x27;m trying to debug a problem that we have with accumulate, specifically with <code>accumulate_ready_queued_reports-1.json</code> test vector. When our VM is initialized, then I see that the contents of the first read-only section has something like this as it&#x27;s contents: 
+``<code>/home/davxy/.cargo/registry/src/index.crates.io-6f17d22bba15001f/jam-codec-0.1.0/src/codec.rsunsafe precondition(s) violated: ptr::write requires that the pointer argument is aligned and non-nullunsafe precondition(s) violated: ptr::add requires that the address calculation does not overflowassertion failed: new_len &amp;lt;= self.capacity()/home/davxy/.rustup/toolchains/nightly-2024-11-01-x86_64-unknown-linux-gnu/lib/rustlib/src/rust/library/alloc/src/vec/mod.rscalled </code>Result::unwrap()<code> on an </code>Err<code> value/mnt/ssd/develop/jam/polkajam/crates/jam-pvm-common/src/mem.rsunsafe precondition(s) violated: ptr::copy_nonoverlapping requires that both pointer arguments are aligned and non-null and the specified memory ranges do not overlapunsafe precondition(s) violated: ptr::read requires that the pointer argument is aligned and non-nullunsafe precondition(s) violated: ptr::add requires that the address calculation does not overflowunsafe precondition(s) violated: ptr::sub_ptr requires </code>self &gt;= origin`unsafe precondition(s) violated: slice::from_raw_parts requires the pointer to be aligned and non-null, and the total size of the slice not to exceed 
+``<code>/home/davxy/.rustup/toolchains/nightly-2024-11-01-x86_64-unknown-linux-gnu/lib/rustlib/src/rust/library/alloc/src/slice.rs/home/davxy/.rustup/toolchains/nightly-2024-11-01-x86_64-unknown-linux-gnu/lib/rustlib/src/rust/library/core/src/iter/traits/accum.rsErrorOutOfBoundsIndexUnknownStorageFullBadCoreNoCashGasLimit ...</code>``
+Does this seem right, or is this the metadata from formula (9.4) that managed to sneak in? Any help is appreciated.</div>
+<div class='msg reply'><a class='ts' href='#$R5GmjQlGhvSmQb3RexqD7_V5apzasJENfmUi-qbMr3A'>#</a> <a class='ts' name='$R5GmjQlGhvSmQb3RexqD7_V5apzasJENfmUi-qbMr3A' href='https://matrix.to/#/!wBOJlzaOULZOALhaRh:polkadot.io/$R5GmjQlGhvSmQb3RexqD7_V5apzasJENfmUi-qbMr3A' target='_blank'>2025-06-23 07:19</a>&ensp;<span class='u' style='color:#da5c80'>jan</span>: This looks like normal RO data to me.</div>
+<div class='msg reply'><a class='ts' href='#$QKvdNpSZBl9gMHQ60ahFwiPBf1yvjeMcS21ZU5teGiY'>#</a> <a class='ts' name='$QKvdNpSZBl9gMHQ60ahFwiPBf1yvjeMcS21ZU5teGiY' href='https://matrix.to/#/!wBOJlzaOULZOALhaRh:polkadot.io/$QKvdNpSZBl9gMHQ60ahFwiPBf1yvjeMcS21ZU5teGiY' target='_blank'>2025-06-23 07:20</a>&ensp;<span class='u' style='color:#bcd429'>subotic</span>: Thanks for confirming 👍️</div>
