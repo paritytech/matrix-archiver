@@ -1,5 +1,5 @@
 # room: #jam:polkadot.io
-# exported: 2025-06-24 03:35 UTC
+# exported: 2025-06-25 03:36 UTC
 2024-04-20 02:08 johnjiao123: 
 2024-04-20 02:09 johnjiao123: 
 2024-05-30 21:48 nradko: Hey everyone,
@@ -9237,6 +9237,7 @@ note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
 ```
 
 Not sure how to set the  "protocol_parameters" flag. can you advise?
+  ↳ 2025-06-24 15:32 arkadiy: See https://github.com/polkadot-fellows/JIPs/pull/1/files#diff-921114467d2dd89436b03d6a57b0784da847a6cd1cc5237d1e4a220ee22c6148R13
 2025-06-11 12:31 ascriv: Can we expect the next polkajam release to be compliant with 0.6.7 or later since 0.6.7 is out already?
 2025-06-11 13:13 dave: We're working on 0.6.6 at the moment. Don't have an exact ETA for a build. There aren't many changes though so hopefully shouldn't be long.
 2025-06-12 11:59 interweb_: Poss related: https://github.com/davxy/jam-test-vectors/issues/39
@@ -9367,3 +9368,6 @@ In fact 8 teams are each working on their own rust implementation! You can see w
 Does this seem right, or is this the metadata from formula (9.4) that managed to sneak in? Any help is appreciated.
   ↳ 2025-06-23 07:19 jan: This looks like normal RO data to me.
   ↳ 2025-06-23 07:20 subotic: Thanks for confirming 👍️
+2025-06-24 14:26 ascriv: It seems inevitable that some people will decide to make sovereign jam chains with new tokens and validators etc. in what ways has the protocol been designed to allow for easy communication between different instances? [edited]
+2025-06-24 17:45 gav: It uses merkle commitments and a fast-finalising protocol, which make bridging relatively easy. Beefy can also help. However the protocol was not designed with the intention to facilitate multiple sovereign JAM instances with their own tokens - it’s just an outcome of the protocol-centric design.  [edited]
+2025-06-24 17:46 gav: What was in the back of my mind, though, was to be able combine many JAM instances over the same staking mechanism and overall validator set. In effect forming a JAM “Grid”
