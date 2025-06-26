@@ -1,5 +1,5 @@
 # room: #graypaper:polkadot.io
-# exported: 2025-06-25 03:36 UTC
+# exported: 2025-06-26 03:35 UTC
 2024-04-17 20:29 syed: https://matrix.to/#/!hyzRkDqDthePbodYFz:parity.io/$f_DMsIEcDXZegw6Sabnehzc-LrdDQkmq5MbxDDyoZxY?via=parity.io&via=web3.foundation
 
 2024-04-17 20:29 syed: 
@@ -6290,3 +6290,24 @@ https://github.com/gavofyork/graypaper/pull/440
 2025-06-21 10:40 gav: The GP assumes common-clock - it makes no assertions about how this is achieved. I’d have thought impls will generally expect system clock to be correct and the problem will thus generally be left to the node’s sysadmin. 
 2025-06-21 18:19 sourabhniyogi: Nitpick suggestion: make fetch case 8 [here](https://graypaper.fluffylabs.dev/#/7e6ff6a/32a50132a501?v=0.6.7) match up exactly with the implied authorizer p\_a preimage [here](https://graypaper.fluffylabs.dev/#/7e6ff6a/1bad011bad01?v=0.6.7) -- prefer 14.10 change instead of fetch. [edited]
 2025-06-22 16:21 gav: As those who follow the GP will have seen, the last few days has seen both major refactoring of the Latex and some pretty heavy changes to the terms used to try to make things a lot easier for newcomers. I expect to finish the [final 0.6 series issue](https://github.com/gavofyork/graypaper/issues/266) imminently, after which 0.7.0 can, in principle, be released. Before I put out 0.7.0 I'll leave it for a few days to settle as no doubt there will be some errors from the huge refactoring/renaming: **If you do happen to be looking at GP-`main` and see any regressions the refactor introduced, do please point them out**.
+2025-06-25 10:32 gav: Nobody reported any issues, so here it is: [GP 0.7.0](https://github.com/gavofyork/graypaper/releases/tag/v0.7.0)
+2025-06-25 10:33 gav: I did a sweep of integer encodings, but may have missed some; if you feel that there are still encodings which are variable and shouldn't be (or which are fixed and should be variable), do feel free to mention it.
+2025-06-25 10:35 clearloop: when will the network protocol being embedded in GP?
+2025-06-25 10:42 gav: It's not a big priority.
+2025-06-25 10:42 gav: It might not happen even before 1.0 - it could just be done as a JIP/RFC. [edited]
+2025-06-25 10:43 gav: Biggest priority is to get the core protocol secure, fast and functional.
+2025-06-25 13:55 clearloop: ```
+spacejam    WARN ticket{attempt=0}: failed to open bi-stream: eecgwpgwq3noky4ijm4jmvjtmuzv44qvigciusxakq5epnrfj2utb@127.0.0.1:40000
+spacejam    DEBUG ticket{attempt=0}:disconnect{peer="eecgwpgwq3noky4ijm4jmvjtmuzv44qvigciusxakq5epnrfj2utb"}: failed to open bi-stream
+spacejam    WARN ticket{attempt=0}: failed to open bi-stream: ekwmt37xecoq6a7otkm4ux5gfmm4uwbat4bg5m223shckhaaxdpqa@127.0.0.1:40002
+spacejam    DEBUG ticket{attempt=0}:disconnect{peer="ekwmt37xecoq6a7otkm4ux5gfmm4uwbat4bg5m223shckhaaxdpqa"}: failed to open bi-stream
+polkajam-3  tokio-runtime-worker WARN authoring  Error processing incoming ticket: finality lagging (final: 2520995, curr: 2520999)
+polkajam-4  tokio-runtime-worker WARN authoring  Error processing incoming ticket: finality lagging (final: 2520995, curr: 2520999)
+polkajam-1   tokio-runtime-worker WARN authoring  Error processing incoming ticket: finality lagging (final: 2520995, curr: 2520999)
+spacejam     TRACE ce132::recv: ticket#0@cdf12f for epoch: 210083
+spacejam     TRACE up0{peer=en5ejs5b2tybkfh4ym5vpfh7nynby73xhtfzmazumtvcijpcsz6ma}:recv: block#2521000@0x4ed2f0, grandpa#2520998@0x961299, remote#2520996@0xdd6fa0
+```
+
+I can reach this finality lagging problem frequently from `polkajam`, at the last line we can see spacejam still receives block#2521000 from a polkajam node, while seems other 3 neighbors are at 2520995 that they reject `spacejam`'s ticket and close the connection, I expect the correct behavior should be like, on receiving a ticket from future blocks, we cache the ticket, and verify it on finalizing that new block instead of closing the connection immediately
+
+our testnet (`0.6.5`) configuration is 5 `polkajam` node + 1 `spacejam` node and `spacejam` can work with `polkajam` nodes with around 30mins then get broken on inconsistent blocks [edited]
