@@ -1,5 +1,5 @@
 # room: #jam:polkadot.io
-# exported: 2025-06-26 03:35 UTC
+# exported: 2025-06-27 03:35 UTC
 2024-04-20 02:08 johnjiao123: 
 2024-04-20 02:09 johnjiao123: 
 2024-05-30 21:48 nradko: Hey everyone,
@@ -9408,6 +9408,8 @@ The protocol, which will be shared in the next days, will be trivial and compose
 Using testnet block sharing mechanisms would introduce unnecessary complexity and overhead.
 The goal is to process blocks as quickly as possible.
 So basically your CLI will need something like `--fuzz` param to open this channel [edited]
+  ↳ 2025-06-26 09:36 kianenigma: If and when this is final, please do share it with the teams so we can implement it 👍️
+  ↳ 2025-06-26 10:10 p1sar: davxy: Great! Thank you for the clarification! 
 2025-06-25 17:09 gav: Possible, [davxy](https://matrix.to/#/@davxy:matrix.org)?
 2025-06-25 17:32 ge0321: Hi everyone 👋 — just joined this space to dive deeper into JAM and Coretime.
 I’ve built a few things in the past (not a heavy hitter dev, but I can code), and I’m especially interested in real-world use cases like decentralized newsletters and government/public sector applications.
@@ -9437,3 +9439,19 @@ We recently delivered the test vectors for version 0.6.6. Some teams are already
 And this https://github.com/davxy/jam-test-vectors/pull/82 for more context
 
 
+2025-06-26 05:40 shankarwarang: Is there any dedicated matrix channel for PolkaVM?
+  ↳ 2025-06-26 06:34 jan: There's no public channel. If you have any questions feel free to ping me here.
+2025-06-26 06:32 ascriv: > <@davxy:matrix.org> Fuzzing is black box. On state root mismatch we'll be able to get a test vector that triggered the contention. A bit of further analysis will be required to find out who is wrong and how. I'm not sure who will be in charge of digging into the target. But for sure, given the vector that triggered the mismatch, the analysis will be easier for the implementor
+
+Will we be able to play around with the fuzzer to keep the iteration loop tight?
+2025-06-26 07:31 olanod: Any implementers settled on being the very best browser friendly rust light client? nothing less, nothing more.
+  ↳ 2025-06-26 07:48 olanod: I'm thinking of a protocol that submits work packages directly from the the web(with Rust), e.g. I hand the WP to the in device light node and it broad casts it to peers via WebTransport API or something, no intermediate blockchain or anything. It would be cool to know if any team is going to specialize on this kind of light client from the get go.
+  ↳ 2025-06-26 07:56 clearloop: We have sort of design, but since we are not open source yet, could be hard to share atm, <del>however we can introduce such features in our explorer in next few weeks</del>
+
+what if a light client that have configs subscribing incoming WPs to specified endpoints (don't need to modify the code of light client, but like a blackbox, but at this case, rust or not it doesn't matter anymore)? mb this is more closed to the need? [edited]
+  ↳ 2025-06-26 08:43 olanod: knowing there are teams considering this is already good :) if sources still need to be kept private for a while I suspect one can link against a precompiled static .rlib, or you publish a standalone wasm that one talks to via a JS API or a worker's messaging APIs
+  ↳ 2025-06-26 09:00 clearloop: using WASM would be dope! glad to hear WASM is still considered as development components nowadays, I can introduce this feature in our light node next week (if no unexpected problems...) [edited]
+  ↳ 2025-06-26 09:07 interweb_: before implementing a light client I have been working on the json-rpc and explorer. I am happy to get involved in this if there is a collaboration.
+At the moment we have all the jamtestvectors decoded in js, however I find the json-rpc data structures do not match the GP.
+  ↳ 2025-06-26 09:09 interweb_: I imagine a light client would implement the native GP protocol, and then we still need the js/ts libs to decode/encode data into the wasm
+  ↳ 2025-06-26 09:37 clearloop: our interface is basically designed for any external data analysis usages  with low-level API, sadly we have a simple explorer in development as well internally XD, but it's always good to see my work can be integrated with others' products! will push the WASM API idea asap anyway after fixing know issues in my implementation
