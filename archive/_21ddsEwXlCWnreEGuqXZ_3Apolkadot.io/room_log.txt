@@ -1,5 +1,5 @@
 # room: #graypaper:polkadot.io
-# exported: 2025-06-27 03:36 UTC
+# exported: 2025-06-28 03:32 UTC
 2024-04-17 20:29 syed: https://matrix.to/#/!hyzRkDqDthePbodYFz:parity.io/$f_DMsIEcDXZegw6Sabnehzc-LrdDQkmq5MbxDDyoZxY?via=parity.io&via=web3.foundation
 
 2024-04-17 20:29 syed: 
@@ -6311,3 +6311,5 @@ spacejam     TRACE up0{peer=en5ejs5b2tybkfh4ym5vpfh7nynby73xhtfzmazumtvcijpcsz6m
 I can reach this finality lagging problem frequently from `polkajam`, at the last line we can see spacejam still receives block#2521000 from a polkajam node, while seems other 3 neighbors are at 2520995 that they reject `spacejam`'s ticket and close the connection, I expect the correct behavior should be like, on receiving a ticket from future blocks, we cache the ticket, and verify it on finalizing that new block instead of closing the connection immediately
 
 our testnet (`0.6.5`) configuration is 5 `polkajam` node + 1 `spacejam` node and `spacejam` can work with `polkajam` nodes with around 30mins then get broken on inconsistent blocks [edited]
+2025-06-27 13:42 prematurata: I've a question in 10.5 `f \in bold_k` but that bold_k can't come from 10.3 which needs `a` from EV. is it a typo? [edited]
+2025-06-27 14:09 prematurata: lol i am totally blind sorry :(
