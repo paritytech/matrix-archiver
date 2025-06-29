@@ -1,5 +1,5 @@
 # room: #jam:polkadot.io
-# exported: 2025-06-28 03:32 UTC
+# exported: 2025-06-29 03:42 UTC
 2024-04-20 02:08 johnjiao123: 
 2024-04-20 02:09 johnjiao123: 
 2024-05-30 21:48 nradko: Hey everyone,
@@ -9455,3 +9455,27 @@ what if a light client that have configs subscribing incoming WPs to specified e
 At the moment we have all the jamtestvectors decoded in js, however I find the json-rpc data structures do not match the GP.
   ↳ 2025-06-26 09:09 interweb_: I imagine a light client would implement the native GP protocol, and then we still need the js/ts libs to decode/encode data into the wasm
   ↳ 2025-06-26 09:37 clearloop: our interface is basically designed for any external data analysis usages  with low-level API, sadly we have a simple explorer in development as well internally XD, but it's always good to see my work can be integrated with others' products! will push the WASM API idea asap anyway after fixing know issues in my implementation
+2025-06-28 15:58 davxy: The fuzzer source code definitely won't be released before the M1 contest is over. As for the binary, honestly, I'm not sure. In theory, it can operate over the network, which might be another way to let the teams play with it independently. However, I'm currently not informed about the actual strategy
+2025-06-28 16:04 ascriv: I imagine there will be a lot of work to get implementations passing the fuzzer tests so a binary would help tighten that iteration loop
+2025-06-28 16:04 ascriv: Test vectors have been great too though
+2025-06-28 16:04 davxy: Here are some details about the protocol used during fuzzy testing:
+
+https://github.com/davxy/jam-stuff/blob/main/fuzz-proto/README.md
+
+I currently have this working with GP 0.6.6 (although the fuzzing engine itself is still being improved).
+It appears to be functioning well, but I'm open to suggestions for enhancements. Please feel free to leave any comments or proposals in the repository. [edited]
+  ↳ 2025-06-28 16:47 oliver.tale-yazdi: Nice, thanks. Will the fuzzer have the PolkaJAM code backed in or can it be used to compare arbitrary implementations?  
+I was thinking `fuzzer --impl 0.0.0.0:8080 --impl 0.0.0.0:8081` or something and it would just treat neither of those as canonical and just report differences.  
+
+But the protocol reads like anyone could implement that as well if they wanted
+  ↳ 2025-06-28 16:48 oliver.tale-yazdi: And would this doc be turned into an JIP or what is the final distribution format? We can also add it to the wiki
+  ↳ 2025-06-28 16:52 oliver.tale-yazdi: If the PolkaJAM code is not backed in then it could also be open-sourced and freely distributed to the teams for comparison of different binaries [edited]
+  ↳ 2025-06-28 16:54 oliver.tale-yazdi: Okay i guess that does not really work since the fault injection code should be private...
+  ↳ 2025-06-28 17:01 davxy: Basically when you start the fuzzer against a target you can specify a `--source` arg.
+Currently it can be:
+
+- `local`: polkajam engine (no I've not rewritten the whole onchain logic for the fuzzer ;-) )
+- `remote`: some other impl
+- `trace`: traces in the filesystem. Same format as the ones in jam-test-vectors.
+
+Only the `local` source is fuzzed using the logic I wrote. Nothing prevents someone to implement their source to be used as `remote` source by the tool. The source must follow the protocol I shared (the fuzzer side in this case) [edited]
