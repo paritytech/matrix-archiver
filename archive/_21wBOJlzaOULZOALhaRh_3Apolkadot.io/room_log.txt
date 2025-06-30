@@ -1,5 +1,5 @@
 # room: #jam:polkadot.io
-# exported: 2025-06-29 03:42 UTC
+# exported: 2025-06-30 03:39 UTC
 2024-04-20 02:08 johnjiao123: 
 2024-04-20 02:09 johnjiao123: 
 2024-05-30 21:48 nradko: Hey everyone,
@@ -9479,3 +9479,45 @@ Currently it can be:
 - `trace`: traces in the filesystem. Same format as the ones in jam-test-vectors.
 
 Only the `local` source is fuzzed using the logic I wrote. Nothing prevents someone to implement their source to be used as `remote` source by the tool. The source must follow the protocol I shared (the fuzzer side in this case) [edited]
+  ↳ 2025-06-29 07:44 yu2c: Since we've updated our implementation to v0.7.0, we were wondering whether there will be an updated for test vectors( v0.6.7 or v0.7.0) — or will it go straight to fuzz testing for the M1 conformance test?
+  ↳ 2025-06-29 12:04 clearloop: I don't get the remote option, if it is not specified yet? for what I under stand so for:
+
+1. `local` use the unix socket
+2. `trace` may accept a folder full of trace tests
+3. `remote`: no ideas
+
+perhaps still need one more flag to tell the program if it is testing others or it is being tested [edited]
+  ↳ 2025-06-29 16:11 clearloop: we just released our 0.6.6 with a command `fuzz` can make `spacejam` a fuzz target, the unix sockets part is not tested yet since currently we don't have the `fuzz` binary, however, the trace command still can be used for processing traces
+
+https://github.com/spacejamapp/specjam/releases/tag/0.6.6 [edited]
+2025-06-29 12:17 davxy: These fuzzer options define where the fuzzer tool picks blocks to be sent to the target. "remote" indicates that blocks can be taken from a remote source.
+
+That said, these are fuzzer details and aren't particularly relevant to the target itself, which simply communicates with the fuzzer via a Unix socket, as outlined in the draft I shared
+2025-06-29 12:22 davxy: Of course, I imagine that the targets currently capable of importing pre-built traces (e.g., test vectors) are also implementing the "trace" source themselves, but that's a separate matter. I was specifically referring to the source from which our fuzzer selects the blocks it sends to the target during a fuzzing session.
+
+2025-06-29 12:30 clearloop: Thanks! I'll try implement the target features atm, and then update when needed
+2025-06-29 12:52 boymaas: Thanks for the fuzzing protocol spec davxy - ooo What constants are we fuzzing with, production(341 validators etc) or tiny?
+2025-06-29 13:33 davxy: > <@boymaas:matrix.org> Thanks for the fuzzing protocol spec davxy - ooo What constants are we fuzzing with, production(341 validators etc) or tiny?
+
+Good question. Spec "flavor" can be deduced from the validators count in the state we're sending you. Not sure if  worth adding it to the PeerInfo message
+2025-06-29 17:14 boymaas: That presents a challenge for JamZig's implementation because the validator count is a compile-time setting in my implementation. I compile binaries based on specified constants using Zigs comptime features. Is a fluid/runtime adaptable validator count and other parameters a strict requirement to pass the conformance tests?
+2025-06-29 17:19 clearloop: same, we need big refactor to support customized parameters
+2025-06-29 17:31 ascriv: +1
+2025-06-29 17:35 boymaas: 
+2025-06-29 17:38 ascriv: Inverting serialization is not necessary for making a compliant impl 
+2025-06-29 17:41 ascriv: You can do gets and sets and deletes on service account storage for example without having the original key that was used 
+2025-06-29 17:43 boymaas: I am curious about how you would initiate the initial storage state. Imagine service X has some storage keys present. How would you deconstruct the actual storage keys used from the initial set state message?
+2025-06-29 17:44 davxy: > <@boymaas:matrix.org> That presents a challenge for JamZig's implementation because the validator count is a compile-time setting in my implementation. I compile binaries based on specified constants using Zigs comptime features. Is a fluid/runtime adaptable validator count and other parameters a strict requirement to pass the conformance tests?
+
+no, I don't think so.
+You can easily provide 2 binaries. Also I think that we'll start with tiny
+2025-06-29 17:45 ascriv: You don’t have to. get/set/delete operations can do the key construction function themselves and now they’re operating in “state key space”
+2025-06-29 17:45 boymaas: That is a big relief 😅
+2025-06-29 17:47 boymaas: Just to ensure we're on the same page, I assume the SetState format for State and for example Storage Keys will be as specified here: https://graypaper.fluffylabs.dev/#/9a08063/3bab023bb802?v=0.6.6 [edited]
+2025-06-29 17:49 ascriv: > <@boymaas:matrix.org> Just to ensure we're on the same page, I assume the SetState format for Storage Keys will be as specified here: https://graypaper.fluffylabs.dev/#/9a08063/3bab023bb802?v=0.6.6
+
+Yes. So the service storage get function you have implemented already would have to be replaced with one that, given the key, calls C(s,E_4(…)k0…27) to get the state key, then looks in your storage for the value 
+2025-06-29 17:50 ascriv: So you never have to invert C(*), which is not invertible anyway 
+2025-06-29 17:57 boymaas: I understand your perspective. [edited]
+2025-06-29 17:59 ascriv: My implementation does this without custom host calls 
+2025-06-29 17:59 ascriv: But I think if I explain further it might break clean room requirements  [edited]
