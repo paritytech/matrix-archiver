@@ -1,5 +1,5 @@
 # room: #jam:polkadot.io
-# exported: 2025-06-30 03:39 UTC
+# exported: 2025-07-01 03:44 UTC
 2024-04-20 02:08 johnjiao123: 
 2024-04-20 02:09 johnjiao123: 
 2024-05-30 21:48 nradko: Hey everyone,
@@ -9521,3 +9521,9 @@ Yes. So the service storage get function you have implemented already would have
 2025-06-29 17:57 boymaas: I understand your perspective. [edited]
 2025-06-29 17:59 ascriv: My implementation does this without custom host calls 
 2025-06-29 17:59 ascriv: But I think if I explain further it might break clean room requirements  [edited]
+2025-06-30 06:34 clearloop: anybody has an extra discount code for web3 submit 🙏
+
+2025-06-30 11:58 emielsebastiaan: Any chance jam-pvm-builder v0.1.23 could be released on crates.io? 🙏🏻
+https://crates.io/crates/jam-pvm-builder/versions
+
+Context: https://github.com/paritytech/polkajam-releases/releases/tag/v0.1.23 [edited]
