@@ -1,5 +1,5 @@
 # room: #jam:polkadot.io
-# exported: 2025-07-01 03:44 UTC
+# exported: 2025-07-02 03:36 UTC
 2024-04-20 02:08 johnjiao123: 
 2024-04-20 02:09 johnjiao123: 
 2024-05-30 21:48 nradko: Hey everyone,
@@ -7974,6 +7974,7 @@ Think I missed this message before, sorry. This was probably because the --dev-v
 
 Currently, while connecting to Polkajam, I am encountering errors: InvalidForName, ServerNameMustContainOneHostName.
   ↳ 2025-06-24 01:48 dave: You just need the alternative name extension, with a single DNS name as defined in the SNP doc
+  ↳ 2025-07-01 12:17 prasad-kumkar: hi David Emett: could you please share how polkajam binary does syncing? We are trying to request all blocks from genesis till the latest time-slot via CE128, but not sure if this is correct as we are unable to get a response, and we get a timeout
 2025-05-15 02:56 sourabhniyogi: Published jamduna binaries:
 
 https://github.com/jam-duna/jamtestnet/releases/tag/0.6.6.1
@@ -9527,3 +9528,86 @@ Yes. So the service storage get function you have implemented already would have
 https://crates.io/crates/jam-pvm-builder/versions
 
 Context: https://github.com/paritytech/polkajam-releases/releases/tag/v0.1.23 [edited]
+2025-07-01 09:37 dakkk: I'm stuck in implementing 0.6.7 / 0.7.0 on jampy, since when constructing the state from the merklerized, I'm unable to determine if a merklerized key is a storage key of a_s or a (key, len) of a_l, in the case that the preimage is not present in a_p.
+
+I've found that someone opened an issue regarding this https://github.com/gavofyork/graypaper/issues/436;
+
+Idk if anyone else is facing the same issue, or if there is a solution that I can't see.
+2025-07-01 09:39 gav: > <@dakkk:matrix.org> I'm stuck in implementing 0.6.7 / 0.7.0 on jampy, since when constructing the state from the merklerized, I'm unable to determine if a merklerized key is a storage key of a_s or a (key, len) of a_l, in the case that the preimage is not present in a_p.
+> 
+> I've found that someone opened an issue regarding this https://github.com/gavofyork/graypaper/issues/436;
+> 
+> Idk if anyone else is facing the same issue, or if there is a solution that I can't see.
+
+That is intentional. 
+2025-07-01 09:39 gav: In general you cannot expect to be able to reconstruct state from the merkle nodes.  [edited]
+2025-07-01 09:40 gav: There will be some elements which you can reconstruct, but being able to get everything back is clearly not supported, since there are parts which we hash. 
+2025-07-01 09:42 dakkk: I know, I don't want to reconstruct it entirely; I only want to distinguish two different things (keys of a\_l and keys of a\_s); should I put everything in a big container containing both? It's the only way I see, but maybe not so good [edited]
+2025-07-01 09:51 gav: Generally, yes.
+2025-07-01 09:51 gav: That is the implication, anyway.
+2025-07-01 10:01 dakkk: ok, got it; I don't like it, but now I can implement the ability of using traces in 0.7
+2025-07-01 10:02 gav: Between convenience and security, we're going to choose security:)
+2025-07-01 10:02 prematurata: I am glad I was not the only one noticing it. The proposed solution in my issue above does allow to distinguish all the keys, preserves entropy and removes some compexity compared to current 0.7.0... 
+
+Or am i missing something? 
+2025-07-01 10:05 gav: Your suggestion misses the fact that adding a request is permissionless.
+2025-07-01 10:05 gav: image.png
+2025-07-01 10:05 gav: It's trivial to create a collision.
+2025-07-01 10:05 gav: Just request the same hash with a different length.
+2025-07-01 10:06 prematurata: thanks i didnt think about that
+2025-07-01 10:07 prematurata: I guess it can be fixed by having the key opaque in a_l. but using 254, 253 and 252
+2025-07-01 10:07 prematurata: like proposed,
+2025-07-01 10:09 prematurata: image.png
+2025-07-01 10:09 prematurata: basically this:
+
+2025-07-01 10:13 gav: C doesn't take 3 arguments.
+2025-07-01 10:15 prematurata: yeah sorry it was part of my issue above. here would be the modified C
+2025-07-01 10:15 prematurata: image.png
+2025-07-01 10:15 prematurata: Again, i might be missing something very obvious :)
+2025-07-01 10:16 gav: C still only takes 2 args in your image there. [edited]
+2025-07-01 10:16 prematurata: image.png
+2025-07-01 10:17 prematurata: sorry
+2025-07-01 10:19 gav: But anyway, the root of the problem is simple: we are forced to fit more than 31 bytes of information into just 31 bytes of entropy. We need to split it opaquely by service since services are mutually trustless and we don't want one service artificially lengthening another service's keys' merkle paths. Services are 4 bytes, so that only leaves 27 bytes of entropy. This is now at the limit of security; any further opaque data in the key will reduce the effective entropy by which we shield permissionless data (such as lookups) potentially allowing a determined attacker to cause a collision. [edited]
+2025-07-01 10:20 gav: Your suggestion removes an additonal byte, turning our 27 bytes of entropy into 26.
+2025-07-01 10:20 gav: This reduces the security threshold from the "probably secure for a few years" to the "possibly attackable within a few years"
+2025-07-01 10:22 gav: The only real way around this is to handle collisions gracefully. However this will either be a huge amount of work, highly inconvenient to service authors or introduce further insecurities, especially over consensus.
+2025-07-01 10:23 gav: This issue with handling collisions is that you need to do something sensible in an exceptional circumstance and in the worst case there may not be a very sensible thing to do other than reversion. And reversion comes with its own issues especially over liveness. [edited]
+2025-07-01 10:30 gav: The 26 vs 27 vs 31 vs 32 is admittedly a lot of guesswork and we can only speculate about the amount of resources an attacker may wish to throw at breaking it. However we knew, ~ten years ago, that 20 bytes was on the bounds of security. [edited]
+2025-07-01 10:32 gav: There's nothing magical about 32 bytes and we can reasonably expect to lower it *somewhat* and retain practical security, but inevitably the bound of insecurity will have been creeping up from 20 bytes over the years.
+2025-07-01 10:36 gav: The degree to which 27 bytes is truly secure against a determined and well-resourced adversary can be argued indefinitely. But what we can say is that reducing from 27 to 26 will make their job a *lot* easier, reducing it by, at face value, over 100x difficulty and turning something which would take a year of concerted effort into a 2 or 3 days.
+2025-07-01 10:37 gav: I would not want to compromise to that level on the basis of implementation convenience.
+2025-07-01 10:37 dakkk: Won't this be solved by restoring 32 bytes keys (instead of 31)? [edited]
+2025-07-01 10:38 gav: That would buy us an extra byte of entropy, but our expectation is that it would cost substantial levels of speed. [edited]
+2025-07-01 10:39 gav: 31 byte keys allow us to pack nodes very efficiently into disk blocks.
+2025-07-01 10:39 gav: That all gets screwed up with 32 byte keys. [edited]
+2025-07-01 10:40 gav: The priorities are:
+
+- Security
+- Performance
+- Implementation convenience (or, indeed, supporting implementors' flawed protocol assumptions!) [edited]
+2025-07-01 10:41 gav: My apologies for not catching this earlier. The hashing should always have been there and then nobody would have written any flawed code. [edited]
+2025-07-01 10:46 prematurata: Thanks for the in-depth explanation on the reasoning behind all the values/lengths etc. 
+
+Do you think it's best to close that issue up or keep it open in case someone have a better idea? Maybe i write a summary of what has been said here [edited]
+2025-07-01 10:46 dakkk: NP, the main drawback are us arguing about it, and you having to reply 😄 
+2025-07-01 11:02 ascriv: I think one additional quirk the hashes introduce is now it’s not as simple to get all storage for a given service index anymore (can’t use 8-byte prefix search). So e.g. when a service is ejected it’s not as simple now to go through and make sure all of that service’s storage is removed from state. Or am I wrong about needing to purge ejected service storage ? [edited]
+2025-07-01 11:12 gav: It's trivial because we track the number of items in the account. [edited]
+2025-07-01 11:17 ascriv: In the case where an ejected service has a bunch of items though, it’s not easy to actually find them and remove them from the state, I think 
+2025-07-01 11:21 gav: We guarantee that the service cannot be deleted unless it has first deleted its items.
+2025-07-01 11:21 gav: Service item enumeration is not a feature of the base JAM protocol. [edited]
+2025-07-01 11:22 gav: (I mention it because perhaps you're mistakenly asserting that it is or should be.)
+2025-07-01 11:27 ascriv: No, I just missed where we guarantee all items are deleted before deleting the service. Where is that in the gp?
+2025-07-01 11:31 gav: See `eject`: 
+2025-07-01 11:31 gav: image.png
+2025-07-01 11:32 gav: This basically just guarantees that storage is empty and there is only one preimage left (the code, which must be there or there'd have been nothing to `upgrade` to the zombie code. [edited]
+2025-07-01 11:33 ascriv: ah i was wondering what that was all about
+2025-07-01 11:36 emielsebastiaan: > <@emielsebastiaan:matrix.org> Any chance jam-pvm-builder v0.1.23 could be released on crates.io? 🙏🏻
+> https://crates.io/crates/jam-pvm-builder/versions
+> 
+> Context: https://github.com/paritytech/polkajam-releases/releases/tag/v0.1.23
+
+Bumping this 👆🏻
+Q: is a release jam-pvm-builder v0.1.23 an option? Or is it not a priority? 
+2025-07-01 11:48 gav: Noted that the latest version is desired. Unfortunately I'm the only one who can make a release and my schedule is not exactly replete with free time. [edited]
+2025-07-01 11:51 emielsebastiaan: Np only asking so we can schedule tasks on our end. 
+2025-07-01 15:53 decentration: do we know yet how long is the deadline window for M1? when does it open/close. 
