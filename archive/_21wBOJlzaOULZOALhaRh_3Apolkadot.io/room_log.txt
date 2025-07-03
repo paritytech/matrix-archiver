@@ -1,5 +1,5 @@
 # room: #jam:polkadot.io
-# exported: 2025-07-02 03:36 UTC
+# exported: 2025-07-03 03:36 UTC
 2024-04-20 02:08 johnjiao123: 
 2024-04-20 02:09 johnjiao123: 
 2024-05-30 21:48 nradko: Hey everyone,
@@ -9611,3 +9611,7 @@ Q: is a release jam-pvm-builder v0.1.23 an option? Or is it not a priority?
 2025-07-01 11:48 gav: Noted that the latest version is desired. Unfortunately I'm the only one who can make a release and my schedule is not exactly replete with free time. [edited]
 2025-07-01 11:51 emielsebastiaan: Np only asking so we can schedule tasks on our end. 
 2025-07-01 15:53 decentration: do we know yet how long is the deadline window for M1? when does it open/close. 
+2025-07-02 13:00 gav: There's no planned closure. However Later milestone submissions take precedence over earlier ones: if W3F must choose between evaluating an M4 candidate vs an M1 candidate, it will prioritise the M4 candidate.
+2025-07-02 20:29 prasad-kumkar: Jan Bujak: From your recompiler talk- if we use `r14` as the base pointer for guest memory, should we exclude it from the guest register mapping set (leaving us with only 12 registers), or is there a way to safely use it for both? Thanks!
+  ↳ 2025-07-03 03:34 jan: If you're going to use a register for the VM then obviously you can't use it for guest registers.
+  ↳ 2025-07-03 03:34 jan: I can give you a hint though: you only need one register for the vmctx and the guest memory if you put the vmctx at a *negative* offset to the guest memory.
