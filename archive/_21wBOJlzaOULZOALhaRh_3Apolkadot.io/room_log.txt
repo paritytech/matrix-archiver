@@ -1,5 +1,5 @@
 # room: #jam:polkadot.io
-# exported: 2025-07-04 03:35 UTC
+# exported: 2025-07-05 03:32 UTC
 2024-04-20 02:08 johnjiao123: 
 2024-04-20 02:09 johnjiao123: 
 2024-05-30 21:48 nradko: Hey everyone,
@@ -9491,6 +9491,8 @@ perhaps still need one more flag to tell the program if it is testing others or 
   ↳ 2025-06-29 16:11 clearloop: we just released our 0.6.6 with a command `fuzz` can make `spacejam` a fuzz target, the unix sockets part is not tested yet since currently we don't have the `fuzz` binary, however, the trace command still can be used for processing traces
 
 https://github.com/spacejamapp/specjam/releases/tag/0.6.6 [edited]
+  ↳ 2025-07-04 16:55 jaymansfield: Hey davxy, what should our implementations do when an invalid block is received by ImportBlock? How should this be communicated back to the fuzzer?
+  ↳ 2025-07-04 18:13 jaymansfield: Second question/comment relating to the fuzzer. I think I saw it mentioned that the chain spec can be derived from the number of validators present in the state. The problem I see is that is the header is sent first when using SetState, and it requires knowing the chain spec to know how many epoch mark validators are present. The order of arguments in SetState would need to be swapped to send the state first for this to work. [edited]
 2025-06-29 12:17 davxy: These fuzzer options define where the fuzzer tool picks blocks to be sent to the target. "remote" indicates that blocks can be taken from a remote source.
 
 That said, these are fuzzer details and aren't particularly relevant to the target itself, which simply communicates with the fuzzer via a Unix socket, as outlined in the draft I shared
@@ -9619,3 +9621,16 @@ Q: is a release jam-pvm-builder v0.1.23 an option? Or is it not a priority?
 2025-07-03 13:51 decentration: i see, so priority for higher milestone submission waiting to be evaluated. and i am assuming if a milestone is submitted and evaluated successfully it is safe for winning a prize.  [edited]
 2025-07-03 14:30 gav: The prize pool is limited overall, and individual language sets are also limited further. So hypothetically (at least) there could be a situation where two teams are competing over the same prize. 
 2025-07-03 14:30 gav: For this reason it’s important to have a means of prioritizing. 
+2025-07-04 18:32 rustybot: > <@jaymansfield:matrix.org> Hey davxy, what should our implementations do when an invalid block is received by ImportBlock? How should this be communicated back to the fuzzer?
+
+on import failure the prior state root should be returned.
+2025-07-04 18:37 rustybot: > <@jaymansfield:matrix.org> Second question/comment relating to the fuzzer. I think I saw it mentioned that the chain spec can be derived from the number of validators present in the state. The problem I see is that is the header is sent first when using SetState, and it requires knowing the chain spec to parse the epoch mark validators. The order of arguments in SetState would need to be swapped to send the state first for this to work.
+
+The number of validators in the epoch marker matches the number of validators in the state, so either can be used to infer the spec flavor. That said, I'm open to adding this parameter to PeerInfo if it simplifies things
+2025-07-04 18:38 rustybot: > <@ascriv:matrix.org> @[davxy - ooo] to support the fuzzer, should our implementation be able to reconstruct the full posterior state for all header hashes in history, or just the most recent one?
+
+The most recent. This is used only to give you back a report  with state diff. Expected vs actual
+2025-07-04 18:42 jaymansfield: Yes it matches, but the header is sent first for SetState,  and without knowing the spec at that point how would you know when to stop reading in validators for the epoch mark? The number of bytes for the header isn't known (just header+state together).  If the state was sent first, it would be easy to derive since the key value lengths can be determined. [edited]
+2025-07-04 18:53 ascriv: It seems that for a lot of impls, knowing the flavor is more convenient at compile time, so maybe we can decide on the flavor for the fuzzing and not have to worry about run-time flavor switching? [edited]
+2025-07-04 18:54 ascriv: or provide multiple binaries of different flavors which we describe a priori if the fuzzing requires. which I think davxy proposed [edited]
+2025-07-04 19:00 rustybot: Of course. I don't think that the spec flavor surprise factor is part of the fuzzing procedure. So you can submit two bins (tiny/full)
