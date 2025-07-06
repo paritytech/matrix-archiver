@@ -1,5 +1,5 @@
 # room: #jam:polkadot.io
-# exported: 2025-07-05 03:32 UTC
+# exported: 2025-07-06 03:40 UTC
 2024-04-20 02:08 johnjiao123: 
 2024-04-20 02:09 johnjiao123: 
 2024-05-30 21:48 nradko: Hey everyone,
@@ -9634,3 +9634,23 @@ The most recent. This is used only to give you back a report  with state diff. E
 2025-07-04 18:53 ascriv: It seems that for a lot of impls, knowing the flavor is more convenient at compile time, so maybe we can decide on the flavor for the fuzzing and not have to worry about run-time flavor switching? [edited]
 2025-07-04 18:54 ascriv: or provide multiple binaries of different flavors which we describe a priori if the fuzzing requires. which I think davxy proposed [edited]
 2025-07-04 19:00 rustybot: Of course. I don't think that the spec flavor surprise factor is part of the fuzzing procedure. So you can submit two bins (tiny/full)
+2025-07-05 06:07 clearloop: will we have test vectors for work package computation this or next month?
+2025-07-05 13:19 oliver.tale-yazdi: Some Qs about this:
+
+- Can Docker images be submitted or does it have to be an executable?
+- Just Linux amd64, I assume?
+- In the case of requiring a binary, what system libraries can we expect to exist (and what glibc version)? [edited]
+2025-07-05 14:24 emielsebastiaan: > <@oliver.tale-yazdi:parity.io> Some Qs about this:
+> 
+> - Can Docker images be submitted or does it have to be an executable?
+> - Just Linux amd64, I assume?
+> - In the case of requiring a binary, what system libraries can we expect to exist (and what glibc version)?
+
+Generalized question for delivery of interpreted languages I suppose. Docker would be ideal. Please advise. 🙏🏻 
+2025-07-05 15:01 clearloop: for interpreted languages running in docker, ain't people can still fetch the source via entering the container? I know typescript can compile javascript into non-human-readable exprs, but what about python, just curious
+2025-07-05 19:27 oliver.tale-yazdi: Opened one question issue around the unix socket operation mode https://github.com/davxy/jam-stuff/issues/3
+2025-07-05 19:55 davxy: I'm not sure where the official conformance testing process will eventually run (as it will run no-stop for... days? weeks?), but as far as I'm concerned:
+- **Docker**: I'm totally fine with you providing a Docker image instead of a plain binary. The key requirement is that the container exposes a Unix domain socket and forwards traffic to your binary inside the container. I haven’t done this myself, but it should definitely be doable. If you go this route, please make sure everything is set up so that we only need to start the container and point the fuzzer to the socket - I think no additional setup on our side is preferable.
+- **Target architecture**: Right now, I believe we’re targeting `amd64`. Not sure yet if we'll fuzz M1 over other platforms (and if it makes sense). 
+- **Binary**: A statically built binary would be very much appreciated. If that’s not feasible, then the Docker approach becomes even more preferable (compared to getting crazy with dynamic lib deps). [edited]
+2025-07-05 19:58 davxy: If Docker is chosen solely to prevent access to the source code of interpreted langs, we'll need to get our hands on the sources anyway :-)
