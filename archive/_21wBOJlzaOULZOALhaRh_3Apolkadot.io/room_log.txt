@@ -1,5 +1,5 @@
 # room: #jam:polkadot.io
-# exported: 2025-07-06 03:40 UTC
+# exported: 2025-07-07 03:40 UTC
 2024-04-20 02:08 johnjiao123: 
 2024-04-20 02:09 johnjiao123: 
 2024-05-30 21:48 nradko: Hey everyone,
@@ -9654,3 +9654,17 @@ Generalized question for delivery of interpreted languages I suppose. Docker wou
 - **Target architecture**: Right now, I believe we’re targeting `amd64`. Not sure yet if we'll fuzz M1 over other platforms (and if it makes sense). 
 - **Binary**: A statically built binary would be very much appreciated. If that’s not feasible, then the Docker approach becomes even more preferable (compared to getting crazy with dynamic lib deps). [edited]
 2025-07-05 19:58 davxy: If Docker is chosen solely to prevent access to the source code of interpreted langs, we'll need to get our hands on the sources anyway :-)
+2025-07-06 06:55 ascriv: @[davxy - ooo] are you going to make test vectors for 0.6.7 and then 0.7.0 before we start m1 conformance? Can we please have a rough timeline for these?
+2025-07-06 19:55 boymaas: II have created some static builds for you. davxy - ooo In case you would like to test against a target during your development. The STF passed the v0.6.6 test vectors and the v0.6.6 traces. I've added a README.
+
+https://github.com/jamzig/conformance-releases/tree/main/releases/202507062117\_3616ff7 [edited]
+  ↳ 2025-07-06 20:46 oliver.tale-yazdi: Very cool! I was about to ask if other teams could publish binaries so that we can try our fuzzer. Perfect timing it seems.
+  ↳ 2025-07-06 20:46 oliver.tale-yazdi: Also looks like it does not like our state root 😆
+  ↳ 2025-07-06 20:46 oliver.tale-yazdi: Screenshot 2025-07-06 at 22.46.47.png
+  ↳ 2025-07-06 20:47 oliver.tale-yazdi: (nvm, we closed the connection on accident) [edited]
+  ↳ 2025-07-06 23:08 jaymansfield: > <@oliver.tale-yazdi:parity.io> Very cool! I was about to ask if other teams could publish binaries so that we can try our fuzzer. Perfect timing it seems.
+
+Which GP version is the fuzzer right now?
+  ↳ 2025-07-07 00:06 clearloop: we have a 0.6.6 release with fuzzer target here, not sure if we can  get matched 👀
+
+https://github.com/spacejamapp/specjam/releases/tag/0.6.6
