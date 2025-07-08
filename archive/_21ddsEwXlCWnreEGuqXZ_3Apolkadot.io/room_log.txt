@@ -1,5 +1,5 @@
 # room: #graypaper:polkadot.io
-# exported: 2025-07-07 03:40 UTC
+# exported: 2025-07-08 03:37 UTC
 2024-04-17 20:29 syed: https://matrix.to/#/!hyzRkDqDthePbodYFz:parity.io/$f_DMsIEcDXZegw6Sabnehzc-LrdDQkmq5MbxDDyoZxY?via=parity.io&via=web3.foundation
 
 2024-04-17 20:29 syed: 

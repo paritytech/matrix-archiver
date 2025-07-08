@@ -1,5 +1,5 @@
 # room: #jam:polkadot.io
-# exported: 2025-07-07 03:40 UTC
+# exported: 2025-07-08 03:36 UTC
 2024-04-20 02:08 johnjiao123: 
 2024-04-20 02:09 johnjiao123: 
 2024-05-30 21:48 nradko: Hey everyone,
@@ -7975,6 +7975,15 @@ Think I missed this message before, sorry. This was probably because the --dev-v
 Currently, while connecting to Polkajam, I am encountering errors: InvalidForName, ServerNameMustContainOneHostName.
   ↳ 2025-06-24 01:48 dave: You just need the alternative name extension, with a single DNS name as defined in the SNP doc
   ↳ 2025-07-01 12:17 prasad-kumkar: hi David Emett: could you please share how polkajam binary does syncing? We are trying to request all blocks from genesis till the latest time-slot via CE128, but not sure if this is correct as we are unable to get a response, and we get a timeout
+  ↳ 2025-07-07 12:13 dave: Sorry have been on holiday. If you aren't getting a response you may not be sending a properly formatted request.
+  ↳ 2025-07-07 12:18 dave: There is no prescribed strategy for syncing the chain. As long as you follow the protocol described in the SNP doc any reasonable strategy should work.
+  ↳ 2025-07-07 13:34 oliver.tale-yazdi: >to request all blocks from genesis till the latest time-slot via CE128, but not sure if this is correct as we are unable to get a response, and we get a timeout
+
+I thought about the same thing to do, but SNP only mentions that the responding nodes needs to respond with *a child*, not the canonical one. So you could get stuck in old forks.  
+Not sure if this is the intended meaning, but it leads to the consequence of having to do reverse order
+  ↳ 2025-07-07 13:35 oliver.tale-yazdi: Just doing descend downloading would be like trying to random-walk a tree downwards.
+  ↳ 2025-07-07 13:35 oliver.tale-yazdi: Maybe the spec could be amended to prioritize blocks of the final (or best fork)? [edited]
+  ↳ 2025-07-07 14:27 dave: CE128 shouldn't return blocks that can't be finalised, I'll clarify this in the doc. But if there are multiple forks yes you need to request them explicitly in reverse order, there isn't really a way to ask for a particular fork otherwise as you say.
 2025-05-15 02:56 sourabhniyogi: Published jamduna binaries:
 
 https://github.com/jam-duna/jamtestnet/releases/tag/0.6.6.1
@@ -9668,3 +9677,24 @@ Which GP version is the fuzzer right now?
   ↳ 2025-07-07 00:06 clearloop: we have a 0.6.6 release with fuzzer target here, not sure if we can  get matched 👀
 
 https://github.com/spacejamapp/specjam/releases/tag/0.6.6
+  ↳ 2025-07-07 06:21 boymaas: You can't read the message I sent, strange? The Fuzzer target generates some simple blocks: fallback and safrole. The target "targets" version v0.6.6. 
+  ↳ 2025-07-07 11:08 boymaas: Aah, okay, that explains it. I created the fuzzer solely to test the target, so it generates only simple blocks. And is not hardened.
+2025-07-07 06:58 dakkk: Does the fuzzer protocol uses asn.1? I see asn.1 syntax, but asn.1 is not mentioned in the README
+2025-07-07 07:02 ascriv: The serialization/deserialization is as in the GP 
+2025-07-07 07:08 dakkk: The "Message" choice, how should be serialized? Like the optional value in the gp with more than two values?
+2025-07-07 07:14 ascriv: Like the 0-6 or whatever it was? It’s a byte 
+2025-07-07 07:14 ascriv: After the length, iirc. I’m not at my laptop though 
+2025-07-07 07:15 dakkk: ok
+2025-07-07 07:41 ascriv: yeah looking at https://github.com/davxy/jam-stuff/blob/main/fuzz-proto/README.md again actually it doesn't explicitly say the enum value is the byte after the 4 bytes for the message length, but that seems to be the case. the 2 encoding examples are evidence of this (they use enum values 0 and 5 correctly). @[davxy - ooo] to confirm for sure though
+2025-07-07 09:04 alice_und_bob: image.png
+2025-07-07 09:04 alice_und_bob: any suggestions on what dates I should push CoreChains and CorePlay back to?
+2025-07-07 09:04 alice_und_bob: and what is the latest in regards to XCMP? Is it still roadmap relevant or did plans here change?
+2025-07-07 11:11 gav: > <@alice_und_bob:matrix.org> any suggestions on what dates I should push CoreChains and CorePlay back to?
+
+From my perspective, CorePlay is still in ideation & research and has an open timeline. 
+2025-07-07 11:12 gav: For CoreChains, prototyping can performance testing can begin, though it is not a priority for me or the PolkaJam team. 
+2025-07-07 11:14 gav: I understand Basti had started some initial work here. 
+2025-07-07 11:15 gav: XCMP is a Polkadot-1, parachains specific protocol. It is unclear to what extent it will be implemented with CoreChains. 
+2025-07-07 11:16 gav: Hyperbridge may be enough. Or perhaps there will be a more general JAM-wide inter-service message passing protocol.  [edited]
+2025-07-07 11:17 gav: This is all dependent on CoreChains successfully being able to replace the Relay-chain. 
+2025-07-07 11:17 gav: That is presently speculative. 
