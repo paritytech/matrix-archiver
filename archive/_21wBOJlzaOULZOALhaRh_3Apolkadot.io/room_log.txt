@@ -1,5 +1,5 @@
 # room: #jam:polkadot.io
-# exported: 2025-07-08 03:36 UTC
+# exported: 2025-07-09 03:38 UTC
 2024-04-20 02:08 johnjiao123: 
 2024-04-20 02:09 johnjiao123: 
 2024-05-30 21:48 nradko: Hey everyone,
@@ -9679,6 +9679,21 @@ Which GP version is the fuzzer right now?
 https://github.com/spacejamapp/specjam/releases/tag/0.6.6
   ↳ 2025-07-07 06:21 boymaas: You can't read the message I sent, strange? The Fuzzer target generates some simple blocks: fallback and safrole. The target "targets" version v0.6.6. 
   ↳ 2025-07-07 11:08 boymaas: Aah, okay, that explains it. I created the fuzzer solely to test the target, so it generates only simple blocks. And is not hardened.
+  ↳ 2025-07-08 12:01 prasad-kumkar: Boy Maas | JamZig: Thank yo ufor sharing this. For the blocks where our implementation produces a different state root, I’m wondering if is there a simpler way to fetch the target state from your binary?
+  ↳ 2025-07-08 13:23 boymaas: Do you mean that you are the fuzzer and JamZig is the target, or is it the other way around, where you are using the JamZig fuzzer against your implemenation as the target? I wrote in the README that the fuzzer is only for simple testing, it uses some random generated blocks.
+
+If there is interest I can add a state dump on the JamZig's fuzzer side, which displays the differences which led to the difference in StateRoot. I believe Oliver Tale-Yazdi was also requesting this.
+  ↳ 2025-07-08 13:30 oliver.tale-yazdi: Yea would be helpful to have a "Why did it fail"-diff.  
+
+GrayMatter also supports both fuzzing and target, so we can also do it on our side, but it will find different issues since our fault injection code will be different form the JamZig fuzzer
+  ↳ 2025-07-08 13:41 boymaas: Okay, let me add it.
+  ↳ 2025-07-08 18:27 prasad-kumkar: Yeah kind of both. Currently we are using JamZig fuzzer against our impl - for cases where we get a mismatch, it'd be super helpful to fetch JamZig target's transitioned state for the same block to compare [if not too complicated ofcourse]
+
+I'm trying this in the meanwhile - to have a script targeting our impl with Jamzig fuzzer, save the blocks+state just before mismatch, replay them on JamZig's target and call GET_STATE, and compare this with our state. I will share if this works, but I guess there could be better ways
+  ↳ 2025-07-08 18:47 boymaas: image.png
+  ↳ 2025-07-08 18:47 boymaas: Just added this; I will upload a new version later.
+  ↳ 2025-07-08 18:55 boymaas: https://github.com/jamzig/conformance-releases/tree/main/releases/202507082050_c20074d
+  ↳ 2025-07-08 18:56 boymaas: This output will be generated on the fuzzer side once it detects a state root mismatch.
 2025-07-07 06:58 dakkk: Does the fuzzer protocol uses asn.1? I see asn.1 syntax, but asn.1 is not mentioned in the README
 2025-07-07 07:02 ascriv: The serialization/deserialization is as in the GP 
 2025-07-07 07:08 dakkk: The "Message" choice, how should be serialized? Like the optional value in the gp with more than two values?
@@ -9698,3 +9713,23 @@ From my perspective, CorePlay is still in ideation & research and has an open ti
 2025-07-07 11:16 gav: Hyperbridge may be enough. Or perhaps there will be a more general JAM-wide inter-service message passing protocol.  [edited]
 2025-07-07 11:17 gav: This is all dependent on CoreChains successfully being able to replace the Relay-chain. 
 2025-07-07 11:17 gav: That is presently speculative. 
+2025-07-08 15:24 alice_und_bob: Thx for the detailed response gav!
+2025-07-08 19:23 davxy: [@boymaas:matrix.org](https://matrix.to/#/@boymaas:matrix.org)    I haven't had a chance to try it yet, but I definitely will once I'm back (together with our fuzzer).
+
+A few questions in the meantime:
+
+- Are you using the fuzzer protocol I proposed?
+- (maybe) would be nice to formalize a bit the final report (on mismatch) form. I can integrate it directly into the fuzzer spec. Our report is similar to the one you proposed anyway. 
+- What functionalities does your fuzzer exercise? For example:  
+  - Does it only generate "valid" blocks, or also try to trigger faults?  
+  - Does it include blocks with safrole vs fallback, or a mix of both?  
+  - Does it exercise some host functions as well?
+- Which GP version are you currently targeting?
+
+Edit: I'm particularly interested in the techniques you used to generate blocks, especially faulty ones (if your fuzzer produces any). The same questions apply to anyone including a fuzzer source in their binaries. [edited]
+2025-07-08 19:46 danicuki: Hey all! I have a question about CE 133: Work-package submission
+
+- Why the builder needs to send the core info? 
+- Why not sending just the work package? 
+- what if the core sent is not the core that the receiver guarantor belongs to? Should the guarantor reject the package? 
+- If builder needs to know the core each validator belongs to, it should inspect the chain state, right? 
