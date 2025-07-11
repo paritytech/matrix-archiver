@@ -1,5 +1,5 @@
 # room: #jam:polkadot.io
-# exported: 2025-07-10 03:37 UTC
+# exported: 2025-07-11 03:43 UTC
 2024-04-20 02:08 johnjiao123: 
 2024-04-20 02:09 johnjiao123: 
 2024-05-30 21:48 nradko: Hey everyone,
@@ -9766,4 +9766,32 @@ Let me add that when a target sends the same root, the fuzzer interprets the tar
 Could you send me the state you are sending, or your target binary, so I can develop further based on that? I am on linux-aarch64. Prefer the binary.
  [edited]
   ↳ 2025-07-09 19:30 vinsystems: Sure, here is my target binary for linux-aarch64 https://github.com/bloppan/conformance_testing
+  ↳ 2025-07-10 05:27 boymaas: Bernar | Vinwolf: I believe you accidentally sent me the wrong file. 
+
+vinwolf: ELF 64-bit LSB pie executable, x86-64, version 1 (SYSV), dynamically linked, interpreter /lib64/ld-linux-x86-64.so.2, for GNU/Linux 3.2.0, BuildID[sha1]=1d84327094cbade1a61ec09270fb016823ea98ef, not stripped
+  ↳ 2025-07-10 08:13 vinsystems: yeah sorry, I updated the repo with the correct one, let me know if you can execute it properly
+  ↳ 2025-07-10 08:32 boymaas: Thanks Bernar | Vinwolf I can execute it properly. Will update the fuzzer
+  ↳ 2025-07-10 09:03 dakkk: these are mine: https://github.com/dakk/jampy-releases/tree/main/dist
+  ↳ 2025-07-10 14:06 vinsystems: Is your fuzzer running as a server? My target is running as a server because the protocol says that "the fuzzer always initiates requests". Therefore, in my opinion, it is the target that should run as a server, since it has to wait for the first request from the fuzzer. [edited]
+  ↳ 2025-07-10 14:07 dakkk: the link I posted contains a fuzzer-target and my fuzzer-target is running as a server
+  ↳ 2025-07-10 14:12 vinsystems: ah ok, I thought it was running as fuzzer (producing blocks) 
 2025-07-09 17:09 vinsystems: 
+2025-07-10 07:44 clearloop: If there is any guide on error handling of the network protocol?
+
+we can work with polkjam nodes for days locally without any bugs, however once put them on a remote server, would be easy to run into a stale status, after checking the logs from polkajam side, I can see there is a lot of `max ack delay reached` emitted without obvious error logs, results in polkajam nodes won't request the newly authored blocks broadcasted by spacejam
+
+PS: polkajam & polkajam nodes are working together perfectly ))
+
+EDITED: seems it is mixed with an issue that we are not handling forks of forks properly, will give it another try anyway [edited]
+  ↳ 2025-07-10 13:28 dave: Not sure what you mean by error handling exactly. In general if there is an error on a particular stream you should close that stream but _not_ the connection (for example, if there is a timeout, or a request is made that you cannot respond to). In the case of a failed request, you probably want to try making the request again but to a different peer. There will likely be guidance eventually on how to deal with misbehaving peers, how to rate limit requests etc, as for this stuff to work well implementations will probably need to be somewhat consistent. There will almost certainly still be scope for implementations to have their own strategies though.
+
+FWIW currently PolkaJam is too unforgiving about misbehaviour/timeouts. There are changes in the works to improve this. With a good network this shouldn't really be a problem though.
+  ↳ 2025-07-10 20:12 clearloop: > In general if there is an error on a particular stream you should close that stream but not the connection (for example, if there is a timeout, or a request is made that you cannot respond to).
+
+Thanks! this helps, can confirm we have diff on this and explain why some behaviors are out of my exception
+
+> Not sure what you mean by error handling exactly. 
+
+sorry for the misunderstanding, it's pretty like the case you just pointed out, also, I'm curious about on closing/resetting streams, if different error code should trigger different behaviors, for example, error code 0, do nothing, error code N, reset streams and try re-connecting, etc.
+  ↳ 2025-07-11 00:08 dave: Currently stream/connection error codes have no prescribed meaning. At some point we may define some standard error codes, to make mixed-implementation debugging easier at least.
+2025-07-10 07:47 vinsystems: 
