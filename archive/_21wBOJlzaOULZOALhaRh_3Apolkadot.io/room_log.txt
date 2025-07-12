@@ -1,5 +1,5 @@
 # room: #jam:polkadot.io
-# exported: 2025-07-11 03:43 UTC
+# exported: 2025-07-12 03:39 UTC
 2024-04-20 02:08 johnjiao123: 
 2024-04-20 02:09 johnjiao123: 
 2024-05-30 21:48 nradko: Hey everyone,
@@ -9666,7 +9666,7 @@ Generalized question for delivery of interpreted languages I suppose. Docker wou
 2025-07-06 06:55 ascriv: @[davxy - ooo] are you going to make test vectors for 0.6.7 and then 0.7.0 before we start m1 conformance? Can we please have a rough timeline for these?
 2025-07-06 19:55 boymaas: II have created some static builds for you. davxy - ooo In case you would like to test against a target during your development. The STF passed the v0.6.6 test vectors and the v0.6.6 traces. I've added a README.
 
-https://github.com/jamzig/conformance-releases/tree/main/releases/202507062117\_3616ff7 [edited]
+https://github.com/jamzig/conformance-releases [edited]
   ↳ 2025-07-06 20:46 oliver.tale-yazdi: Very cool! I was about to ask if other teams could publish binaries so that we can try our fuzzer. Perfect timing it seems.
   ↳ 2025-07-06 20:46 oliver.tale-yazdi: Also looks like it does not like our state root 😆
   ↳ 2025-07-06 20:46 oliver.tale-yazdi: Screenshot 2025-07-06 at 22.46.47.png
@@ -9775,6 +9775,9 @@ vinwolf: ELF 64-bit LSB pie executable, x86-64, version 1 (SYSV), dynamically li
   ↳ 2025-07-10 14:06 vinsystems: Is your fuzzer running as a server? My target is running as a server because the protocol says that "the fuzzer always initiates requests". Therefore, in my opinion, it is the target that should run as a server, since it has to wait for the first request from the fuzzer. [edited]
   ↳ 2025-07-10 14:07 dakkk: the link I posted contains a fuzzer-target and my fuzzer-target is running as a server
   ↳ 2025-07-10 14:12 vinsystems: ah ok, I thought it was running as fuzzer (producing blocks) 
+  ↳ 2025-07-11 09:16 dakkk: image.png
+  ↳ 2025-07-11 09:17 dakkk: I'm also writing a fuzzer, it works against my target but it only creates empty blocks for now
+  ↳ 2025-07-11 09:55 boymaas: Nice looks awesome. 🔥
 2025-07-09 17:09 vinsystems: 
 2025-07-10 07:44 clearloop: If there is any guide on error handling of the network protocol?
 
@@ -9795,3 +9798,4 @@ Thanks! this helps, can confirm we have diff on this and explain why some behavi
 sorry for the misunderstanding, it's pretty like the case you just pointed out, also, I'm curious about on closing/resetting streams, if different error code should trigger different behaviors, for example, error code 0, do nothing, error code N, reset streams and try re-connecting, etc.
   ↳ 2025-07-11 00:08 dave: Currently stream/connection error codes have no prescribed meaning. At some point we may define some standard error codes, to make mixed-implementation debugging easier at least.
 2025-07-10 07:47 vinsystems: 
+2025-07-11 22:06 boymaas: 
