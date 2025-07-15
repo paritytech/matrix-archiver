@@ -1,5 +1,5 @@
 # room: #jam:polkadot.io
-# exported: 2025-07-14 03:44 UTC
+# exported: 2025-07-15 03:43 UTC
 2024-04-20 02:08 johnjiao123: 
 2024-04-20 02:09 johnjiao123: 
 2024-05-30 21:48 nradko: Hey everyone,
@@ -9812,6 +9812,14 @@ HandShake is OK, SetState is OK, and the initial roots match after SetState. How
   ↳ 2025-07-12 16:50 boymaas: dakkk | JamPy: The protocol is functioning, but the JamPy target is failing on the seal signature. However, after this failure I do receive the correct state. So with the JamPy implementation, the JamZig fuzzer gets a working GetState, and I obtain the correct key values and can produce a good state diff. [edited]
   ↳ 2025-07-13 10:53 boymaas: Just pushed a cleaned up version: https://github.com/jamzig/conformance-releases [edited]
   ↳ 2025-07-13 11:20 boymaas: Bernar | Vinwolf:  https://asciinema.org/a/rZfU3E9kqfC3hCeU0vaPioVjD almost there.
+  ↳ 2025-07-14 11:33 boymaas: Hi Bernar | Vinwolf , could you check why our protocols are mismatched? At random points, when I run the official traces, against the Vinwolf target it stops unexpectedly. Is this an issue on my side or yours? When I run it against my target, it always works.
+
+
+  ↳ 2025-07-14 12:15 qiwei: hi Boy Maas | JamZig , Boka target matches with jamzig fuzzer when using --trace-dir, can pass all traces
+  ↳ 2025-07-14 12:18 vinsystems: image.png
+  ↳ 2025-07-14 12:18 vinsystems: yes, there was an issue on my side, now I can pass all traces as well, I've updated my vinwolf_target binary Boy Maas | JamZig. My GetState response is not fixed yet [edited]
+  ↳ 2025-07-14 12:40 boymaas: Nice! That makes sense. Let me try this as well.
+  ↳ 2025-07-14 12:41 boymaas: Cool, the fuzz protocol seems to be working! Now we need to initiate some real fuzzing. 
 2025-07-09 17:09 vinsystems: 
 2025-07-10 07:44 clearloop: If there is any guide on error handling of the network protocol?
 

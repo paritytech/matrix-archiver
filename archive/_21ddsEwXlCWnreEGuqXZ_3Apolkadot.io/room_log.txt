@@ -1,5 +1,5 @@
 # room: #graypaper:polkadot.io
-# exported: 2025-07-14 03:45 UTC
+# exported: 2025-07-15 03:44 UTC
 2024-04-17 20:29 syed: https://matrix.to/#/!hyzRkDqDthePbodYFz:parity.io/$f_DMsIEcDXZegw6Sabnehzc-LrdDQkmq5MbxDDyoZxY?via=parity.io&via=web3.foundation
 
 2024-04-17 20:29 syed: 
@@ -6313,3 +6313,15 @@ I can reach this finality lagging problem frequently from `polkajam`, at the las
 our testnet (`0.6.5`) configuration is 5 `polkajam` node + 1 `spacejam` node and `spacejam` can work with `polkajam` nodes with around 30mins then get broken on inconsistent blocks [edited]
 2025-06-27 13:42 prematurata: I've a question in 10.5 `f \in bold_k` but that bold_k can't come from 10.3 which needs `a` from EV. is it a typo? [edited]
 2025-06-27 14:09 prematurata: lol i am totally blind sorry :(
+2025-07-14 14:10 ascriv: when computing the work report for a work package, i'm a bit confused how GP is specifying how to compute the segment root dictionary. It seems like we should rely on the segment-roots in the recent blocks component in the current state according to (11.41). But also 11.41 says the segment-roots might be in the guarantees extrinsic itself. that seems to imply we should wait for all the work reports in E_G before computing it, which seems to imply the author should be computing the segment root dictionaries. what am I missing?
+  ↳ 2025-07-14 14:17 dave: 11.41 is a validity condition for a block, it doesn't say how the reports should be computed
+  ↳ 2025-07-14 14:18 dave: The WP hash -> segments-root map in a report has to be computed by the report's guarantors as it is signed by them
+  ↳ 2025-07-14 14:20 dave: It is expected to be computed by the "primary" guarantor, who received the work-package from the builder. When the work-package is shared with a secondary guarantor, this mapping is sent in the first message (see CE 134)
+  ↳ 2025-07-14 14:21 dave: The author of a block should only include guarantees where this mapping is valid as per 11.41
+  ↳ 2025-07-14 14:25 dave: Exactly how guarantors compute the mapping is up to them. They may optimistically include work-packages that have not yet been reported on-chain. Guarantors won't be slashed for including an invalid mapping in a report, but they also won't be paid for these reports as it won't be possible to include them on chain
+2025-07-14 14:27 ascriv: Got it. So could a naive guarantor could compute it by looking at the recent blocks component in the current state and that would suffice but possibly not be optimal? [edited]
+2025-07-14 14:37 ascriv: Should we not also include optimal guarantor behavior in the gp? Or is it not well defined?
+  ↳ 2025-07-14 14:42 dave: To some extent this may need to be defined for guarantors assigned to the same core to work well together. I think we'd generally like to allow validators to have their own strategies for things though
+  ↳ 2025-07-14 14:44 dave: eg It wouldn't be great if the mappings computed by one guarantor were always rejected by the other two assigned to the core [edited]
+  ↳ 2025-07-14 14:44 dave: Builders will also need to know generally what to expect from guarantors
+  ↳ 2025-07-14 14:46 dave: So I expect we will define some of this stuff, but probably not until after performance testing etc has happened on the toaster, as I don't think we will understand things well enough until then
