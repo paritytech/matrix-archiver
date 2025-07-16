@@ -1,5 +1,5 @@
 # room: #graypaper:polkadot.io
-# exported: 2025-07-15 03:44 UTC
+# exported: 2025-07-16 03:43 UTC
 2024-04-17 20:29 syed: https://matrix.to/#/!hyzRkDqDthePbodYFz:parity.io/$f_DMsIEcDXZegw6Sabnehzc-LrdDQkmq5MbxDDyoZxY?via=parity.io&via=web3.foundation
 
 2024-04-17 20:29 syed: 
@@ -2791,6 +2791,46 @@ Guarantors will need to maintain a map from Segment Root to Erasure Root. This c
   ↳ 2024-10-15 11:51 dave: > I need clarification on how is pageProof being used in CE139/CE140? Our understanding is that page proof is quite large as it's encoded with Justification & ↕si⋅⋅⋅+64 in https://graypaper.fluffylabs.dev/#/c71229b/1a15001a1500. So it's probably possible to recover exported segments from pageproof alone;
 
 The proof pages contain Merkle proofs from the segment root to the exported segments. Each proof page/segment contains proofs for 64 exported segments. You certainly can't reconstruct the exported segments themselves from these proof pages. CE139/140 is intended to be used to fetch proof page shards as well as exported segment shards. You need to explicitly request proof page shards by passing the appropriate segment indices.
+  ↳ 2025-07-15 11:17 knight1205: Hi David Emett !
+
+Could you explain why do we explicitly need CE 139  / 40 for segment shard requests? Like what advantage does it has.
+
+for importing segments for a particular shard index and segment index, we also need to create its justification at the time of creating bundle. [HERE](https://graypaper.fluffylabs.dev/#/38c4e62/1cba001cd600?v=0.7.0)
+
+for that we would need to have all the segments with their proofs. To build all the segments, we would have to manually pass all the indices for each shard index and then call CE139/40 to separate assurers.
+
+so wouldn't it be better we fetch whole shard from them using CE137?
+
+
+  ↳ 2025-07-15 11:21 knight1205: Although eventually 137 would become push protocol later on I suppose. So that might be the reason?
+
+even in that case if we would need whole shard itself, we could just leave segment indexes empty? [edited]
+  ↳ 2025-07-15 11:24 dave: I think you are misunderstanding the purpose of the various proofs/justifications
+  ↳ 2025-07-15 11:27 dave: You should not use CE137 except to fetch your shards as an assurer. There is no reason to do so, and validators may refuse to service such requests
+  ↳ 2025-07-15 11:32 dave: FWIW in the full network protocol it will be possible to directly fetch exported segments from guarantors. This will be the fast path and generally will be attempted first. Currently only the fallback path is specified, where you fetch shards from assurers and reconstruct via EC.
+  ↳ 2025-07-15 11:35 dave: To reconstruct a 4kB segment you need 342 distinct 12-byte segment shards. You _also_ need to reconstruct the page containing the proof for the segment, which will require an additional 342 12-byte segments.
+  ↳ 2025-07-15 11:36 dave: You _do not_ need to fetch anything else
+  ↳ 2025-07-15 11:39 dave: As covered in the SNP doc, you should use CE139 initially, ie do not request justifications. This is because the justifications are quite large compared to the shards themselves. You should only use CE140 if segment proof verification fails and you need to refetch the shards
+  ↳ 2025-07-15 11:41 dave: You do not need to fetch anything to check a justification returned by CE140; each justification is a Merkle proof to the erasure root that was passed in with the request
+  ↳ 2025-07-15 11:51 knight1205: this is good. I got the actual use of 139 but i was sceptical about specifying segment indices. 
+
+for building specific justification page (of size 1) for a particular segment, we would need to have all the segments for a particular segment root mapped to that erasure-root.
+
+so thus we would then have to request all the shards (more than threshold), with all the segment indices.
+
+it would be direct, if we could directly get that particular segment shard without the need for specifying indices? 
+  ↳ 2025-07-15 11:56 dave: You reconstruct proof pages in the same way you reconstruct the segments they prove
+  ↳ 2025-07-15 11:56 dave: Not sure what you mean by "building specific justification page"
+  ↳ 2025-07-15 11:58 dave: The proof pages are built when the segments are exported. This does not happen at import time when you are using CE139, that would not make sense
+  ↳ 2025-07-15 11:59 knight1205: at the time of building bundle, the primary guarantor needs to fetch justifications for required import segment.
+
+for that it needs to create a single paged proof. this can be done when we have all the segments exported, mapped to a particular segment root.  
+  ↳ 2025-07-15 12:07 dave: It does not _create_ any proofs for imported segments. It _fetches_ these proofs in the same way it fetches the segments being proven
+  ↳ 2025-07-15 12:07 dave: At the moment this requires fetching the shards for the proof page and doing an EC reconstruction
+  ↳ 2025-07-15 12:08 dave: It _does not_ require fetching unrelated segment shards
+  ↳ 2025-07-15 12:13 dave: You are possibly hung up on the definition in the GP. The GP definition tells you exactly what the proofs must look like but you are not expected to construct them following the definition
+  ↳ 2025-07-15 12:14 dave: For imports you are expected to construct them via fetched proof pages
+  ↳ 2025-07-15 12:23 knight1205: Thanks a lot. I would need to revisit it for more clarity. 
 2024-10-16 07:17 dakkk: In the 'new' hostcall (https://graypaper.fluffylabs.dev/#/c71229b/2e9a022ee302):
 - in case of OOB | CASH, we are assigning 2 elements to a tuple of 3 elements
 - we are referencing X_T, which I'm unable to find defined in any other part of the paper 

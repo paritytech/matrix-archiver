@@ -1,5 +1,5 @@
 # room: #jam:polkadot.io
-# exported: 2025-07-15 03:43 UTC
+# exported: 2025-07-16 03:42 UTC
 2024-04-20 02:08 johnjiao123: 
 2024-04-20 02:09 johnjiao123: 
 2024-05-30 21:48 nradko: Hey everyone,
@@ -9820,6 +9820,9 @@ HandShake is OK, SetState is OK, and the initial roots match after SetState. How
   ↳ 2025-07-14 12:18 vinsystems: yes, there was an issue on my side, now I can pass all traces as well, I've updated my vinwolf_target binary Boy Maas | JamZig. My GetState response is not fixed yet [edited]
   ↳ 2025-07-14 12:40 boymaas: Nice! That makes sense. Let me try this as well.
   ↳ 2025-07-14 12:41 boymaas: Cool, the fuzz protocol seems to be working! Now we need to initiate some real fuzzing. 
+  ↳ 2025-07-15 17:26 vinsystems: Hi Boy Maas | JamZig I found a protocol mismatch between jamzig and vinwolf: During the encoding of the validator key-values, jamzig is prepending the total length of the ed25519, bandersnatch, bls and metadata keys of each set of validators. I believe that this length should not be encoded, as these keys have a fixed size.
+
+I am also working on a more robust vinwolf version of the fuzz protocol, as I have found more cases where it can stop unexpectedly, I will let you know when I have it ready.
 2025-07-09 17:09 vinsystems: 
 2025-07-10 07:44 clearloop: If there is any guide on error handling of the network protocol?
 
@@ -9881,3 +9884,4 @@ Discussion: https://polkadot.polkassembly.io/post/3296
 App: https://search.fluffylabs.dev
 2025-07-13 12:10 emielsebastiaan: IMO we should try to keep this channel free from treasury funding discussions and free from JAM Implementers DAO discussions. 
 2025-07-13 12:17 gav: Sounds sensible. 
+2025-07-15 17:19 carpathiancoder: 👋 any problem in changing the email commited in git? I used a wrong one for like 5 commits and I would like it corrected...which means I need to do a rebase or something... I can leave it as is tho.. [edited]
