@@ -1,5 +1,5 @@
 # room: #graypaper:polkadot.io
-# exported: 2025-07-16 03:43 UTC
+# exported: 2025-07-17 03:43 UTC
 2024-04-17 20:29 syed: https://matrix.to/#/!hyzRkDqDthePbodYFz:parity.io/$f_DMsIEcDXZegw6Sabnehzc-LrdDQkmq5MbxDDyoZxY?via=parity.io&via=web3.foundation
 
 2024-04-17 20:29 syed: 
@@ -6365,3 +6365,11 @@ our testnet (`0.6.5`) configuration is 5 `polkajam` node + 1 `spacejam` node and
   ↳ 2025-07-14 14:44 dave: eg It wouldn't be great if the mappings computed by one guarantor were always rejected by the other two assigned to the core [edited]
   ↳ 2025-07-14 14:44 dave: Builders will also need to know generally what to expect from guarantors
   ↳ 2025-07-14 14:46 dave: So I expect we will define some of this stuff, but probably not until after performance testing etc has happened on the toaster, as I don't think we will understand things well enough until then
+2025-07-16 10:22 ascriv: Screenshot 2025-07-16 at 12.22.13 PM.png
+2025-07-16 10:22 ascriv: Screenshot 2025-07-16 at 12.22.44 PM.png
+2025-07-16 10:23 ascriv: is there a discrepancy between GP and https://github.com/zdave-parity/jam-np/blob/main/simple.md ? 139/140 require the erasure root to reconstruct the imported segments but GP says the segments root is what's needed
+  ↳ 2025-07-16 20:55 dave: The erasure root is used in SNP as the distributed shards are proven only to this, it is not possible to (efficiently) prove a segment shard to a segments-root
+  ↳ 2025-07-16 20:59 dave: Of course for an imported segment you start with a segments-root, not an erasure-root. The guarantor fetching the segment is expected to map one to the other, based on previously observed work-reports [edited]
+  ↳ 2025-07-16 21:05 dave: Not sure the network protocol can sensibly work any other way, could be wrong about this though
+2025-07-16 21:12 ascriv: I guess this would be in the availability spec. How long should a guarantor keep work report availability specs? [edited]
+2025-07-16 21:14 dave: Should keep mappings for as long as the data is available, 28 days is what's currently specified I believe

@@ -1,5 +1,5 @@
 # room: #jam:polkadot.io
-# exported: 2025-07-16 03:42 UTC
+# exported: 2025-07-17 03:42 UTC
 2024-04-20 02:08 johnjiao123: 
 2024-04-20 02:09 johnjiao123: 
 2024-05-30 21:48 nradko: Hey everyone,
@@ -9820,9 +9820,6 @@ HandShake is OK, SetState is OK, and the initial roots match after SetState. How
   ↳ 2025-07-14 12:18 vinsystems: yes, there was an issue on my side, now I can pass all traces as well, I've updated my vinwolf_target binary Boy Maas | JamZig. My GetState response is not fixed yet [edited]
   ↳ 2025-07-14 12:40 boymaas: Nice! That makes sense. Let me try this as well.
   ↳ 2025-07-14 12:41 boymaas: Cool, the fuzz protocol seems to be working! Now we need to initiate some real fuzzing. 
-  ↳ 2025-07-15 17:26 vinsystems: Hi Boy Maas | JamZig I found a protocol mismatch between jamzig and vinwolf: During the encoding of the validator key-values, jamzig is prepending the total length of the ed25519, bandersnatch, bls and metadata keys of each set of validators. I believe that this length should not be encoded, as these keys have a fixed size.
-
-I am also working on a more robust vinwolf version of the fuzz protocol, as I have found more cases where it can stop unexpectedly, I will let you know when I have it ready.
 2025-07-09 17:09 vinsystems: 
 2025-07-10 07:44 clearloop: If there is any guide on error handling of the network protocol?
 
@@ -9885,3 +9882,31 @@ App: https://search.fluffylabs.dev
 2025-07-13 12:10 emielsebastiaan: IMO we should try to keep this channel free from treasury funding discussions and free from JAM Implementers DAO discussions. 
 2025-07-13 12:17 gav: Sounds sensible. 
 2025-07-15 17:19 carpathiancoder: 👋 any problem in changing the email commited in git? I used a wrong one for like 5 commits and I would like it corrected...which means I need to do a rebase or something... I can leave it as is tho.. [edited]
+2025-07-15 17:26 vinsystems: 
+2025-07-16 05:37 sourabhniyogi: We have a working recompiler getting > 10 FPS on Doom now  (> 20 FPS if we don't do any gas checks/charging) -- yay!
+
+The results between different x86 machines vary widely though (one machine gets 5FPS, the other 10 FPS, etc.) so we're wondering how we can do meaningful apples-to-apples comparisons and know where we stand relative to whatever you've achieved on Doom with respect to 50%/100% performance.
+
+Using an extra ecalli call per basic block _temporarily_ added for analytics, we collected data to answer "how many x86 instructions were used in executing XYZ PVM instruction" in a run of doom -- measuring over many exported frames (>2T gas).  Thankfully, the top 15 PVM instructions (ADD_64, SHLO_L_IMM_64, LOAD_IMM_JUMP_IND,  LOAD_IND_U64... ) ended up with >85-90% of x86 instructions executed.   While like half of these 15 are optimizable (in that we will proceed to eliminate push/pop/movs/...), the other half are not (being 1 already.. or 2-3 irreducible).  The raw data cannot support a 6x improvement -- if we magically mapped every PVM instruction to just 1 X86 instruction, we'd only get a 4.75x gain.  So we're puzzled how you can suggest 60 fps.
+
+While we can of course optimize relative to X machine, we appear to need to talk hardware specs to make fair apples-to-apples comparisons.  While the Toaster would solve this, it seems reasonable to do this outside by counting (or estimating) how many x86 instructions were executed per frame on average or in aggregate (or something similar, like, average # of x86 instructions per basic block, # of basic blocks)... or just move onto more "real" benchmarks.  Do you have DOOM statistics like this or some "real" benchmarks to share? 
+ 
+  ↳ 2025-07-16 05:54 jan: The harware specs should be irrelevant here; you should be able to run DOOM at 60+ FPS on virtually any machine.
+
+Most PVM instructions should result in only a couple of native instructions. If you need to use `push`/`pop` then you're most likely doing something wrong - essentially only at most three types of instructions should even necessitate the need to push anything to the stack - division and remainder, upper multiplication instructions, and _maybe_ indirect jump instruction. All of the rest of the instructions should have no pushes/pops.
+
+To give you an example: the `add_64` instruction should be recompiled either to a) a `mov` followed by `add` (when the destination register is different than both source registers), or b) a single `add` instruction (when the destination register is equal to either of the source registers).
+
+Also, note that the instruction counts don't necessarily correlate linearly with performance; certain instructions are more expensive than others. [edited]
+  ↳ 2025-07-16 10:09 sourabhniyogi: Thank you so much for the guidance -- we will proceed to eliminate all the  push/pop/movs/... we can and report back summary stats!
+2025-07-16 08:26 danicuki: We are going to have a JAM nodespace today at Web3Summit Berlin. Join the JAM builders from 12pm til 2pm at the nodespace 3. 
+2025-07-16 09:13 clearloop: We'll have one introducing the status of spacejam and related rust tools tmr 2pm at nodespace 1, the topic is open, feel free to DM me that I can prepare more context
+2025-07-16 20:18 tomusdrw: Is the source code for the service being accumulated in test vectors (`stf/accumulate`; latest master of `w3f/jamtestvectors` aka 0.6.6) available somewhere? It seems the `test-service` link from README doesn't work any more and there is no JAM-SDK service in the repo any more. [edited]
+2025-07-16 20:29 davxy: > <@tomusdrw:matrix.org> Is the code for the service being accumulated in test vectors (`stf/accumulate`; latest master of `w3f/jamtestvectors` aka 0.6.6) available somewhere? It seems the `test-service` link from README doesn't work any more and there is no JAM-SDK service in the repo any more.
+
+It was removed because it's using jam-pvm-common 0.1.23, which is the version compatible with GP 0.6.6 and not yet published on crates.io.
+If you think it's useful, I can reintroduce it, but it won't build until the new crates are published.
+2025-07-16 20:46 tomusdrw: I see. I was trying to look for some more debug info in the service itself to figure out what it's doing since it seems unhappy with my constants and/or operands encoding, that I feel is matching the GP, hence asking. But I feel what you are saying is that there are no significant changes to the service code and it's just the `jam-pvm-common` version that's different, right? 
+2025-07-16 22:11 clearloop: We have [a fork of jam-pvm-common](https://github.com/spacejamapp/jade/blob/main/polkajam/jam-types/src/types.rs#L307) aligns to pvm at `0.6.6`, the data structure of `AccumulateItem` and the `fetch` call in the accumulate could be root case ...
+
+btw we now support [local testing](https://github.com/spacejamapp/jade/blob/main/services/simple-token-service/src/tests.rs) for the accumulate interface, it's a fast impl atm, things could be better in next month )) [edited]
