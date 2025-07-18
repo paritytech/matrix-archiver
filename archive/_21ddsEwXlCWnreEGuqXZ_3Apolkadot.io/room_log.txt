@@ -1,5 +1,5 @@
 # room: #graypaper:polkadot.io
-# exported: 2025-07-17 03:43 UTC
+# exported: 2025-07-18 03:44 UTC
 2024-04-17 20:29 syed: https://matrix.to/#/!hyzRkDqDthePbodYFz:parity.io/$f_DMsIEcDXZegw6Sabnehzc-LrdDQkmq5MbxDDyoZxY?via=parity.io&via=web3.foundation
 
 2024-04-17 20:29 syed: 
@@ -4452,6 +4452,7 @@ Should the preimage be retrieved from a node's internal data store (local databa
 
 https://github.com/gavofyork/graypaper/pull/241 [edited]
 2025-02-14 11:49 sourabhniyogi: How is the strangely odd number [81](https://graypaper.fluffylabs.dev/#/5f542d7/114c01114c01) from the `a_o` service storage size formula derived?   The 32 within the same formula is the storage for key, but 81 is 17 more bytes than 64... [edited]
+  ↳ 2025-07-17 10:13 dave: I believe it's key+value size for the l and p dictionaries. p key size is 32, value size is z. l key size is 36, value size is max 13 (1 for len + 3*4 bytes). Total is 81+z.
 2025-02-14 19:27 ascriv: For initializing the ring context for bandersnatch ring vrf stuff, there must be a common seed we’ll all be using? So that it remains deterministic 
 2025-02-14 19:33 ascriv: I assume we use the parameters in 4.1 configuration in https://github.com/davxy/bandersnatch-vrfs-spec/blob/main/specification.pdf but wanted to confirm 
 2025-02-14 21:58 davxy: > <@ascriv:matrix.org> I assume we use the parameters in 4.1 configuration in https://github.com/davxy/bandersnatch-vrfs-spec/blob/main/specification.pdf but wanted to confirm 
@@ -6373,3 +6374,5 @@ our testnet (`0.6.5`) configuration is 5 `polkajam` node + 1 `spacejam` node and
   ↳ 2025-07-16 21:05 dave: Not sure the network protocol can sensibly work any other way, could be wrong about this though
 2025-07-16 21:12 ascriv: I guess this would be in the availability spec. How long should a guarantor keep work report availability specs? [edited]
 2025-07-16 21:14 dave: Should keep mappings for as long as the data is available, 28 days is what's currently specified I believe
+2025-07-17 09:21 ascriv: Can guarantors assume that each imported data segment for the work items is exported by one of the prerequisite work packages? (Unless perhaps the imported segment is identified by work package hash)
+  ↳ 2025-07-17 09:24 dave: No
