@@ -1,5 +1,5 @@
 # room: #graypaper:polkadot.io
-# exported: 2025-07-18 03:44 UTC
+# exported: 2025-07-19 03:38 UTC
 2024-04-17 20:29 syed: https://matrix.to/#/!hyzRkDqDthePbodYFz:parity.io/$f_DMsIEcDXZegw6Sabnehzc-LrdDQkmq5MbxDDyoZxY?via=parity.io&via=web3.foundation
 
 2024-04-17 20:29 syed: 
@@ -6376,3 +6376,8 @@ our testnet (`0.6.5`) configuration is 5 `polkajam` node + 1 `spacejam` node and
 2025-07-16 21:14 dave: Should keep mappings for as long as the data is available, 28 days is what's currently specified I believe
 2025-07-17 09:21 ascriv: Can guarantors assume that each imported data segment for the work items is exported by one of the prerequisite work packages? (Unless perhaps the imported segment is identified by work package hash)
   ↳ 2025-07-17 09:24 dave: No
+2025-07-18 14:54 ascriv: The JNP seems pretty clear about how guarantors should get segment shards for reconstruction, but aren’t segment justifications also in D3L? There doesn’t seem to be a way to get those that I can tell. The justifications sent in 140 are justifications for shards, not segments, no?
+  ↳ 2025-07-18 14:55 dave: You should also use 139/140 to request proof page shards
+  ↳ 2025-07-18 14:56 dave: You need to reconstruct proof pages in the same way that you reconstruct import segments
+  ↳ 2025-07-18 14:58 dave: The justifications returned by CE 140 are for shards yes. As the SNP doc says you generally should only use CE 140 if your first attempt to fetch shards and reconstruct segments using CE 139 fails
+2025-07-18 15:22 ascriv: Ok think I get it, looking at 14.16, we can reuse the same erasure roots but use different indices to get paged proof shards using 139/140 [edited]
