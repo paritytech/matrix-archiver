@@ -1,5 +1,5 @@
 # room: #jam:polkadot.io
-# exported: 2025-07-20 03:46 UTC
+# exported: 2025-07-21 03:45 UTC
 2024-04-20 02:08 johnjiao123: 
 2024-04-20 02:09 johnjiao123: 
 2024-05-30 21:48 nradko: Hey everyone,
@@ -9820,6 +9820,9 @@ HandShake is OK, SetState is OK, and the initial roots match after SetState. How
   ↳ 2025-07-14 12:18 vinsystems: yes, there was an issue on my side, now I can pass all traces as well, I've updated my vinwolf_target binary Boy Maas | JamZig. My GetState response is not fixed yet [edited]
   ↳ 2025-07-14 12:40 boymaas: Nice! That makes sense. Let me try this as well.
   ↳ 2025-07-14 12:41 boymaas: Cool, the fuzz protocol seems to be working! Now we need to initiate some real fuzzing. 
+  ↳ 2025-07-20 12:20 oliver.tale-yazdi: Yes the `--trace-dir` is quite useful. GrayMatter can pass Fallback and Safrole tests in this manner.  
+We are debugging our authoring logic to maybe also get JamZig to import our blocks
+  ↳ 2025-07-20 12:22 boymaas: Great to hear that it's useful. I added it to provide some "objective" fuzzing, ensuring that our protocol implementations function correctly before we proceed with implementing our own fuzzers.
 2025-07-09 17:09 vinsystems: 
 2025-07-10 07:44 clearloop: If there is any guide on error handling of the network protocol?
 
@@ -9899,6 +9902,17 @@ To give you an example: the `add_64` instruction should be recompiled either to 
 
 Also, note that the instruction counts don't necessarily correlate linearly with performance; certain instructions are more expensive than others. [edited]
   ↳ 2025-07-16 10:09 sourabhniyogi: Thank you so much for the guidance -- we will proceed to eliminate all the  push/pop/movs/... we can and report back summary stats!
+  ↳ 2025-07-21 00:02 sourabhniyogi: Jan Bujak: We finally realized our way of running Doom for 1000 frames with our recompiler [here](https://github.com/colorfulnotion/polkavm/blob/0.6.5.3/services/doom/src/main.rs#L61-L126) _within_ a `refine` operation of a service (that does what you do **outside** [here](https://github.com/paritytech/polkavm/blob/master/examples/doom/src/main.rs#L143-L145)) is very unlikely to be an apples-to-apples comparison... and adds a considerable amount of overhead the way we do it.
+
+We believe we should do apples-to-apples comparisons in a tiny 6-node jam testnet with "pvm-backend" set to "compiler" for exact "Doom" work packages between polkajam and our (and other)  implementations, comparing refine executions.
+
+How can we get the first 5 work packages of { doom, quake } into a jam testnet with jamt (or the repl or something else still)?
+
+In the absence of the above, we developed a set of "numerical recipes in C" battery of like 150 simple algorithms to generate what we think of as is a controlled set of work packages (but without any of Doom/Quake's "ext\_initialize/ext\_tick" IO sexiness).  However, we need to get in sync on versions though -- to compare recompiler execution times on the exact same work on the exact same machine (or identical hardware on 6 different ones).   Can you advise when polkajam will move from 0.6.6 to 0.6.7 or 0.7.0 so we can do our 3-guarantor compiler comparison on this "numerical recipes in refine" work packages battery (or better: Doom/Quake)?
+
+What does it mean when Polkajam shows a refine \[PVM\] execution time exactly when pvm-backend is "compiler"? [edited]
+  ↳ 2025-07-21 00:04 sourabhniyogi: image.png
+  ↳ 2025-07-21 00:04 sourabhniyogi: Above is our week's optimization on the top 90% of actual PVM instruction execution for 1000 frames.  Is this permissible to share? [edited]
 2025-07-16 08:26 danicuki: We are going to have a JAM nodespace today at Web3Summit Berlin. Join the JAM builders from 12pm til 2pm at the nodespace 3. 
 2025-07-16 09:13 clearloop: We'll have one introducing the status of spacejam and related rust tools tmr 2pm at nodespace 1, the topic is open, feel free to DM me that I can prepare more context
 2025-07-16 20:18 tomusdrw: Is the source code for the service being accumulated in test vectors (`stf/accumulate`; latest master of `w3f/jamtestvectors` aka 0.6.6) available somewhere? It seems the `test-service` link from README doesn't work any more and there is no JAM-SDK service in the repo any more. [edited]
