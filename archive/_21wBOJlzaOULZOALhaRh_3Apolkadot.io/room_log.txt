@@ -1,5 +1,5 @@
 # room: #jam:polkadot.io
-# exported: 2025-07-21 03:45 UTC
+# exported: 2025-07-22 03:43 UTC
 2024-04-20 02:08 johnjiao123: 
 2024-04-20 02:09 johnjiao123: 
 2024-05-30 21:48 nradko: Hey everyone,
@@ -9924,3 +9924,46 @@ If you think it's useful, I can reintroduce it, but it won't build until the new
 2025-07-16 22:11 clearloop: We have [a fork of jam-pvm-common](https://github.com/spacejamapp/jade/blob/main/polkajam/jam-types/src/types.rs#L307) aligns to pvm at `0.6.6`, the data structure of `AccumulateItem` and the `fetch` call in the accumulate could be root case ...
 
 btw we now support [local testing](https://github.com/spacejamapp/jade/blob/main/services/simple-token-service/src/tests.rs) for the accumulate interface, it's a fast impl atm, things could be better in next month )) [edited]
+2025-07-21 13:23 aang114: image.png
+2025-07-21 13:23 aang114: @boymaas:matrix.org: Hi, we ran JamZig’s fuzzer with Tiny Config (https://github.com/jamzig/conformance-releases/) against the GP 0.6.6 fuzzer-target implementation of our JAM client. It fails after processing the first block and the only difference is the authorizer-pool state component (i.e the state key 01000000000000000000000000000000000000000000000000000000000000). As you can see in the screenshot, the fuzzer’s authorizer-pool was still empty for the 2 cores (i.e 0000). While in our implementation, it had added an item to each of the 2 cores (therefore becoming 010000000000000000000000000000000000000000000000000000000000000000010000000000000000000000000000000000000000000000000000000000000000). 
+
+Surprisingly, if we disable updating the authorizer-pool state component when processing a block, we are able successfully process all the blocks of the fuzzer.
+
+Therefore, could this be an oversight in the processing of the authorizer-pool state component in the fuzzer? Thanks [edited]
+  ↳ 2025-07-21 14:54 oliver.tale-yazdi: I actually hit the same thing yesterday but did not check yet which is correct 
+  ↳ 2025-07-21 14:54 oliver.tale-yazdi: Screenshot 2025-07-21 at 16.54.25.png
+2025-07-21 18:54 emielsebastiaan: What’s the plan for JAM and Kusama?
+
+With Referendum 682, Polkadot governance signaled support for a future where the Polkadot relay chain is replaced by JAM. (https://polkadot.polkassembly.io/referenda/682)
+
+In the JAM Implementers’ Prize, milestone 3 refers to achieving “Kusama performance”—which, if memory serves, has informally been described as around 50% of Polkadot’s performance (though I’m not sure who first coined that or where it was stated).
+
+However, as far as I can tell, there’s been no explicit discussion—let alone a referendum—about what happens to the Kusama relay chain with regard to JAM. Unlike Polkadot, Kusama has not had a 682-style governance decision to define its path in a JAM future.
+
+Personally, I’ve always assumed we’d see a first JAM instance for Kusama, followed by a second for Polkadot—each fully sovereign, each with its own independent validator set.
+
+Of course, this ultimately falls to Kusama OpenGov to decide, nevertheless what are the possible paths forward for Kusama?
+
+1. A fully sovereign Kusama/JAM chain with its own validator set. 
+2. Kusama has a separate ParachainsService (or similar) on Polkadot/JAM (inspired by Oliver’s post: https://x.com/olivertaleyazdi/status/1947043501268455559?s=46&t=ThX7Y87rr1MIKyk6af4OXg)
+3. Some eventual hybrid arrangement as part of the JAM Grid
+4. Or something wild—beyond what I can currently imagine
+
+I’d love to hear ideas. 💡 
+2025-07-21 20:43 gav: Yes, the performance nomenclature was a little premature. In my more recent writings I’ve avoided using the name Kusama for this meaning. 
+2025-07-21 20:46 gav: Kusama could reasonably switch to JAM first; this would likely be quite helpful to reduce risk for Polkadot and could presumably happen prior to the completion of the formal audit. 
+2025-07-21 20:48 gav: Of course it’s OpenGov which should decide in the end. And it doesn’t much help with the greater problem that JAM will likely be ready before the parachains service logic is completed and all tooling ready for the transition. 
+2025-07-21 20:50 gav: A combined JAM with both Polkadot and Kusama sharing a validator set is an interesting proposition but inevitably raises questions about the staking tokenomics for such a network. JAM Grid doesn’t help here (even if it were ready) since that’s only about scaling up beyond a single JAM instance - it doesn’t help with consolidating two token economies. 
+2025-07-21 21:03 ascriv: A dot/ksm merger/acquisition would be a great proof of concept and could optimistically be replicated between dot and other economies in the future 
+2025-07-21 21:14 ascriv: JAM should theoretically be general enough to support hosting a service created just for onboarding all projects on any potential acquired L1, no? 
+2025-07-21 21:16 ascriv: And then do a “stock-for-stock” transaction for all stakeholders funded by treasury. Or something 
+2025-07-21 21:16 emilkietzman: Was it ever under consideration, that Kusama becomes not only a canary network around Polkadot but for the whole JAM protocol - since it’s going heavy on ZK technology and could test/be early on JAM ZK-rollups and Services?
+2025-07-21 21:17 gav: If you’re considering it, then it’s under consideration:P
+2025-07-21 21:18 gav: > <@ascriv:matrix.org> And then do a “stock-for-stock” transaction for all stakeholders funded by treasury. Or something 
+
+This probably doesn’t work since it disregards dramatic differences in liquidity. 
+2025-07-21 21:19 gav: > <@ascriv:matrix.org> JAM should theoretically be general enough to support hosting a service created just for onboarding all projects on any potential acquired L1, no? 
+
+An interesting query. It depends on the L1 - JAM could not onboard itself. 
+2025-07-21 21:22 gav: Overall, there’s a lot to be considered with crypto M&A. Ultimately this stuff is political. Unfortunately it appears to be a widespread belief that being the sole currency used to account value in staking for the provision of security is a privilege not to be shared. 
+2025-07-21 21:25 gav: Personally I think such a view is narrow-minded and short-term and that this technology will only reach its full potential when the forces of token maximalism relent to mutually-beneficial cooperation over such things as provision of security. 
