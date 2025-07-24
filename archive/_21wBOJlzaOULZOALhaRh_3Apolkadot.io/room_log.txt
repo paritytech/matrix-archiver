@@ -1,5 +1,5 @@
 # room: #jam:polkadot.io
-# exported: 2025-07-23 03:44 UTC
+# exported: 2025-07-24 03:43 UTC
 2024-04-20 02:08 johnjiao123: 
 2024-04-20 02:09 johnjiao123: 
 2024-05-30 21:48 nradko: Hey everyone,
@@ -9932,6 +9932,16 @@ Surprisingly, if we disable updating the authorizer-pool state component when pr
 Therefore, could this be an oversight in the processing of the authorizer-pool state component in the fuzzer? Thanks [edited]
   ↳ 2025-07-21 14:54 oliver.tale-yazdi: I actually hit the same thing yesterday but did not check yet which is correct 
   ↳ 2025-07-21 14:54 oliver.tale-yazdi: Screenshot 2025-07-21 at 16.54.25.png
+  ↳ 2025-07-23 06:52 boymaas: aang114 | Gossamer | CS:  That is a very interesting find. I will look into it! If you run with --trace-dir, do you pass everything?
+  ↳ 2025-07-23 12:17 aang114: It passes all the 100 blocks when I do `--trace-dir <safrole trace folder>` and `--trace-dir <fallback trace folder>`.
+
+However, it fails on the 5th and 3rd block respectively when I do `--trace dir <reports-l0 trace folder>` and `--trace-dir \<reports-l1 trace folder>`. What's interesting in our local tests everything passes (including the reports-l0 trace folder and the reports-l1 trace folder).
+
+So I'm honestly not sure what's going on here. Does the JamZig fuzzer compare our local state-root against JamZig's calculated state-root or the state-root in the JSON trace files? [edited]
+  ↳ 2025-07-23 12:20 aang114: image.png
+  ↳ 2025-07-23 12:21 aang114: image.png
+  ↳ 2025-07-23 12:22 aang114: the two screenshots above are from `--trace dir <reports-l0 trace folder>` and `--trace dir <reports-l1 trace folder>` respectively
+  ↳ 2025-07-23 21:04 boymaas: It compares the state root in the JSON files. Therefore, the Local State root is <unavailable>. Multiple teams can successfully import the --trace-dir using the official vectors. Assuming JamZig and the other teams can successfully import those via the fuzzer using --trace-dir, and your local tests are passing, my guess is that something might go wrong in the protocol or in the state reconstruction from the keyvals. 
 2025-07-21 18:54 emielsebastiaan: What’s the plan for JAM and Kusama?
 
 With Referendum 682, Polkadot governance signaled support for a future where the Polkadot relay chain is replaced by JAM. (https://polkadot.polkassembly.io/referenda/682)
@@ -9979,3 +9989,62 @@ So the question is: are there any compelling reasons not to want Kusama to follo
  2 - expected correct work report and segment exports
 
 If anyone already produced such vector, would be very useful to test our refine implementation.
+2025-07-23 08:57 ascriv: I think there is mutual benefit to merging economies which outweighs the benefits of having an entire separate 'test' economy. Sovereignty is important of course and I feel services have a significant degree of sovereignty even though they all share the same security [edited]
+2025-07-23 08:59 ascriv: kusama must consent to any merge at the end of the day of course
+2025-07-23 08:59 gav: Indeed. Sovereignty is more likely compromised from too little overall security than as a result of pooling security costs.
+2025-07-23 09:00 gav: Probably pride will prevent this stuff from happening until it's too painful not to :/
+2025-07-23 09:03 gav: JAM doesn't care about how validators are selected, so if there's a sensible way to combine two (or more) tokens into the same staking economy, JAM won't make an issue. Similarly with cores; JAM doesn't care how they're allocated. Indeed as of 0.7 series, individual services can actually own JAM cores and decide themselves how to allocate them. This could facilitate the sharing of a single JAM between multiple sub-economies. [edited]
+2025-07-23 09:04 gav: The trickier thing is the tokens used for storage deposits (currently that which is represented in the balance of service accounts). It's totally unclear if these could work with multiple tokens. After consideration, I suspect there really must only be a single storage token, ideally with a fixed supply and no other use. [edited]
+2025-07-23 09:07 gav: As of 0.7 series, services can have a gratis storage allocation at least, which can help manage certain cases of a shared economy, but the need for a single storage-deposit token stands. [edited]
+2025-07-23 09:12 ascriv: perhaps we can plan on two services, one for polkadot parachains one for kusama parachains? ksm used within the kusama service and dot within the polkadot service
+2025-07-23 09:13 ascriv: except only dot will be used for storage deposits, e.g.
+2025-07-23 09:15 emielsebastiaan: Would the following approach make sense?
+	1.	An independent Kusama/Jam launch (parallel to Polkadot/Jam) with its own validator set.
+	2.	A not too distant future with a JAM-grid of two in which Kusama/Jam outsources only its security to Polkadot/Jam and keeps KSM as its storage token? [edited]
+2025-07-23 09:22 rusticcottage: As a Polkadot & Kusama governance participant, I would like to understand that perspective better. The pride point in particular, so we can try to address it properly. I do understand some difficult decisions will soon need to be made, therefore the more we (governance participants) have time to exchange around the subject, the higher quality our governance decisions will hopefully be.
+2025-07-23 09:24 emielsebastiaan: >> As a Polkadot & Kusama governance participant, I ... 
+I believe we are at the stage of exploring feasible ideas more than making decisions here. [edited]
+2025-07-23 09:32 rusticcottage: I understand that. In my opinion good governance stems from good understanding. If there is a concern around pride preventing the best outcome in a timely manner, it may be possible to handle this through a quality narrative to counters that potential reaction. Only really works if the governance participants kind of have enough time to warm up to a paradigm shifting idea. Anyway, I'll leave it at that, thanks for any feedback.
+2025-07-23 09:36 emielsebastiaan: I don’t know if the ‘pride’ remark was meant to reflect Kusama/Polkadot alignment/relations or broader blockchain industry alignment/relations. 
+2025-07-23 09:59 emielsebastiaan: Is there a risk that Kusama’s economy cannot adequately support an independent JAM?
+2025-07-23 12:14 gav: I'd say at this point it's beyond risk and pretty much a given, at least with the standard params. [edited]
+2025-07-23 12:15 gav: Assuming validator nodes cost a bare minimum of ~$3k/month to run, it would cost $3m/month, $36m/year. Bare minimum, assuming stakers otherwise got zero rewards.
+2025-07-23 12:17 gav: Kusama's present mcap is $280m, so it would need to inflate at close to 10% annually to achieve this with the requirement that the price didn't go down.
+2025-07-23 12:18 gav: It's unclear if $3k is even realistic for running a node; I budgeted $5k for Polkadot and it's the same job with the same hardware and software. [edited]
+2025-07-23 12:18 gav: It's certainly unrealistic to assume stakers will stake for nothing. And without them, there's no (economic) security.
+2025-07-23 12:19 gav: > A not too distant future with a JAM-grid
+
+Not especially realistic.
+2025-07-23 12:21 gav: In any case, it's far from clear that a JAM core, sold at the breakeven price of $15-30k/month baseline security costs, could clear 1023 units. Polkadot certainly clears a lot less today and at a lower price point. [edited]
+2025-07-23 12:21 gav: We certainly don't need a Grid until we cannot serve the market with a single JAM.
+2025-07-23 12:23 gav: So for now I would focus much less on Grid (which remains a future scaling route) and much more on a) lowering marginal price for a core; b) finding models for allowing multiple interests to cohabit the same JAM; and c) making cores as useful as possible with bridges, SDK, ... [edited]
+2025-07-23 12:40 oliver.tale-yazdi: Yea 341 cores is possibly also way too much for Kusama. We do have the smaller config presets for testing, maybe it could use a smaller instance if it does not want to join the Polkadot JAM chain? [edited]
+2025-07-23 13:03 roysingh8368: 
+2025-07-23 13:09 roysingh8368: Hey team,
+
+I'm working on the Safrole simulation, specifically with the tiny/enact-epoch-change-with-no-tickets-4.json test vector, and I'm consistently seeing a mismatch in the gamma_s output in the post_state.
+
+I've already implemented two key fixes based on the spec (Equations 6.23, 6.24, and 6.26):
+
+Corrected F function: The fallback F function now canonically sorts the validator keys (kappa) before selecting proposers. This ensures deterministic selection, as implied by the spec for operations on sets of keys.
+
+Correct Entropy for F: I'm now passing currentState.eta[2] (which is preState.eta[1] after epoch rotation) as the entropy source to the F function, as required by the η 
+2
+′
+​
+  in Equation 6.24.
+
+Despite these changes, my generated gamma_s still differs from the test vector's expected gamma_s. It seems like there might be a subtle difference in how the test vector generates this sequence, possibly related to:
+
+The exact set of kappa keys being used for F.
+
+A nuance in the cryptographic operations within F (e.g., hash function parameters, how the index is derived from the hash).
+
+Could someone with knowledge of the test vector generation logic for this specific case take a look?
+2025-07-23 17:37 jimboj21: Question on gas cost calculations for traces: For host calls does the inst cost get added to the host call cost? Like 1 gas for ecalli instruction then 10 for the call itself, so 11 total? Or is it just 10 total?
+2025-07-23 17:40 jimboj21: For context, I pass all traces for 0.6.6 except I have an issue with gas calculations, so am investigating where I am off.
+  ↳ 2025-07-23 18:11 sourabhniyogi: 11 total except for LOG (which is just 1 for the ecalli) and TRANSFER (which has an extra component)
+  ↳ 2025-07-23 18:12 jimboj21: okay yup yup cool that makes sense. Just wanted to double check that
+  ↳ 2025-07-23 18:12 jimboj21: thank you!
+2025-07-23 18:06 jimboj21: This would be particularly interesting for log, since it costs 0. but executing ecalli would mean it costs 1 and isnt free. That or it is free meaning that instructions for real host calls cost 0 but the host call cost is 10
+2025-07-23 18:09 jimboj21: at least according to GP 0.6.7 (ik isnt the version im talking about, but since it has gas costs as non 0 thats what im referencing here) ecalli costs 1. So then logging via a host call is not free right it costs 1?

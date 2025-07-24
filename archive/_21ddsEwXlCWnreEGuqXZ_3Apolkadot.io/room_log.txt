@@ -1,5 +1,5 @@
 # room: #graypaper:polkadot.io
-# exported: 2025-07-23 03:44 UTC
+# exported: 2025-07-24 03:44 UTC
 2024-04-17 20:29 syed: https://matrix.to/#/!hyzRkDqDthePbodYFz:parity.io/$f_DMsIEcDXZegw6Sabnehzc-LrdDQkmq5MbxDDyoZxY?via=parity.io&via=web3.foundation
 
 2024-04-17 20:29 syed: 
@@ -6382,3 +6382,11 @@ our testnet (`0.6.5`) configuration is 5 `polkajam` node + 1 `spacejam` node and
   ↳ 2025-07-18 14:58 dave: The justifications returned by CE 140 are for shards yes. As the SNP doc says you generally should only use CE 140 if your first attempt to fetch shards and reconstruct segments using CE 139 fails
 2025-07-18 15:22 ascriv: Ok think I get it, looking at 14.16, we can reuse the same erasure roots but use different indices to get paged proof shards using 139/140 [edited]
 2025-07-22 13:28 danicuki: 
+2025-07-23 10:15 ascriv: Is there a proposal for the format of the metadata in the last 128 octets of the validator keys somewhere? I can infer from the various examples floating around but would be nice if it was written down somewhere (to infer the IP address/port, e.g.) [edited]
+2025-07-23 12:24 dave: IDK if this is specified anywhere, but PolkaJam currently assumes first 16 bytes are an IPv6 address and next 2 bytes are a port
+2025-07-23 12:25 dave: Remaining metadata bytes are currently ignored
+2025-07-23 12:27 gav: This ought to fit nicely in the networking spec [edited]
+2025-07-23 12:28 dave: Ah, it is there already actually: https://github.com/zdave-parity/jam-np/blob/main/simple.md#required-connectivity
+2025-07-23 12:28 dave: "The validators' IP-layer endpoints are given as IPv6/port combinations, to be found in the first 18 bytes of validator metadata, with the first 16 bytes being the IPv6 address and the latter 2 being a little endian representation of the port"
+2025-07-23 15:03 ascriv: should a valid ipv6/port be enforced before incorporation on chain?
+2025-07-23 15:21 dave: Could plausibly be sanity checked by the delegator service, GP does not have any such logic though
