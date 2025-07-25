@@ -1,5 +1,5 @@
 # room: #jam:polkadot.io
-# exported: 2025-07-24 03:43 UTC
+# exported: 2025-07-25 03:44 UTC
 2024-04-20 02:08 johnjiao123: 
 2024-04-20 02:09 johnjiao123: 
 2024-05-30 21:48 nradko: Hey everyone,
@@ -10048,3 +10048,40 @@ Could someone with knowledge of the test vector generation logic for this specif
   ↳ 2025-07-23 18:12 jimboj21: thank you!
 2025-07-23 18:06 jimboj21: This would be particularly interesting for log, since it costs 0. but executing ecalli would mean it costs 1 and isnt free. That or it is free meaning that instructions for real host calls cost 0 but the host call cost is 10
 2025-07-23 18:09 jimboj21: at least according to GP 0.6.7 (ik isnt the version im talking about, but since it has gas costs as non 0 thats what im referencing here) ecalli costs 1. So then logging via a host call is not free right it costs 1?
+2025-07-24 04:15 luke_f: Question about Network library and clean room rules:
+
+tl;dr
+Another implementors team (JamBrains) has forked a network library we both use and fixed an issue we also need to fix. Is it OK to use their fork?
+
+Long version:
+Both us  in Jamixir and JamBrains use [Quicer](https://github.com/emqx/quic) library for QUIC protocol binding into Elixir
+
+This makes sense because this library is pretty much the only offering for this binding in Erlang/Elixir.
+
+Recently, I have become aware of shortcomings of this lib, for example, it is impossible to require the client to send certificates without said certificates being validated against a CA on the server side
+which does not fit into our use case. 
+
+I was about to fork the library and at the same time open an issue,
+then I saw JamBrains has opened an [issue](https://github.com/emqx/quic/issues/332) about this more than 6 months ago, from the issue it was clear that they already solved this problem (possibly other issues that I did not encounter yet)
+
+So, since networking libraries, afaik, are outside the clean room rules. Is it OK to use their fork?
+
+Thanks
+
+
+
+
+2025-07-24 05:47 gav: Yes. 
+2025-07-24 05:48 gav: Exactly for the reason you state. Networking is outside of cleanroom rules. 
+2025-07-24 07:15 luke_f: Thanks
+never hurts to make sure :)
+2025-07-24 11:58 oliver.tale-yazdi: Yea its fine from our side, thanks for asking 😄
+2025-07-24 13:12 jaymansfield: Had to push enhancements to my languages open source quic library as well (ed25519 support). Seems JAM teams are not just building a new protocol, we’re also enhancing quic transport for everyone 👍🏻 [edited]
+2025-07-24 14:51 olanod: > <@oliver.tale-yazdi:parity.io> Yea 341 cores is possibly also way too much for Kusama. We do have the smaller config presets for testing, maybe it could use a smaller instance if it does not want to join the Polkadot JAM chain?
+
+If Kusama rolls its own JAM it certainly doesn't need to go full power, if 1 core alone can handle our current(even mid-term) needs it seems wasteful to have even more, even current set up could use a shrinkage, too many validators for such a small economy.
+
+Even as a Kusamaxi I'm more in favor of some form of merger, it will take a long while until there's enough demand in the world to need more than 1 JAM instance, I mentioned a while back in the forum about the possibility of JAM launching first with Kusama, give implementers and services the chance to launch early and let Polkadot join later when the dust has settled. With JAM reaching 1.0 the canary will be out of a job as an experimental ground, the innovation will be at the services level, there will be both experimental and mature stuff running on the same JAM. 
+It would be good to find a way for JAM to be very token agnostic and host multiple economies, perhaps start with a neutral bootstrap (JAM?) token while the required economic machinery(including bridges) is set in place to then allow any token be used to power JAM, who knows, maybe BTC ends up used to pay for storage ;P
+2025-07-24 15:06 ascriv: as far as i understand, JAM's token is represented by the service account balances, so it doesn't really know what dot or btc or whatever are. the plan i think is to make a bootstrap service account, give it a balance of 3.1415926..*10^9, and then somehow distribute them to match how DOT is currently distributed [edited]
+2025-07-24 15:07 ascriv: i'm not sure what it would look like to also accept another token for gas and storage and whatever service account balances are used for

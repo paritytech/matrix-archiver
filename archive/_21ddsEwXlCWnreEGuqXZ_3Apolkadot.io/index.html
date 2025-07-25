@@ -18,7 +18,7 @@ a:hover{color:#90caf9}
 em{font-style:italic}
 </style>
 <h1>#graypaper:polkadot.io</h1>
-<p><small>last updated 2025-07-24 03:44 UTC</small></p>
+<p><small>last updated 2025-07-25 03:44 UTC</small></p>
 <p><a href='room_log.txt'>⇩ plaintext</a> · <a href='../../'>⇦ all rooms</a></p>
 <hr>
 <div class='msg'><a class='ts' href='#$G0deSwnlYlCrSn5lIFL__hi6bgWVITql5VyahU4bzpI'>#</a> <a class='ts' name='$G0deSwnlYlCrSn5lIFL__hi6bgWVITql5VyahU4bzpI' href='https://matrix.to/#/!ddsEwXlCWnreEGuqXZ:polkadot.io/$G0deSwnlYlCrSn5lIFL__hi6bgWVITql5VyahU4bzpI' target='_blank'>2024-04-17 20:29</a>&ensp;<span class='u' style='color:#da6aa2'>syed</span>: <a href="https://matrix.to/#/!hyzRkDqDthePbodYFz:parity.io/$f_DMsIEcDXZegw6Sabnehzc-LrdDQkmq5MbxDDyoZxY?via=parity.io&amp;via=web3.foundation" rel="noopener" target="_blank">https://matrix.to/#/!hyzRkDqDthePbodYFz:parity.io/$f_DMsIEcDXZegw6Sabnehzc-LrdDQkmq5MbxDDyoZxY?via=parity.io&amp;via=web3.foundation</a>
@@ -6382,3 +6382,21 @@ our testnet (<code>0.6.5</code>) configuration is 5 <code>polkajam</code> node +
 <div class='msg'><a class='ts' href='#$GofdAi4dkz0aDPA4nEWXwrtn8dab5qnyNfvwak0cf8k'>#</a> <a class='ts' name='$GofdAi4dkz0aDPA4nEWXwrtn8dab5qnyNfvwak0cf8k' href='https://matrix.to/#/!ddsEwXlCWnreEGuqXZ:polkadot.io/$GofdAi4dkz0aDPA4nEWXwrtn8dab5qnyNfvwak0cf8k' target='_blank'>2025-07-23 12:28</a>&ensp;<span class='u' style='color:#c65779'>dave</span>: &quot;The validators&#x27; IP-layer endpoints are given as IPv6/port combinations, to be found in the first 18 bytes of validator metadata, with the first 16 bytes being the IPv6 address and the latter 2 being a little endian representation of the port&quot;</div>
 <div class='msg'><a class='ts' href='#$FctUkKKKvaYGLSBR9NcfNChydLikIgrvWOfUOnkJI9o'>#</a> <a class='ts' name='$FctUkKKKvaYGLSBR9NcfNChydLikIgrvWOfUOnkJI9o' href='https://matrix.to/#/!ddsEwXlCWnreEGuqXZ:polkadot.io/$FctUkKKKvaYGLSBR9NcfNChydLikIgrvWOfUOnkJI9o' target='_blank'>2025-07-23 15:03</a>&ensp;<span class='u' style='color:#4036ac'>ascriv</span>: should a valid ipv6/port be enforced before incorporation on chain?</div>
 <div class='msg'><a class='ts' href='#$tJ8R60sQoC2xPhKAhxtu94jdlIeNcxja7GLz1U1JQlw'>#</a> <a class='ts' name='$tJ8R60sQoC2xPhKAhxtu94jdlIeNcxja7GLz1U1JQlw' href='https://matrix.to/#/!ddsEwXlCWnreEGuqXZ:polkadot.io/$tJ8R60sQoC2xPhKAhxtu94jdlIeNcxja7GLz1U1JQlw' target='_blank'>2025-07-23 15:21</a>&ensp;<span class='u' style='color:#c65779'>dave</span>: Could plausibly be sanity checked by the delegator service, GP does not have any such logic though</div>
+<div class='msg'><a class='ts' href='#$T--8sRzc4ym6rSeHlLdv0e7KTPm5GRdpiVp53Qf2OyI'>#</a> <a class='ts' name='$T--8sRzc4ym6rSeHlLdv0e7KTPm5GRdpiVp53Qf2OyI' href='https://matrix.to/#/!ddsEwXlCWnreEGuqXZ:polkadot.io/$T--8sRzc4ym6rSeHlLdv0e7KTPm5GRdpiVp53Qf2OyI' target='_blank'>2025-07-25 00:33</a>&ensp;<span class='u' style='color:#5bdb7f'>r2rtnl</span>: I&#x27;m observing a possible inconsistency in instruction decoding between the Gray Paper and the official PolkaVM implementation:
+
+1. According to (A.16) of the Gray Paper, any signed extension must produce a 64-bit value:
+<a href="https://graypaper.fluffylabs.dev/#/9a08063/25e30225e302?v=0.6.6" rel="noopener" target="_blank">https://graypaper.fluffylabs.dev/#/9a08063/25e30225e302?v=0.6.6</a>
+2. In (A.26), the immediate (nu\_x) for the branch\_ge\_u\_imm instruction must be sign-extended from 32 bits or less (as the immediate size is up to 4 bytes) to 64 bits, using the signed extension defined in (A.16).
+<a href="https://graypaper.fluffylabs.dev/#/9a08063/27e70227e702?v=0.6.6" rel="noopener" target="_blank">https://graypaper.fluffylabs.dev/#/9a08063/27e70227e702?v=0.6.6</a>
+3. When decoding the following argument octets for a branch\_ge\_u\_imm (opcode 85):
+0x17 0xf7 0xf4 0x1,
+the official PolkaVM implementation logs this as:
+&quot;jump 70519 if a0 &gt;=u 4294967287&quot; (the instruction starts at offset 70019).
+This suggests that the signed extension applied to an 8-bit value (0xf7) resulted in a 32-bit value 0xfffffff7 = 4294967287, rather than a 64-bit value as implied by (A.26).
+
+Could you please clarify the intended behavior in this case?
+
+P.S. This observation comes from analyzing the following PolkaVM trace:
+<a href="https://github.com/davxy/jam-stuff/blob/main/pvm-traces/0.6.6/reports-l0-00000005.log" rel="noopener" target="_blank">https://github.com/davxy/jam-stuff/blob/main/pvm-traces/0.6.6/reports-l0-00000005.log</a>
+that was provided in this task:
+<a href="https://github.com/davxy/jam-test-vectors/issues/83" rel="noopener" target="_blank">https://github.com/davxy/jam-test-vectors/issues/83</a> <span class="edited">(edited)</span></div>

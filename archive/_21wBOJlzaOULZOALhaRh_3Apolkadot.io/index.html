@@ -18,7 +18,7 @@ a:hover{color:#90caf9}
 em{font-style:italic}
 </style>
 <h1>#jam:polkadot.io</h1>
-<p><small>last updated 2025-07-24 03:43 UTC</small></p>
+<p><small>last updated 2025-07-25 03:44 UTC</small></p>
 <p><a href='room_log.txt'>⇩ plaintext</a> · <a href='../../'>⇦ all rooms</a></p>
 <hr>
 <div class='msg'><a class='ts' href='#$we4SYXTHwmKn094X9Zs_7mWUOoUVh4icvVdxD83RZfs'>#</a> <a class='ts' name='$we4SYXTHwmKn094X9Zs_7mWUOoUVh4icvVdxD83RZfs' href='https://matrix.to/#/!wBOJlzaOULZOALhaRh:polkadot.io/$we4SYXTHwmKn094X9Zs_7mWUOoUVh4icvVdxD83RZfs' target='_blank'>2024-04-20 02:08</a>&ensp;<span class='u' style='color:#d0709e'>johnjiao123</span>: </div>
@@ -9958,3 +9958,40 @@ Could someone with knowledge of the test vector generation logic for this specif
 <div class='msg reply'><a class='ts' href='#$uV56HbsUJF4gQ7H5Xo67wKOwDuXPeydmz03Oe-CNmPw'>#</a> <a class='ts' name='$uV56HbsUJF4gQ7H5Xo67wKOwDuXPeydmz03Oe-CNmPw' href='https://matrix.to/#/!wBOJlzaOULZOALhaRh:polkadot.io/$uV56HbsUJF4gQ7H5Xo67wKOwDuXPeydmz03Oe-CNmPw' target='_blank'>2025-07-23 18:12</a>&ensp;<span class='u' style='color:#4281bb'>jimboj21</span>: thank you!</div>
 <div class='msg'><a class='ts' href='#$_sL-WbefetzxAsvJk2HfqthK0ziRnI8vKJX7BgwDf4M'>#</a> <a class='ts' name='$_sL-WbefetzxAsvJk2HfqthK0ziRnI8vKJX7BgwDf4M' href='https://matrix.to/#/!wBOJlzaOULZOALhaRh:polkadot.io/$_sL-WbefetzxAsvJk2HfqthK0ziRnI8vKJX7BgwDf4M' target='_blank'>2025-07-23 18:06</a>&ensp;<span class='u' style='color:#4281bb'>jimboj21</span>: This would be particularly interesting for log, since it costs 0. but executing ecalli would mean it costs 1 and isnt free. That or it is free meaning that instructions for real host calls cost 0 but the host call cost is 10</div>
 <div class='msg'><a class='ts' href='#$v20ZdtCbRAy1con5I4QbSx54RagVhY6npWbJSiEtzMU'>#</a> <a class='ts' name='$v20ZdtCbRAy1con5I4QbSx54RagVhY6npWbJSiEtzMU' href='https://matrix.to/#/!wBOJlzaOULZOALhaRh:polkadot.io/$v20ZdtCbRAy1con5I4QbSx54RagVhY6npWbJSiEtzMU' target='_blank'>2025-07-23 18:09</a>&ensp;<span class='u' style='color:#4281bb'>jimboj21</span>: at least according to GP 0.6.7 (ik isnt the version im talking about, but since it has gas costs as non 0 thats what im referencing here) ecalli costs 1. So then logging via a host call is not free right it costs 1?</div>
+<div class='msg'><a class='ts' href='#$Vf0uM77tVeHBA42gcVQHvcsTssju-CehdHvM1fiXx_Y'>#</a> <a class='ts' name='$Vf0uM77tVeHBA42gcVQHvcsTssju-CehdHvM1fiXx_Y' href='https://matrix.to/#/!wBOJlzaOULZOALhaRh:polkadot.io/$Vf0uM77tVeHBA42gcVQHvcsTssju-CehdHvM1fiXx_Y' target='_blank'>2025-07-24 04:15</a>&ensp;<span class='u' style='color:#c77c36'>luke_f</span>: Question about Network library and clean room rules:
+
+tl;dr
+Another implementors team (JamBrains) has forked a network library we both use and fixed an issue we also need to fix. Is it OK to use their fork?
+
+Long version:
+Both us  in Jamixir and JamBrains use <a href="https://github.com/emqx/quic" rel="noopener" target="_blank">Quicer</a> library for QUIC protocol binding into Elixir
+
+This makes sense because this library is pretty much the only offering for this binding in Erlang/Elixir.
+
+Recently, I have become aware of shortcomings of this lib, for example, it is impossible to require the client to send certificates without said certificates being validated against a CA on the server side
+which does not fit into our use case. 
+
+I was about to fork the library and at the same time open an issue,
+then I saw JamBrains has opened an <a href="https://github.com/emqx/quic/issues/332" rel="noopener" target="_blank">issue</a> about this more than 6 months ago, from the issue it was clear that they already solved this problem (possibly other issues that I did not encounter yet)
+
+So, since networking libraries, afaik, are outside the clean room rules. Is it OK to use their fork?
+
+Thanks
+
+
+
+</div>
+<div class='msg'><a class='ts' href='#$k672qFw1-GvSQ9NNIBwF3jutxejEV_XhFi-0CCl_2fM'>#</a> <a class='ts' name='$k672qFw1-GvSQ9NNIBwF3jutxejEV_XhFi-0CCl_2fM' href='https://matrix.to/#/!wBOJlzaOULZOALhaRh:polkadot.io/$k672qFw1-GvSQ9NNIBwF3jutxejEV_XhFi-0CCl_2fM' target='_blank'>2025-07-24 05:47</a>&ensp;<span class='u' style='color:#cd8957'>gav</span>: Yes. </div>
+<div class='msg'><a class='ts' href='#$DxfFMHOAsqPSf2HG1Rf3C35TTvvi3LN7xhzdf1JcGk0'>#</a> <a class='ts' name='$DxfFMHOAsqPSf2HG1Rf3C35TTvvi3LN7xhzdf1JcGk0' href='https://matrix.to/#/!wBOJlzaOULZOALhaRh:polkadot.io/$DxfFMHOAsqPSf2HG1Rf3C35TTvvi3LN7xhzdf1JcGk0' target='_blank'>2025-07-24 05:48</a>&ensp;<span class='u' style='color:#cd8957'>gav</span>: Exactly for the reason you state. Networking is outside of cleanroom rules. </div>
+<div class='msg'><a class='ts' href='#$I-W0ctmTFD7KhUxxNMRsPECqtEEqANF-zPdtWyg1ZG4'>#</a> <a class='ts' name='$I-W0ctmTFD7KhUxxNMRsPECqtEEqANF-zPdtWyg1ZG4' href='https://matrix.to/#/!wBOJlzaOULZOALhaRh:polkadot.io/$I-W0ctmTFD7KhUxxNMRsPECqtEEqANF-zPdtWyg1ZG4' target='_blank'>2025-07-24 07:15</a>&ensp;<span class='u' style='color:#c77c36'>luke_f</span>: Thanks
+never hurts to make sure :)</div>
+<div class='msg'><a class='ts' href='#$GwERKmmJr_BH5YqEKkr2YmdiTX-QESQoQFgFf7-zkpQ'>#</a> <a class='ts' name='$GwERKmmJr_BH5YqEKkr2YmdiTX-QESQoQFgFf7-zkpQ' href='https://matrix.to/#/!wBOJlzaOULZOALhaRh:polkadot.io/$GwERKmmJr_BH5YqEKkr2YmdiTX-QESQoQFgFf7-zkpQ' target='_blank'>2025-07-24 11:58</a>&ensp;<span class='u' style='color:#cdc232'>oliver.tale-yazdi</span>: Yea its fine from our side, thanks for asking 😄</div>
+<div class='msg'><a class='ts' href='#$1U2GfyzNHXC1Xl9Y9ZuvNFzcTMbqa6dXH7ZsNSRA5C8'>#</a> <a class='ts' name='$1U2GfyzNHXC1Xl9Y9ZuvNFzcTMbqa6dXH7ZsNSRA5C8' href='https://matrix.to/#/!wBOJlzaOULZOALhaRh:polkadot.io/$1U2GfyzNHXC1Xl9Y9ZuvNFzcTMbqa6dXH7ZsNSRA5C8' target='_blank'>2025-07-24 13:12</a>&ensp;<span class='u' style='color:#d470bf'>jaymansfield</span>: Had to push enhancements to my languages open source quic library as well (ed25519 support). Seems JAM teams are not just building a new protocol, we’re also enhancing quic transport for everyone 👍🏻 <span class="edited">(edited)</span></div>
+<div class='msg'><a class='ts' href='#$6JAbr2YGmQa6rQsuNxEaOOz5uvi9d7RPstoadDNBDrM'>#</a> <a class='ts' name='$6JAbr2YGmQa6rQsuNxEaOOz5uvi9d7RPstoadDNBDrM' href='https://matrix.to/#/!wBOJlzaOULZOALhaRh:polkadot.io/$6JAbr2YGmQa6rQsuNxEaOOz5uvi9d7RPstoadDNBDrM' target='_blank'>2025-07-24 14:51</a>&ensp;<span class='u' style='color:#9b6fdc'>olanod</span>: &gt; &lt;@oliver.tale-yazdi:parity.io&gt; Yea 341 cores is possibly also way too much for Kusama. We do have the smaller config presets for testing, maybe it could use a smaller instance if it does not want to join the Polkadot JAM chain?
+
+If Kusama rolls its own JAM it certainly doesn&#x27;t need to go full power, if 1 core alone can handle our current(even mid-term) needs it seems wasteful to have even more, even current set up could use a shrinkage, too many validators for such a small economy.
+
+Even as a Kusamaxi I&#x27;m more in favor of some form of merger, it will take a long while until there&#x27;s enough demand in the world to need more than 1 JAM instance, I mentioned a while back in the forum about the possibility of JAM launching first with Kusama, give implementers and services the chance to launch early and let Polkadot join later when the dust has settled. With JAM reaching 1.0 the canary will be out of a job as an experimental ground, the innovation will be at the services level, there will be both experimental and mature stuff running on the same JAM. 
+It would be good to find a way for JAM to be very token agnostic and host multiple economies, perhaps start with a neutral bootstrap (JAM?) token while the required economic machinery(including bridges) is set in place to then allow any token be used to power JAM, who knows, maybe BTC ends up used to pay for storage ;P</div>
+<div class='msg'><a class='ts' href='#$AmjF7foSjYK6MZMwmedpiD8u7ukjKZr5TCl-oMRZYZc'>#</a> <a class='ts' name='$AmjF7foSjYK6MZMwmedpiD8u7ukjKZr5TCl-oMRZYZc' href='https://matrix.to/#/!wBOJlzaOULZOALhaRh:polkadot.io/$AmjF7foSjYK6MZMwmedpiD8u7ukjKZr5TCl-oMRZYZc' target='_blank'>2025-07-24 15:06</a>&ensp;<span class='u' style='color:#4036ac'>ascriv</span>: as far as i understand, JAM&#x27;s token is represented by the service account balances, so it doesn&#x27;t really know what dot or btc or whatever are. the plan i think is to make a bootstrap service account, give it a balance of 3.1415926..*10^9, and then somehow distribute them to match how DOT is currently distributed <span class="edited">(edited)</span></div>
+<div class='msg'><a class='ts' href='#$X4I0Hh8agHMSL3XaBNVrU9CLURNDuCw2gQF0iGyYKe4'>#</a> <a class='ts' name='$X4I0Hh8agHMSL3XaBNVrU9CLURNDuCw2gQF0iGyYKe4' href='https://matrix.to/#/!wBOJlzaOULZOALhaRh:polkadot.io/$X4I0Hh8agHMSL3XaBNVrU9CLURNDuCw2gQF0iGyYKe4' target='_blank'>2025-07-24 15:07</a>&ensp;<span class='u' style='color:#4036ac'>ascriv</span>: i&#x27;m not sure what it would look like to also accept another token for gas and storage and whatever service account balances are used for</div>

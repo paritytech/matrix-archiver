@@ -1,5 +1,5 @@
 # room: #graypaper:polkadot.io
-# exported: 2025-07-24 03:44 UTC
+# exported: 2025-07-25 03:44 UTC
 2024-04-17 20:29 syed: https://matrix.to/#/!hyzRkDqDthePbodYFz:parity.io/$f_DMsIEcDXZegw6Sabnehzc-LrdDQkmq5MbxDDyoZxY?via=parity.io&via=web3.foundation
 
 2024-04-17 20:29 syed: 
@@ -6390,3 +6390,21 @@ our testnet (`0.6.5`) configuration is 5 `polkajam` node + 1 `spacejam` node and
 2025-07-23 12:28 dave: "The validators' IP-layer endpoints are given as IPv6/port combinations, to be found in the first 18 bytes of validator metadata, with the first 16 bytes being the IPv6 address and the latter 2 being a little endian representation of the port"
 2025-07-23 15:03 ascriv: should a valid ipv6/port be enforced before incorporation on chain?
 2025-07-23 15:21 dave: Could plausibly be sanity checked by the delegator service, GP does not have any such logic though
+2025-07-25 00:33 r2rtnl: I'm observing a possible inconsistency in instruction decoding between the Gray Paper and the official PolkaVM implementation:
+
+1. According to (A.16) of the Gray Paper, any signed extension must produce a 64-bit value:
+https://graypaper.fluffylabs.dev/#/9a08063/25e30225e302?v=0.6.6
+2. In (A.26), the immediate (nu\_x) for the branch\_ge\_u\_imm instruction must be sign-extended from 32 bits or less (as the immediate size is up to 4 bytes) to 64 bits, using the signed extension defined in (A.16).
+https://graypaper.fluffylabs.dev/#/9a08063/27e70227e702?v=0.6.6
+3. When decoding the following argument octets for a branch\_ge\_u\_imm (opcode 85):
+0x17 0xf7 0xf4 0x1,
+the official PolkaVM implementation logs this as:
+"jump 70519 if a0 >=u 4294967287" (the instruction starts at offset 70019).
+This suggests that the signed extension applied to an 8-bit value (0xf7) resulted in a 32-bit value 0xfffffff7 = 4294967287, rather than a 64-bit value as implied by (A.26).
+
+Could you please clarify the intended behavior in this case?
+
+P.S. This observation comes from analyzing the following PolkaVM trace:
+https://github.com/davxy/jam-stuff/blob/main/pvm-traces/0.6.6/reports-l0-00000005.log
+that was provided in this task:
+https://github.com/davxy/jam-test-vectors/issues/83 [edited]
