@@ -1,5 +1,5 @@
 # room: #graypaper:polkadot.io
-# exported: 2025-07-25 03:44 UTC
+# exported: 2025-07-26 03:42 UTC
 2024-04-17 20:29 syed: https://matrix.to/#/!hyzRkDqDthePbodYFz:parity.io/$f_DMsIEcDXZegw6Sabnehzc-LrdDQkmq5MbxDDyoZxY?via=parity.io&via=web3.foundation
 
 2024-04-17 20:29 syed: 
@@ -6408,3 +6408,6 @@ P.S. This observation comes from analyzing the following PolkaVM trace:
 https://github.com/davxy/jam-stuff/blob/main/pvm-traces/0.6.6/reports-l0-00000005.log
 that was provided in this task:
 https://github.com/davxy/jam-test-vectors/issues/83 [edited]
+2025-07-26 00:57 gav: [Gray Paper version 0.7.1 is out](https://github.com/gavofyork/graypaper/releases/tag/v0.7.1). This one contains most of the pre-planned 0.7 series changes already. The rest of the changes may be dropped or postponed to 0.8; we'll see once we have vaguely real services running on the Toaster.
+
+The biggest change with this release is to combine `on_transfer` with `accumulate`, actually reducing the size of the spec and, hopefully, implementation and API complexity. Also introduced is a new privilege, the Registrar, which is able to name the index of newly created services in a newly cordoned AccountId space (the lower 16 bits). [edited]

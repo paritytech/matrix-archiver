@@ -1,5 +1,5 @@
 # room: #jam:polkadot.io
-# exported: 2025-07-25 03:44 UTC
+# exported: 2025-07-26 03:41 UTC
 2024-04-20 02:08 johnjiao123: 
 2024-04-20 02:09 johnjiao123: 
 2024-05-30 21:48 nradko: Hey everyone,
@@ -9942,6 +9942,11 @@ So I'm honestly not sure what's going on here. Does the JamZig fuzzer compare ou
   ↳ 2025-07-23 12:21 aang114: image.png
   ↳ 2025-07-23 12:22 aang114: the two screenshots above are from `--trace dir <reports-l0 trace folder>` and `--trace dir <reports-l1 trace folder>` respectively
   ↳ 2025-07-23 21:04 boymaas: It compares the state root in the JSON files. Therefore, the Local State root is <unavailable>. Multiple teams can successfully import the --trace-dir using the official vectors. Assuming JamZig and the other teams can successfully import those via the fuzzer using --trace-dir, and your local tests are passing, my guess is that something might go wrong in the protocol or in the state reconstruction from the keyvals. 
+  ↳ 2025-07-25 09:21 boymaas: aang114 | Gossamer | CS Oliver Tale-Yazdi : 
+
+Just released a new version: https://github.com/jamzig/conformance-releases 
+
+Fuzzer genesis state now begins with authentication queues filled with 0x0 which should match your expected output.
 2025-07-21 18:54 emielsebastiaan: What’s the plan for JAM and Kusama?
 
 With Referendum 682, Polkadot governance signaled support for a future where the Polkadot relay chain is replaced by JAM. (https://polkadot.polkassembly.io/referenda/682)
@@ -10085,3 +10090,132 @@ Even as a Kusamaxi I'm more in favor of some form of merger, it will take a long
 It would be good to find a way for JAM to be very token agnostic and host multiple economies, perhaps start with a neutral bootstrap (JAM?) token while the required economic machinery(including bridges) is set in place to then allow any token be used to power JAM, who knows, maybe BTC ends up used to pay for storage ;P
 2025-07-24 15:06 ascriv: as far as i understand, JAM's token is represented by the service account balances, so it doesn't really know what dot or btc or whatever are. the plan i think is to make a bootstrap service account, give it a balance of 3.1415926..*10^9, and then somehow distribute them to match how DOT is currently distributed [edited]
 2025-07-24 15:07 ascriv: i'm not sure what it would look like to also accept another token for gas and storage and whatever service account balances are used for
+2025-07-25 05:38 gav: As I said, the storage deposit token economics most naturally favour a token with limited cap and which is not used for anything else.
+2025-07-25 05:38 gav: This is because the storage capacity of a JAM has a fixed upper limit and by equating this to a token we benefit from market economics for its pricing. [edited]
+2025-07-25 05:40 gav: Tts supply is fixed so that when all is used as storage deposit JAM is at full capacity. This ensures that JAM can never exceed capacity and that as it gets close, the market dispenses storage to those most willing to pay for it. [edited]
+2025-07-25 05:41 gav: It is best not used for anything else because this would effective reduce supply (as the token gets deployed elsewhere in its economy) and mean that a portion of JAM's storage capacity goes unused. [edited]
+2025-07-25 05:46 gav: For JAM there are really three points where tokens could potentially be utilised - staking in order to become a validator, core-procurement and storage deposits. In Polkadot, the DOT token is used exclusively for all three, in Kusama it's KSM used for all three. Any combination of the two would necessarily mean some form of allocation or sharing these economic segments. Theoretically the tokens themselves could be merged, but this seems to be an extremely political, not technical, proposition so I don't find it especially viable to reason about. [edited]
+2025-07-25 05:47 gav: Now, JAM has a clever ability to allow cores themselves to be owned by a service, implying that a Polkadot service could reasonably *own* some number of cores (and sell them for DOT) whereas a Kusama service could own some (other?) number of cores and (and sell them for KSM). 
+2025-07-25 05:48 gav: So sharing the core-procurement part of the economy isn't especially hard to imagine.
+2025-07-25 05:49 gav: Staking has two components - a) placing (potentially slashable) value under bond in order to become elected; and b) reward payments. For the first component it seems reasonable to allow either of the "native" tokens to be used. [edited]
+2025-07-25 05:53 gav: Longer-term, as I mentioned in my summit presentation this year, I believe the rewards must become more-or-less in line with receipts from usage fees, potentially with a market-acceptable short-fall to be made up with inflation (though I'd question whether it is truly realistic for any token economy to rely on inflation as a means of preserving itself in the long-term - token economies don't have the force of arms and arbitrary tax requirements which fiat economies do which I believe could be a critical difference).
+2025-07-25 05:54 gav: With two independent economies sharing the benefits of security (core-provision), one presumes that the costs must be similarly shared, and it is unclear how this could work. However my feelings are that it's probably just a case of negotiating some long-term price point for core-ownership and ensuring all native tokens respect it. [edited]
+2025-07-25 05:55 emilkietzman: After proof of Personhood if 55-60% DOT staked won’t be the ideal, but like 30% - should we launch a huge DeFi campaign with initiatives so people don’t go with them at start?
+2025-07-25 05:57 gav: Yes, this is a very interesting point. The concept of value-representation-exclusivity as utility.
+2025-07-25 05:58 gav: Personally, I believe it is an over-played card. 
+2025-07-25 05:59 emielsebastiaan: “Shared security”-burden by two (or many more) token economies. Cool 😎 
+2025-07-25 06:01 gav: If we can use PoP voting to avert the need for nominations (and their rewards) and validator rewards can be kept minimal (perhaps through highly optimised deployment and a second tier of author-validators to ensure there's a ready supply of nodes), then it would imply security costs could be minimal - far less than today's ~$500m. This would then imply comparatively little costs on to the token-economy or economies sharing this security, then implying far less of a need to inflate (in the perfect scenario, no need to inflate at all). [edited]
+2025-07-25 06:10 gav: But yes, I understand that staking capital is a "utility" for staking tokens. In reality it's not a utility but merely an attraction for token-holders, effectively allowing them to be paid in kind at the cost of market participants who suffer relative dilution. It only works as long as there are enough traders who are willing to pay the cost of dilution for swift market entry/exit (or using other aspects of the token, if there are any). If the number of those non-staking participants who are suffering this baseline cost dwindles, then the price drops as they exit. Assuming max staking rewards are fixed (in DOT they even reduce as there become too many stakers), then the return rate reduces, limiting the potential for staking to soak up extra supply. Furthermore, this dilution trick only works if the capital keeps its perceived value. If participants are not confident that their holdings will retain value while staked, then they will exit also, leaving only those who would hold anyway ("true believers" 🤭). [edited]
+2025-07-25 06:11 gav: Basically, diluting non-stakers isn't free money; it's a means of cashing out market confidence. Eventually that confidence will run out and the trick won't work any more. Unfortunately if you talk to some economists, even those quite close to Polkadot's home, they act as though it is, quoting the dilution in fiat economies as an accepted model which can be drawn upon here. [edited]
+2025-07-25 06:14 gav: I don't know about "huge DeFi campaign"s, but establishing a token as more than just a means of diluting one group of market participants to inflate the balance of others seems sensible. [edited]
+2025-07-25 06:19 gav: Yes. It seems to me that this, in some form or another, is where things must ultimately go.
+2025-07-25 06:24 ascriv: > <@gav:polkadot.io> We don't want it used for anything else because this will effective reduce supply (as the token gets deployed elsewhere in its economy) and mean that a portion of JAM's storage capacity goes unused.
+
+This seems to imply we should have a token just for storage? Since dot has utility other than paying for storage 
+2025-07-25 07:05 olanod: So I take it that Kusama and Polkadot sharing the same JAM home is not the worst idea? Sharing the security burden among different economies and paying for coretime with different tokens seem doable so the question remains, what single token is used for storage deposits. Perhaps Sourabh's idea of [KSM turn into JAM token](<https://forum.polkadot.network/t/introducing-a-new-jam-token/13029/21>) is also not the worst idea?
+
+Anyways it seems like Kusama could start deciding whether it wants to adopt JAM(a small configuration initially?), Polkadot can later run another poll with the community to decide if it joins the same JAM or spins up a new one.
+2025-07-25 07:54 emielsebastiaan: If I understand correctly, JAM has three independent economic activities:
+
+1. Storage Economy | With an independent storage token for its sovereign space. JAM introduces an independent storage token, effectively creating a sovereign economic zone where anyone or anything can own a portion of JAM's sovereign space. This space consists of JAM’s scarce storage capacity for code (sovereign services and their preimages) and its sovereign consensus state (storage items).
+2. Core Allocation Economy | With generalized economic agents (cores): JAM includes generalized economic agents—its cores—that can perform arbitrary computations. These cores are allocated through a core allocation economy, allowing them to be temporarily “hired” to perform work for a defined period.
+3. Staking economy for hardware & staking | JAM requires significant hardware infrastructure, with operational costs of approximately $5,000 per node per month (~$60M/year). Initially, these costs must be subsidized by the staking economy until JAM runs at capacity and its core allocation economy becomes fully active.
+4. A potential fourth I thought about initially is the DA storage activity, but after further study this is really only indirectly bound by network bandwidth. This 2PB constraint is not a scarcity but design implication.
+
+Benefits of the Three-Way Decoupling
+This decoupling ensures JAM remains accessible and neutral, avoiding alignment with any single user or stakeholder group. 
+Validators share the financial burden of hardware and operational expenses through the staking economy.
+For instance, if both Polkadot and Kusama participate in the staking economy, they could share the $60M/year expense (e.g., proportionally based on market capitalization or another agreed-upon mechanism or metric).
+Sovereign services that own cores (e.g., “gratis” in the GP-0.7 range) can then allocate computational resources to their users. Polkadot for its parachain services and Kusama for its parachain services.
+
+Why I Love This Model
+If two token economies can coexist within this model, many more can as well, creating a truly open and permissionless “world computer” substrate.
+It also scales seamlessly with JAM Grid: two or more sovereign JAMs, each with its own independent storage token and sovereign space, but sharing a broader staking economy. As these independent storage token economies grow and reach capacity, we can expect migration and optimization, where services move to whichever JAM offers the best conditions for their operations.
+
+Potential PR Challenge
+One possible concern is perception: some in the Polkadot and Kusama ecosystems might initially react with a tribal mindset (something I also felt at first I confess). It may take time to fully articulate the benefits, address emotional responses, and foster a constructive conversation around this vision.
+2025-07-25 08:26 gav: Indeed.
+2025-07-25 08:27 emielsebastiaan: “JAM is Space for Sovereign Digital Existence.”
+2025-07-25 08:40 gav: I find it an unlikely contingency that DOT holders would willingly join a network so predisposed to another token.
+2025-07-25 08:40 gav: I think realistically if KSM launches a JAM with its own storage token it'll forever be on its own.
+2025-07-25 08:44 gav: I suspect that the only means of delivering a JAM shared between multiple token economies would be by appealing to the twin drivers of some fair economic disposition (where no founding token economy got a better deal than any other) *and* an improvement in individual prospects (where all founding tokens can see they would do better than if they stayed isolated).
+2025-07-25 08:45 gav: But this is all conjecture; even if there are good arguments, as Emiel points out, there would still be an uphill struggle to get the right PR. [edited]
+2025-07-25 09:08 olanod: > <@gav:polkadot.io> I find it an unlikely contingency that DOT holders would willingly join a network so predisposed to another token.
+
+It's likely and I'm biased because I'm a KSM holder, not DOT. But I still think it's a sensible option. The 2 economies are very intertwined, if one does well so does the other(usually), Kusama would set up JAM first using KSM as the storage token and if new economies are deployed later on the same space is better to not try to change the storage token for a new one. KSM low market cap should make it easier for Polkadot to acquire storage(KSM) ahead of time and if DOT holders don't feel they are getting a good deal Kusama could even offer a large amount(e.g. transfer ownership of the whole treasury) for free.
+2025-07-25 09:08 olanod: A new JAM token might be a hard sale even if it's only used for storage deposits, it will spark heated discussions and panic just like it already happened. We can try hard to show it only as the representation of this finite "natural resource" that won't compete with DOT but it would still be confusing. Perhaps it feels less of a threat if it looks like something else, e.g. an nft-like resource, the storage could be partitioned and each shard is a tradable item that gives me X amount of storage right.
+2025-07-25 09:28 gav: So the economic fact is that it doesn't make sense to amalgamate the representation of a finite resource (storage) with some other functionality (e.g. representation of staking capital or payment currency for cores); by amalgamating you either risk systemic overuse of resources (dangerous for the system), a broken market or systemic underuse of resources (compromising the system's scalability). Or all three. [edited]
+2025-07-25 09:30 gav: It's a sad reflection when sentiment is at a point where technical optimality (or even viability) is expected to be sacrificed in the name of maximalism.
+2025-07-25 09:31 gav: This is not limited to JAM; Polkadot (and Kusama) already suffers from this - arbitrary existential deposits, often cited to me as a comparative failing of Polkadot - are a direct consequence of this amalgamation. [edited]
+2025-07-25 09:36 gav: The storage-deposit economy is likely to be tiny - though it uses up some supply, I find it hard to imagine that Polkadot's ED model contributes (positively) more than a rounding error to its overall economics. However, I expect that because of the sub-optimally high deposit requirements (indeed dramatically so) in usage of not just accounts but things like proxies, that _not_ having a separate token (which would give users optimal pricing) undermines utility and indirectly imposes a far more substantial negative pressure on DOT. [edited]
+2025-07-25 09:42 ascriv: Is it similarly suboptimal to be using dot for both paying for cores and staking? Should we strive for 1-1 mapping functionality->token? Ignoring maximalism 
+2025-07-25 09:43 gav: Well, the question is really whether the underlying tokenomics of one compromise the ability to do the other.
+2025-07-25 09:44 gav: E.g. a currency might just as well be used for purchasing bread as for purchasing a house.
+2025-07-25 09:46 gav: I would argue that the procurement of cores is really just a payment function and perfectly fine to be done in any currency. Of course depending on what the system wanted to do with the proceeds, it might use a DEX soon after if the currency was not one it wanted to hold or burn. But given that it is economically equivalent to having the procurer hold their preferred currency and exchange it for the sale just-in-time, there is no especially strong argument to force core sales to be one currency or another. [edited]
+2025-07-25 09:46 emilkietzman: Can’t this be done with the new decentralized stablecoin from Polkadot?
+2025-07-25 09:48 gav: Staking rewards fall into the same category - it's just payments.
+2025-07-25 09:51 gav: Staking capital is arguably a little different for two reasons:
+
+- Staking is an important security function of the system since it controls who is selected as a validator. Therefore we want to ensure that any token which can be used for staking cannot reasonably be minted, controlled or blocked by a third-party. This precludes centralised stablecoins, and coins whose underlying ownership distribution is murky. That, unfortunately, means a whole lot of crypto.  Furthermore even bridged coins are problematic since this will subject the security of the validator set to the security limits of the bridge, which can will typically be a lot lower than the primary consensus machine.
+- Staking involves holding tokens, effectively reducing the supply in circulation and, all other things equal, driving up price. It can thus be seen as a privilege to bestow on only tokens which as in some way well-aligned to the ideals of the system. [edited]
+2025-07-25 09:56 ascriv: This kind of brings into question the utility of dot or ksm if there’s no reason to force core purchasing or staking to be in any particular token [edited]
+2025-07-25 09:57 gav: Taking these two together, tokens used for the staking capital of a JAM must surely:
+
+- Have their issuance logic be totally algorithmic and with no privileged parties.
+- Have said logic be validated by the JAM for whose staking they be used.
+- Support the need to cover their JAM's security costs, including through dilution as necessary. [edited]
+2025-07-25 09:59 gav: In the case of a single native token on a JAM used for staking, all three are true. [edited]
+2025-07-25 10:01 gav: If the stablecoin is robust enough, then yes I believe so.
+2025-07-25 10:26 ascriv: If we actually have a robust decentralized jam native stablecoin, why have dot or ksm at all? Unless they somehow power the stablecoin in a way I don’t understand 
+2025-07-25 10:27 ascriv: If true it seems to capture the upside a capitalist is incentivized not to own tokens but to own and rent out coretime itself (?)  [edited]
+2025-07-25 12:08 gav: All decentralised stablecoin designs, to be best of my knowledge, require at least one other token to construe their underlying value or measure their value against.
+2025-07-25 13:55 emielsebastiaan: Formatting issues on editing see below. 💩  [edited]
+2025-07-25 14:05 emielsebastiaan: By hard fork enactment of JAM Editoral Board Governance (protocol over network) and general purposeness, openness, permissionlessness and accessibility as broadest and inclusive general value system, sovereignty of JAMs for their first class citizens (services / autonomous software) is best guaranteed. [edited]
+2025-07-25 14:09 emielsebastiaan: So is revisiting alignment of DOT with JAM good? I’d say yes. But Polkadot Governance needs to make a choice on its fate and start believing in what it is capable of - and capitalizing on all the hard work that has been put into Polkadot over the past 8 years. [edited]
+2025-07-25 14:28 emielsebastiaan: > Staking involves holding tokens, effectively reducing the supply in circulation and, all other things equal, driving up price. It can thus be seen as a privilege to bestow on only tokens which as in some way well-aligned to the ideals of the system.
+
+When it comes to storage tokens for individual JAMs within the eventual JAM-grid (with its shared security and multi-stakeholder economic burden sharing), I don’t see them as particularly interesting long term.
+
+While a storage token for a single JAM might be scarce in the short term—potentially encouraging hoarding—the reality is that a JAM costs around $60M/year to operate and does not justify itself until it generates at least that much in revenue.
+
+Only after achieving break-even does it make sense to deploy another JAM, thereby expanding the grid. This additional capacity would increase storage availability and drive down the price of sovereign software space, ultimately reducing the average overall price of storage tokens across the network. 
+
+Autonomous software, acting out of its own microeconomic self-interest, will naturally migrate, and storage hoarding will eventually disappear.
+
+The staking tokens that participate in JAM’s greater competitive staking economy that align best with JAM’s values will accrue most value of all tokens in these economies.
+
+Polkadot (and Kusama) are well positioned to emerge as leaders in this future competitive landscape.
+
+I see this insight as a call to action for both Polkadot and Kusama Governance.
+2025-07-25 14:29 emielsebastiaan: By hard fork enactment of JAM Editoral Board Governance (protocol over network) and general purposeness, openness, permissionlessness and accessibility as broadest and inclusive general value system, sovereignty of JAMs for their first class citizens (services / autonomous software) is best guaranteed.
+2025-07-25 14:29 emielsebastiaan: So is revisiting alignment of DOT with JAM good? I’d say yes. But Polkadot Governance needs to make a choice on its fate and start believing in what it is capable of - and capitalizing on all the hard work that has been put into Polkadot over the past 8 years. [edited]
+2025-07-25 15:01 emielsebastiaan: Although the stable coin discussion is interesting it is primarily a tool at this point to drive down the cost of running a JAM (by decoupling from volatile tokens). 
+
+Which is warranted by the actual expenses happening in meat space. It is mostly a discussion on getting a stable coin design with the right properties emphasizing on sovereignty. Ie where is the stable coin most sovereign. This is also in the interest of both JAM and DOT (and KSM). How it is collateralized is a secondary concern. 
+2025-07-25 15:07 emielsebastiaan: (Polkadot) OpenGov does not provide the same level of sovereignty as JAM Editorial Board Governance and its hard fork friction for enactment of protocol changes.
+If any multichain future or broader Sovereign Digital Future is valued at all even Polkadot should (hopefully or eventually) see the value proposition of this. [edited]
+2025-07-25 15:09 emielsebastiaan: This is the discussion we all should be having if you ask me.
+Trust me I am vested and I am trying to force myself to see the bigger picture. 
+
+End of rant. [edited]
+2025-07-25 15:22 emielsebastiaan: Polkadot should not worry about an comparatively insignificant storage token(s).   Polkadot should not worry about competition in a staking economy.  Polkadot should have confidence in its ability to be a leader in this competitive game. Any other ecosystem joining the JAM substrate will benefit from cross ecosystem interoperability just like free trade (economics) has a Nash equilibrium over autarky. [edited]
+2025-07-25 15:43 emielsebastiaan: I welcome a discussion with stakeholders with different hats on to discover differences in value systems, beliefs and interests and a start of a negotiation for a symbiotic future relationship.  I say this with different hats on: Polkadot Citizen, Kusama Citizen, JAM Implementor, Chief Investment Officer, Ideologist, Futurist, Engineer, Economist, Technologist & Human Being. [edited]
+2025-07-25 18:54 sourabhniyogi: Can we get a polkajam release at 0.6.7 or 0.7.0 next week ... or have an estimate of when can hope for a release in August?  I checked the nightly release just now and it still shows 0.6.6 as in
+
+```
+./polkajam --version
+polkajam 0.1.23
+GP 0.6.6
+```
+
+We are ready now (if we go back to GP 0.6.6, or wait a bit) to compare our implementations recompiler timing and work reports of work package execution against  "--pvm-backend compiler".  This would be with work packages that spend 2-3 billion gas in 2-3s, where our PVM recompiler works on ~40 "numerical recipes in C" type programs up to the allocated refine gas limit and on random payloads (there are many others which run out of heap or maybe stack).
+
+We can report back relative timing within the same testnet hardware on random payloads and are eager to compare recompiler performance on the same work packages compared to polkajam. [edited]
+2025-07-25 19:28 davxy: 0.6.7 is almost ready. We'll ship the client and test vectors very soon [edited]
+2025-07-26 00:36 gav: Did you try porting your "numerical recipes in C" algorithms to Solidity? If you already have a framework for PVM benchmarking and gas-profiling, then it could be interesting to reuse them for EVM gas profiling.
+2025-07-26 00:37 gav: It could help understand how PVM gas compares to EVM gas.
+2025-07-26 00:38 gav: (And potentially other systems' gas also - Solana's SVM and Near's Wasm, for example)
+2025-07-26 00:39 gav: The GP only has pretty vague comparisons made last year on the basis of relatively little data. It's always nice to have more clarity.
+2025-07-26 00:47 sourabhniyogi: We will use `revive` to get started on that finally for these -- it looks easy to dive in and collect this data! [edited]
+2025-07-26 01:00 sourabhniyogi: https://watch.protocol.berlin/65a90bf47932ebe436ba9351/watch?session=68553b9a90bd41297b490a51
+2025-07-26 02:06 gav: Some interesting talks at that conference.

@@ -18,7 +18,7 @@ a:hover{color:#90caf9}
 em{font-style:italic}
 </style>
 <h1>#graypaper:polkadot.io</h1>
-<p><small>last updated 2025-07-25 03:44 UTC</small></p>
+<p><small>last updated 2025-07-26 03:42 UTC</small></p>
 <p><a href='room_log.txt'>⇩ plaintext</a> · <a href='../../'>⇦ all rooms</a></p>
 <hr>
 <div class='msg'><a class='ts' href='#$G0deSwnlYlCrSn5lIFL__hi6bgWVITql5VyahU4bzpI'>#</a> <a class='ts' name='$G0deSwnlYlCrSn5lIFL__hi6bgWVITql5VyahU4bzpI' href='https://matrix.to/#/!ddsEwXlCWnreEGuqXZ:polkadot.io/$G0deSwnlYlCrSn5lIFL__hi6bgWVITql5VyahU4bzpI' target='_blank'>2024-04-17 20:29</a>&ensp;<span class='u' style='color:#da6aa2'>syed</span>: <a href="https://matrix.to/#/!hyzRkDqDthePbodYFz:parity.io/$f_DMsIEcDXZegw6Sabnehzc-LrdDQkmq5MbxDDyoZxY?via=parity.io&amp;via=web3.foundation" rel="noopener" target="_blank">https://matrix.to/#/!hyzRkDqDthePbodYFz:parity.io/$f_DMsIEcDXZegw6Sabnehzc-LrdDQkmq5MbxDDyoZxY?via=parity.io&amp;via=web3.foundation</a>
@@ -6400,3 +6400,6 @@ P.S. This observation comes from analyzing the following PolkaVM trace:
 <a href="https://github.com/davxy/jam-stuff/blob/main/pvm-traces/0.6.6/reports-l0-00000005.log" rel="noopener" target="_blank">https://github.com/davxy/jam-stuff/blob/main/pvm-traces/0.6.6/reports-l0-00000005.log</a>
 that was provided in this task:
 <a href="https://github.com/davxy/jam-test-vectors/issues/83" rel="noopener" target="_blank">https://github.com/davxy/jam-test-vectors/issues/83</a> <span class="edited">(edited)</span></div>
+<div class='msg'><a class='ts' href='#$xcOfYxgx6XxWerTVmFS4dxCuAnY2F_ge8J-ihCfIdeY'>#</a> <a class='ts' name='$xcOfYxgx6XxWerTVmFS4dxCuAnY2F_ge8J-ihCfIdeY' href='https://matrix.to/#/!ddsEwXlCWnreEGuqXZ:polkadot.io/$xcOfYxgx6XxWerTVmFS4dxCuAnY2F_ge8J-ihCfIdeY' target='_blank'>2025-07-26 00:57</a>&ensp;<span class='u' style='color:#cd8957'>gav</span>: <a href="https://github.com/gavofyork/graypaper/releases/tag/v0.7.1" rel="noopener" target="_blank">Gray Paper version 0.7.1 is out</a>. This one contains most of the pre-planned 0.7 series changes already. The rest of the changes may be dropped or postponed to 0.8; we&#x27;ll see once we have vaguely real services running on the Toaster.
+
+The biggest change with this release is to combine <code>on_transfer</code> with <code>accumulate</code>, actually reducing the size of the spec and, hopefully, implementation and API complexity. Also introduced is a new privilege, the Registrar, which is able to name the index of newly created services in a newly cordoned AccountId space (the lower 16 bits). <span class="edited">(edited)</span></div>
