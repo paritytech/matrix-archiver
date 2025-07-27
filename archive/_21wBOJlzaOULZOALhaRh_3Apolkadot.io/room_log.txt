@@ -1,5 +1,5 @@
 # room: #jam:polkadot.io
-# exported: 2025-07-26 03:41 UTC
+# exported: 2025-07-27 03:46 UTC
 2024-04-20 02:08 johnjiao123: 
 2024-04-20 02:09 johnjiao123: 
 2024-05-30 21:48 nradko: Hey everyone,
@@ -9947,6 +9947,7 @@ So I'm honestly not sure what's going on here. Does the JamZig fuzzer compare ou
 Just released a new version: https://github.com/jamzig/conformance-releases 
 
 Fuzzer genesis state now begins with authentication queues filled with 0x0 which should match your expected output.
+  ↳ 2025-07-26 17:05 oliver.tale-yazdi: GrayMatter passes it now, thanks
 2025-07-21 18:54 emielsebastiaan: What’s the plan for JAM and Kusama?
 
 With Referendum 682, Polkadot governance signaled support for a future where the Polkadot relay chain is replaced by JAM. (https://polkadot.polkassembly.io/referenda/682)
@@ -10216,6 +10217,6 @@ We can report back relative timing within the same testnet hardware on random pa
 2025-07-26 00:37 gav: It could help understand how PVM gas compares to EVM gas.
 2025-07-26 00:38 gav: (And potentially other systems' gas also - Solana's SVM and Near's Wasm, for example)
 2025-07-26 00:39 gav: The GP only has pretty vague comparisons made last year on the basis of relatively little data. It's always nice to have more clarity.
-2025-07-26 00:47 sourabhniyogi: We will use `revive` to get started on that finally for these -- it looks easy to dive in and collect this data! [edited]
+2025-07-26 00:47 sourabhniyogi: We will use our JAM implementation vs `revmc` to get started on that finally for these -- it looks easy to dive in and collect this data! [edited]
 2025-07-26 01:00 sourabhniyogi: https://watch.protocol.berlin/65a90bf47932ebe436ba9351/watch?session=68553b9a90bd41297b490a51
 2025-07-26 02:06 gav: Some interesting talks at that conference.
