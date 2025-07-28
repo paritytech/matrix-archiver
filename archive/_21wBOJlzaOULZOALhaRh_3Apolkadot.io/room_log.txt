@@ -1,5 +1,5 @@
 # room: #jam:polkadot.io
-# exported: 2025-07-27 03:46 UTC
+# exported: 2025-07-28 03:46 UTC
 2024-04-20 02:08 johnjiao123: 
 2024-04-20 02:09 johnjiao123: 
 2024-05-30 21:48 nradko: Hey everyone,
@@ -9948,6 +9948,9 @@ Just released a new version: https://github.com/jamzig/conformance-releases
 
 Fuzzer genesis state now begins with authentication queues filled with 0x0 which should match your expected output.
   ↳ 2025-07-26 17:05 oliver.tale-yazdi: GrayMatter passes it now, thanks
+  ↳ 2025-07-27 15:31 oliver.tale-yazdi: Boy Maas: do you have an idea why this would happen? It is on the first block, and the block references the genesis header.
+  ↳ 2025-07-27 15:31 oliver.tale-yazdi: Screenshot 2025-07-27 at 17.31.21.png
+  ↳ 2025-07-27 17:14 oliver.tale-yazdi: Boy Maas: GrayMatter rejects block with slot 248 when importing blocks from `./jam_conformance_fuzzer -b 1000 --seed 1753635650` with this `ticket useless` error which corresponds to this condition, can you please check whether your authoring logic might include useless tickets in the extrinsic? https://graypaper.fluffylabs.dev/#/9a08063/0f8f010f9a01?v=0.6.6
 2025-07-21 18:54 emielsebastiaan: What’s the plan for JAM and Kusama?
 
 With Referendum 682, Polkadot governance signaled support for a future where the Polkadot relay chain is replaced by JAM. (https://polkadot.polkassembly.io/referenda/682)
@@ -10220,3 +10223,32 @@ We can report back relative timing within the same testnet hardware on random pa
 2025-07-26 00:47 sourabhniyogi: We will use our JAM implementation vs `revmc` to get started on that finally for these -- it looks easy to dive in and collect this data! [edited]
 2025-07-26 01:00 sourabhniyogi: https://watch.protocol.berlin/65a90bf47932ebe436ba9351/watch?session=68553b9a90bd41297b490a51
 2025-07-26 02:06 gav: Some interesting talks at that conference.
+2025-07-27 07:13 shunsukewatanabe: 
+2025-07-27 13:20 dhruv245: Hello Everyone, Is there any ETA for the submission openings?
+2025-07-27 16:27 danicuki: Is there any doc explaining how to generate those keys based on the seed?
+https://docs.jamcha.in/basics/dev-accounts
+
+I tried `subkey` but results differ. Also, the BLS key is not present in those specs. Aren't they being used anymore? 
+2025-07-27 17:05 gav: > <@dhruv245:matrix.org> Hello Everyone, Is there any ETA for the submission openings?
+
+I’m happy for trams to be submitting implementations of the most recent published GP at the time of submission. That said I think it’s probably only sensible to be submitting once we have test vectors with 0.7.1 data. 
+2025-07-27 17:05 gav: We’ll discuss it this week. 
+2025-07-27 17:09 oliver.tale-yazdi: The JIP 5 is linked at the top of the page 😄 https://github.com/polkadot-fellows/JIPs/pull/2 If you find discrepancies then please report them
+2025-07-27 17:15 danicuki: I don't see any discrepancy. I just couldn't figure out how these keys were generated. The key generator I tried here don't return the same priv / pub keys using the same seeds. e.g. for bandersnatch, we are using the ark\_vrf lib:
+
+```
+use ark_vrf::{reexports::ark_ff::PrimeField, ScalarField, Secret};
+use crate::types::Bandersnatch as S;
+
+fn generate_secret_from_seed(seed: Vec<u8>) -> NifResult<(SecretBridge<S>, PublicBridge<S>)> {
+    let secret = Secret::from_seed(&seed);
+    let public = secret.public();
+    Ok((secret.into(), public.into()))
+}
+```
+
+Eg: how do I get the key
+seed: 0x0000000000000000000000000000000000000000000000000000000000000000
+ed25519_secret_seed: 0x996542becdf1e78278dc795679c825faca2e9ed2bf101bf3c4a236d3ed79cf59
+ [edited]
+2025-07-27 22:51 clearloop: what about the testnet, will work package related stuffs, network + VM, extrinsic, data layer (segments) being required for joining the testnet, hope there will be sort of pre-requirements /checking list for joining the testnet that we can prepare for it more specifically ! [edited]
