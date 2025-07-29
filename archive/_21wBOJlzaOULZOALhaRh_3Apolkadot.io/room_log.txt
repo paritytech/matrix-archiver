@@ -1,5 +1,5 @@
 # room: #jam:polkadot.io
-# exported: 2025-07-28 03:46 UTC
+# exported: 2025-07-29 03:46 UTC
 2024-04-20 02:08 johnjiao123: 
 2024-04-20 02:09 johnjiao123: 
 2024-05-30 21:48 nradko: Hey everyone,
@@ -9950,7 +9950,9 @@ Fuzzer genesis state now begins with authentication queues filled with 0x0 which
   ↳ 2025-07-26 17:05 oliver.tale-yazdi: GrayMatter passes it now, thanks
   ↳ 2025-07-27 15:31 oliver.tale-yazdi: Boy Maas: do you have an idea why this would happen? It is on the first block, and the block references the genesis header.
   ↳ 2025-07-27 15:31 oliver.tale-yazdi: Screenshot 2025-07-27 at 17.31.21.png
-  ↳ 2025-07-27 17:14 oliver.tale-yazdi: Boy Maas: GrayMatter rejects block with slot 248 when importing blocks from `./jam_conformance_fuzzer -b 1000 --seed 1753635650` with this `ticket useless` error which corresponds to this condition, can you please check whether your authoring logic might include useless tickets in the extrinsic? https://graypaper.fluffylabs.dev/#/9a08063/0f8f010f9a01?v=0.6.6
+  ↳ 2025-07-27 17:14 oliver.tale-yazdi: Boy Maas: GrayMatter rejects block with slot 248 when importing tiny blocks from `./jam_conformance_fuzzer -b 1000 --seed 1753635650` with this `ticket useless` error which corresponds to this condition, can you please check whether your authoring logic might include useless tickets in the extrinsic? https://graypaper.fluffylabs.dev/#/9a08063/0f8f010f9a01?v=0.6.6 [edited]
+  ↳ 2025-07-28 16:31 vinsystems: Hi Boy Maas: Could you please check if the fuzzer is applying the condition `i = Ha` [from Eq. 6.16](https://graypaper.fluffylabs.dev/#/1c979cb/0e77010e7801?v=0.7.1)?
+If I ignore this condition, I match the state root result from all the fuzzed blocks (around 7,000 so far). I updated the vinwolf-target binaries in [my repo](https://github.com/bloppan/conformance_testing) [edited]
 2025-07-21 18:54 emielsebastiaan: What’s the plan for JAM and Kusama?
 
 With Referendum 682, Polkadot governance signaled support for a future where the Polkadot relay chain is replaced by JAM. (https://polkadot.polkassembly.io/referenda/682)
