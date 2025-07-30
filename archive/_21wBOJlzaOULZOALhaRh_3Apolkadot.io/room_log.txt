@@ -1,5 +1,5 @@
 # room: #jam:polkadot.io
-# exported: 2025-07-29 03:46 UTC
+# exported: 2025-07-30 03:45 UTC
 2024-04-20 02:08 johnjiao123: 
 2024-04-20 02:09 johnjiao123: 
 2024-05-30 21:48 nradko: Hey everyone,
@@ -9953,6 +9953,12 @@ Fuzzer genesis state now begins with authentication queues filled with 0x0 which
   ↳ 2025-07-27 17:14 oliver.tale-yazdi: Boy Maas: GrayMatter rejects block with slot 248 when importing tiny blocks from `./jam_conformance_fuzzer -b 1000 --seed 1753635650` with this `ticket useless` error which corresponds to this condition, can you please check whether your authoring logic might include useless tickets in the extrinsic? https://graypaper.fluffylabs.dev/#/9a08063/0f8f010f9a01?v=0.6.6 [edited]
   ↳ 2025-07-28 16:31 vinsystems: Hi Boy Maas: Could you please check if the fuzzer is applying the condition `i = Ha` [from Eq. 6.16](https://graypaper.fluffylabs.dev/#/1c979cb/0e77010e7801?v=0.7.1)?
 If I ignore this condition, I match the state root result from all the fuzzed blocks (around 7,000 so far). I updated the vinwolf-target binaries in [my repo](https://github.com/bloppan/conformance_testing) [edited]
+  ↳ 2025-07-29 13:21 aang114: > Just released a new version: https://github.com/jamzig/conformance-releases
+> 
+> Fuzzer genesis state now begins with authentication queues filled with 0x0 which should match your expected output.
+
+
+Boy Maas | JamZig: Gossamer-Jam passes it now as well. Thanks 
 2025-07-21 18:54 emielsebastiaan: What’s the plan for JAM and Kusama?
 
 With Referendum 682, Polkadot governance signaled support for a future where the Polkadot relay chain is replaced by JAM. (https://polkadot.polkassembly.io/referenda/682)
@@ -10254,3 +10260,31 @@ seed: 0x0000000000000000000000000000000000000000000000000000000000000000
 ed25519_secret_seed: 0x996542becdf1e78278dc795679c825faca2e9ed2bf101bf3c4a236d3ed79cf59
  [edited]
 2025-07-27 22:51 clearloop: what about the testnet, will work package related stuffs, network + VM, extrinsic, data layer (segments) being required for joining the testnet, hope there will be sort of pre-requirements /checking list for joining the testnet that we can prepare for it more specifically ! [edited]
+2025-07-29 18:05 davxy: I'd like to start sharing some results from our fuzzer against public targets developed by other teams.
+
+I'll be publishing a few of the failing traces in the [jam-stuff](https://github.com/davxy/jam-stuff/tree/main/fuzz-reports/) repository.  
+As you can imagine, I won't be doing deep triage on each individual bug - especially because **this effort is not (yet) part of the official implementation audits** - debugging every implementation could easily become a full-time job 🙂.  
+That said, I’m happy to help where I can (e.g., share reports, PVM traces, etc.).
+
+Each report includes:
+- The step that caused the target to produce a different root compared to the expected one.
+- The step immediately before that (or genesis, if the failure happened on the first block), since some implementations may find useful to have the previous block header on initialization.
+- A textual report showing the state diff between the fuzzer and the target, plus some extra info.
+
+For now, I’ve run the fuzzer against **jampy**, **vinwolf**, and **jamzig**.  
+If other teams want me to run the fuzzer against their target, just share a ready to use binary in a repo.
+
+The folder name for each report is generated from the `PeerInfo` your target shares with the fuzzer during the handshake.
+
+For any discussion and improvement, please open an issue in the repository.  
+We can have one issue per implementation to keep things organized. I'll try to keep up - but no guarantees for quick sync responses 🙂 [edited]
+2025-07-29 18:06 jaymansfield: Which GP version is it targeting?
+2025-07-29 18:06 davxy: Oh, 0.6.6 for now. We'll be ready for 0.6.7 stuff this week [edited]
+2025-07-29 18:12 jaymansfield: Ok thanks. Can share a JavaJAM 0.6.7 build with fuzzer support once you are ready I can push it out anytime. Have too many changes incorporated to go back to 0.6.6 for now. 
+2025-07-29 18:13 ascriv: I think it makes sense to have publish the fuzzer binary to help with iteration speed, what do you think @davxy ?
+2025-07-29 18:17 davxy: Since no one wants to lose their mind over this, I think it’s a sensible idea. I’ll bring it up with the team this week
+2025-07-29 18:28 sourabhniyogi: If we can jump from 0.6.7 to 0.7.1 and skip over 0.7.0 (and make a habit of skipping like this), I think it will save a lot of us a lot of work.
+2025-07-29 18:31 sourabhniyogi: Having the polkajam binary massively improved our iteration speed and got us to work report correctness (in the sense of matching thus guaranteeding) in ways I don't think would have been possible without it.  Having the fuzzer binary published alongside it will do the same, probably.  We can also publish our own fuzzer binary .. once we have 0.6.7 polkajam alignment and traces alignment. [edited]
+2025-07-29 21:09 sourabhniyogi: Yes, pls share your 0.6.7 build with fuzzer support [we are in the same state] and if you can, your 0.6.7 traces -- we'll do the same and if we can, do a "fuzz-reports" output in the same style as davxy 's report!
+  ↳ 2025-07-30 01:52 jaymansfield: I pushed a new set of traces for 0.6.7 here https://github.com/javajamio/javajam-trace
+  ↳ 2025-07-30 01:53 jaymansfield: and a new JavaJAM build for 0.6.7 https://github.com/javajamio/javajam-releases
