@@ -18,7 +18,7 @@ a:hover{color:#90caf9}
 em{font-style:italic}
 </style>
 <h1>#jam:polkadot.io</h1>
-<p><small>last updated 2025-07-30 03:45 UTC</small></p>
+<p><small>last updated 2025-07-31 03:45 UTC</small></p>
 <p><a href='room_log.txt'>⇩ plaintext</a> · <a href='../../'>⇦ all rooms</a></p>
 <hr>
 <div class='msg'><a class='ts' href='#$we4SYXTHwmKn094X9Zs_7mWUOoUVh4icvVdxD83RZfs'>#</a> <a class='ts' name='$we4SYXTHwmKn094X9Zs_7mWUOoUVh4icvVdxD83RZfs' href='https://matrix.to/#/!wBOJlzaOULZOALhaRh:polkadot.io/$we4SYXTHwmKn094X9Zs_7mWUOoUVh4icvVdxD83RZfs' target='_blank'>2024-04-20 02:08</a>&ensp;<span class='u' style='color:#d0709e'>johnjiao123</span>: </div>
@@ -10196,3 +10196,29 @@ We can have one issue per implementation to keep things organized. I&#x27;ll try
 <div class='msg'><a class='ts' href='#$lwnuq8oqiMcFt31N4s5bEitG0x3mB6k-KN10NhvS9JI'>#</a> <a class='ts' name='$lwnuq8oqiMcFt31N4s5bEitG0x3mB6k-KN10NhvS9JI' href='https://matrix.to/#/!wBOJlzaOULZOALhaRh:polkadot.io/$lwnuq8oqiMcFt31N4s5bEitG0x3mB6k-KN10NhvS9JI' target='_blank'>2025-07-29 21:09</a>&ensp;<span class='u' style='color:#c67452'>sourabhniyogi</span>: Yes, pls share your 0.6.7 build with fuzzer support [we are in the same state] and if you can, your 0.6.7 traces -- we&#x27;ll do the same and if we can, do a &quot;fuzz-reports&quot; output in the same style as davxy &#x27;s report!</div>
 <div class='msg reply'><a class='ts' href='#$L0n2-2CVbUrgpr3t0B9n6U803luwZXtzD4Nm9lZ7cU8'>#</a> <a class='ts' name='$L0n2-2CVbUrgpr3t0B9n6U803luwZXtzD4Nm9lZ7cU8' href='https://matrix.to/#/!wBOJlzaOULZOALhaRh:polkadot.io/$L0n2-2CVbUrgpr3t0B9n6U803luwZXtzD4Nm9lZ7cU8' target='_blank'>2025-07-30 01:52</a>&ensp;<span class='u' style='color:#d470bf'>jaymansfield</span>: I pushed a new set of traces for 0.6.7 here <a href="https://github.com/javajamio/javajam-trace" rel="noopener" target="_blank">https://github.com/javajamio/javajam-trace</a></div>
 <div class='msg reply'><a class='ts' href='#$01euMcRuHrBHVnFVf2HNEVcZzmnCV0pxMbqJBBU4Z1A'>#</a> <a class='ts' name='$01euMcRuHrBHVnFVf2HNEVcZzmnCV0pxMbqJBBU4Z1A' href='https://matrix.to/#/!wBOJlzaOULZOALhaRh:polkadot.io/$01euMcRuHrBHVnFVf2HNEVcZzmnCV0pxMbqJBBU4Z1A' target='_blank'>2025-07-30 01:53</a>&ensp;<span class='u' style='color:#d470bf'>jaymansfield</span>: and a new JavaJAM build for 0.6.7 <a href="https://github.com/javajamio/javajam-releases" rel="noopener" target="_blank">https://github.com/javajamio/javajam-releases</a></div>
+<div class='msg reply'><a class='ts' href='#$efdVzFJ69F3I5803kVqJXzHsf-kNQY7VwVmBmC8Q5oM'>#</a> <a class='ts' name='$efdVzFJ69F3I5803kVqJXzHsf-kNQY7VwVmBmC8Q5oM' href='https://matrix.to/#/!wBOJlzaOULZOALhaRh:polkadot.io/$efdVzFJ69F3I5803kVqJXzHsf-kNQY7VwVmBmC8Q5oM' target='_blank'>2025-07-30 13:44</a>&ensp;<span class='u' style='color:#4977cf'>danicuki</span>: here is ours: <a href="https://github.com/jamixir/jamixir-releases" rel="noopener" target="_blank">https://github.com/jamixir/jamixir-releases</a></div>
+<div class='msg reply'><a class='ts' href='#$7QGSjELOJlriOsd69i05BH4PutI5y639QOcO4ijt6yM'>#</a> <a class='ts' name='$7QGSjELOJlriOsd69i05BH4PutI5y639QOcO4ijt6yM' href='https://matrix.to/#/!wBOJlzaOULZOALhaRh:polkadot.io/$7QGSjELOJlriOsd69i05BH4PutI5y639QOcO4ijt6yM' target='_blank'>2025-07-30 18:13</a>&ensp;<span class='u' style='color:#c377dd'>mkchung</span>: <pre><code class=''>11:08:25.356 [error] [ALICE] ❌ Failed to generate TLS identity bundle: {:certificate_creation_failed, &quot;&quot;}
+
+11:08:25.356 [info] [ALICE] 🎭 Starting as validator
+
+11:08:25.508 [info] [ALICE] 🔧 Running in fuzzer environment
+
+11:09:29.028 [info] [ALICE] New fuzzer  connected
+
+11:09:29.031 [info] [ALICE] Peer info: name=jam-duna-fuzzer-v0.1, version=0.6.7, protocol=0.6.7
+
+11:09:29.032 [error] Task #PID&lt;0.203.0&gt; started from #PID&lt;0.202.0&gt; terminating
+** (UndefinedFunctionError) function Mix.Project.config/0 is undefined (module Mix.Project is not available)
+    Mix.Project.config()
+    (jamixir 0.6.7) lib/meta.ex:2: Jamixir.Meta.app_version/0
+    (jamixir 0.6.7) lib/fuzzer/service.ex:95: Jamixir.Fuzzer.Service.send_peer_info/1
+    (jamixir 0.6.7) lib/fuzzer/service.ex:37: Jamixir.Fuzzer.Service.handle_client/2
+    (elixir 1.17.2) lib/task/supervised.ex:101: Task.Supervised.invoke_mfa/2
+Function: #Function&lt;0.18238596/0 in Jamixir.Fuzzer.Service.loop_acceptor/2&gt;
+    Args: []
+
+</code></pre>
+danicuki | Jamixir : I think we got errors right after connecting to jamixir</div>
+<div class='msg'><a class='ts' href='#$_UP1ZWDuA0fAuKfc23s7qvoWrbEYXe0ZBQVB4CAWYjs'>#</a> <a class='ts' name='$_UP1ZWDuA0fAuKfc23s7qvoWrbEYXe0ZBQVB4CAWYjs' href='https://matrix.to/#/!wBOJlzaOULZOALhaRh:polkadot.io/$_UP1ZWDuA0fAuKfc23s7qvoWrbEYXe0ZBQVB4CAWYjs' target='_blank'>2025-07-30 18:16</a>&ensp;<span class='u' style='color:#52b0cd'>advatar</span>: Does anyone have a full implementation of 0.7.1 up and running?</div>
+<div class='msg'><a class='ts' href='#$zy3YcrY_papkhhdFRkl0pFbtV4LSlYGxw16KdXIMrTM'>#</a> <a class='ts' name='$zy3YcrY_papkhhdFRkl0pFbtV4LSlYGxw16KdXIMrTM' href='https://matrix.to/#/!wBOJlzaOULZOALhaRh:polkadot.io/$zy3YcrY_papkhhdFRkl0pFbtV4LSlYGxw16KdXIMrTM' target='_blank'>2025-07-30 19:08</a>&ensp;<span class='u' style='color:#c67452'>sourabhniyogi</span>: Jason | JavaJAM: We successfully passed your 0.6.7 traces <a href="https://github.com/javajamio/javajam-trace/tree/5297d62c8634017151acbf36d1ad65d81d5b0465/stf/state_transitions" rel="noopener" target="_blank">here</a> happily, thank you for posting.  Everyone else, if you&#x27;re hungry for 0.6.7 traces vectors, recommend you check them out!</div>
+<div class='msg'><a class='ts' href='#$mHVS-WwI9nII1nkKY3a6JK_MpwOQ2BnprUjyvM7Rwuc'>#</a> <a class='ts' name='$mHVS-WwI9nII1nkKY3a6JK_MpwOQ2BnprUjyvM7Rwuc' href='https://matrix.to/#/!wBOJlzaOULZOALhaRh:polkadot.io/$mHVS-WwI9nII1nkKY3a6JK_MpwOQ2BnprUjyvM7Rwuc' target='_blank'>2025-07-30 20:49</a>&ensp;<span class='u' style='color:#52b0cd'>advatar</span>: No?</div>

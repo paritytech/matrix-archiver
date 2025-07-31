@@ -1,5 +1,5 @@
 # room: #jam:polkadot.io
-# exported: 2025-07-30 03:45 UTC
+# exported: 2025-07-31 03:45 UTC
 2024-04-20 02:08 johnjiao123: 
 2024-04-20 02:09 johnjiao123: 
 2024-05-30 21:48 nradko: Hey everyone,
@@ -10288,3 +10288,30 @@ We can have one issue per implementation to keep things organized. I'll try to k
 2025-07-29 21:09 sourabhniyogi: Yes, pls share your 0.6.7 build with fuzzer support [we are in the same state] and if you can, your 0.6.7 traces -- we'll do the same and if we can, do a "fuzz-reports" output in the same style as davxy 's report!
   ↳ 2025-07-30 01:52 jaymansfield: I pushed a new set of traces for 0.6.7 here https://github.com/javajamio/javajam-trace
   ↳ 2025-07-30 01:53 jaymansfield: and a new JavaJAM build for 0.6.7 https://github.com/javajamio/javajam-releases
+  ↳ 2025-07-30 13:44 danicuki: here is ours: https://github.com/jamixir/jamixir-releases
+  ↳ 2025-07-30 18:13 mkchung: ```
+11:08:25.356 [error] [ALICE] ❌ Failed to generate TLS identity bundle: {:certificate_creation_failed, ""}
+
+11:08:25.356 [info] [ALICE] 🎭 Starting as validator
+
+11:08:25.508 [info] [ALICE] 🔧 Running in fuzzer environment
+
+11:09:29.028 [info] [ALICE] New fuzzer  connected
+
+11:09:29.031 [info] [ALICE] Peer info: name=jam-duna-fuzzer-v0.1, version=0.6.7, protocol=0.6.7
+
+11:09:29.032 [error] Task #PID<0.203.0> started from #PID<0.202.0> terminating
+** (UndefinedFunctionError) function Mix.Project.config/0 is undefined (module Mix.Project is not available)
+    Mix.Project.config()
+    (jamixir 0.6.7) lib/meta.ex:2: Jamixir.Meta.app_version/0
+    (jamixir 0.6.7) lib/fuzzer/service.ex:95: Jamixir.Fuzzer.Service.send_peer_info/1
+    (jamixir 0.6.7) lib/fuzzer/service.ex:37: Jamixir.Fuzzer.Service.handle_client/2
+    (elixir 1.17.2) lib/task/supervised.ex:101: Task.Supervised.invoke_mfa/2
+Function: #Function<0.18238596/0 in Jamixir.Fuzzer.Service.loop_acceptor/2>
+    Args: []
+
+```
+danicuki | Jamixir : I think we got errors right after connecting to jamixir
+2025-07-30 18:16 advatar: Does anyone have a full implementation of 0.7.1 up and running?
+2025-07-30 19:08 sourabhniyogi: Jason | JavaJAM: We successfully passed your 0.6.7 traces [here](https://github.com/javajamio/javajam-trace/tree/5297d62c8634017151acbf36d1ad65d81d5b0465/stf/state_transitions) happily, thank you for posting.  Everyone else, if you're hungry for 0.6.7 traces vectors, recommend you check them out!
+2025-07-30 20:49 advatar: No?

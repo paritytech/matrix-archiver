@@ -1,5 +1,5 @@
 # room: #graypaper:polkadot.io
-# exported: 2025-07-30 03:46 UTC
+# exported: 2025-07-31 03:45 UTC
 2024-04-17 20:29 syed: https://matrix.to/#/!hyzRkDqDthePbodYFz:parity.io/$f_DMsIEcDXZegw6Sabnehzc-LrdDQkmq5MbxDDyoZxY?via=parity.io&via=web3.foundation
 
 2024-04-17 20:29 syed: 
@@ -6411,3 +6411,28 @@ https://github.com/davxy/jam-test-vectors/issues/83 [edited]
 2025-07-26 00:57 gav: [Gray Paper version 0.7.1 is out](https://github.com/gavofyork/graypaper/releases/tag/v0.7.1). This one contains most of the pre-planned 0.7 series changes already. The rest of the changes may be dropped or postponed to 0.8; we'll see once we have vaguely real services running on the Toaster.
 
 The biggest change with this release is to combine `on_transfer` with `accumulate`, actually reducing the size of the spec and, hopefully, implementation and API complexity. Also introduced is a new privilege, the Registrar, which is able to name the index of newly created services in a newly cordoned AccountId space (the lower 16 bits). [edited]
+2025-07-30 09:01 prematurata: I've a question about B.11. what is bold_o in the fetch? I can't seem to find a reference 
+  ↳ 2025-07-30 10:04 0xjunha: Good catch - that should be bold_i for accumulate input, I updated that from bold_o to bold_i but missed updating FETCH https://github.com/gavofyork/graypaper/pull/465
+  ↳ 2025-07-30 10:04 0xjunha: Opened a PR to fix it - https://github.com/gavofyork/graypaper/pull/479
+  ↳ 2025-07-30 11:21 prematurata: thanks!!
+2025-07-30 23:08 sourabhniyogi: In comparing PVM gas vs EVM gas (and for a bit more than funsies, throwing geth's evm interpreter into our implementation and wiring up Go StateDB interface) and seeing how modular JAM is in its PVM invocations to refine/accumulate, it's clear that JAM can totally support other VMs besides PVM -- so long as JAM guarantors+auditors/validators measure gas/work the exact same way and take in argument inputs/outputs according to whatever the VM's interfaces are, I think we can transplant multiple non-PVM VMs into JAM -- good idea or no?
+
+In principle, GP could split off Appendix A (the PVM) from GP (and like grandpa/bls/bandersnatch) incorporate by reference and make JAM agnostic to its VM, and describe JAM VM-specific interfaces in separate JAM+PVM, JAM+EVM, JAM+whatever VM papers (or JIPs).   You could have CorePVM service running PVM refine/accumulate, CoreEVM running EVM refine/accumulate, Core{whatever}VM running whateverVM refine/accumulate.  Instead of "JAM can run any VM that people want so long as it’s PVM” 😀   it can be "JAM can run any VM people so long as it runs on gas".
+
+The reason _against_ doing so is that PVM's recompilation and RISC-V choice is technically the best option!   Having done a basic recompiler, we now see directly how recompiling PVM to X86 (and surely, ARM) wins a truly massive performance gain over the PVM interpreter -- so no debate there!
+
+But other VMs can also map into X86 (or ARM) in the same way and get similar truly massive performance gains: `revmc` does it for EVM, and its clear a non-PVM JAM path could be based on that or something similar for EVM (and probably other non-PVM VMs).  Once we compare X86 to X86 wall clock times, the differences between these VMs are bound to be more like the difference between QWERTY vs non-QWERTY keyboards: people will use Solidity/Remix/solc over Rust/polkatool/revive just because its familiar, not because its actually the best option.
+
+What is the reason for tying JAM solely to PVM?  Could we chart a more open course?  If not, what did I miss? [edited]
+2025-07-30 23:27 clearloop: I think too many translations are over complicating the problem and endless of maintenance, if I'm not mistaken, we can simply run a VM in builders and wrap the result to the extrinsic data of work packages
+2025-07-30 23:29 xlchen: the main thing is actually working gas model. PVM is designed in such way that the gas consumption actually reflect the resource usage. EVM gas is not the case
+2025-07-30 23:37 clearloop: my idea is that builders holding VMs for executing any programs, host a service for charging fees, users can get the execution data from refine context and doing pending stuffs, the translation solutions are more like for non-JAM arch, e.g. PVM out of JAM
+2025-07-30 23:46 sourabhniyogi: I probably learned the wrong lesson here from the 3 snippets [here](https://forum.polkadot.network/t/announcing-polkavm-a-new-risc-v-based-vm-for-smart-contracts-and-possibly-more/3811#appendix-bonus-section-or-why-does-it-smell-like-gas-here-18) where Jan's point in 
+```
+Snippet 1: 6ms
+Snippet 2: 114ms
+Snippet 3: 10ms
+```  
+was that not even PVM can get it right -- thus we need to have a new mechanism considering whether observed wall clock times are close to expected "average" times to steer away from "Snippet 2" situations.   You appear to believe PVM has it right, and I don't know about that...
+2025-07-30 23:51 xlchen: the whole point is accurate gas measuring is hard. but that's the exact reason why pvm gas system is not yet out
+2025-07-31 00:47 sourabhniyogi: I believe the solution, whenever it comes out, will be at the JAM level rather than VM-specific, which is a happy outcome because I think JAM's innovations here are not wholly dependent on PVM at all.
