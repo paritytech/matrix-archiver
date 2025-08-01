@@ -18,7 +18,7 @@ a:hover{color:#90caf9}
 em{font-style:italic}
 </style>
 <h1>#graypaper:polkadot.io</h1>
-<p><small>last updated 2025-07-31 03:45 UTC</small></p>
+<p><small>last updated 2025-08-01 03:49 UTC</small></p>
 <p><a href='room_log.txt'>⇩ plaintext</a> · <a href='../../'>⇦ all rooms</a></p>
 <hr>
 <div class='msg'><a class='ts' href='#$G0deSwnlYlCrSn5lIFL__hi6bgWVITql5VyahU4bzpI'>#</a> <a class='ts' name='$G0deSwnlYlCrSn5lIFL__hi6bgWVITql5VyahU4bzpI' href='https://matrix.to/#/!ddsEwXlCWnreEGuqXZ:polkadot.io/$G0deSwnlYlCrSn5lIFL__hi6bgWVITql5VyahU4bzpI' target='_blank'>2024-04-17 20:29</a>&ensp;<span class='u' style='color:#da6aa2'>syed</span>: <a href="https://matrix.to/#/!hyzRkDqDthePbodYFz:parity.io/$f_DMsIEcDXZegw6Sabnehzc-LrdDQkmq5MbxDDyoZxY?via=parity.io&amp;via=web3.foundation" rel="noopener" target="_blank">https://matrix.to/#/!hyzRkDqDthePbodYFz:parity.io/$f_DMsIEcDXZegw6Sabnehzc-LrdDQkmq5MbxDDyoZxY?via=parity.io&amp;via=web3.foundation</a>
@@ -6427,3 +6427,16 @@ Snippet 3: 10ms
 was that not even PVM can get it right -- thus we need to have a new mechanism considering whether observed wall clock times are close to expected &quot;average&quot; times to steer away from &quot;Snippet 2&quot; situations.   You appear to believe PVM has it right, and I don&#x27;t know about that...</div>
 <div class='msg'><a class='ts' href='#$tGIY7Gcg37DOA4PE5B3rs09Yqs46MVLQnKrQ-K58xqM'>#</a> <a class='ts' name='$tGIY7Gcg37DOA4PE5B3rs09Yqs46MVLQnKrQ-K58xqM' href='https://matrix.to/#/!ddsEwXlCWnreEGuqXZ:polkadot.io/$tGIY7Gcg37DOA4PE5B3rs09Yqs46MVLQnKrQ-K58xqM' target='_blank'>2025-07-30 23:51</a>&ensp;<span class='u' style='color:#4cbfa8'>xlchen</span>: the whole point is accurate gas measuring is hard. but that&#x27;s the exact reason why pvm gas system is not yet out</div>
 <div class='msg'><a class='ts' href='#$VAtMO3AAJPTJpcEGl-d7ezMQUQ_GYECdJ7W54LUQ8fo'>#</a> <a class='ts' name='$VAtMO3AAJPTJpcEGl-d7ezMQUQ_GYECdJ7W54LUQ8fo' href='https://matrix.to/#/!ddsEwXlCWnreEGuqXZ:polkadot.io/$VAtMO3AAJPTJpcEGl-d7ezMQUQ_GYECdJ7W54LUQ8fo' target='_blank'>2025-07-31 00:47</a>&ensp;<span class='u' style='color:#c67452'>sourabhniyogi</span>: I believe the solution, whenever it comes out, will be at the JAM level rather than VM-specific, which is a happy outcome because I think JAM&#x27;s innovations here are not wholly dependent on PVM at all.</div>
+<div class='msg'><a class='ts' href='#$-Lxn-emNfv2w8EgaarLSnuYcxrrY2ZH1v5P3QSMJvB8'>#</a> <a class='ts' name='$-Lxn-emNfv2w8EgaarLSnuYcxrrY2ZH1v5P3QSMJvB8' href='https://matrix.to/#/!ddsEwXlCWnreEGuqXZ:polkadot.io/$-Lxn-emNfv2w8EgaarLSnuYcxrrY2ZH1v5P3QSMJvB8' target='_blank'>2025-07-31 14:17</a>&ensp;<span class='u' style='color:#6247cb'>bamzedev</span>: Equation 10.2 defines the verdict age as an element of N₂ (i.e., {0, 1}), and equation 10.3 determines which validator set to use based on comparing the age to ⌊τ/E⌋.
+At epoch transitions (e.g., slot 600 transitioning from epoch 0 to epoch 1), this appears to create a one-slot delay before new validators can have their judgments included in verdicts:
+At slot 600: τ = 599, so ⌊τ/E⌋ = 0
+Valid ages are {0, 1}
+Age 0 → uses κ (epoch 0 validators from prior state)
+Age 1 → uses λ (validators from before epoch 0)
+No age value allows referencing κ&#x27; (the new epoch 1 validators)
+Does this mean:
+Slot 600 might have no verdicts at all, OR
+Epoch 0 validators continue sending judgments into the first slot of epoch 1 (and these can be included with age=0)?
+</div>
+<div class='msg reply'><a class='ts' href='#$NyQ2DRbWgXTh6SceT5yayrrCBWqck-g0EOObxpcPrW0'>#</a> <a class='ts' name='$NyQ2DRbWgXTh6SceT5yayrrCBWqck-g0EOObxpcPrW0' href='https://matrix.to/#/!ddsEwXlCWnreEGuqXZ:polkadot.io/$NyQ2DRbWgXTh6SceT5yayrrCBWqck-g0EOObxpcPrW0' target='_blank'>2025-07-31 14:59</a>&ensp;<span class='u' style='color:#c65779'>dave</span>: This sounds like a misunderstanding of the auditing system. Verdicts/judgments are posted on-chain only if there is a dispute, ie at least one validator thinks a report is faulty. This should be extremely rare, and is likely to happen at least a couple of slots after the disputed report is made available. The first block the epoch 1 validators are responsible for auditing is the one in slot 601, so it doesn&#x27;t matter if they can&#x27;t include a verdict before this.</div>
+<div class='msg reply'><a class='ts' href='#$3SqHUQolyOMJu8NpZE5DoEoHVpOiT5jJVkfqFn3PeT4'>#</a> <a class='ts' name='$3SqHUQolyOMJu8NpZE5DoEoHVpOiT5jJVkfqFn3PeT4' href='https://matrix.to/#/!ddsEwXlCWnreEGuqXZ:polkadot.io/$3SqHUQolyOMJu8NpZE5DoEoHVpOiT5jJVkfqFn3PeT4' target='_blank'>2025-07-31 15:19</a>&ensp;<span class='u' style='color:#6247cb'>bamzedev</span>: thanks</div>

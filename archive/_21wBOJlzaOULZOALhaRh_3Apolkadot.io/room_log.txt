@@ -1,5 +1,5 @@
 # room: #jam:polkadot.io
-# exported: 2025-07-31 03:45 UTC
+# exported: 2025-08-01 03:49 UTC
 2024-04-20 02:08 johnjiao123: 
 2024-04-20 02:09 johnjiao123: 
 2024-05-30 21:48 nradko: Hey everyone,
@@ -10312,6 +10312,81 @@ Function: #Function<0.18238596/0 in Jamixir.Fuzzer.Service.loop_acceptor/2>
 
 ```
 danicuki | Jamixir : I think we got errors right after connecting to jamixir
+  ↳ 2025-07-31 10:06 danicuki: Thanks for reporting. Just fixed the issue. Could you please retry with the latest updated 0.6.7.tar.gz file? [edited]
+  ↳ 2025-07-31 18:15 mkchung: 
+Pulled the latest build. but still have issues with handshake
+```
+2025/07/31 11:00:09 Handshake failed before test run: failed to jam-decode data for tag 0: [Error From Codec Decode]data length insufficient for string character , type: string, name: Name, tag: name
+```
+you can find more detail here: https://gist.github.com/mkchungs/c623db06b9dd520c3cd37a670258469f. 
 2025-07-30 18:16 advatar: Does anyone have a full implementation of 0.7.1 up and running?
 2025-07-30 19:08 sourabhniyogi: Jason | JavaJAM: We successfully passed your 0.6.7 traces [here](https://github.com/javajamio/javajam-trace/tree/5297d62c8634017151acbf36d1ad65d81d5b0465/stf/state_transitions) happily, thank you for posting.  Everyone else, if you're hungry for 0.6.7 traces vectors, recommend you check them out!
 2025-07-30 20:49 advatar: No?
+2025-07-31 09:18 anish1222: Screenshot 2025-07-31 at 2.48.28 PM.png
+2025-07-31 09:19 anish1222: mail: harpreet@techsteck.com
+2025-07-31 09:21 anish1222: when i am doing KYC i am getting this error why?
+and how can i complete KYC now? kindly help
+  ↳ 2025-07-31 09:25 david: Thanks for bringing this up. Let me share your contact information with the team at the foundation that is handling KYC.   
+  ↳ 2025-07-31 15:22 keegan: Hey guys, I can help with this. Did you submit a JAM delivery recently or what's the reason for KYC?
+2025-07-31 09:43 sukhdev123: Screenshot 2025-07-31 at 3.11.49 PM.png
+2025-07-31 09:43 sukhdev123: mail:9664sukhdevsingh@gmail.com
+2025-07-31 09:44 sukhdev123: During KYC I'm getting this error?
+  ↳ 2025-07-31 10:46 david: I will also share it internally with the team. 
+  ↳ 2025-07-31 15:22 keegan: Hey guys, I can help with this. Did you submit a JAM delivery recently or what's the reason for KYC?
+2025-07-31 11:02 roysingh8368: Hi everyone,
+
+I'm currently working on the Bandersnatch VRF and encountering an issue during the ticket verification process. The extrinsic is failing, and I'm having trouble pinpoint where exactly the problem lies.
+
+Specifically, I'm following Equation 6.29 from the GreyPaper and attempting to verify against the gamma_z ring root of Bandersnatch. However, the verification fails, and I'm not sure where the discrepancy is.
+
+Could someone with experience in Bandersnatch VRF help me debug this? Here’s what I’ve tried so far:
+
+Confirmed the input parameters (e.g., public key, challenge, response) are correctly formatted.
+
+Ensured the gamma_z derivation aligns with the spec.
+
+Any insights or pointers would be greatly appreciated!
+
+2025-07-31 11:03 advatar: Is there some place where I can see which implementations are being worked on and their current protocol version?
+2025-07-31 11:30 rustybot: > <@advatar:matrix.org> Is there some place where I can see which implementations are being worked on and their current protocol version?
+
+Whould be nice to have this info here https://jamcha.in/clients
+  ↳ 2025-07-31 11:51 oliver.tale-yazdi: The original idea was to have Milestones in there, but so far everybody was on zero so it is not show.  
+The information is pulled from here https://graypaper.com/clients/json , (which does contain the milestones) so you can probably propose in that repo to add the GP version here https://github.com/w3f-webops/graypaper-website/blob/b870e97491b92302383e1a3085e23d3ebed5a991/src/data/types.ts#L61
+  ↳ 2025-07-31 11:52 oliver.tale-yazdi: Then I can change the rendering to include the GP version as well
+  ↳ 2025-07-31 11:53 oliver.tale-yazdi: Or we go by a different convention where it just scans a public GitHub repo per project where each project can set its version (like the conformance-release repos that some teams already maintain)
+  ↳ 2025-07-31 11:53 oliver.tale-yazdi: That would probably be less friction and more up-to-date
+2025-07-31 11:32 roysingh8368: > <@roysingh8368:matrix.org> Hi everyone,
+> 
+> I'm currently working on the Bandersnatch VRF and encountering an issue during the ticket verification process. The extrinsic is failing, and I'm having trouble pinpoint where exactly the problem lies.
+> 
+> Specifically, I'm following Equation 6.29 from the GreyPaper and attempting to verify against the gamma_z ring root of Bandersnatch. However, the verification fails, and I'm not sure where the discrepancy is.
+> 
+> Could someone with experience in Bandersnatch VRF help me debug this? Here’s what I’ve tried so far:
+> 
+> Confirmed the input parameters (e.g., public key, challenge, response) are correctly formatted.
+> 
+> Ensured the gamma_z derivation aligns with the spec.
+> 
+> Any insights or pointers would be greatly appreciated!
+
+can anybody help me with this as i'm stuck now.
+2025-07-31 12:18 rustybot: > <@roysingh8368:matrix.org> can anybody help me with this as i'm stuck now.
+
+Have you tried to follow the example here: https://github.com/davxy/bandersnatch-vrf-spec/tree/main/assets/example ?
+2025-07-31 12:49 danicuki: You have to run something like:
+RingVrf.ring\_vrf\_verify(epoch\_root, context, "", ticket\_signature)
+
+context is \<\<$jam\_ticket\_seal + eta2' + attempt>> [edited]
+2025-07-31 12:52 danicuki: I just created a PR to add some  JAM related data to the  ElectricCapital Developer Report (https://www.developerreport.com/). This report methodology required that every team self claim their participation into specific Ecosystems. It is a very weak methodology, but still this is a reference report for the industry. I noticed many missing Polkadot repos in the list - including the Graypaper repo. I strongly suggest that all JAM teams make PRs like this one to make sure we appear strong in the next report that comes out by the end of the year. https://github.com/electric-capital/crypto-ecosystems/pull/2088
+2025-07-31 15:02 ascriv: That would have helped me a lot a few months ago….. 🤦‍♂️ [edited]
+2025-07-31 22:23 shwchg: hey David Emett
+I saw your binary version is updated to 0.6.7
+and we found that our protocol\_parameters length mismatch (we are 136 and you are 134) [edited]
+2025-07-31 22:28 shwchg: and found this when we were running `polkajam-testnet`
+```
+node1: 2025-07-31 20:56:54 main ERROR jam_cli  Error: Chain error: VmEngine(EngineInitializationFailed(Error(Owned("failed to create a worker process (0 already exist): failed to fetch the userfaultfd from the child process: recvfd failed: received zero bytes (root cause: failed to create an userfaultfd: userfaultfd (errno = 1 (EPERM)))"))))
+node0: 2025-07-31 20:56:54 main ERROR jam_cli  Error: Chain error: VmEngine(EngineInitializationFailed(Error(Owned("failed to create a worker process (0 already exist): failed to fetch the userfaultfd from the child process: recvfd failed: received zero bytes (root cause: failed to create an userfaultfd: userfaultfd (errno = 1 (EPERM)))"))))
+node4: 2025-07-31 20:56:54 main ERROR jam_cli  Error: Chain error: VmEngine(EngineInitializationFailed(Error(Owned("failed to create a worker process (0 already exist): failed to fetch the userfaultfd from the child process: recvfd failed: received zero bytes (root cause: failed to create an userfaultfd: userfaultfd (errno = 1 (EPERM)))"))))
+```
+2025-07-31 23:43 olanod: Hi there! hoping to gather some feedback/thoughts on this early stage idea of [**Kunekt** a JAM-native real-time collaboration protocol](https://forum.polkadot.network/t/kunekt-jam-native-real-time-collaboration-protocol/14153). Our team that focuses on building tech to on-boarding real-world organizations as DAOs, in the pre-JAM era we (ab)use the Matrix protocol as part of our stack to give orgs the ability to store encrypted private data, collaborate and do off-chain computation. I believe JAM can evolve our stack and remove the need for our Matrix dependency with a protocol like Kunekt to serve most needs for collaboration and privacy of organizations, it would be a protocol that I hope compliments well other JAM services like parachains instead of competing with them :)
