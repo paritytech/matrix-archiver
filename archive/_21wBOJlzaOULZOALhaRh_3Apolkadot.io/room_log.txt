@@ -1,5 +1,5 @@
 # room: #jam:polkadot.io
-# exported: 2025-08-01 03:49 UTC
+# exported: 2025-08-02 03:40 UTC
 2024-04-20 02:08 johnjiao123: 
 2024-04-20 02:09 johnjiao123: 
 2024-05-30 21:48 nradko: Hey everyone,
@@ -10328,6 +10328,9 @@ you can find more detail here: https://gist.github.com/mkchungs/c623db06b9dd520c
 and how can i complete KYC now? kindly help
   ↳ 2025-07-31 09:25 david: Thanks for bringing this up. Let me share your contact information with the team at the foundation that is handling KYC.   
   ↳ 2025-07-31 15:22 keegan: Hey guys, I can help with this. Did you submit a JAM delivery recently or what's the reason for KYC?
+  ↳ 2025-08-01 11:10 anish1222: Screenshot 2025-08-01 at 4.40.01 PM.png
+  ↳ 2025-08-01 11:11 anish1222: while i am completing KYC i am getting that error
+  ↳ 2025-08-01 13:40 keegan: thx Anish Gajbhare our compliance team will reach out to you via email.
 2025-07-31 09:43 sukhdev123: Screenshot 2025-07-31 at 3.11.49 PM.png
 2025-07-31 09:43 sukhdev123: mail:9664sukhdevsingh@gmail.com
 2025-07-31 09:44 sukhdev123: During KYC I'm getting this error?
@@ -10390,3 +10393,126 @@ node0: 2025-07-31 20:56:54 main ERROR jam_cli  Error: Chain error: VmEngine(Engi
 node4: 2025-07-31 20:56:54 main ERROR jam_cli  Error: Chain error: VmEngine(EngineInitializationFailed(Error(Owned("failed to create a worker process (0 already exist): failed to fetch the userfaultfd from the child process: recvfd failed: received zero bytes (root cause: failed to create an userfaultfd: userfaultfd (errno = 1 (EPERM)))"))))
 ```
 2025-07-31 23:43 olanod: Hi there! hoping to gather some feedback/thoughts on this early stage idea of [**Kunekt** a JAM-native real-time collaboration protocol](https://forum.polkadot.network/t/kunekt-jam-native-real-time-collaboration-protocol/14153). Our team that focuses on building tech to on-boarding real-world organizations as DAOs, in the pre-JAM era we (ab)use the Matrix protocol as part of our stack to give orgs the ability to store encrypted private data, collaborate and do off-chain computation. I believe JAM can evolve our stack and remove the need for our Matrix dependency with a protocol like Kunekt to serve most needs for collaboration and privacy of organizations, it would be a protocol that I hope compliments well other JAM services like parachains instead of competing with them :)
+2025-08-01 03:51 gav: Yes, definitely. 
+2025-08-01 03:51 gav: Just the sort of thing which we should be exploring. 
+2025-08-01 03:59 gav: While Kusama governance has not yet made an decision wrt JAM, it occurs to me that one way forward (assuming Kusama and Polkadot do not cohabit) would be to have Kusama run a smaller JAM (perhaps just 32-core) with shorter block time, perhaps as short as 1 second depending on the results of Toaster experiments. Such a small JAM will reduce overall validator costs (assuming $4k/node and PoP-based nomination with a modest lottery, the issuance-based fallback would only need to be around $6m/year, offset by core rental). The lower blocktime would result in lesser data throughput between WPs and between refine/accumulate, but obvious lowers latency dramatically. 
+2025-08-01 06:41 emielsebastiaan: How many individuals do you need onboarded to PoP in order for such nominations to work effectively/securely?
+2025-08-01 06:43 emielsebastiaan: I can imagine such number would be lower for Kusama than for Polkadot in a non-cohabit scenario. 
+2025-08-01 06:44 gav: Difficult to say, but the purpose is to ensure that of the validators elected no more than 1/3 are well-aligned.
+2025-08-01 06:45 gav: Probably approximately the same number as the number of nominator accounts would be a vaguely sensible rule of thumb to start with.
+2025-08-01 06:50 emielsebastiaan: Benefit of this scenario would be divergence between KusamaJam & PolkadotJam on the speed/resilience trade-off. And it would negate the controversy of sharing the staking economy (at the cost of burden sharing of infrastructure cost). 
+2025-08-01 06:51 gav: Yes. There are almost certainly some applications which make much more sense under much faster state resolution (and with it, finality). [edited]
+2025-08-01 06:55 gav: But faster state resolution necessarily comes at a cost of reducing overall internal data transfers; there may be some way of mitigating against this to some degree (see [Slipstream](https://github.com/gavofyork/graypaper/issues/322)), but I wouldn't expect it to deliver quite the same level of performance as just having larger block-times. [edited]
+2025-08-01 06:56 emielsebastiaan: Would a future upgrade path to a shared staking economy still be possible with this scenario? Ie commoditized node infrastructure? With a Grid? Eg Heterogeneous Jam Grid.  [edited]
+2025-08-01 06:58 ascriv: If we’re going to have two jam instances from the start, can we suppose that for jam implementors the additional maintenance would be negligible? The differences being essentially parameters   [edited]
+2025-08-01 07:02 gav: I wouldn't say definitely not ever, but certainly if there are differing parameters it will make the Grid protocol more difficult.
+2025-08-01 07:03 gav: Generally, the Grid should be considered as a means of scaling up a single JAM, rather than a means of joining two independent JAMs and their token economies.
+2025-08-01 07:04 gav: A single JAM can (on paper at least) process so much more stuff than existing networks that existence of the Grid isn't going to change anything.
+2025-08-01 07:04 gav: What matters is the economics.
+2025-08-01 07:05 gav: And as yet there isn't an uncontroversial way forward on that (though I'd hope that discussion still proceeds in the hope of finding consensus over a win-win scenario). [edited]
+2025-08-01 07:15 davxy: > <@shwchg:matrix.org> hey David Emett 
+> I saw binary version is updated to 0.6.7
+> and we found that our protocol_parameters length mismatch (we are 136 and you are 134)
+
+If I'm not wrong, the correct encoded size should be 134 bytes (based on the sum derived from the `fetch_params` expression).  
+Also, keep in mind that we're using version `0.7.x` for this, as noted somewhere at the time.  
+An older `vector` release was incorrectly encoding it as 136 bytes, but that issue has been fixed.
+2025-08-01 07:53 emielsebastiaan: This seems like a very interesting direction. Divergence between Polkadot & Kusama on the infrastructure layer on the latency/size tradeoff creates a overall increase for the design space on the combined application layer, albeit at the cost of coherence between these two infrastructure layers. It would allow Polkadot and Kusama to further differentiate and distinctly market themselves to the world. 
+2025-08-01 08:06 ascriv: It feels like if we go this direction we are inevitably going to have a world with many different jam instances with different tradeoffs. I guess this is probably inevitable anyway 
+2025-08-01 08:07 ascriv: One-size-fits-all jam instance sounds great but probably isn’t realistic  
+2025-08-01 08:14 emielsebastiaan: Re: What really matters is the economics.
+
+Staking on Kusama has 10,669 active nominations (Polkadot 21,266 btw).
+
+So (speculating), a Proof of Personhood (PoP) system with around 10,000 participants should be enough to drastically lower Kusama’s costs.
+This number of onboarded individuals seems like a reasonable objective for PoP (perhaps with some one time incentive to onboard).
+Costs: $4,000 per node per month × 12 months × 32 cores × 3 guarantors = $4.6 million per year.
+Gavin mentions costs of $6 million per year, which likely includes an extra $1.4 million to annually compensate nominators.
+
+With a Kusama market cap of $250 million, this translates to a worst case inflation rate of 2.4% (given assumptions).
+Assuming no protocol revenue which is a worst case.
+Assuming no change in marketcap which can be mitigated by stable coin payments (governance planning/budget and treasury management). [edited]
+2025-08-01 08:27 gav: > Gavin mentions costs of $6 million per year, which likely includes an extra $1.4 million to annually compensate nominators.
+
+Indeed - there needs to be some incentive for randomers to vote (and ideally sensibly). [edited]
+2025-08-01 08:28 gav: With 10,000 people voting and a budget of $1.4m/year we can afford to provide an average of $140 per person per year - this is pretty substantial.
+2025-08-01 08:34 olanod: > <@gav:polkadot.io> While Kusama governance has not yet made an decision wrt JAM, it occurs to me that one way forward (assuming Kusama and Polkadot do not cohabit) would be to have Kusama run a smaller JAM (perhaps just 32-core) with shorter block time, perhaps as short as 1 second depending on the results of Toaster experiments. Such a small JAM will reduce overall validator costs (assuming $4k/node and PoP-based nomination with a modest lottery, the issuance-based fallback would only need to be around $6m/year, offset by core rental). The lower blocktime would result in lesser data throughput between WPs and between refine/accumulate, but obvious lowers latency dramatically.
+
+It's interesting having a smaller and faster JAM for Kusama, for Kunekt it would be useful although it should work with the standard longer block time configuration as peers still can send each other CRDT udates in real time and the raft elected leader would sync with  the on JAM coordinator at whatever frequency is required as for simple use cases the JAM peer acts more like a remote git repository, but sure for anything triggering on-chain transactions a faster low latency JAM would be ideal at the expense of lower throughput, but anyway I'm assuming a smaller faster JAM would still be a powerhouse that can serve quite a lot of traffic no?
+
+It's good that Kusama didn't rush to make a decision on JAM, as I'm the one that started the topic of making Kusama and Polkadot share the same JAM instance and after the discussion of sharing the security burden between two or more economies which is great, I think now is a good time to bring the JAM topic to Kusama's governance so I'll propose two simultaneous WFC refs with two interesting paths Kusama could take:
+
+- Implement an independent lighter/faster JAM with KSM as the main/only token driving its economy.
+- Implement JAM with the "standard configurations", have a new "JAM storage token" with fixed supply to represent the finite storage as an independent resource so the chain is not biased towards KSM allowing other economies like DOT's to share the same space and security burden in the future.
+2025-08-01 08:36 olanod: 10K participants is totally doable and we might even have the incentive already. Say we use something like Bloque's on-going initiative to [on-board 20K users with debit cards](https://kusama.subsquare.io/referenda/568), those users might be do PoP without even realizing, we work close with Bloque and there's still some room to for example bundle some specialized java applet in the cards in case it's needed for PoP [edited]
+2025-08-01 08:40 emielsebastiaan: Any particular reason you chose $4000/month/node for Kusama, while previous estimations were lower for Kusama and higher for Polkadot. Is this just a new estimate or are there inherent differences in cost depending on Jam size? [edited]
+2025-08-01 08:44 ascriv: Should we not consider the downsides of a split economy, split mindshare, split devs, split marketing etc when we are so similarly aligned at least technically speaking?
+2025-08-01 08:45 ascriv: Are the benefits of having two differently parameterized instances worth these tradeoffs?
+2025-08-01 08:45 ascriv: Putting bagholder interests aside 
+2025-08-01 08:46 gav: > those users might be do PoP without even realizing
+
+Highly highly unlikely.
+  ↳ 2025-08-01 09:07 olanod: "might" 😅 ... would need to get creative(my favorite part) with the on-boarding to make it as painless as possible but if people are already willing to do KYC they might do other kinds of ceremonies. e.g. most of those initial card recipients will be clustered in 1 city, what if they receive an extra keychain gift that is a relatively inexpensive LoRa device that can talk with a city hub over long distances and  do PoP ceremony ala Encointer or similar but more seamless and scalable? ... just a random idea ;)
+  ↳ 2025-08-01 09:09 gav: As long as it's possible your population is not fully inducted (and you can't control/track your population borders and any new entrants individually) then generally PoP cannot be a one-off thing. [edited]
+  ↳ 2025-08-01 09:10 gav: The only reason existing systems do this is because they rely on appealing to authorities who do impose such restrictions/requirements on their sub-populations. Be we cannot reasonably rely on such authorities since it would undermine security to the arbitrariness of a single jurisdiction.
+  ↳ 2025-08-01 09:11 gav: In reality any non-invasive PoP would need to be done both regularly and in a globally synchronised manner to ensure the same individual did not re-induct themselves.
+  ↳ 2025-08-01 09:13 gav: Invasive DIMs, such as proof-of-ink, can be one-off or at least a highly infrequent revalidation. [edited]
+  ↳ 2025-08-01 09:13 gav: That's the trade-off here.
+  ↳ 2025-08-01 09:14 gav: Either way the individual is going to know.
+  ↳ 2025-08-01 09:21 olanod: sure, they can know but it doesn't have to be a painful process, they can initially see it as, oh cool! the card comes with a membership to some special club or something. I prefer the non invasive approaches, that's why I like the Encointer approach but I think we need a better version of it, an "automated Encointer" with the help of some specialized hardware, I'm not tattooing but I'd carry some token or something. It would still be an on-going thing as the LoRa based protocol would constantly challenge me but I don't need to do much other than keep the device powered. 
+  ↳ 2025-08-01 09:29 gav: If you can think of a means of doing that *universally* (Encointer fails here) without being invasive and without regular temporally-synchronised gatherings, you should write it up and publish.
+  ↳ 2025-08-01 09:30 gav: In fact, I have found that it's an extremely hard problem. 
+  ↳ 2025-08-01 09:32 gav: Perhaps not "painful" exactly, but I believe it will necessarily place a burden of proof on the individual. [edited]
+  ↳ 2025-08-01 09:33 gav: I've seen a number of PoP methods over the years. Most are totally flawed, based around appeal-to-authority and unsuitable for this usage. Only Idena's method looked reasonably secure and universal but even this requires a form of regular temporally-synchronised gatherings. [edited]
+  ↳ 2025-08-01 09:35 gav: >  I'd carry some token or something
+
+Good for you but I've no idea why you think it would help here.
+  ↳ 2025-08-01 09:35 gav: > I don't need to do much other than keep the device powered
+
+Sounds like you're talking about proof-of-device. Anything involving proof-of-personhood would necessarily require some human interaction. The clue is in the term: _personhood_. [edited]
+  ↳ 2025-08-01 10:20 olanod: fair point, but the device alone is not the thing identifies me (bare with me as I'm just brainstorming on the fly and I might brainfart some nonsense), I would still attend some main ceremonies but they are virtual, e.g. in a kunekt powered chat/interactive session I prove I'm human with some fun challenges that might involve other human participants or just solving a series of captchas. The LoRa device component that is simultaneously connected to my phone via BLE is there mostly to attest my location but the protocol could be more complicated(we can learn something from helium network), the thing is, I can be comfortably attend the ceremony few kilometers away from the nearest hub that is running the virtual gathering(in latam with security issues I wouldn't like predictably attending the same physical space with a bunch of strangers). 
+The device(paired to the phone?) can participate on a second kind of non-interactive automated ceremony that is celebrated more often(daily/hourly/all the time?) as an extra measure and mostly to not require my participation in the main ceremonies as often.
+  ↳ 2025-08-01 10:57 olanod: I was skimming over Idena's approach and ceremony, it looks interesting, I think what I mention is a mix of that and the geo component of Encointer. Ceremonies with good UX, the right incentive and without having to be very regular shouldn't be a downside it can actually become something people look forward to.
+  ↳ 2025-08-02 01:26 gav: I don’t know of any trustless device. I certainly don’t know of one which can deliver its GPS coordinates to a public network in a trustless manner such that any observer can believe them. I see little point for any continuous device proof and cannot see how it is any way effective at reducing the rate of actual proof of personhood.  [edited]
+2025-08-01 08:46 gav: Economically strong PoP is hard.
+2025-08-01 08:46 gav: Users will realise.
+2025-08-01 08:47 gav: My estimation is actually $5k/month, given that running a node must be assumed to be a pretty hard-core thing to be doing and keeping an eye on. I figured that Kusama can probably skimp a bit. [edited]
+2025-08-01 08:48 gav: It's not about node costs (which are high given the hardware requirements, but not super bad), but more the personnel/stress costs, and the fact that if done right then there isn't the usual node-farming which can spread costs over a large number of machines.
+2025-08-01 08:49 gav: Unclear, but quite possible.
+2025-08-01 08:49 emielsebastiaan: The calculation seems to omit the fixed fiat reward of 3% you mentioned at Web3 Summit for capital at stake. I.e. taxes or opportunity cost. [edited]
+2025-08-01 08:49 emielsebastiaan: image.png
+2025-08-01 09:07 emielsebastiaan: At a market cap of $250M and 50% stake target percentage (stake capital / total issuance) it would be an additional $3.75M/year for Kusama (with the same assumptions as before). So we then get to ~$10M/year for Kusama which is 4% inflation worst case (same assumptions). [edited]
+2025-08-01 09:12 gav: Those are my near-term (non-PoP-based) thoughts.
+2025-08-01 09:18 gav: With PoP then that 3% can be reduced since we're basically just paying validators for their trouble and incentivising voters to vote.
+2025-08-01 09:19 emielsebastiaan: Ahh got it. Thx. 
+1. You mention validators themselves would need stake. Is this the ‘own stake’ the current staking system has?
+2. How much stake would a validator be required to have? 
+3. Or would this be part of some game of getting pop votes? 
+2025-08-01 09:19 emielsebastiaan: image.png
+2025-08-01 09:39 gav: 1. Yes, we'd need to introduce a more improved validator gating, with PoP (though perhaps some allowance of running multiple nodes albeit at a reduced revenue), identity attestation (governance-backed KYC, probably delivered via PoP) and a "here I am" video. This would be in addition to a basic slashable stake to give baseline expectation that the node will be up and running. [edited]
+2025-08-01 09:40 gav: 2. Unclear, but not *that* much. Maybe a few grand.
+2025-08-01 09:40 gav: 3. Yes, you'd be elected via voting.
+2025-08-01 09:41 emielsebastiaan: Staking design itself is probably off scope for this channel. I now understand the $6M/year. 💪🏻 This is a hygiene threshold for considering KusamaJam with fixed cost (currently ~2.4% KSM inflation) which is totally acceptable. [edited]
+2025-08-01 09:50 emielsebastiaan: Banning node operators from (being voted into) the validator set for bad behavior would further solve current validator centralization by limiting the number of validators per individual (pop), correct? Thus increasing nakamoto coefficient compared to the current staking design. [edited]
+2025-08-01 10:36 emielsebastiaan: > But faster state resolution necessarily comes at a cost of reducing overall internal data transfers.
+
+1. Is this a bandwidth tradeoff? 
+2. Given equal amount of hard disk space for node operators for a 341 core configuration (Polkadot) and a 32 core configuration (Kusama) would this imply a potential larger consensus (accumulate) state for the 32 core configuration in contrast to the 341 core configuration? Ie implied by smaller worst case data availability size for the former?
+3. Is there a real benefit of having a larger consensus (accumulate) state?
+2025-08-01 10:49 sourabhniyogi: We tally 136 in GP 0.6.7 and 138 in 0.7.0 [here](https://docs.google.com/spreadsheets/d/1ueAisCMOx7B-m_fXMLT0FXBxfVzydJyr-udE8jKwDN8/edit?gid=1275042738#gid=1275042738) -- I can't figure out how to get to 134, can you take a look at your "fetch\_params"?.   The goal is to get polkajam connectivity with "tiny" in some nightly release using our spec containing "tiny" params. [edited]
+2025-08-01 10:50 sourabhniyogi: 
+2025-08-01 11:06 rustybot: > <@sourabhniyogi:matrix.org> We tally 136 in GP 0.6.7 and 138 in 0.7.0 [here](https://docs.google.com/spreadsheets/d/1ueAisCMOx7B-m_fXMLT0FXBxfVzydJyr-udE8jKwDN8/edit?gid=1275042738#gid=1275042738) -- I can't figure out to get 134, can you take a look at your "fetch_params"?.   The goal is to get polkajam connectivity with "tiny" in some nightly release using our spec containing "tiny" params.
+
+As I said we're usong the struct introduced in 0.7.
+your picture is not compliant witg 0.7. E.g. I see you don't have N and you have S (which has been removed). Please double check your table
+2025-08-01 11:13 rustybot: Doing the sums of the fields you have 8x7 + 4x13 + 2x13 = 134. but pls double check as I'm ooo in a not very focused situation LOL [edited]
+2025-08-01 11:22 sourabhniyogi: image.png
+2025-08-01 11:23 sourabhniyogi: Ok Thanks for the 0.7 clarification, now its 134 =). Is there anything else in polkajam 0.6.7 binary that is actually 0.7.0 functionality besides this protocol parameter detail?   [edited]
+2025-08-01 11:32 rustybot: Nothing that I'm aware of
+2025-08-01 17:36 davxy: 0.6.7 test vectors are ready. Please try them and share your feedback
+https://github.com/davxy/jam-test-vectors/pull/87
+2025-08-01 22:32 advatar: @gav:polkadot.ioThe guarantee/assure/audit/judge pipeline in JAM is a fascinating approach to secure in-core execution. I’m particularly interested in how it balances economic security vs. liveness. For example, the protocol assigns ~3 validators per core to guarantee and later audit each work-package  This yields great scalability, but in theory a colluding group could try to slip in a bad state transition if they control a core’s validator subset briefly. Of course, the odds are kept low by random rotation and the heavy slashing penalties if caught. My question is: have you considered enhancing this with any cryptographic verification in the future - e.g. incorporating succinct proofs for particularly critical services or as a backstop to the audit game? JAM currently opts for crypto-economic honesty over ZK proofs (which you note helps maintain state coherence) , but as proving technology improves, it might complement the audit phase well, reducing the need to re-execute everything even in a semi-coherent model. 
+
+2025-08-02 01:21 gav: Before you casually suggest the possibility (“in theory”) of JAM being insecure, I would suggest you read the Elves paper. It is referenced in the GP.  [edited]
+2025-08-02 01:22 gav: If you want the latest information on using ZK as an alternative to Elves in JAM, see my latest talk at the Web3 Summit.  [edited]
+2025-08-02 01:23 gav: Bottom line: it’s not going to be commercially comparable for some years yet. 

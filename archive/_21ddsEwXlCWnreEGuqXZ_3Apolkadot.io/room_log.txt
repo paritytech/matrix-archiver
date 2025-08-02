@@ -1,5 +1,5 @@
 # room: #graypaper:polkadot.io
-# exported: 2025-08-01 03:49 UTC
+# exported: 2025-08-02 03:41 UTC
 2024-04-17 20:29 syed: https://matrix.to/#/!hyzRkDqDthePbodYFz:parity.io/$f_DMsIEcDXZegw6Sabnehzc-LrdDQkmq5MbxDDyoZxY?via=parity.io&via=web3.foundation
 
 2024-04-17 20:29 syed: 
@@ -6449,3 +6449,54 @@ Epoch 0 validators continue sending judgments into the first slot of epoch 1 (an
 
   ↳ 2025-07-31 14:59 dave: This sounds like a misunderstanding of the auditing system. Verdicts/judgments are posted on-chain only if there is a dispute, ie at least one validator thinks a report is faulty. This should be extremely rare, and is likely to happen at least a couple of slots after the disputed report is made available. The first block the epoch 1 validators are responsible for auditing is the one in slot 601, so it doesn't matter if they can't include a verdict before this.
   ↳ 2025-07-31 15:19 bamzedev: thanks
+2025-08-01 04:12 gav: > <@sourabhniyogi:matrix.org> I believe the solution, whenever it comes out, will be at the JAM level rather than VM-specific, which is a happy outcome because I think JAM's innovations here are not wholly dependent on PVM at all.
+
+PVM provides a number of key innovations for JAM:
+1. An execution and gas model which we expect to get much closer to metering at native speed than anything before.
+2. A well supported ISA, allowing a host of compilation tooling to be used, including LLVM.
+3. A stack and memory model which allows for easy consensus-sensitive program suspension and restoration. This opens the doors to things like CoreVM and “native speed” smart contract execution (rather than executing the smart contract as a second interpreter within the VM).  
+2025-08-01 04:15 gav: Using EVM or Wasm instead of PVM is technically possible, but would increase workload and maintenance for all JAM implementation teams and would mean hard-forking to keep up with any EVM changes which we wanted to support (forcing a choice of outdated tooling or being subject to other peoples’ hard fork schedule). Neither Wasm nor EVM have particular good gas models. Polkadot works around this with a special wall-clock time consensus protocol but this approach is insecure outside of Polkadot 1. Realistically it may be end up being faster to recompile EVM into PVM and execute “natively” than build in a specialist EVM protocol with a crappy gas models. I wouldn’t necessarily say never, but I won’t be adding it to 1.0.  [edited]
+2025-08-01 10:08 dakkk: davxy: after finishing tests for 0.6.7, will you go ahead implementing those for 0.7.1 or you will do 0.7.0 first? I'm asking since in Jampy I'm maintaining branches for every gp versions from 0.6.7 to latest, and I'm doing it only for being able to run your tests in the future
+2025-08-01 10:43 rustybot: 
+2025-08-01 10:44 davxy: > <@dakkk:matrix.org> davxy: after finishing tests for 0.6.7, will you go ahead implementing those for 0.7.1 or you will do 0.7.0 first? I'm asking since in Jampy I'm maintaining branches for every gp versions from 0.6.7 to latest, and I'm doing it only for being able to run your tests in the future
+
+Probably we'll ship 0.7.0 first.
+Side note, are you aware of  this: https://github.com/davxy/jam-stuff/tree/main/fuzz-reports/0.6.6/jampy/jampy-0.6.6_GP-0.6.6/1753810654 ?
+2025-08-01 10:57 dakkk: ok (y) No, I wasn't aware; I will have a look
+2025-08-01 11:33 sourabhniyogi: For the engineering of a whateverVM byte code to PVM byte code (and winning gas metering closer to wall clock times [but by no means perfect, as Jan's Snippet 1/2/3 illustrates super well]), this makes a lot of sense!  Do you believe it should be done 
+(a) in a performance-based way like PVM byte code is being mapped to X86 (or ___) now,
+(b) according to a spec, or
+(c) with one good FFI [like most of us are all treating the W3F bls+bandersnatch libs + erasure encoding]
+?  
+
+If there is a difference between engineering the mapping between (1) whateverVM to PVM and (2) PVM to X86, what is it?
+
+Based on the very long history of dozens-to-hundreds of smart contract compiler bugs (which get a lot of press!), I'm far more concerned about buggy polkatool or problems in one actually-not-so-good FFI (for EVM=>PVM or PVM=>X86) than I am of crappy gas models being the source of severe security problems.  What should people like me read to rebalance their security concerns and develop a better appreciation of how severely crappy the gas models are?  
+2025-08-01 11:57 jan: Unless I misunderstood it, your question doesn't really make sense. Translating one bytecode into another must always be done according to the spec, otherwise you'll get diverging semantics and the translated program won't do what it's supposed to do. Of course 1-to-1 *exact* translation isn't always possible - e.g. in case of EVM you can do things like inspect the current gas, so if you'd translate this to PVM you'd either have to implement very expensive emulation to fake EVM's gas, or just accept that programs which depend on this will be incompatible. Nevertheless, PVM's gas metering itself (which you cannot turn off) will ensure that the guest program can be safely run.; we care about how PVM instructions map to native AMD64 code because this *is* security sensitive; we don't care how EVM instructions map to PVM instructions because the PVM layer below it already provides the security it needs.
+2025-08-01 12:20 jan: Anyway, JAM using a different VM would be possible, but unless you don't care about performance *or* you don't care about security then it would be *much* harder, precisely because of the gas cost model.
+
+Let's say, for example, we want to use WASM. Okay. So first, we absolutely need O(n) recompilation support in the VM, otherwise it's trivial to DoS our chain. But WASM wasn't designed with this in mind, so we eat 2x performance cost to use a single-pass WASM VM even before any other consideration.
+Then, we need a gas cost model. WASM bytecode is relatively high level and doesn't map to native instructions 1-to-1, so this makes coming up with a secure optimal gas cost model even harder. But okay, let's give up on the "optimal" part. This means you need to overestimate your gas model costs by quite a lot, even *more* than we have to do with PVM.
+And you *still* need to do the legwork and come up with the gas cost model yourself, because WASM itself doesn't come with one!
+
+Of course there's still the YOLO option of just.... not having a secure gas cost model (without any backup mechanism like Polkadot 1). I know of at least one chain which picked this option (whether deliberately or accidentally), and they're doing fine because no one really cares to actually attack them. :P But I can't in good conscience recommend this option, for obvious reasons.
+2025-08-01 12:29 jan: JAM would most likely look very different without PVM. In the gas cost model that I'm working on I'm already pretty much pushing the absolute limits of what can be practically modeled; to do significantly better you'd need to either a) skimp on security, or b) gimp the chain's capabilities and make it *not* a general-purpose, permissionless-chain (which is JAM's killer feature in my opinion).
+2025-08-01 17:41 sourabhniyogi: We will need to study what is missing in revmc's EVM-to-X86 implementation (which is obviously as performance oriented as JAM's PVM-to-X86)  a bit more to understand what it is missing there that is present in the PVM-to-X86 architecture that gives the latter better security outside of gas semantics alone.
+
+Obviously, its missing a dozen or two teams competing in 2026 in a performance-based way.   Otherwise, I think you can redo a gas model for most (but not all) EVM op codes based on typical revmc typical X86 measurement, give up on legacy gas model and get "almost compatibility" -- using host function calls for any and all op codes that need them.  
+
+You would then have two modern paths for 2 different types of teams/implementations:
+
+- DVORAK teams/implementations:  evm =TBD=> pvm =M3/M4 impl=> x86 \[with a pvm gas model based on x86\]
+- QWERTY teams/implementations:  evm =revmc \[or similar/better\]=> x86 \[with a non-legacy gas model based on x86\]
+
+Augmenting Current Teams with DVORAK teams and/or QWERTY teams is better than the current path of
+
+- Current Teams: Rust/Solidity =\[revive/polkatool\]=> pvm => x86 \[with a pvm gas model based on x86\]
+
+_alone_ because, simply put, there are basically a O(10^4)-O(10^6) times fewer people who have dogfooded polkatool with the above path (we're trying our best, its just ... not ready yet =) ).  We want security, performance and **impact**.
+
+JAM's path to max impact probably should involve DVORAK teams, is what I'm hearing, informed by the predicted failures of QWERTY teams.
+
+Do you have a prediction on how QWERTY teams will fail? [edited]
+2025-08-02 01:18 gav: While i appreciate the desire to create impact, as I already stated the GP will definitely not see EVM in it before 1.0, and probably never. I’d suggest you instead focus your efforts on comparison (perhaps putting your various benchmarking code through both revmc and Rust/PolkaVM) and compilation of Solidity to PVM (or perhaps even recompilation of EVM to PVM). 
