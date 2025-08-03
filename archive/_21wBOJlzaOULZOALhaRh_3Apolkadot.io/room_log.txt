@@ -1,5 +1,5 @@
 # room: #jam:polkadot.io
-# exported: 2025-08-02 03:40 UTC
+# exported: 2025-08-03 03:47 UTC
 2024-04-20 02:08 johnjiao123: 
 2024-04-20 02:09 johnjiao123: 
 2024-05-30 21:48 nradko: Hey everyone,
@@ -10336,6 +10336,8 @@ and how can i complete KYC now? kindly help
 2025-07-31 09:44 sukhdev123: During KYC I'm getting this error?
   ↳ 2025-07-31 10:46 david: I will also share it internally with the team. 
   ↳ 2025-07-31 15:22 keegan: Hey guys, I can help with this. Did you submit a JAM delivery recently or what's the reason for KYC?
+  ↳ 2025-08-02 06:53 sukhdev123: Yes,I need KYC for Submit a Jam delivery.
+  ↳ 2025-08-02 06:55 sukhdev123: Thank you so much
 2025-07-31 11:02 roysingh8368: Hi everyone,
 
 I'm currently working on the Bandersnatch VRF and encountering an issue during the ticket verification process. The extrinsic is failing, and I'm having trouble pinpoint where exactly the problem lies.
@@ -10474,6 +10476,38 @@ Sounds like you're talking about proof-of-device. Anything involving proof-of-pe
 The device(paired to the phone?) can participate on a second kind of non-interactive automated ceremony that is celebrated more often(daily/hourly/all the time?) as an extra measure and mostly to not require my participation in the main ceremonies as often.
   ↳ 2025-08-01 10:57 olanod: I was skimming over Idena's approach and ceremony, it looks interesting, I think what I mention is a mix of that and the geo component of Encointer. Ceremonies with good UX, the right incentive and without having to be very regular shouldn't be a downside it can actually become something people look forward to.
   ↳ 2025-08-02 01:26 gav: I don’t know of any trustless device. I certainly don’t know of one which can deliver its GPS coordinates to a public network in a trustless manner such that any observer can believe them. I see little point for any continuous device proof and cannot see how it is any way effective at reducing the rate of actual proof of personhood.  [edited]
+  ↳ 2025-08-02 17:36 olanod: Thinking better yeah I don't see much benefit for the continuous device proof, but there's a reason I started to consider the device thing, I still think it has its place in the picture ;)
+
+Idena and Encointer's premise of _one human cannot be in two places at the same time_ is a good starting point, regular temporally-synchronised gatherings are not ideal but might not be the worst thing. I see some pros and cons with their approaches,
+-Idena challenges(FLIP) can be solved anywhere in the world, there's no need to move but the ceremony taking place at the same time everywhere means some parts of the world won't be lucky with the time, also I'd argue that AI might be advanced enough nowadays to solve their FLIPs and can it handle millions of people at the same time?
+
+- Encointer is more flexible with the time to accommodate people in different timezones, showing up in a physical place also proves your location, but it's hard to scale that kind of ceremonies(and I still think it can be dangerous for participants).
+
+Now the device thing to try to make things a bit better. Borrowing from Helium [proof of coverage](https://docs.helium.com/iot/proof-of-coverage/#why-proof-of-coverage), we can use the Long Range radio to proof location(no GPS, no need to trust the device, just solve an automated challenge)
+
+> - RF has limited physical propagation and, therefore, distance.
+> - The strength of a received RF signal is inversely proportional to the square of the distance from the transmitter.
+> - RF travels at the speed of Light with (effectively) no latency.
+
+We can use physical hubs with well known locations elected via governance to be the "challengers" that expect swift responses and coordinate the ceremonies(e.g. the Web3 Outposts). The device solving a challenge via radio marks the start of the time sensitive ceremony that could use JAM Kunekt's realtime collaboration properties to have more robust(and more fun) forms of verification. Idena also has the concept of different levels of "humanness", older participants who have gone through several ceremonies can afford to miss some, so given that we are proving the location and a device solving an automated challenge is better that not attending a ceremony, I'd say there's room for relaxing the frequency or ratio of attendance. Some participants with track record humanness can also help expand the coverage of the hub. Devices should also be relatively cheap(e.g. 10 - 50 USD dev boards[¹](https://lilygo.cc/products/t-watch-s3)[²](https://www.seeedstudio.com/Wio-SX1262-with-XIAO-ESP32S3-p-5982.html)[³](https://lilygo.cc/products/t-beam-supreme-meshtastic)), more affordable that a tattoo? [edited]
+  ↳ 2025-08-02 17:37 olanod: pop+lora.png
+  ↳ 2025-08-03 03:27 gav: > AI might be advanced enough nowadays to solve their FLIPs and can it handle millions of people at the same time?
+
+Always a concern with remote PoP. [edited]
+  ↳ 2025-08-03 03:27 gav: > showing up in a physical place also proves your location, but it's hard to scale that kind of ceremonies
+
+Agreed, but ultimately I fear that it will come to either to this or something more invasive (e.g. proof-of-ink). [edited]
+  ↳ 2025-08-03 03:28 gav: > We can use physical hubs with well known locations elected via governance to be the "challengers" that expect swift responses and coordinate the ceremonies
+
+All this does is introduce a new governmental authority.
+  ↳ 2025-08-03 03:29 gav: This is not what I believe is helpful to the world, and certainly not what I would wish to spend my time, stress-levels and resources on. [edited]
+  ↳ 2025-08-03 03:30 gav: All participants in any Web3 system must be unprivileged; barriers to entry must be zero.
+  ↳ 2025-08-03 03:32 gav: If it then becomes hub-controllers who create the challenge and attest to location (and through that, personhood) and that the barriers to entry for a hub-controller are basically $$$ to purchase land/property, then you've just created the basis for a feudal society, with princelings basically awarding digital passports to their local peasantry. [edited]
+  ↳ 2025-08-03 03:33 gav: Now there are plenty of tech bros out there who see a feudal society (with tech bro kings sitting at the top) as some sort of thing to aim for, but as I said it's really not what I'm wanting to spend time on.
+  ↳ 2025-08-03 03:35 gav: This is part of a wider issue with the challenge-based approach: who sets the challenge and who verifies it?
+  ↳ 2025-08-03 03:36 gav: You cannot generally assume a perfect "challenge oracle". If it comes down to "trusted parties" setting a challenge and/or determining the correct answer, then you're back to feudalism.
+  ↳ 2025-08-03 03:38 gav: Idena was interesting due to the challenges being both settable and veriifiable in a transparent and decentralised manner. Bitcoin's PoW has the same properties but is obviously a device challenge rather than ostensibly human. [edited]
+  ↳ 2025-08-03 03:43 gav: Specialist devices/tech are generally not a silver bullet since they are neither transparent nor robust. (The latter becomes an issue when it becomes critical equipment for a semi-centralised "hub" to help attest to its peasantry.) [edited]
 2025-08-01 08:46 gav: Economically strong PoP is hard.
 2025-08-01 08:46 gav: Users will realise.
 2025-08-01 08:47 gav: My estimation is actually $5k/month, given that running a node must be assumed to be a pretty hard-core thing to be doing and keeping an eye on. I figured that Kusama can probably skimp a bit. [edited]
@@ -10516,3 +10550,16 @@ https://github.com/davxy/jam-test-vectors/pull/87
 2025-08-02 01:21 gav: Before you casually suggest the possibility (“in theory”) of JAM being insecure, I would suggest you read the Elves paper. It is referenced in the GP.  [edited]
 2025-08-02 01:22 gav: If you want the latest information on using ZK as an alternative to Elves in JAM, see my latest talk at the Web3 Summit.  [edited]
 2025-08-02 01:23 gav: Bottom line: it’s not going to be commercially comparable for some years yet. 
+2025-08-02 10:35 philip.poloczek: 
+2025-08-02 19:43 sourabhniyogi: Here are all the factors of 4104 below Polkadot's C=341:
+```
+2, 3, 4, 6, 8, 9, 12, 18, 19, 24, 27, 36, 38, 54, 57, 72, 76, 108, 114, 152, 171, 216, 228
+```
+
+What are technical reasons why 2-3 hard forks can't be planned within the above set of core numbers?
+
+36 =x2=> 72 =x3=> 228 
+36 =x3=> 108 =x2=> 228
+
+
+2025-08-03 03:25 gav: The GP generally assumes a fixed V/C from block to block. There are no fundamental technical reasons why the protocol could not be changed to allow these to mutate over time (indeed there's [an issue](https://github.com/gavofyork/graypaper/issues/324) in the GP repo already) but those changes would be needed to manage the transition. I haven't taken a deep look yet, but the places where V and C are assumed constant are going to be mostly in validator set rotation, validator statistics and the core pipeline.

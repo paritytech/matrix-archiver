@@ -1,5 +1,5 @@
 # room: #graypaper:polkadot.io
-# exported: 2025-08-02 03:41 UTC
+# exported: 2025-08-03 03:47 UTC
 2024-04-17 20:29 syed: https://matrix.to/#/!hyzRkDqDthePbodYFz:parity.io/$f_DMsIEcDXZegw6Sabnehzc-LrdDQkmq5MbxDDyoZxY?via=parity.io&via=web3.foundation
 
 2024-04-17 20:29 syed: 
@@ -6500,3 +6500,5 @@ JAM's path to max impact probably should involve DVORAK teams, is what I'm heari
 
 Do you have a prediction on how QWERTY teams will fail? [edited]
 2025-08-02 01:18 gav: While i appreciate the desire to create impact, as I already stated the GP will definitely not see EVM in it before 1.0, and probably never. I’d suggest you instead focus your efforts on comparison (perhaps putting your various benchmarking code through both revmc and Rust/PolkaVM) and compilation of Solidity to PVM (or perhaps even recompilation of EVM to PVM). 
+2025-08-02 15:09 jan: If you're paranoid about using my linker for translating RISC-V code to PVM you can always either disable my linker's optimizations (in which case it does very little changes to the original RISC-V bytecode, besides translating it to equivalent PVM instructions and relocating the code and data like any other linker does to fit with the PVM memory map), or you can just write your own independent RISC-V -> PVM translator and end-to-end fuzz it against mine. And of course you can also try to do formal verification of the resulting PVM bytecode of your program, but the tooling for that is as of yet still missing (you're welcome to contribute though if you have the manpower, as that would actually be useful).
+2025-08-03 00:37 sourabhniyogi: clever ok!
