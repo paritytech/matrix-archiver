@@ -1,5 +1,5 @@
 # room: #jam:polkadot.io
-# exported: 2025-08-03 03:47 UTC
+# exported: 2025-08-04 03:49 UTC
 2024-04-20 02:08 johnjiao123: 
 2024-04-20 02:09 johnjiao123: 
 2024-05-30 21:48 nradko: Hey everyone,
@@ -10508,6 +10508,39 @@ All this does is introduce a new governmental authority.
   ↳ 2025-08-03 03:36 gav: You cannot generally assume a perfect "challenge oracle". If it comes down to "trusted parties" setting a challenge and/or determining the correct answer, then you're back to feudalism.
   ↳ 2025-08-03 03:38 gav: Idena was interesting due to the challenges being both settable and veriifiable in a transparent and decentralised manner. Bitcoin's PoW has the same properties but is obviously a device challenge rather than ostensibly human. [edited]
   ↳ 2025-08-03 03:43 gav: Specialist devices/tech are generally not a silver bullet since they are neither transparent nor robust. (The latter becomes an issue when it becomes critical equipment for a semi-centralised "hub" to help attest to its peasantry.) [edited]
+  ↳ 2025-08-03 03:54 gav: From the linked site: 
+  ↳ 2025-08-03 03:54 gav: image.png
+  ↳ 2025-08-03 03:55 gav: 😂
+  ↳ 2025-08-03 03:55 gav: Anyway, I can't see anything in the linked docs which comes across as in any way robust or reliable. [edited]
+  ↳ 2025-08-03 03:56 gav: Quite the opposite; the broad vibe seems to be "attacks are getting more sophisticated so we're increasing the protocol's complexity".
+  ↳ 2025-08-03 08:56 olanod: I'm still not tattooing or getting a chip (also many people in the most populated areas of the world where the topic might still be a taboo(China?)), so I do wish to spend more of my time and "resources" on this as it is important 😅
+PoP is indeed hard, it would be nice to solve it in a simple, elegant way but then it wouldn't be a hard problem, so it might be unavoidable for protocols that address the issue(the usable non-invasive ones at least) to grow in complexity without being able to guarantee 100% their effectiveness, society still functions despite fake passports, is it Ok to settle with almost perfect?(SLA of 99.999%)
+  ↳ 2025-08-03 08:56 olanod: > All this does is introduce a new governmental authority.
+
+Ok then no hubs, lighter permissionless nests or the birdies alone might be enough, I think it's a bit extreme to think it would introduce some form of feudalism. Opening a new location might require an in-person gathering first with an emissary from an already established community but later those first attendants can become nests/relayers that can be as simple as gathering in a park around a (illegally installed😈) device bound to a pole or a tree[*](https://www.seeedstudio.com/SenseCAP-Solar-Node-P1-Pro-for-Meshtastic-LoRa-p-6412.html).
+  ↳ 2025-08-03 08:56 olanod: > This is part of a wider issue with the challenge-based approach: who sets the challenge and who verifies
+
+Challenges can come from an on-chain source, e.g. our passkey verification solution in pallet-pass checks a challenge that comes from recent block hash data, it's something public clients can get in different ways. Something like:
+  ↳ 2025-08-03 08:57 olanod: out.png
+  ↳ 2025-08-03 09:08 gav: > <@olanod:virto.community> I'm still not tattooing or getting a chip (also many people in the most populated areas of the world where the topic might still be a taboo(China?)), so I do wish to spend more of my time and "resources" on this as it is important 😅
+> PoP is indeed hard, it would be nice to solve it in a simple, elegant way but then it wouldn't be a hard problem, so it might be unavoidable for protocols that address the issue(the usable non-invasive ones at least) to grow in complexity without being able to guarantee 100% their effectiveness, society still functions despite fake passports, is it Ok to settle with almost perfect?(SLA of 99.999%)
+
+Don’t know if you’ve noticed, but society doesn’t actually function that well any more. Passports kinda work well enough but they presume a trusted network of benevolent trusted issuing authorities, and are massively helped by physical control over the borders of these borders, state violence against rule-breakers, a total lack of personal privacy and various physical requirements (like running passport offices, requiring people to turn up there for biometrics etc). 
+  ↳ 2025-08-03 09:08 olanod: Anyway, there might be plenty of questions left and things to consider to further polish this kind of solution, it will require a good amount of iteration and prototyping, but the challenges left seem to be workable and worth a try, wdyt? I already start imagining ways to make a game that is more fun and robust, or even considerations for the firmware to allow the protocol to evolve with OTA updates fetched directly from JAM, parachain runtime style, we don't need trust hardware more than we trust an AMD/Intel processor. [edited]
+  ↳ 2025-08-03 09:12 gav: Then I don’t see how this can help prove personhood. [edited]
+  ↳ 2025-08-03 09:15 gav: > <@olanod:virto.community> > All this does is introduce a new governmental authority.
+> 
+> Ok then no hubs, lighter permissionless nests or the birdies alone might be enough, I think it's a bit extreme to think it would introduce some form of feudalism. Opening a new location might require an in-person gathering first with an emissary from an already established community but later those first attendants can become nests/relayers that can be as simple as gathering in a park around a (illegally installed😈) device bound to a pole or a tree[*](https://www.seeedstudio.com/SenseCAP-Solar-Node-P1-Pro-for-Meshtastic-LoRa-p-6412.html).
+
+The devil is in the detail. On the face of it this doesn’t sound especially robust against a determined attacker.
+  ↳ 2025-08-03 09:19 olanod: The personhood comes from the game where the device would play an active role, e.g. the user submits the time sensitive answers on its own but also the device sends "stuff" via the nest, JAM might expect the user and device answers to be found in the same 1sec block or something like that. The initial challenge of the diagram is just the way to get the key to the game room 
+  ↳ 2025-08-03 09:24 gav: Again, anything at all reliant on device is irrelevant and will not help secure PoP - indeed it could even result in undermining the real mechanism over time. If you’re going to rely on devices and trusted parties, you can just use worldcoin - it’s way easier.  [edited]
+  ↳ 2025-08-03 10:16 olanod: > we don't need trust hardware more than we trust an AMD/Intel processor.
+
+Maybe I'm not seeing it, but it still looks solvable, firmware would come directly from the network and anything produced by the device could be verified. I'm fully on-board with not trusting hardware and I wouldn't try to build something that requires a specific vendor much less closed software, I'm Stallman level of "freedom obsession", so the solution surly would need to meet the required trustlessness criteria. [edited]
+  ↳ 2025-08-03 10:16 olanod: 
+
+I get good pointers from the conversation, thanks the brainstorming session 🙏 I'll try to mature more the concept and later see if Kusama has appetite to support this kind of solution.
 2025-08-01 08:46 gav: Economically strong PoP is hard.
 2025-08-01 08:46 gav: Users will realise.
 2025-08-01 08:47 gav: My estimation is actually $5k/month, given that running a node must be assumed to be a pretty hard-core thing to be doing and keeping an eye on. I figured that Kusama can probably skimp a bit. [edited]
@@ -10563,3 +10596,6 @@ What are technical reasons why 2-3 hard forks can't be planned within the above 
 
 
 2025-08-03 03:25 gav: The GP generally assumes a fixed V/C from block to block. There are no fundamental technical reasons why the protocol could not be changed to allow these to mutate over time (indeed there's [an issue](https://github.com/gavofyork/graypaper/issues/324) in the GP repo already) but those changes would be needed to manage the transition. I haven't taken a deep look yet, but the places where V and C are assumed constant are going to be mostly in validator set rotation, validator statistics and the core pipeline.
+2025-08-03 09:09 gav: As i said, any trust in hardware would be unacceptable to me as someone who wants to build a system resilient to state-level attack.  [edited]
+2025-08-03 09:09 gav: And personally unless you’re actually building something transparently trustless I really don’t see the point. 
+2025-08-03 09:23 gav: 
