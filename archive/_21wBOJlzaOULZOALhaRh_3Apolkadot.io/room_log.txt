@@ -1,5 +1,5 @@
 # room: #jam:polkadot.io
-# exported: 2025-08-05 03:46 UTC
+# exported: 2025-08-06 03:45 UTC
 2024-04-20 02:08 johnjiao123: 
 2024-04-20 02:09 johnjiao123: 
 2024-05-30 21:48 nradko: Hey everyone,
@@ -10599,3 +10599,33 @@ What are technical reasons why 2-3 hard forks can't be planned within the above 
 2025-08-03 09:09 gav: As i said, any trust in hardware would be unacceptable to me as someone who wants to build a system resilient to state-level attack.  [edited]
 2025-08-03 09:09 gav: And personally unless you’re actually building something transparently trustless I really don’t see the point. 
 2025-08-03 09:23 gav: 
+2025-08-05 09:29 ascriv: Can I request that polkajam releases 7.0.0 and onwards align 1-1 with GP versions (not mixed)? It makes alignment with all other implementations much easier  [edited]
+2025-08-05 09:34 ascriv: > <@davxy:matrix.org> Since no one wants to lose their mind over this, I think it’s a sensible idea. I’ll bring it up with the team this week
+
+Also, any word on fuzzer binaries?
+2025-08-05 11:42 davxy: > <@ascriv:matrix.org> Can I request that polkajam releases 7.0.0 and onwards align 1-1 with GP versions? It makes alignment with all other implementations much easier 
+
+Version 0.7.0 will be released soon.
+Polkajam is typically released alongside the corresponding test vectors. Right now, we're gathering feedback on the 0.6.7 vectors, which teams have only recently started processing successfully.
+We'll let those vectors mature for a bit longer before moving on to 0.7.0, which is already prepared (given that the changes from 0.6.7 are minimal)
+2025-08-05 11:46 davxy: We're currently collecting reports here: https://github.com/davxy/jam-stuff/tree/main/fuzz-reports
+
+If you have a binary you'd like us to fuzz, please open an issue there and include a link to it.
+At the moment, we're prepared to fuzz 0.6.7 implementations [edited]
+  ↳ 2025-08-05 11:51 jaymansfield: JavaJAM is ready for 0.6.7 fuzzing: https://github.com/javajamio/javajam-releases
+2025-08-05 11:47 ascriv: Thank you. Are there plans to release the fuzzer as a binary for us to test ourselves?
+2025-08-05 11:48 ascriv: And regarding this I meant it would be ideal for the polkajam version Y to have same behavior as GP version Y. For the past couple releases this hasn’t been the case [edited]
+2025-08-05 12:22 davxy: I see what you mean, and indeed that is the ideal.
+
+The fuzzer and tooling shipped by the PolkaJam team are, as you'd expect, based directly on the PolkaJam sources. If a future GP version change (intentional or not) slips in, we usually keep it.
+We  **generally** don't:
+
+- maintain a separate fork for the tooling
+- revert the main branch just because of future feature inclusions
+
+We do try to stay disciplined, BTW :-) [edited]
+2025-08-05 12:23 davxy: The fuzzer is stabilizing. I imagine we could share the binary once we hit 0.7.  
+WDYT gav ?
+
+
+2025-08-05 12:25 davxy: This naturally lets the teams iterate faster and ensures we're not the bottleneck
