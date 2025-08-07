@@ -1,5 +1,5 @@
 # room: #jam:polkadot.io
-# exported: 2025-08-06 03:45 UTC
+# exported: 2025-08-07 03:45 UTC
 2024-04-20 02:08 johnjiao123: 
 2024-04-20 02:09 johnjiao123: 
 2024-05-30 21:48 nradko: Hey everyone,
@@ -10338,6 +10338,14 @@ and how can i complete KYC now? kindly help
   ↳ 2025-07-31 15:22 keegan: Hey guys, I can help with this. Did you submit a JAM delivery recently or what's the reason for KYC?
   ↳ 2025-08-02 06:53 sukhdev123: Yes,I need KYC for Submit a Jam delivery.
   ↳ 2025-08-02 06:55 sukhdev123: Thank you so much
+  ↳ 2025-08-06 05:54 sukhdev123: Screenshot 2025-08-06 at 11.23.26 AM.png
+  ↳ 2025-08-06 05:57 sukhdev123: KYB link is not working i need to do KYB .How can i do?My entire team doing KYB .Link is not working anymore help me with this.
+
+1. one team member is sufficient for KYB or entire team has to do KYB? 
+
+  ↳ 2025-08-06 14:25 keegan: Sukhdev Singh: that appears to be the wrong link, can you try with https://in.sumsub.com/websdk/p/uni_6eVGNmoJ83HVovnN
+  ↳ 2025-08-06 14:25 keegan: KYB is for the legal entity, but yes all members need to do KYC as part of it.
+  ↳ 2025-08-06 14:26 keegan: If that doesn't work feel free to email compliance@web3.foundation
 2025-07-31 11:02 roysingh8368: Hi everyone,
 
 I'm currently working on the Bandersnatch VRF and encountering an issue during the ticket verification process. The extrinsic is failing, and I'm having trouble pinpoint where exactly the problem lies.
@@ -10629,3 +10637,41 @@ WDYT gav ?
 
 
 2025-08-05 12:25 davxy: This naturally lets the teams iterate faster and ensures we're not the bottleneck
+2025-08-06 16:16 olanod: Sharing here the two Wish For Change proposals in Kusama about how to proceed with JAM.
+
+- [Option A](https://kusama.subsquare.io/referenda/573) - **Lightweight and independent**
+- [Option B](https://kusama.subsquare.io/referenda/574) - **Full power and Polkadot friendly**
+
+My *wishing budget* went on OptA, anyone feel free to place decision deposit for OptB. 
+The context is mostly quotes from this chat, gav and Emiel let me know if I(the AI) have misquoted you or if extra context should be provided.
+2025-08-06 17:53 danicuki: We have a doubt about the state serialization:
+do we need to prefix each KeyValue item with its size? 
+2025-08-06 19:05 davxy: No. Perhaps the confusion lies in the interpretation of the ASN.1 `SEQUENCE` keyword.
+
+In ASN.1:
+
+- `SEQUENCE` is conceptually equivalent to a `struct`; it represents an ordered collection of typed fields.
+
+- A *variable-length vector* of elements of type `T` is written as:
+
+  `SEQUENCE OF T`  
+  This form includes a length prefix.
+
+- A *fixed-length vector* of `T` with size `N` is written as:
+
+  `SEQUENCE (SIZE(N)) OF T`  
+  This form does **not** include a length prefix.
+
+- A *variable-length byte array* is written as:
+
+  `OCTET STRING`  
+  This is effectively a shorthand for `SEQUENCE OF U8` and includes a length prefix.
+
+- A *fixed-length byte array* is written as:
+
+  `OCTET STRING (SIZE(N))`  
+  This is equivalent to `SEQUENCE (SIZE(N)) OF OCTET`, and does **not** include a length prefix.
+
+For context for the other readers, see the protocol message syntax:  
+https://github.com/davxy/jam-stuff/tree/main/fuzz-proto#protocol-messages and the syntax for all the jam protocol types: https://github.com/davxy/jam-test-vectors/blob/master/lib/jam-types.asn [edited]
+2025-08-06 19:32 emielsebastiaan: Daniel: It’s always a little weird seeing one’s words twisted by missing context. I would not have proposed option B. [edited]
