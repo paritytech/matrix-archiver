@@ -1,5 +1,5 @@
 # room: #graypaper:polkadot.io
-# exported: 2025-08-07 03:46 UTC
+# exported: 2025-08-08 03:46 UTC
 2024-04-17 20:29 syed: https://matrix.to/#/!hyzRkDqDthePbodYFz:parity.io/$f_DMsIEcDXZegw6Sabnehzc-LrdDQkmq5MbxDDyoZxY?via=parity.io&via=web3.foundation
 
 2024-04-17 20:29 syed: 
@@ -6502,3 +6502,8 @@ Do you have a prediction on how QWERTY teams will fail? [edited]
 2025-08-02 01:18 gav: While i appreciate the desire to create impact, as I already stated the GP will definitely not see EVM in it before 1.0, and probably never. I’d suggest you instead focus your efforts on comparison (perhaps putting your various benchmarking code through both revmc and Rust/PolkaVM) and compilation of Solidity to PVM (or perhaps even recompilation of EVM to PVM). 
 2025-08-02 15:09 jan: If you're paranoid about using my linker for translating RISC-V code to PVM you can always either disable my linker's optimizations (in which case it does very little changes to the original RISC-V bytecode, besides translating it to equivalent PVM instructions and relocating the code and data like any other linker does to fit with the PVM memory map), or you can just write your own independent RISC-V -> PVM translator and end-to-end fuzz it against mine. And of course you can also try to do formal verification of the resulting PVM bytecode of your program, but the tooling for that is as of yet still missing (you're welcome to contribute though if you have the manpower, as that would actually be useful).
 2025-08-03 00:37 sourabhniyogi: clever ok!
+2025-08-07 10:38 ascriv: https://graypaper.fluffylabs.dev/#/1c979cb/308a01308a01?v=0.7.1
+2025-08-07 10:39 ascriv: I don't think any impls are doing the g-10 in the default case for the mutator here? Should we remove?
+2025-08-07 10:40 ascriv: also if we keep it, shouldn't we do an out of gas check in case g < 10 ?
+2025-08-07 10:45 gav: It shouldn’t be removed, and yes an OOG check should be assumed. Feel free to make a PR stating this explicitly. 
+2025-08-07 11:35 ascriv: https://github.com/gavofyork/graypaper/pull/482

@@ -1,5 +1,5 @@
 # room: #jam:polkadot.io
-# exported: 2025-08-07 03:45 UTC
+# exported: 2025-08-08 03:45 UTC
 2024-04-20 02:08 johnjiao123: 
 2024-04-20 02:09 johnjiao123: 
 2024-05-30 21:48 nradko: Hey everyone,
@@ -10675,3 +10675,54 @@ In ASN.1:
 For context for the other readers, see the protocol message syntax:  
 https://github.com/davxy/jam-stuff/tree/main/fuzz-proto#protocol-messages and the syntax for all the jam protocol types: https://github.com/davxy/jam-test-vectors/blob/master/lib/jam-types.asn [edited]
 2025-08-06 19:32 emielsebastiaan: Daniel: It’s always a little weird seeing one’s words twisted by missing context. I would not have proposed option B. [edited]
+2025-08-07 03:54 gav: Daniel, please do not publish an AI-twisted version of my words that you yourself would not assert full accountability for. This is extremely bad form. [edited]
+2025-08-07 03:58 gav: > "Assuming validator nodes cost a bare minimum of ~$3k/month to run, it would cost $3m/month, $36m/year" for full configuration, but "Kusama could reasonably... have Kusama run a smaller JAM (perhaps just 32-core)" - Gavin Wood
+
+Please give a reference to this quote.
+2025-08-07 04:47 olanod: Alright, my bad, I checked some of the quotes and looks god on the surface but perhaps it's better without the quoting. The main idea that I wrote on the remarks remains, Opt.A: light, fast, cheaper, independent configuration. OptB: Standard params, non-biased towards KSM, and crossing fingers that Polkadot joins later to share security costs. We can always have an option C if there's something fundamentally wrong with the other two.
+2025-08-07 04:54 gav: Daniel, I choose my words here carefully. What you did is despicable and dishonourable. 
+2025-08-07 04:55 gav: You made a false quote of me and published it in a highly central community space as the truth.  
+2025-08-07 04:56 gav: If you foolishly entrust my reputation to AI, you can count my support for you at an end. 
+2025-08-07 04:57 olanod: Knowing AI is as quirky as it is my first reaction was to share it here. Sorry to hear you feel that way, I'll be a better human next time 🙏
+2025-08-07 04:58 gav: YOU posted that, not the AI. Man the fuck up. 
+2025-08-07 04:58 gav: I trust this is mere foolishness and not malice, so I will give you a second chance. If you value your honour and my company, never ever use AI to speak for anyone other than yourself. 
+2025-08-07 05:06 gav: Publishing lies and asking the victim to fact-check is *at best* ignorant and lazy. 
+2025-08-07 05:07 olanod:  No lazy AI quoting, lesson learned for life 🫡 [edited]
+2025-08-07 05:08 gav: Good 🫡
+2025-08-07 21:16 shimonchick: Hey everyone. I am trying to reproduce the Altnames. Reading the Graypaper they seem to start with "$" and the alphabet seems to include $ in the start. I cannot see that behavior in the dev-config or in polkajam. Also are they based on the ed25519 public key or the bandersnatch one.  Thoughts are appreciated [edited]
+2025-08-07 21:19 dave: $xyz just means the ASCII string "xyz", the $ is part of the notation. This ought to be covered in the notation section at the start of the paper, but I can't find it so possibly it is missing.
+2025-08-07 23:46 sourabhniyogi: ```
+# bin/polkajam --version
+polkajam 0.1.24
+GP 0.6.7
+# bin/polkajam-testnet
+testnet: Working directory: /tmp/testnet-PGBe0P
+node0: 2025-08-07 23:46:25 main INFO jam_node  Chain ID: dev
+node0: 2025-08-07 23:46:25 main INFO jam_node  Config dir: /tmp/testnet-PGBe0P/node0/conf/dev
+node0: 2025-08-07 23:46:25 main INFO jam_node  Data dir: /tmp/testnet-PGBe0P/node0/data/dev
+node1: 2025-08-07 23:46:25 main INFO jam_node  Chain ID: dev
+node1: 2025-08-07 23:46:25 main INFO jam_node  Config dir: /tmp/testnet-PGBe0P/node1/conf/dev
+node1: 2025-08-07 23:46:25 main INFO jam_node  Data dir: /tmp/testnet-PGBe0P/node1/data/dev
+node2: 2025-08-07 23:46:25 main INFO jam_node  Chain ID: dev
+node2: 2025-08-07 23:46:25 main INFO jam_node  Config dir: /tmp/testnet-PGBe0P/node2/conf/dev
+node2: 2025-08-07 23:46:25 main INFO jam_node  Data dir: /tmp/testnet-PGBe0P/node2/data/dev
+node3: 2025-08-07 23:46:25 main INFO jam_node  Chain ID: dev
+node3: 2025-08-07 23:46:25 main INFO jam_node  Config dir: /tmp/testnet-PGBe0P/node3/conf/dev
+node3: 2025-08-07 23:46:25 main INFO jam_node  Data dir: /tmp/testnet-PGBe0P/node3/data/dev
+node4: 2025-08-07 23:46:25 main INFO jam_node  Chain ID: dev
+node4: 2025-08-07 23:46:25 main INFO jam_node  Config dir: /tmp/testnet-PGBe0P/node4/conf/dev
+node4: 2025-08-07 23:46:25 main INFO jam_node  Data dir: /tmp/testnet-PGBe0P/node4/data/dev
+node5: 2025-08-07 23:46:25 main INFO jam_node  Chain ID: dev
+node5: 2025-08-07 23:46:25 main INFO jam_node  Config dir: /tmp/testnet-PGBe0P/node5/conf/dev
+node5: 2025-08-07 23:46:25 main INFO jam_node  Data dir: /tmp/testnet-PGBe0P/node5/data/dev
+node0: 2025-08-07 23:46:25 main INFO jam_node::chain  Reading state...
+node2: 2025-08-07 23:46:25 main INFO jam_node::chain  Reading state...
+node3: 2025-08-07 23:46:25 main INFO jam_node::chain  Reading state...
+node1: 2025-08-07 23:46:25 main INFO jam_node::chain  Reading state...
+node5: 2025-08-07 23:46:25 main INFO jam_node::chain  Reading state...
+node4: 2025-08-07 23:46:25 main INFO jam_node::chain  Reading state...
+node0: 2025-08-07 23:46:26 main ERROR jam_cli  Error: Chain error: VmEngine(EngineInitializationFailed(Error(Owned("failed to create a worker process (0 already exist): failed to fetch the userfaultfd from the child process: recvfd failed: received zero bytes (root cause: failed to create an userfaultfd: userfaultfd (errno = 1 (EPERM)))"))))
+Error: node0 exited abnormally: exit code 1
+``` [edited]
+2025-08-07 23:47 dave: `sudo sysctl -w vm.unprivileged_userfaultfd=1`
+2025-08-07 23:47 sourabhniyogi: Thank you that worked! [edited]
