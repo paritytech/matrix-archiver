@@ -1,5 +1,5 @@
 # room: #jam:polkadot.io
-# exported: 2025-08-08 03:45 UTC
+# exported: 2025-08-09 03:36 UTC
 2024-04-20 02:08 johnjiao123: 
 2024-04-20 02:09 johnjiao123: 
 2024-05-30 21:48 nradko: Hey everyone,
@@ -10726,3 +10726,64 @@ Error: node0 exited abnormally: exit code 1
 ``` [edited]
 2025-08-07 23:47 dave: `sudo sysctl -w vm.unprivileged_userfaultfd=1`
 2025-08-07 23:47 sourabhniyogi: Thank you that worked! [edited]
+2025-08-08 19:22 sourabhniyogi: Alright David Emett : We got our "numerical recipes in C" battery of tests to match up work report hashes for a couple dozen work packages with different recipes and want to know how to compare polkajam refine executions (with 100M-2B gas) with ms level accuracy -- can you advise on how we should do this accurately?
+
+We turned on `RUST_LOG=polkavm=trace` (where I thought there was some PVM refine execution timing info but I could be hallucinating =) ) and can't find anything, and its "second level accuracy" rather than "millisecond level accuracy"
+
+Also, since we want to actually go up to 2B gas (2s or more) is there some "too much refine gas" limit outside of GP we should know about [when we use 2B or more we hit a "too much refine gas" error from polkajam]?
+2025-08-08 19:28 dave: If you want something now, I believe there is a log message which includes the amount of time taken to execute refine. You need log level debug with target chain-core AFAICT. Longer term the telemetry stuff will expose refine timing and more. I've got that mostly implemented in PolkaJam now, but it's not on the main branch yet and so it is not included in the nightly builds. Hopefully that will change in the next couple of weeks.
+  ↳ 2025-08-08 20:28 sourabhniyogi: Found it -- thank you!
+
+```
+2025-08-08 20:27:49 tokio-runtime-worker DEBUG chain-core  Refine OK with result: Ok("") using 698 gas, took 475.496963ms
+```
+  ↳ 2025-08-08 20:44 sourabhniyogi: So we see the first comparisons and believe polkajam should be able to process at 1B gas/second, but we're seeing performance far less than that -- how can we get the totally optimal performance out of polkajam to do an apples-to-apples comparison of polkajam vs our jam implementation:
+```
+polkajam-3.log:2025-08-08 20:37:08 tokio-runtime-worker DEBUG chain-core  Refine OK with result: Ok(0x1821201f) using 95211247 gas, took 1.057200902s
+polkajam-3.log:2025-08-08 20:37:27 tokio-runtime-worker DEBUG chain-core  Refine OK with result: Ok(0x31252724221f) using 178149455 gas, took 1.838010218s
+polkajam-3.log:2025-08-08 20:37:46 tokio-runtime-worker DEBUG chain-core  Refine OK with result: Ok(0x1c21182531240920) using 191725861 gas, took 3.215107299s
+```
+We are currently running with:
+```
+@for i in 0 1 2 3 4; do \
+                RUST_LOG=chain-core=debug bin/polkajam  --chain chainspecs/jamduna-spec.json run --pvm-backend compiler --temp --dev-validator $$i --rpc-port=$$((19800 + $$i)) >logs/polkajam-$$i.log 2>&1 & \
+        done
+```
+What does "using 95211247 gas, took 1.057200902s" refer to exactly, like what is the start and what is the end of that measurement?
+
+Our current measurement is
+
+```
+=== VM recompiler Execution Summary (service algo, 50832 bytes, refineGasUsed 95211247)===
+Phase            Duration       Percent
+Initialization   42µs             0.01%
+StandardInit     10.695ms         3.30%
+Compile          55.985ms        17.26%
+Execution        257.550ms       79.38%
+Total            324.447ms   
+```
+with the 6th node being our jam implementation, surely with different methodology -- can you advise?
+  ↳ 2025-08-08 20:52 dave: It measures across load+compile+execute, so should be comparable to your total. If you're seeing poor performance it's likely in the integration of PolkaVM with PolkaJam or in some hostcall implementation; while I believe PolkaVM is well-optimised at this point, we haven't spent much time optimising PolkaJam. There are many places where the code is not very efficient. If you want a good benchmark for your recompiler I would suggest using PolkaVM standalone for now [edited]
+  ↳ 2025-08-08 21:03 sourabhniyogi: Ok!  How do we invoke PolkaVM standalone with a work package (or work package bundle)?  Can we just get the Compile + Execute part timing instead, without any loading? 
+
+Jan Bujak  Can you chime in on the exact recipe for doing this?  We'd like to know if we're at 50% or 70% or 100% of PolkaVM performance (in the sense of M3 vs M4) after a summer of opcode optimization =) [edited]
+  ↳ 2025-08-08 21:06 dave: That is not possible, but in any case wouldn't give different results -- it would still be using the PolkaJam hostcall impls etc, some of which are quite inefficient at the moment. It is possible to run eg doom on PolkaVM directly, without any JAM stuff involved. IDK any more details.
+  ↳ 2025-08-08 21:24 sourabhniyogi: For our test workpackages [and accumulates], these "numerical recipes in C" payloads are doing "pure" execution without any host function calls except "log" (which we can eliminate).  These + doom work packages (that also doesn't do any host function calls) can support everyone doing apples-to-apples comparisons.  How else can we know if teams are at M3 vs M4 performance? 
+  ↳ 2025-08-08 21:26 dave: You can't know, because the performance requirements aren't even defined yet
+2025-08-08 20:38 ge0321: Hi Dr. Wood,
+
+I’ve been following the discussions around a potential DOT supply cap, especially the community-driven models being explored following the OpenGov RFP. A 2.1B max supply seems to have strong support and may eventually go to a vote.
+
+I was wondering:
+
+Is it technically feasible to implement a fixed supply cap like 2.1B within JAM?
+
+If so, how would this be enforced. Would it require changes at the core runtime level?
+
+Some community members have said that once this is enshrined in JAM, any future changes would require a hard fork. Is that correct?
+
+I’ve looked through the JAM Gray Paper but haven’t found a section that addresses supply mechanics directly, or I may have missed it somewhere. Is this something planned for a future revision?
+
+Appreciate your time and all the work you continue to do.
+2025-08-08 20:43 emilkietzman: ima_ce00723.jpeg
+2025-08-08 20:43 emilkietzman: 

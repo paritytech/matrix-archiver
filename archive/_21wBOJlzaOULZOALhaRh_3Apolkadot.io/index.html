@@ -18,7 +18,7 @@ a:hover{color:#90caf9}
 em{font-style:italic}
 </style>
 <h1>#jam:polkadot.io</h1>
-<p><small>last updated 2025-08-08 03:45 UTC</small></p>
+<p><small>last updated 2025-08-09 03:36 UTC</small></p>
 <p><a href='room_log.txt'>⇩ plaintext</a> · <a href='../../'>⇦ all rooms</a></p>
 <hr>
 <div class='msg'><a class='ts' href='#$we4SYXTHwmKn094X9Zs_7mWUOoUVh4icvVdxD83RZfs'>#</a> <a class='ts' name='$we4SYXTHwmKn094X9Zs_7mWUOoUVh4icvVdxD83RZfs' href='https://matrix.to/#/!wBOJlzaOULZOALhaRh:polkadot.io/$we4SYXTHwmKn094X9Zs_7mWUOoUVh4icvVdxD83RZfs' target='_blank'>2024-04-20 02:08</a>&ensp;<span class='u' style='color:#d0709e'>johnjiao123</span>: </div>
@@ -10629,3 +10629,60 @@ Error: node0 exited abnormally: exit code 1
 </code></pre> <span class="edited">(edited)</span></div>
 <div class='msg'><a class='ts' href='#$Jmy-3ca_iXCmPkNvyBUOXpN2AHV6iXoMNrRPUzpti_A'>#</a> <a class='ts' name='$Jmy-3ca_iXCmPkNvyBUOXpN2AHV6iXoMNrRPUzpti_A' href='https://matrix.to/#/!wBOJlzaOULZOALhaRh:polkadot.io/$Jmy-3ca_iXCmPkNvyBUOXpN2AHV6iXoMNrRPUzpti_A' target='_blank'>2025-08-07 23:47</a>&ensp;<span class='u' style='color:#c65779'>dave</span>: <code>sudo sysctl -w vm.unprivileged_userfaultfd=1</code></div>
 <div class='msg'><a class='ts' href='#$u9FJA8epkZ-y1yuzTjsG4zwQ4Pc2ogZ_IDpiFK_IM90'>#</a> <a class='ts' name='$u9FJA8epkZ-y1yuzTjsG4zwQ4Pc2ogZ_IDpiFK_IM90' href='https://matrix.to/#/!wBOJlzaOULZOALhaRh:polkadot.io/$u9FJA8epkZ-y1yuzTjsG4zwQ4Pc2ogZ_IDpiFK_IM90' target='_blank'>2025-08-07 23:47</a>&ensp;<span class='u' style='color:#c67452'>sourabhniyogi</span>: Thank you that worked! <span class="edited">(edited)</span></div>
+<div class='msg'><a class='ts' href='#$BWjHu9Wksb01znWwcV9PH4UAfZbeBFeAMTGAatVVfY8'>#</a> <a class='ts' name='$BWjHu9Wksb01znWwcV9PH4UAfZbeBFeAMTGAatVVfY8' href='https://matrix.to/#/!wBOJlzaOULZOALhaRh:polkadot.io/$BWjHu9Wksb01znWwcV9PH4UAfZbeBFeAMTGAatVVfY8' target='_blank'>2025-08-08 19:22</a>&ensp;<span class='u' style='color:#c67452'>sourabhniyogi</span>: Alright David Emett : We got our &quot;numerical recipes in C&quot; battery of tests to match up work report hashes for a couple dozen work packages with different recipes and want to know how to compare polkajam refine executions (with 100M-2B gas) with ms level accuracy -- can you advise on how we should do this accurately?
+
+We turned on <code>RUST_LOG=polkavm=trace</code> (where I thought there was some PVM refine execution timing info but I could be hallucinating =) ) and can&#x27;t find anything, and its &quot;second level accuracy&quot; rather than &quot;millisecond level accuracy&quot;
+
+Also, since we want to actually go up to 2B gas (2s or more) is there some &quot;too much refine gas&quot; limit outside of GP we should know about [when we use 2B or more we hit a &quot;too much refine gas&quot; error from polkajam]?</div>
+<div class='msg'><a class='ts' href='#$woF6fVKhgCHR9-cLkCAo1izS10oWOk1fotQlw2mkLDY'>#</a> <a class='ts' name='$woF6fVKhgCHR9-cLkCAo1izS10oWOk1fotQlw2mkLDY' href='https://matrix.to/#/!wBOJlzaOULZOALhaRh:polkadot.io/$woF6fVKhgCHR9-cLkCAo1izS10oWOk1fotQlw2mkLDY' target='_blank'>2025-08-08 19:28</a>&ensp;<span class='u' style='color:#c65779'>dave</span>: If you want something now, I believe there is a log message which includes the amount of time taken to execute refine. You need log level debug with target chain-core AFAICT. Longer term the telemetry stuff will expose refine timing and more. I&#x27;ve got that mostly implemented in PolkaJam now, but it&#x27;s not on the main branch yet and so it is not included in the nightly builds. Hopefully that will change in the next couple of weeks.</div>
+<div class='msg reply'><a class='ts' href='#$w3FqUWHmu3AD847-OdKp9gHtDztvn5OM75cWqC8ffq4'>#</a> <a class='ts' name='$w3FqUWHmu3AD847-OdKp9gHtDztvn5OM75cWqC8ffq4' href='https://matrix.to/#/!wBOJlzaOULZOALhaRh:polkadot.io/$w3FqUWHmu3AD847-OdKp9gHtDztvn5OM75cWqC8ffq4' target='_blank'>2025-08-08 20:28</a>&ensp;<span class='u' style='color:#c67452'>sourabhniyogi</span>: Found it -- thank you!
+
+<pre><code class=''>2025-08-08 20:27:49 tokio-runtime-worker DEBUG chain-core  Refine OK with result: Ok(&quot;&quot;) using 698 gas, took 475.496963ms
+</code></pre></div>
+<div class='msg reply'><a class='ts' href='#$1Qx3Ra_3oGP2Iv_9klIcBguSUBL3FOslyq1O0RoTNJ0'>#</a> <a class='ts' name='$1Qx3Ra_3oGP2Iv_9klIcBguSUBL3FOslyq1O0RoTNJ0' href='https://matrix.to/#/!wBOJlzaOULZOALhaRh:polkadot.io/$1Qx3Ra_3oGP2Iv_9klIcBguSUBL3FOslyq1O0RoTNJ0' target='_blank'>2025-08-08 20:44</a>&ensp;<span class='u' style='color:#c67452'>sourabhniyogi</span>: So we see the first comparisons and believe polkajam should be able to process at 1B gas/second, but we&#x27;re seeing performance far less than that -- how can we get the totally optimal performance out of polkajam to do an apples-to-apples comparison of polkajam vs our jam implementation:
+<pre><code class=''>polkajam-3.log:2025-08-08 20:37:08 tokio-runtime-worker DEBUG chain-core  Refine OK with result: Ok(0x1821201f) using 95211247 gas, took 1.057200902s
+polkajam-3.log:2025-08-08 20:37:27 tokio-runtime-worker DEBUG chain-core  Refine OK with result: Ok(0x31252724221f) using 178149455 gas, took 1.838010218s
+polkajam-3.log:2025-08-08 20:37:46 tokio-runtime-worker DEBUG chain-core  Refine OK with result: Ok(0x1c21182531240920) using 191725861 gas, took 3.215107299s
+</code></pre>
+We are currently running with:
+<pre><code class=''>@for i in 0 1 2 3 4; do \
+                RUST_LOG=chain-core=debug bin/polkajam  --chain chainspecs/jamduna-spec.json run --pvm-backend compiler --temp --dev-validator $$i --rpc-port=$$((19800 + $$i)) &gt;logs/polkajam-$$i.log 2&gt;&amp;1 &amp; \
+        done
+</code></pre>
+What does &quot;using 95211247 gas, took 1.057200902s&quot; refer to exactly, like what is the start and what is the end of that measurement?
+
+Our current measurement is
+
+<pre><code class=''>=== VM recompiler Execution Summary (service algo, 50832 bytes, refineGasUsed 95211247)===
+Phase            Duration       Percent
+Initialization   42µs             0.01%
+StandardInit     10.695ms         3.30%
+Compile          55.985ms        17.26%
+Execution        257.550ms       79.38%
+Total            324.447ms   
+</code></pre>
+with the 6th node being our jam implementation, surely with different methodology -- can you advise?</div>
+<div class='msg reply'><a class='ts' href='#$LIbMSLzOk1ucbU_Zh7RxjKHlYf5SoN9xMs0LL_qVlH8'>#</a> <a class='ts' name='$LIbMSLzOk1ucbU_Zh7RxjKHlYf5SoN9xMs0LL_qVlH8' href='https://matrix.to/#/!wBOJlzaOULZOALhaRh:polkadot.io/$LIbMSLzOk1ucbU_Zh7RxjKHlYf5SoN9xMs0LL_qVlH8' target='_blank'>2025-08-08 20:52</a>&ensp;<span class='u' style='color:#c65779'>dave</span>: It measures across load+compile+execute, so should be comparable to your total. If you&#x27;re seeing poor performance it&#x27;s likely in the integration of PolkaVM with PolkaJam or in some hostcall implementation; while I believe PolkaVM is well-optimised at this point, we haven&#x27;t spent much time optimising PolkaJam. There are many places where the code is not very efficient. If you want a good benchmark for your recompiler I would suggest using PolkaVM standalone for now <span class="edited">(edited)</span></div>
+<div class='msg reply'><a class='ts' href='#$64QgJ8fA4uSDz15XCcO5I6dsfE4SW1z8_7nv5blHmaQ'>#</a> <a class='ts' name='$64QgJ8fA4uSDz15XCcO5I6dsfE4SW1z8_7nv5blHmaQ' href='https://matrix.to/#/!wBOJlzaOULZOALhaRh:polkadot.io/$64QgJ8fA4uSDz15XCcO5I6dsfE4SW1z8_7nv5blHmaQ' target='_blank'>2025-08-08 21:03</a>&ensp;<span class='u' style='color:#c67452'>sourabhniyogi</span>: Ok!  How do we invoke PolkaVM standalone with a work package (or work package bundle)?  Can we just get the Compile + Execute part timing instead, without any loading? 
+
+Jan Bujak  Can you chime in on the exact recipe for doing this?  We&#x27;d like to know if we&#x27;re at 50% or 70% or 100% of PolkaVM performance (in the sense of M3 vs M4) after a summer of opcode optimization =) <span class="edited">(edited)</span></div>
+<div class='msg reply'><a class='ts' href='#$lz9xwXBVL-qACSv3iQGrzQnDaq4YZYc6wnrEOhisLLA'>#</a> <a class='ts' name='$lz9xwXBVL-qACSv3iQGrzQnDaq4YZYc6wnrEOhisLLA' href='https://matrix.to/#/!wBOJlzaOULZOALhaRh:polkadot.io/$lz9xwXBVL-qACSv3iQGrzQnDaq4YZYc6wnrEOhisLLA' target='_blank'>2025-08-08 21:06</a>&ensp;<span class='u' style='color:#c65779'>dave</span>: That is not possible, but in any case wouldn&#x27;t give different results -- it would still be using the PolkaJam hostcall impls etc, some of which are quite inefficient at the moment. It is possible to run eg doom on PolkaVM directly, without any JAM stuff involved. IDK any more details.</div>
+<div class='msg reply'><a class='ts' href='#$2GNDnnnzOQ1DxMEm1yCj87KDSvo5BB4n2X-uZ2jfH2E'>#</a> <a class='ts' name='$2GNDnnnzOQ1DxMEm1yCj87KDSvo5BB4n2X-uZ2jfH2E' href='https://matrix.to/#/!wBOJlzaOULZOALhaRh:polkadot.io/$2GNDnnnzOQ1DxMEm1yCj87KDSvo5BB4n2X-uZ2jfH2E' target='_blank'>2025-08-08 21:24</a>&ensp;<span class='u' style='color:#c67452'>sourabhniyogi</span>: For our test workpackages [and accumulates], these &quot;numerical recipes in C&quot; payloads are doing &quot;pure&quot; execution without any host function calls except &quot;log&quot; (which we can eliminate).  These + doom work packages (that also doesn&#x27;t do any host function calls) can support everyone doing apples-to-apples comparisons.  How else can we know if teams are at M3 vs M4 performance? </div>
+<div class='msg reply'><a class='ts' href='#$3wA0oS0buATLexfLhrHUCFxWlgjd9CLjGzuWi4ZWfmY'>#</a> <a class='ts' name='$3wA0oS0buATLexfLhrHUCFxWlgjd9CLjGzuWi4ZWfmY' href='https://matrix.to/#/!wBOJlzaOULZOALhaRh:polkadot.io/$3wA0oS0buATLexfLhrHUCFxWlgjd9CLjGzuWi4ZWfmY' target='_blank'>2025-08-08 21:26</a>&ensp;<span class='u' style='color:#c65779'>dave</span>: You can&#x27;t know, because the performance requirements aren&#x27;t even defined yet</div>
+<div class='msg'><a class='ts' href='#$8NBenA3elHFvbpv0mDcev2LfSScUIG-5GH541Qqxj8s'>#</a> <a class='ts' name='$8NBenA3elHFvbpv0mDcev2LfSScUIG-5GH541Qqxj8s' href='https://matrix.to/#/!wBOJlzaOULZOALhaRh:polkadot.io/$8NBenA3elHFvbpv0mDcev2LfSScUIG-5GH541Qqxj8s' target='_blank'>2025-08-08 20:38</a>&ensp;<span class='u' style='color:#7bdab2'>ge0321</span>: Hi Dr. Wood,
+
+I’ve been following the discussions around a potential DOT supply cap, especially the community-driven models being explored following the OpenGov RFP. A 2.1B max supply seems to have strong support and may eventually go to a vote.
+
+I was wondering:
+
+Is it technically feasible to implement a fixed supply cap like 2.1B within JAM?
+
+If so, how would this be enforced. Would it require changes at the core runtime level?
+
+Some community members have said that once this is enshrined in JAM, any future changes would require a hard fork. Is that correct?
+
+I’ve looked through the JAM Gray Paper but haven’t found a section that addresses supply mechanics directly, or I may have missed it somewhere. Is this something planned for a future revision?
+
+Appreciate your time and all the work you continue to do.</div>
+<div class='msg'><a class='ts' href='#$lRwAxXUUrVr3tJJKXRjKHnI3bQFPK5gnx0FJlbnaL74'>#</a> <a class='ts' name='$lRwAxXUUrVr3tJJKXRjKHnI3bQFPK5gnx0FJlbnaL74' href='https://matrix.to/#/!wBOJlzaOULZOALhaRh:polkadot.io/$lRwAxXUUrVr3tJJKXRjKHnI3bQFPK5gnx0FJlbnaL74' target='_blank'>2025-08-08 20:43</a>&ensp;<span class='u' style='color:#bf4233'>emilkietzman</span>: ima_ce00723.jpeg</div>
+<div class='msg'><a class='ts' href='#$CatqASIAh1tJ7HjZnW9aMLRVADITKih9ZUMSwXz7xg4'>#</a> <a class='ts' name='$CatqASIAh1tJ7HjZnW9aMLRVADITKih9ZUMSwXz7xg4' href='https://matrix.to/#/!wBOJlzaOULZOALhaRh:polkadot.io/$CatqASIAh1tJ7HjZnW9aMLRVADITKih9ZUMSwXz7xg4' target='_blank'>2025-08-08 20:43</a>&ensp;<span class='u' style='color:#bf4233'>emilkietzman</span>: </div>
