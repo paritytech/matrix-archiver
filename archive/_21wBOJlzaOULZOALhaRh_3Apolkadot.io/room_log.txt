@@ -1,5 +1,5 @@
 # room: #jam:polkadot.io
-# exported: 2025-08-09 03:36 UTC
+# exported: 2025-08-10 03:45 UTC
 2024-04-20 02:08 johnjiao123: 
 2024-04-20 02:09 johnjiao123: 
 2024-05-30 21:48 nradko: Hey everyone,
@@ -10787,3 +10787,9 @@ I’ve looked through the JAM Gray Paper but haven’t found a section that addr
 Appreciate your time and all the work you continue to do.
 2025-08-08 20:43 emilkietzman: ima_ce00723.jpeg
 2025-08-08 20:43 emilkietzman: 
+2025-08-09 08:02 davxy: Anyone else want a little fuzz action?
+
+https://github.com/davxy/jam-conformance/issues
+2025-08-09 09:32 boymaas: Yes! Let me prepare the 0.6.7 🤠
+2025-08-09 10:10 boymaas: Uploaded a new version ready for some fuzzing action 🤞 which passes all the v0.6.7 testvectors: https://github.com/jamzig/conformance-releases [edited]
+2025-08-09 14:11 sourabhniyogi: Cool, thank you for leading the way and getting our juices flowing --  can we get the 0.6.7 fuzzer binary posted please?   
