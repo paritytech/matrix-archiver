@@ -1,5 +1,5 @@
 # room: #jam:polkadot.io
-# exported: 2025-08-11 03:45 UTC
+# exported: 2025-08-12 03:35 UTC
 2024-04-20 02:08 johnjiao123: 
 2024-04-20 02:09 johnjiao123: 
 2024-05-30 21:48 nradko: Hey everyone,
@@ -10793,3 +10793,37 @@ https://github.com/davxy/jam-conformance/issues
 2025-08-09 09:32 boymaas: Yes! Let me prepare the 0.6.7 🤠
 2025-08-09 10:10 boymaas: Uploaded a new version ready for some fuzzing action 🤞 which passes all the v0.6.7 testvectors: https://github.com/jamzig/conformance-releases [edited]
 2025-08-09 14:11 sourabhniyogi: Cool, thank you for leading the way and getting our juices flowing --  can we get the 0.6.7 fuzzer binary posted please?   
+2025-08-11 11:54 dvladco: Hi davxy,
+
+we are struggling to pass some accumulation test vectors. The actual accumulate gas used is 2 less than expected for the test vectors bellow. I checked the `Gas Costs` section from the readme and it aligns with our implementation. Is it possible that 2 instructions are not being called? Can you provide more info maybe some traces from the vm or point us in the right direction, or maybe you have some intuition what could be wrong.
+
+These are the failing tests: (`accumulate_ready_queued_reports-1 gas 15014 instead of 15016, enqueue_and_unlock_chain-3 5618 -> 5620, enqueue_and_unlock_simple-2 5659 -> 5661, enqueue_and_unlock_with_sr_lookup-2 5612 -> 5614, process_one_immediate_report-1 4290 -> 4292, queues_are_shifted-1 4290 -> 4292, ready_queue_editing-2 4301 -> 4303, same_code_different_services-1 4256 -> 4258`)
+
+Is anyone else having this issue as well? [edited]
+2025-08-11 16:18 clearloop: if it is possible introducing a wild range of trace tests for `0.6.7`, not limited by storage and preimages? for example generating 100 traces with the current fuzzing mechanism for us to work on ( if introducing a fuzzer binary is overkilling atm )
+
+I just updated our fuzzer today and tried on sort of reports in the repo, unfortunately, we failed on the cases reported from other teams as well 😂  it seems the workflow can be more efficient once we have more trace tests before testing with the fuzzer given that there is no team can process more than 4 blocks atm [edited]
+2025-08-11 16:54 ascriv: the binary should be released soon which will improve efficiency a lot
+2025-08-11 16:55 ascriv: i imagine that would be easier than making a better trace distribution, but not sure
+2025-08-11 17:27 davxy: Some teams fail after more uncharted hostcalls (i.e., not covered by the static traces and test vectors). Most of them pass simple fuzzing for storage R/W, preimage provisioning, safrole. etc
+
+We're adding more and more host calls and tricks trying to break targets, and it’s being updated very frequently (still in alpha). That said, I think we can share the binary to **increase the current bus factor**.
+
+Bit I can’t make this decision alone. I’ll try to discuss it with the team tomorrow
+2025-08-11 17:32 davxy: One additional interesting topic to discuss is: do we expect implementers to support "simple" forks?  
+
+The fuzzer can be instructed to generate *N* mutants of certain blocks and attempt to import them before importing the original block. The next block is always built over the original - meaning even if a mutant is imported successfully, that fork is always discarded.  
+
+I expect this scenario to be allowed for fuzz testing, as it leads to way more interesting results. In fact, I’ve noticed that most implementations fail under these conditions.
+2025-08-11 17:36 davxy: Perhaps if an implementation doesn’t support forks yet, then given *X* blocks with the same parent, I can send the `SetState` message *X* times to the target (once before importing each of the alternatives) - effectively resetting the state each time.
+2025-08-11 17:37 davxy: I need to check if forks managent are expected for M1
+2025-08-11 17:38 ascriv: yeah seems like a question for those who are awarding the prizes, not the implementors, imo. but let us know when you do
+2025-08-11 18:11 davxy: Actually, it might be simpler than that. You don't need to support "true" arbitrary forking for the fuzzer to work.
+
+The closest you need to get to forking is receiving a block with the same parent as the one just imported (trivial forking :-)). In that case, you simply restore the previous state by discarding the last posterior state ( the original block will be always provided as the last one).
+
+This should be easier to implement since you only need to keep one snapshot around, rather than managing full forking. I think this is both reasonable and necessary for effective fuzzing.
+
+I'll discuss this topic as well. [edited]
+2025-08-11 18:33 davxy: AFAIK, most of the active teams are now passing the test vectors and are aligned on gas consumption. I can share a couple of PVM traces for the vectors if that helps [edited]
+2025-08-11 19:48 dhruv245: Hi, Is there an ETA for when milestone submissions will open?
