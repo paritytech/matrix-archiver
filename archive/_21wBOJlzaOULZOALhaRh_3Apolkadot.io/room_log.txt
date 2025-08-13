@@ -1,5 +1,5 @@
 # room: #jam:polkadot.io
-# exported: 2025-08-12 03:35 UTC
+# exported: 2025-08-13 03:36 UTC
 2024-04-20 02:08 johnjiao123: 
 2024-04-20 02:09 johnjiao123: 
 2024-05-30 21:48 nradko: Hey everyone,
@@ -10826,4 +10826,28 @@ This should be easier to implement since you only need to keep one snapshot arou
 
 I'll discuss this topic as well. [edited]
 2025-08-11 18:33 davxy: AFAIK, most of the active teams are now passing the test vectors and are aligned on gas consumption. I can share a couple of PVM traces for the vectors if that helps [edited]
+  ↳ 2025-08-12 08:25 dvladco: If you can this will help us tremendously, we could check instruction by instruction and see where we are off, thank you 🙏 
+  ↳ 2025-08-12 10:57 vinsystems: I have the same problem of a 2 gas unit difference, but in test vectors different from yours. In enqueue_and_unlock_chain-3 I can correctly calculate the gas used. I have uploaded a [log of the traces](https://gist.github.com/bloppan/950f29173670473ff900a367800fbffa) instruction by instruction in case it helps you. Could you please share a log of traces from the enqueue_and_unlock_chain-4 test?
+  ↳ 2025-08-12 11:34 dvladco: these are my traces for `enqueue_and_unlock_chain_wraps-2` one of the tests that is passing: https://gist.github.com/danielvladco/e9d33e2448feb68fc9514c22afd15b70
+  ↳ 2025-08-12 11:55 dvladco: nevermind I was looking at the wrong test sorry for that
+  ↳ 2025-08-12 11:56 dvladco: here are the traces for the enqueue_and_unlock_chain-4 https://gist.github.com/danielvladco/4e1bd0bec146a4ddb6ed0b0c31e57bd8
+  ↳ 2025-08-12 13:51 dvladco: I have found the issue, the problem was that the write host call was returning the wrong result
+  ↳ 2025-08-12 15:12 vinsystems: Nice! In my case the problem was in my test module. I wasn't saving properly the storage keys
 2025-08-11 19:48 dhruv245: Hi, Is there an ETA for when milestone submissions will open?
+2025-08-12 06:53 ascriv: > <@gav:polkadot.io> 0.7.0 is where I would be happy to accept M1 submissions. 
+
+From gav a while ago^. So I guess what’s left is polkajam to get to 0.7.0 and complete the fuzzer (and fuzzer binary), and then teams can start submitting their 0.7.0 jam binaries which clear the fuzzing
+2025-08-12 06:53 ascriv: so probably quite soon
+2025-08-12 11:38 roysingh8368: Hello team,
+
+I'm now focusing on integration testing for my JAM node. I'm looking for a specific type of test vector: a single, complex block payload designed to test the interactions between multiple components of the state transition function at once.
+
+For example, a block that includes a mix of extrinsics like ticket submissions, work-report guarantees, availability assurances, and disputes, which would trigger a complex accumulation phase. The goal is to validate the entire workflow as a whole on an isolated node.
+
+Does anyone have or know of a canonical integration test case like this? or if it already available in the Jam-test-vector . 
+  ↳ 2025-08-12 13:25 roysingh8368: davxy:
+2025-08-12 11:38 dvladco: 
+2025-08-12 11:55 anish1222: i am also wanted the same thing full test payload for my node [edited]
+2025-08-12 19:22 rustybot: 
+2025-08-12 19:31 rustybot: For simpler scenarios, we provide traces in the test vectors [repository](https://github.com/davxy/jam-test-vectors/tree/master/traces).  
+More involved (though still not very complex) scenarios are currently tested using the fuzzer. You may eventually want to implement the target side of the fuzzer [protocol](https://github.com/davxy/jam-conformance/tree/main/fuzz-proto) [edited]

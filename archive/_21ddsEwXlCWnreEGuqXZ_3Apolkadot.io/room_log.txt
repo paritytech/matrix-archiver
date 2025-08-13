@@ -1,5 +1,5 @@
 # room: #graypaper:polkadot.io
-# exported: 2025-08-12 03:36 UTC
+# exported: 2025-08-13 03:37 UTC
 2024-04-17 20:29 syed: https://matrix.to/#/!hyzRkDqDthePbodYFz:parity.io/$f_DMsIEcDXZegw6Sabnehzc-LrdDQkmq5MbxDDyoZxY?via=parity.io&via=web3.foundation
 
 2024-04-17 20:29 syed: 
@@ -6510,3 +6510,26 @@ Do you have a prediction on how QWERTY teams will fail? [edited]
 2025-08-08 15:54 ascriv: https://graypaper.fluffylabs.dev/#/1c979cb/2c57022c6102?v=0.7.1
 
 host functions returning a page fault is only theoretical at this point, right? Couldn't find any that actually return this exit reason
+2025-08-12 13:37 ge0321: Hi Gavin, I was wondering if there’s been any thought given to updating the original Polkadot whitepaper. With Polkadot 1.0 now fully delivered, the original vision has essentially been realized. Now that we have JAM, the Gray Paper does an excellent job explaining the technical details, but it’s quite dense for a general audience. Do you think there’s value in producing an updated whitepaper or equivalent that frames Polkadot’s vision and architecture from the JAM perspective for a broader audience?
+2025-08-12 15:12 gav: Yeah perhaps that could be interesting. 
+2025-08-12 15:13 gav: Question is whether I can find the time:)
+2025-08-12 16:00 ge0321: :)
+2025-08-12 17:04 sourabhniyogi: What are the primary reasons for _not_ having `refine`'s { `machine`, `poke`, `invoke`, `peek`, `pages`, `expunge` } host functions available as invokable `accumulate` host functions as well?   If these are "expensive" (or worth discouraging) why not just gas price them as such?
+
+As far as we can see, there is no constraint on a child VM's available gas in `invoke` from the parent VM -- is that correct?  If the parent has 2B gas allocated, the `machine`-generated child VM could have 3B, or 3 `machine` generated child VMs could have 1B (or 1T).  What did I miss on how `invoke` is constrained so that a `refine` invocation has the child VM not using more gas than was allocated to the parent?
+
+I'm taking a good look at `invoke` to tackle the EVM-to-PVM gas comparison problem seriously with some fraction of Ethereum legacy tests -- where I think if the EVM contract-related family of opcodes (CALL/STATICCALL/DELEGATECALL/...) is mapped into PVM refine+accumulate machinery "correctly", it can be a good source of dogfooding.  This is almost certainly a non-trivial undertaking to do right but a PoC seems tractable especially if the goal is "just" to compare gas models for "pure" computations.   How would you constrain or order the execution of this?  Or, should this be avoided completely?  It sure seems that refines child VM `invoke`/`machine`/... machinery should be adapted for this purpose (and incorporated into accumulate)-- would you agree?
+
+To do a proper precise comparison of gas models and demonstrate the improvements of gas models based on PVM to EVM, it seems an absolute requirement to compare wall clock times between
+(1) EVM-to-X86 (with revmc), measuring both:
+(a) strawman EVM gas model (whatever the production model is circa 2025) to
+(b) "reparameterized" EVM gas model (as informed by X86/.. wall clock times)
+(2) EVM-to-PVM-to-X86, with the new PVM gas model (as informed by X86/.. wall clock times)
+with the exact same battery of EVM byte code doing the exact same full range of computations (computing with 256-bit with no 64-bit shortcuts) and allowing both (1)+(2) optimizations (e.g. if the 256-bit computation only actually needs 64-bit computation, then take the shortcut).  Am I requiring too much here?  What are legit shortcuts to take?
+
+The primary shortcut I believe is to only measure pure functions (no EVM byte code reading/writing state, or doing any kind of IO), with no use of host functions (except maybe to actually conduct the test).  Are there other shortcuts you would advise, for the goal of doing precise gas model comparison? [edited]
+2025-08-12 21:19 boymaas: I am re-reading the accumulated definitions and have a question about a detail in the outer accumulation function which calls the parallelized accumulation function one or more times based on actual gas usage. The parallelized accumulation function takes a set of ( w ) and executes single service invocations in parallel, building, for example, ( B ), the service-indexed commitment.
+
+Now I wonder what would happen if the second invocation included a w with an (s) service\_id which was also present in the first invocation of the parallelized accumulation function. Are we not losing the output from the first parallelized accumulation function invocation for that service in B when we perform the union integrating the results from the second invocation into B?
+
+https://graypaper.fluffylabs.dev/#/1c979cb/17be0117c101?v=0.7.1 [edited]
