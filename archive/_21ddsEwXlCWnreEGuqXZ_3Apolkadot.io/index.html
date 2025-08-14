@@ -18,7 +18,7 @@ a:hover{color:#90caf9}
 em{font-style:italic}
 </style>
 <h1>#graypaper:polkadot.io</h1>
-<p><small>last updated 2025-08-13 03:37 UTC</small></p>
+<p><small>last updated 2025-08-14 03:37 UTC</small></p>
 <p><a href='room_log.txt'>⇩ plaintext</a> · <a href='../../'>⇦ all rooms</a></p>
 <hr>
 <div class='msg'><a class='ts' href='#$G0deSwnlYlCrSn5lIFL__hi6bgWVITql5VyahU4bzpI'>#</a> <a class='ts' name='$G0deSwnlYlCrSn5lIFL__hi6bgWVITql5VyahU4bzpI' href='https://matrix.to/#/!ddsEwXlCWnreEGuqXZ:polkadot.io/$G0deSwnlYlCrSn5lIFL__hi6bgWVITql5VyahU4bzpI' target='_blank'>2024-04-17 20:29</a>&ensp;<span class='u' style='color:#da6aa2'>syed</span>: <a href="https://matrix.to/#/!hyzRkDqDthePbodYFz:parity.io/$f_DMsIEcDXZegw6Sabnehzc-LrdDQkmq5MbxDDyoZxY?via=parity.io&amp;via=web3.foundation" rel="noopener" target="_blank">https://matrix.to/#/!hyzRkDqDthePbodYFz:parity.io/$f_DMsIEcDXZegw6Sabnehzc-LrdDQkmq5MbxDDyoZxY?via=parity.io&amp;via=web3.foundation</a>
@@ -6524,3 +6524,9 @@ The primary shortcut I believe is to only measure pure functions (no EVM byte co
 Now I wonder what would happen if the second invocation included a w with an (s) service\_id which was also present in the first invocation of the parallelized accumulation function. Are we not losing the output from the first parallelized accumulation function invocation for that service in B when we perform the union integrating the results from the second invocation into B?
 
 <a href="https://graypaper.fluffylabs.dev/#/1c979cb/17be0117c101?v=0.7.1" rel="noopener" target="_blank">https://graypaper.fluffylabs.dev/#/1c979cb/17be0117c101?v=0.7.1</a> <span class="edited">(edited)</span></div>
+<div class='msg'><a class='ts' href='#$i9FEBvl4FS34kH1M7texDlr4pBmgqKg452kAuV6nJXc'>#</a> <a class='ts' name='$i9FEBvl4FS34kH1M7texDlr4pBmgqKg452kAuV6nJXc' href='https://matrix.to/#/!ddsEwXlCWnreEGuqXZ:polkadot.io/$i9FEBvl4FS34kH1M7texDlr4pBmgqKg452kAuV6nJXc' target='_blank'>2025-08-13 18:08</a>&ensp;<span class='u' style='color:#cb735c'>prasad-kumkar</span>: We’ve published some early benchmarks comparing our x86 recompiler vs the Python interpreter for PVM on pure compute programs (with gas computation): 🔗 <a href="https://gist.github.com/prasad-kumkar/7727798f7b06d8ead3e84436e85499f1" rel="noopener" target="_blank">https://gist.github.com/prasad-kumkar/7727798f7b06d8ead3e84436e85499f1</a>
+
+These numbers are super early and there’s a lot of room for improvement.
+One thing I noticed - when we integrate it in JAM (with host calls), performance drops quite a bit, even slower than interpreter 🤔 
+
+Sharing here in case anyone wants to reference</div>

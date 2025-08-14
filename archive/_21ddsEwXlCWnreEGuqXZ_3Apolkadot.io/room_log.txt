@@ -1,5 +1,5 @@
 # room: #graypaper:polkadot.io
-# exported: 2025-08-13 03:37 UTC
+# exported: 2025-08-14 03:37 UTC
 2024-04-17 20:29 syed: https://matrix.to/#/!hyzRkDqDthePbodYFz:parity.io/$f_DMsIEcDXZegw6Sabnehzc-LrdDQkmq5MbxDDyoZxY?via=parity.io&via=web3.foundation
 
 2024-04-17 20:29 syed: 
@@ -6533,3 +6533,9 @@ The primary shortcut I believe is to only measure pure functions (no EVM byte co
 Now I wonder what would happen if the second invocation included a w with an (s) service\_id which was also present in the first invocation of the parallelized accumulation function. Are we not losing the output from the first parallelized accumulation function invocation for that service in B when we perform the union integrating the results from the second invocation into B?
 
 https://graypaper.fluffylabs.dev/#/1c979cb/17be0117c101?v=0.7.1 [edited]
+2025-08-13 18:08 prasad-kumkar: We’ve published some early benchmarks comparing our x86 recompiler vs the Python interpreter for PVM on pure compute programs (with gas computation): 🔗 https://gist.github.com/prasad-kumkar/7727798f7b06d8ead3e84436e85499f1
+
+These numbers are super early and there’s a lot of room for improvement.
+One thing I noticed - when we integrate it in JAM (with host calls), performance drops quite a bit, even slower than interpreter 🤔 
+
+Sharing here in case anyone wants to reference
