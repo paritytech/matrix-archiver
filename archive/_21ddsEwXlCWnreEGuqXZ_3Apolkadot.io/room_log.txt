@@ -1,5 +1,5 @@
 # room: #graypaper:polkadot.io
-# exported: 2025-08-14 03:37 UTC
+# exported: 2025-08-15 03:38 UTC
 2024-04-17 20:29 syed: https://matrix.to/#/!hyzRkDqDthePbodYFz:parity.io/$f_DMsIEcDXZegw6Sabnehzc-LrdDQkmq5MbxDDyoZxY?via=parity.io&via=web3.foundation
 
 2024-04-17 20:29 syed: 
@@ -6539,3 +6539,9 @@ These numbers are super early and there’s a lot of room for improvement.
 One thing I noticed - when we integrate it in JAM (with host calls), performance drops quite a bit, even slower than interpreter 🤔 
 
 Sharing here in case anyone wants to reference
+2025-08-14 19:04 vinsystems: When the [designate hostcall](https://graypaper.fluffylabs.dev/#/7e6ff6a/36b50136b501?v=0.6.7) is called and the next\_validators are updated, should we also update the safrole's pending validators, recompute the epoch root and empty the tickets accumulator? [edited]
+2025-08-14 19:23 jaymansfield: Results of designate go into iota prime (see 12.25). Ring root and next validators come from the original iota (6.13) [edited]
+2025-08-14 19:39 davxy: The designate validator is stored in iota and remains there until the next epoch change.  
+When the epoch changes, iota enters the safrole state, and the ring root (commitment) is recomputed for the new validator set.  
+
+The designate host call can be invoked multiple times during an epoch to update iota, but only the last value written before the epoch change is used to recompute the safrole ring root.

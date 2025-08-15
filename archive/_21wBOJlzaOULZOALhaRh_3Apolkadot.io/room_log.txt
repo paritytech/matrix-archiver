@@ -1,5 +1,5 @@
 # room: #jam:polkadot.io
-# exported: 2025-08-14 03:37 UTC
+# exported: 2025-08-15 03:37 UTC
 2024-04-20 02:08 johnjiao123: 
 2024-04-20 02:09 johnjiao123: 
 2024-05-30 21:48 nradko: Hey everyone,
@@ -10852,3 +10852,50 @@ Does anyone have or know of a canonical integration test case like this? or if i
 2025-08-12 19:31 rustybot: For simpler scenarios, we provide traces in the test vectors [repository](https://github.com/davxy/jam-test-vectors/tree/master/traces).  
 More involved (though still not very complex) scenarios are currently tested using the fuzzer. You may eventually want to implement the target side of the fuzzer [protocol](https://github.com/davxy/jam-conformance/tree/main/fuzz-proto) [edited]
 2025-08-13 15:15 decentration: should the M1 submission be based on 0.7.0 or should we continue focussing on the latest release (>0.7.1) before submitting
+2025-08-14 05:31 shimonchick: Also on Rules 14 -16: What is considered timely fashion and which network should messages be placed on? Is a simple public mapping from timestamp to commit hash sufficient, or do we care about other info for a specific implementation on-chain?
+2025-08-14 05:31 shimonchick: telegram-cloud-photo-size-4-5823655781847911928-y.jpg
+2025-08-14 06:45 dakkk: maybe polkadot? 😂  the timestamping means you put the commit hash in a block (via extrinsic, opreturn or wathever), the timestamp is the block timestamp
+2025-08-14 06:47 dakkk: the "timely fashion" is once a week for me
+2025-08-14 07:00 ascriv: I just have a private github repo, presumably that’s ok. I figured the “in private” meant like off GitHub even  
+2025-08-14 07:01 dakkk: it's ok to have a private repo, but you should also have a timestamped history
+2025-08-14 07:07 ascriv: Hmm I don’t have that... But there must be another way for people in my position to verify they wrote the code organically? The timestamps are on GH’s servers they’re just not public 
+2025-08-14 07:08 jan: Git commit timestamps are not reliable; they can be edited at will. [edited]
+2025-08-14 07:09 xlchen: github pr should be fine? their timestamp cannot be edited
+2025-08-14 07:09 ascriv: I mostly committed directly to main :/
+2025-08-14 07:09 dakkk: you can fake them if you want; that's why they're requesting a public timestamp
+2025-08-14 07:10 ascriv: Is there anything I can do to still be eligible for m1?
+2025-08-14 07:14 jan: No idea; I would look through the Github API and see if there's a way to perhaps fetch unfakeable timestamps or something like that. Like, I can see with a cursory look that they do have an events API which apparently has timestamps telling you when commits were pushed? https://docs.github.com/en/rest/activity/events?apiVersion=2022-11-28
+2025-08-14 07:15 jan: But whether W3F will accept this in lieu of rule 16 (assuming these are actually unfakeable) - I have no idea. You need to clarify with them. [edited]
+2025-08-14 08:07 dakkk: maybe you only have to do an 8 hours oral exam with gav about the graypaper and your code 😁
+2025-08-14 10:17 decentration: will the fuzzer (eventually) be supporting >0.7.1 for M1? or should we stick to passing 0.7.0. just want to know what i should prioritise for davxy 
+2025-08-14 10:23 oliver.tale-yazdi: You can use this in CI to remark every master commit, we used that from the beginning: https://github.com/JamBrains/remark-commit
+2025-08-14 10:42 davxy: The fuzzer will eventually support version 0.7.1 (as will polkajam).
+
+At the moment, we are fuzzing 0.6.7\* (\*with some deviations, see [here](https://github.com/davxy/jam-test-vectors/pull/87)).
+
+We plan to switch to 0.7.0 as soon as at least one team can be fuzzed for a few seconds without deviating from the fuzzer's expectations or crashing :-)
+
+**For now, my advice to all teams:**
+
+If you have a 0.6.7 (or 0.7.0) implementation:
+
+- Propose it [here](https://github.com/davxy/jam-conformance/issues)
+- Try the other teams' published traces to see if you pass where they fail  (I'm going to create an `archive` folder)
+- Follow updates [here](https://github.com/davxy/jam-conformance?tab=readme-ov-file#latest-updates) [edited]
+2025-08-14 10:47 davxy: **About the fuzzer binary release:**  
+
+We discussed this internally, and we have decided not to share it yet to avoid biasing implementations toward the fuzzer's results.  
+The fuzzer is **not** and will never be a reference implementation. When it detects a difference, it is more productive to discuss it openly so we can verify the correct behavior together. Otherwise, teams might end up matching the fuzzer's quirks rather than the gray paper.  
+
+As more teams join, we probably expose the fuzzer in a rate-limited way (e.g. a web service), with failures reported to us and made public on GitHub for community inspection.
+
+We also encourage teams to write their own fuzzer implementations, not just the target.  
+This is not mandatory for M1, but it can help having more robust implementations
+
+2025-08-14 23:52 charliewinston14: Hi Jan Bujak , I'm reading your talk_recomp.pdf and had a question. Do you generate the assembly for the entire program blob and run it, or do you go basic block by basic block? Is there a strategy there?
+  ↳ 2025-08-14 23:53 jan: I translate the whole program once in one go.
+2025-08-15 02:45 sourabhniyogi: If you are hungry for a fuzzer binary, we published ours here:
+
+ https://github.com/jam-duna/jamtestnet/releases/tag/v0.6.7.14
+
+along with our fuzzer target, which can dump out PVM traces with a "--pvm-logging debug" input.  If you're looking to get your fuzzer target built (after passing the 0.6.7 traces) or are stuck on some fuzzer target and need a PVM trace log, this should help you.  Would be great to have all fuzzer targets have a kind of "--pvm-logging" feature so we can get ourselves unstuck as well.

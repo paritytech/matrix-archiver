@@ -18,7 +18,7 @@ a:hover{color:#90caf9}
 em{font-style:italic}
 </style>
 <h1>#graypaper:polkadot.io</h1>
-<p><small>last updated 2025-08-14 03:37 UTC</small></p>
+<p><small>last updated 2025-08-15 03:38 UTC</small></p>
 <p><a href='room_log.txt'>⇩ plaintext</a> · <a href='../../'>⇦ all rooms</a></p>
 <hr>
 <div class='msg'><a class='ts' href='#$G0deSwnlYlCrSn5lIFL__hi6bgWVITql5VyahU4bzpI'>#</a> <a class='ts' name='$G0deSwnlYlCrSn5lIFL__hi6bgWVITql5VyahU4bzpI' href='https://matrix.to/#/!ddsEwXlCWnreEGuqXZ:polkadot.io/$G0deSwnlYlCrSn5lIFL__hi6bgWVITql5VyahU4bzpI' target='_blank'>2024-04-17 20:29</a>&ensp;<span class='u' style='color:#da6aa2'>syed</span>: <a href="https://matrix.to/#/!hyzRkDqDthePbodYFz:parity.io/$f_DMsIEcDXZegw6Sabnehzc-LrdDQkmq5MbxDDyoZxY?via=parity.io&amp;via=web3.foundation" rel="noopener" target="_blank">https://matrix.to/#/!hyzRkDqDthePbodYFz:parity.io/$f_DMsIEcDXZegw6Sabnehzc-LrdDQkmq5MbxDDyoZxY?via=parity.io&amp;via=web3.foundation</a>
@@ -6530,3 +6530,9 @@ These numbers are super early and there’s a lot of room for improvement.
 One thing I noticed - when we integrate it in JAM (with host calls), performance drops quite a bit, even slower than interpreter 🤔 
 
 Sharing here in case anyone wants to reference</div>
+<div class='msg'><a class='ts' href='#$A_o7OZUI4y0yctR0FGqxSCdsorSHWb9BMgsD8wdA8A0'>#</a> <a class='ts' name='$A_o7OZUI4y0yctR0FGqxSCdsorSHWb9BMgsD8wdA8A0' href='https://matrix.to/#/!ddsEwXlCWnreEGuqXZ:polkadot.io/$A_o7OZUI4y0yctR0FGqxSCdsorSHWb9BMgsD8wdA8A0' target='_blank'>2025-08-14 19:04</a>&ensp;<span class='u' style='color:#c457c5'>vinsystems</span>: When the <a href="https://graypaper.fluffylabs.dev/#/7e6ff6a/36b50136b501?v=0.6.7" rel="noopener" target="_blank">designate hostcall</a> is called and the next\_validators are updated, should we also update the safrole&#x27;s pending validators, recompute the epoch root and empty the tickets accumulator? <span class="edited">(edited)</span></div>
+<div class='msg'><a class='ts' href='#$XYm5glzaT8BCdxCm_TZ_ij--7Tdtry2H0z0HqiJmbkQ'>#</a> <a class='ts' name='$XYm5glzaT8BCdxCm_TZ_ij--7Tdtry2H0z0HqiJmbkQ' href='https://matrix.to/#/!ddsEwXlCWnreEGuqXZ:polkadot.io/$XYm5glzaT8BCdxCm_TZ_ij--7Tdtry2H0z0HqiJmbkQ' target='_blank'>2025-08-14 19:23</a>&ensp;<span class='u' style='color:#d470bf'>jaymansfield</span>: Results of designate go into iota prime (see 12.25). Ring root and next validators come from the original iota (6.13) <span class="edited">(edited)</span></div>
+<div class='msg'><a class='ts' href='#$mH6ENawuS3asuib-XHt_A3GgayD61mT6x8e83AK4fBI'>#</a> <a class='ts' name='$mH6ENawuS3asuib-XHt_A3GgayD61mT6x8e83AK4fBI' href='https://matrix.to/#/!ddsEwXlCWnreEGuqXZ:polkadot.io/$mH6ENawuS3asuib-XHt_A3GgayD61mT6x8e83AK4fBI' target='_blank'>2025-08-14 19:39</a>&ensp;<span class='u' style='color:#c9419d'>davxy</span>: The designate validator is stored in iota and remains there until the next epoch change.  
+When the epoch changes, iota enters the safrole state, and the ring root (commitment) is recomputed for the new validator set.  
+
+The designate host call can be invoked multiple times during an epoch to update iota, but only the last value written before the epoch change is used to recompute the safrole ring root.</div>
