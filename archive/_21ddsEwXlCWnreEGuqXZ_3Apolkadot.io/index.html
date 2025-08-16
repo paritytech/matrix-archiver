@@ -18,7 +18,7 @@ a:hover{color:#90caf9}
 em{font-style:italic}
 </style>
 <h1>#graypaper:polkadot.io</h1>
-<p><small>last updated 2025-08-15 03:38 UTC</small></p>
+<p><small>last updated 2025-08-16 03:34 UTC</small></p>
 <p><a href='room_log.txt'>⇩ plaintext</a> · <a href='../../'>⇦ all rooms</a></p>
 <hr>
 <div class='msg'><a class='ts' href='#$G0deSwnlYlCrSn5lIFL__hi6bgWVITql5VyahU4bzpI'>#</a> <a class='ts' name='$G0deSwnlYlCrSn5lIFL__hi6bgWVITql5VyahU4bzpI' href='https://matrix.to/#/!ddsEwXlCWnreEGuqXZ:polkadot.io/$G0deSwnlYlCrSn5lIFL__hi6bgWVITql5VyahU4bzpI' target='_blank'>2024-04-17 20:29</a>&ensp;<span class='u' style='color:#da6aa2'>syed</span>: <a href="https://matrix.to/#/!hyzRkDqDthePbodYFz:parity.io/$f_DMsIEcDXZegw6Sabnehzc-LrdDQkmq5MbxDDyoZxY?via=parity.io&amp;via=web3.foundation" rel="noopener" target="_blank">https://matrix.to/#/!hyzRkDqDthePbodYFz:parity.io/$f_DMsIEcDXZegw6Sabnehzc-LrdDQkmq5MbxDDyoZxY?via=parity.io&amp;via=web3.foundation</a>
@@ -6536,3 +6536,5 @@ Sharing here in case anyone wants to reference</div>
 When the epoch changes, iota enters the safrole state, and the ring root (commitment) is recomputed for the new validator set.  
 
 The designate host call can be invoked multiple times during an epoch to update iota, but only the last value written before the epoch change is used to recompute the safrole ring root.</div>
+<div class='msg'><a class='ts' href='#$T5VgINrmAwTfp7y7HREQ_dpcYvRhM0FeXCSB3q7UJ4E'>#</a> <a class='ts' name='$T5VgINrmAwTfp7y7HREQ_dpcYvRhM0FeXCSB3q7UJ4E' href='https://matrix.to/#/!ddsEwXlCWnreEGuqXZ:polkadot.io/$T5VgINrmAwTfp7y7HREQ_dpcYvRhM0FeXCSB3q7UJ4E' target='_blank'>2025-08-15 07:08</a>&ensp;<span class='u' style='color:#4036ac'>ascriv</span>: Can anyone explain why handling page fault exit reasons from host calls is necessary? Otherwise I’ll make a PR to remove it. It seems each host call is careful not to access or mutate inaccessible memory  <span class="edited">(edited)</span></div>
+<div class='msg'><a class='ts' href='#$DSgsTevS-1J1CJV2gBokQgpgfns-z3eRfdB_hGJ--lU'>#</a> <a class='ts' name='$DSgsTevS-1J1CJV2gBokQgpgfns-z3eRfdB_hGJ--lU' href='https://matrix.to/#/!ddsEwXlCWnreEGuqXZ:polkadot.io/$DSgsTevS-1J1CJV2gBokQgpgfns-z3eRfdB_hGJ--lU' target='_blank'>2025-08-15 18:48</a>&ensp;<span class='u' style='color:#c65779'>dave</span>: I agree that case does not seem necessary. I&#x27;m also not sure about some of the wording below. eg &quot;We use both values of instruction-counter for the definition of ΨH since if the host-call results in a page fault we need to allow the outer environment to resolve the fault and re-try the host-call&quot;. There only seems to be one value for the instruction counter in Psi_H. The bit about outer environment I assume is talking about inner PVMs, but <code>invoke</code> does not use Psi_H, it uses Psi directly.</div>

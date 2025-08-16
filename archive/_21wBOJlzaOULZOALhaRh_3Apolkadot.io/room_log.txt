@@ -1,5 +1,5 @@
 # room: #jam:polkadot.io
-# exported: 2025-08-15 03:37 UTC
+# exported: 2025-08-16 03:33 UTC
 2024-04-20 02:08 johnjiao123: 
 2024-04-20 02:09 johnjiao123: 
 2024-05-30 21:48 nradko: Hey everyone,
@@ -10894,8 +10894,52 @@ This is not mandatory for M1, but it can help having more robust implementations
 
 2025-08-14 23:52 charliewinston14: Hi Jan Bujak , I'm reading your talk_recomp.pdf and had a question. Do you generate the assembly for the entire program blob and run it, or do you go basic block by basic block? Is there a strategy there?
   ↳ 2025-08-14 23:53 jan: I translate the whole program once in one go.
+  ↳ 2025-08-15 23:50 sourabhniyogi: image.png
+  ↳ 2025-08-15 23:56 sourabhniyogi: Jan Bujak: We were able to achieve very similar performance in a refine with a parent-child setup of "game of life" in 5 polkajam + 1 jamduna tiny testnet (using the full range of machine/pages/poke/invoke/peek/export) -- we believe the numbers were more similar than our "numerical recipes" because we limited our host log calls (100) to an absolute minimum.  
+
+We took the data measurements with 
+```
+2025-08-15 19:39:25 tokio-runtime-worker DEBUG chain-core  Refine OK with result: Ok("") using 73579 gas, took 18.903349ms
+```
+
+We had though this included a JIT compilation + execution but is the reported "took __ ms" 
+(a) an AOT compile time + execution (which is what we have now)
+or 
+(b) just the execution alone
+?
+
+We'd love to redo this experiment with "picoalloc" [here](https://github.com/koute/picoalloc) (and get 100% JAM ready "doom work packages") -- can you advise how to jump into the middle of this?
+
+  ↳ 2025-08-16 00:03 dave: That time includes loading and compilation. There is a compilation cache though so in practice it sometimes doesn't really include compilation
 2025-08-15 02:45 sourabhniyogi: If you are hungry for a fuzzer binary, we published ours here:
 
- https://github.com/jam-duna/jamtestnet/releases/tag/v0.6.7.14
+ https://github.com/jam-duna/jamtestnet/releases/tag/v0.6.7.15
 
-along with our fuzzer target, which can dump out PVM traces with a "--pvm-logging debug" input.  If you're looking to get your fuzzer target built (after passing the 0.6.7 traces) or are stuck on some fuzzer target and need a PVM trace log, this should help you.  Would be great to have all fuzzer targets have a kind of "--pvm-logging" feature so we can get ourselves unstuck as well.
+along with our fuzzer target, which can dump out PVM traces with a "--pvm-logging debug" input.  If you're looking to get your fuzzer target built (after passing the 0.6.7 traces) or are stuck on some fuzzer target and need a PVM trace log, this should help you.  Would be great to have all fuzzer targets have a kind of "--pvm-logging" feature so we can get ourselves unstuck as well. [edited]
+2025-08-15 03:45 davxy: What features does the fuzzer support?  
+For example: invalid blocks via white-box mutations, random bit flips, types of host calls it can trigger, skip slots etc.  
+
+It would be useful to have a list of these published somewhere.  
+We can share ours as we go, in the form of a task list, since we have not yet implemented all our ideas. [edited]
+2025-08-15 05:19 sourabhniyogi: Only "invalid blocks via white-box mutations" for your major stf { safrole, reports, assurances } errors (not disputes or preimages), which in the end was around 3 dozen or so.  We'll try everyone's fuzzer target with this simple fuzzer over the next couple of weeks as teams pass your 0.6.7 to see if it actually finds issues, also using the challenging jam-conformance "archive" as a source test bank.   [edited]
+2025-08-15 05:23 sourabhniyogi: image.png
+2025-08-15 05:23 sourabhniyogi: That's the scope of what we attempted to do.
+2025-08-15 05:24 sourabhniyogi: Having a task list and having different teams do different parts is a wonderful idea.
+2025-08-15 05:24 ascriv: R.E. The timestamped commit hashes, seems my interpretation aligns with gav’s: only required if you’re not on GitHub or similar. I will still add them going forward anyway (OTS seems good for this) but if anyone else hasn’t been putting commit hashes on a blockchain, but still used GitHub, should be fine  [edited]
+2025-08-15 19:55 sourabhniyogi: We would be most keen to extend your fuzzer / target protocol to support refining (and fuzzing refine-specific host functions machine/peek/poke/invoke/pages/historical\_lookup deeply), taking the essence of CE134 here
+
+```
+--> Core Index ++ Segment Root Mappings (+ a Timeslot)
+--> Work Package Bundle
+<-- Work Report Hash ++ Ed25519 Signature
+```
+
+If you write up your precise design, we can publish our fuzzer+target and other teams can do similar things and we win basic coverage on "the other half".   I'm sure you'll have an even better fuzzer as follow up, but its clear fuzzer protocol is easier for teams to get in the middle of relative to all of JAMNP and forces attacking availability specifiers head on. [edited]
+  ↳ 2025-08-16 02:01 clearloop: curious about when you testing your refine logic, which jam-pvm-comon ur using, we had a fork at 0.6.6 but it's currently not ideal to me updating it to 0.6.7 since it will make our fork contains more and more diff with the official one
+  ↳ 2025-08-16 02:56 sourabhniyogi: We are not using jam-pvm-common but polkatool 
+
+https://github.com/colorfulnotion/polkavm/blob/dev/services/algo/src/main.rs#L5006
+https://github.com/colorfulnotion/polkavm/blob/dev/services/algo/src/main.rs#L5049
+
+Cost: we have to update the [parse_{refine/accumulate}_args](https://github.com/colorfulnotion/polkavm/blob/dev/services/utils/src/functions.rs) as the codec details changes ourselves, which pretty much happens like every version ;)
+Benefits: by eliminating using the "official" abstraction we are more in control and don't have to wonder if its the abstractions fault or ours when Bad Things Happen -- its always our fault =)!
