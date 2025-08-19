@@ -1,5 +1,5 @@
 # room: #jam:polkadot.io
-# exported: 2025-08-18 03:44 UTC
+# exported: 2025-08-19 03:31 UTC
 2024-04-20 02:08 johnjiao123: 
 2024-04-20 02:09 johnjiao123: 
 2024-05-30 21:48 nradko: Hey everyone,
@@ -10947,3 +10947,44 @@ https://github.com/colorfulnotion/polkavm/blob/dev/services/algo/src/main.rs#L50
 
 Cost: we have to update the [parse_{refine/accumulate}_args](https://github.com/colorfulnotion/polkavm/blob/dev/services/utils/src/functions.rs) as the codec details changes ourselves, which pretty much happens like every version ;)
 Benefits: by eliminating using the "official" abstraction we are more in control and don't have to wonder if its the abstractions fault or ours when Bad Things Happen -- its always our fault =)!
+2025-08-18 09:02 aang114: Hi @davxy and everybody else, I noticed that in GP 0.6.7 that the **service's storage dictionary's keys** are **blobs** now instead of **hashes** (https://github.com/gavofyork/graypaper/pull/406). Therefore, may I please enquire, when we deserialize the entire state - how are we expected to calculate the service's minimum/threshold balance (https://graypaper.fluffylabs.dev/#/7e6ff6a/117b01117b01?v=0.6.7)? Since now we need the **blob's length**, but there doesn't seem to be any way of deserializing the blob's length from the 31-byte state key. Thanks [edited]
+2025-08-18 09:04 luke_jamixir: I'm wondering the same thing. Especially in the context of fuzzing 
+2025-08-18 09:43 dave: You are not expected to deserialize the entire state. In the case of the threshold balance this is explicitly stored alongside other account info and is expected to be updated incrementally as relevant state changes are made.
+2025-08-18 10:39 ascriv: FWIW, threshold balance doesn’t have to be stored, my impl derives it from total items used , total octets used, etc on the fly 
+2025-08-18 10:39 ascriv: But total octets used and total items used , yes I believe they must be kept track of and maintained 
+2025-08-18 12:26 dave: > <@ascriv:matrix.org> But total octets used and total items used , yes I believe they must be kept track of and maintained 
+
+Yes, sorry. This is accurate.
+2025-08-18 16:21 davxy: The latest batch contains **highly controversial reports** ,  either we’re making a serious mistake,  
+or perhaps many people have overlooked something. Most of the failures involve host calls with malicious arguments.  
+
+I’ll be digging into these as well.  
+
+Have fun :-)  
+
+https://github.com/davxy/jam-conformance/tree/main/fuzz-reports
+
+2025-08-18 16:22 dakkk: > <@davxy:matrix.org> The latest batch contains **highly controversial reports** ,  either we’re making a serious mistake,  
+> or perhaps many people have overlooked something. Most of the failures involve host calls with malicious arguments.  
+> 
+> I’ll be digging into these as well.  
+> 
+> Have fun :-)  
+> 
+> https://github.com/davxy/jam-conformance/tree/main/fuzz-reports
+> 
+
+Any time estimation for 0.7.0 traces?
+2025-08-18 16:26 davxy: TBH, we already have it. It's just going through the review process. Hopefully by next week.
+2025-08-18 16:31 dakkk: > <@davxy:matrix.org> TBH, we already have it. It's just going through the review process. Hopefully by next week.
+
+Awesome 👍
+2025-08-18 16:32 ascriv: 💀
+2025-08-18 16:34 ascriv: my guess is page fault stuff
+2025-08-18 16:34 ascriv: but idk hm
+2025-08-18 16:37 ascriv: actually my diffs are minor. basically just gas used in service stats. will look now
+2025-08-18 16:47 ascriv: @davxy can you double check if the gas used for service index 3202820706 in test 1755531322 is expected to be 0? I have a similar concern for most other tests in that set too [edited]
+2025-08-18 17:29 davxy: I expect (hope) that most of these issues share the same root cause.  
+If anyone finds any interesting updates, please note them in the GitHub issue.  
+I won't be able to look into this until Wednesday
+2025-08-18 19:18 jaymansfield: It almost looks like polkajam may skip accumulation if the refine result is BAD. I can't seem to find anything in the GP suggesting to do this though so my conclusion may be wrong but that's my first guess. There are 6 traces that follow this pattern. [edited]
