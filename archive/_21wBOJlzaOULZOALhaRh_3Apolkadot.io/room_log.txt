@@ -1,5 +1,5 @@
 # room: #jam:polkadot.io
-# exported: 2025-08-19 03:31 UTC
+# exported: 2025-08-20 03:30 UTC
 2024-04-20 02:08 johnjiao123: 
 2024-04-20 02:09 johnjiao123: 
 2024-05-30 21:48 nradko: Hey everyone,
@@ -10988,3 +10988,20 @@ Awesome 👍
 If anyone finds any interesting updates, please note them in the GitHub issue.  
 I won't be able to look into this until Wednesday
 2025-08-18 19:18 jaymansfield: It almost looks like polkajam may skip accumulation if the refine result is BAD. I can't seem to find anything in the GP suggesting to do this though so my conclusion may be wrong but that's my first guess. There are 6 traces that follow this pattern. [edited]
+2025-08-19 07:07 davxy: We have gas accounting issues, so most traces in the last batch should be ignored ([NEWS](https://github.com/davxy/jam-conformance/blob/main/NEWS.md))
+2025-08-19 11:53 sourabhniyogi: It appears necessary to take a stand on when and whether gas accounting should be done 1 instruction at a time (interpreter start) vs basic block at a time (recompiler end), and what to do in the `gas` host function call given it may appear anywhere in a basic block.
+2025-08-19 12:09 jan: The GP is pretty clear in this regard. Currently handling gas one-instruction-at-a-time is correct. The final gas cost model will most certainly be basic block at a time.
+2025-08-19 16:01 sourabhniyogi: Since we're now actually trying to conform to 0.6.7 and navigate to 0.7.1 to 1.0, it is likely useful to specify that starting at version { ... } of GP, it will switch from one to the other.  Implementers will set up flags etc. to coordinate conformance to one-instruction-at-a-time vs basic block at a time in expectation of this eventuality.  What is the reason to delay the switch any further?
+2025-08-19 16:47 sourabhniyogi: The "32 core Kusama JAM" https://kusama.polkassembly.io/referenda/573 is basically passing tomorrow.  Can we get the byte level protocol specs for this?  The Toaster can fit 10 Kusama JAMs.  Can we call this "medium" relative to "tiny" and "full"?
+2025-08-19 16:50 davxy: The gas issue should be fixed. Some new traces+reports submitted.
+https://github.com/davxy/jam-conformance/tree/main/fuzz-reports
+2025-08-19 20:02 rustybot: How about creating a public channel for inter-team discussions on test vectors, conformance, and reports? This room works, but it's broad and sometimes includes off-topic or non-technical chats. A dedicated channel could help keep technical exchanges easier to follow.
+edit: technical exchanges only about conformance [edited]
+2025-08-19 20:06 rustybot: The GP room isn't an ideal fit either, since it’s more focused on GP improvements and editing
+2025-08-19 22:27 sourabhniyogi: We have an JAM Implementers DAO #implementers room in Discord [here](https://discord.gg/mu7VCQHwpc)  (created by + managed by Kyrylo Pisariev | Gossamer | CS  ) , and a Matrix room ( originally created by me, abandoned in favor of the former, but can be resurrected specifically for conformance).  We tend to talk more if there are 10x fewer people, but both rooms are/were pretty quiet -- but maybe with jam-conformance and davxy keeping us on our toes we will naturally need to communicate more quickly.   
+
+The key requirement, as most of us know, is that whatever is discussed is open to all and the past is archived so everyone new can access it (even AI agents).   I think someone set up an archive for the discord room, not sure if they succeeded (share link if so?).   This room is very well archived already.  
+
+2025-08-20 01:30 cisco: The fluffylabs team created an amazing website that searches on the paper, matrix rooms and the jam implementers discord: https://search.fluffylabs.dev/
+2025-08-20 03:25 ascriv: Maybe we can just have a new issue in the jam-conformance repo just for general discussion?
+2025-08-20 03:28 clearloop: I remember gh has the discussion feature by default, just need to open in the repo settings, for example https://github.com/spacejamapp/specjam/discussions [edited]
