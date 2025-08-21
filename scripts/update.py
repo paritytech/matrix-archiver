@@ -181,7 +181,7 @@ em{{font-style:italic}}
         body=fmt(ev["content"].get("body",""))
         if ev.get("_edited"): body+=' <span class="edited">(edited)</span>'
         eid=ev["event_id"]
-        ts=f"<a class='ts' href='https://matrix.to/#/{room}/{eid}' target='_blank'>" \
+        ts=f"<a class='ts' href='#{eid}'>#</a> <a class='ts' name='{eid}' href='https://matrix.to/#/{room}/{eid}' target='_blank'>" \
            f"{when(ev).strftime('%Y-%m-%d %H:%M')}</a>"
         html_lines.append(f"<div class='{cls}'>{ts}&ensp;"
                           f"<span class='u' style='color:{pastel(ev['sender'])}'>{uname(ev['sender'])}</span>: "

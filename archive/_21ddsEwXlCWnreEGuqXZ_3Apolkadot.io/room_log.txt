@@ -1,5 +1,5 @@
 # room: #graypaper:polkadot.io
-# exported: 2025-04-28 03:30 UTC
+# exported: 2025-08-21 03:30 UTC
 2024-04-17 20:29 syed: https://matrix.to/#/!hyzRkDqDthePbodYFz:parity.io/$f_DMsIEcDXZegw6Sabnehzc-LrdDQkmq5MbxDDyoZxY?via=parity.io&via=web3.foundation
 
 2024-04-17 20:29 syed: 
@@ -2791,6 +2791,46 @@ Guarantors will need to maintain a map from Segment Root to Erasure Root. This c
   ↳ 2024-10-15 11:51 dave: > I need clarification on how is pageProof being used in CE139/CE140? Our understanding is that page proof is quite large as it's encoded with Justification & ↕si⋅⋅⋅+64 in https://graypaper.fluffylabs.dev/#/c71229b/1a15001a1500. So it's probably possible to recover exported segments from pageproof alone;
 
 The proof pages contain Merkle proofs from the segment root to the exported segments. Each proof page/segment contains proofs for 64 exported segments. You certainly can't reconstruct the exported segments themselves from these proof pages. CE139/140 is intended to be used to fetch proof page shards as well as exported segment shards. You need to explicitly request proof page shards by passing the appropriate segment indices.
+  ↳ 2025-07-15 11:17 knight1205: Hi David Emett !
+
+Could you explain why do we explicitly need CE 139  / 40 for segment shard requests? Like what advantage does it has.
+
+for importing segments for a particular shard index and segment index, we also need to create its justification at the time of creating bundle. [HERE](https://graypaper.fluffylabs.dev/#/38c4e62/1cba001cd600?v=0.7.0)
+
+for that we would need to have all the segments with their proofs. To build all the segments, we would have to manually pass all the indices for each shard index and then call CE139/40 to separate assurers.
+
+so wouldn't it be better we fetch whole shard from them using CE137?
+
+
+  ↳ 2025-07-15 11:21 knight1205: Although eventually 137 would become push protocol later on I suppose. So that might be the reason?
+
+even in that case if we would need whole shard itself, we could just leave segment indexes empty? [edited]
+  ↳ 2025-07-15 11:24 dave: I think you are misunderstanding the purpose of the various proofs/justifications
+  ↳ 2025-07-15 11:27 dave: You should not use CE137 except to fetch your shards as an assurer. There is no reason to do so, and validators may refuse to service such requests
+  ↳ 2025-07-15 11:32 dave: FWIW in the full network protocol it will be possible to directly fetch exported segments from guarantors. This will be the fast path and generally will be attempted first. Currently only the fallback path is specified, where you fetch shards from assurers and reconstruct via EC.
+  ↳ 2025-07-15 11:35 dave: To reconstruct a 4kB segment you need 342 distinct 12-byte segment shards. You _also_ need to reconstruct the page containing the proof for the segment, which will require an additional 342 12-byte segments.
+  ↳ 2025-07-15 11:36 dave: You _do not_ need to fetch anything else
+  ↳ 2025-07-15 11:39 dave: As covered in the SNP doc, you should use CE139 initially, ie do not request justifications. This is because the justifications are quite large compared to the shards themselves. You should only use CE140 if segment proof verification fails and you need to refetch the shards
+  ↳ 2025-07-15 11:41 dave: You do not need to fetch anything to check a justification returned by CE140; each justification is a Merkle proof to the erasure root that was passed in with the request
+  ↳ 2025-07-15 11:51 knight1205: this is good. I got the actual use of 139 but i was sceptical about specifying segment indices. 
+
+for building specific justification page (of size 1) for a particular segment, we would need to have all the segments for a particular segment root mapped to that erasure-root.
+
+so thus we would then have to request all the shards (more than threshold), with all the segment indices.
+
+it would be direct, if we could directly get that particular segment shard without the need for specifying indices? 
+  ↳ 2025-07-15 11:56 dave: You reconstruct proof pages in the same way you reconstruct the segments they prove
+  ↳ 2025-07-15 11:56 dave: Not sure what you mean by "building specific justification page"
+  ↳ 2025-07-15 11:58 dave: The proof pages are built when the segments are exported. This does not happen at import time when you are using CE139, that would not make sense
+  ↳ 2025-07-15 11:59 knight1205: at the time of building bundle, the primary guarantor needs to fetch justifications for required import segment.
+
+for that it needs to create a single paged proof. this can be done when we have all the segments exported, mapped to a particular segment root.  
+  ↳ 2025-07-15 12:07 dave: It does not _create_ any proofs for imported segments. It _fetches_ these proofs in the same way it fetches the segments being proven
+  ↳ 2025-07-15 12:07 dave: At the moment this requires fetching the shards for the proof page and doing an EC reconstruction
+  ↳ 2025-07-15 12:08 dave: It _does not_ require fetching unrelated segment shards
+  ↳ 2025-07-15 12:13 dave: You are possibly hung up on the definition in the GP. The GP definition tells you exactly what the proofs must look like but you are not expected to construct them following the definition
+  ↳ 2025-07-15 12:14 dave: For imports you are expected to construct them via fetched proof pages
+  ↳ 2025-07-15 12:23 knight1205: Thanks a lot. I would need to revisit it for more clarity. 
 2024-10-16 07:17 dakkk: In the 'new' hostcall (https://graypaper.fluffylabs.dev/#/c71229b/2e9a022ee302):
 - in case of OOB | CASH, we are assigning 2 elements to a tuple of 3 elements
 - we are referencing X_T, which I'm unable to find defined in any other part of the paper 
@@ -4412,6 +4452,7 @@ Should the preimage be retrieved from a node's internal data store (local databa
 
 https://github.com/gavofyork/graypaper/pull/241 [edited]
 2025-02-14 11:49 sourabhniyogi: How is the strangely odd number [81](https://graypaper.fluffylabs.dev/#/5f542d7/114c01114c01) from the `a_o` service storage size formula derived?   The 32 within the same formula is the storage for key, but 81 is 17 more bytes than 64... [edited]
+  ↳ 2025-07-17 10:13 dave: I believe it's key+value size for the l and p dictionaries. p key size is 32, value size is z. l key size is 36, value size is max 13 (1 for len + 3*4 bytes). Total is 81+z.
 2025-02-14 19:27 ascriv: For initializing the ring context for bandersnatch ring vrf stuff, there must be a common seed we’ll all be using? So that it remains deterministic 
 2025-02-14 19:33 ascriv: I assume we use the parameters in 4.1 configuration in https://github.com/davxy/bandersnatch-vrfs-spec/blob/main/specification.pdf but wanted to confirm 
 2025-02-14 21:58 davxy: > <@ascriv:matrix.org> I assume we use the parameters in 4.1 configuration in https://github.com/davxy/bandersnatch-vrfs-spec/blob/main/specification.pdf but wanted to confirm 
@@ -5569,6 +5610,31 @@ exporting a segment to be imported)
 if you were the "generator" of  CE140 justification(i.e someone requested the justification from you), wouldn't you also need to fetch the raw "s" from your sibling's just to provide a co-path to the segment shard that you are responsible to store?
   ↳ 2025-04-23 22:03 mkchung: I think I'm confused as why "S" not being hashed before building the segments root
   ↳ 2025-04-24 16:52 jaymansfield: No you only need to know what was returned from CE137 originally. You are providing a path to a root for a list of shards with an index, not for all shards of a given segment. Refer back to s\_clubs in your availability specifier. [edited]
+  ↳ 2025-04-28 15:46 dave: Sorry, missed these messages earlier. s is the full sequence of segments shards with the given shard index yes. These are all provided in CE 137 (the `[Segment Shard]`), you should not need to request data from another node to handle a CE 140 request. [edited]
+  ↳ 2025-04-28 15:47 dave: FWIW the segments root is _not_ involved here, the justifications returned by CE 140 are justifications from the returned segment shards to the erasure root
+  ↳ 2025-04-28 15:52 dave: As Jason says look at s_clubs
+  ↳ 2025-04-28 15:53 dave: I've opened a PR to (hopefully) improve the wording: https://github.com/gavofyork/graypaper/pull/345
+  ↳ 2025-05-09 10:35 knight1205: Hi David Emett ,
+
+Sorry to disturb you again.
+
+[Here](https://graypaper.fluffylabs.dev/#/9a08063/1b33021b3c02?v=0.6.6), in S function we are fetching all the segments whose root / wp hash is present in imports. Is this function returning segments grouped based on segment root or just simply list of segment?
+
+Coz, current definition implies its just list of segments, however in Refine Invocation, we are passing list of list of segments [here](https://graypaper.fluffylabs.dev/#/9a08063/2e5f012e6401?v=0.6.6).
+
+if the latter is true, then, I think in eqn itself there must be change for more clarity.
+
+Please correct me if I understand this wrong.
+  ↳ 2025-05-09 11:09 dave: Bold b is the complete list of segments with the given root, or exported by the work-package with the given hash
+  ↳ 2025-05-09 11:09 dave: This is what the M(b) = L(r) bit means
+  ↳ 2025-05-09 11:32 knight1205: that i got, but after that we are picking nth segment from b and building a list. but in psi R list of list of segment is expected. 
+  ↳ 2025-05-09 12:05 dave: Ah I see what you mean now, sorry. The refine call for each work item has access to the imports for _all_ work items. So the list-of-list-of-segments is [S(w) for w in p_w]
+  ↳ 2025-05-09 12:06 dave: I believe there is an error in the definition of I(p,j); this says S(w) is passed in rather than the above
+  ↳ 2025-05-09 12:07 knight1205: yes 
+  ↳ 2025-05-09 12:07 knight1205: that's confusing
+  ↳ 2025-05-09 12:09 dave: I'll push a PR to the GP repo to address this
+  ↳ 2025-05-09 12:16 knight1205: Raised [Issue #377](https://github.com/gavofyork/graypaper/issues/377).
+  ↳ 2025-05-09 12:26 dave: Thanks for reporting, I've pushed a fix here https://github.com/gavofyork/graypaper/pull/378
 2025-04-22 18:33 sourabhniyogi: We have found our development life has improved with the "metadata" attached to preimages, specifically when the preimage is for service code, because we can then have tools show that metadata as strings like "fib" and "gameoflife".   Can we get the same for workpackages+bundles so that we can attach metadata like "fib(93)", "gameoflife(314)", or should that be in the payload as a mere convention?
 2025-04-22 19:56 sourabhniyogi: Another quick request: Would you mind assigning `provide` a number like 17 or 27, and perhaps starting historical\_lookup at 32 or 64 or 128? That would leave a bit of space between the two big groups of host functions for "one more".
  [edited]
@@ -5723,3 +5789,786 @@ I am not sure what it is trying to imply.
 2025-04-26 17:40 ascriv: For the function definition (D.4), it seems like k could  have (much) fewer than 248 bits, e.g. in the case where there are many elements of the preimage lookup for any service account. Since in this case the keys for all of these in the serialized state will have the same first 8 bytes, so by the time we are computing the leaf value for one of these keys we will have cleaved off at least 64 bits, leaving fewer than 192 bits for k, if I understand correctly  
 2025-04-26 17:40 ascriv: Should we be padding with zeroes in such cases to compute bits(k)…248?
 2025-04-26 17:47 ascriv: Ah, nevermind. This is why we also have the key in the rhs of the map, so we remember the original non-cleaved key
+2025-04-28 07:58 kianenigma: I noticed from (latex) comments in https://github.com/gavofyork/graypaper/pull/285 that the encoding of the new statistics state components vary between u16, u32, and u64. Yet, in the state serialization section, they are not covered: https://graypaper.fluffylabs.dev/#/cc517d7/39dd0139e901?v=0.6.5 
+
+Is this something that is not finalized yet, or are they mentioned in another section and I am missing it? 
+
+For example, I could guess that gas always serialized as u64 but didn't have a prior reference to know e.g. extrinsic count is encoded as u16.
+2025-04-28 09:31 gav: The state serialisation for the latter two components is the general (variable size integer) encoding.  [edited]
+2025-04-28 16:07 prasad-kumkar: Should argument `a` from [argument invocation function](https://graypaper.fluffylabs.dev/#/cc517d7/2c05022c0702?v=0.6.5) be encoded with p before passing in [program initialization function](https://graypaper.fluffylabs.dev/#/cc517d7/2b64022b6402?v=0.6.5), as its being decoding from `p` as described in [A.37](https://graypaper.fluffylabs.dev/#/cc517d7/2bb1022bc102?v=0.6.5) ? As noted:
+
+> Given some p which is appropriately encoded together with some argument data a, we can define program code c, registers ω and ram μ through the standard initialization decoder function Y [edited]
+2025-04-28 19:14 ascriv: Should we expect to be able to handle bad blocks for M1? Or are all blocks presumed valid?
+  ↳ 2025-04-28 19:25 jay_ztc: +"handle forks" to this question [edited]
+  ↳ 2025-04-28 21:07 xlchen: IMO M1 is just STF, state in, new state out. there is no concept of a block chain to be considered
+  ↳ 2025-04-28 21:10 xlchen: so you should detect if a block is bad (purely using the provided input state), but no need to care about forks because it is stateless
+2025-04-28 21:09 davxy: > <@ascriv:matrix.org> Should we expect to be able to handle bad blocks for M1? Or are all blocks presumed valid?
+
+Be prepared for bad blocks. A lot of bad blocks :)
+2025-04-29 13:22 qinwenwang: JAM Gray Paper Chinese Version has been updated to 0.6.5 accordingly https://www.lollipop.builders/JAM-Graypaper-Chinese.pdf
+2025-04-29 18:41 jay_ztc: Curious why the state serialization of preimage availabilities specifies that the preimage hash should be hashed? Instead of serializing the preimage hash itself, like in the preimage serialization?
+
+https://graypaper.fluffylabs.dev/#/cc517d7/397202397202?v=0.6.5
+
+Edit: wording [edited]
+2025-04-30 02:39 ascriv: Maybe for super extra care in having no collisions?
+2025-04-30 02:44 xlchen: I asked the same question before
+2025-04-30 02:45 ascriv: I have a question also about state serialization:
+
+For pending reports serialization, is it the case that the segment count in (11.5) should be serialized using the general natural number encoding? In fact , since E is not subscripted in C(10), shouldn’t all naturals in the work report be encoded in the general way?
+2025-04-30 02:51 ascriv: But, if we’re going with naturals that are subscripted (like gas values) should always be encoded in the non general way (that seems to be convention?), does that mean the gas values in core and service statistics should not be generally encoded? [edited]
+2025-04-30 10:01 jimboj21: I see in 12.20 that P is a return value. From what I can see it is not defined here but is a returned by the accumulation invokable pvm instance. However it does not appear that psi_a function signature has been updated to reflect this 
+2025-04-30 10:07 jimboj21: 
+2025-04-30 12:47 jay_ztc: Anyone else having trouble with the archives site? Only seeing the title: "Archived Rooms"
+
+light inspection reveals the following warning: Error with Permissions-Policy header: Unrecognized feature: 'interest-cohort'.
+
+https://paritytech.github.io/matrix-archiver/ 
+2025-04-30 12:48 erin: ah thanks for flagging, I'll check on it right away
+2025-04-30 12:58 erin: It's now fixed - sorry about that. Looks like the archival process timed out, could have been due to a slow github runner. I've increased the timeout to something quite high now so it should (hopefully) not happen again.
+2025-04-30 13:15 jay_ztc: <del>Validators won't be able to get the preimage hash itself from the serialized state-> Instead they will need to refer to the block extrinsics right? (for any newly-requested, not yet provided preimage).</del>
+
+What if instead of hashing, we stack the length octets on top of our preimage hash octets? Basically instead of concatenating bytes, we add each of the 4 length octets to each of the first 4 hash octets, and use the result as our state-key?
+
+I'm thinking if we can avoid the hash operation while meeting the same requirements- we can lessen our perf overhead
+
+edit: wording (duplication)
+edit: strikethrough not-really-relevent edge case of validator requesting state from another validator for reconstruction [edited]
+  ↳ 2025-04-30 13:16 jay_ztc: For context, this was the post from David Emett in Oct 2024:
+
+2024-10-31 22:29 dave: The preimage hash is passed in to eg solicit directly, it's trivial to pass in almost-colliding hashes. As the trie key construction function doesn't preserve all hash bits, these almost-colliding hashes could actually collide in the trie if they are not hashed beforehand
+
+  ↳ 2025-04-30 13:23 dave: > <@jay_ztc:matrix.org> Validators won't be able to get the preimage hash itself from the serialized state-> Instead they will need to refer to the block extrinsics right? (for any newly-requested, not yet provided preimage).
+> 
+> What if instead of hashing, we stack the length octets on top of our preimage hash octets? Basically instead of concatenating bytes, we add each of the 4 length octets to each of the first 4 hash octets, and use the result as our state-key?
+> 
+> I'm thinking if we can avoid the hash operation while meeting the same requirements- we can lessen our perf overhead
+> 
+> edit: wording (duplication)
+
+Maybe I'm not understanding but it seems trivial to generate collisions with this scheme. The requested hash and length are almost unconstrained (the length is somewhat constrained by required deposit I think)
+  ↳ 2025-04-30 13:24 jay_ztc: doh! of course, thank you
+2025-04-30 13:24 jay_ztc: 
+2025-04-30 14:20 luke_fishman: has anyone passes the latest accumulate test vector `same_code_different_services-1`
+
+in the `pre-state` there are 2 services: 1729, 1730
+1730 has no "blob" i.e service code
+
+in the `post-state` service 1730 is removed, only service 1729 remains
+
+i am currently clueless as to how that might have happend
+
+- it could not have ejected itself - since it has no code
+- as far as i can tell, it is not removed from `d'`  in [12.17](https://graypaper.fluffylabs.dev/#/cc517d7/17fe01170102?v=0.6.5)
+
+how else can it be removed?
+
+davxy  could you advise? [edited]
+2025-04-30 14:21 jimboj21: Luke | Jamixir: I am also stuck trying to get this working currently
+2025-04-30 14:21 jimboj21: and dont see why it is happening yet
+2025-04-30 14:22 luke_fishman: good to know I'm not alone on this
+2025-04-30 15:45 emielsebastiaan: Seems to be addressed in https://github.com/gavofyork/graypaper/pull/348
+And thus likely published in next release of GP (0.6.6).
+2025-04-30 15:46 emielsebastiaan: Minor text change near equation: 12.20: change p -> i
+PR: https://github.com/gavofyork/graypaper/pull/351
+2025-04-30 15:48 emielsebastiaan: Some suggested changes to the provide host function: https://github.com/gavofyork/graypaper/pull/352
+Fixes: 1) setting registers, 2) setting bold_d (service dictionary)
+
+
+2025-04-30 18:04 sourabhniyogi: The new 0.6.5 gas parameter x\_g in the operand is serialized in [C.29](https://graypaper.fluffylabs.dev/#/cc517d7/385f02385f02?v=0.6.5) not with E\_8 but with [C.6](https://graypaper.fluffylabs.dev/#/cc517d7/37a10037a100?v=0.6.5), unlike the others that use E\_8 (see C.23, C.26, C.28) -- is this a typo or intended?  Why not make them consistent in one direction or the other? [edited]
+2025-04-30 19:28 gav: All these encodings will be revisited in due course before 0.7.0 (there’s an issue on the 0.6 milestone page) but until then assume your reading is correct.
+2025-04-30 20:21 davxy: > <@luke_fishman:matrix.org> has anyone passes the latest accumulate test vector `same_code_different_services-1`
+> 
+> in the `pre-state` there are 2 services: 1729, 1730
+> 1730 has no "blob" i.e service coed
+> 
+> 
+> in the `post-state` service 1730 is removes, only service 1729 remains
+> 
+> i am currently clueless to how that might have happend
+> - it could not have ejected itself - since it has no code
+> - as far as i can tell, it is not removed from `d'`  in [12.17](https://graypaper.fluffylabs.dev/#/cc517d7/17fe01170102?v=0.6.5)
+> 
+> how else can it be removed?
+> 
+> davxy  could you advice?
+> 
+
+I'll have a look
+2025-05-01 04:23 clw0908: Some questions about [A.36](https://graypaper.fluffylabs.dev/#/cc517d7/2b63022b6302?v=0.6.5), [A.37](https://graypaper.fluffylabs.dev/#/cc517d7/2bc1022bc102?v=0.6.5), and [A.43](https://graypaper.fluffylabs.dev/#/cc517d7/2cb8012cb801?v=0.6.5):  
+ 
+In A.43, **p** is the program blob of a service, and **a** is the serialized arguments from `refine` or `accumulate` (on-transfer).  
+ 
+So how can **p** include **a** in A.37?  
+ 
+Since A.36 only checks whether there exists a **c**, **o**, **w**, `z`, `s` (excluding **a**) that satisfies A.37, does this mean we don’t have to care whether **a** exists in **p**?
+2025-05-01 07:54 gav: Bold a should be in that list
+  ↳ 2025-05-01 07:59 prasad-kumkar: Should a be concatenated to p before passing in A36 ? https://github.com/gavofyork/graypaper/pull/350 [edited]
+2025-05-01 08:00 gav: 
+2025-05-01 08:03 gav: Hmm. Looks like bold a getting added into that concatenation is a typo. 
+2025-05-01 08:04 gav: Bold a is not a part of the program blob 
+2025-05-01 08:06 prasad-kumkar: then shall **a** be passed as a function argument to Y?
+2025-05-01 08:12 gav: Yes indeed. 
+  ↳ 2025-05-01 08:16 prasad-kumkar: Okay thank you! I’ll update #350 (https://github.com/gavofyork/graypaper/pull/350) to reflect the change if that’s okay 🙂
+2025-05-01 20:01 ascriv: For instruction 104, doesn’t this actually get the trailing (not leading) zeros as it’s defined? For example if wA is 0x1, B_8 will be 1 followed by 0s, and so the formula will evaluate to 0, when it should be 63 [edited]
+2025-05-01 20:06 ascriv: We should be using the big endian representation of wA in 104-107 unless I’m mistaken 
+2025-05-01 22:48 ascriv: Made a pr www.github.com/gavofyork/graypaper/pull/357 [edited]
+2025-05-02 08:51 gav: Merged a fix
+2025-05-02 11:16 danicuki: I am a bit confused about the terminology used in CE 139/140 (https://docs.jamcha.in/knowledge/advanced/simple-networking/spec#ce-139140-segment-shard-request):
+the GP specifies very well the concept of "segment". It doesn't use the word "shard" - are they the same concept? Also, CE139 define 12 bytes segment shards. But the GP segment sizes are 684 bytes. Where do 12 comes from? Where are shards defined in the GP? 
+2025-05-02 11:19 gav: segments are 4104 bytes and can be reconstructed by 342 validators each presenting their 12 byte *shard* (and its index)
+2025-05-02 12:29 danicuki: > <@gav:polkadot.io> segments are 4104 bytes and can be reconstructed by 342 validators each presenting their 12 byte *shard* (and its index)
+
+Thanks. Then In tiny testnets (6 nodes, 2 cores) each shard has 2052 bytes? So shard size is 4104 / [number of cores]?
+2025-05-02 12:36 gav: Yes indeed. 
+2025-05-02 15:51 sourabhniyogi: image.png
+2025-05-02 15:52 sourabhniyogi: You might find the above useful (if you spot an error, please advise!)
+2025-05-02 17:21 jaymansfield: Hey all. With having M2 pretty much complete at this point I'm now trying to wrap my head around how to build the required  recompiler. Based on my research so far, it looks like I could generate RISC-V machine code, add an ELF header, then use a linker to produce the final ELF file, and finally execute that ELF (somehow) as a background process. Am I heading in the right direction, or am I way off and should just wait for Jan’s talk?
+2025-05-02 17:23 jan: Nope. My talk next week should contain the bare basics that should let you get started on writing one.
+2025-05-02 17:25 jaymansfield: Alright I'll hold off for now. I'm no longer going to be able to make it to jam experience so I really hope this is available to watch online afterwards
+2025-05-02 17:26 jan: I will also share the slides so even if you can't watch the talk they should be useful.
+2025-05-02 17:26 jaymansfield: Thanks!
+2025-05-03 17:09 ascriv: State serialization is lossy, specifically in regards to the keys of the storage dictionary of service accounts. I’m a bit confused why this isn’t important. Are we not expected to be able to fully recover a serialized state in the case that the storage dictionary is non empty? State serialization is lossless everywhere else, so it seems odd. [edited]
+2025-05-03 17:47 jaymansfield: I don’t think it’s something really meant to be reversed. Also storage items are not the only thing suffering from this. There are cases where preimage lookups are also not recoverable (if the preimage isn’t known). If it’s just been solicited through a host call and not included in a block yet you wouldn’t know the full hash of it either by looking at the lookup state key [edited]
+2025-05-03 20:02 davxy: As I wrote in the GH discussion. Storage keys are lossy from the host perspective. When a service requires to read (or write) a service key it gives to the host the full unhashes key. The host then computes the state key (as per D.2) and gives (or writes) the data. Host doesn't need to keep track of the full key as it doesn't need it [edited]
+2025-05-03 20:19 jaymansfield: I understand the process you suggested, but doesn't it go against the GP? It defines the preimage and storage lookup dictionaries as having 32 byte keys with a key format of H(E4(s∗)⌢ µko ⋅⋅⋅+kz). If we were to support state keys instead for these since they are not all reversible the logic in the GP is invalid in a few spots
+2025-05-03 20:22 davxy: 31 bytes https://github.com/gavofyork/graypaper/pull/356
+2025-05-03 20:24 ascriv: I think Jason is talking about the definition in the service account (9.3), but I think it’s still correct, however implementations will likely not have an actual struct which maps 32 octet strings to blobs, and instead opt for 31 octet strings (the state key) 
+2025-05-03 20:25 ascriv: But even  that implementation would still follow gp, functionally 
+2025-05-03 20:26 davxy: To process our vectors you need to support construction of the state using state keys
+  ↳ 2025-05-03 22:30 jaymansfield: Ok thank you. Will make the updates to be able to support this
+2025-05-03 20:27 jaymansfield: > <@davxy:matrix.org> 31 bytes https://github.com/gavofyork/graypaper/pull/356
+
+I was referring to the preimage lookup dictionary and storage dictionary in delta. GP shows key is H.
+2025-05-03 20:31 ascriv: That’s still true, it’s just to process davxys test vectors you can’t have an implementation which works with the full storage keys, instead working with the state key versions of the storage keys. GP doesn’t say your internal representation of service accounts must match the one in (9.3)  [edited]
+2025-05-03 20:32 ascriv: An implementation might has a_s mapping 31 byte strings to blobs and still be faithful to gp 
+2025-05-03 20:33 ascriv: Just need to make sure it serializes correctly, does key existence checks correctly, etc 
+2025-05-03 20:35 ascriv: But correct me if I’m wrong @davxy 
+2025-05-03 20:43 davxy: I see your problem. IIUC you are talking about constructing the Dictionaries with the preimage full hash from the raw KV state.
+- For the preimage you can. Just hash the value.
+- For the preimage lookup dictionary you can just if you already have the corresponding preimage in the KV
+- For services you can't recover the unhashed service key
+
+Yeah, the vectors assume that you use the state keys as your dictionary keys [edited]
+2025-05-03 20:58 cisco: I'm also really confused by this. I guess the encodings will be revised in 0.7.0 but I would like to know how they are right now if possible
+2025-05-03 21:04 rustybot: > <@davxy:matrix.org> I see your problem. IIUC you are talking about construct some Dictionary with the preimage full hash from the raw KV state.
+> - For the preimage you can. Just hash the value.
+> - For the preimage lookup dictionary you can just if you already have the corresponding preimage in the KV
+> - For services you can't recover the unhashed service key
+> 
+> Yeah, the vectors assume that you use the state keys as your dictionary keys
+
+I’d also like to add that, to support warp sync (i.e., syncing from a finalized state rather than from genesis), you'll receive the raw key-value state keys. Not sure if this is already specified by JAM SNP
+2025-05-03 21:21 ascriv: > <@davxy:matrix.org> I see your problem. IIUC you are talking about construct some Dictionary with the preimage full hash from the raw KV state.
+> - For the preimage you can. Just hash the value.
+> - For the preimage lookup dictionary you can just if you already have the corresponding preimage in the KV
+> - For services you can't recover the unhashed service key
+> 
+> Yeah, the vectors assume that you use the state keys as your dictionary keys
+
+I think (very) technically speaking, an implementation which relies on state keys for storage does not actually implement the gp, because of the extraordinarily unlikely outcome of a state key collision when checking existence of a key. this is probably not even worth mentioning due to the likelihood but thought it was interesting 
+2025-05-04 09:33 greywolve: In the last point, do you mean for storage keys you can't recover the unhashed storage key? It's only the storage dict that would have state keys? (since we can recover the rest) [edited]
+2025-05-04 13:09 ascriv: > <@cisco:parity.io> I'm also really confused by this. I guess the encodings will be revised in 0.7.0 but I would like to know how they are right now if possible
+
+If you look at (C.24) it explains how to serialize work reports which I previously overlooked
+2025-05-05 09:57 gav: The segment-count field (in the availability specifier set) is encoded as a 2-byte fixed length integer.
+2025-05-05 10:00 gav: This is missing the point.
+2025-05-05 10:01 gav: Nowhere in the GP does it tell you (how) to store the state. [edited]
+2025-05-05 10:01 gav: It only specifies how to *recognise* a valid state. [edited]
+2025-05-05 10:02 gav: And in fact this is done via the Merkle root, which (under reasonable assumptions) identifies a single state. But (obviously) it's lossy in so much as it impossible to reconstruct a potentially multi-gigabyte state from a 32 byte quantity. [edited]
+2025-05-05 10:03 gav: Implementations are free to store state however they choose. GP takes pains not to specify this; it's one of the very many implementation details. GP only specifies how to recognise a valid block. [edited]
+2025-05-05 10:06 gav: Of course when we want to provide test vectors for incomplete portions of the protocol, then we may need to make judgement calls on exactly what data an implementation has available. That's a bit unfortunate and may coerce implementations into particular design patterns. Note that __implementations need not be able to pass the test vectors__. They must only pass the conformance tests, which will test in line with the GP not any internal data structures we might assume implementations have within.
+2025-05-05 10:07 gav: Test vectors are provided only in so much as they might *help* teams.
+2025-05-05 10:08 gav: If you're talking about a possible collision of the 32nd byte of a hash (or even the 27th byte), then the GP implicitly assumes it is impossible. [edited]
+2025-05-05 10:10 gav: Always remember: GP only specifies behaviour, not mechanism. [edited]
+2025-05-05 10:12 gav: The change made to characterise state keys as 31 bytes in the GP should make no practical difference to behaviour; it's there to ensure that W3F's test vectors have something concrete to point at in the GP.
+2025-05-05 11:21 rustybot: Since GP defines the service storage dictionary key as the full hash, an implementation is free to use the full hash (9.3) as the dictionary key. If this implementation supports warp sync, as outlined in CE129, it receives a sequence of KV items with 31-byte state keys (as per D.1). But now this implementation cannot construct its service dictionary properly (as it uses full hashes), and may fail to process subsequent blocks. This happens because host calls will pass full hashes, but they've  padded the keys received from another node, causing mismatches. The likelihood of such a mismatch is pretty high.
+
+Doesn't this suggest that implementations aiming to support warp sync need to use 31-byte state keys for their dictionaries? [edited]
+2025-05-05 11:41 ascriv: This is my understanding as well, but interested to hear others opinions  [edited]
+2025-05-05 11:43 ascriv: The last few bytes of the keys are not present in the serialized state so warp sync and full storage key implementations must not be compatible  [edited]
+2025-05-05 14:09 gav: Yes, warp-sync is not (yet) within the behavioural description of the GP. [edited]
+2025-05-05 14:14 gav: [GP v0.6.6](https://github.com/gavofyork/graypaper/releases/tag/v0.6.6) is released.
+  ↳ 2025-05-06 00:56 jaymansfield: There might be a typo in I(p,j) where it checks the output size of the refine calls. I'm assuming it should be checking if the size is greater then WR rather then smaller
+2025-05-05 14:16 gav: It's not quite the 0.7.0 I had wanted prior to the JAM XP, but it's now getting [quite close](https://github.com/gavofyork/graypaper/milestone/3).
+2025-05-05 14:17 gav: There are a few small changes here in line with the 0.6 milestone, but the most impactful is the alteration to `fetch`, which now works across the different invocations and averts the need for unavoidable unbounded RAM allocations. [edited]
+2025-05-05 14:18 gav: `fetch` also changed to allow on-chain entropy to be inspected in Accumulate/OnTransfer, and, in the future, off-chain entropy to be inspected in Refinement.
+2025-05-05 14:18 gav: It is now possible to introspect the chain's parameters, allowing for chain-agnostic PVM code.
+2025-05-07 17:30 sigsigsigsigsig: hi gang
+2025-05-07 17:30 sigsigsigsigsig: coming back to jam, struggling to find the black on white version of the updated pdf could anyone help?
+2025-05-07 17:31 sigsigsigsigsig: this one is gnarly to print 😁
+2025-05-07 17:31 sigsigsigsigsig: would be most grateful 🙏
+2025-05-07 17:31 oliver.tale-yazdi: there are three versions here https://jamcha.in/spec
+2025-05-07 17:32 sigsigsigsigsig: Oliver Tale-Yazdi: amazing, thankyou!! 😍
+2025-05-07 17:33 sigsigsigsigsig: will think of you while i'm enjoying reading it in the uk sun 😁 💕
+2025-05-07 17:33 sigsigsigsigsig: gotta get it while it's hot here! ☔️
+2025-05-08 14:32 ascriv: The fifth component of the yield invocation in (B.2) should be a hash but it’s a work package. Assuming that’s a typo?
+2025-05-09 09:43 gav: Yes. https://github.com/gavofyork/graypaper/pull/376
+2025-05-09 16:14 ascriv: The third state key constructor in (D.1) only uses the first 27 bytes of h, but each usage of that constructor sends 31 bytes. I think e.g. for the storage dictionary we should use k0…23, and similar the next 2. This wouldn’t change functionality but as far as I can tell we are sending 4 extraneous bytes in each of them  [edited]
+2025-05-10 01:15 ascriv: also I saw that we changed the arguments for the argument invocation in the accumulation definition (B.9) to include just the length of operand tuples array, instead of the full array. is this intentional? is it also intentional that we've left off any subscript for E, and thus we use the general natural encoding for t and s?
+2025-05-10 13:47 ascriv: https://github.com/gavofyork/graypaper/pull/380
+https://github.com/gavofyork/graypaper/pull/381
+
+draft fixes for the above two issues [edited]
+2025-05-11 17:10 gav: > <@ascriv:matrix.org> also I saw that we changed the arguments for the argument invocation in the accumulation definition (B.9) to include just the length of operand tuples array, instead of the full array. is this intentional? is it also intentional that we've left off any subscript for E, and thus we use the general natural encoding for t and s?
+
+All intentional 
+2025-05-11 17:11 gav: Passing the whole vector will become unsound when gas cost inflates with accessible memory. The point of these changes is to support sound service code and thus ensure that baseline gas costs are fixed over all inputs. Memos and work results must now be `fetch`ed as needed.  [edited]
+2025-05-11 19:08 jan: To expand on the rationale here - we've been doing research/running experiments on how to come up with a secure gas cost model we can use in a permissionless environment like JAM, and it has been increasingly clear that minimizing the amount of memory that is accessible to the programs is important to keep the gas costs of the memory instructions in check. In general the more memory you have accessible the easier it gets to trigger cache misses, which makes the the worst case, well, worse, for memory access instructions, potentially up to *several hundred times* more costly (compared to the average case) if you can access the whole ~4GB worth of address space. So if we can do something while needing less memory, even if that ends up being slightly more computationally inefficient, it will still be a net win considering the gas costs.
+2025-05-12 01:56 ascriv: https://github.com/gavofyork/graypaper/pull/387
+
+various fetch nits
+2025-05-12 19:56 ascriv: For this message, can we assume that (w_s)_l is added for each r in w_r ? so if len(w_r) = 2, the b component for R(c) is 2 * (w_s)_l ?
+2025-05-12 19:57 ascriv: For this equation *
+2025-05-12 19:58 ascriv: (assuming there's one work report for that core)
+2025-05-12 21:22 gav: No, this is an oversight. (w_s)_l should only be counted once. Feel free to open an issue.
+2025-05-13 10:34 greywolve: For the [service storage keys state serialization](https://graypaper.fluffylabs.dev/#/9a08063/3bb2023bb802?v=0.6.6), should the truncated key not be the encoded service id + k0..23 (23 bytes), given that the C function [accepts 27 bytes](https://graypaper.fluffylabs.dev/#/9a08063/3b39003b4300?v=0.6.6)?  
+2025-05-13 10:35 greywolve: Also applies the the preimages/preimage lookups, 4 bytes less
+2025-05-13 10:49 greywolve: Ahh someone already opened a [PR](https://github.com/gavofyork/graypaper/pull/380/files) for this :)
+2025-05-13 14:34 ascriv: Yes me 👋
+2025-05-14 14:06 decentration: Are there existing conformance vectors available for validating the entire serialized state, including all chapters, after it has been merkleized into a single state root?
+  ↳ 2025-05-15 12:53 decentration: (just realised i asked this in GP not Lets Jam group), i found these shared by Jamduna, and will use these for now. 
+
+https://github.com/jam-duna/jamtestnet/blob/main/data/generic/state_transitions/00000012.json
+  ↳ 2025-05-15 13:10 decentration: though these would be slightly outdated 
+2025-05-15 13:19 ascriv: Yes I find they are not up to date with 0.6.6 yet @sourabhniyogi FYI
+2025-05-15 18:44 dakkk: Reading the GP a falltrought instruction is like a nop, right? It only do nothing and the program counter goes to the next instruction? 
+2025-05-15 18:55 sourabhniyogi: This is off-topic for this channel, but for fallback/safrole you can definitely use this
+https://github.com/davxy/jam-test-vectors/pull/45 
+and you can attempt the "reports" as well, which I imagine we'll get team convergence on very soon...
+2025-05-15 20:35 jan: The primary function of the `fallthrough` instruction is to allow jumps into code which otherwise you wouldn't be able to jump into, as it starts a new basic block, and only jumps to the beginning of basic blocks are allowed. But otherwise yes, it just goes to the next instruction.
+2025-05-16 21:05 greywolve: In the state [constructor function for service account state keys](https://graypaper.fluffylabs.dev/#/9a08063/3b5d003b6400?v=0.6.6) wouldn't a representation like  \[i, 0, n0, 0, n1, 0, n2, 0, n3, 0, 0 ... \] make identifying the different types of keys more robust? In that case the second byte would be unique for each of them. (regular, service, preimage, preimage lookup, storage)
+
+(note, assuming preimage lookup lengths are > 0 and \< max(uint32) -1, but it's still unique for the other four at least) [edited]
+2025-05-20 04:51 jtxmp: 
+2025-05-20 09:19 gav: Not sure how you mean "more robust" - could you give an example of it not being robust? [edited]
+2025-05-20 20:28 greywolve: Maybe more robust was the wrong way to phrase it, more like make a collision impossible, though that's just a nit since right now it's quite unlikely there would ever be a collision.
+
+I just meant with that representation, service state keys and preimage meta state keys have the second byte as always 0, and always > 1  respectively, so they can never collide then.
+
+Eg. if x can be any byte.
+
+```
+[255,  0   ...] // service keys
+[x,   >1   ...] // preimage meta keys  
+```
+
+But this probably doesn't make much difference in practice I guess. [edited]
+2025-05-21 11:02 faiz_871: 
+2025-05-23 22:23 ascriv: Screenshot 2025-05-23 at 11.23.50 PM.png
+2025-05-23 22:24 ascriv: for sbrk, if wA happens to be 0, then N_x..+wA = {}, which is a subset of every set. so there is no x which satisfies the conditions, meaning sbrk is undefined
+2025-05-23 22:24 ascriv: should we define sbrk for the case when wA = 0?
+2025-05-24 16:53 gav: Well remove `sbrk` pretty soon I believe, wdyt [Jan Bujak](https://matrix.to/#/@jan:parity.io)?
+2025-05-24 20:31 jan: Indeed. We will be removing `sbrk` and replacing it with a host call, so I wouldn't waste any effort on handling corner cases with the current `sbrk`.
+2025-05-27 15:23 danicuki: Screenshot 2025-05-27 at 16.23.14.png
+2025-05-27 15:23 danicuki: How should I interpret host call "read" and o = 0 and l = 0? 
+2025-05-27 15:24 danicuki: is this a panic?
+2025-05-29 09:26 gav: No.
+2025-05-29 09:27 gav: \<anything> ...+ 0 is the empty range [edited]
+2025-05-29 09:28 gav: So N_{anything ...+ 0} is {}
+2025-05-29 09:28 gav: And {} is the subset-or-equal of all sets. [edited]
+2025-05-29 09:34 gav: @room [GP version 0.6.7](https://github.com/gavofyork/graypaper/releases/tag/v0.6.7) released
+2025-05-29 09:35 gav: Several smaller alterations here. [edited]
+2025-05-29 09:36 gav: This completes almost all of the 0.6 milestone, with the rest just being the sweep of numeric encodings and some tidying to the underlying latex. [edited]
+2025-05-29 09:37 gav: There could be some additional corrections/tweaks once we see this stuff implemented, so there will likely be one or two more releases on the 0.6 series before we move to 0.7. [edited]
+2025-05-29 09:38 gav: One interesting thing which was added is [the ability for cores to be owned by services](https://github.com/gavofyork/graypaper/pull/393)
+2025-05-29 12:23 ascriv: Screenshot 2025-05-29 at 1.23.45 PM.png
+2025-05-29 12:24 ascriv: I think 12.22 in 0.6.7 needs to pass the additional 3 U parameters we added [edited]
+2025-05-29 12:27 ascriv: from privileged services (chi) presumably
+2025-05-29 12:29 ascriv: oh nevermind, actually chi just needs to be expanded and placed at the end [edited]
+2025-05-29 12:31 ascriv: 
+2025-05-29 12:32 ascriv: 
+2025-05-29 14:07 ascriv: Screenshot 2025-05-29 at 3.07.37 PM.png
+2025-05-29 14:09 ascriv: this part of bless in 0.6.7 should probably be E^-1_4#([u_a+4i...+4] for i in N_C) ? [edited]
+2025-05-29 14:12 ascriv: and I guess now we don't need to validate that each of them is in the range of a valid service index, because they're limited to 4 bytes [edited]
+2025-05-30 00:38 jaymansfield: Is there any documentation on the extra RPC methods that jamt uses? I noticed it uses a couple additional things on top of JIP-2, like a subscribeSyncStatus method and expects a few extra variables in the parameters object for example. I'm trying to make it work with one of my nodes.
+2025-05-30 10:45 gav: https://github.com/gavofyork/graypaper/pull/413
+2025-05-30 11:14 gav: https://github.com/gavofyork/graypaper/pull/415
+2025-05-30 11:34 arkadiy: https://github.com/polkadot-fellows/JIPs/pull/7
+As for the chain parameters, these will most likely be changed to match the on-chain data return by the `fetch` function here:
+https://graypaper.fluffylabs.dev/#/7e6ff6a/32f800324e01?v=0.6.7
+2025-05-30 11:55 jaymansfield: > <@arkadiy:parity.io> https://github.com/polkadot-fellows/JIPs/pull/7
+> As for the chain parameters, these will most likely be changed to match the on-chain data return by the `fetch` function here:
+> https://graypaper.fluffylabs.dev/#/7e6ff6a/32f800324e01?v=0.6.7
+
+Thank you.
+2025-05-30 16:47 subotic: Sorry, if this is trivial. The GP mentions an explicit halt instruction [here](https://graypaper.fluffylabs.dev/#/7e6ff6a/0acc010ad001?v=0.6.7), which I don't see defined in Appendix A. Am I missing something?
+2025-05-30 16:49 subotic: ah, brain fog. the djump thingy. sorry for the noise. [edited]
+2025-05-30 19:44 jaymansfield: From the jamt source code I noticed that for the statistics and service related rpc subscriptions that it expects their responses to always first include the header hash and slot #. I don't think this is mentioned anywhere in JIP-2. For example under subscribeStatistics it just says "Notification type: Blob", but in reality it looks like the notifications need to include Header hash, slot and then the blob. Are you able to confirm?
+2025-05-30 19:49 arkadiy: Yes, I guess we need to update the spec here David Emett 
+2025-05-30 19:53 dave: Yeah I think there are a few updates needed to JIP-2, will review and update next week
+2025-05-31 22:08 greywolve: For the disputes extrinsic verdict's age, does using the prior state's slot, active and archived validators imply that in the first block of a new epoch a verdict can have an age of 2 epochs back? Eg, we're in the first slot of epoch 3 (slot 36), at that point the prior state is in epoch 2 (slot 35), and our verdict has an age of 1 which is valid. 2 is also valid, but we couldn't at this point have an age of 3. [edited]
+2025-06-01 14:20 tvvkk7: Hello,
+I would like to double-check a question regarding the recompiler.
+Is the implementation language restricted to JAM, to the same language set, or are other programming languages also permitted?
+2025-06-01 19:25 charliewinston14: For the wonky disputes, is it exactly 1/3 or 1/3+?
+2025-06-02 06:48 davxy: > <@charliewinston14:matrix.org> For the wonky disputes, is it exactly 1/3 or 1/3+?
+
+Exactly . Otherwise, it would logically include the 2V/3 + 1 case - which isn't wonky, but rather the good case
+2025-06-02 07:14 davxy: > <@davxy:matrix.org> Exactly . Otherwise, it would logically include the 2V/3 + 1 case - which isn't wonky, but rather the good case
+
+Just to elaborate. The purpose of this expression is to concisely capture the condition in which a supermajority cannot be reached for either outcome
+2025-06-02 11:47 ascriv: Screenshot 2025-06-02 at 2.47.21 PM.png
+2025-06-02 11:48 ascriv: for the state serialization, can't we get away with omitting a_o and a_i since they are derivable from other components of the serialized state?
+2025-06-03 11:35 greywolve: Doesn't changing storage keys [here](https://graypaper.fluffylabs.dev/#/7e6ff6a/103301103301?v=0.6.7) from H -> Y mean that implementers are not free to choose how they represent storage keys in the storage dict? Ie we'd have to ensure that we all have the same length for our chosen key representation.
+
+Seems to contradict [with the new paragraph](https://graypaper.fluffylabs.dev/#/7e6ff6a/3b1f033b2403?v=0.6.7) in the state serialization section. [edited]
+2025-06-03 11:48 dave: The change from H->Y was just to avoid hashing the keys twice. They are still hashed by the C function (see https://graypaper.fluffylabs.dev/#/7e6ff6a/3b6c003b7d00?v=0.6.7).
+2025-06-03 11:51 greywolve: But does that mean you're forced to use the C function as your representation?
+2025-06-03 11:51 dave: Yes, this is pretty much required anyway to implement warp sync
+2025-06-03 12:00 greywolve: I wonder if that wouldn't make more sense as Y_31 then since you're pretty much forced to have that key length to get the same footprint
+2025-06-03 12:02 dave: The output of the C function is now Y_31, maybe I'm misunderstanding
+2025-06-03 12:03 greywolve: I mean for the storage keys definition. Y -> Y , vs Y\_31 -> Y , since you're forced to use C [edited]
+2025-06-03 12:06 dave: Not sure I understand. The service storage stuff is only one part of the trie
+2025-06-03 12:10 greywolve: Sorry I'm probably not being clear.
+
+For [this definition.](https://graypaper.fluffylabs.dev/#/7e6ff6a/103301103301?v=0.6.7) Y\_31 -> Y .
+
+Wouldn't you dict always have 31 byte keys? [edited]
+2025-06-03 12:12 greywolve: Or does Y there represent the original key. Ie the f[ootprint for storage](https://graypaper.fluffylabs.dev/#/7e6ff6a/117b01117b01?v=0.6.7) is done based on the length of the original key [edited]
+2025-06-03 12:37 greywolve: Seems like this is the case if I'm reading this correctly, so to calculate the balance now you need to know the length of the original raw key
+2025-06-03 13:01 dave: Yes for the footprint calculation the original key is used. This is intentional even though the storage backend should really only store the 31-byte output of the C function
+2025-06-03 13:03 dave: Note that you should always have the original key at hand when inserting/removing/updating such a value, even if the original key is not kept in the underlying storage (which it really shouldn't be)
+2025-06-03 13:05 dave: Re accessing the service storage see the read/write host calls, which no longer hash the key: https://graypaper.fluffylabs.dev/#/7e6ff6a/333800331602?v=0.6.7
+2025-06-03 13:05 greywolve: Thanks! That clears it up :)
+2025-06-03 13:54 prematurata: I've a question about 0.6.7. I noticed storage keys for service account changed in type from hash to generic "blob". the read and write host calls still refer/use hashes so is it an overlook or is it really meant to be generic blob? 
+2025-06-03 14:01 greywolve: If you read just above I asked a similar question, and those host calls no longer hash the key it seems.
+2025-06-03 14:02 prematurata: ha
+2025-06-03 14:02 dave: Could you link the relevant bit of the GP? Possibly something was missed in the update.
+2025-06-03 14:03 prematurata: i was looking at 0.6.6 for the host calls 
+2025-06-03 14:03 prematurata: my bad
+2025-06-03 14:26 prematurata: So if I understand properly warp supporting implmenetations should be a bit offspec compared to GP's write and read and use the `C` key instead of "plain" 
+2025-06-03 14:29 greywolve: Given [this](https://graypaper.fluffylabs.dev/#/7e6ff6a/3b1f033b2403?v=0.6.7), I guess maybe not off spec per say. Ie it's better to not store plain keys. [edited]
+2025-06-03 14:30 basedafdev: 
+2025-06-03 14:31 prematurata: yeah I read that. but on the other side the read host call (for example) math says that **k** should be \in K(a_s)
+2025-06-03 14:31 greywolve: Yeah I guess it's not clear to me that you're forced to use C, and that in the service account footprint calculation the storage key is actually the original key [edited]
+2025-06-03 14:32 prematurata: but actually we would need to do C(s*, E4(2**232-1) ^ k) \in K(a_s**)
+2025-06-03 14:32 prematurata: well thanks formatting :)
+2025-06-03 14:33 prematurata: yeah basically read and write imply you have access to original keys
+2025-06-03 14:33 prematurata: but on the other side that paragraph somehow says "well yeah you can use `C` hashes instead of original keys"
+2025-06-03 14:35 prematurata: but if this is the way it was conceived. And it looks like it is... It bugs me cause `C(....)` is a subset of `Y` so not exactly the same 
+2025-06-03 14:36 prematurata: couldnt we just use Y31 like you suggested  as keys in storage and go through `C` in read and write?
+2025-06-03 14:38 greywolve: I don't think you can use Y_31 as the key in the service definition because that definition is referring to the original key, not C(original_key)
+2025-06-03 14:38 greywolve: (i.e the footprint now uses the original key length, so it's gone from stateless to stateful)
+2025-06-03 14:39 greywolve: so it's a bit fiddly I guess to express
+2025-06-03 14:40 greywolve: For footprint calculation purposes it's Y -> Y, but for the purpose of storing the key in state it's Y_31 -> Y [edited]
+2025-06-03 14:43 prematurata: well apart to know the length is the original really needed?
+2025-06-03 14:43 greywolve: Doesn't seem like it
+2025-06-03 15:05 dave: No. Practically speaking all implementations should support warp sync. For the later milestones, particularly the ones involving networking, this will be required. This is effectively required by some of the current test vectors I believe, though I don't know if it will be required for M1 conformance testing. There is an implicit assumption here that the C function is injective, which it obviously isn't really. In _practice_ it is because it is impractical to find a collision.
+2025-06-03 15:08 dave: So while you could argue that an implementation which only stores the output of the C function and not the original keys is not really compliant with the GP, we explicitly allow and will ultimately require this behaviour
+2025-06-03 15:10 prematurata: thanks for clarifying. I was just wondering why not using C directly in read and write instead  [edited]
+2025-06-03 15:10 dave: The service storage stuff is only one part of the trie
+2025-06-03 15:11 dave: Not sure it would make sense to use C there
+2025-06-03 15:13 dave: The keys would go through C again as part of State Merklization
+2025-06-03 15:26 greywolve: Wouldn't there still be a problem with warp sync and preimage meta keys, since you can only reconstruct those completely if you have the preimage extrinsics that are going to be solicited aswell? Are details on that still being worked out? [edited]
+2025-06-03 15:27 dave: You are not intended to reconstruct anything. This is why I said "the storage backend should really only store the 31-byte output of the C function"
+2025-06-03 15:30 greywolve: So the same principle should apply to all the service dicts in theory for warp sync?
+2025-06-03 15:31 greywolve: (ie , storage, preimage lookup, preimage meta)
+2025-06-03 15:32 dave: So the bottom layer of your storage stack should probably have get/set functions which take a 31-byte key. Warp sync, which will use the state request protocol defined here https://github.com/zdave-parity/jam-np/blob/main/simple.md#ce-129-state-request, should just fill in the bottom layer with the exact keys/values received over the network. That layer shouldn't care what bits of state these keys/values correspond to [edited]
+2025-06-03 15:33 greywolve: Completely understood for storage, just wondering about preimage meta in particular
+2025-06-03 15:33 dave: Not sure I understand the question, sorry. There's nothing special about that vs any other bit of state really
+2025-06-03 15:37 dave: For Merklization there is just one Y_31 -> Y dictionary. All the various bits of state get placed into this single dictionary in accordance with the C function.
+2025-06-03 15:37 greywolve: I think this [comment from davxy](https://github.com/davxy/jam-test-vectors/pull/45#issuecomment-2848736219) sums it up.
+2025-06-03 15:38 dave: In practice you should store this single dictionary rather than the nicely structured state as otherwise you will be unable to implement warp sync
+2025-06-03 15:41 dave: I don't think you should be doing any "deserialization" as Davide calls it. I think the point of his comment is that in some cases doing such deserialization is somewhat possible, but it really should not be necessary. If you find yourself needing to do it then either you are misunderstanding something or there is an issue with the GP that needs to be fixed.
+2025-06-03 15:42 greywolve: Right rereading it now I understand your point more
+2025-06-03 15:43 dave: "Deserialization" might be useful for tooling of course, the current stance is that it is just not in general possible
+2025-06-03 15:45 ascriv: We do need to deserialize the other parts of the merkilized state though for warp sync right?
+2025-06-03 15:45 dave: No!
+2025-06-03 15:46 greywolve: I'm also a bit confused because how would you update your state then if you don't deserialize it?
+2025-06-03 15:46 greywolve: I understand the dicts, sure
+2025-06-03 15:46 dave: Warp sync should just be a case of taking the Y_31 -> Y dictionary you get using the State request protocol and sticking that as-is into the bottom layer of your storage stack
+2025-06-03 15:47 dave: You can read/write bits of state by computing C(...) and then using this as a key into the underlying storage dictionary
+2025-06-03 15:47 dave: At no point do you need an inverse of C
+2025-06-03 15:49 ascriv: But to do the operations in the GP we need to have a representation of state that is not just key->bytes no?
+2025-06-03 15:50 greywolve: We are talking about. eg 1-16
+2025-06-03 15:50 greywolve: Fully understand that you won't need to deserialize any of the service dicts
+2025-06-03 15:51 dave: No, all operations in the GP should be expressible in terms of get/set on the state. This is what this paragraph https://graypaper.fluffylabs.dev/#/7e6ff6a/3b1f033b2403?v=0.6.7 is talking about; enumeration of dictionaries for example is not required anywhere in the GP
+2025-06-03 15:52 greywolve: Ahh I guess there's a difference between deserialize, and decode?
+2025-06-03 15:52 greywolve: You don't mean you don't need to decode the other parts of the state, naturally
+2025-06-03 15:53 dave: You are of course free to deserialize bits of the underlying dictionary if you think this will for example help with performance. In general you can do whatever you like in your implementation provided the observed behaviour is the same. The point here is more that a compliant implementation will not need to perform any deserialization.
+2025-06-03 15:54 dave: Yes I'm just talking about the keys here. You will need to decode the values. Sorry if I caused any confusion with that.
+2025-06-03 15:55 dave: The value decoding should be trivial
+2025-06-03 15:55 greywolve: Yeah that makes complete sense
+2025-06-03 15:55 ascriv: Oh. Yeah not the keys 
+2025-06-03 15:55 greywolve: You shouldn't ever need to deserialize keys , 100%
+2025-06-04 15:27 yu2c: I came across two related definitions:
+
+B, defined as [a service-indexed commitment to the accumulation output](https://graypaper.fluffylabs.dev/#/7e6ff6a/178300178300?v=0.6.7), and
+
+θ ( theta ), currently defined as [the block’s accumulation-output sequence](https://graypaper.fluffylabs.dev/#/7e6ff6a/0f08020f2102?v=0.6.7).
+
+I initially thought they referred to the same thing( sequence ), but I noticed that B is defined as a set while θ is defined as a sequence.
+
+Am I missing some distinction here, or are they meant to serve different purposes despite the similarity?
+2025-06-05 10:03 gav: Theta is presently defined as being an item within the set B, effectively making it a set. This doesn’t quite work since Theta is elsewhere defined to be a sequence. B should in fact be a sequence and the combinator in Delta_+ should be concatenation rather than union.
+2025-06-05 10:03 gav: Feel free to make an issue or a PR. 
+2025-06-05 13:39 prematurata: typo? https://graypaper.fluffylabs.dev/#/7e6ff6a/33cc0233cc02?v=0.6.7
+2025-06-05 13:40 prematurata: (the `v` part)
+2025-06-06 11:03 dvladco: In the [accumulate invocation](https://graypaper.fluffylabs.dev/#/7e6ff6a/2fdb012fdb01?v=0.6.7) we pass the new timeslot `τ′` which according to eq. 6.1 is equivalent to `H_t` however later in the accumulation invocation we use `H_t` explicitly. Is there any reason for that? and why not use `t` which in equivalent to `H_t`?
+2025-06-06 11:21 prematurata: https://graypaper.fluffylabs.dev/#/7e6ff6a/37f70137fc01?v=0.6.7 can someone help me understand the last part of the check where codehash (d_c ->32bytes) is compared to a 32  bit number (x_s -> Service Index ) encoded into 32 byte? [edited]
+2025-06-06 11:22 prematurata: how is that suppoused to work in a real scenario
+2025-06-06 11:55 tomusdrw: > <@prematurata:matrix.org> https://graypaper.fluffylabs.dev/#/7e6ff6a/37f70137fc01?v=0.6.7 can someone help me understand the last part of the check where codehash (d_c ->32bytes) is compared to a 32  bit number (x_s -> Service Index ) encoded into 32 byte?
+
+The service updates it code hash to this value, which indicates it's ready to be ejected. There can be only one preimage left for the ejected account, presumably some kind of tombstone.
+2025-06-06 12:31 prematurata: ah ok
+2025-06-06 12:31 prematurata: tkz
+2025-06-06 18:13 gav: > <@tomusdrw:matrix.org> The service updates it code hash to this value, which indicates it's ready to be ejected. There can be only one preimage left for the ejected account, presumably some kind of tombstone.
+
+They preimage with be the most recent code since the new code hash has no preimage it cannot possibly be removed after the upgrade to a zombie (or, obviously, before)
+2025-06-06 22:06 ascriv: Screenshot 2025-06-07 at 1.06.27 AM.png
+2025-06-06 22:06 ascriv: for 0.6.7 I noticed that we have serialization components for theta and beta_B in C(16) and C(3) respectively, but the state definition only has B_H and no theta [edited]
+2025-06-06 22:08 ascriv: why does it seem that we are storing some things which aren't considered part of the state?
+2025-06-07 15:26 gav: Yes indeed - that’s a typo and should be beta and theta. 
+2025-06-08 19:48 prematurata: can we please reconsider adding storage key length inside the state merklization value ? It should make the "restore from merklized state" easier. like massively easier to implement.  [edited]
+2025-06-09 08:42 ascriv: Screenshot 2025-06-09 at 11.42.47 AM.png
+2025-06-09 08:43 ascriv: Screenshot 2025-06-09 at 11.43.00 AM.png
+2025-06-09 08:43 ascriv: What is the utility of having item markers like E_4(2^32-1) if we set fire to it with a hash when making the state key?
+2025-06-09 08:47 ascriv: I thought they were useful for prefix search too
+2025-06-09 11:59 prematurata: none i can see indeed 
+2025-06-09 15:59 oliver.tale-yazdi: Looking at the [`dev-spec.json`](https://gist.github.com/zdave-parity/72eb9cfe07756d2c0c13c3064600190d) from David Emett makes me think that something is off:  
+There is a key `00fe00ff00ff00ff93528801297aa9d5702c0d1b92efacb77f07cddd9edd28`, which *looks* like the preimage key for Service 0, but without that hash function applied. Otherwise this key must be an opaque service key, which would be odd to exactly collide with this pattern. 
+2025-06-09 16:00 dave: That `dev-spec.json` doesn't have these latest state changes applied, they're not implemented in PolkaJam yet
+2025-06-09 16:01 dave: Re this, it's still important to not have the different C(s, ...) cases collide
+2025-06-09 16:02 dave: I think it's assumed impossible to request a preimage of length eg 2^32-1 as AIUI you need a deposit proportional to the requested length
+2025-06-09 16:04 oliver.tale-yazdi: I think not having this hash function makes the keys easier understandable, as you can prefix-match on them. I added some tool for this here https://docs.jamcha.in/advanced/storage/keys , but it fails for `C(s, ..)` because of that hash function.  
+So there is no way to determine whether something is a Service Preimage, Service Storage or Service Preimage Lookup key. All the other C 1-16 and C(255, s) work fine.
+2025-06-09 16:04 dave: The hash was added/moved to improve the security margin, see https://github.com/gavofyork/graypaper/issues/403
+2025-06-09 16:06 dave: It's true that you can't currently reverse the key mapping done by the C() function
+2025-06-09 16:13 ascriv: > <@dave:parity.io> Re this, it's still important to not have the different C(s, ...) cases collide
+
+If it’s just about collisions, we could make the item marker only 1 byte instead of 4. But I think more importantly we can no longer do nice prefix search as @[Oliver Tale-Yazdi] pointed out 
+2025-06-09 16:15 ascriv: I presumed that was exactly why we had 4 byte long item markers, so that, interleaved with the 4 byte service index, we have a prefix we can search with 
+2025-06-09 16:23 yu2c: Does [\\mathcal{E}\_M](https://graypaper.fluffylabs.dev/#/7e6ff6a/3b40013b5801?v=0.6.7), serialization of merkle mountain range, have a formal definition somewhere in the graypaper? I couldn’t find where this notation is explicitly defined. [edited]
+2025-06-09 20:01 greywolve: See equation E.9 :)
+2025-06-10 11:42 gav: It is about collisions.
+2025-06-10 11:44 gav: Some care is needed; at present it should be secure and I see little opportunity to "optimize" here. a\_s and a\_l are relatively unconstrained, giving an attacker a vector for engineering a collision. [edited]
+2025-06-10 11:46 gav: In particular, if only a single byte were used for the discriminator for a\_s, then a key could conceivably be engineered within a\_s which caused a collision with a properly chosen hash of economically feasible length in a\_l. [edited]
+2025-06-10 11:47 gav: This would then need to be managed by altering the key-formula for a_l (e.g. by adding an additional discriminator).
+2025-06-10 11:49 gav: Right now we avoid this extra discriminator by ensuring that there can be no engineered collisions between a_s & a_l by effectively namespacing through those first four bytes of the key-formulae.
+2025-06-10 11:50 gav: I don't have an especially strong preference for this though - design-wise it's a bit of a hangover from when we didn't do the hashing at all and it made sense to make the database keys easily reversible. [edited]
+2025-06-10 11:52 gav: (To make this truly secure we should really add a requirement that no entries in a\_l may have lengths >= 2^32-2 - without this then we rely solely on economic properties to avoid a collision, and while such properties are reasonable to assume on a public mainnet, they may not be on e.g. a testnet or a permissioned network) [edited]
+2025-06-11 09:48 ascriv: Does the cleanroom rule apply also to all things related to networking, or not since it’s sort of external to GP?
+2025-06-11 10:05 dave: Networking stuff will eventually be included in the GP so I assume the clean room rule applies
+2025-06-11 23:52 sourabhniyogi: Should the first sentence of 11.3 [here](https://graypaper.fluffylabs.dev/#/7e6ff6a/14f70114f701?v=0.6.7) be "Every slot, each core has 3 validators.. " rather than "Every block, each core has 3 validators .."
+2025-06-12 03:20 xlchen: not every slot have a block, and a slot could have multiple blocks 
+2025-06-13 13:31 sourabhniyogi: We would like to see [Provide a more optimal EC parameterization for work bundles](https://github.com/gavofyork/graypaper/issues/97) get moved up to 0.7 (so we can work on it this summer rather than the fall) -- as we are finding that erasure encoding / decoding with 1K-3K imported/exported segments is disruptively time-consuming.  Possible?
+
+Or, I'm missing something basic [here](https://github.com/jam-duna/jamtestnet/blob/main/erasurecoding/src/lib.rs#L29-L44) to match up with davxy 's new [Erasure coding test vectors](https://github.com/davxy/jam-test-vectors/pull/74) and would like someone to provide the trick to get the efficiency of just having [1 encode call rather than k](https://github.com/davxy/jam-test-vectors/pull/74#issuecomment-2962400563)? [edited]
+  ↳ 2025-06-13 13:43 clearloop: I remember parity has this erasure-coding repo https://github.com/paritytech/erasure-coding, wouldn't this be helpful? since in the jam prize page it says we can use erasure-coding library as primitives directly
+  ↳ 2025-06-13 14:32 jaymansfield: If theres no way to reduce the k encode calls to just one, you can try doing them in parallel rather than sequentially. It significantly reduced encoding time for me after doing that. Although would be faster still to just do a single call if possible.
+  ↳ 2025-06-13 16:36 sourabhniyogi: The efficiency we want is that encoding+decoding of 3072 segments coming back from 342+ CE138 responses form 12MB+ work package bundle is done in well under 1s using up 1/16 of resources as aimed for here 
+https://graypaper.fluffylabs.dev/#/7e6ff6a/202501202501?v=0.6.7
+
+It is surely doable, we just have to actually do it.  I think a solution between "tiny" (V=6, C=2) and "full" (V=1023, C=341) should be pursued so that N teams can pursue parallelization of requests/responses ( and various politeness concerns ) within the Toaster in pairs or something like that. [edited]
+  ↳ 2025-06-13 16:46 dave: FWIW the full network protocol will provide a way of fetching bundles/segments directly from guarantors, as a fast path. The less fast path which is possible now is to request the shards containing original data, in which case reconstruction is just concatenation. If you need to do full reconstruction of segments it should still be possible to have only a single call into the EC library _if_ the shard indices are the same for every segment. If they're not then I'm not sure how efficiently reconstruction can be done.
+  ↳ 2025-06-16 17:35 clearloop: just stepped in this part, if I'm not mistaken, isn't the `k` params for memory safe and scalability, I think the problem is the word size is too small in the tests, and `k !=1 ` allows us to encode the data in parallel indeed [edited]
+2025-06-15 07:15 ascriv: The header has a parent hash and prior state root. We need to guarantee the posterior state root of the parent block equals this prior state root. Does this mean implementations must also keep track of the posterior state roots along with headers? Otherwise it seems naively that an incoming header could point to any ancestral header as its parent 
+2025-06-15 08:59 gav: Implementations will need to be able to determine the posterior state root for any block they retain in their chain which could serve as a parent. 
+2025-06-15 09:00 gav: The fork-choice rule and finality ensure that this set cannot grow indefinitely (and thus that a new block cannot have a non-recent parent).  [edited]
+2025-06-16 15:58 prematurata: I hate restarting the discussion on the topic again but i think the C function used in merklization should be changed. ( and maybe the T fn as well)
+
+I wrote a rationale issue on the topic https://github.com/gavofyork/graypaper/issues/436  [edited]
+2025-06-16 20:00 gav: Replied. 
+2025-06-17 11:44 greywolve: What is the new state serialization for privileged services? I see this isn't yet updated in the [GP](https://graypaper.fluffylabs.dev/#/7e6ff6a/3b4e023b5302?v=0.6.7).
+
+Is it reasonable to assume it's going to be something like:
+
+```
+E4(χm, χv) ⌢ E(χa) ⌢ E(χg) 
+```
+
+
+2025-06-17 14:45 gav: Yes something like this. 
+2025-06-17 15:45 gav: Is it not?
+2025-06-17 15:45 gav: image.png
+2025-06-17 15:46 gav: This is in equation D.2, GP `main`
+2025-06-17 15:46 dakkk: X\_a is a list, so D.2 is wrong [edited]
+2025-06-17 15:48 gav: No it's not:)
+2025-06-17 15:48 gav: See equation C.15
+2025-06-17 15:51 dakkk: The equation defining X_a is 9.9, and it says X_a is a list; I don't understand why C.15 should be involved
+2025-06-17 16:26 gav: chi_a is indeed a sequence. The serialisation function used is defined in multiple parts, depending on the domain.  [edited]
+2025-06-17 16:27 gav: If the domain is a sequence, then C.15 comes into effect. 
+2025-06-17 16:59 dakkk: E_4 doesn't rewrite to E, so if the argument is a sequence, it shouldn't be rewritten as E_4(a1) ^ E_4(a2) ...; btw it's just a matter of formalism
+2025-06-17 17:02 gav: Not sure what you mean. 
+2025-06-17 17:03 gav: E_4 indeed is not expressed in terms of E under any argument domain.
+2025-06-17 17:04 gav: Regardless it is well defined for sequence domains, multiple arguments and tuples (all of them in terms of itself).  [edited]
+2025-06-17 20:17 greywolve: Does that mean the `#` [here for E_8](https://graypaper.fluffylabs.dev/#/7e6ff6a/357001357701?v=0.6.7) is redundant ?
+2025-06-18 05:12 gav: Yes, not just the hash but also the concatenation operator above. Feel free to make a PR or issue.
+2025-06-18 10:38 greywolve: Does the [new service host call](https://graypaper.fluffylabs.dev/#/7e6ff6a/36ad0336b903?v=0.6.7) imply that no service id, even genesis services, should be less than 256?
+2025-06-18 10:46 gav: It implies that no new services can be less than 256 (or greater than 2^32-256)
+2025-06-18 10:47 gav: Genesis state is necessarily trusted and so doesn’t have these constraints.  [edited]
+2025-06-18 10:48 gav: However the state merklisation is done to allow a genesis service at 0. 
+2025-06-18 11:02 greywolve: State serialization question: How does one tell the difference between a preimage meta state key for a freshly solicited preimage, and a storage state key?
+
+I know the preimage meta value will be the encoded empty list, ie 0, but a storage key could have the same value. [edited]
+2025-06-18 11:03 gav: Who says you can?
+2025-06-18 11:03 gav: The only thing which we aim to achieve with Merklisation is security (non-collision) and speed.
+2025-06-18 11:04 gav: The ability to introspect/interpret merklised keys is not a priority. [edited]
+2025-06-18 11:05 greywolve: I understand that, but I surely need to know which map to put a given key in when I import a trace, for example [edited]
+2025-06-18 11:05 gav: Nope.
+2025-06-18 11:06 gav: That's simply not a given.
+2025-06-18 11:06 gav: It would imply requiring that which I've already said isn't a priority.
+2025-06-18 11:06 greywolve: Ah right
+2025-06-18 11:07 oliver.tale-yazdi: I think many implementations use KV lookup, in which case you dont need to invert them. IMHO it is still possible to not use KV Db by inverting all keys that can be inverted and then doing some special handling for the service keys that cannot be inverted. Also since only three key kinds cannot be inverted and they are used from host-calls that tell you the kind of the key. You can check this unofficial key table here https://docs.jamcha.in/advanced/storage/keys
+2025-06-18 11:09 gav: If the lack of merklised-key-interpretability turns out to be an issue in usage, it's something fairly easy to fix (by including metadata in the value).
+2025-06-18 11:09 gav: But right now the assumption is that it's an unneeded pessimisation.
+2025-06-20 07:40 clearloop: I'm feeling it's necessary to weaken the usage of chain parameters, since in the context of jam, the parameters should be the same in the stable production network finally if I'm not mistaken, that the parameters is more like for the node development usage, it should not trouble the app/service developers of jam, ideally, they will never reach this concept since it increases the complexity of their development
+
+EDITED: just got the purpose via https://github.com/gavofyork/graypaper/issues/186 [edited]
+2025-06-20 09:21 ascriv: (C.16) says that the validator index for each credential in the guarantees extrinsic (11.23) should be generically serialized, but in order to comply with the test vectors (for condition (5.4)), I had to serialize the validator indices with E_2. Which is correct? [edited]
+2025-06-20 10:05 gav: > <@ascriv:matrix.org> (C.16) says that the validator index for each credential in the guarantees extrinsic (11.23) should be generically serialized, but in order to comply with the test vectors (for condition (5.4)), I had to serialize the validator indices with E_2. Which is correct?
+
+The GP should be corrected so that the term `a` (credential) is serialized with a fixed-length validator index.
+2025-06-20 10:06 gav: Feel free to make an issue or a PR.
+2025-06-20 20:14 ascriv: 
+2025-06-20 20:19 ascriv: > <@gav:polkadot.io> Feel free to make an issue or a PR.
+
+https://github.com/gavofyork/graypaper/pull/440
+2025-06-21 09:35 ascriv: For handling time, a naive approach which pings ntp servers during block validation will probably take >10ms on average which is too long. Could do periodic syncing during downtime but I feel like that technically wouldn’t be gp compliant. Could rely on system time but also prob not gp compliant  [edited]
+2025-06-21 09:38 ascriv: Should we have a recommended configuration or should we leave solving this problem up to the implementers? 
+2025-06-21 10:37 gav: There’s nothing uncompliant about periodic time syncing providing you have good reason to believe the machine’s internal clock isn’t going to be totally mad. 
+2025-06-21 10:40 gav: The GP assumes common-clock - it makes no assertions about how this is achieved. I’d have thought impls will generally expect system clock to be correct and the problem will thus generally be left to the node’s sysadmin. 
+2025-06-21 18:19 sourabhniyogi: Nitpick suggestion: make fetch case 8 [here](https://graypaper.fluffylabs.dev/#/7e6ff6a/32a50132a501?v=0.6.7) match up exactly with the implied authorizer p\_a preimage [here](https://graypaper.fluffylabs.dev/#/7e6ff6a/1bad011bad01?v=0.6.7) -- prefer 14.10 change instead of fetch. [edited]
+2025-06-22 16:21 gav: As those who follow the GP will have seen, the last few days has seen both major refactoring of the Latex and some pretty heavy changes to the terms used to try to make things a lot easier for newcomers. I expect to finish the [final 0.6 series issue](https://github.com/gavofyork/graypaper/issues/266) imminently, after which 0.7.0 can, in principle, be released. Before I put out 0.7.0 I'll leave it for a few days to settle as no doubt there will be some errors from the huge refactoring/renaming: **If you do happen to be looking at GP-`main` and see any regressions the refactor introduced, do please point them out**.
+2025-06-25 10:32 gav: Nobody reported any issues, so here it is: [GP 0.7.0](https://github.com/gavofyork/graypaper/releases/tag/v0.7.0)
+2025-06-25 10:33 gav: I did a sweep of integer encodings, but may have missed some; if you feel that there are still encodings which are variable and shouldn't be (or which are fixed and should be variable), do feel free to mention it.
+2025-06-25 10:35 clearloop: when will the network protocol being embedded in GP?
+2025-06-25 10:42 gav: It's not a big priority.
+2025-06-25 10:42 gav: It might not happen even before 1.0 - it could just be done as a JIP/RFC. [edited]
+2025-06-25 10:43 gav: Biggest priority is to get the core protocol secure, fast and functional.
+2025-06-25 13:55 clearloop: ```
+spacejam    WARN ticket{attempt=0}: failed to open bi-stream: eecgwpgwq3noky4ijm4jmvjtmuzv44qvigciusxakq5epnrfj2utb@127.0.0.1:40000
+spacejam    DEBUG ticket{attempt=0}:disconnect{peer="eecgwpgwq3noky4ijm4jmvjtmuzv44qvigciusxakq5epnrfj2utb"}: failed to open bi-stream
+spacejam    WARN ticket{attempt=0}: failed to open bi-stream: ekwmt37xecoq6a7otkm4ux5gfmm4uwbat4bg5m223shckhaaxdpqa@127.0.0.1:40002
+spacejam    DEBUG ticket{attempt=0}:disconnect{peer="ekwmt37xecoq6a7otkm4ux5gfmm4uwbat4bg5m223shckhaaxdpqa"}: failed to open bi-stream
+polkajam-3  tokio-runtime-worker WARN authoring  Error processing incoming ticket: finality lagging (final: 2520995, curr: 2520999)
+polkajam-4  tokio-runtime-worker WARN authoring  Error processing incoming ticket: finality lagging (final: 2520995, curr: 2520999)
+polkajam-1   tokio-runtime-worker WARN authoring  Error processing incoming ticket: finality lagging (final: 2520995, curr: 2520999)
+spacejam     TRACE ce132::recv: ticket#0@cdf12f for epoch: 210083
+spacejam     TRACE up0{peer=en5ejs5b2tybkfh4ym5vpfh7nynby73xhtfzmazumtvcijpcsz6ma}:recv: block#2521000@0x4ed2f0, grandpa#2520998@0x961299, remote#2520996@0xdd6fa0
+```
+
+I can reach this finality lagging problem frequently from `polkajam`, at the last line we can see spacejam still receives block#2521000 from a polkajam node, while seems other 3 neighbors are at 2520995 that they reject `spacejam`'s ticket and close the connection, I expect the correct behavior should be like, on receiving a ticket from future blocks, we cache the ticket, and verify it on finalizing that new block instead of closing the connection immediately
+
+our testnet (`0.6.5`) configuration is 5 `polkajam` node + 1 `spacejam` node and `spacejam` can work with `polkajam` nodes with around 30mins then get broken on inconsistent blocks [edited]
+2025-06-27 13:42 prematurata: I've a question in 10.5 `f \in bold_k` but that bold_k can't come from 10.3 which needs `a` from EV. is it a typo? [edited]
+2025-06-27 14:09 prematurata: lol i am totally blind sorry :(
+2025-07-14 14:10 ascriv: when computing the work report for a work package, i'm a bit confused how GP is specifying how to compute the segment root dictionary. It seems like we should rely on the segment-roots in the recent blocks component in the current state according to (11.41). But also 11.41 says the segment-roots might be in the guarantees extrinsic itself. that seems to imply we should wait for all the work reports in E_G before computing it, which seems to imply the author should be computing the segment root dictionaries. what am I missing?
+  ↳ 2025-07-14 14:17 dave: 11.41 is a validity condition for a block, it doesn't say how the reports should be computed
+  ↳ 2025-07-14 14:18 dave: The WP hash -> segments-root map in a report has to be computed by the report's guarantors as it is signed by them
+  ↳ 2025-07-14 14:20 dave: It is expected to be computed by the "primary" guarantor, who received the work-package from the builder. When the work-package is shared with a secondary guarantor, this mapping is sent in the first message (see CE 134)
+  ↳ 2025-07-14 14:21 dave: The author of a block should only include guarantees where this mapping is valid as per 11.41
+  ↳ 2025-07-14 14:25 dave: Exactly how guarantors compute the mapping is up to them. They may optimistically include work-packages that have not yet been reported on-chain. Guarantors won't be slashed for including an invalid mapping in a report, but they also won't be paid for these reports as it won't be possible to include them on chain
+2025-07-14 14:27 ascriv: Got it. So could a naive guarantor could compute it by looking at the recent blocks component in the current state and that would suffice but possibly not be optimal? [edited]
+2025-07-14 14:37 ascriv: Should we not also include optimal guarantor behavior in the gp? Or is it not well defined?
+  ↳ 2025-07-14 14:42 dave: To some extent this may need to be defined for guarantors assigned to the same core to work well together. I think we'd generally like to allow validators to have their own strategies for things though
+  ↳ 2025-07-14 14:44 dave: eg It wouldn't be great if the mappings computed by one guarantor were always rejected by the other two assigned to the core [edited]
+  ↳ 2025-07-14 14:44 dave: Builders will also need to know generally what to expect from guarantors
+  ↳ 2025-07-14 14:46 dave: So I expect we will define some of this stuff, but probably not until after performance testing etc has happened on the toaster, as I don't think we will understand things well enough until then
+2025-07-16 10:22 ascriv: Screenshot 2025-07-16 at 12.22.13 PM.png
+2025-07-16 10:22 ascriv: Screenshot 2025-07-16 at 12.22.44 PM.png
+2025-07-16 10:23 ascriv: is there a discrepancy between GP and https://github.com/zdave-parity/jam-np/blob/main/simple.md ? 139/140 require the erasure root to reconstruct the imported segments but GP says the segments root is what's needed
+  ↳ 2025-07-16 20:55 dave: The erasure root is used in SNP as the distributed shards are proven only to this, it is not possible to (efficiently) prove a segment shard to a segments-root
+  ↳ 2025-07-16 20:59 dave: Of course for an imported segment you start with a segments-root, not an erasure-root. The guarantor fetching the segment is expected to map one to the other, based on previously observed work-reports [edited]
+  ↳ 2025-07-16 21:05 dave: Not sure the network protocol can sensibly work any other way, could be wrong about this though
+2025-07-16 21:12 ascriv: I guess this would be in the availability spec. How long should a guarantor keep work report availability specs? [edited]
+2025-07-16 21:14 dave: Should keep mappings for as long as the data is available, 28 days is what's currently specified I believe
+2025-07-17 09:21 ascriv: Can guarantors assume that each imported data segment for the work items is exported by one of the prerequisite work packages? (Unless perhaps the imported segment is identified by work package hash)
+  ↳ 2025-07-17 09:24 dave: No
+2025-07-18 14:54 ascriv: The JNP seems pretty clear about how guarantors should get segment shards for reconstruction, but aren’t segment justifications also in D3L? There doesn’t seem to be a way to get those that I can tell. The justifications sent in 140 are justifications for shards, not segments, no?
+  ↳ 2025-07-18 14:55 dave: You should also use 139/140 to request proof page shards
+  ↳ 2025-07-18 14:56 dave: You need to reconstruct proof pages in the same way that you reconstruct import segments
+  ↳ 2025-07-18 14:58 dave: The justifications returned by CE 140 are for shards yes. As the SNP doc says you generally should only use CE 140 if your first attempt to fetch shards and reconstruct segments using CE 139 fails
+2025-07-18 15:22 ascriv: Ok think I get it, looking at 14.16, we can reuse the same erasure roots but use different indices to get paged proof shards using 139/140 [edited]
+2025-07-22 13:28 danicuki: 
+2025-07-23 10:15 ascriv: Is there a proposal for the format of the metadata in the last 128 octets of the validator keys somewhere? I can infer from the various examples floating around but would be nice if it was written down somewhere (to infer the IP address/port, e.g.) [edited]
+2025-07-23 12:24 dave: IDK if this is specified anywhere, but PolkaJam currently assumes first 16 bytes are an IPv6 address and next 2 bytes are a port
+2025-07-23 12:25 dave: Remaining metadata bytes are currently ignored
+2025-07-23 12:27 gav: This ought to fit nicely in the networking spec [edited]
+2025-07-23 12:28 dave: Ah, it is there already actually: https://github.com/zdave-parity/jam-np/blob/main/simple.md#required-connectivity
+2025-07-23 12:28 dave: "The validators' IP-layer endpoints are given as IPv6/port combinations, to be found in the first 18 bytes of validator metadata, with the first 16 bytes being the IPv6 address and the latter 2 being a little endian representation of the port"
+2025-07-23 15:03 ascriv: should a valid ipv6/port be enforced before incorporation on chain?
+2025-07-23 15:21 dave: Could plausibly be sanity checked by the delegator service, GP does not have any such logic though
+2025-07-25 00:33 r2rtnl: I'm observing a possible inconsistency in instruction decoding between the Gray Paper and the official PolkaVM implementation:
+
+1. According to (A.16) of the Gray Paper, any signed extension must produce a 64-bit value:
+https://graypaper.fluffylabs.dev/#/9a08063/25e30225e302?v=0.6.6
+2. In (A.26), the immediate (nu\_x) for the branch\_ge\_u\_imm instruction must be sign-extended from 32 bits or less (as the immediate size is up to 4 bytes) to 64 bits, using the signed extension defined in (A.16).
+https://graypaper.fluffylabs.dev/#/9a08063/27e70227e702?v=0.6.6
+3. When decoding the following argument octets for a branch\_ge\_u\_imm (opcode 85):
+0x17 0xf7 0xf4 0x1,
+the official PolkaVM implementation logs this as:
+"jump 70519 if a0 >=u 4294967287" (the instruction starts at offset 70019).
+This suggests that the signed extension applied to an 8-bit value (0xf7) resulted in a 32-bit value 0xfffffff7 = 4294967287, rather than a 64-bit value as implied by (A.26).
+
+Could you please clarify the intended behavior in this case?
+
+P.S. This observation comes from analyzing the following PolkaVM trace:
+https://github.com/davxy/jam-stuff/blob/main/pvm-traces/0.6.6/reports-l0-00000005.log
+that was provided in this task:
+https://github.com/davxy/jam-test-vectors/issues/83 [edited]
+2025-07-26 00:57 gav: [Gray Paper version 0.7.1 is out](https://github.com/gavofyork/graypaper/releases/tag/v0.7.1). This one contains most of the pre-planned 0.7 series changes already. The rest of the changes may be dropped or postponed to 0.8; we'll see once we have vaguely real services running on the Toaster.
+
+The biggest change with this release is to combine `on_transfer` with `accumulate`, actually reducing the size of the spec and, hopefully, implementation and API complexity. Also introduced is a new privilege, the Registrar, which is able to name the index of newly created services in a newly cordoned AccountId space (the lower 16 bits). [edited]
+2025-07-30 09:01 prematurata: I've a question about B.11. what is bold_o in the fetch? I can't seem to find a reference 
+  ↳ 2025-07-30 10:04 0xjunha: Good catch - that should be bold_i for accumulate input, I updated that from bold_o to bold_i but missed updating FETCH https://github.com/gavofyork/graypaper/pull/465
+  ↳ 2025-07-30 10:04 0xjunha: Opened a PR to fix it - https://github.com/gavofyork/graypaper/pull/479
+  ↳ 2025-07-30 11:21 prematurata: thanks!!
+2025-07-30 23:08 sourabhniyogi: In comparing PVM gas vs EVM gas (and for a bit more than funsies, throwing geth's evm interpreter into our implementation and wiring up Go StateDB interface) and seeing how modular JAM is in its PVM invocations to refine/accumulate, it's clear that JAM can totally support other VMs besides PVM -- so long as JAM guarantors+auditors/validators measure gas/work the exact same way and take in argument inputs/outputs according to whatever the VM's interfaces are, I think we can transplant multiple non-PVM VMs into JAM -- good idea or no?
+
+In principle, GP could split off Appendix A (the PVM) from GP (and like grandpa/bls/bandersnatch) incorporate by reference and make JAM agnostic to its VM, and describe JAM VM-specific interfaces in separate JAM+PVM, JAM+EVM, JAM+whatever VM papers (or JIPs).   You could have CorePVM service running PVM refine/accumulate, CoreEVM running EVM refine/accumulate, Core{whatever}VM running whateverVM refine/accumulate.  Instead of "JAM can run any VM that people want so long as it’s PVM” 😀   it can be "JAM can run any VM people so long as it runs on gas".
+
+The reason _against_ doing so is that PVM's recompilation and RISC-V choice is technically the best option!   Having done a basic recompiler, we now see directly how recompiling PVM to X86 (and surely, ARM) wins a truly massive performance gain over the PVM interpreter -- so no debate there!
+
+But other VMs can also map into X86 (or ARM) in the same way and get similar truly massive performance gains: `revmc` does it for EVM, and its clear a non-PVM JAM path could be based on that or something similar for EVM (and probably other non-PVM VMs).  Once we compare X86 to X86 wall clock times, the differences between these VMs are bound to be more like the difference between QWERTY vs non-QWERTY keyboards: people will use Solidity/Remix/solc over Rust/polkatool/revive just because its familiar, not because its actually the best option.
+
+What is the reason for tying JAM solely to PVM?  Could we chart a more open course?  If not, what did I miss? [edited]
+2025-07-30 23:27 clearloop: I think too many translations are over complicating the problem and endless of maintenance, if I'm not mistaken, we can simply run a VM in builders and wrap the result to the extrinsic data of work packages
+2025-07-30 23:29 xlchen: the main thing is actually working gas model. PVM is designed in such way that the gas consumption actually reflect the resource usage. EVM gas is not the case
+2025-07-30 23:37 clearloop: my idea is that builders holding VMs for executing any programs, host a service for charging fees, users can get the execution data from refine context and doing pending stuffs, the translation solutions are more like for non-JAM arch, e.g. PVM out of JAM
+2025-07-30 23:46 sourabhniyogi: I probably learned the wrong lesson here from the 3 snippets [here](https://forum.polkadot.network/t/announcing-polkavm-a-new-risc-v-based-vm-for-smart-contracts-and-possibly-more/3811#appendix-bonus-section-or-why-does-it-smell-like-gas-here-18) where Jan's point in 
+```
+Snippet 1: 6ms
+Snippet 2: 114ms
+Snippet 3: 10ms
+```  
+was that not even PVM can get it right -- thus we need to have a new mechanism considering whether observed wall clock times are close to expected "average" times to steer away from "Snippet 2" situations.   You appear to believe PVM has it right, and I don't know about that...
+2025-07-30 23:51 xlchen: the whole point is accurate gas measuring is hard. but that's the exact reason why pvm gas system is not yet out
+2025-07-31 00:47 sourabhniyogi: I believe the solution, whenever it comes out, will be at the JAM level rather than VM-specific, which is a happy outcome because I think JAM's innovations here are not wholly dependent on PVM at all.
+2025-07-31 14:17 bamzedev: Equation 10.2 defines the verdict age as an element of N₂ (i.e., {0, 1}), and equation 10.3 determines which validator set to use based on comparing the age to ⌊τ/E⌋.
+At epoch transitions (e.g., slot 600 transitioning from epoch 0 to epoch 1), this appears to create a one-slot delay before new validators can have their judgments included in verdicts:
+At slot 600: τ = 599, so ⌊τ/E⌋ = 0
+Valid ages are {0, 1}
+Age 0 → uses κ (epoch 0 validators from prior state)
+Age 1 → uses λ (validators from before epoch 0)
+No age value allows referencing κ' (the new epoch 1 validators)
+Does this mean:
+Slot 600 might have no verdicts at all, OR
+Epoch 0 validators continue sending judgments into the first slot of epoch 1 (and these can be included with age=0)?
+
+  ↳ 2025-07-31 14:59 dave: This sounds like a misunderstanding of the auditing system. Verdicts/judgments are posted on-chain only if there is a dispute, ie at least one validator thinks a report is faulty. This should be extremely rare, and is likely to happen at least a couple of slots after the disputed report is made available. The first block the epoch 1 validators are responsible for auditing is the one in slot 601, so it doesn't matter if they can't include a verdict before this.
+  ↳ 2025-07-31 15:19 bamzedev: thanks
+2025-08-01 04:12 gav: > <@sourabhniyogi:matrix.org> I believe the solution, whenever it comes out, will be at the JAM level rather than VM-specific, which is a happy outcome because I think JAM's innovations here are not wholly dependent on PVM at all.
+
+PVM provides a number of key innovations for JAM:
+1. An execution and gas model which we expect to get much closer to metering at native speed than anything before.
+2. A well supported ISA, allowing a host of compilation tooling to be used, including LLVM.
+3. A stack and memory model which allows for easy consensus-sensitive program suspension and restoration. This opens the doors to things like CoreVM and “native speed” smart contract execution (rather than executing the smart contract as a second interpreter within the VM).  
+2025-08-01 04:15 gav: Using EVM or Wasm instead of PVM is technically possible, but would increase workload and maintenance for all JAM implementation teams and would mean hard-forking to keep up with any EVM changes which we wanted to support (forcing a choice of outdated tooling or being subject to other peoples’ hard fork schedule). Neither Wasm nor EVM have particular good gas models. Polkadot works around this with a special wall-clock time consensus protocol but this approach is insecure outside of Polkadot 1. Realistically it may be end up being faster to recompile EVM into PVM and execute “natively” than build in a specialist EVM protocol with a crappy gas models. I wouldn’t necessarily say never, but I won’t be adding it to 1.0.  [edited]
+2025-08-01 10:08 dakkk: davxy: after finishing tests for 0.6.7, will you go ahead implementing those for 0.7.1 or you will do 0.7.0 first? I'm asking since in Jampy I'm maintaining branches for every gp versions from 0.6.7 to latest, and I'm doing it only for being able to run your tests in the future
+2025-08-01 10:43 rustybot: 
+2025-08-01 10:44 davxy: > <@dakkk:matrix.org> davxy: after finishing tests for 0.6.7, will you go ahead implementing those for 0.7.1 or you will do 0.7.0 first? I'm asking since in Jampy I'm maintaining branches for every gp versions from 0.6.7 to latest, and I'm doing it only for being able to run your tests in the future
+
+Probably we'll ship 0.7.0 first.
+Side note, are you aware of  this: https://github.com/davxy/jam-stuff/tree/main/fuzz-reports/0.6.6/jampy/jampy-0.6.6_GP-0.6.6/1753810654 ?
+2025-08-01 10:57 dakkk: ok (y) No, I wasn't aware; I will have a look
+2025-08-01 11:33 sourabhniyogi: For the engineering of a whateverVM byte code to PVM byte code (and winning gas metering closer to wall clock times [but by no means perfect, as Jan's Snippet 1/2/3 illustrates super well]), this makes a lot of sense!  Do you believe it should be done 
+(a) in a performance-based way like PVM byte code is being mapped to X86 (or ___) now,
+(b) according to a spec, or
+(c) with one good FFI [like most of us are all treating the W3F bls+bandersnatch libs + erasure encoding]
+?  
+
+If there is a difference between engineering the mapping between (1) whateverVM to PVM and (2) PVM to X86, what is it?
+
+Based on the very long history of dozens-to-hundreds of smart contract compiler bugs (which get a lot of press!), I'm far more concerned about buggy polkatool or problems in one actually-not-so-good FFI (for EVM=>PVM or PVM=>X86) than I am of crappy gas models being the source of severe security problems.  What should people like me read to rebalance their security concerns and develop a better appreciation of how severely crappy the gas models are?  
+2025-08-01 11:57 jan: Unless I misunderstood it, your question doesn't really make sense. Translating one bytecode into another must always be done according to the spec, otherwise you'll get diverging semantics and the translated program won't do what it's supposed to do. Of course 1-to-1 *exact* translation isn't always possible - e.g. in case of EVM you can do things like inspect the current gas, so if you'd translate this to PVM you'd either have to implement very expensive emulation to fake EVM's gas, or just accept that programs which depend on this will be incompatible. Nevertheless, PVM's gas metering itself (which you cannot turn off) will ensure that the guest program can be safely run.; we care about how PVM instructions map to native AMD64 code because this *is* security sensitive; we don't care how EVM instructions map to PVM instructions because the PVM layer below it already provides the security it needs.
+2025-08-01 12:20 jan: Anyway, JAM using a different VM would be possible, but unless you don't care about performance *or* you don't care about security then it would be *much* harder, precisely because of the gas cost model.
+
+Let's say, for example, we want to use WASM. Okay. So first, we absolutely need O(n) recompilation support in the VM, otherwise it's trivial to DoS our chain. But WASM wasn't designed with this in mind, so we eat 2x performance cost to use a single-pass WASM VM even before any other consideration.
+Then, we need a gas cost model. WASM bytecode is relatively high level and doesn't map to native instructions 1-to-1, so this makes coming up with a secure optimal gas cost model even harder. But okay, let's give up on the "optimal" part. This means you need to overestimate your gas model costs by quite a lot, even *more* than we have to do with PVM.
+And you *still* need to do the legwork and come up with the gas cost model yourself, because WASM itself doesn't come with one!
+
+Of course there's still the YOLO option of just.... not having a secure gas cost model (without any backup mechanism like Polkadot 1). I know of at least one chain which picked this option (whether deliberately or accidentally), and they're doing fine because no one really cares to actually attack them. :P But I can't in good conscience recommend this option, for obvious reasons.
+2025-08-01 12:29 jan: JAM would most likely look very different without PVM. In the gas cost model that I'm working on I'm already pretty much pushing the absolute limits of what can be practically modeled; to do significantly better you'd need to either a) skimp on security, or b) gimp the chain's capabilities and make it *not* a general-purpose, permissionless-chain (which is JAM's killer feature in my opinion).
+2025-08-01 17:41 sourabhniyogi: We will need to study what is missing in revmc's EVM-to-X86 implementation (which is obviously as performance oriented as JAM's PVM-to-X86)  a bit more to understand what it is missing there that is present in the PVM-to-X86 architecture that gives the latter better security outside of gas semantics alone.
+
+Obviously, its missing a dozen or two teams competing in 2026 in a performance-based way.   Otherwise, I think you can redo a gas model for most (but not all) EVM op codes based on typical revmc typical X86 measurement, give up on legacy gas model and get "almost compatibility" -- using host function calls for any and all op codes that need them.  
+
+You would then have two modern paths for 2 different types of teams/implementations:
+
+- DVORAK teams/implementations:  evm =TBD=> pvm =M3/M4 impl=> x86 \[with a pvm gas model based on x86\]
+- QWERTY teams/implementations:  evm =revmc \[or similar/better\]=> x86 \[with a non-legacy gas model based on x86\]
+
+Augmenting Current Teams with DVORAK teams and/or QWERTY teams is better than the current path of
+
+- Current Teams: Rust/Solidity =\[revive/polkatool\]=> pvm => x86 \[with a pvm gas model based on x86\]
+
+_alone_ because, simply put, there are basically a O(10^4)-O(10^6) times fewer people who have dogfooded polkatool with the above path (we're trying our best, its just ... not ready yet =) ).  We want security, performance and **impact**.
+
+JAM's path to max impact probably should involve DVORAK teams, is what I'm hearing, informed by the predicted failures of QWERTY teams.
+
+Do you have a prediction on how QWERTY teams will fail? [edited]
+2025-08-02 01:18 gav: While i appreciate the desire to create impact, as I already stated the GP will definitely not see EVM in it before 1.0, and probably never. I’d suggest you instead focus your efforts on comparison (perhaps putting your various benchmarking code through both revmc and Rust/PolkaVM) and compilation of Solidity to PVM (or perhaps even recompilation of EVM to PVM). 
+2025-08-02 15:09 jan: If you're paranoid about using my linker for translating RISC-V code to PVM you can always either disable my linker's optimizations (in which case it does very little changes to the original RISC-V bytecode, besides translating it to equivalent PVM instructions and relocating the code and data like any other linker does to fit with the PVM memory map), or you can just write your own independent RISC-V -> PVM translator and end-to-end fuzz it against mine. And of course you can also try to do formal verification of the resulting PVM bytecode of your program, but the tooling for that is as of yet still missing (you're welcome to contribute though if you have the manpower, as that would actually be useful).
+2025-08-03 00:37 sourabhniyogi: clever ok!
+2025-08-07 10:38 ascriv: https://graypaper.fluffylabs.dev/#/1c979cb/308a01308a01?v=0.7.1
+2025-08-07 10:39 ascriv: I don't think any impls are doing the g-10 in the default case for the mutator here? Should we remove?
+2025-08-07 10:40 ascriv: also if we keep it, shouldn't we do an out of gas check in case g < 10 ?
+2025-08-07 10:45 gav: It shouldn’t be removed, and yes an OOG check should be assumed. Feel free to make a PR stating this explicitly. 
+2025-08-07 11:35 ascriv: https://github.com/gavofyork/graypaper/pull/482
+2025-08-08 15:54 ascriv: https://graypaper.fluffylabs.dev/#/1c979cb/2c57022c6102?v=0.7.1
+
+host functions returning a page fault is only theoretical at this point, right? Couldn't find any that actually return this exit reason
+2025-08-12 13:37 ge0321: Hi Gavin, I was wondering if there’s been any thought given to updating the original Polkadot whitepaper. With Polkadot 1.0 now fully delivered, the original vision has essentially been realized. Now that we have JAM, the Gray Paper does an excellent job explaining the technical details, but it’s quite dense for a general audience. Do you think there’s value in producing an updated whitepaper or equivalent that frames Polkadot’s vision and architecture from the JAM perspective for a broader audience?
+2025-08-12 15:12 gav: Yeah perhaps that could be interesting. 
+2025-08-12 15:13 gav: Question is whether I can find the time:)
+2025-08-12 16:00 ge0321: :)
+2025-08-12 17:04 sourabhniyogi: What are the primary reasons for _not_ having `refine`'s { `machine`, `poke`, `invoke`, `peek`, `pages`, `expunge` } host functions available as invokable `accumulate` host functions as well?   If these are "expensive" (or worth discouraging) why not just gas price them as such?
+
+As far as we can see, there is no constraint on a child VM's available gas in `invoke` from the parent VM -- is that correct?  If the parent has 2B gas allocated, the `machine`-generated child VM could have 3B, or 3 `machine` generated child VMs could have 1B (or 1T).  What did I miss on how `invoke` is constrained so that a `refine` invocation has the child VM not using more gas than was allocated to the parent?
+
+I'm taking a good look at `invoke` to tackle the EVM-to-PVM gas comparison problem seriously with some fraction of Ethereum legacy tests -- where I think if the EVM contract-related family of opcodes (CALL/STATICCALL/DELEGATECALL/...) is mapped into PVM refine+accumulate machinery "correctly", it can be a good source of dogfooding.  This is almost certainly a non-trivial undertaking to do right but a PoC seems tractable especially if the goal is "just" to compare gas models for "pure" computations.   How would you constrain or order the execution of this?  Or, should this be avoided completely?  It sure seems that refines child VM `invoke`/`machine`/... machinery should be adapted for this purpose (and incorporated into accumulate)-- would you agree?
+
+To do a proper precise comparison of gas models and demonstrate the improvements of gas models based on PVM to EVM, it seems an absolute requirement to compare wall clock times between
+(1) EVM-to-X86 (with revmc), measuring both:
+(a) strawman EVM gas model (whatever the production model is circa 2025) to
+(b) "reparameterized" EVM gas model (as informed by X86/.. wall clock times)
+(2) EVM-to-PVM-to-X86, with the new PVM gas model (as informed by X86/.. wall clock times)
+with the exact same battery of EVM byte code doing the exact same full range of computations (computing with 256-bit with no 64-bit shortcuts) and allowing both (1)+(2) optimizations (e.g. if the 256-bit computation only actually needs 64-bit computation, then take the shortcut).  Am I requiring too much here?  What are legit shortcuts to take?
+
+The primary shortcut I believe is to only measure pure functions (no EVM byte code reading/writing state, or doing any kind of IO), with no use of host functions (except maybe to actually conduct the test).  Are there other shortcuts you would advise, for the goal of doing precise gas model comparison? [edited]
+2025-08-12 21:19 boymaas: I am re-reading the accumulated definitions and have a question about a detail in the outer accumulation function which calls the parallelized accumulation function one or more times based on actual gas usage. The parallelized accumulation function takes a set of ( w ) and executes single service invocations in parallel, building, for example, ( B ), the service-indexed commitment.
+
+Now I wonder what would happen if the second invocation included a w with an (s) service\_id which was also present in the first invocation of the parallelized accumulation function. Are we not losing the output from the first parallelized accumulation function invocation for that service in B when we perform the union integrating the results from the second invocation into B?
+
+https://graypaper.fluffylabs.dev/#/1c979cb/17be0117c101?v=0.7.1 [edited]
+2025-08-13 18:08 prasad-kumkar: We’ve published some early benchmarks comparing our x86 recompiler vs the Python interpreter for PVM on pure compute programs (with gas computation): 🔗 https://gist.github.com/prasad-kumkar/7727798f7b06d8ead3e84436e85499f1
+
+These numbers are super early and there’s a lot of room for improvement.
+One thing I noticed - when we integrate it in JAM (with host calls), performance drops quite a bit, even slower than interpreter 🤔 
+
+Sharing here in case anyone wants to reference
+2025-08-14 19:04 vinsystems: When the [designate hostcall](https://graypaper.fluffylabs.dev/#/7e6ff6a/36b50136b501?v=0.6.7) is called and the next\_validators are updated, should we also update the safrole's pending validators, recompute the epoch root and empty the tickets accumulator? [edited]
+2025-08-14 19:23 jaymansfield: Results of designate go into iota prime (see 12.25). Ring root and next validators come from the original iota (6.13) [edited]
+2025-08-14 19:39 davxy: The designate validator is stored in iota and remains there until the next epoch change.  
+When the epoch changes, iota enters the safrole state, and the ring root (commitment) is recomputed for the new validator set.  
+
+The designate host call can be invoked multiple times during an epoch to update iota, but only the last value written before the epoch change is used to recompute the safrole ring root.
+2025-08-15 07:08 ascriv: Can anyone explain why handling page fault exit reasons from host calls is necessary? Otherwise I’ll make a PR to remove it. It seems each host call is careful not to access or mutate inaccessible memory  [edited]
+2025-08-15 18:48 dave: I agree that case does not seem necessary. I'm also not sure about some of the wording below. eg "We use both values of instruction-counter for the definition of ΨH since if the host-call results in a page fault we need to allow the outer environment to resolve the fault and re-try the host-call". There only seems to be one value for the instruction counter in Psi_H. The bit about outer environment I assume is talking about inner PVMs, but `invoke` does not use Psi_H, it uses Psi directly.
+2025-08-16 06:59 ascriv: https://github.com/gavofyork/graypaper/pull/485
+2025-08-16 23:14 shwchg: Hi guys! Does anyone know why we can't retrieve the instruction counter after an invoke?
+We can still resume code execution in the next package, even if we're out of gas during the invoke.
+  ↳ 2025-08-17 03:02 jan: If you can't retrieve the instruction counter after an invoke then how can you resume code execution?
+  ↳ 2025-08-17 03:03 jan: In general the instruction counter should be retrievable every time there's an expectation that you might want to interrupt the execution and continue during another block.
+  ↳ 2025-08-17 03:05 jan: However, we don't want the instruction counter to be inspectable when the program terminates abnormally (due to a trap/panic/etc.) or when it successfully finishes execution and quits, since that shouldn't be very useful on-chain, and not requiring this makes the virtual machine easier to implement (and it's one less place where different implementations might diverge). [edited]
+  ↳ 2025-08-17 03:16 shwchg: https://graypaper.fluffylabs.dev/#/1c979cb/350c02352602?v=0.7.1
+
+actually I just found you can get the instruction counter from `expunge`
+
+but I think `expunge` should return two value back so you won't have the same value as `WHO` [edited]
+2025-08-20 15:24 tvvkk7: Hello, davxy 
+I am comparing pvm output with [pvm-traces/0.6.7/preimages_light_00000003](https://raw.githubusercontent.com/davxy/jam-conformance/refs/heads/main/pvm-traces/0.6.7/preimages_light_00000003/pvm-trace.log). 
+I found that we have different setting on [argument data memory allocation](https://graypaper.fluffylabs.dev/#/7e6ff6a/2da2012da201?v=0.6.7) .
+I allocated argument data memory size with [E(t, s, |o|)](https://graypaper.fluffylabs.dev/#/7e6ff6a/2fc6012fc601?v=0.6.7), while the trace log allocated 2^24 bytes, which is [the most data size of argument data](https://graypaper.fluffylabs.dev/#/7e6ff6a/2d65022d6502?v=0.6.7). 
+I was wondering if I might have misunderstood the GP, or if there could be another possible interpretation.
+ 
+2025-08-20 19:22 rustybot: > <@tvvkk7:matrix.org> Hello, davxy 
+> I am comparing pvm output with [pvm-traces/0.6.7/preimages_light_00000003](https://raw.githubusercontent.com/davxy/jam-conformance/refs/heads/main/pvm-traces/0.6.7/preimages_light_00000003/pvm-trace.log). 
+> I found that we have different setting on [argument data memory allocation](https://graypaper.fluffylabs.dev/#/7e6ff6a/2da2012da201?v=0.6.7) .
+> I allocated argument data memory size with [E(t, s, |o|)](https://graypaper.fluffylabs.dev/#/7e6ff6a/2fc6012fc601?v=0.6.7), while the trace log allocated 2^24 bytes, which is [the most data size of argument data](https://graypaper.fluffylabs.dev/#/7e6ff6a/2d65022d6502?v=0.6.7). 
+> I was wondering if I might have misunderstood the GP, or if there could be another possible interpretation.
+>  
+
+https://matrix.to/#/#jam-conformance:matrix.org
