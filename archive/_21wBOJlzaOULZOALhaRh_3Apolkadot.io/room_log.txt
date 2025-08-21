@@ -1,5 +1,5 @@
 # room: #jam:polkadot.io
-# exported: 2025-08-21 03:30 UTC
+# exported: 2025-08-21 17:11 UTC
 2024-04-20 02:08 johnjiao123: 
 2024-04-20 02:09 johnjiao123: 
 2024-05-30 21:48 nradko: Hey everyone,
@@ -11049,3 +11049,4 @@ Thanks in advance,
 
 We've made a small tool to decode these kind of test files. You can check it out here: https://state.fluffylabs.dev
 2025-08-20 18:44 sourabhniyogi: New "JAM Conformance" room (public, unencrypted) -- https://matrix.to/#/#jam-conformance:matrix.org -- meant for volatile discussions around fuzzer/targets related to https://github.com/davxy/jam-conformance/issues 
+2025-08-21 16:56 dakkk: is someone still passing pvm tests from koute after updating to >= 0.6.7?
