@@ -94,7 +94,10 @@ def archive(room:str):
 
     for cmd in (["--room-join",room],["--room",room,"--listen","once"]):
         try: run(["matrix-commander",*CRED,*cmd])
-        except subprocess.CalledProcessError: pass
+        except subprocess.CalledProcessError as e:
+            logging.warning("Command %s failed for room %s: exit code %d", " ".join(cmd[-2:]), room, e.returncode)
+            if e.stderr:
+                logging.warning("Error details: %s", e.stderr)
 
     title=room
     try:
