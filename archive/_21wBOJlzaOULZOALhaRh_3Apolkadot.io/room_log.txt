@@ -1,5 +1,5 @@
 # room: #jam:polkadot.io
-# exported: 2025-08-20 03:30 UTC
+# exported: 2025-08-21 03:30 UTC
 2024-04-20 02:08 johnjiao123: 
 2024-04-20 02:09 johnjiao123: 
 2024-05-30 21:48 nradko: Hey everyone,
@@ -11005,3 +11005,47 @@ The key requirement, as most of us know, is that whatever is discussed is open t
 2025-08-20 01:30 cisco: The fluffylabs team created an amazing website that searches on the paper, matrix rooms and the jam implementers discord: https://search.fluffylabs.dev/
 2025-08-20 03:25 ascriv: Maybe we can just have a new issue in the jam-conformance repo just for general discussion?
 2025-08-20 03:28 clearloop: I remember gh has the discussion feature by default, just need to open in the repo settings, for example https://github.com/spacejamapp/specjam/discussions [edited]
+2025-08-20 06:16 anish1222: can you explain what are the key value pairs in the traces-> safrole test vectors?????
+
+"pre_state": {
+        "state_root": "0x87895c582222f62827fabcc4b59c61163b767752a3818fbd89e0356001dfe627",
+        "keyvals": [
+            {
+                "key": "0x004700b0000000000b0cce53c35439dfe73087b1439c846b5ff0b18ec0052e",
+                "value": "0x0100000000"
+            },
+            {
+                "key": "0x00dd00ba00010000cced2ebcc7a238699d0973f70cc6f6772e084efaf9d26f",
+                "value": "0x0100000000"
+            },
+
+
+2025-08-20 06:20 ascriv: This is the encoding of the full state as described in the state serialization section of the gray paper 
+2025-08-20 06:21 ascriv: In particular this is the state before the block in that test vector was imported (pre_state)
+2025-08-20 06:25 davxy: https://github.com/davxy/jam-conformance/discussions
+2025-08-20 12:25 rossbulat: Good day all, 
+Could someone please share a discord link for the DAO please, in relation to getting feedback for a proposal.
+Thanks in advance,
+2025-08-20 12:26 oliver.tale-yazdi: There is one top here, https://docs.jamcha.in/ i think it should still work 
+  ↳ 2025-08-20 12:27 rossbulat: Thanks!
+2025-08-20 12:26 cisco: Latest version of the JAM SDK (0.1.22) is not in line with 0.6.7, right? Is there going to be one?
+2025-08-20 12:33 cisco: I'd love to use it to test custom services on our client
+2025-08-20 12:47 clearloop: I think the answer is no, hope we can have it at `0.7.1`
+2025-08-20 14:18 tomusdrw: > <@anish1222:matrix.org> can you explain what are the key value pairs in the traces-> safrole test vectors?????
+> 
+> "pre_state": {
+>         "state_root": "0x87895c582222f62827fabcc4b59c61163b767752a3818fbd89e0356001dfe627",
+>         "keyvals": [
+>             {
+>                 "key": "0x004700b0000000000b0cce53c35439dfe73087b1439c846b5ff0b18ec0052e",
+>                 "value": "0x0100000000"
+>             },
+>             {
+>                 "key": "0x00dd00ba00010000cced2ebcc7a238699d0973f70cc6f6772e084efaf9d26f",
+>                 "value": "0x0100000000"
+>             },
+> 
+> 
+
+We've made a small tool to decode these kind of test files. You can check it out here: https://state.fluffylabs.dev
+2025-08-20 18:44 sourabhniyogi: New "JAM Conformance" room (public, unencrypted) -- https://matrix.to/#/#jam-conformance:matrix.org -- meant for volatile discussions around fuzzer/targets related to https://github.com/davxy/jam-conformance/issues 

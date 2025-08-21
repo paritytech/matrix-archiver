@@ -18,7 +18,7 @@ a:hover{color:#90caf9}
 em{font-style:italic}
 </style>
 <h1>#graypaper:polkadot.io</h1>
-<p><small>last updated 2025-08-20 03:31 UTC</small></p>
+<p><small>last updated 2025-08-21 03:30 UTC</small></p>
 <p><a href='room_log.txt'>⇩ plaintext</a> · <a href='../../'>⇦ all rooms</a></p>
 <hr>
 <div class='msg'><a class='ts' href='#$G0deSwnlYlCrSn5lIFL__hi6bgWVITql5VyahU4bzpI'>#</a> <a class='ts' name='$G0deSwnlYlCrSn5lIFL__hi6bgWVITql5VyahU4bzpI' href='https://matrix.to/#/!ddsEwXlCWnreEGuqXZ:polkadot.io/$G0deSwnlYlCrSn5lIFL__hi6bgWVITql5VyahU4bzpI' target='_blank'>2024-04-17 20:29</a>&ensp;<span class='u' style='color:#da6aa2'>syed</span>: <a href="https://matrix.to/#/!hyzRkDqDthePbodYFz:parity.io/$f_DMsIEcDXZegw6Sabnehzc-LrdDQkmq5MbxDDyoZxY?via=parity.io&amp;via=web3.foundation" rel="noopener" target="_blank">https://matrix.to/#/!hyzRkDqDthePbodYFz:parity.io/$f_DMsIEcDXZegw6Sabnehzc-LrdDQkmq5MbxDDyoZxY?via=parity.io&amp;via=web3.foundation</a>
@@ -6549,3 +6549,17 @@ We can still resume code execution in the next package, even if we&#x27;re out o
 actually I just found you can get the instruction counter from <code>expunge</code>
 
 but I think <code>expunge</code> should return two value back so you won&#x27;t have the same value as <code>WHO</code> <span class="edited">(edited)</span></div>
+<div class='msg'><a class='ts' href='#$RgIy3kB7F6uR3BX-R62HTjEtINFPC-vpE1W7RkYEqfk'>#</a> <a class='ts' name='$RgIy3kB7F6uR3BX-R62HTjEtINFPC-vpE1W7RkYEqfk' href='https://matrix.to/#/!ddsEwXlCWnreEGuqXZ:polkadot.io/$RgIy3kB7F6uR3BX-R62HTjEtINFPC-vpE1W7RkYEqfk' target='_blank'>2025-08-20 15:24</a>&ensp;<span class='u' style='color:#994dd2'>tvvkk7</span>: Hello, davxy 
+I am comparing pvm output with <a href="https://raw.githubusercontent.com/davxy/jam-conformance/refs/heads/main/pvm-traces/0.6.7/preimages_light_00000003/pvm-trace.log" rel="noopener" target="_blank">pvm-traces/0.6.7/preimages_light_00000003</a>. 
+I found that we have different setting on <a href="https://graypaper.fluffylabs.dev/#/7e6ff6a/2da2012da201?v=0.6.7" rel="noopener" target="_blank">argument data memory allocation</a> .
+I allocated argument data memory size with <a href="https://graypaper.fluffylabs.dev/#/7e6ff6a/2fc6012fc601?v=0.6.7" rel="noopener" target="_blank">E(t, s, |o|)</a>, while the trace log allocated 2^24 bytes, which is <a href="https://graypaper.fluffylabs.dev/#/7e6ff6a/2d65022d6502?v=0.6.7" rel="noopener" target="_blank">the most data size of argument data</a>. 
+I was wondering if I might have misunderstood the GP, or if there could be another possible interpretation.
+ </div>
+<div class='msg'><a class='ts' href='#$KPsIdfXdhnR6MlwTLa9QuTgpZtajLtkHTmWKanJM_JA'>#</a> <a class='ts' name='$KPsIdfXdhnR6MlwTLa9QuTgpZtajLtkHTmWKanJM_JA' href='https://matrix.to/#/!ddsEwXlCWnreEGuqXZ:polkadot.io/$KPsIdfXdhnR6MlwTLa9QuTgpZtajLtkHTmWKanJM_JA' target='_blank'>2025-08-20 19:22</a>&ensp;<span class='u' style='color:#b332c3'>rustybot</span>: &gt; &lt;@tvvkk7:matrix.org&gt; Hello, davxy 
+&gt; I am comparing pvm output with <a href="https://raw.githubusercontent.com/davxy/jam-conformance/refs/heads/main/pvm-traces/0.6.7/preimages_light_00000003/pvm-trace.log" rel="noopener" target="_blank">pvm-traces/0.6.7/preimages_light_00000003</a>. 
+&gt; I found that we have different setting on <a href="https://graypaper.fluffylabs.dev/#/7e6ff6a/2da2012da201?v=0.6.7" rel="noopener" target="_blank">argument data memory allocation</a> .
+&gt; I allocated argument data memory size with <a href="https://graypaper.fluffylabs.dev/#/7e6ff6a/2fc6012fc601?v=0.6.7" rel="noopener" target="_blank">E(t, s, |o|)</a>, while the trace log allocated 2^24 bytes, which is <a href="https://graypaper.fluffylabs.dev/#/7e6ff6a/2d65022d6502?v=0.6.7" rel="noopener" target="_blank">the most data size of argument data</a>. 
+&gt; I was wondering if I might have misunderstood the GP, or if there could be another possible interpretation.
+&gt;  
+
+<a href="https://matrix.to/#/#jam-conformance:matrix.org" rel="noopener" target="_blank">https://matrix.to/#/#jam-conformance:matrix.org</a></div>
