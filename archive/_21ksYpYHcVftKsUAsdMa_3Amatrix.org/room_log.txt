@@ -1,0 +1,59 @@
+# room: #jam-conformance:matrix.org
+# exported: 2025-08-21 17:38 UTC
+2025-08-20 15:56 erin: tomusdrw: i've set up the archiver to archive this also, so hopefully will be up starting tomorrow
+2025-08-21 06:33 ascriv: https://github.com/davxy/jam-conformance/issues/26 should we not discourage open source implementations (for now)? [edited]
+2025-08-21 10:27 oliver.tale-yazdi: I think open source repos are fine. Other implementors are just not supposed to look at it
+2025-08-21 10:28 oliver.tale-yazdi: Maybe in their self interest it should be private though since someone else may steal their code and submit it first, but that is up to them to decide IMO [edited]
+2025-08-21 10:30 sourabhniyogi: I've never understood when we are required to make everything open-source -- is it after M1 (like, this year =) ), or would it be at the very end?  Or is there some "share with the w3feval team" process?
+
+As the [reports](https://github.com/davxy/jam-conformance/tree/main/fuzz-reports) are clear for > 2/3 of active teams now (omg ... yay!), can we move onto 0.7.0 traces for the rest of the month and start the 0.7.0 fuzzing in first half of September, and then do 0.7.1 traces/fuzzing in the second half? [edited]
+2025-08-21 10:32 oliver.tale-yazdi: I think you only need to share the code with the Milestone judges eventually. 
+2025-08-21 10:45 sourabhniyogi: Does anyone want to see refining added to the fuzz protocol?
+2025-08-21 10:47 ascriv: Sure. But doesn’t that require networking for the erasure coding stuff? 
+2025-08-21 10:56 sourabhniyogi: For a auditable work package bundle, it doesn't have to.  We can add this to the fuzzer protocol:
+
+```
+--> Work Package Bundle ++ Core Index ++ Segment Root Mappings ++ Timeslot
+<-- Work Report
+```
+2025-08-21 10:57 jaymansfield: > <@sourabhniyogi:matrix.org> Does anyone want to see refining added to the fuzz protocol?
+
+That would be great 
+2025-08-21 11:01 sourabhniyogi: Anyone see the need to add more to the above than 1+2, or have a desire to add this in 0.7.0 vs 0.7.1?  There is this ancestors detail I'm wondering what will happen when
+2025-08-21 11:02 ascriv: I’m ok with whatever the evaluators decide, but clarity/a roadmap would be nice 
+2025-08-21 11:18 clearloop: I hope polkajam can join the discuss which can make our time spent more efficient, for example, the testing data format
+2025-08-21 11:26 sourabhniyogi: I think the expectation is that we all become evaluators, and we earn our fellowship stripes by suggesting the changes we want ... like, how do you want to see ancestors in the data
+2025-08-21 11:26 davxy: Your time schedule looks realistic and reasonable
+2025-08-21 11:36 davxy: 
+This seems doable. Maybe you could open a PR to extend the fuzzer protocol?
+
+Right now, I am focused on fixing issues in the fuzzer and getting stuff ready for version 0.7.0 (test vectors first).
+
+The refinement extension could realistically land in 0.7.1 instead.  
+For 0.7.0, the fuzzer protocol should already be extended with:  
+- supported-features handshake during PeerInfo message exchange  
+- ancestors set  
+
+If the target supports refinement, that capability could be included as part of the features exchange.
+
+
+
+2025-08-21 11:37 sourabhniyogi: Is refining successfully part of M1 conformance?  M2?  
+2025-08-21 11:38 sourabhniyogi: I am happy to do a refining extension PR targeting 0.7.1 and try it out with everyone here in Sept =)
+2025-08-21 11:40 sourabhniyogi: I'll primarily just extend this README.md here https://github.com/davxy/jam-conformance/blob/main/fuzz-proto/README.md unless you suggest something else?
+2025-08-21 11:44 davxy: From a technical standpoint, M1 is doing block importing, so as far as I can tell, the answer is no.
+2025-08-21 11:54 sourabhniyogi: Can we consider the 0.6.7 fuzzer "done" (which allows other teams to roll in) or are you going to go through another few waves of 0.6.7 for the next 7-10 days, like the gas accounting wave?
+2025-08-21 11:57 sourabhniyogi: For others doing fuzzers, what else should be addressed?  I think you had a task list to share maybe
+2025-08-21 12:09 jaymansfield: Seems like this should work. I might attempt to build my own refine fuzzer actually as I'm getting close to finishing my recompiler. Will use the same refine arguments when I get to it next.
+2025-08-21 16:03 r2rtnl: JAM Prize rules #14 and #15 appear to favor using a public GitHub repo as evidence of organic development.
+Rule #7 seems reasonably interpreted as: “don’t look; and if you did look, disclose it publicly.”
+2025-08-21 16:16 oliver.tale-yazdi: Rule #16 also explicitly allows private repos. So not sure if either is favoured
+2025-08-21 16:20 r2rtnl: Agreed — I’ve just shared an explanation of why TurboJam chose to go the open-source route.
+2025-08-21 16:20 ascriv: I’m pretty sure private meant off-GitHub according to gav’s comments last October 
+2025-08-21 16:21 ascriv: image_D9A1B8B1-C051-4866-9047-C48BBDBB137B_1755793257.png
+2025-08-21 16:21 ascriv: But I’m in the process of confirming this with the fellowship, can share once I hear 
+2025-08-21 16:23 ascriv: “If you don’t want to use GitHub (private or public), add commits timestamped on a blockchain”
+2025-08-21 16:23 oliver.tale-yazdi: But also depends on how one uses it. Just pushing commits to public GibHub wont help, it will need to be Merge Requests since they carry timestamps.
+2025-08-21 16:26 oliver.tale-yazdi: Yea I am doing this to avoid any controversy later on: https://github.com/JamBrains/remark-commit (i already posted this recently but nobody seems to want to use it 😆)
+2025-08-21 16:27 ascriv: It’s definitely best to do something like OTS or your remark tool regardless. They should have required everyone do this no matter if on GitHub or off imo  [edited]
+2025-08-21 16:28 ascriv: Bc as it’s written and as gav explained, it seems just being on github suffices
