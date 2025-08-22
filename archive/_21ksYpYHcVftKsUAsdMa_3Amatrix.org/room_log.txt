@@ -1,5 +1,5 @@
 # room: #jam-conformance:matrix.org
-# exported: 2025-08-21 17:38 UTC
+# exported: 2025-08-22 03:30 UTC
 2025-08-20 15:56 erin: tomusdrw: i've set up the archiver to archive this also, so hopefully will be up starting tomorrow
 2025-08-21 06:33 ascriv: https://github.com/davxy/jam-conformance/issues/26 should we not discourage open source implementations (for now)? [edited]
 2025-08-21 10:27 oliver.tale-yazdi: I think open source repos are fine. Other implementors are just not supposed to look at it
@@ -57,3 +57,10 @@ Rule #7 seems reasonably interpreted as: “don’t look; and if you did look, d
 2025-08-21 16:26 oliver.tale-yazdi: Yea I am doing this to avoid any controversy later on: https://github.com/JamBrains/remark-commit (i already posted this recently but nobody seems to want to use it 😆)
 2025-08-21 16:27 ascriv: It’s definitely best to do something like OTS or your remark tool regardless. They should have required everyone do this no matter if on GitHub or off imo  [edited]
 2025-08-21 16:28 ascriv: Bc as it’s written and as gav explained, it seems just being on github suffices
+2025-08-21 17:41 erin: archive is up: https://paritytech.github.io/matrix-archiver/archive/_21ksYpYHcVftKsUAsdMa_3Amatrix.org/index.html
+
+cc tomusdrw 
+2025-08-21 17:45 davxy: Two new highly controversial reports: 1755796851 1755796995
+2025-08-21 17:46 davxy: I guess after these two we can start with 0.7.0 :-)
+2025-08-21 17:46 davxy: https://github.com/davxy/jam-conformance/tree/main/fuzz-reports
+2025-08-21 17:49 davxy: (the traces passed by all teams were removed from the table)
