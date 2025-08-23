@@ -1,5 +1,5 @@
 # room: #graypaper:polkadot.io
-# exported: 2025-08-22 03:30 UTC
+# exported: 2025-08-23 03:27 UTC
 2024-04-17 20:29 syed: https://matrix.to/#/!hyzRkDqDthePbodYFz:parity.io/$f_DMsIEcDXZegw6Sabnehzc-LrdDQkmq5MbxDDyoZxY?via=parity.io&via=web3.foundation
 
 2024-04-17 20:29 syed: 
@@ -6572,3 +6572,14 @@ I was wondering if I might have misunderstood the GP, or if there could be anoth
 >  
 
 https://matrix.to/#/#jam-conformance:matrix.org
+2025-08-22 13:31 danicuki: I have a doubt about interpretation of Formula 12.38 (GP 0.6.7):
+h ∈/ d[s]p ∧ d[s]_l[(h,l)]=[] 
+many of our traces are failing because we are not considering the case where d[s]l[(h,l)]=∅ 
+
+Shouldn't the GP formula be:
+R(d,s,h,l) ⇔ d[s]_p[h] = ∅ ∧ d[s]_l[(h,l)] = ∅
+
+Also, shouldn't we consider the case where d[s] = ∅ ?
+  ↳ 2025-08-22 15:24 0xjunha: Why should that be `d[s]_l[(h,l)] = ∅`?
+That means preimage was not solicited yet - GP says preimage should be solicited before it can be provided as E_P & integrated
+  ↳ 2025-08-22 19:23 danicuki: thanks for the explanation. I know what I am missing

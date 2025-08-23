@@ -18,7 +18,7 @@ a:hover{color:#90caf9}
 em{font-style:italic}
 </style>
 <h1>#graypaper:polkadot.io</h1>
-<p><small>last updated 2025-08-22 03:30 UTC</small></p>
+<p><small>last updated 2025-08-23 03:27 UTC</small></p>
 <p><a href='room_log.txt'>⇩ plaintext</a> · <a href='../../'>⇦ all rooms</a></p>
 <hr>
 <div class='msg'><a class='ts' href='#$G0deSwnlYlCrSn5lIFL__hi6bgWVITql5VyahU4bzpI'>#</a> <a class='ts' name='$G0deSwnlYlCrSn5lIFL__hi6bgWVITql5VyahU4bzpI' href='https://matrix.to/#/!ddsEwXlCWnreEGuqXZ:polkadot.io/$G0deSwnlYlCrSn5lIFL__hi6bgWVITql5VyahU4bzpI' target='_blank'>2024-04-17 20:29</a>&ensp;<span class='u' style='color:#da6aa2'>syed</span>: <a href="https://matrix.to/#/!hyzRkDqDthePbodYFz:parity.io/$f_DMsIEcDXZegw6Sabnehzc-LrdDQkmq5MbxDDyoZxY?via=parity.io&amp;via=web3.foundation" rel="noopener" target="_blank">https://matrix.to/#/!hyzRkDqDthePbodYFz:parity.io/$f_DMsIEcDXZegw6Sabnehzc-LrdDQkmq5MbxDDyoZxY?via=parity.io&amp;via=web3.foundation</a>
@@ -6563,3 +6563,14 @@ I was wondering if I might have misunderstood the GP, or if there could be anoth
 &gt;  
 
 <a href="https://matrix.to/#/#jam-conformance:matrix.org" rel="noopener" target="_blank">https://matrix.to/#/#jam-conformance:matrix.org</a></div>
+<div class='msg'><a class='ts' href='#$ps8N0jq66pBJG1o26Z5XUGyU23QETifiYuVaaiiypIc'>#</a> <a class='ts' name='$ps8N0jq66pBJG1o26Z5XUGyU23QETifiYuVaaiiypIc' href='https://matrix.to/#/!ddsEwXlCWnreEGuqXZ:polkadot.io/$ps8N0jq66pBJG1o26Z5XUGyU23QETifiYuVaaiiypIc' target='_blank'>2025-08-22 13:31</a>&ensp;<span class='u' style='color:#4977cf'>danicuki</span>: I have a doubt about interpretation of Formula 12.38 (GP 0.6.7):
+h ∈/ d[s]p ∧ d[s]_l[(h,l)]=[] 
+many of our traces are failing because we are not considering the case where d[s]l[(h,l)]=∅ 
+
+Shouldn&#x27;t the GP formula be:
+R(d,s,h,l) ⇔ d[s]_p[h] = ∅ ∧ d[s]_l[(h,l)] = ∅
+
+Also, shouldn&#x27;t we consider the case where d[s] = ∅ ?</div>
+<div class='msg reply'><a class='ts' href='#$wasLV2n_gKhppU_-_hrlcPEmYa2zgFuHgaKqt98P_Bo'>#</a> <a class='ts' name='$wasLV2n_gKhppU_-_hrlcPEmYa2zgFuHgaKqt98P_Bo' href='https://matrix.to/#/!ddsEwXlCWnreEGuqXZ:polkadot.io/$wasLV2n_gKhppU_-_hrlcPEmYa2zgFuHgaKqt98P_Bo' target='_blank'>2025-08-22 15:24</a>&ensp;<span class='u' style='color:#4068cd'>0xjunha</span>: Why should that be <code>d[s]_l[(h,l)] = ∅</code>?
+That means preimage was not solicited yet - GP says preimage should be solicited before it can be provided as E_P &amp; integrated</div>
+<div class='msg reply'><a class='ts' href='#$k2hURvxYlPCCth4aggVxH3df9fPp-aQF0hlG0FlQ-kA'>#</a> <a class='ts' name='$k2hURvxYlPCCth4aggVxH3df9fPp-aQF0hlG0FlQ-kA' href='https://matrix.to/#/!ddsEwXlCWnreEGuqXZ:polkadot.io/$k2hURvxYlPCCth4aggVxH3df9fPp-aQF0hlG0FlQ-kA' target='_blank'>2025-08-22 19:23</a>&ensp;<span class='u' style='color:#4977cf'>danicuki</span>: thanks for the explanation. I know what I am missing</div>
