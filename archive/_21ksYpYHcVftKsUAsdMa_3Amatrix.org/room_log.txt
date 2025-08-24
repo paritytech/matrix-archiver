@@ -1,5 +1,5 @@
 # room: #jam-conformance:matrix.org
-# exported: 2025-08-23 03:27 UTC
+# exported: 2025-08-24 03:36 UTC
 2025-08-20 15:56 erin: tomusdrw: i've set up the archiver to archive this also, so hopefully will be up starting tomorrow
 2025-08-21 06:33 ascriv: https://github.com/davxy/jam-conformance/issues/26 should we not discourage open source implementations (for now)? [edited]
 2025-08-21 10:27 oliver.tale-yazdi: I think open source repos are fine. Other implementors are just not supposed to look at it
@@ -91,3 +91,7 @@ Which according to 12.38, should fail the block.
 2025-08-22 18:06 ascriv: And I see it in the pre state for ….008.json for this test vector 
 2025-08-22 18:06 ascriv: Value 0x00 which corresponds with empty list
 2025-08-22 18:24 danicuki: I will double check on my side but I think I know what we are doing wrong. 
+2025-08-23 11:22 davxy: **0.7.0 test vectors are up:**  
+https://github.com/davxy/jam-test-vectors/pull/90
+
+2025-08-23 17:54 jaymansfield: Another set of 0.7.0 safrole vectors if anyone is interested: https://github.com/javajamio/javajam-trace
