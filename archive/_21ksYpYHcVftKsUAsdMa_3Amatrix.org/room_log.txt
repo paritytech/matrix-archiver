@@ -1,5 +1,5 @@
 # room: #jam-conformance:matrix.org
-# exported: 2025-08-24 03:36 UTC
+# exported: 2025-08-25 03:35 UTC
 2025-08-20 15:56 erin: tomusdrw: i've set up the archiver to archive this also, so hopefully will be up starting tomorrow
 2025-08-21 06:33 ascriv: https://github.com/davxy/jam-conformance/issues/26 should we not discourage open source implementations (for now)? [edited]
 2025-08-21 10:27 oliver.tale-yazdi: I think open source repos are fine. Other implementors are just not supposed to look at it
@@ -95,3 +95,22 @@ Which according to 12.38, should fail the block.
 https://github.com/davxy/jam-test-vectors/pull/90
 
 2025-08-23 17:54 jaymansfield: Another set of 0.7.0 safrole vectors if anyone is interested: https://github.com/javajamio/javajam-trace
+2025-08-24 07:31 davxy: ⚠️ https://github.com/davxy/jam-test-vectors/pull/90#issuecomment-3217905803
+2025-08-24 07:33 davxy: For tiny we're using G_T = 20_000_000 and not 3_500_000_000 . That is why we call into accumulate twice in preimages/00000008.bin
+As I described in the comment, I think a different value for tiny is reasonable to trigger interesting cases
+2025-08-24 07:33 davxy: if there are no objections I'll open a PR in jamcha.in and set this as the value for G_T in tiny config
+2025-08-24 08:16 davxy: https://github.com/JamBrains/jam-docs/pull/59
+2025-08-24 11:13 prematurata: hey @davxy I just found out about the sbrk note in the traces readme https://github.com/davxy/jam-test-vectors/tree/v0.7.0/traces
+
+besides the sbrk implementation the RAM code looks a bit off to me.
+
+For example in A.42 the Writeable section starts at 2Zz + Z(|o|) while in the code there it seems to end there
+2025-08-24 11:18 davxy: Was written by [@sourabhniyogi:matrix.org](https://matrix.to/#/@sourabhniyogi:matrix.org)some time ago Feel free to open a PR
+2025-08-24 11:18 prematurata: ah ok maybe at that time the gp was different :)
+2025-08-24 11:20 davxy: Honestly I didn't went through that go code LOL
+2025-08-24 11:20 prematurata: npnp thanks for clarifying
+2025-08-24 11:27 davxy: I don’t feel like I’ve clarified anything :-) I’ll check that section out
+2025-08-24 11:28 prematurata: well it's clear that there MAY be an error :)
+2025-08-24 17:05 sourabhniyogi: Yes, it deserves an update -- the 0.6.7 fuzz traces did a thorough job of showing how its out of date (64k, read vs write OOB) -- I'm not aware of really great SBRK / heap testing expansion anywhere, and the "s" component [stack] remains elusive and entirely untouched so far as I can tell in addition to the "h" [heap] of SBRK which has not been fuzzed much.  
+
+It would be ideal if the next 0.7.2+ fuzzing series attacked this fully and somehow incorporated "picoalloc" which I gather is the replacement to SBRK (the "h").  I am wondering if its useful to really go crazy with fuzz testing of SBRK because its going to be replaced.  We can keep busy with outeraccumulate in 0.7.0 and transfer in 0.7.1 the meantime =).   [edited]
