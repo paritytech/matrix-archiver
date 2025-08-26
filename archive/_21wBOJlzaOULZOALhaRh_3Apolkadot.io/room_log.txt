@@ -1,5 +1,5 @@
 # room: #jam:polkadot.io
-# exported: 2025-08-25 03:34 UTC
+# exported: 2025-08-26 03:31 UTC
 2024-04-20 02:08 johnjiao123: 
 2024-04-20 02:09 johnjiao123: 
 2024-05-30 21:48 nradko: Hey everyone,
@@ -11095,3 +11095,19 @@ It would not be a bad future for both Polkadot and Kusama to diverge paths by ea
 I am eager to learn more about these tradeoffs. [edited]
 2025-08-24 23:20 sourabhniyogi: image.png
 2025-08-24 23:25 sourabhniyogi: 1s blocktimes, 5x faster finality combined with PolkaVM recompilation (which we have seen has 1B gas/s firsthand) and "continuation" powers ... super excited about Kusama JAM.  Can we pick more protocol parameters for this now Daniel ?
+2025-08-25 11:04 gav: It wasn’t made particularly clear in the WFC but such different parameters imply a fairly different approach to its parachains. 1s block times will inevitably mean quite a lot less per-block throughput; depending on the nature of the chain’s logic, perhaps even more than 10x.
+2025-08-25 12:05 qinwenwang: We have finished our grant project, prototype of sBPF runtime as a service on PolkaVM.
+The sBPF virtual machine has been successfully ported to ​PolkaVM, enabling seamless execution of Solana-native programs within the Polkadot ecosystem.
+You can review the details of the project, its scope, and final implementation in the application document here:
+https://github.com/w3f/Grant-Milestone-Delivery/blob/master/evaluations/lollipop-m1.md
+2025-08-25 12:07 olanod: > <@gav:polkadot.io> It wasn’t made particularly clear in the WFC but such different parameters imply a fairly different approach to its parachains. 1s block times will inevitably mean quite a lot less per-block throughput; depending on the nature of the chain’s logic, perhaps even more than 10x.
+
+Do you think it can be so different that the relevant parachain service or collator node + runtime would need to be different from Polkadot's or is it something that Substrate+Cumulus+FRAME and parachain service can handle with a few config changes?
+
+If its from the perspective of managing parachain team's expectations I think we should be fine as the average core usage across all 140 cores is 0% 😅
+2025-08-25 17:13 gav: Fair enough - in any case if parachains wanted greater throughput it would be possible by a move to Polkadot. 
+2025-08-25 19:33 sourabhniyogi: Very cool, love it qinwen@Lollipop !  Have you run your accumulate on Polkajam (or another teams JAM implementation) of the sbpf "Service" with refined work packages?
+
+Do you have plans to develop the refine+accumulate design of the PoC  [here](https://github.com/LollipopHQ/sbpf-on-polkavm/blob/main/sbpf-jam/src/main.rs#L32-L47) further to use host functions read/write/etc vs import/export/etc.?
+
+Because you can't do that much with 10MM gas (G\_A) but can do a LOT in 5B  (G\_R) https://graypaper.fluffylabs.dev/#/1c979cb/444400444400?v=0.7.1 the central problem is how to combine the stateless refine and the stateful accumulate together with work reports and loop back in a "sBPF" service.     We'd love to test out some work packages involving this "sBPF" service this fall and chart a course for really high performance execution on both sides (with accurate gas accounting). [edited]
