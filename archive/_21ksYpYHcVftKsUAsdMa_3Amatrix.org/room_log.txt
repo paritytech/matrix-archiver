@@ -1,5 +1,5 @@
 # room: #jam-conformance:matrix.org
-# exported: 2025-08-26 03:31 UTC
+# exported: 2025-08-27 03:27 UTC
 2025-08-20 15:56 erin: tomusdrw: i've set up the archiver to archive this also, so hopefully will be up starting tomorrow
 2025-08-21 06:33 ascriv: https://github.com/davxy/jam-conformance/issues/26 should we not discourage open source implementations (for now)? [edited]
 2025-08-21 10:27 oliver.tale-yazdi: I think open source repos are fine. Other implementors are just not supposed to look at it
@@ -119,3 +119,27 @@ It would be ideal if the next 0.7.2+ fuzzing series attacked this fully and some
   ↳ 2025-08-25 11:17 dakkk: thank you
 2025-08-25 14:57 emielsebastiaan: davxy: Potential ASN error: https://github.com/davxy/jam-test-vectors/issues/93
 Please review.
+2025-08-26 06:50 davxy: https://github.com/davxy/jam-test-vectors/pull/94
+2025-08-26 07:02 emielsebastiaan: In the office in an hour. Let me check then. It is simply the reordering. New order: i, x, z, e for both CoreActivityRecord and ServiceActivityRecord. [edited]
+2025-08-26 08:24 davxy: @room Could you please check these vectors https://github.com/davxy/jam-test-vectors/pull/94 before I proceed with merging?
+STF and traces. Ty
+
+  ↳ 2025-08-26 08:37 0xjunha: fastroll passes all stf/traces
+  ↳ 2025-08-26 12:10 jaymansfield: Looks good.
+2025-08-26 08:32 dakkk: it works for me, and now I pass all the tests either
+2025-08-26 08:45 arjanz: Traces and STF are passing
+2025-08-26 08:53 vinsystems: vinwolf passes all stf and traces as well
+2025-08-26 09:36 ascriv: Jamzilla passes as well
+2025-08-26 10:59 danicuki: Do we already have fuzzer for 0.7.0? 
+2025-08-26 11:03 danicuki: Jamixir passes all 0.7.0 traces and test vectors. 
+2025-08-26 11:06 danicuki: We are still struggling with two fuzzer cases on 0.6.7 - Could anyone please provide the PVM traces for 1755531265 and 1755796995 fuzz cases (0.6.7)? 
+  ↳ 2025-08-26 16:20 clearloop: 1755531265.log
+  ↳ 2025-08-26 16:20 clearloop: 1755796995.log
+  ↳ 2025-08-26 16:21 clearloop: hope them help ⬆️
+  ↳ 2025-08-26 23:49 danicuki: ❤️
+2025-08-26 11:25 davxy: Polkajam has it; I'll provide some reports in the next days
+2025-08-26 14:41 emielsebastiaan: davxy afk -> 28 Aug: https://github.com/w3f/jamtestvectors/pull/55#issuecomment-3224458898
+2025-08-26 15:04 emielsebastiaan: https://github.com/paritytech/polkajam-releases/releases/tag/v0.1.25
+
+CoreVM & DOOM included.  [edited]
+2025-08-26 18:48 prematurata: Hello can someone provide tracelog for storage 13 in 0.7.0? I am struggling to pass that one [edited]

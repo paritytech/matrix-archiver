@@ -18,7 +18,7 @@ a:hover{color:#90caf9}
 em{font-style:italic}
 </style>
 <h1>#jam:polkadot.io</h1>
-<p><small>last updated 2025-08-26 03:31 UTC</small></p>
+<p><small>last updated 2025-08-27 03:26 UTC</small></p>
 <p><a href='room_log.txt'>⇩ plaintext</a> · <a href='../../'>⇦ all rooms</a></p>
 <hr>
 <div class='msg'><a class='ts' href='#$we4SYXTHwmKn094X9Zs_7mWUOoUVh4icvVdxD83RZfs'>#</a> <a class='ts' name='$we4SYXTHwmKn094X9Zs_7mWUOoUVh4icvVdxD83RZfs' href='https://matrix.to/#/!wBOJlzaOULZOALhaRh:polkadot.io/$we4SYXTHwmKn094X9Zs_7mWUOoUVh4icvVdxD83RZfs' target='_blank'>2024-04-20 02:08</a>&ensp;<span class='u' style='color:#d0709e'>johnjiao123</span>: </div>
@@ -11008,3 +11008,9 @@ If its from the perspective of managing parachain team&#x27;s expectations I thi
 Do you have plans to develop the refine+accumulate design of the PoC  <a href="https://github.com/LollipopHQ/sbpf-on-polkavm/blob/main/sbpf-jam/src/main.rs#L32-L47" rel="noopener" target="_blank">here</a> further to use host functions read/write/etc vs import/export/etc.?
 
 Because you can&#x27;t do that much with 10MM gas (G\_A) but can do a LOT in 5B  (G\_R) <a href="https://graypaper.fluffylabs.dev/#/1c979cb/444400444400?v=0.7.1" rel="noopener" target="_blank">https://graypaper.fluffylabs.dev/#/1c979cb/444400444400?v=0.7.1</a> the central problem is how to combine the stateless refine and the stateful accumulate together with work reports and loop back in a &quot;sBPF&quot; service.     We&#x27;d love to test out some work packages involving this &quot;sBPF&quot; service this fall and chart a course for really high performance execution on both sides (with accurate gas accounting). <span class="edited">(edited)</span></div>
+<div class='msg'><a class='ts' href='#$XVU-_XdJxLKeao5qcEWYwh3MfNNuhy8qLeeI_3C8zyQ'>#</a> <a class='ts' name='$XVU-_XdJxLKeao5qcEWYwh3MfNNuhy8qLeeI_3C8zyQ' href='https://matrix.to/#/!wBOJlzaOULZOALhaRh:polkadot.io/$XVU-_XdJxLKeao5qcEWYwh3MfNNuhy8qLeeI_3C8zyQ' target='_blank'>2025-08-26 17:29</a>&ensp;<span class='u' style='color:#3c8ec8'>bmaas</span>: &gt; &lt;@qinwenwang:matrix.org&gt; We have finished our grant project, prototype of sBPF runtime as a service on PolkaVM.
+&gt; The sBPF virtual machine has been successfully ported to ​PolkaVM, enabling seamless execution of Solana-native programs within the Polkadot ecosystem.
+&gt; You can review the details of the project, its scope, and final implementation in the application document here:
+&gt; <a href="https://github.com/w3f/Grant-Milestone-Delivery/blob/master/evaluations/lollipop-m1.md" rel="noopener" target="_blank">https://github.com/w3f/Grant-Milestone-Delivery/blob/master/evaluations/lollipop-m1.md</a>
+
+Great to see this! I’m with the Polana team and will take a closer look in the coming days. Really cool to see lollipop working on this too. </div>
