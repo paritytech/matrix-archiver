@@ -1,5 +1,5 @@
 # room: #jam:polkadot.io
-# exported: 2025-08-27 03:26 UTC
+# exported: 2025-08-28 03:27 UTC
 2024-04-20 02:08 johnjiao123: 
 2024-04-20 02:09 johnjiao123: 
 2024-05-30 21:48 nradko: Hey everyone,
@@ -11117,3 +11117,95 @@ Because you can't do that much with 10MM gas (G\_A) but can do a LOT in 5B  (G\_
 > https://github.com/w3f/Grant-Milestone-Delivery/blob/master/evaluations/lollipop-m1.md
 
 Great to see this! I’m with the Polana team and will take a closer look in the coming days. Really cool to see lollipop working on this too. 
+2025-08-27 09:49 gav: We've had a wide range of speeds of implementations submitted for fuzzing. Some are as much as 100x slower than others at importing blocks. Do note that all implementations will be judged through our fuzzing suite and can expect to need the same number of imported blocks for the W3F (and by extension, probably, the Fellowship) to sign off on conformance. Practically speaking, if implementation A is 100x slower than implementation B, then even if they're both totally conformant, if B takes 4 weeks to fuzz to our expected level of confidence, A could take as much as 8 years before passing M1. [edited]
+2025-08-27 10:39 qinwenwang: > <@sourabhniyogi:matrix.org> Very cool, love it qinwen@Lollipop !  Have you run your accumulate on Polkajam (or another teams JAM implementation) of the sbpf "Service" with refined work packages?
+> 
+> Do you have plans to develop the refine+accumulate design of the PoC  [here](https://github.com/LollipopHQ/sbpf-on-polkavm/blob/main/sbpf-jam/src/main.rs#L32-L47) further to use host functions read/write/etc vs import/export/etc.?
+> 
+> Because you can't do that much with 10MM gas (G\_A) but can do a LOT in 5B  (G\_R) https://graypaper.fluffylabs.dev/#/1c979cb/444400444400?v=0.7.1 the central problem is how to combine the stateless refine and the stateful accumulate together with work reports and loop back in a "sBPF" service.     We'd love to test out some work packages involving this "sBPF" service this fall and chart a course for really high performance execution on both sides (with accurate gas accounting).
+
+Thanks for the thoughtful feedback - really appreciate the depth here.
+
+We haven't run accumulate on Polkajam or other JAM implementations, as we don't think that environment gives particularly meaningful signals in its current form. It requires further refinement before a full launch. Instead, our focus has been on isolating the refine/accumulate interaction itself and validating how the sBPF "service" pattern could evolve with richer host functions.
+
+We absolutely agree that the core challenge is bridging stateless refine with stateful accumulate in a way that loops back cleanly with work reports. 
+
+We'd love to stay in sync as you start experimenting this fall and happy to share early designs and compare approaches so we can chart a path toward high-performance execution with solid gas accounting.
+  ↳ 2025-08-27 13:15 boymaas: Great achievement and progress! I understand this is a complicated problem, and we have experienced similar challenges. We are now at Solana CPI with the Polana Project. And there is till much to do. If there is anything we can assist you with, please let us know. https://x.com/andyjsbell/status/1942628582699983189
+2025-08-27 11:21 subotic: To not make the M1 conformance testing a multi-year endeavor, would it then make sense to (I) make the fuzzer public and (II) have already for M1 some (minimal) expectations of speed, e.g., x amount of imported blocks per hour and fuzzer running without crashing for x amount of days? Then teams should only really submit, if those criteria are met.
+2025-08-27 11:36 jan: There isn't really anything that prevents us from having a public, community JAM fuzzer. Create a shared repository with a fuzzing harness, have everyone contribute, integrate everyone's implementations there and just let it rip.
+
+I have to agree that it makes sense to keep the fuzzer that'll be used for JAM prize conformance testing private, because the objective here is not "pass the fuzzer checks", but "write an implementation according to the GP". Consider two potential scenarios here:
+
+1) The fuzzer is public. You've ran your implementation against it, fixed all of the issues, and everything passes.
+2) The fuzzer is private. Everything passes without you testing your implementation against the fuzzer.
+
+Which case has the higher chance of your implementation being correct? The one where you've fixed the issues in response to fuzzer finding them and stopped once everything passed? Or the one where you've meticulously crosschecked your code against the GP, fixed the bugs based on that, and because of that the fuzzer didn't find anything in the first place?
+
+Of course there are no true guarantees either way, but the point here is to push people into submitting implementations which are of as high quality as possible.
+2025-08-27 11:57 ascriv: I like the idea of hosting the fuzzer somewhere, so that it’s private but also removes the bottleneck. But if the dev time to make this secure etc is too much then nbd for me  [edited]
+2025-08-27 11:58 dakkk: A middle way could be a remote hosted fuzzer with an usage quota for every team
+2025-08-27 12:14 gav: Indeed, our fuzzer will not be made public for the reason previously given by davxy afk -> 28 Aug and in any case the by which fuzzing would complete is just a function of the impl's block import. I'd be interested to know why you'd think making the fuzzer executable public would help with anything beyond allowing teams to the milestone tests more quickly.
+2025-08-27 12:16 gav: Well, no. The point, as Jan Bujak took the effort to point out very clearly, is to get implementation compliant with the GP, not which merely "pass the fuzzer". The fuzzer will necessarily be imperfect. Unfortunately there's no easy way, at present, to write a suite of tests such that all logical paths of the GP are covered. If we allowed the fuzzer to be used freely it would be just the same as providing the executable freely. [edited]
+2025-08-27 12:18 gav: Yes, this is likely what we'll  move towards. We are finding that some teams are relying far too heavily on the fuzzer to direct their implementation and are thus unlikely to be "GP literate".
+2025-08-27 12:20 gav: Most likely, we will move to a rate-limited round-robin queue system for "pre-submission" fuzzing.
+2025-08-27 12:21 gav: Implementations which are sufficiently GP-compliant will end up getting more time on such a system; those that are relatively flakey will get little as they bomb out and get pushed to the back of the queue.
+2025-08-27 12:22 gav: An implementation which completes this initial fuzzing may then be submitted for the full M1 fuzzing which will be a much longer affair.
+2025-08-27 12:30 gav: Since different fuzzers (especially if clean-room implemented) will necessarily test different aspects of compliance I'm very keen to invite teams to write their own fuzzer or contribute to one bug public fuzzer.
+2025-08-27 12:30 gav: Such an endeavour would allow "fuzzer-directed development" without compromising our compliance test framework.
+2025-08-27 12:41 clearloop: curious about if there are sort of fuzzers in polkadot / substrate that we can learn from, as for the parts out of 'runtime' (M1), we are pretty limited by the version of jam-pvm-common that we can't build up-to-date programs for testing the latest GP, on the other handle, building our own sdks takes time and duplicates with the exists one
+2025-08-27 12:43 gav: Duplication is nothing to be afraid of! [edited]
+2025-08-27 12:44 gav: It builds understanding, creates competition and pushes down barriers to entry.
+2025-08-27 12:44 gav: Embrace duplication!
+2025-08-27 12:45 gav: As Jan Bujak wrote, create a fuzzer harness (this is trivial) then invite teams to contribute modules which construct blocks for it.
+2025-08-27 12:46 gav: There's really nothing difficult here and creating those fuzzing modules helps further ones own understanding of the GP.
+2025-08-27 12:48 gav: Of course you can also just rely on your own reading of the GP; like writing documentation and unit tests, writing a fuzzer for your impl is not a requirement for M1, but it might help you get across the finish line! [edited]
+2025-08-27 13:26 oliver.tale-yazdi: JamBrains is working on an alternative service SDK in C. We can run our [example service](https://github.com/JamBrains/polkavm-examples/blob/871f061c6f52a9f14bf9a92362f35248da5652c0/lang-c/main.c) with 0.6.7 currently. It uses the standard-lib from the Polkaports repo *musl* in combination with *Picoalloc*, both thanks to Jan 🙏  
+The API looks like [this](https://github.com/JamBrains/polkavm-examples/blob/871f061c6f52a9f14bf9a92362f35248da5652c0/lang-c/jb_service.h). The plan is to make one dummy service for fuzz testing that tests all HostCall x EntryPoint combinations with all arguments. Then later on it should be usable as low level SDK to write bindings for other languages or port existing software.
+2025-08-27 13:28 oliver.tale-yazdi: Without being called out; I assume that the implementation I'm working on is probably one of the slowest (if not the slowest).  
+Currently the Fuzzing is purely single-threaded. Would it be possible to run the fuzzer target multiple times in parallel to speed this up? Alternatively we could also alter the fuzzing protocol to allow to import multiple blocks in parallel.  
+This could help implementations that are not yet parallelising their STF [edited]
+2025-08-27 13:35 davxy: Personally I prefer to not complicate the fuzzer protocol. I have some changes in mind, but not about this. Perhaps it is sufficient to run N fuzzers in parallel to obtain the same throughput
+2025-08-27 13:36 dakkk: > <@oliver.tale-yazdi:parity.io> Without being called out; I assume that the implementation I'm working on is probably one of the slowest (if not the slowest).  
+> Currently the Fuzzing is purely single-threaded. Would it be possible to run the fuzzer target multiple times in parallel to speed this up? Alternatively we could also alter the fuzzing protocol to allow to import multiple blocks in parallel.  
+> This could help implementations that are not yet parallelising their STF
+
+You can parallelize the accumulation function, this would speed It up a lot
+2025-08-27 13:52 oliver.tale-yazdi: Maybe it would be possible to publish a speed score to know which team has to optimize? (could also be told in private to them if its too embarrassing 😆)
+2025-08-27 14:31 gav: I think a speed score (blocks/second) should be manageable (davxy afk -> 28 Aug ?)
+2025-08-27 14:57 davxy: Yes we can share this info within the report. I'll propose an extension to the fuzzer proto for public review soon
+2025-08-27 15:05 subotic: My reasoning was to lessen the load on your side. But I now understand, that it is not a good idea to make the official fuzzer public and that it is actually better for us to write our own.
+2025-08-27 17:56 emielsebastiaan: Gav, is it a educated guess that exhaustive conformance fuzzing will take 1 full month on one of the fastest implementations to get to a sufficiently high confidence level? 
+
+E.g. PolkaJAM, including a recompiler and one instance sequential fuzzer? [edited]
+2025-08-27 18:25 gav: I certainly hope not. I think realistically for a fast impl we’d expect a day or two.
+2025-08-27 18:26 gav: I’d hope slow implementations can get to be no more than 20x slower. 
+2025-08-27 18:28 gav: Of course to get to M3 they’d need to be substantially faster than that so any low-hanging optimisation work to get M1 submission working reasonably fast probably wouldn’t be wasted effort.  [edited]
+2025-08-27 18:28 emielsebastiaan: The eight years you used was to make a point for sure. 😝 I guess it worked. Thx. 
+2025-08-27 18:30 gav: Indeed - it was more to say that even for M1 there is a practical limit to how slow implementations can be and still pass our conformance tests.  [edited]
+2025-08-27 18:30 clearloop: for the block time of 6secs (expected PVM performance + network traffic + general runtime transition, etc), if there is research about how much time node takes on importing/executing blocks can make sure they keep alive in the protocol [edited]
+2025-08-27 18:35 jan: Requiring a recompiler for M1 might not necessarily be fair (I know not everyone even plans to have a recompiler), but we might need *at least* people to submit reasonably fast interpreters. It's possible even polkajam will be (at least partially) fuzzed with an interpreter, since our recompiler currently doesn't support the per-instruction gas cost model that's in the GP right now (and I have no plans of adding this to the recompiler, since the final gas cost model will 100% be block-based, which is what our recompiler has always implemented).
+2025-08-27 18:38 gav: A recompiler should certainly not be needed. 
+2025-08-27 18:42 jaymansfield: Does the fuzzer support aarch64? JavaJAM has a recompiler but its been disabled for fuzzing since it only supports ARM64 at the moment. 
+2025-08-27 18:44 sourabhniyogi: I really would love it if we had a fuzzer protocol that didn't involve publishing fuzzer target binaries but simply having urls that accepted the same traces and just responded with stateroots or some http 4xx error code.  With N teams, there are just N urls, and its easier for everyone to deal with.  Oliver Tale-Yazdi - OOO (back next week) had some API doc for this in like Feb/Mar that probably is very easy for almost all of us to execute on.  Then the binaries-way is what would have to be the real thing.   Is this reasonable?
+
+
+2025-08-27 18:44 jan: Only for the later performance-related milestones a recompiler will be pretty much required. For those we might even release an official testing harness instead of keeping it private like for the M1 (at least for the PVM parts), since the main portion of what it will be testing is purely measuring performance so it will be a lot easier to test than for M1. [edited]
+2025-08-27 18:45 jan: You're free to have an Aarch64 backend (and we encourage it), but we'll always be testing on AMD64 (since that's what the toaster runs).
+2025-08-27 18:47 tomusdrw: Sorry if it's a dumb question, but I'm genuinely curious. AFAIU the fuzzer needs coverage data to produce more interesting inputs (i.e. inputs that have a combination of conditional branches hits). Given that there are only binaries, I assume that PolkaJAM is used as fuzzer coverage source. So I wonder if fuzzing (sequentially) X different implementations is really making any difference? Doesn't it mean we are just fuzzing PolkaJAM X times (possibly covering the same cases)? Couldn't we just generate terabytes of test cases instead and make sure that all implementations pass them?
+Some ballpark estimates: 10blocks/s \* 3600 \* 24 \* 7 \* 4 = 24M blocks for 4 weeks of fuzzing, with avg 0.5MB/block that's 12TB of data. 20TB disk is $500 - and the data could even be mailed instead of fetched. [edited]
+2025-08-27 18:51 oliver.tale-yazdi: Its still online, but I did not test it recently for conformance. You just post a JSON test file with  `pre_state`, `block` and `post_state` to it and it either returns code 2xx or 5xx.  
+You can play around with it [here](https://dev.jamcha.in/#/Functions/Gm.OpenApiWeb.FunctionsController.check_stf_safrole) from the browser. I guess alternatively it could be changed to only accept `pre_state`+`block` and return the 2xx `post_state`  or 5xx if the block was invalid. It has a [OpenAPI spec attached](https://dev.jamcha.in/api/v1/openapi), but I am quite flexible on the details of it.  
+It seems to work reasonably well though, and authentication + rate-limiting is pretty natural to these kind of APIs.
+2025-08-27 18:53 oliver.tale-yazdi: For any team to be usable we should probably use binary format though, to not enforce canonical JSON codecs. *Maybe* hex encoded binaries inside the JSON files are an acceptable overhead for ease-of-use; otherwise we would need a more dedicated protocol I guess
+2025-08-27 18:59 sourabhniyogi: I think if you/we adjust it to the .bin form we win cross-team testing very quickly.  
+
+We built a fuzzer and have wanted to test out all the other teams fuzzer targets, but in the end just doing 2-3 "manually" by downloading xyz is a lot of work.   With good old urls conforming to an API, its a piece of cake. [edited]
+2025-08-27 19:09 oliver.tale-yazdi: I also wanted to do a compatibility matrix between all available targets and fuzzers, but did not do it yet. But I assume that using this script, it should be simple enough to start all available fuzz targets: https://github.com/davxy/jam-conformance/blob/main/scripts/target.sh  
+
+The API approach is better when one side wants to remain private I think (but i can still do another API design iteration with binaries, to see how it goes) [edited]
+2025-08-27 19:34 sourabhniyogi: Ready to publish a 0.7.0 url that receives  the ".bin" trace files according to your updated spec, and hit your url with the same.  We can have a "fuzz reports" url that streams this continuously (read a .bin file from some place or another, post it to all N enrolled teams) for everyone to admire and stress over, directly modelled after https://github.com/davxy/jam-conformance/tree/main/fuzz-reports
+
+It really only works if people actually want to challenge each other with "hard" fuzzing.  If all we did was had a few dozen challenges from a couple of test runs, we don't find issues.
+
+Right now our collective approach is to wait for davxy afk -> 28 Aug to give us challenges, and we enjoyed a great month meeting them (congrats all!).  Collectively we should be proactive about finding each others problems on our own.  If it helps us all "cross the finish line" faster, we should all get in the middle of the nooks and crannies and challenge each other. [edited]

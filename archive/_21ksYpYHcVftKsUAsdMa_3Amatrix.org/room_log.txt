@@ -1,5 +1,5 @@
 # room: #jam-conformance:matrix.org
-# exported: 2025-08-27 03:27 UTC
+# exported: 2025-08-28 03:27 UTC
 2025-08-20 15:56 erin: tomusdrw: i've set up the archiver to archive this also, so hopefully will be up starting tomorrow
 2025-08-21 06:33 ascriv: https://github.com/davxy/jam-conformance/issues/26 should we not discourage open source implementations (for now)? [edited]
 2025-08-21 10:27 oliver.tale-yazdi: I think open source repos are fine. Other implementors are just not supposed to look at it
@@ -135,11 +135,34 @@ STF and traces. Ty
 2025-08-26 11:06 danicuki: We are still struggling with two fuzzer cases on 0.6.7 - Could anyone please provide the PVM traces for 1755531265 and 1755796995 fuzz cases (0.6.7)? 
   ↳ 2025-08-26 16:20 clearloop: 1755531265.log
   ↳ 2025-08-26 16:20 clearloop: 1755796995.log
-  ↳ 2025-08-26 16:21 clearloop: hope them help ⬆️
+  ↳ 2025-08-26 16:21 clearloop: hope these help ⬆️ [edited]
   ↳ 2025-08-26 23:49 danicuki: ❤️
+  ↳ 2025-08-27 19:23 danicuki: clearloop | SpaceJam: I have a doubt about your logs:
+
+```
+2025-08-27 00:19:42 TRACE stf:accumulate: pos=26517  Ecalli               gas=9997503 regs=[804, 4278056528, 17, 16, 4278056271, 206752, 70, 2, 66858, 4, 206752, 57, 8]
+2025-08-27 00:19:42 DEBUG stf:accumulate: calling host call 100
+2025-08-27 00:19:42  INFO program: Bootstrap Service Accumulate, 0h @8 $18446744073709003931 target="boot"
+2025-08-27 00:19:42 TRACE stf:accumulate: pos=26519  Fallthrough          gas=9997502 regs=[804, 4278056528, 17, 16, 4278056271, 206752, 70, 0, 66858, 4, 206752, 57, 8]
+```
+the host call is a log, so it should not change r7 from 2 to 0
+the next call is a fallthrough, which should also not change r7 from 2 to 0
+
+So why is your r7 changed to 0?  
+
+  ↳ 2025-08-27 23:25 clearloop: good catch! we have a wrap of host calls, 0 means the host call executed successfully 🤦‍♂️ this could be confusing but it should not be the root case since `r7` is commonly used as exit status, and it is actually ignored by the log host call in the program, (e.g. it will be override by other operations without getting loaded )
+
+while you can pass the traces in the test vectors, I believe the bug in the fuzz tests are in `host call` / `memory op` / `encoding stuffs`
 2025-08-26 11:25 davxy: Polkajam has it; I'll provide some reports in the next days
 2025-08-26 14:41 emielsebastiaan: davxy afk -> 28 Aug: https://github.com/w3f/jamtestvectors/pull/55#issuecomment-3224458898
 2025-08-26 15:04 emielsebastiaan: https://github.com/paritytech/polkajam-releases/releases/tag/v0.1.25
 
 CoreVM & DOOM included.  [edited]
-2025-08-26 18:48 prematurata: Hello can someone provide tracelog for storage 13 in 0.7.0? I am struggling to pass that one [edited]
+2025-08-26 18:48 prematurata: <del>~Hello can someone provide tracelog for storage 13 in 0.7.0? I am struggling to pass that one~</del> [edited]
+2025-08-27 14:10 yu2c: davxy afk -> 28 Aug: 
+I'm curious about some issues of the jam-test-vector/stf/assurances (v0.7.0)
+From [README](https://github.com/davxy/jam-test-vectors/blob/master/stf/assurances/README.md):
+1. the "[assurances_for_stale_report-1](https://github.com/davxy/jam-test-vectors/blob/master/stf/assurances/tiny/assurances_for_stale_report-1.json)" pins red dot (which implies error code exists), but in the file, there's no error code but has ok with reports (which implies green dot)
+
+2. Why "[no_assurances_with_stale_report-1](https://github.com/davxy/jam-test-vectors/blob/master/stf/assurances/tiny/no_assurances_with_stale_report-1.json)" doesn't have output? (we don't output timeout reports?)
+> Stale work report assignment is removed (but not returned in the output).
