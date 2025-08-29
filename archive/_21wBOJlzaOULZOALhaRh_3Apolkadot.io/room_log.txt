@@ -1,5 +1,5 @@
 # room: #jam:polkadot.io
-# exported: 2025-08-28 03:27 UTC
+# exported: 2025-08-29 03:26 UTC
 2024-04-20 02:08 johnjiao123: 
 2024-04-20 02:09 johnjiao123: 
 2024-05-30 21:48 nradko: Hey everyone,
@@ -11209,3 +11209,21 @@ The API approach is better when one side wants to remain private I think (but i 
 It really only works if people actually want to challenge each other with "hard" fuzzing.  If all we did was had a few dozen challenges from a couple of test runs, we don't find issues.
 
 Right now our collective approach is to wait for davxy afk -> 28 Aug to give us challenges, and we enjoyed a great month meeting them (congrats all!).  Collectively we should be proactive about finding each others problems on our own.  If it helps us all "cross the finish line" faster, we should all get in the middle of the nooks and crannies and challenge each other. [edited]
+2025-08-28 07:36 clearloop: hey Jan Bujak , may I ask if PVM has sort of 'function section' design, or if there is any document has deeper explanation about the 'code section', given accumulate starts from 5 and refine starts from 0 and they are sharing the same binary,  I'm thinking about compiling accumulate function and refine function separately which would speed up the compilation time a lot I believe [edited]
+  ↳ 2025-08-28 07:40 jan: There's nothing special about the dispatch table we have at the start of the code blob; it's just normal code, except purely by *convention* we put jumps there to go to actual entry points.
+  ↳ 2025-08-28 07:41 jan: You can try to lazily compile the program block by block if you want, although that probably isn't actually necessary.
+  ↳ 2025-08-28 07:45 jan: If you find that your recompilation performance is slow then this pretty much means you should optimize it *before* you try to do stuff like recompiling only parts of the program. It was explicitly designed so that it's possible to make a blazing fast recompiler, you just need to read between the lines of the GP. The GP only describes the *behavior* we want, but almost always this isn't actually how you would write an implementation that is fast, so if you're just translating formulas from the GP 1-to-1 into code then you're going to have a bad time. You need to stop and think, "okay, this is how it's supposed to behave, but how can I make this more efficient to execute?".
+  ↳ 2025-08-28 07:46 jan: I touched upon this in my recompiler talk, so if you haven't seen that you should watch it. [edited]
+  ↳ 2025-08-28 07:50 clearloop: yes I just had a big refactor on the interfaces these days XD for deprecating the GP formula but keeping the signatures, they are pretty useful for debugging if my implementations are GP aligned and yes seems less optimized, still carefully optimizing them PR by PR since making things work is more important than performance atm ))) [edited]
+  ↳ 2025-08-28 07:52 jan: Assuming that you're planning to go for the performance milestones, rather than keeping the same interfaces I would probably recommend you to write two completely independent implementations (one naive, and one optimized), and then just unit test or fuzz test them that they're equivalent.
+  ↳ 2025-08-28 07:52 jan: If you want the most performant code then that almost always involves an entirely different way of designing it, _including_ the interfaces. [edited]
+  ↳ 2025-08-28 07:53 clearloop: I have read the video and the PPT, straightforward talk! actually I just implemented a recompiler last days, however it is currently 10x-150x slower than my interpreter (compile + execution) 🤦‍♂️
+  ↳ 2025-08-28 07:54 jan: For example, the "nice" way of recompiling the code might be: you first parse the code into nice data structures, then you do another pass on those data structures to emit assembly. If you want to go fast then this is not the right design - you want to emit assembly *immediately* as you're parsing the code.
+  ↳ 2025-08-28 07:55 jan: Of course you don't need to do *everything* like that, only the performance critical parts of your implementation.
+  ↳ 2025-08-28 07:55 jan: The less performance-critical something is, the more you can keep nice, high level code for that part.
+  ↳ 2025-08-28 07:56 jan: First, you should benchmark compilation and execution separately.
+  ↳ 2025-08-28 07:56 jan: If you're just measuring how much time it takes end-to-end then you actually have no idea which part you need to optimize.
+  ↳ 2025-08-28 07:57 jan: In general it should be easier to get good execution performance rather than good recompilation speed.
+  ↳ 2025-08-28 07:57 jan: So for example, if your execution speed is really bad then you're doing something horribly wrong.
+  ↳ 2025-08-28 08:00 clearloop: at this point, I'm thinking about migrating sort of benchmarks of riscv to PVM, embench vs coremark, what do you think?
+  ↳ 2025-08-28 08:01 jan: You could reuse my benchmarks, then you can directly compare your PVM to PolkaVM to see where you stand: https://github.com/paritytech/polkavm/blob/master/BENCHMARKS.md
