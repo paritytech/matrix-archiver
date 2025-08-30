@@ -1,5 +1,5 @@
 # room: #jam-conformance:matrix.org
-# exported: 2025-08-29 03:27 UTC
+# exported: 2025-08-30 03:23 UTC
 2025-08-20 15:56 erin: tomusdrw: i've set up the archiver to archive this also, so hopefully will be up starting tomorrow
 2025-08-21 06:33 ascriv: https://github.com/davxy/jam-conformance/issues/26 should we not discourage open source implementations (for now)? [edited]
 2025-08-21 10:27 oliver.tale-yazdi: I think open source repos are fine. Other implementors are just not supposed to look at it
@@ -215,6 +215,9 @@ From [README](https://github.com/davxy/jam-test-vectors/blob/master/stf/assuranc
 where the `corevm-monitor` is showing nothing on the 3rd step and the only work package logging we see is from "null-authorizer" caused by the `corevm-builder`.
 
 Am I missing a key step here or is there something else involved to have us test our JAM  implementations against the famous 60fps target? [edited]
+  ↳ 2025-08-29 04:59 clearloop: aint coreVM has different entrypoint that either refine or accumulate will not be able to be invoked [edited]
+  ↳ 2025-08-29 05:00 jan: CoreVM payloads cannot be loaded as toplevel services. They use a different blob format than JAM services do, and need hostcalls which are not provided by the JAM client.
+  ↳ 2025-08-29 05:12 clearloop: oh I got it, so in this test, `jamt vm ./doom.corevm` creates a process which running the `corevm` and keep submitting work packages to the network
 2025-08-28 22:21 dave: I don't think anything is missing there. It does take a little while to get going. `jamtop` should show you the doom service and packages being refined/accumulated for it
 2025-08-28 22:22 sourabhniyogi: A little while = how many seconds?  Ok, will run `jamtop`
 2025-08-28 22:22 dave: Well, nothing is missing assuming you have a JAM network running
@@ -241,3 +244,122 @@ u64 [0xfefdfc68] = a1 = 0x1 <<<<< the argument input length should be 2, not 1 f
 ```
 
 If we change our encoding from E\_2(c) to E\_1(c) we get work reports to match (in addition to matching this little "a1") ... except for gas where we're wondering when polkajam 0.7.0 does "basic block" gas accounting and when it does single instruction gas accounting. [edited]
+2025-08-29 04:32 davxy: You can accumulate one service multiple times. I don't understand why you thought this wasn't possible and came to that conclusion.
+
+The paragraph you shared is completely unrelated - as David mentioned, it refers to conflicts in IDs of new services.
+
+I suspect this might just be a bug on our side. I'll investigate it today. [edited]
+2025-08-29 05:07 davxy: There's a bug
+2025-08-29 10:06 sourabhniyogi: It had a lot to do with this trace 😂 but really ... because service designers want to have accumulation bring together async refined data together across multiple cores synchronously.    I definitely have a "GROUP BY" map-reduce view of what I want to see happen from JAM's 'rollup host' purpose:  A service designer will want to integrate ALL the work that was done in the last N seconds every N seconds and have a single place to compute and write out a SINGLE view of what happened.
+
+While I'm glad no work report is left behind, JAM's accumulate appears to have a depressing G\_T problem for its rollup host purpose:  accumulate does NOT accumulate everything every N seconds, not even typically.  Yes, you can organize work packages in chain with every work package having a prereq, but that is pretty lame. [edited]
+2025-08-29 10:09 dave: I believe the only case where JAM _won't_ accumulate everything is when there are unsatisfied dependencies
+2025-08-29 10:10 dave: It will accumulate these as their dependencies are satisfied, subject to per-block gas limits
+2025-08-29 10:11 dave: So I'm not sure I agree with "it won't typically accumulate everything"
+2025-08-29 10:15 sourabhniyogi: I mean a service designer would like to see *one* `accumulate` execution across all work reports.  Whether it typically does or not depends on what else is happening.  Its definitely not the case that a service designer can expect to get all the work reports grouped together.  Anyway, we're outside the topic of JAM conformance =)
+2025-08-29 10:16 dave: You certainly can't rely on that no
+2025-08-29 14:15 boymaas: davxy:  I see you are already publishing the import stats. That's great! I was wondering if you are measuring with verbose output enabled, or if you ran the JamZig⚡ node with -vv or without any verbose flags. I compiled these with detailed runtime debugging on, and the best performance is achieved without -vv and with all debug output removed. Let me know if you want a new binary compiled without this.
+2025-08-29 14:23 davxy: I'll disable debug then. No worries -- Zig looks fast ;-)  
+2025-08-29 14:24 davxy: FYI, we're working on extracting some rough numbers to get a basic comparison between the implementations and to provide a bit of extra incentive :-D  
+Soon we'll publish a nice-looking chart, courtesy of Erin.  
+
+The perf reports are based on monitoring your import timings (accounting for the small overhead of the process link). Nothing scientific here -- just estimates.  
+In practice, we also run polkajam as a target. In this case, the difference between the fuzzer importing the block and the target import is pure overhead.  This is the overhead that we considered for your targets as well.
+The perf reports are generated from the test vector traces.  
+
+I'm scripting the production of these numbers, so if you update your binary, regeneration will be immediate.
+
+  ↳ 2025-08-29 17:53 clearloop: hi davxy just did some optimizations! hope can try spacejam again! https://github.com/davxy/jam-conformance/issues/13#issuecomment-3237780866
+2025-08-29 14:34 clearloop: curious about what's the system info of the benchmarking machine, also, if it is possible providing memory peeks as well, I'm a bit worry about it since some programs are pretty big [edited]
+2025-08-29 14:39 davxy: Perhaps we can run this on some more beefy machine at some point.
+But for the moment I think these results already gives you enough hints 
+2025-08-29 14:39 jaymansfield: I published a new version of javajam yesterday that included about a 70% import performance improvement for the storage test vectors. Are you able to grab the latest 0.2.7? It looks like the report used 0.2.6.
+2025-08-29 14:39 davxy: My machine 
+AMD Ryzen Threadripper 3970X 32-Core (64) @ 4.55 GHz
+2025-08-29 14:40 davxy: > it is possible providing memory peeks as well
+
+Current reports not, perhaps we will in the future. 
+2025-08-29 14:46 davxy: done
+2025-08-29 14:50 jaymansfield: Thanks!
+2025-08-29 14:51 ascriv: Where can I see the import stats? Been afk for a while 
+2025-08-29 14:53 ascriv: Or are they not published yet
+2025-08-29 14:54 clearloop: Jamzilla is super fast 
+
+https://github.com/davxy/jam-conformance/blob/import-perf/fuzz-reports/0.7.0/reports/jamzilla/perf/storage.json
+2025-08-29 14:57 ascriv: 🫢
+2025-08-29 14:59 clearloop: I'm curious are you all running accumulation in parallel already, why in that speed
+2025-08-29 15:00 ascriv: I am doing in parallel yes
+2025-08-29 15:00 ascriv: Interpreted pvm for now 
+2025-08-29 15:00 sourabhniyogi: davxy: Which metric should teams optimize for to get the most fuzzing action?  
+
+```
+% grep import_p75 */perf/storage.json  
+boka/perf/storage.json:    "import_p75": 6925.978,
+jamduna/perf/storage.json:    "import_p75": 171.9,
+jamzig/perf/storage.json:    "import_p75": 39.349,
+jamzilla/perf/storage.json:    "import_p75": 81.848,
+javajam/perf/storage.json:    "import_p75": 233.967,
+pyjamaz/perf/storage.json:    "import_p75": 5186.699,
+spacejam/perf/storage.json:    "import_p75": 187.597,
+turbojam/perf/storage.json:    "import_p75": 10.395,
+
+```
+  ↳ 2025-08-29 15:02 clearloop: can't believe the performance of turbojam
+  ↳ 2025-08-29 15:04 davxy: You have two ways of make the fuzzer happy:
+- run the STF
+- hardcode the replies in the binary :-D (given that we run the test vectors traces here)
+  ↳ 2025-08-29 15:04 sourabhniyogi: Removing logs and recompiler is 95% of the optimizing
+  ↳ 2025-08-29 15:04 davxy: But the thing is that turbojam has the same perfs with a random seed. So it can't predict the state roots. Ergo. Looks really fast
+  ↳ 2025-08-29 15:05 davxy: I'll provide perf reports for polkajam in few mins
+  ↳ 2025-08-29 15:05 davxy: both with interpreter and recompiler
+  ↳ 2025-08-29 15:05 davxy: you can provide optimized binaries. I don't need the logs actually
+  ↳ 2025-08-29 15:07 davxy: @room If you republish optimized bins, please leave a note in your dedicated GH issue.  
+I won’t re-run them right away, and otherwise I’ll probably forget.
+
+  ↳ 2025-08-29 15:09 clearloop: I doubt about the performance of recompiler... I've tried compiling the programs in the stroage set however they at least take 10s on compilation... not sure what's the number from others [edited]
+  ↳ 2025-08-29 15:10 jan: 10s per program or in total?
+  ↳ 2025-08-29 15:11 clearloop: per...I must made sort of horrible mistake... haven't implemented the cache yet so each test triggers a compilation, there mb sort of memory issues as well
+
+still reorganizing my implementations these days, will take the benchmark with polkavm/bentools soon! [edited]
+  ↳ 2025-08-29 15:14 jan: Note that if you have optimal enough code then you don't actually need a cache. Anyway, 10s seconds sounds very abnormal.
+  ↳ 2025-08-29 23:20 clearloop: Just made my recompiler 20x faster via removing my "sugar" of register operations .... compiling storage\_light::00000004 from `11s -> 0.6s` indeed horrible mistake! trying to remove more "sugar methods" now XD I was actually handling the instructions with a interpreter mind! [edited]
+2025-08-29 15:01 boymaas: davxy:I pushed a new version for JamZig⚡ with all the debugging mechanics removed. I'm curious about the performance gains! It looks very promising locally. 🤠 The -vv flags on the target do not do anything anymore.
+2025-08-29 15:20 boymaas: https://asciinema.org/a/eMIt8geWsubdseBLBn9ygUkiN 🤠
+  ↳ 2025-08-29 15:23 clearloop: this visualization tool looks perfect, can you make a PR to the repo that we can try it as well?
+2025-08-29 15:21 boymaas: image.png
+2025-08-29 15:22 jan: Would be nice to also have the implementation language next to the name.
+2025-08-29 15:24 dakkk: is this using only fallback / safrole right?
+2025-08-29 15:24 boymaas: Safrole indeed
+2025-08-29 15:26 dakkk: davxy: I managed to solve the issue that was causing an error on jampy when using the pvm; I've just uploaded a fixed version
+2025-08-29 15:38 boymaas: Good idea, let me check if I can add that quickly.
+2025-08-29 15:41 sourabhniyogi: Way to go everyone -- this will turbocharge all of us =)
+2025-08-29 15:43 boymaas: Does anyone know what language TurboJam uses? I cannot find it that quickly online.
+  ↳ 2025-08-29 15:43 clearloop: C++
+2025-08-29 15:44 emielsebastiaan: davxy: Is there a reason why you choose not to include `preimages` & `preimages_light` in the speed benchmark?
+2025-08-29 15:44 arjanz: C++ I believe
+2025-08-29 15:44 ascriv: The repo is public too
+2025-08-29 15:44 davxy: Not really. I can add in the next iteration
+2025-08-29 15:48 prematurata: wow nice charts. :)
+2025-08-29 15:49 prematurata: do we know all language sets? it would be nice to have it after the name until we get used to it. I, for example dont know many of other implementors languages other than the ones that contain it in the name
+2025-08-29 15:50 dakkk: it could be useful to have a script that generates those charts automatically for every test set
+2025-08-29 15:52 boymaas: image.png
+2025-08-29 15:53 davxy: Added polkajam and polkajam iterpreted
+  ↳ 2025-08-29 16:03 clearloop: fact: polkajam is 2x faster than turbojam = =
+2025-08-29 16:00 davxy: Given the data I have provided, you do not need to worry about variations of around +/-3ms.  
+This is not a dedicated machine, so results may fluctuate a bit.  
+Still, the data gives good hints on where improvements are needed, and it shows which trace step took more time so you can re-execute it.
+
+2025-08-29 16:00 davxy: https://github.com/davxy/jam-conformance/tree/import-perf/fuzz-reports/0.7.0/reports/perf
+2025-08-29 16:04 boymaas: image.png
+2025-08-29 16:04 boymaas: Forgive me if I have associated the wrong language; please let me know, and I will correct it.
+2025-08-29 16:08 ascriv: Turbojam is c++, not unknown
+   https://github.com/r2rationality/turbojam
+2025-08-29 16:10 sourabhniyogi: Ok, since polkajam is at the top 3 of the `reports/perf` (for non-zero values anyway), we can all aim to turbocharge up to polkajam `polkajam_perf_int` most easily if we use polkajam fuzzer target to compare against our own.  
+
+Is there a fuzzer option within `polkajam` or is that a separate binary that can be provided?
+
+Not asking for polkajam fuzzer binary -- just the polkajam fuzzer target.
+2025-08-29 16:12 jaymansfield: Will be interesting to see where everyone stands in a few days after working on optimizations
+2025-08-29 16:12 jaymansfield: Really useful seeing the numbers
+2025-08-29 16:12 boymaas: Thank you ascriv | Jamzilla and arjan | PyJAMaz  will add it.
+2025-08-29 16:47 danicuki: Jamixir already has 0.7.0 - would you please include it in this speed report?

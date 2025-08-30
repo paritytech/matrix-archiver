@@ -1,5 +1,5 @@
 # room: #jam:polkadot.io
-# exported: 2025-08-29 03:26 UTC
+# exported: 2025-08-30 03:22 UTC
 2024-04-20 02:08 johnjiao123: 
 2024-04-20 02:09 johnjiao123: 
 2024-05-30 21:48 nradko: Hey everyone,
@@ -11227,3 +11227,9 @@ Right now our collective approach is to wait for davxy afk -> 28 Aug to give us 
   ↳ 2025-08-28 07:57 jan: So for example, if your execution speed is really bad then you're doing something horribly wrong.
   ↳ 2025-08-28 08:00 clearloop: at this point, I'm thinking about migrating sort of benchmarks of riscv to PVM, embench vs coremark, what do you think?
   ↳ 2025-08-28 08:01 jan: You could reuse my benchmarks, then you can directly compare your PVM to PolkaVM to see where you stand: https://github.com/paritytech/polkavm/blob/master/BENCHMARKS.md
+2025-08-29 16:45 sourabhniyogi: Now that we've emerged from our implementation caves,  can we post JAM-related social links (like this https://x.com/colorfulnotion/status/1961459179098358115 ) in this room that we think are RT worthy.  Not asking for memetic BS, just want to share any and all good news with the Web3 community as it happens. We're going to have a lot more good news in the next 6-12 months, and having everyone beating drums cohesively would be stellar.  
+
+You could specify a rate limit for each person/team of like 1 per week and impose some kind of quality metric so signal-to-noise ratio remains high.  
+
+The idea is to get organic JAM marketing directly from the people involved, and their supporters. [edited]
+2025-08-29 17:17 sultanindonesia: We often miss the time we conveyed from the Timeline Roadmap that we ourselves conveyed publicly, Therefore the Polkadot Ecosystem, especially JAM, must continue to quickly increase the speed of moving forward like a Shinkansen. A disciplined team, strong determination, high dedication to achieve before the timeline, agile, tenacious, without looking at the time until the Vision is achieved then we open the bottle of Whiskey. Very much respect for Japanese Culture that should also be implemented in Polkadot. Mental Revolution is a Priority 
