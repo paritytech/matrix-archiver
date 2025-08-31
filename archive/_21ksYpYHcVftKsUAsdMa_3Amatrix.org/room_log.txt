@@ -1,5 +1,5 @@
 # room: #jam-conformance:matrix.org
-# exported: 2025-08-30 03:23 UTC
+# exported: 2025-08-31 03:29 UTC
 2025-08-20 15:56 erin: tomusdrw: i've set up the archiver to archive this also, so hopefully will be up starting tomorrow
 2025-08-21 06:33 ascriv: https://github.com/davxy/jam-conformance/issues/26 should we not discourage open source implementations (for now)? [edited]
 2025-08-21 10:27 oliver.tale-yazdi: I think open source repos are fine. Other implementors are just not supposed to look at it
@@ -363,3 +363,35 @@ Not asking for polkajam fuzzer binary -- just the polkajam fuzzer target.
 2025-08-29 16:12 jaymansfield: Really useful seeing the numbers
 2025-08-29 16:12 boymaas: Thank you ascriv | Jamzilla and arjan | PyJAMaz  will add it.
 2025-08-29 16:47 danicuki: Jamixir already has 0.7.0 - would you please include it in this speed report?
+2025-08-30 07:02 dakkk: > <@boymaas:matrix.org> Forgive me if I have associated the wrong language; please let me know, and I will correct it.
+
+Can you share the script you re using to create this chart? 
+2025-08-30 07:40 boymaas: visualize_perf_enhanced.py
+2025-08-30 08:32 boymaas: davxy: Feel free to include it in the repo as well.
+2025-08-30 10:56 davxy: Can you open a PR ? 
+2025-08-30 10:56 dakkk: maybe you can also integrate it in the github-CI, so every time perf are updated, it creates the chart
+2025-08-30 10:57 prematurata: this changed from "make a graypaper compliant implementation" to a drag race [edited]
+2025-08-30 10:57 prematurata: :)
+2025-08-30 10:57 dakkk: image.png
+2025-08-30 10:57 dakkk: image.png
+2025-08-30 10:57 dakkk: btw, those are from last update: 
+2025-08-30 10:58 prematurata: tsjam is TypeScript Language btw... i see it is marked as unknown [edited]
+2025-08-30 11:04 jan: Jamixir is Elixir AFAIX (hence the "ixir" in the name)
+2025-08-30 11:06 jan: And it'd make more sense to change "Rust (int)" to "Rust" and "Rust" to "Rust (recomp)" for polkajam (or perhaps have another column whether the implementation is using a recompiler; not sure if any other implementation besides polkajam uses one currently?) [edited]
+2025-08-30 11:07 ascriv:  I think jamduna has one?
+2025-08-30 11:07 ascriv: @sourabhniyogi 
+2025-08-30 11:08 jan: Yeah, I know a few of the implementations have one in-progress, but it's unclear if any are used here for these tests. [edited]
+2025-08-30 11:09 clearloop: btw I want to confirm if block based gas charging matches the tracing tests, we can match accumulate tests but not tracing tests with block based gas charging, could be caused by the host call tried once but seems the problem is not that obvious [edited]
+2025-08-30 11:10 jan: Block based gas is not yet part of the GP; not sure if current traces use per-instruction gas yet (you'd have to ask davxy ), but I have implemented per-instruction gas metering in PolkaVM so the plan is to have the fuzzer/traces use per-instruction gas until the new gas cost model is ready.
+2025-08-30 11:11 jan: You can already start implementing a block-based gas cost model to get a head start on the final gas cost model, but for now the official model is per-instruction.
+2025-08-30 11:18 davxy: We use per-instruction gas charging. The test vector traces work for both models, since they never fail midway through a block.
+2025-08-30 11:18 clearloop: kk so the problem is in my implementation, will take a deeper look at it then!
+2025-08-30 11:55 danicuki: > <@prematurata:matrix.org> this turned out from "make a graypaper compliant implementation" to a drag race
+
+Tell me how you measure me and I will tell you how I will behave. 
+2025-08-30 13:46 davxy: EoW batch: https://github.com/davxy/jam-conformance/pull/41 
+2025-08-30 13:47 davxy: 0.7.0 table:
+https://github.com/davxy/jam-conformance/blob/reports-batch-0.7.0/fuzz-reports/README.md#disputes
+2025-08-30 14:55 boymaas: dakkk | JamPy: If you updated the script, please feel free to create the PR for the visualize_perf tool.
+2025-08-30 17:03 vinsystems: I started a discussion about trace 1756548916 https://github.com/davxy/jam-conformance/discussions/42 which affects almost all teams 
+2025-08-30 17:23 davxy: replied
