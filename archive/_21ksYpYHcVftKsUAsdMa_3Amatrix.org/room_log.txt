@@ -1,5 +1,5 @@
 # room: #jam-conformance:matrix.org
-# exported: 2025-08-31 03:29 UTC
+# exported: 2025-09-01 03:39 UTC
 2025-08-20 15:56 erin: tomusdrw: i've set up the archiver to archive this also, so hopefully will be up starting tomorrow
 2025-08-21 06:33 ascriv: https://github.com/davxy/jam-conformance/issues/26 should we not discourage open source implementations (for now)? [edited]
 2025-08-21 10:27 oliver.tale-yazdi: I think open source repos are fine. Other implementors are just not supposed to look at it
@@ -395,3 +395,64 @@ https://github.com/davxy/jam-conformance/blob/reports-batch-0.7.0/fuzz-reports/R
 2025-08-30 14:55 boymaas: dakkk | JamPy: If you updated the script, please feel free to create the PR for the visualize_perf tool.
 2025-08-30 17:03 vinsystems: I started a discussion about trace 1756548916 https://github.com/davxy/jam-conformance/discussions/42 which affects almost all teams 
 2025-08-30 17:23 davxy: replied
+2025-08-31 10:39 danicuki: davxy: how frequent do you update the reports tables - (performance and disputes)? On our side, do we need to notify you when we have a new version of our binary, or just put the binary in same place? 
+2025-08-31 12:55 davxy: In general, just drop a message in your team's issue.  
+I usually re-run the scripts when it is worthwhile -- for example, if a team has made significant improvements or fixed a some traces.  
+
+Of course, do not expect me to re-run them immediately after a ping, since I might be away or focused on something at the time.  
+
+Still, given that there are not too many teams, I tend to run the scripts more frequently than expected, as I enjoy seeing things improve and become more resilient to the fuzzer day by day.
+
+2025-08-31 13:32 davxy: Just to be clear - currently - the performance table is mostly meant to provide an indication of how long fuzzing should run to reach the same level of confidence across implementations. This is also to start thinking a bit more about the auditing process duration.
+
+For example, if we take (in the screenshot shared by dakk above) PolkaJam as the baseline, and auditors require 3 days of continuous fuzzing without crashes/diffs then:
+
+- An implementation 300x slower would require 900 days (about 2.5 years)
+- If the baseline is instead 10x slower than Polkajam, the same 300x implementation would need 90 days
+
+These numbers are speculative, but that is the point of sharing performance results at this stage: they are not about improving by few ms to climb the ranking, but about giving a tangible sense of scale for testing.
+
+I will likely update performance numbers less often (about once per week) to reduce noise from micro-optimizations and keep the focus on M1 compliance. Slower implementations that report tangible improvements may get more frequent updates. [edited]
+2025-08-31 13:39 jaymansfield: I have started a discussion about 1756548741 : https://github.com/davxy/jam-conformance/discussions/43
+2025-08-31 17:37 jaymansfield: Regenerated the rankings:
+2025-08-31 17:37 jaymansfield: Screenshot 2025-08-31 at 1.34.03 PM.png
+2025-08-31 17:37 jaymansfield: Screenshot 2025-08-31 at 1.35.38 PM.png
+2025-08-31 17:37 jaymansfield: Screenshot 2025-08-31 at 1.35.48 PM.png
+2025-08-31 17:41 clearloop: seems our perf is not updated XD, we should be at least ~3x faster now
+2025-08-31 19:01 sourabhniyogi: Since most of us are deathly afraid of flaming out of fear of being too slow (or have really large egos 🤪🤣 ), why not just state some precise guidelines now that you got almost all of us into basic "walking" shape.
+
+Concretely:
+
+1. Your implementation _should_ perform no slower than 10x (or 25x or 50x, you pick the number) polkajam\_int across all test groups
+2. Your interpreter _should_ be able to interpret at 1MM gas/s (or 10M gas/s, 50MM gas/s, you pick the number }.
+
+By stating this clearly, teams who are way ahead of this "should" threshold can proceed without fear on winning the M3/M4 marathon (refining Doom/.. workpackages with a recompiler) rather than an M1 sprint rankings game (which we should save for M3/M4, right?).  In the end the timings are dominated by PVM accumulate execution?
+
+What do you think -- does that make sense? [edited]
+2025-08-31 19:11 dakkk: > <@sourabhniyogi:matrix.org> Since most of us are deathly afraid of flaming out of fear of being too slow (or have really large egos 🤪🤣 ), why not just state some precise guidelines now that you got almost all of us into basic "walking" shape.
+> 
+> Concretely:
+> 
+> 1. Your implementation _should_ perform no slower than 10x (or 25x or 50x, you pick the number) polkajam\_int across all test groups
+> 2. Your interpreter _should_ be able to interpret at 1MM gas/s (or 10M gas/s, 50MM gas/s, you pick the number }.
+> 
+> By stating this clearly, teams who are way ahead of this "should" threshold can proceed without fear on winning the M3/M4 marathon (refining Doom/.. workpackages with a recompiler) rather than an M1 sprint rankings game (which we should save for M3/M4, right?).  In the end the timings are dominated by PVM accumulate execution?
+> 
+> What do you think -- does that make sense?
+
+I dont think it would be a good idea for M1 and M2, interpeted languages are slower by design, and they may never achieve certain performances. [edited]
+2025-08-31 19:12 sourabhniyogi: image.png
+2025-08-31 19:12 sourabhniyogi: That makes sense -- probably need to make Set C + D versions of those guidelines based on the data.
+2025-08-31 19:15 sourabhniyogi: Since you (and other Set C folks) know what Python (and other interpreted languages) can achieve, what would you have as guidelines?  Key word is "should" not turning into a "must" [edited]
+2025-08-31 19:19 dakkk: Idk, I personally prefer not to have constraints on it
+2025-08-31 19:19 sourabhniyogi: Using the word "must" would be a constraint.  "should" would mean you would be expected to improve your interpreter to get more fuzzing action.
+2025-08-31 19:27 davxy: What you said makes sense, but keep in mind:
+
+1. The data we collected is meant to support this goal. Giving guidelines without data would just be speculation.
+
+2. I can't really give you an answer here. You might need to escalate this kind of question to the architect :-D Maybe in jam chat. Not sure.
+2025-08-31 19:31 davxy: I see that Gav is not in this channel BTW
+2025-08-31 19:32 clearloop: I'd like to share some opinions at this topic as well, not sure if we should pivot this discussion to the let's jam channel first [edited]
+2025-08-31 19:32 davxy: So yeah, if your questions can't be answered here, I'd say try with the JAM channel
+2025-08-31 19:34 clearloop: could you please (mb) re-post your paragraph in the let's JAM channel sourabhniyogi , and then we can continue on it? [edited]
+2025-08-31 20:00 prematurata: any difference in tiny for WA and WB and WC? [edited]

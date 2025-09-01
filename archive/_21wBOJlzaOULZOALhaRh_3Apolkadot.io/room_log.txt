@@ -1,5 +1,5 @@
 # room: #jam:polkadot.io
-# exported: 2025-08-31 03:28 UTC
+# exported: 2025-09-01 03:38 UTC
 2024-04-20 02:08 johnjiao123: 
 2024-04-20 02:09 johnjiao123: 
 2024-05-30 21:48 nradko: Hey everyone,
@@ -11233,3 +11233,64 @@ You could specify a rate limit for each person/team of like 1 per week and impos
 
 The idea is to get organic JAM marketing directly from the people involved, and their supporters. [edited]
 2025-08-29 17:17 sultanindonesia: We often miss the time we conveyed from the Timeline Roadmap that we ourselves conveyed publicly, Therefore the Polkadot Ecosystem, especially JAM, must continue to quickly increase the speed of moving forward like a Shinkansen. A disciplined team, strong determination, high dedication to achieve before the timeline, agile, tenacious, without looking at the time until the Vision is achieved then we open the bottle of Whiskey. Very much respect for Japanese Culture that should also be implemented in Polkadot. Mental Revolution is a Priority 
+2025-08-31 19:51 sourabhniyogi: Since most of us are deathly afraid of flaming out of fear of being too slow (or have really large egos 🤪🤣 ), why not just state some precise guidelines now that davxy  got almost all of us into basic "walking" shape this past few days with performance reports [here](https://github.com/davxy/jam-conformance/tree/3a1040c1c626a9739033439cf2c3402ebff674cf/fuzz-reports/0.7.0/reports/perf)
+
+Concretely, something like:
+
+- Your implementation should perform no slower than 10x (or 25x or 50x, you pick the number) polkajam\_int across all test groups
+- Your interpreter should be able to interpret at 1MM gas/s (or 10M gas/s, 50MM gas/s, you pick the number ).
+
+By stating this clearly, teams who are way ahead of this "should" threshold can proceed without fear on winning the M3/M4 marathon (refining Doom/.. workpackages with a recompiler) rather than an M1 sprint rankings game (which we should save for M3/M4, right?). In the end the timings are dominated by PVM accumulate execution.
+
+Some guidelines recognizing the natural difference between compiled and interpreted languages (Set A/B vs Set C vs D) and carefully recognizing "should" (more fuzzer action!) vs "must" (hard constraint) may be order, and iterating by data.
+
+What do you think -- does that make sense? [edited]
+2025-08-31 20:07 clearloop: based on the optimizations these days, I'm also feeling confused about, when the protocol running in production, most of the operators will definitely run the implementation which has the best performance, others may maintain different nodes for the safety & diversity of the network, (and yes, implementations should at least be able to finish the required work at each timeslot), but this could be only a small part of the network, thus except the milestones, if there are plans for making our implementations more meaningful at that time for an overall insight, (yes, we can build related tools in different languages, even build services for JAM, but if there are more directions that can open our mind) [edited]
+2025-08-31 20:13 davxy: For completeness of the broad discussion, I rewrite here what I already wrote in the conformance chan:
+
+Currently (in the context of M1) the performance table is mostly meant to provide an indication of how long fuzzing should run to reach the same level of confidence across implementations. This is also to start thinking a bit more about the auditing process duration.
+
+For example, if we take (in the screenshot shared by dakk above) PolkaJam as the baseline, and auditors require 3 days of continuous fuzzing without crashes/diffs then:
+
+- An implementation 300x slower would require 900 days (about 2.5 years)
+- If the baseline is instead 10x slower than Polkajam, the same 300x implementation would need 90 days
+
+These numbers (fuzz duration for baseline) are speculative, but that is the point of sharing performance results at this stage: they are not about improving by few ms to climb the ranking, but about giving a tangible sense of scale for testing. [edited]
+2025-08-31 20:14 erin: I will be releasing an auto-updating dashboard tomorrow including estimated fuzzing times based on current performance metrics.
+2025-08-31 20:37 emielsebastiaan: In general I feel teams should get some time to process the NEW secondary performance objectives. Ie the low hanging fruits such as basic parallelisms. Additionally I hope some reasonable consideration can be given to the language group or even language in assigning fuzzer-time ranking given equal conformance. 
+2025-08-31 20:39 gav: I’m not sure how these could be considered “NEW”. 
+2025-08-31 20:40 gav: Fuzzing has been explicitly stated as one of our means of determining conformance for some time now.  [edited]
+2025-08-31 20:41 gav: I’m open to ideas about other means of very generally, objectively and effectively determining whether an impl is conformant. But failing that, it’ll need to be this way. 
+2025-08-31 20:41 gav: And this way implies a threshold number of iterations. 
+2025-08-31 20:42 gav: Which implies that implementations which are slow will take longer to pass said conformance tests.  
+2025-08-31 20:43 gav: None of this seems to me like it falls under “NEW”. 
+2025-08-31 20:44 emielsebastiaan: We are perfectly fine with all conformant constraints (of course) and we are confident in our process. Maybe I read it wrong but I hope performance in and of itself will not impact our access to the fuzzer process (for M1). You did mention a ranking system. 
+2025-08-31 20:45 gav: Please provide reference
+2025-08-31 20:45 gav: Not sure what context that was mentioned in. 
+2025-08-31 20:46 gav: Please note; the W3F fuzzer is not a community resource. It is a Fellowship resource to help understand whether a submission is (probably) conformant. 
+2025-08-31 20:46 gav: The GP is a community resource. 
+2025-08-31 20:47 gav: This chat room is a community resource. 
+2025-08-31 20:47 gav: To the extent we provide informal (ie pre-submission) access to the fuzzer we do so in the hope it will be helpful. 
+2025-08-31 20:48 gav: But that is not our primary goal. If you believe a fuzzer will be helpful for your development process, do create one yourself and feel free to share among teams. 
+2025-08-31 20:50 emielsebastiaan: Reference:
+> Implementations which are sufficiently GP-compliant will end up getting more time on such a system; those that are relatively flakey will get little as they bomb out and get pushed to the back of the queue.
+
+I suppose it is conformance based. My bad. 
+2025-08-31 20:50 gav: To the extent we provide some fuzzer service, we’ll do so in a manner which we consider fair and we’ll be transparent about what that is. 
+2025-08-31 20:52 gav: Fairness here will be based on *our* resources used. If your impl can do more with less of our resources, it’ll get a greater benefit from our service. 
+2025-08-31 20:57 gav: I wouldn’t consider parallelism as a requirement for M1, nor exceptionally fast PVM. Fuzzing will centre around block import logic rather than vast amounts of PVM instructions or database I/O. PVM will be fuzzed of course, but not in the ratio which would result from a maximal PVM gas usage in each block.  [edited]
+2025-08-31 20:59 gav: For M3 and M4, PVM and database I/O will matter a lot more. (Not to mention networking and Refinement which isn’t relevant for M1.) [edited]
+2025-08-31 21:00 clearloop: curious about if the current performance of polkavm can be considered as M3 or M4 level?
+2025-08-31 21:00 gav: Nah - we’re still optimising:)
+2025-08-31 21:01 gav: When the gas figures come out, that should give some clear performance requirements.  [edited]
+2025-08-31 21:02 gav: Other than that, performance will need to be sufficient to retain maximal throughput on standard hardware. 
+2025-08-31 21:02 clearloop: I believe there is a limit in the current PVM format (a big single function), not sure at M3 or M4 we can take more time on this
+2025-08-31 21:03 clearloop: for example, the iter related stuffs, panic handlers could be reused, and they are super big in each of the compiled modules [edited]
+2025-08-31 21:11 sourabhniyogi: Thank you for clarifying -- at what milestone (and 2025 vs 2026 month guess) are are implementations refining (and authorization) going to be fuzz tested.
+
+I really loved how every single `accumulate` host function has been tested and was improved by teams this August, and wish we were doing `refine` (and `is_authorized`) in the same way already.
+
+Not sure if I would like to see those suddenly be part of M1 fuzzer requirement ("Refinement which isn’t relevant for M1", refinement is not "authoring" per se) but I really would like to end 2025 feeling that we covered it as well.  
+
+If you said it was an { M1 vs M2 vs M3 } requirement we would get { hyper focussed vs super focussed vs slightly focussed } on extending the fuzzer protocol to support refining/is\_authorizing this fall.  I venture to say a lot of us recompiler "m4 or die" types would take on the challenge of building great fuzzers in the style of davxy if it was an M2 thing,  throw up our hands if it was an M1 thing, or do something else (like writing M1 reports) if it was an M3 thing.   Just a guess. [edited]
+2025-08-31 21:19 sourabhniyogi: I would like to know what teams should have accomplished exactly before getting access to the toaster.  Before it was (loosely) "can you do DOOM at 60fps" and now it could be precisely "can you refine DOOM work packages in your implementation + polkajam testnet" but you could also gate it with refine+auth related jam-conformance fuzzing performance, in a unofficial fuzzer way, with davxy -- or with us submitting a claim that we can do xyz in our M1 reports. [edited]
