@@ -1,5 +1,5 @@
 # room: #graypaper:polkadot.io
-# exported: 2025-09-01 03:38 UTC
+# exported: 2025-09-02 03:30 UTC
 2024-04-17 20:29 syed: https://matrix.to/#/!hyzRkDqDthePbodYFz:parity.io/$f_DMsIEcDXZegw6Sabnehzc-LrdDQkmq5MbxDDyoZxY?via=parity.io&via=web3.foundation
 
 2024-04-17 20:29 syed: 
@@ -6583,3 +6583,5 @@ Also, shouldn't we consider the case where d[s] = ∅ ?
   ↳ 2025-08-22 15:24 0xjunha: Why should that be `d[s]_l[(h,l)] = ∅`?
 That means preimage was not solicited yet - GP says preimage should be solicited before it can be provided as E_P & integrated
   ↳ 2025-08-22 19:23 danicuki: thanks for the explanation. I know what I am missing
+2025-09-01 08:38 0xjunha: In `TRANSFER` host call, it seems GP specifies to charge (10 + φ9 = base gas + transfer gas limit) even for failure cases (Panic, WHO, LOW, CASH), which do not add a deferred transfer to the posterior accumulate context (**x_t**). Is this intended or a typo? I'm a bit confused why we should charge additional gas (φ9) for those failure cases.
+2025-09-01 13:32 gav: Probably a typo - feel free to raise a properly references issue or PR if you want. 

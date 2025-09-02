@@ -1,5 +1,5 @@
 # room: #jam:polkadot.io
-# exported: 2025-09-01 03:38 UTC
+# exported: 2025-09-02 03:29 UTC
 2024-04-20 02:08 johnjiao123: 
 2024-04-20 02:09 johnjiao123: 
 2024-05-30 21:48 nradko: Hey everyone,
@@ -11286,11 +11286,14 @@ I suppose it is conformance based. My bad.
 2025-08-31 21:02 gav: Other than that, performance will need to be sufficient to retain maximal throughput on standard hardware. 
 2025-08-31 21:02 clearloop: I believe there is a limit in the current PVM format (a big single function), not sure at M3 or M4 we can take more time on this
 2025-08-31 21:03 clearloop: for example, the iter related stuffs, panic handlers could be reused, and they are super big in each of the compiled modules [edited]
-2025-08-31 21:11 sourabhniyogi: Thank you for clarifying -- at what milestone (and 2025 vs 2026 month guess) are are implementations refining (and authorization) going to be fuzz tested.
+2025-08-31 21:11 sourabhniyogi: Thank you for clarifying -- at what milestone (and 2025 vs 2026 month guess) are are implementations refining (and authorization) going to be fuzz tested?
 
 I really loved how every single `accumulate` host function has been tested and was improved by teams this August, and wish we were doing `refine` (and `is_authorized`) in the same way already.
 
-Not sure if I would like to see those suddenly be part of M1 fuzzer requirement ("Refinement which isn’t relevant for M1", refinement is not "authoring" per se) but I really would like to end 2025 feeling that we covered it as well.  
+Not sure if I would like to see those suddenly be part of M1 fuzzer requirement ("Refinement which isn’t relevant for M1", refinement is not "authoring" per se) ... but I really would like to end 2025 feeling that we covered it as well.
 
-If you said it was an { M1 vs M2 vs M3 } requirement we would get { hyper focussed vs super focussed vs slightly focussed } on extending the fuzzer protocol to support refining/is\_authorizing this fall.  I venture to say a lot of us recompiler "m4 or die" types would take on the challenge of building great fuzzers in the style of davxy if it was an M2 thing,  throw up our hands if it was an M1 thing, or do something else (like writing M1 reports) if it was an M3 thing.   Just a guess. [edited]
+If you said it was an { M1 vs M2 vs M3 } requirement we would get { hyper focussed vs super focussed vs slightly focussed } on extending the fuzzer protocol to support refining/is\_authorizing this fall. A lot of us recompiler "m4 or die" types would take on the challenge of building great fuzzers in the style of davxy if it was an M2 thing,  throw up our hands if it was an M1 thing, or do something else (like writing M1 reports) if it was an M3 thing.   Just a guess. [edited]
 2025-08-31 21:19 sourabhniyogi: I would like to know what teams should have accomplished exactly before getting access to the toaster.  Before it was (loosely) "can you do DOOM at 60fps" and now it could be precisely "can you refine DOOM work packages in your implementation + polkajam testnet" but you could also gate it with refine+auth related jam-conformance fuzzing performance, in a unofficial fuzzer way, with davxy -- or with us submitting a claim that we can do xyz in our M1 reports. [edited]
+2025-09-01 07:34 gav: Toaster access should come once it’s clear that M2 is there or at least when we’re confident that M2 could pass. I’d like to start accepting M1 candidates imminently, but it’s really on [davxy](https://matrix.to/#/@davxy:matrix.org)to determine when the fuzzer is ready for prime time. 
+2025-09-01 07:36 gav: M2 candidates should begin being accepted once we have the conformance tests for that. The priority is M1 testing for now. 
+2025-09-01 07:54 gav: Obviously nothing stops this community from setting up their own comparator harness and get going with cross-impl refinement testing/fuzzing. 

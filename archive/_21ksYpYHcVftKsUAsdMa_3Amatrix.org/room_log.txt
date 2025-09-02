@@ -1,5 +1,5 @@
 # room: #jam-conformance:matrix.org
-# exported: 2025-09-01 03:39 UTC
+# exported: 2025-09-02 03:30 UTC
 2025-08-20 15:56 erin: tomusdrw: i've set up the archiver to archive this also, so hopefully will be up starting tomorrow
 2025-08-21 06:33 ascriv: https://github.com/davxy/jam-conformance/issues/26 should we not discourage open source implementations (for now)? [edited]
 2025-08-21 10:27 oliver.tale-yazdi: I think open source repos are fine. Other implementors are just not supposed to look at it
@@ -456,3 +456,22 @@ I dont think it would be a good idea for M1 and M2, interpeted languages are slo
 2025-08-31 19:32 davxy: So yeah, if your questions can't be answered here, I'd say try with the JAM channel
 2025-08-31 19:34 clearloop: could you please (mb) re-post your paragraph in the let's JAM channel sourabhniyogi , and then we can continue on it? [edited]
 2025-08-31 20:00 prematurata: any difference in tiny for WA and WB and WC? [edited]
+2025-09-01 07:02 prematurata: I want to tell you how i lost 4 hours of my life debugging. but i will share the code. now that I share you'll instantly find it but it took me 4 hours : `SERVICECODE_MAX_SIZE = 4_000_0000;`
+
+damn fat fingers [edited]
+2025-09-01 07:37 clearloop: I used to spend 2 days for an encoding order error = =
+2025-09-01 07:39 davxy: Jason | JavaJAM: can you pls open a PR with the latest version of the perf script? I'd like to have it in the jam-conformance `scripts` folder. Ty
+2025-09-01 08:09 clearloop: I just made one for Boy Maas | JamZig⚡ with his commit info, would you mind checking it over again or you can make one instead Boy Maas | JamZig⚡ , wanna keep you as the original author of this script in the git history anyway for respect https://github.com/davxy/jam-conformance/pull/46 then we can join the update of it together later [edited]
+2025-09-01 08:31 boymaas: Thank you clearloop | SpaceJam  I asked you to create one. Thank you for the PR and the attribution; I appreciate it! 😎
+2025-09-01 09:47 davxy: Please add your considerations/proposals
+2025-09-01 09:47 davxy: https://github.com/davxy/jam-conformance/pull/47
+2025-09-01 10:03 sourabhniyogi: Jason | JavaJAM: would you like to add your ideas on how to add refinement to the above?  davxy is this ok to do?
+2025-09-01 10:05 sourabhniyogi: Are there \[Set C/D?\] teams who want to work on an FFI into a PVM recompiler?  If so, we probably can do a meaningful call together, well beyond intros, at the intersection of everything. [edited]
+2025-09-01 10:34 bamzedev: davxy: https://github.com/davxy/jam-test-vectors/blob/master/stf/reports/tiny/banned\_validator\_guarantee-1.json if I understand correctly, you are expecting that the guarantee is invalid, because one of the guarantors is in the offenders list? If that is the case, could you point out to the GP equation for that validation? [edited]
+2025-09-01 11:54 davxy: 11.21 & 11.22
+https://graypaper.fluffylabs.dev/#/1c979cb/155800155800?v=0.7.1 
+key is zeroed out if belongs to the offenders set (as per 6.14)
+2025-09-01 11:55 davxy: I'll add it to the features. 
+2025-09-01 12:03 sourabhniyogi: would you be able to join a call with us (this week or next) to give us some tips on how to do a refine fuzzer that is approximately what you would do?   I understand your priorities are on M1 but a little guidance would go a long way
+2025-09-01 20:44 sourabhniyogi: https://github.com/davxy/jam-conformance/pull/50
+2025-09-02 00:20 r2rtnl: A discussion about 1756548706: https://github.com/davxy/jam-conformance/discussions/51
