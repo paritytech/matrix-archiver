@@ -1,5 +1,5 @@
 # room: #jam:polkadot.io
-# exported: 2025-09-02 03:29 UTC
+# exported: 2025-09-03 03:20 UTC
 2024-04-20 02:08 johnjiao123: 
 2024-04-20 02:09 johnjiao123: 
 2024-05-30 21:48 nradko: Hey everyone,
@@ -11297,3 +11297,21 @@ If you said it was an { M1 vs M2 vs M3 } requirement we would get { hyper focuss
 2025-09-01 07:34 gav: Toaster access should come once it’s clear that M2 is there or at least when we’re confident that M2 could pass. I’d like to start accepting M1 candidates imminently, but it’s really on [davxy](https://matrix.to/#/@davxy:matrix.org)to determine when the fuzzer is ready for prime time. 
 2025-09-01 07:36 gav: M2 candidates should begin being accepted once we have the conformance tests for that. The priority is M1 testing for now. 
 2025-09-01 07:54 gav: Obviously nothing stops this community from setting up their own comparator harness and get going with cross-impl refinement testing/fuzzing. 
+2025-09-02 03:46 jan: Considering it's still incomplete and the spec is not at 1.0 yet - nope. There's still the new gas cost model that will be introduced (there is a high chance that it will require a competent SIMD-accelerated codepath to reach M3/M4), there could be minor changes to the instruction set to accelerate things and I still want to use more aggressive SIMD acceleration in certain places of the codebase.
+
+For everyone wondering about M3 and M4, in general you can expect the following to be tested at M3 and M4 when it comes to PVM:
+
+- Recompilation speed - how fast can you recompile code into native code?
+- Gas cost calculation speed - how fast can you calculate the gas costs for blocks? (This will not be tested separately from the recompilation speed, but I'm explicitly mentioning it since I expect it will also be a major factor.)
+- Execution performance - how fast is the code that you've recompiled?
+- Gas costs conformance - is the native code you've emitted conformant with the gas cost model? The new gas cost model will be somewhat strict wrt what exact machine code you can emit to avoid denial-of-service type of attacks; for example, whatever machine code you'll emit for the PVM addition instruction will be _required_ to only have a single cycle of latency, so essentially the _only_ valid way of recompiling it will be into a single native addition instruction. The GP of course won't tell you explicitly which native instructions are conformant with given latency numbers (that would be widely out-of-scope for the GP), but once we get up to M3 I might write up an implementers' note or host another talk or something like that for people to give a little bit of guidance as to how to actually do it in practice without having a PhD in CPU microarchitecture. [edited]
+2025-09-02 03:53 jan: The PVM code blob is not a single big function. It's split into basic blocks which in theory should be recompilable in isolation if that's what you want to do, so a more explicit subdivision of the code blob wouldn't necessarily help you all that much.
+
+(Side note: of course, if someone has good ideas to speed things up/make things more efficient/simplify things without compromising on speed then I'm always happy to hear any potential ideas.) [edited]
+2025-09-02 03:55 xlchen: what are the benefits to put everything into a single blob compare to one blob per entry point? (it is simpler for one)
+2025-09-02 03:57 jan: Practical benefits besides simplicity? You can share code between the blobs, I suppose.
+2025-09-02 04:00 jan: In general since you could most likely just cache and reuse the recompiled PVM binary based on a hash you know a priori for the toplevel services it's probably not worth splitting the blobs for each entry point.
+2025-09-02 04:05 jan: But of course this doesn't apply to inner PVM. Those don't have any "official" entry points (whatever the toplevel service decides is the entry point will be the entry point), and you still need fast recompilation since for inner PVMs whatever service is invoking the inner PVM can just conjure whatever code blob it wants from wherever it wants, so near zero cost caching is not feasible there (you could do caching there if you'd calculate the hash yourself in your PVM, but considering it's possible to recompile the code faster than it is to hash it, it's not really the solution)
+2025-09-02 05:25 clearloop: yes I think SIMD would help a lot! given we are generating thousands of write_bytes(addr, 4) atm for the testing programs in traces, my complaint about the program(blocks) (wait, ain't this a chain of blocks, e.g. blockchain ??) format is mainly about the compilation speed and the code size, mb concept like [wasm module](https://webassembly.github.io/spec/core/syntax/modules.html) (reduce size) or function based cache (in compiler, speed up compilation) would help if all of the programs are sharing a same 1MB block area in their binaries
+
+and I agree with that the execution speed has more priority, since it's more hardcore in our implementations while cache stuffs are easy to be patched later then

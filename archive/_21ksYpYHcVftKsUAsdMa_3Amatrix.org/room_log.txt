@@ -1,5 +1,5 @@
 # room: #jam-conformance:matrix.org
-# exported: 2025-09-02 03:30 UTC
+# exported: 2025-09-03 03:21 UTC
 2025-08-20 15:56 erin: tomusdrw: i've set up the archiver to archive this also, so hopefully will be up starting tomorrow
 2025-08-21 06:33 ascriv: https://github.com/davxy/jam-conformance/issues/26 should we not discourage open source implementations (for now)? [edited]
 2025-08-21 10:27 oliver.tale-yazdi: I think open source repos are fine. Other implementors are just not supposed to look at it
@@ -475,3 +475,11 @@ key is zeroed out if belongs to the offenders set (as per 6.14)
 2025-09-01 12:03 sourabhniyogi: would you be able to join a call with us (this week or next) to give us some tips on how to do a refine fuzzer that is approximately what you would do?   I understand your priorities are on M1 but a little guidance would go a long way
 2025-09-01 20:44 sourabhniyogi: https://github.com/davxy/jam-conformance/pull/50
 2025-09-02 00:20 r2rtnl: A discussion about 1756548706: https://github.com/davxy/jam-conformance/discussions/51
+2025-09-02 09:20 davxy: Reports batch: https://github.com/davxy/jam-conformance/pull/52
+2025-09-02 12:03 ascriv: @davxy can you enlighten us on what is left to be done in pre-submission fuzzing before M1 submissions are opened?
+2025-09-02 12:07 davxy: 1. finish some open tasks on the fuzzer 
+2. define/enact fuzz protocol v1 https://github.com/davxy/jam-conformance/pull/47 
+3. better define baseline timings/requirements/auditors etc. I'll discuss about this with the team as soon as I have the opportunity
+
+2025-09-02 12:09 ascriv: thanks!
+2025-09-02 15:55 boymaas: 
