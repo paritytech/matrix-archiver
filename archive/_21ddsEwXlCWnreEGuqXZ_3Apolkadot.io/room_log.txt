@@ -1,5 +1,5 @@
 # room: #graypaper:polkadot.io
-# exported: 2025-09-04 03:21 UTC
+# exported: 2025-09-05 03:24 UTC
 2024-04-17 20:29 syed: https://matrix.to/#/!hyzRkDqDthePbodYFz:parity.io/$f_DMsIEcDXZegw6Sabnehzc-LrdDQkmq5MbxDDyoZxY?via=parity.io&via=web3.foundation
 
 2024-04-17 20:29 syed: 
@@ -6587,3 +6587,22 @@ That means preimage was not solicited yet - GP says preimage should be solicited
 2025-09-01 13:32 gav: Probably a typo - feel free to raise a properly references issue or PR if you want. 
 2025-09-02 04:19 0xjunha: Opened a PR for `TRANSFER`: https://github.com/gavofyork/graypaper/pull/488
 Some refactoring was needed to avoid repetition of result cases. I'd be happy to adjust the approach if needed.
+2025-09-04 16:06 prematurata: Not sure if it's premature or not but i'd like to implement jam-np and I've some questions. Especially about assurers. If I understand properly this should be the process:
+
+  - CEI137: Assurer asks for its shard to the Guarantor who computed workreport for WorkPackage X
+  - CEI141: Assurer advertise that they have data available so that `EA` can be filled in the next block
+  - CEI139: later in time Guarantor of WorkPackage Y which refers to some exported elements from X, asks to the associated Assurers their shard in order to reconstruct the imports.
+  - repeats the above
+
+This means Assurers are just validators with a special rotating-role like Guarantors?
+
+
+2025-09-04 16:08 dave: Yes, also auditors will request bundle shards for auditing
+2025-09-04 16:09 dave: "Assurer", "Guarantor", "Auditor", etc just refer to the different roles performed by validators. Every validator node is all of these
+2025-09-04 16:11 prematurata: Guarantors => EG | rotating role
+Assurers => EA | rotating role
+Auditor => ED | anyone in `λ` [edited]
+2025-09-04 16:11 prematurata: i am probably stating the obvious here :)
+2025-09-04 16:14 prematurata: But since i didnt find much else on the topic i prefer to have a confirmation that i have indeed got the concepts right
+2025-09-04 16:15 dave: Guarantors/Assurers rotate in the sense that validators are assigned to different cores/shards at different points in time, but every validator is always assigned to something. Anyway seems like you have the concepts right
+2025-09-04 16:16 prematurata: yes sorry i should have explained better myself. :) Thanks a lot 
