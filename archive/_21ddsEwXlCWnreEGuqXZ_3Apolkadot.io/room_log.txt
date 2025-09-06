@@ -1,5 +1,5 @@
 # room: #graypaper:polkadot.io
-# exported: 2025-09-05 03:24 UTC
+# exported: 2025-09-06 03:20 UTC
 2024-04-17 20:29 syed: https://matrix.to/#/!hyzRkDqDthePbodYFz:parity.io/$f_DMsIEcDXZegw6Sabnehzc-LrdDQkmq5MbxDDyoZxY?via=parity.io&via=web3.foundation
 
 2024-04-17 20:29 syed: 
@@ -6606,3 +6606,6 @@ Auditor => ED | anyone in `λ` [edited]
 2025-09-04 16:14 prematurata: But since i didnt find much else on the topic i prefer to have a confirmation that i have indeed got the concepts right
 2025-09-04 16:15 dave: Guarantors/Assurers rotate in the sense that validators are assigned to different cores/shards at different points in time, but every validator is always assigned to something. Anyway seems like you have the concepts right
 2025-09-04 16:16 prematurata: yes sorry i should have explained better myself. :) Thanks a lot 
+2025-09-05 14:07 prematurata: I have a question about I in 11.28  (0.7.0). It's specified as a set but subsequent formulas forbid 2 or more reports of the same package so is there any other reason why `I` needs to be a `set`?  [edited]
+2025-09-05 14:11 prematurata: In other words `I` being a set or a sequence of reports in EG would have the same cardinality. [edited]
+2025-09-05 18:28 prematurata: 

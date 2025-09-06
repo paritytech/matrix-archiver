@@ -1,5 +1,5 @@
 # room: #jam-conformance:matrix.org
-# exported: 2025-09-05 03:24 UTC
+# exported: 2025-09-06 03:21 UTC
 2025-08-20 15:56 erin: tomusdrw: i've set up the archiver to archive this also, so hopefully will be up starting tomorrow
 2025-08-21 06:33 ascriv: https://github.com/davxy/jam-conformance/issues/26 should we not discourage open source implementations (for now)? [edited]
 2025-08-21 10:27 oliver.tale-yazdi: I think open source repos are fine. Other implementors are just not supposed to look at it
@@ -492,3 +492,5 @@ Then teams can continuously check if they improved, otherwise it would look like
   ↳ 2025-09-03 12:41 erin: good feedback, thanks!
 2025-09-03 18:35 boymaas: Very nice dashboard erin . Now I also need to start optimizing 🤠
 2025-09-03 19:15 clearloop: wow, this dashboard looks much more prettier than I can imagine [edited]
+2025-09-05 11:00 sourabhniyogi: For all of us macro data refiners (you know you want to =)), please check out / comment on https://github.com/davxy/jam-conformance/pull/59 -- this aims to add the ability to trace the causes of work report differences with a new `feature-exports` in addition to the basics of `feature-bundle-refinement`.  
+2025-09-05 20:30 jaymansfield: https://github.com/davxy/jam-conformance/discussions/64
