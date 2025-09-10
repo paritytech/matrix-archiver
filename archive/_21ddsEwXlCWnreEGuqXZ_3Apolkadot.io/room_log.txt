@@ -1,5 +1,5 @@
 # room: #graypaper:polkadot.io
-# exported: 2025-09-09 03:26 UTC
+# exported: 2025-09-10 03:21 UTC
 2024-04-17 20:29 syed: https://matrix.to/#/!hyzRkDqDthePbodYFz:parity.io/$f_DMsIEcDXZegw6Sabnehzc-LrdDQkmq5MbxDDyoZxY?via=parity.io&via=web3.foundation
 
 2024-04-17 20:29 syed: 
@@ -6609,3 +6609,12 @@ Auditor => ED | anyone in `λ` [edited]
 2025-09-05 14:07 prematurata: I have a question about I in 11.28  (0.7.0). It's specified as a set but subsequent formulas forbid 2 or more reports of the same package so is there any other reason why `I` needs to be a `set`?  [edited]
 2025-09-05 14:11 prematurata: In other words `I` being a set or a sequence of reports in EG would have the same cardinality. [edited]
 2025-09-05 18:28 prematurata: 
+2025-09-09 11:33 r2rtnl: GP 0.7.1 states in (4.11) that ψ′ depends only on external disputes and the previous ψ. However, the definitions in the disputes section also involve κ, λ, and τ (non-prime).
+
+This is a minor point, but shouldn’t these additional dependencies be made explicit in (4.11)?
+
+https://graypaper.fluffylabs.dev/#/1c979cb/09bc0009c500?v=0.7.1
+2025-09-09 12:42 r2rtnl: A similar concern applies to (4.13) for ρ‡, where assurance signatures must be verified—requiring access to κ, λ, τ, and τ′.
+
+My broader question is whether such hidden or implicit dependencies should be explicitly reported and addressed, or whether there is a general rule I may be missing that allows certain dependencies to remain implicit and excluded from the 4.2.1 State Transition Dependency Graph.
+2025-09-09 17:48 gav: GP editorial board will be happy to consider a PR if you have time to submit:)

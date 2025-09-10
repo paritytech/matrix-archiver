@@ -1,5 +1,5 @@
 # room: #jam-conformance:matrix.org
-# exported: 2025-09-09 03:26 UTC
+# exported: 2025-09-10 03:21 UTC
 2025-08-20 15:56 erin: tomusdrw: i've set up the archiver to archive this also, so hopefully will be up starting tomorrow
 2025-08-21 06:33 ascriv: https://github.com/davxy/jam-conformance/issues/26 should we not discourage open source implementations (for now)? [edited]
 2025-08-21 10:27 oliver.tale-yazdi: I think open source repos are fine. Other implementors are just not supposed to look at it
@@ -525,5 +525,17 @@ Last but not least, the focus should stay on M1, not on chasing a tight race for
 I think a lot of us became SUPER performance focussed in the last 7-10 days because of the "audit" expectations that we will be doing 10-1000x more fuzzing, running for 3 days rather than 3-30s.  The moment you have programmatic fuzzing working at higher scale, it becomes valuable.  Looking ahead to PVM fuzzing, this error string could summarize the result of "we differ at gas/step/opcode with xyz registers" from the fuzzer probing the target via this feature https://github.com/davxy/jam-conformance/pull/65 -- but we should not have this feature part of v1 with a v0=>v1 of this week. [edited]
   ↳ 2025-09-09 01:20 clearloop: I got sick last week on working on my implementation, (after 3~5 hours sleep per day) for re-writing my compiler, and my compiler is now getting even worse 😅
   ↳ 2025-09-09 02:32 xlchen: this is the fun part of doing optimizations. you never know if your optimization actually optimizes it or not until you spend/wasted bunch time on it [edited]
+  ↳ 2025-09-09 19:30 danicuki: > <@xlchen:matrix.org> this is the fun part of doing optimizations. you never know if your optimization actually optimizes it or not until you spend/wasted bunch time on it
+
+In practice, the theory is different. 
 2025-09-08 18:23 sourabhniyogi: In the end, because there is just 1 of you and 15+ of us, we should do whatever makes your life easier so we get over the finish line together faster -- anything to increase the fuzzing level so we get as much conformance as possible and at least half of us done with M1 before sub0 ( ideally ) and most of us before xmas would be best.  It seems pretty clear from the extremely high speeds that teams do their homework each week that we're all capable and motivated to work at high speeds but we don't want to stress you out either =) [edited]
-2025-09-09 01:10 clearloop: agree with the error message, because the current report (per team level), doesn't make a lot of sense since we can get them any way on debugging them locally (diff of key-values), with error messages embedded, the reports will be more human readable, and it would be nice if the fuzzer provides error messages in the report as well, e.g. for the cases the the target can import the blocks while the blocks should not be imported [edited]
+2025-09-09 01:10 clearloop: agree with the error message, because the current report (per team level), doesn't make a lot of sense since we can get them any way on debugging them locally (diff of key-values), with error messages embedded, the reports will be more useful, and it would be nice if the fuzzer provides error messages in the report as well, e.g. for the cases the the target can import the blocks while the blocks should not be imported
+
+from yesterday till today, I have met some traces broken remote but works locally, and without the error message from the remote, I actually have no ideas what to fix ... [edited]
+2025-09-09 14:45 davxy: https://github.com/davxy/jam-conformance/pull/68
+2025-09-09 20:47 vinsystems:  https://github.com/davxy/jam-conformance/discussions/71 
+2025-09-09 20:53 prematurata: damn bernar. you beat me by some minutes. i opened it as well for 771 https://github.com/davxy/jam-conformance/discussions/72
+2025-09-09 21:35 davxy: Fuzzer protocol v1 will go into effect on Friday, 12 Sep. Starting on that date, our fuzzer will implement the changes proposed in:
+https://github.com/davxy/jam-conformance/pull/47 [edited]
+2025-09-09 21:43 sourabhniyogi: Friday 9/12 yes?
+2025-09-09 21:50 davxy: Fixed 😅
