@@ -1,5 +1,5 @@
 # room: #jam-conformance:matrix.org
-# exported: 2025-09-10 03:21 UTC
+# exported: 2025-09-11 03:25 UTC
 2025-08-20 15:56 erin: tomusdrw: i've set up the archiver to archive this also, so hopefully will be up starting tomorrow
 2025-08-21 06:33 ascriv: https://github.com/davxy/jam-conformance/issues/26 should we not discourage open source implementations (for now)? [edited]
 2025-08-21 10:27 oliver.tale-yazdi: I think open source repos are fine. Other implementors are just not supposed to look at it
@@ -539,3 +539,125 @@ from yesterday till today, I have met some traces broken remote but works locall
 https://github.com/davxy/jam-conformance/pull/47 [edited]
 2025-09-09 21:43 sourabhniyogi: Friday 9/12 yes?
 2025-09-09 21:50 davxy: Fixed 😅
+2025-09-10 10:30 clearloop: ( if the fork tests the last set of M1 ? ^ ^)
+2025-09-10 10:41 ascriv: > <@davxy:matrix.org> Fuzzer protocol v1 will go into effect on Friday, 10/11. Starting on that date, our fuzzer will implement the changes proposed in:
+> https://github.com/davxy/jam-conformance/pull/47
+
+On import failure due to a jam protocol-defined error condition, it seems like the README says we should both return the 0 hash AND an 'Error' message, but shouldn't it be one or the other?
+2025-09-10 10:44 davxy: We should return Error message. I need to remove the 0 hash requirement. That is a leftover
+2025-09-10 14:12 clearloop: btw wanna discuss about if either header verification or fork detection should be in the network level? if the received header is not validated, we won't execute it at all (or put it in the pool), tbh the fork part and the header validation breaks our design, that I have to downgrade my validations from my network layer to the block import layer, and for the fork part, I have to rewrite the logic just for tests (bcz there is no finalization, no "grandpa", no peer handshake info)
+
+but as "block importer", header validation & fork detection makes sense again ... [edited]
+2025-09-10 14:51 dave: Not entirely sure what you mean. From the networking perspective you should verify blocks before announcing them to peers. You should announce and attempt to import all forks. It should be possible to verify blocks significantly faster than executing them. In particular, it is intended to be possible to verify a block without performing any accumulation, so without any PVM execution. There is _one_ validity condition that cannot be checked without performing accumulation; that we don't attempt to create two services with the same ID. It is not intended that this is checked before announcing/distributing a block to peers.
+2025-09-10 14:53 dave: I think we could probably only require verification of the author and the author's signature before announcing, this isn't what the JAM-NP doc currently says though
+2025-09-10 14:57 clearloop: > From the networking perspective you should verify blocks before announcing them to peers
+
+yes, but verifying headers after producing a block or received a new block from remote peers which is right happens at the SNP, if it is validated, I'll put it into a fork, waiting for the block processor to pick it up then execute (block import), I meant that **header validation is ahead of block execution**, they are not bound together, also if we receive a block earlier than the finalization chain, I won't even validate it, that for adapting the tests, I need to bind them together, but it's fine indeed since the logic is minor and the header verification logic do need to be confirmed or it may be tough for the networking part [edited]
+2025-09-10 15:02 dave: Still not really sure what you're saying. Are you saying the fuzzing interface is forcing you to change your design, even though your current design is fine for implementing JAM-NP?
+2025-09-10 15:04 clearloop: sorry and yes I meant that I have to write new logic just for adapting the tests now (which will not contribute to the production), header validation is indeed fine, but testing fork at the current state, I think it may go out of control finally [edited]
+2025-09-10 15:14 dave: Nodes are expected to follow all forks, not clear to me why it's an issue for the fuzzer to test forks? What do you mean by "testing fork at the current state"?
+2025-09-10 15:20 clearloop: for example, we are now introducing fork tests at this level:  https://github.com/davxy/jam-conformance/discussions/71#discussioncomment-14360978 , simply replace the latest imported block
+
+I believe the approach in production is creating a new fork at parent, results in we now have two fork chains (currently without grandpa or finalization), but for the current fuzzing interface, we are more like just maintaining a "finalized chain" (or importing from a finalized chain), which makes conflict, and starting from this, I'm afraid that we'll introduce more and more parameters/arguments in the fuzzer till we can cover the entire fork system, and during the process, I believe for some teams, their work will be rewriting their implementation 5%, 10%...100%, till they back to the status months ago
+ [edited]
+2025-09-10 15:42 dave: Ok, think davxy's input is needed here. But I would think you probably shouldn't be immediately finalizing blocks that are imported. Ideally the fuzzer won't force the node to be architected in any particular way, but you're naturally going to have to write _some_ code to interface with it; M1 doesn't require JAM-NP so we can't just use that.
+2025-09-10 15:44 clearloop: > But I would think you probably shouldn't be immediately finalizing blocks that are imported.
+
+what do you think about the case for light node? If I connect a node which is present in validator set, can I import its finalized blocks without verification? [edited]
+2025-09-10 15:44 dave: Light nodes will probably follow the finalized chain and so lag slightly
+2025-09-10 15:47 dave: Though it really depends on the use case, for some use cases maybe it's good enough to trust instead of verify
+2025-09-10 15:48 dave: In the case of a finalized block you can always ask for proof of finality
+2025-09-10 15:48 dave: (This isn't in the JAM-NP spec, GRANDPA stuff will be added soon)
+2025-09-10 15:49 clearloop: but if a node is present in validator set, and we can't trust its finalized blocks, ain't the consensus got broken, or the case would be like,
+
+- if we importing blocks from it from 0 till the latest finalized block, we can trust (mb with small verifications)
+- If we just pick sort of blocks in the middle, we'll need the proof of finality
+
+hmm, but the rpc may cheat or broken as well? [edited]
+2025-09-10 15:51 dave: What do you mean by "trust its finalized blocks"? Validators are generally fairly trusted but the protocol is designed to work with up to 1/3 byzantine validators. A byzantine validator could lie to you about which blocks have been finalized
+2025-09-10 15:52 dave: If you want to be sure a block has been finalized you need to ask for a proof and verify it. A proof will consist of various GRANDPA votes, possibly going all the way back to the genesis block to verify validator set changes and so on
+2025-09-10 15:52 dave: RPC is totally different, as the RPC interface is specifically intended to only be used between two processes which trust each other [edited]
+2025-09-10 15:53 dave: Probably because they are being run by the same operator
+2025-09-10 15:57 danicuki: Sorry if I missed this information in the protocol: when a block should not be imported for any reason, how do we know the expected reason why the block wasn't imported? On test vectors there was an expected error message. Do we have something similar in the fuzzer?
+2025-09-10 15:57 clearloop: you got me, probably I have done some work less of security in my previous work lol, e.g. importing blocks from open rpc directly without checks for building centralized databases, the concepts of proof of finalization makes sense to me! [edited]
+2025-09-10 16:01 clearloop: I had asked for it before as well, but seems it's still not included in Fuzzer V1 yet (only has error from target to fuzzer but not fuzzer to target), probably we can comment it in https://github.com/davxy/jam-conformance/pull/47 [edited]
+2025-09-10 16:33 davxy: Ideally, you should not need to write any special code to interact with the fuzzer.
+
+You only need to implement the communication channel, which is straightforward.
+
+No special handling is required at the block import level.
+
+## Basic Protocol
+
+1. Receive a block
+2. Import the block, which yields either success or failure
+3. Reply:
+    - On success: return the resulting state root
+    - On failure: return the `Error` message (the reason is irrelevant and not specified in the GP)
+
+## Handling Forks
+
+In production, you must support forks that occur above the last finalized block.
+
+However, since there is no finalization rule in this context, you will not finalize anything.
+
+Technically, this means you must be able to handle any kind of fork.
+
+For fuzzing, of course, this is not required.
+
+The only requirement (which matches a correct implementation and does not need special code)
+
+is that you must allow forks at the **last imported block**.
+
+This is necessary because fuzzing involves mutating blocks in several ways,
+
+and you must attempt to import all the mutations (some may fail some may be successfull -> fork)
+
+## Example Session
+
+1. Let `i = 0`
+2. Increment i and Produce block `B_i` with parent `B_(i-1)`
+3. Mutate `B_i` into several variants: `B_i1`, `B_i2`, `B_i3`
+4. Send these variants in order: `B_i1`, `B_i2`, `B_i3`, and finally `B_i`
+5. Repeat from step 2, using `B_i` as the parent for the next batch
+
+## Notes
+
+- Finality is not required: just import the blocks
+- Forks created by the mutations can remain in the state
+- (optional) You may prune these forks as you progress if you wish [edited]
+2025-09-10 16:34 davxy: This goes straight into the fuzz protocol v1 readme
+2025-09-10 16:39 davxy: The trace and report. Re execute to get why your impl fails. 
+This is the same as the jam-test-vectors traces, a dynamic that matches how the system actually works. [edited]
+2025-09-10 16:43 clearloop: > The only requirement (which matches a correct implementation and does not need special code)
+> is that you must allow forks at the last imported block.
+> 
+> This is necessary because fuzzing involves mutating blocks in several ways,
+> and you must attempt to import all the mutations (some may fail some may be successful -> fork)
+
+well I can accept the current fork system now since I just realized that I have to refactor my test infura anyway now..., but want to confirm **if the current fork system won't be expanded anymore?**
+
+block mutation happens, and we have already had the logic which is pretty large, handling orphan blocks, invalid blocks, forks, fork of forks, block mutation may happen in any part of them and we have already handled all of them, but for adapting the fuzzer, we still need to write new logic, because our exist system requires more informations to bootstrap [edited]
+2025-09-10 16:46 davxy: > but want to confirm if the current fork system won't be expanded anymore
+
+I can confirm this. At least according to our fuzzer protocol proposal [edited]
+2025-09-10 18:21 danicuki: In this case, https://github.com/davxy/jam-conformance/blob/main/fuzz-reports/0.7.0/traces/1757406441/00000117.json - the post_state is same as pre_state. This means that the block import should fail for some reason, resulting in the same state root. But we don't know, based on the trace, what is the reason why you are rejecting the block. On test vectors, there is something like `"err": "bad_validator_index"` or other hints about the reason why the block fails. 
+2025-09-10 19:10 davxy: Hmm interesting... indeed we could include the result of our last block import in the final fuzz report - it might serve as a helpful hint.  
+
+However, should be noted that the evaluation order of some expressions is arbitrary, so with a block with the potential to trigger multiple errors the result could is a bit ambiguous.  
+It thus also expose some implementation details, which might not be super ideal.
+
+I'm not against including it, just unsure.  
+Perhaps we should add it if it meaningfully speeds up the analysis.  
+What do you think, [@dave:parity.io](https://matrix.to/#/@dave:parity.io)  [edited]
+2025-09-10 22:04 danicuki: > <@davxy:matrix.org> Hmm interesting... indeed we could include the result of our last block import in the final fuzz report - it might serve as a helpful hint.  
+> 
+> However, should be noted that the evaluation order of some expressions is arbitrary, so with a block with the potential to trigger multiple errors the result could is a bit ambiguous.  
+> It thus also expose some implementation details, which might not be super ideal.
+> 
+> I'm not against including it, just unsure.  
+> Perhaps we should add it if it meaningfully speeds up the analysis.  
+> What do you think, [@dave:parity.io](https://matrix.to/#/@dave:parity.io) 
+
+You could list all potential errors in no particular order. Or at least reveal the first one. Because it is very very hard from our side to know why a particular block is rejected. When we have state value diff it is easier to debug and find reasons for the diff. But when next state doesn’t change, we stay clueless and can’t even challenge the fuzzer. 
+2025-09-10 22:08 danicuki: Another idea: fuzzer target binaries are public. This means anyone can download other teams binaries and run over them the blocks and inspect the logs to find clues. For this reason, since you already run teams fuzzer target, you could share in the repo the running logs of all teams. [edited]
