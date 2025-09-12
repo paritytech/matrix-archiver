@@ -1,5 +1,5 @@
 # room: #jam-conformance:matrix.org
-# exported: 2025-09-11 03:25 UTC
+# exported: 2025-09-12 03:21 UTC
 2025-08-20 15:56 erin: tomusdrw: i've set up the archiver to archive this also, so hopefully will be up starting tomorrow
 2025-08-21 06:33 ascriv: https://github.com/davxy/jam-conformance/issues/26 should we not discourage open source implementations (for now)? [edited]
 2025-08-21 10:27 oliver.tale-yazdi: I think open source repos are fine. Other implementors are just not supposed to look at it
@@ -642,14 +642,12 @@ block mutation happens, and we have already had the logic which is pretty large,
 
 I can confirm this. At least according to our fuzzer protocol proposal [edited]
 2025-09-10 18:21 danicuki: In this case, https://github.com/davxy/jam-conformance/blob/main/fuzz-reports/0.7.0/traces/1757406441/00000117.json - the post_state is same as pre_state. This means that the block import should fail for some reason, resulting in the same state root. But we don't know, based on the trace, what is the reason why you are rejecting the block. On test vectors, there is something like `"err": "bad_validator_index"` or other hints about the reason why the block fails. 
-2025-09-10 19:10 davxy: Hmm interesting... indeed we could include the result of our last block import in the final fuzz report - it might serve as a helpful hint.  
+2025-09-10 19:10 davxy: Hmm interesting... indeed we could include the result of our last block import in the final fuzz report - it might serve as a helpful hint.
 
-However, should be noted that the evaluation order of some expressions is arbitrary, so with a block with the potential to trigger multiple errors the result could is a bit ambiguous.  
-It thus also expose some implementation details, which might not be super ideal.
+However, should be noted that the evaluation order of some expressions is arbitrary, so with a block with the potential to trigger multiple errors the result could is a bit ambiguous.
 
-I'm not against including it, just unsure.  
-Perhaps we should add it if it meaningfully speeds up the analysis.  
-What do you think, [@dave:parity.io](https://matrix.to/#/@dave:parity.io)  [edited]
+
+Edit: After thinking about it, I agree - I don't see a major issue with adding it to the report. [edited]
 2025-09-10 22:04 danicuki: > <@davxy:matrix.org> Hmm interesting... indeed we could include the result of our last block import in the final fuzz report - it might serve as a helpful hint.  
 > 
 > However, should be noted that the evaluation order of some expressions is arbitrary, so with a block with the potential to trigger multiple errors the result could is a bit ambiguous.  
@@ -661,3 +659,12 @@ What do you think, [@dave:parity.io](https://matrix.to/#/@dave:parity.io)  [edit
 
 You could list all potential errors in no particular order. Or at least reveal the first one. Because it is very very hard from our side to know why a particular block is rejected. When we have state value diff it is easier to debug and find reasons for the diff. But when next state doesn’t change, we stay clueless and can’t even challenge the fuzzer. 
 2025-09-10 22:08 danicuki: Another idea: fuzzer target binaries are public. This means anyone can download other teams binaries and run over them the blocks and inspect the logs to find clues. For this reason, since you already run teams fuzzer target, you could share in the repo the running logs of all teams. [edited]
+2025-09-11 11:44 davxy: As you are the main stakeholders, could I ask for one more review round before we merge?  
+The changes are summarized in the PR description: https://github.com/davxy/jam-conformance/pull/47
+2025-09-11 13:08 r2rtnl: https://github.com/davxy/jam-conformance/discussions/74
+2025-09-11 16:02 charliewinston14: Is it correct that the ancestry set is maintained separately for each fork?
+2025-09-11 16:15 davxy: The ancestry is determined using the P() function (see 5.3), which traces the chain backward starting from a specified header. 
+For a block within one fork, the state in other forks is irrelevant. [edited]
+2025-09-11 16:17 davxy: For the sake of fuzzing you can maintain a simple bounded queue... (as we never extend mutations chain) [edited]
+2025-09-11 22:15 r2rtnl: https://github.com/davxy/jam-conformance/discussions/75
+2025-09-11 23:55 sourabhniyogi: It is likely very useful to have a v1 .bin/.json ancestors (and maybe forks) trace for us to test our v1 implementations as we post them in the next 24-72 hours?  In the examples/v1, with the updated names  [edited]

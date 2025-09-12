@@ -1,5 +1,5 @@
 # room: #graypaper:polkadot.io
-# exported: 2025-09-11 03:25 UTC
+# exported: 2025-09-12 03:21 UTC
 2024-04-17 20:29 syed: https://matrix.to/#/!hyzRkDqDthePbodYFz:parity.io/$f_DMsIEcDXZegw6Sabnehzc-LrdDQkmq5MbxDDyoZxY?via=parity.io&via=web3.foundation
 
 2024-04-17 20:29 syed: 
@@ -6619,3 +6619,7 @@ https://graypaper.fluffylabs.dev/#/1c979cb/09bc0009c500?v=0.7.1
 My broader question is whether such hidden or implicit dependencies should be explicitly reported and addressed, or whether there is a general rule I may be missing that allows certain dependencies to remain implicit and excluded from the 4.2.1 State Transition Dependency Graph.
 2025-09-09 17:48 gav: GP editorial board will be happy to consider a PR if you have time to submit:)
 2025-09-10 19:46 r2rtnl: https://github.com/gavofyork/graypaper/pull/491
+2025-09-12 00:08 sourabhniyogi: Its 9/11, so like Happy  2nd birthday JAM! 
+
+Its been 2 years since some of started reading about JAM here: https://github.com/polkadot-fellows/RFCs/blob/gav-corejam/text/0031-corejam.md  [edited]
+2025-09-12 00:09 sourabhniyogi: Very cool to see how much has changed, and how little has changed from the original RFC.
