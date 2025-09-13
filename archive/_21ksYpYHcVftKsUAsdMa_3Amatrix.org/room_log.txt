@@ -1,5 +1,5 @@
 # room: #jam-conformance:matrix.org
-# exported: 2025-09-12 03:21 UTC
+# exported: 2025-09-13 03:18 UTC
 2025-08-20 15:56 erin: tomusdrw: i've set up the archiver to archive this also, so hopefully will be up starting tomorrow
 2025-08-21 06:33 ascriv: https://github.com/davxy/jam-conformance/issues/26 should we not discourage open source implementations (for now)? [edited]
 2025-08-21 10:27 oliver.tale-yazdi: I think open source repos are fine. Other implementors are just not supposed to look at it
@@ -668,3 +668,10 @@ For a block within one fork, the state in other forks is irrelevant. [edited]
 2025-09-11 16:17 davxy: For the sake of fuzzing you can maintain a simple bounded queue... (as we never extend mutations chain) [edited]
 2025-09-11 22:15 r2rtnl: https://github.com/davxy/jam-conformance/discussions/75
 2025-09-11 23:55 sourabhniyogi: It is likely very useful to have a v1 .bin/.json ancestors (and maybe forks) trace for us to test our v1 implementations as we post them in the next 24-72 hours?  In the examples/v1, with the updated names  [edited]
+2025-09-12 17:04 davxy: [V1 Enacted](https://github.com/davxy/jam-conformance/pull/47)
+2025-09-12 17:38 sourabhniyogi: Can you suggest the proper home for this issue https://github.com/davxy/jam-conformance/issues/76 
+2025-09-12 17:44 clearloop: I assume this should be under `w3f/jam-test-vectors` or https://github.com/polkadot-fellows/JIPs ? [edited]
+2025-09-12 17:46 clearloop: pretty like a standard interface for `PVM-FFI`, I think Jan Bujak may have some inputs? according to the benchmark tool in polkavm, there is sort of arch of Module, compile, various steps, etc. [edited]
+2025-09-12 17:48 clearloop: https://github.com/paritytech/polkavm/blob/master/tools/benchtool/src/backend.rs#L14 this is pretty like a universal interface, but I think it's still missing the host calls part for making it PVM in JAM focused [edited]
+2025-09-12 18:06 sourabhniyogi: Jan Bujak: Can you advise?
+2025-09-12 18:56 prematurata: 🥳 should we signal support of our targets somehow? in the ghissue maybe?  [edited]

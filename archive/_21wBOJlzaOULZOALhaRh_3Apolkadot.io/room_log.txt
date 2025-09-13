@@ -1,5 +1,5 @@
 # room: #jam:polkadot.io
-# exported: 2025-09-12 03:20 UTC
+# exported: 2025-09-13 03:17 UTC
 2024-04-20 02:08 johnjiao123: 
 2024-04-20 02:09 johnjiao123: 
 2024-05-30 21:48 nradko: Hey everyone,
@@ -11315,3 +11315,71 @@ For everyone wondering about M3 and M4, in general you can expect the following 
 2025-09-02 05:25 clearloop: yes I think SIMD would help a lot! given we are generating thousands of write_bytes(addr, 4) atm for the testing programs in traces, my complaint about the program(blocks) (wait, ain't this a chain of blocks, e.g. blockchain ??) format is mainly about the compilation speed and the code size, mb concept like [wasm module](https://webassembly.github.io/spec/core/syntax/modules.html) (reduce size) or function based cache (in compiler, speed up compilation) would help if all of the programs are sharing a same 1MB block area in their binaries
 
 and I agree with that the execution speed has more priority, since it's more hardcore in our implementations while cache stuffs are easy to be patched later then
+2025-09-12 11:29 prematurata: am i wrong or someone had a ci pipeline to auto timestamp commits into polkadot? it seems i cant find it
+2025-09-12 12:17 ascriv: https://github.com/JamBrains/remark-commit 
+2025-09-12 12:17 ascriv: @[Oliver Tale-Yazdi] 
+2025-09-12 12:23 vinsystems: It should be enough to push code to GitHub frequently, right?
+2025-09-12 12:30 oliver.tale-yazdi: This was discussed many times now. The whole point is that teams need to present _unfakable timestamps_.
+
+Just pushing commits to GitHub _does not achieve this_, since you can force push with altered timestamps and change them to arbitrary values. Using Merge Requests does achieve this (if you trust GitHub), since GitHub merge requests are queryable into the past with fixed timestamps.
+
+Persisting the commit hashes and timestamps to a decentralizeed ledger achieves this as well without having to trust GitHub. [edited]
+2025-09-12 12:31 oliver.tale-yazdi: Anyway, I am not a judge of the rules and this is my interpretation of it.
+2025-09-12 12:36 vinsystems: [The repository activity](https://github.com/paritytech/polkadot-sdk/activity) shows when the code has been pushed and each one of these timestamps are unfakeable. Perhaps a judge could help us clarify this.   [edited]
+2025-09-12 12:39 vinsystems: image.png
+2025-09-12 12:42 oliver.tale-yazdi: I did not know this Activity feature of GitHub. Looks like that could work, yea
+2025-09-12 12:56 ascriv: > <@vinsystems:matrix.org> Yes, but the activity of the repository shows when the code has been pushed and each one of these timestamps are unfakable. Perhaps a judge could help us clarify this.  
+
+I received word from the fellowship that pushes to main, e.g. are technically not sufficient, but they will still consider my code. To be safe, just put timestamps on some blockchain
+2025-09-12 12:57 ascriv: They said they will deprioritize my submission due to the extra work required for them to verify
+2025-09-12 12:57 jaymansfield: GitHub workflow execution timestamps also can’t be modified if you have some type of CI setup to verify tests on merges for example. 
+2025-09-12 13:05 vinsystems: Acording to the rule 15, we should be safe pushing code to Github frequently. I didn't develop all the code in main, so far I have done 30 merges on GitHub, but acording to the rule 15 I thought that it was ok to conform to the rules.  [edited]
+2025-09-12 13:11 clearloop: truth, commits can be faked easily, but actions and PR histories can't
+2025-09-12 13:16 ascriv: > <@vinsystems:matrix.org> Acording to the rule 15, we should be safe pushing code to Github frequently. I didn't develop all the code in main, I have done 30 merges so far on GitHub, but acording to the rule 15 I thought that it was ok to conform to the rules. 
+
+This was also my argument as well. If you want confirmation, you can email jam@web3.foundation about your specific case. You should be fine but they might give you a similar answer 
+2025-09-12 17:37 sourabhniyogi: Can you offer your thoughts on whether one or more high-performance [**PVM FFI-able libraries for JAM Implementers**](https://github.com/davxy/jam-conformance/issues/76) can reasonably be used for M1/M2 unofficial vs official fuzzing?
+
+I drafted a `pvm.h` here https://github.com/davxy/jam-conformance/issues/76 as a solution to the  "our impl performance is Nx slower than Polkajam 😂"  problem (for high N 😅), which is very sharp for those in Set C + D, so far.  The gorgeous [JAM Conformance dashboard](https://paritytech.github.io/jam-conformance-dashboard/) got us whipped into shape real fast, along with the fear of having ridiculously long audit times =).
+
+Many teams \[faced with the performance data pointing to slower audit times (weeks/months rather than hours/days)\] are going to want to go _hybrid_ by combining a PVM interpreter/recompiler written in a high performance language (probably C/C++/Rust) with their language.   I think some sharpening on what is an acceptable way to go hybrid would be super useful!
+
+The "For the purpose of performance testing, a third-party PVM implementation may be used to help achieve the required performance." is already there for the "Non-PVM Validating Node Path".   So I see no reason why, especially now that we have 15+ teams happily fuzzing, we should not expose a PVM API and some high performance PVM libraries conforming to this API, between Rust (specifically what polkajam uses) and C/X86 (from those gunning for M3/M4) at least.
+
+What do you think? [edited]
+2025-09-12 17:51 dave: The web3 JAM page (https://jam.web3.foundation/) is fairly clear that an original PVM implementation is required for M1/M2. A third-party PVM implementation may only be used for MN3/MN4, to hit the required performance targets, if you are following the "non-PVM validating node path". So I think the answer is that no you can't use a third-party PVM implementation to improve your performance for M1/M2.
+2025-09-12 17:56 dave: I wouldn't recommend trying to integrate a third-party PVM implementation now as I would think you could easily fall foul of the clean room requirements
+2025-09-12 19:05 tomusdrw: Quote from jam.web3.foundation:
+
+> The language set of an implementation is determined as the language in which its business logic is written. Peripheral, performance-bottleneck components of an implementation may be written in a higher-performance language without any impact on the consideration of language set. A non-exhaustive list of such components include: **PVM**, Database, Erasure, (de-)coding
+
+Teams writing in "slow" languages, are not required to write PVM in the same language. I think the only point is that it should be original implementation for "Validating Node Path". [edited]
+2025-09-12 19:26 jaymansfield: > <@tomusdrw:matrix.org> Quote from jam.web3.foundation:
+> 
+> > The language set of an implementation is determined as the language in which its business logic is written. Peripheral, performance-bottleneck components of an implementation may be written in a higher-performance language without any impact on the consideration of language set. A non-exhaustive list of such components include: **PVM**, Database, Erasure, (de-)coding
+> 
+> Teams writing in "slow" languages, are not required to write PVM in the same language. I think the only point is that it should be original implementation for "Validating Node Path".
+
+And in some languages it isn’t even possible to execute assembly to do a built in recompiler. I ended up doing a c++ recompiler for my java implementation. 
+2025-09-12 20:07 clearloop: interesting, I thought it would be into JAVA bytecode or Kotlin IR
+2025-09-12 20:11 dave: Yeah your PVM impl doesn't need to be in the same language, but it does need to be _your_ implementation. It can't be a third-party implementation, at least for M1/M2.
+2025-09-12 21:23 sourabhniyogi: There are now 15+ enrolled teams  that already have their own first-party PVM interpreter happily getting fuzz-reports.  The Set C/D teams happen to have slower implementations.  But I don't think there is any value in these slow PVM interpreters _except_ for the fact that _they trained us_: everyone with this JAM experience can see this was mere scaffolding for the next stage, which is to replace all of this with a high performance PVM recompiler, which can be done with third-party PVM libraries.
+
+Re "Clean room": Multiple teams can publish a libpvm.a (or whatever) FFI with high performance PVM interpretation/recompilation in the same way they are currently publishing compiled binary fuzzer targets while ALSO satisfying clean room requirements, I assume, if these recompiler/intepreter impls aren't publishing their code (or people don't look inside them when they do).  All recompiler teams can publish a library without publishing any source anything beyond an API -- something close to pvm.h can work for both C+Rust, and I'd like to see if this can work in late 2025 rather than late 2026 or 2027.
+
+Nearly 1.5 years has passed since rules were published.  At least for the 15+ enrolled teams who have already built a PVM interpreter, we're now _well_ beyond the _educational value of training these teams_ ... and now to the point where we can want PVM fuzzing and **performance** and **robustness** in PVM libraries instead.   I see little point in having PVM fuzzing of non-performant PVM interpreters, except to satisfy the rules.  In contrast, if the "C(++)/Rust" + "hybrid" recompiler teams provide PVM library for others, provided that the bug fixes flow to improve the robust production-grade high performant PVM libraries rather than the throwaway low performance PVM interpreters, we win something meaningfully better.
+
+Is this actually a debate?  Am I missing how important it is to have these throwaway PVM interpreters go through some PVM fuzz process for some reason?
+
+You can also distinguish between "unofficial" vs. "official" -- the beloved fuzzing processes are marked "unofficial", and you can still have the "official" process go through everyone's original throwaway PVM interpreter.  But if everyone's slow language implementation fuzzing goes 20-100x times faster using a library in the "unofficial" process, we should do that smarter thing, especially if it improves the end goal of having more robust more performant PVM recompilers and thus JAM implementations generally. [edited]
+2025-09-13 01:12 dave: > I don't think there is any value in these slow PVM interpreters except for the fact that they trained us
+
+You're right that there is little direct value in yet another slow PVM interpreter. The value is in the process of creating this interpreter: reading and interpreting the GP, and resolving the inevitable mismatches with other implementations. The more times this is done the more likely it is that we find all the issues in the GP, and the more likely it is that all implementations actually match the GP.
+
+There are two reasons I said I would be careful about integrating a third-party PVM at this point:
+
+- The PVM interface itself is likely to imply a particular interpretation of the GP. It could arguably be considered code, even if it's just function prototypes and type definitions.
+- If you're integrating with say PolkaVM, you'd have to be rather careful not to look at the PolkaVM code when debugging and so on. Yes, this probably isn't a concern if you're just using a binary with no debug info.
+
+Of course, teams following the non-PVM path will have to integrate with a third-party PVM at some point if they want to atttempt the performance milestones. In my opinion that would best be done after M1/M2.
+2025-09-13 01:21 dave: FWIW I don't think we intend to make the "unofficial" fuzzing particularly fast. We really do _not_ want teams to be fixing their implementations solely based on fuzzing against PolkaJam. At the end of the day PolkaJam is just another implementation and will have its own bugs and mismatches with the GP, which we certainly don't want copied
