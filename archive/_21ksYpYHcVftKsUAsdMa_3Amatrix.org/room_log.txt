@@ -1,5 +1,5 @@
 # room: #jam-conformance:matrix.org
-# exported: 2025-09-13 03:18 UTC
+# exported: 2025-09-14 03:26 UTC
 2025-08-20 15:56 erin: tomusdrw: i've set up the archiver to archive this also, so hopefully will be up starting tomorrow
 2025-08-21 06:33 ascriv: https://github.com/davxy/jam-conformance/issues/26 should we not discourage open source implementations (for now)? [edited]
 2025-08-21 10:27 oliver.tale-yazdi: I think open source repos are fine. Other implementors are just not supposed to look at it
@@ -675,3 +675,16 @@ For a block within one fork, the state in other forks is irrelevant. [edited]
 2025-09-12 17:48 clearloop: https://github.com/paritytech/polkavm/blob/master/tools/benchtool/src/backend.rs#L14 this is pretty like a universal interface, but I think it's still missing the host calls part for making it PVM in JAM focused [edited]
 2025-09-12 18:06 sourabhniyogi: Jan Bujak: Can you advise?
 2025-09-12 18:56 prematurata: 🥳 should we signal support of our targets somehow? in the ghissue maybe?  [edited]
+2025-09-13 05:16 jan: Something similar to this but cut down:
+
+https://docs.rs/polkavm/latest/polkavm/struct.RawInstance.html
+
+Basically:
+1. A function to turn a raw program blob into a module (i.e. a compilation step for recompilers; for interpreters this will be mostly a nop)
+2. A function to instantiate a new VM instance from that module.
+3. Then various getters/setters to modify that instantiated VM's state and be able to call into it.
+
+We definitely do not want to have callbacks in the interface. There should be just a single `run` method that you call on the instance, and if it happens to trigger a host call then it should return a status code signifying that a hostcall was called. (Similar to how inner PVM invocation hostcalls work.) Same with handling page-faults. The various "read_bytes_8" functions are completely unnecessary; there should only be one function for reading bytes with a given length, and then using that to e.g. read a 32-bit number is just a few trivial bitshifts and bitors away. And of course, most of the stuff in your "Debug and Tracing" section should not be in a standard API at all.
+2025-09-13 12:12 sourabhniyogi: OK!  I will adjust our pvm.h to match that API 100% and shift the callback process to the run method approach, thank you!
+2025-09-13 18:21 danicuki: Do we need to maintain fuzzer target accepting multiple versions? Or should we keep only the latest (in this case, now, v1)?
+2025-09-13 19:52 davxy: for what concerns our fuzzer, you can switch to v1 only. All new fuzzing sessions will use v1

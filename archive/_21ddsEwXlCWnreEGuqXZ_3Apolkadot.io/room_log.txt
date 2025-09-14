@@ -1,5 +1,5 @@
 # room: #graypaper:polkadot.io
-# exported: 2025-09-13 03:18 UTC
+# exported: 2025-09-14 03:25 UTC
 2024-04-17 20:29 syed: https://matrix.to/#/!hyzRkDqDthePbodYFz:parity.io/$f_DMsIEcDXZegw6Sabnehzc-LrdDQkmq5MbxDDyoZxY?via=parity.io&via=web3.foundation
 
 2024-04-17 20:29 syed: 
@@ -6623,3 +6623,14 @@ My broader question is whether such hidden or implicit dependencies should be ex
 
 Its been 2 years since some of started reading about JAM here: https://github.com/polkadot-fellows/RFCs/blob/gav-corejam/text/0031-corejam.md  [edited]
 2025-09-12 00:09 sourabhniyogi: Very cool to see how much has changed, and how little has changed from the original RFC.
+2025-09-13 06:57 prematurata: I was looking into the pvm memory management in my implementation. I've seen others addressing the pvmmemory in regions (ro, rw, stack...).  Eg: https://github.com/davxy/jam-conformance/issues/76
+
+I've had that hint as well but I always hesitated because of the page host call which seems to allow setting a W access modifier on a RO region (and vice-versa).
+
+To explain this differently i don't see any contraint in pages hostcall to prevent setting 1-or-more pages of the RO region as writeable. Or setting part of the RW region Readonly (maybe in the middle of it). 
+
+I'd like to migrate my currently overcomplicated pvm memory implementation to something with regions. Should also give me some boosts but I'd like to know what I am missing .... [edited]
+2025-09-13 07:53 clearloop: imo you need to think about how to make your memory access closed to O(1) performance, region based or page map based, it doesn't matter, btw I'm curious have you tried AssemblyScript for specified logic, or using bun or deno as runtime instead of node, not sure if these would help
+2025-09-13 08:29 prematurata: > <@clearloop:matrix.org> imo you need to think about how to make your memory access closed to O(1) performance, region based or page map based, it doesn't matter, btw I'm curious have you tried AssemblyScript for specified logic, or using bun or deno as runtime instead of node, not sure if these would help
+
+I am exploring all of this but some of the big winners are no go for now (ex bun)
