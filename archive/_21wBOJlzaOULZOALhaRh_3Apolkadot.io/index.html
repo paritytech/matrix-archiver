@@ -18,7 +18,7 @@ a:hover{color:#90caf9}
 em{font-style:italic}
 </style>
 <h1>#jam:polkadot.io</h1>
-<p><small>last updated 2025-09-14 03:25 UTC</small></p>
+<p><small>last updated 2025-09-15 03:30 UTC</small></p>
 <p><a href='room_log.txt'>⇩ plaintext</a> · <a href='../../'>⇦ all rooms</a></p>
 <hr>
 <div class='msg'><a class='ts' href='#$we4SYXTHwmKn094X9Zs_7mWUOoUVh4icvVdxD83RZfs'>#</a> <a class='ts' name='$we4SYXTHwmKn094X9Zs_7mWUOoUVh4icvVdxD83RZfs' href='https://matrix.to/#/!wBOJlzaOULZOALhaRh:polkadot.io/$we4SYXTHwmKn094X9Zs_7mWUOoUVh4icvVdxD83RZfs' target='_blank'>2024-04-20 02:08</a>&ensp;<span class='u' style='color:#d0709e'>johnjiao123</span>: </div>
@@ -11289,3 +11289,26 @@ For the PolkaVM crate specifically I&#x27;d say that looking at the public inter
 Requiring a binary ABI does restrict the use of non-native languages for code-emission.</div>
 <div class='msg'><a class='ts' href='#$JtMlWjhTuMTO-j7nzTL6kpKcGiKaCqkUqmtuQUu2fbM'>#</a> <a class='ts' name='$JtMlWjhTuMTO-j7nzTL6kpKcGiKaCqkUqmtuQUu2fbM' href='https://matrix.to/#/!wBOJlzaOULZOALhaRh:polkadot.io/$JtMlWjhTuMTO-j7nzTL6kpKcGiKaCqkUqmtuQUu2fbM' target='_blank'>2025-09-13 16:09</a>&ensp;<span class='u' style='color:#da5c80'>jan</span>: An interface is an interface, and it doesn&#x27;t make much difference whether it&#x27;s called directly or through some sort of an indirection layer like a socket. The extra noise due to the RPC will make it more difficult to do the measurements, but probably not impossible.</div>
 <div class='msg'><a class='ts' href='#$VaQA3yxrr-bzbRAWMb8buWB3B7KS2QhMBzIOnfPWSI4'>#</a> <a class='ts' name='$VaQA3yxrr-bzbRAWMb8buWB3B7KS2QhMBzIOnfPWSI4' href='https://matrix.to/#/!wBOJlzaOULZOALhaRh:polkadot.io/$VaQA3yxrr-bzbRAWMb8buWB3B7KS2QhMBzIOnfPWSI4' target='_blank'>2025-09-14 01:28</a>&ensp;<span class='u' style='color:#c67452'>sourabhniyogi</span>: Terrific, totally makes sense -- lets make this PVM API a JIP draft like super-soon!  Will take stab at it starting from the <a href="https://docs.rs/polkavm/latest/polkavm/struct.RawInstance.html" rel="noopener" target="_blank">polkavm API</a> and see if we can aim for what you have in mind </div>
+<div class='msg'><a class='ts' href='#$5XHiB_MQq6LI4mb1M0nO7inmFQwj_aCN1U0ruSuG04Y'>#</a> <a class='ts' name='$5XHiB_MQq6LI4mb1M0nO7inmFQwj_aCN1U0ruSuG04Y' href='https://matrix.to/#/!wBOJlzaOULZOALhaRh:polkadot.io/$5XHiB_MQq6LI4mb1M0nO7inmFQwj_aCN1U0ruSuG04Y' target='_blank'>2025-09-15 00:17</a>&ensp;<span class='u' style='color:#a047cd'>jam_man</span>: Not sure if I can ask this here. But it seems appropriate.
+
+Jay Chrawnna has stated that this new hard cap for DOT will be “enshrined in JAM and can only be changed through a hard fork”
+
+Could anyone explain how we enshrine something In JAM. While I understand that JAM is supposed to be a non-upgradable, fixed-parameter protocol that will host upgradable services, including hosting open-gov itself. Is there really no way for open-gov to modify any aspect of the JAM protocol?</div>
+<div class='msg'><a class='ts' href='#$lZL5jJlP6n214dIlTO1Kr_9xxz2dCWN9vBARwe1U7Ww'>#</a> <a class='ts' name='$lZL5jJlP6n214dIlTO1Kr_9xxz2dCWN9vBARwe1U7Ww' href='https://matrix.to/#/!wBOJlzaOULZOALhaRh:polkadot.io/$lZL5jJlP6n214dIlTO1Kr_9xxz2dCWN9vBARwe1U7Ww' target='_blank'>2025-09-15 00:18</a>&ensp;<span class='u' style='color:#a047cd'>jam_man</span>: From my understanding, JAM doesn’t even host the DOT token. It will need to be a service on JAM.</div>
+<div class='msg'><a class='ts' href='#$ZtVGtuBvRF1FnMfWymuYkDt7R4pwTiw8eGDpDy4C_Ro'>#</a> <a class='ts' name='$ZtVGtuBvRF1FnMfWymuYkDt7R4pwTiw8eGDpDy4C_Ro' href='https://matrix.to/#/!wBOJlzaOULZOALhaRh:polkadot.io/$ZtVGtuBvRF1FnMfWymuYkDt7R4pwTiw8eGDpDy4C_Ro' target='_blank'>2025-09-15 00:19</a>&ensp;<span class='u' style='color:#4cbfa8'>xlchen</span>: JAM host the DOT token. It is the only token hosted by JAM chain. All the balance related logic are referring to DOT (the native token) <span class="edited">(edited)</span></div>
+<div class='msg'><a class='ts' href='#$LedYOprIQyxLnj-x0F3DqRa97tCDJPbAqYQTcb-CBuU'>#</a> <a class='ts' name='$LedYOprIQyxLnj-x0F3DqRa97tCDJPbAqYQTcb-CBuU' href='https://matrix.to/#/!wBOJlzaOULZOALhaRh:polkadot.io/$LedYOprIQyxLnj-x0F3DqRa97tCDJPbAqYQTcb-CBuU' target='_blank'>2025-09-15 00:20</a>&ensp;<span class='u' style='color:#4cbfa8'>xlchen</span>: Gav said there will be an editorial board for GP, so update of GP will go through that.</div>
+<div class='msg'><a class='ts' href='#$HtuW2gbnUauzMhjzT53icYT9qsNR15eKg9miWmC3sqg'>#</a> <a class='ts' name='$HtuW2gbnUauzMhjzT53icYT9qsNR15eKg9miWmC3sqg' href='https://matrix.to/#/!wBOJlzaOULZOALhaRh:polkadot.io/$HtuW2gbnUauzMhjzT53icYT9qsNR15eKg9miWmC3sqg' target='_blank'>2025-09-15 00:21</a>&ensp;<span class='u' style='color:#4cbfa8'>xlchen</span>: As you already said, JAM chain is not designed to be upgradable. So upgrades requires hard fork. Then the rest is just how hard fork upgrade works. i.e. social consensus.</div>
+<div class='msg'><a class='ts' href='#$nvQUX3fuFhUxe--UVHZVb3N9a8bFWq_ZzLA1PWfCEoU'>#</a> <a class='ts' name='$nvQUX3fuFhUxe--UVHZVb3N9a8bFWq_ZzLA1PWfCEoU' href='https://matrix.to/#/!wBOJlzaOULZOALhaRh:polkadot.io/$nvQUX3fuFhUxe--UVHZVb3N9a8bFWq_ZzLA1PWfCEoU' target='_blank'>2025-09-15 00:25</a>&ensp;<span class='u' style='color:#a047cd'>jam_man</span>: Hm, ya that’s what I assumed.
+
+That you could simply force a hard fork with an open-gov proposal. Which does not inherently enshrine it?
+
+Has this concept been discussed for JAM. Can forks be forced by proposals, or will it be up to the node operators. </div>
+<div class='msg'><a class='ts' href='#$FF-1o2PTwyYvif11I06562hASAPF1FAhNnzcw5GzVtY'>#</a> <a class='ts' name='$FF-1o2PTwyYvif11I06562hASAPF1FAhNnzcw5GzVtY' href='https://matrix.to/#/!wBOJlzaOULZOALhaRh:polkadot.io/$FF-1o2PTwyYvif11I06562hASAPF1FAhNnzcw5GzVtY' target='_blank'>2025-09-15 00:27</a>&ensp;<span class='u' style='color:#4cbfa8'>xlchen</span>: what open gov can do is boot off / slash uncooperative validators <span class="edited">(edited)</span></div>
+<div class='msg'><a class='ts' href='#$B9_21NXigWp8MZziV58-CW0Skxqfju5D6pF-UKAp-nc'>#</a> <a class='ts' name='$B9_21NXigWp8MZziV58-CW0Skxqfju5D6pF-UKAp-nc' href='https://matrix.to/#/!wBOJlzaOULZOALhaRh:polkadot.io/$B9_21NXigWp8MZziV58-CW0Skxqfju5D6pF-UKAp-nc' target='_blank'>2025-09-15 00:27</a>&ensp;<span class='u' style='color:#4cbfa8'>xlchen</span>: so in some way, it can be done</div>
+<div class='msg'><a class='ts' href='#$sJB8pvcHqf9_Hwuxi4kn6wv3PwF8QpRvydRyCSRdVns'>#</a> <a class='ts' name='$sJB8pvcHqf9_Hwuxi4kn6wv3PwF8QpRvydRyCSRdVns' href='https://matrix.to/#/!wBOJlzaOULZOALhaRh:polkadot.io/$sJB8pvcHqf9_Hwuxi4kn6wv3PwF8QpRvydRyCSRdVns' target='_blank'>2025-09-15 00:38</a>&ensp;<span class='u' style='color:#a047cd'>jam_man</span>: I see thank you. 
+
+And now I see. The Gray paper outlines how the networks Balances (NB) are baked into consensus as 64-bit unsigned integers.
+
+So it’s not a service at all. I assumed we would have to bring DOT over as a service. 
+
+This is actually good to know. Thank you again. </div>

@@ -1,5 +1,5 @@
 # room: #jam-conformance:matrix.org
-# exported: 2025-09-14 03:26 UTC
+# exported: 2025-09-15 03:31 UTC
 2025-08-20 15:56 erin: tomusdrw: i've set up the archiver to archive this also, so hopefully will be up starting tomorrow
 2025-08-21 06:33 ascriv: https://github.com/davxy/jam-conformance/issues/26 should we not discourage open source implementations (for now)? [edited]
 2025-08-21 10:27 oliver.tale-yazdi: I think open source repos are fine. Other implementors are just not supposed to look at it
@@ -688,3 +688,8 @@ We definitely do not want to have callbacks in the interface. There should be ju
 2025-09-13 12:12 sourabhniyogi: OK!  I will adjust our pvm.h to match that API 100% and shift the callback process to the run method approach, thank you!
 2025-09-13 18:21 danicuki: Do we need to maintain fuzzer target accepting multiple versions? Or should we keep only the latest (in this case, now, v1)?
 2025-09-13 19:52 davxy: for what concerns our fuzzer, you can switch to v1 only. All new fuzzing sessions will use v1
+2025-09-14 15:23 danicuki: Are you planning to add some examples that use ancestors on v1? As far as I saw, all 30 examples don't use ancestors feature. 
+2025-09-14 17:06 davxy: Yes, but I've not implemented the feature yet. Indeed during the handshake the flag is turned off in our PeerInfo message
+2025-09-14 17:06 davxy: new batch https://github.com/davxy/jam-conformance/pull/78 [edited]
+2025-09-14 20:13 prematurata: https://github.com/davxy/jam-conformance/discussions/79
+2025-09-15 02:42 clearloop: interesting, each time new traces come out, I can trigger the sum of failures from all other teams
