@@ -1,5 +1,5 @@
 # room: #jam-conformance:matrix.org
-# exported: 2025-09-15 03:31 UTC
+# exported: 2025-09-16 03:22 UTC
 2025-08-20 15:56 erin: tomusdrw: i've set up the archiver to archive this also, so hopefully will be up starting tomorrow
 2025-08-21 06:33 ascriv: https://github.com/davxy/jam-conformance/issues/26 should we not discourage open source implementations (for now)? [edited]
 2025-08-21 10:27 oliver.tale-yazdi: I think open source repos are fine. Other implementors are just not supposed to look at it
@@ -693,3 +693,19 @@ We definitely do not want to have callbacks in the interface. There should be ju
 2025-09-14 17:06 davxy: new batch https://github.com/davxy/jam-conformance/pull/78 [edited]
 2025-09-14 20:13 prematurata: https://github.com/davxy/jam-conformance/discussions/79
 2025-09-15 02:42 clearloop: interesting, each time new traces come out, I can trigger the sum of failures from all other teams
+2025-09-15 22:32 r2rtnl: davxy:  a question regarding ancestor support and sharing the same implementation of the (11.35) check between a fuzzer target and jam-test-vectors.
+
+In GP 0.7.0, (11.35) requires two things:
+
+1. The lookup\_anchor hash must be present in the ancestor set.
+2. Its slot must match lookup\_anchor\_slot.
+
+The issue I’m seeing is that the reports test vectors only provide recent\_blocks, which don’t include slot information.
+
+This creates a mismatch:
+
+- To pass the reports test vectors, the implementation must skip the slot check and check only against recent\_blocks.
+- For full ancestor support in fuzzer target, the slot check must remain.
+
+Would it be feasible to adjust the reports test vectors to include slot information, or otherwise make it possible to construct the ancestor set so that the full (11.35) check can run? [edited]
+2025-09-16 02:55 ascriv: https://github.com/davxy/jam-conformance/discussions/84

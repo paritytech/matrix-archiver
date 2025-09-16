@@ -18,7 +18,7 @@ a:hover{color:#90caf9}
 em{font-style:italic}
 </style>
 <h1>#jam-conformance:matrix.org</h1>
-<p><small>last updated 2025-09-15 03:31 UTC</small></p>
+<p><small>last updated 2025-09-16 03:22 UTC</small></p>
 <p><a href='room_log.txt'>⇩ plaintext</a> · <a href='../../'>⇦ all rooms</a></p>
 <hr>
 <div class='msg'><a class='ts' href='#$_9hLINsChVG8rufQkmbqp-fIbsNyK1YqpS3C9S7QZHU'>#</a> <a class='ts' name='$_9hLINsChVG8rufQkmbqp-fIbsNyK1YqpS3C9S7QZHU' href='https://matrix.to/#/!ksYpYHcVftKsUAsdMa:matrix.org/$_9hLINsChVG8rufQkmbqp-fIbsNyK1YqpS3C9S7QZHU' target='_blank'>2025-08-20 15:56</a>&ensp;<span class='u' style='color:#787fdf'>erin</span>: tomusdrw: i&#x27;ve set up the archiver to archive this also, so hopefully will be up starting tomorrow</div>
@@ -709,3 +709,19 @@ We definitely do not want to have callbacks in the interface. There should be ju
 <div class='msg'><a class='ts' href='#$oIn3YfWNLiydpv7CxKFda94Srz-MdI3-Z6_HYnWKBCI'>#</a> <a class='ts' name='$oIn3YfWNLiydpv7CxKFda94Srz-MdI3-Z6_HYnWKBCI' href='https://matrix.to/#/!ksYpYHcVftKsUAsdMa:matrix.org/$oIn3YfWNLiydpv7CxKFda94Srz-MdI3-Z6_HYnWKBCI' target='_blank'>2025-09-14 17:06</a>&ensp;<span class='u' style='color:#c9419d'>davxy</span>: new batch <a href="https://github.com/davxy/jam-conformance/pull/78" rel="noopener" target="_blank">https://github.com/davxy/jam-conformance/pull/78</a> <span class="edited">(edited)</span></div>
 <div class='msg'><a class='ts' href='#$bbRffJPBe5E4y2GIix0xrNNLN7Udqqwmw3T4M1cmg6A'>#</a> <a class='ts' name='$bbRffJPBe5E4y2GIix0xrNNLN7Udqqwmw3T4M1cmg6A' href='https://matrix.to/#/!ksYpYHcVftKsUAsdMa:matrix.org/$bbRffJPBe5E4y2GIix0xrNNLN7Udqqwmw3T4M1cmg6A' target='_blank'>2025-09-14 20:13</a>&ensp;<span class='u' style='color:#5c84c9'>prematurata</span>: <a href="https://github.com/davxy/jam-conformance/discussions/79" rel="noopener" target="_blank">https://github.com/davxy/jam-conformance/discussions/79</a></div>
 <div class='msg'><a class='ts' href='#$ptleQK8_8kEVgah13ZoK1O0wFBDofD0uXmedS_jmTL4'>#</a> <a class='ts' name='$ptleQK8_8kEVgah13ZoK1O0wFBDofD0uXmedS_jmTL4' href='https://matrix.to/#/!ksYpYHcVftKsUAsdMa:matrix.org/$ptleQK8_8kEVgah13ZoK1O0wFBDofD0uXmedS_jmTL4' target='_blank'>2025-09-15 02:42</a>&ensp;<span class='u' style='color:#be2950'>clearloop</span>: interesting, each time new traces come out, I can trigger the sum of failures from all other teams</div>
+<div class='msg'><a class='ts' href='#$KWj4OS-QKpN1QQiDy4S0C5gwMXEXkVFP8oo8_0Me164'>#</a> <a class='ts' name='$KWj4OS-QKpN1QQiDy4S0C5gwMXEXkVFP8oo8_0Me164' href='https://matrix.to/#/!ksYpYHcVftKsUAsdMa:matrix.org/$KWj4OS-QKpN1QQiDy4S0C5gwMXEXkVFP8oo8_0Me164' target='_blank'>2025-09-15 22:32</a>&ensp;<span class='u' style='color:#5bdb7f'>r2rtnl</span>: davxy:  a question regarding ancestor support and sharing the same implementation of the (11.35) check between a fuzzer target and jam-test-vectors.
+
+In GP 0.7.0, (11.35) requires two things:
+
+1. The lookup\_anchor hash must be present in the ancestor set.
+2. Its slot must match lookup\_anchor\_slot.
+
+The issue I’m seeing is that the reports test vectors only provide recent\_blocks, which don’t include slot information.
+
+This creates a mismatch:
+
+- To pass the reports test vectors, the implementation must skip the slot check and check only against recent\_blocks.
+- For full ancestor support in fuzzer target, the slot check must remain.
+
+Would it be feasible to adjust the reports test vectors to include slot information, or otherwise make it possible to construct the ancestor set so that the full (11.35) check can run? <span class="edited">(edited)</span></div>
+<div class='msg'><a class='ts' href='#$7EK0fGvP1xRX7grGy44b_qE61Ob4Vl1Q9hX3rM-LWOw'>#</a> <a class='ts' name='$7EK0fGvP1xRX7grGy44b_qE61Ob4Vl1Q9hX3rM-LWOw' href='https://matrix.to/#/!ksYpYHcVftKsUAsdMa:matrix.org/$7EK0fGvP1xRX7grGy44b_qE61Ob4Vl1Q9hX3rM-LWOw' target='_blank'>2025-09-16 02:55</a>&ensp;<span class='u' style='color:#4036ac'>ascriv</span>: <a href="https://github.com/davxy/jam-conformance/discussions/84" rel="noopener" target="_blank">https://github.com/davxy/jam-conformance/discussions/84</a></div>

@@ -1,5 +1,5 @@
 # room: #graypaper:polkadot.io
-# exported: 2025-09-15 03:31 UTC
+# exported: 2025-09-16 03:22 UTC
 2024-04-17 20:29 syed: https://matrix.to/#/!hyzRkDqDthePbodYFz:parity.io/$f_DMsIEcDXZegw6Sabnehzc-LrdDQkmq5MbxDDyoZxY?via=parity.io&via=web3.foundation
 
 2024-04-17 20:29 syed: 
@@ -6634,3 +6634,10 @@ I'd like to migrate my currently overcomplicated pvm memory implementation to so
 2025-09-13 08:29 prematurata: > <@clearloop:matrix.org> imo you need to think about how to make your memory access closed to O(1) performance, region based or page map based, it doesn't matter, btw I'm curious have you tried AssemblyScript for specified logic, or using bun or deno as runtime instead of node, not sure if these would help
 
 I am exploring all of this but some of the big winners are no go for now (ex bun)
+2025-09-15 05:11 gav: @room GP v0.7.2 is [released](https://github.com/gavofyork/graypaper/releases/tag/v0.7.2). There's no big changes, just a bunch of corrections and clarifications.
+2025-09-15 05:16 gav: For future note, 0.7 series will probably not see any substantial development other than Jan Bujak 's gas charging refactor and (possibly) [one new host call](https://github.com/gavofyork/graypaper/issues/398). I'll keep rolling in corrections/clarifications until then and we'll move on to 0.8 series once that's all done.
+2025-09-15 05:16 gav: I also don't see much happening in 0.8/0.9 series beyond what I've already talked about - optimisations and security fixes.
+2025-09-15 15:01 boymaas: https://graypaper.fluffylabs.dev/#/1c979cb/373d01373d01?v=0.7.1 This should probably be "b." The balance should not fall below the threshold balance.
+2025-09-15 15:01 gav: See 0.7.2.
+2025-09-15 17:39 clearloop: curious about why we use `blake2b` instead of `blake3` for storage hash, how storage can be attacked, since the program storage key is "prefixed" by service id without hash, that inside of services, it will never be possible to mockup the same keys of others [edited]
+2025-09-15 18:00 dave: Might be interesting to switch to Blake3 as its hierarchical structure allows you to make Merkle proofs for ranges of the hashed data
