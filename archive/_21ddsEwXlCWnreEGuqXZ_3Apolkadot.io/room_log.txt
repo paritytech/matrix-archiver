@@ -1,5 +1,5 @@
 # room: #graypaper:polkadot.io
-# exported: 2025-09-16 03:22 UTC
+# exported: 2025-09-17 03:21 UTC
 2024-04-17 20:29 syed: https://matrix.to/#/!hyzRkDqDthePbodYFz:parity.io/$f_DMsIEcDXZegw6Sabnehzc-LrdDQkmq5MbxDDyoZxY?via=parity.io&via=web3.foundation
 
 2024-04-17 20:29 syed: 
@@ -6641,3 +6641,18 @@ I am exploring all of this but some of the big winners are no go for now (ex bun
 2025-09-15 15:01 gav: See 0.7.2.
 2025-09-15 17:39 clearloop: curious about why we use `blake2b` instead of `blake3` for storage hash, how storage can be attacked, since the program storage key is "prefixed" by service id without hash, that inside of services, it will never be possible to mockup the same keys of others [edited]
 2025-09-15 18:00 dave: Might be interesting to switch to Blake3 as its hierarchical structure allows you to make Merkle proofs for ranges of the hashed data
+2025-09-16 06:45 sivakona: https://github.com/w3f/fflonk/issues/45#issue-3393797205
+
+davxy  Could you please help me figure this out, or provide any guidance?
+
+P.S.: The results are only differing at this specific scope — in other areas, they match.
+
+ [edited]
+2025-09-16 10:06 gav: > curious about why we use blake2b instead of blake3 for storage hash
+
+From Wikipedia:
+
+> The BLAKE3 compression function is closely based on that of BLAKE2s, with the biggest difference being that the number of rounds is reduced from 10 to 7, a change based on the assumption that current cryptography is too conservative.
+2025-09-16 10:06 gav: It's unclear as to whether that assumption is correct.
+2025-09-16 10:10 gav: Furthermore Blake3, inherits its main datum from Blake2s as 32-bit, making it fastest on silicon of that architecture. I expect JAM nodes to be overwhelmingly 64-bit architecture, giving Blake2b an edge. They added a binary tree structure to it to help parallelise the processing, however this isn't too helpful unless the data is large enough to use a deep enough binary tree. Much of our hash input is itself quite close to 32 bytes and probably wouldn't. In reality hashing small data on 64-bit hardware the two are pretty similar in speed yet Blake2b is objectively and substantially more secure - even if, arguably, that security is redundant. [edited]
+2025-09-16 10:12 gav: On the latter point, just because there are no published attacks from academia doesn't mean that at the state level there are no weakening vectors known. Furthermore, in JAM we routinely *don't* use all 32 bytes of security from the hash, so it makes sense to be more conservative in the hash function itself.

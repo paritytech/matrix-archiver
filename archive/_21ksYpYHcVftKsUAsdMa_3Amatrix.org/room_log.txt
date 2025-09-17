@@ -1,5 +1,5 @@
 # room: #jam-conformance:matrix.org
-# exported: 2025-09-16 03:22 UTC
+# exported: 2025-09-17 03:22 UTC
 2025-08-20 15:56 erin: tomusdrw: i've set up the archiver to archive this also, so hopefully will be up starting tomorrow
 2025-08-21 06:33 ascriv: https://github.com/davxy/jam-conformance/issues/26 should we not discourage open source implementations (for now)? [edited]
 2025-08-21 10:27 oliver.tale-yazdi: I think open source repos are fine. Other implementors are just not supposed to look at it
@@ -709,3 +709,112 @@ This creates a mismatch:
 
 Would it be feasible to adjust the reports test vectors to include slot information, or otherwise make it possible to construct the ancestor set so that the full (11.35) check can run? [edited]
 2025-09-16 02:55 ascriv: https://github.com/davxy/jam-conformance/discussions/84
+2025-09-16 09:07 davxy: Please try to run your implementation against minifuzz first
+
+https://github.com/davxy/jam-conformance/pull/85
+
+  ↳ 2025-09-16 10:01 r2rtnl: davxy: Does minifuzz assume that an implementation supports forks? Messages 5 and 7 seem to import a block with the same slot (3).
+  ↳ 2025-09-16 10:39 davxy: In the next hours I'll share a set with forks and another without forks.
+2025-09-16 09:08 davxy: May be a bit buggy :-) feel free to open a PR to improve it
+2025-09-16 09:24 davxy: Teams that are already enrolled are encouraged to run it anyway, as I have found some minor issues in the targets (e.g., incorrect error message length, wrong argument order in PeerInfo, etc.).  
+I will not fuzz your target if you have not successfully completed the first 20 steps in the examples/v1 folder using minifuzz [edited]
+2025-09-16 10:21 tomusdrw: Is there any more details on the examples (i.e. expected state, etc)? We are getting a wrong state root at some point, but not really sure how I could debug it.
+2025-09-16 10:38 davxy: I added a readme file to the examples folder. However, I'll copy the first 20 steps to the minifuzz folder to avoid midunderstandings
+2025-09-16 10:46 clearloop: we have unit tests for `examples/v1`, e.g. decode/encode `*.bin` and see if things get matched, not sure if this is easier to test the format, will try the mini-fuzz script anyway
+2025-09-16 10:56 tomusdrw: Ah, okay, perfect! I missed that.
+2025-09-16 13:01 jaymansfield: davxy: Just a heads up, minifuzz seems to work until the invalid state root in step 29. It then shuts down after seeing the mismatch rather then proceeding with the final get state request.
+2025-09-16 13:02 davxy: Yes this is known. See the README in the examples folder.
+I'll prepare some other traces for minifuzz testing (with and without forks)
+2025-09-16 13:04 davxy: In the examples we intentionally return a wrong root to emulate a bad target, and thus include the GetState message in the examples sequence
+2025-09-16 13:04 davxy: But this is causing some confusion (you are the third to ask)
+2025-09-16 13:04 davxy: so I'll provide a dedicated folder for the "self test"
+2025-09-16 13:07 jaymansfield: This would help. I think the readme is clear in that it should fail, but not that minifuzz won't actually perform the get state itself after. That was the part missing. [edited]
+2025-09-16 13:10 clearloop: wait, I just realized that `minifuzzer` stopped after 10 pairs on my machine without any error messages, if this is not normal as well
+
+```
+==========================================================================
+Processing pair 10: 00000009_fuzzer_import_block.bin -> 00000009_target_state_root.bin
+TX: import_block
+RX: state_root
+
+Stopping after 10 file pairs as requested
+``` [edited]
+2025-09-16 13:11 jaymansfield: Try adding the argument: --stop-after 30
+2025-09-16 13:47 davxy: https://github.com/davxy/jam-conformance/tree/main/fuzz-proto#preliminary-self-testing
+2025-09-16 13:47 davxy: I hope is clear now
+2025-09-16 14:12 danicuki: I get error when try to run minifuzz:
+```
+$ python minifuzz/minifuzz.py -d examples/v1/forks --target-sock /tmp/jam_target.sock
+Traceback (most recent call last):
+  File "/Users/danicuki/dev/jam-conformance/fuzz-proto/minifuzz/minifuzz.py", line 9, in <module>
+    from jam_types.fuzzer import FuzzerMessage
+ModuleNotFoundError: No module named 'jam_types'
+```
+
+Where can I find the `jam_types` code? 
+2025-09-16 14:14 clearloop: ```
+pip install git+https://github.com/davxy/jam-types-py.git
+```
+2025-09-16 14:22 clearloop: davxy: I think there is a problem in the fork tests at `00000004` which propose `block.slot=1` with parent hash of the block in `00000003` (`block.slot=1` imported successfully) and expects import success, if I'm not mistaken, if this is a fork, it should have the parent hash of `block.slot=0`
+2025-09-16 14:59 jaymansfield: I'm seeing the parent of 00000004 to be the one from the initialize in 00000001
+2025-09-16 15:40 danicuki: minifuzzer should not compare message size, since error messages can differ from implementation to implementation, no?
+
+```
+Processing pair 7: 00000006_fuzzer_import_block.bin -> 00000006_target_error.bin
+TX: import_block
+Error decoding target response: Decoding <String> - No more bytes available (needed: 69 / total: 68)
+Connection closed
+```
+
+I believe `FuzzerMessage(data=scale_bytes).decode()` might have a bug [edited]
+2025-09-16 15:43 clearloop: can you pass that, from my logs `0x7003387fc23f422113a94dd5abc0b4fa31eae0108b4ac9ea6a133ffd14e315fb` is the parent `00000004` want
+
+```
+DEBUG  read: message(length): Info
+DEBUG write: message(21): Info
+DEBUG  read: message(length): Initialize(len=21)
+DEBUG write: message(33): StateRoot(0xe174c1ea94e21958db28c9ea621f09ae2b360a9ecb6047afdbf94827d216e1db)
+
+DEBUG  read: message(length): ImportBlock(slot=1, hash=0x252ff7a523a698b91e872f90f3f046fac90b80869bf9c7cf2000d627f4e7df3e)
+DEBUG import: importing block(1)=0x252ff7a523a698b91e872f90f3f046fac90b80869bf9c7cf2000d627f4e7df3e, best block: 0
+ WARN failed to import block: BadCoreIndex
+DEBUG write: message(14): Error(BadCoreIndex)
+
+DEBUG  read: message(length): ImportBlock(slot=1, hash=0x7003387fc23f422113a94dd5abc0b4fa31eae0108b4ac9ea6a133ffd14e315fb)
+DEBUG import: importing block(1)=0x7003387fc23f422113a94dd5abc0b4fa31eae0108b4ac9ea6a133ffd14e315fb, best block: 0
+DEBUG write: message(33): StateRoot(0x25b1bd54e8d0d5c82202ae51de2d378b8dfa13f637fe75bda672484c25e1c6a6)
+
+DEBUG  read: message(length): ImportBlock(slot=1, hash=0xe63b5fa906678415f5b15ae6514d44b35e4dafa497f52a1640cbf374811b9c89)
+DEBUG import: importing block(1)=0xe63b5fa906678415f5b15ae6514d44b35e4dafa497f52a1640cbf374811b9c89, best block: 1
+ WARN import: Fallback state to 0
+ WARN failed to import block: Parent mismatch, expected: 0x7003387fc23f422113a94dd5abc0b4fa31eae0108b4ac9ea6a133ffd14e315fb, got: 0x2bf11dc5e1c7b9bbaafc2c8533017abc12daeb0baf22c92509ad50f7875e5716
+``` [edited]
+2025-09-16 16:39 davxy: > I think there is a problem in the fork tests at 00000004
+
+I don't see any issue
+
+> I'm seeing the parent of 00000004 to be the one from the initialize in 00000001
+
+Correct
+
+Given the filename number associated to each block, the chain graph of the blocks (attempted to be imported) up to 7 should be:
+
+```
+1--+--2
+   +--3
+   +--4--+--5
+         +--6--7
+``` [edited]
+2025-09-16 16:43 davxy: From the replies, it appears that:
+
+- Blocks **2** and **5** fail to be imported.  
+- Blocks **3** and **4** are successfully imported (actual fork).  
+
+According to the fuzzer protocol, the chain is extended using the **last successfully imported block**.  
+
+In other words, you will **never** see blocks 3 and 4 successfully imported and then the chain extended from block 3.
+
+2025-09-16 16:43 davxy: https://github.com/davxy/jam-conformance/tree/main/fuzz-proto#example-session
+2025-09-16 20:42 sourabhniyogi: After teams get through  "minifuzz" this week and a round or two of ancestry + forks this week and next, can we wrap up 0.7.0 and move collectively onto 0.7.1, say, on week of Sept 29?
+
+Since there isn't _that_ much happening on 0.7.2, perhaps we can jump from 0.7.0 to [0.7.2](https://github.com/gavofyork/graypaper/releases/tag/v0.7.2)? [edited]

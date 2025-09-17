@@ -18,7 +18,7 @@ a:hover{color:#90caf9}
 em{font-style:italic}
 </style>
 <h1>#jam-conformance:matrix.org</h1>
-<p><small>last updated 2025-09-16 03:22 UTC</small></p>
+<p><small>last updated 2025-09-17 03:22 UTC</small></p>
 <p><a href='room_log.txt'>⇩ plaintext</a> · <a href='../../'>⇦ all rooms</a></p>
 <hr>
 <div class='msg'><a class='ts' href='#$_9hLINsChVG8rufQkmbqp-fIbsNyK1YqpS3C9S7QZHU'>#</a> <a class='ts' name='$_9hLINsChVG8rufQkmbqp-fIbsNyK1YqpS3C9S7QZHU' href='https://matrix.to/#/!ksYpYHcVftKsUAsdMa:matrix.org/$_9hLINsChVG8rufQkmbqp-fIbsNyK1YqpS3C9S7QZHU' target='_blank'>2025-08-20 15:56</a>&ensp;<span class='u' style='color:#787fdf'>erin</span>: tomusdrw: i&#x27;ve set up the archiver to archive this also, so hopefully will be up starting tomorrow</div>
@@ -725,3 +725,106 @@ This creates a mismatch:
 
 Would it be feasible to adjust the reports test vectors to include slot information, or otherwise make it possible to construct the ancestor set so that the full (11.35) check can run? <span class="edited">(edited)</span></div>
 <div class='msg'><a class='ts' href='#$7EK0fGvP1xRX7grGy44b_qE61Ob4Vl1Q9hX3rM-LWOw'>#</a> <a class='ts' name='$7EK0fGvP1xRX7grGy44b_qE61Ob4Vl1Q9hX3rM-LWOw' href='https://matrix.to/#/!ksYpYHcVftKsUAsdMa:matrix.org/$7EK0fGvP1xRX7grGy44b_qE61Ob4Vl1Q9hX3rM-LWOw' target='_blank'>2025-09-16 02:55</a>&ensp;<span class='u' style='color:#4036ac'>ascriv</span>: <a href="https://github.com/davxy/jam-conformance/discussions/84" rel="noopener" target="_blank">https://github.com/davxy/jam-conformance/discussions/84</a></div>
+<div class='msg'><a class='ts' href='#$QiP1hcy8KenmUbpvrwfxA88hsYOO50309LNJLa5T39s'>#</a> <a class='ts' name='$QiP1hcy8KenmUbpvrwfxA88hsYOO50309LNJLa5T39s' href='https://matrix.to/#/!ksYpYHcVftKsUAsdMa:matrix.org/$QiP1hcy8KenmUbpvrwfxA88hsYOO50309LNJLa5T39s' target='_blank'>2025-09-16 09:07</a>&ensp;<span class='u' style='color:#c9419d'>davxy</span>: Please try to run your implementation against minifuzz first
+
+<a href="https://github.com/davxy/jam-conformance/pull/85" rel="noopener" target="_blank">https://github.com/davxy/jam-conformance/pull/85</a>
+</div>
+<div class='msg reply'><a class='ts' href='#$1I0B_CStdaCN70-AGwWz1tIk7U5Ai40Q9HL7rfGNtfE'>#</a> <a class='ts' name='$1I0B_CStdaCN70-AGwWz1tIk7U5Ai40Q9HL7rfGNtfE' href='https://matrix.to/#/!ksYpYHcVftKsUAsdMa:matrix.org/$1I0B_CStdaCN70-AGwWz1tIk7U5Ai40Q9HL7rfGNtfE' target='_blank'>2025-09-16 10:01</a>&ensp;<span class='u' style='color:#5bdb7f'>r2rtnl</span>: davxy: Does minifuzz assume that an implementation supports forks? Messages 5 and 7 seem to import a block with the same slot (3).</div>
+<div class='msg reply'><a class='ts' href='#$7ysxS_WH8fO0ueNPNID-GXyBNxrBKoLaTuS4HA6oM24'>#</a> <a class='ts' name='$7ysxS_WH8fO0ueNPNID-GXyBNxrBKoLaTuS4HA6oM24' href='https://matrix.to/#/!ksYpYHcVftKsUAsdMa:matrix.org/$7ysxS_WH8fO0ueNPNID-GXyBNxrBKoLaTuS4HA6oM24' target='_blank'>2025-09-16 10:39</a>&ensp;<span class='u' style='color:#c9419d'>davxy</span>: In the next hours I&#x27;ll share a set with forks and another without forks.</div>
+<div class='msg'><a class='ts' href='#$Nf2aeSM40SdBhCSamum6HGq9P8tTVpn9V_OY3TC1jZs'>#</a> <a class='ts' name='$Nf2aeSM40SdBhCSamum6HGq9P8tTVpn9V_OY3TC1jZs' href='https://matrix.to/#/!ksYpYHcVftKsUAsdMa:matrix.org/$Nf2aeSM40SdBhCSamum6HGq9P8tTVpn9V_OY3TC1jZs' target='_blank'>2025-09-16 09:08</a>&ensp;<span class='u' style='color:#c9419d'>davxy</span>: May be a bit buggy :-) feel free to open a PR to improve it</div>
+<div class='msg'><a class='ts' href='#$ghWRMK1DBAMsoLANce-vttRQqnN_TiH_hN8mRIiZQ1U'>#</a> <a class='ts' name='$ghWRMK1DBAMsoLANce-vttRQqnN_TiH_hN8mRIiZQ1U' href='https://matrix.to/#/!ksYpYHcVftKsUAsdMa:matrix.org/$ghWRMK1DBAMsoLANce-vttRQqnN_TiH_hN8mRIiZQ1U' target='_blank'>2025-09-16 09:24</a>&ensp;<span class='u' style='color:#c9419d'>davxy</span>: Teams that are already enrolled are encouraged to run it anyway, as I have found some minor issues in the targets (e.g., incorrect error message length, wrong argument order in PeerInfo, etc.).  
+I will not fuzz your target if you have not successfully completed the first 20 steps in the examples/v1 folder using minifuzz <span class="edited">(edited)</span></div>
+<div class='msg'><a class='ts' href='#$gPhN_A7g6B1PnO4hv5MkpyC07823cGI6sQGAOsaTOmk'>#</a> <a class='ts' name='$gPhN_A7g6B1PnO4hv5MkpyC07823cGI6sQGAOsaTOmk' href='https://matrix.to/#/!ksYpYHcVftKsUAsdMa:matrix.org/$gPhN_A7g6B1PnO4hv5MkpyC07823cGI6sQGAOsaTOmk' target='_blank'>2025-09-16 10:21</a>&ensp;<span class='u' style='color:#48d03d'>tomusdrw</span>: Is there any more details on the examples (i.e. expected state, etc)? We are getting a wrong state root at some point, but not really sure how I could debug it.</div>
+<div class='msg'><a class='ts' href='#$UNJcXObhffMy3sglFJztIhR-kGcSTBI1f-ZItCU7xPo'>#</a> <a class='ts' name='$UNJcXObhffMy3sglFJztIhR-kGcSTBI1f-ZItCU7xPo' href='https://matrix.to/#/!ksYpYHcVftKsUAsdMa:matrix.org/$UNJcXObhffMy3sglFJztIhR-kGcSTBI1f-ZItCU7xPo' target='_blank'>2025-09-16 10:38</a>&ensp;<span class='u' style='color:#c9419d'>davxy</span>: I added a readme file to the examples folder. However, I&#x27;ll copy the first 20 steps to the minifuzz folder to avoid midunderstandings</div>
+<div class='msg'><a class='ts' href='#$5Jbiu6lCozOwv1K815Ujy19RUZXNbWhb4CDIusb0IUk'>#</a> <a class='ts' name='$5Jbiu6lCozOwv1K815Ujy19RUZXNbWhb4CDIusb0IUk' href='https://matrix.to/#/!ksYpYHcVftKsUAsdMa:matrix.org/$5Jbiu6lCozOwv1K815Ujy19RUZXNbWhb4CDIusb0IUk' target='_blank'>2025-09-16 10:46</a>&ensp;<span class='u' style='color:#be2950'>clearloop</span>: we have unit tests for <code>examples/v1</code>, e.g. decode/encode <code>*.bin</code> and see if things get matched, not sure if this is easier to test the format, will try the mini-fuzz script anyway</div>
+<div class='msg'><a class='ts' href='#$35a9P4Hq616SGFf-3nz0W_U3V5IIo2v7Z_sF7x8Lbrk'>#</a> <a class='ts' name='$35a9P4Hq616SGFf-3nz0W_U3V5IIo2v7Z_sF7x8Lbrk' href='https://matrix.to/#/!ksYpYHcVftKsUAsdMa:matrix.org/$35a9P4Hq616SGFf-3nz0W_U3V5IIo2v7Z_sF7x8Lbrk' target='_blank'>2025-09-16 10:56</a>&ensp;<span class='u' style='color:#48d03d'>tomusdrw</span>: Ah, okay, perfect! I missed that.</div>
+<div class='msg'><a class='ts' href='#$lK-8MU43X6WH1C3fCmUxI82NWTSswqHWBXUKJGheOeg'>#</a> <a class='ts' name='$lK-8MU43X6WH1C3fCmUxI82NWTSswqHWBXUKJGheOeg' href='https://matrix.to/#/!ksYpYHcVftKsUAsdMa:matrix.org/$lK-8MU43X6WH1C3fCmUxI82NWTSswqHWBXUKJGheOeg' target='_blank'>2025-09-16 13:01</a>&ensp;<span class='u' style='color:#d470bf'>jaymansfield</span>: davxy: Just a heads up, minifuzz seems to work until the invalid state root in step 29. It then shuts down after seeing the mismatch rather then proceeding with the final get state request.</div>
+<div class='msg'><a class='ts' href='#$USPzPxEjDecmLAMGge3kkA3J1x_7r4AA2lmmua2b9l4'>#</a> <a class='ts' name='$USPzPxEjDecmLAMGge3kkA3J1x_7r4AA2lmmua2b9l4' href='https://matrix.to/#/!ksYpYHcVftKsUAsdMa:matrix.org/$USPzPxEjDecmLAMGge3kkA3J1x_7r4AA2lmmua2b9l4' target='_blank'>2025-09-16 13:02</a>&ensp;<span class='u' style='color:#c9419d'>davxy</span>: Yes this is known. See the README in the examples folder.
+I&#x27;ll prepare some other traces for minifuzz testing (with and without forks)</div>
+<div class='msg'><a class='ts' href='#$CCaNCwoVBh5E6vIfmXaMs1K9PzWinnu1pFKzjCSHQH4'>#</a> <a class='ts' name='$CCaNCwoVBh5E6vIfmXaMs1K9PzWinnu1pFKzjCSHQH4' href='https://matrix.to/#/!ksYpYHcVftKsUAsdMa:matrix.org/$CCaNCwoVBh5E6vIfmXaMs1K9PzWinnu1pFKzjCSHQH4' target='_blank'>2025-09-16 13:04</a>&ensp;<span class='u' style='color:#c9419d'>davxy</span>: In the examples we intentionally return a wrong root to emulate a bad target, and thus include the GetState message in the examples sequence</div>
+<div class='msg'><a class='ts' href='#$zHwdADsWqGYVRgqURA0edKCZLwP8-RiBJHoEuJNE8sY'>#</a> <a class='ts' name='$zHwdADsWqGYVRgqURA0edKCZLwP8-RiBJHoEuJNE8sY' href='https://matrix.to/#/!ksYpYHcVftKsUAsdMa:matrix.org/$zHwdADsWqGYVRgqURA0edKCZLwP8-RiBJHoEuJNE8sY' target='_blank'>2025-09-16 13:04</a>&ensp;<span class='u' style='color:#c9419d'>davxy</span>: But this is causing some confusion (you are the third to ask)</div>
+<div class='msg'><a class='ts' href='#$NjbLLLzMNMAc2-j1Bje__wQZx50c2IpQQ7q7M5Gy3v0'>#</a> <a class='ts' name='$NjbLLLzMNMAc2-j1Bje__wQZx50c2IpQQ7q7M5Gy3v0' href='https://matrix.to/#/!ksYpYHcVftKsUAsdMa:matrix.org/$NjbLLLzMNMAc2-j1Bje__wQZx50c2IpQQ7q7M5Gy3v0' target='_blank'>2025-09-16 13:04</a>&ensp;<span class='u' style='color:#c9419d'>davxy</span>: so I&#x27;ll provide a dedicated folder for the &quot;self test&quot;</div>
+<div class='msg'><a class='ts' href='#$paO23w-QcKtCdtX_2a_cb2dnqgyfjxRs4SsaFiOTKKE'>#</a> <a class='ts' name='$paO23w-QcKtCdtX_2a_cb2dnqgyfjxRs4SsaFiOTKKE' href='https://matrix.to/#/!ksYpYHcVftKsUAsdMa:matrix.org/$paO23w-QcKtCdtX_2a_cb2dnqgyfjxRs4SsaFiOTKKE' target='_blank'>2025-09-16 13:07</a>&ensp;<span class='u' style='color:#d470bf'>jaymansfield</span>: This would help. I think the readme is clear in that it should fail, but not that minifuzz won&#x27;t actually perform the get state itself after. That was the part missing. <span class="edited">(edited)</span></div>
+<div class='msg'><a class='ts' href='#$q0eaOmDJMdm4GDG-jiSt032VPTFWg3kmbH8KNxwi8UM'>#</a> <a class='ts' name='$q0eaOmDJMdm4GDG-jiSt032VPTFWg3kmbH8KNxwi8UM' href='https://matrix.to/#/!ksYpYHcVftKsUAsdMa:matrix.org/$q0eaOmDJMdm4GDG-jiSt032VPTFWg3kmbH8KNxwi8UM' target='_blank'>2025-09-16 13:10</a>&ensp;<span class='u' style='color:#be2950'>clearloop</span>: wait, I just realized that <code>minifuzzer</code> stopped after 10 pairs on my machine without any error messages, if this is not normal as well
+
+<pre><code class=''>==========================================================================
+Processing pair 10: 00000009_fuzzer_import_block.bin -&gt; 00000009_target_state_root.bin
+TX: import_block
+RX: state_root
+
+Stopping after 10 file pairs as requested
+</code></pre> <span class="edited">(edited)</span></div>
+<div class='msg'><a class='ts' href='#$LvoO3A6fQeQPFVDD323gCHF83IXi5OsJmPMnQ4fm3pU'>#</a> <a class='ts' name='$LvoO3A6fQeQPFVDD323gCHF83IXi5OsJmPMnQ4fm3pU' href='https://matrix.to/#/!ksYpYHcVftKsUAsdMa:matrix.org/$LvoO3A6fQeQPFVDD323gCHF83IXi5OsJmPMnQ4fm3pU' target='_blank'>2025-09-16 13:11</a>&ensp;<span class='u' style='color:#d470bf'>jaymansfield</span>: Try adding the argument: --stop-after 30</div>
+<div class='msg'><a class='ts' href='#$2H9wduLo4Bu9-qWJr4YbPyr7UJn_VDIWRT9EZFwToUk'>#</a> <a class='ts' name='$2H9wduLo4Bu9-qWJr4YbPyr7UJn_VDIWRT9EZFwToUk' href='https://matrix.to/#/!ksYpYHcVftKsUAsdMa:matrix.org/$2H9wduLo4Bu9-qWJr4YbPyr7UJn_VDIWRT9EZFwToUk' target='_blank'>2025-09-16 13:47</a>&ensp;<span class='u' style='color:#c9419d'>davxy</span>: <a href="https://github.com/davxy/jam-conformance/tree/main/fuzz-proto#preliminary-self-testing" rel="noopener" target="_blank">https://github.com/davxy/jam-conformance/tree/main/fuzz-proto#preliminary-self-testing</a></div>
+<div class='msg'><a class='ts' href='#$TwXFDL-l1Ecr_fh6Ycv89rkXadEwVA7VJ-ZRTkJSFzk'>#</a> <a class='ts' name='$TwXFDL-l1Ecr_fh6Ycv89rkXadEwVA7VJ-ZRTkJSFzk' href='https://matrix.to/#/!ksYpYHcVftKsUAsdMa:matrix.org/$TwXFDL-l1Ecr_fh6Ycv89rkXadEwVA7VJ-ZRTkJSFzk' target='_blank'>2025-09-16 13:47</a>&ensp;<span class='u' style='color:#c9419d'>davxy</span>: I hope is clear now</div>
+<div class='msg'><a class='ts' href='#$D4hno39kpbkH640EQ6Y5odYXuS9HXLiQwT1LF0DOhiM'>#</a> <a class='ts' name='$D4hno39kpbkH640EQ6Y5odYXuS9HXLiQwT1LF0DOhiM' href='https://matrix.to/#/!ksYpYHcVftKsUAsdMa:matrix.org/$D4hno39kpbkH640EQ6Y5odYXuS9HXLiQwT1LF0DOhiM' target='_blank'>2025-09-16 14:12</a>&ensp;<span class='u' style='color:#4977cf'>danicuki</span>: I get error when try to run minifuzz:
+<pre><code class=''>$ python minifuzz/minifuzz.py -d examples/v1/forks --target-sock /tmp/jam_target.sock
+Traceback (most recent call last):
+  File &quot;/Users/danicuki/dev/jam-conformance/fuzz-proto/minifuzz/minifuzz.py&quot;, line 9, in &lt;module&gt;
+    from jam_types.fuzzer import FuzzerMessage
+ModuleNotFoundError: No module named &#x27;jam_types&#x27;
+</code></pre>
+
+Where can I find the <code>jam_types</code> code? </div>
+<div class='msg'><a class='ts' href='#$ysjjFhCP9usJJ8jfYvZqpB64Y60nZ-_a0ECvoDtv1QA'>#</a> <a class='ts' name='$ysjjFhCP9usJJ8jfYvZqpB64Y60nZ-_a0ECvoDtv1QA' href='https://matrix.to/#/!ksYpYHcVftKsUAsdMa:matrix.org/$ysjjFhCP9usJJ8jfYvZqpB64Y60nZ-_a0ECvoDtv1QA' target='_blank'>2025-09-16 14:14</a>&ensp;<span class='u' style='color:#be2950'>clearloop</span>: <pre><code class=''>pip install git+https://github.com/davxy/jam-types-py.git
+</code></pre></div>
+<div class='msg'><a class='ts' href='#$P6PxRTmnlgd6lO_uDVDY937pPvBiynmRlkZOXwWIedk'>#</a> <a class='ts' name='$P6PxRTmnlgd6lO_uDVDY937pPvBiynmRlkZOXwWIedk' href='https://matrix.to/#/!ksYpYHcVftKsUAsdMa:matrix.org/$P6PxRTmnlgd6lO_uDVDY937pPvBiynmRlkZOXwWIedk' target='_blank'>2025-09-16 14:22</a>&ensp;<span class='u' style='color:#be2950'>clearloop</span>: davxy: I think there is a problem in the fork tests at <code>00000004</code> which propose <code>block.slot=1</code> with parent hash of the block in <code>00000003</code> (<code>block.slot=1</code> imported successfully) and expects import success, if I&#x27;m not mistaken, if this is a fork, it should have the parent hash of <code>block.slot=0</code></div>
+<div class='msg'><a class='ts' href='#$xgCCxCvTaebu0TwE-ZImPifXBrE0rWT_d75knnwmD5Q'>#</a> <a class='ts' name='$xgCCxCvTaebu0TwE-ZImPifXBrE0rWT_d75knnwmD5Q' href='https://matrix.to/#/!ksYpYHcVftKsUAsdMa:matrix.org/$xgCCxCvTaebu0TwE-ZImPifXBrE0rWT_d75knnwmD5Q' target='_blank'>2025-09-16 14:59</a>&ensp;<span class='u' style='color:#d470bf'>jaymansfield</span>: I&#x27;m seeing the parent of 00000004 to be the one from the initialize in 00000001</div>
+<div class='msg'><a class='ts' href='#$TwRMkUMgIGgB8iX6uNWWN4NbCty4Z6q2Bs79t3vxUgs'>#</a> <a class='ts' name='$TwRMkUMgIGgB8iX6uNWWN4NbCty4Z6q2Bs79t3vxUgs' href='https://matrix.to/#/!ksYpYHcVftKsUAsdMa:matrix.org/$TwRMkUMgIGgB8iX6uNWWN4NbCty4Z6q2Bs79t3vxUgs' target='_blank'>2025-09-16 15:40</a>&ensp;<span class='u' style='color:#4977cf'>danicuki</span>: minifuzzer should not compare message size, since error messages can differ from implementation to implementation, no?
+
+<pre><code class=''>Processing pair 7: 00000006_fuzzer_import_block.bin -&gt; 00000006_target_error.bin
+TX: import_block
+Error decoding target response: Decoding &lt;String&gt; - No more bytes available (needed: 69 / total: 68)
+Connection closed
+</code></pre>
+
+I believe <code>FuzzerMessage(data=scale_bytes).decode()</code> might have a bug <span class="edited">(edited)</span></div>
+<div class='msg'><a class='ts' href='#$EiJ1e36NX6GbyeDfS-C_-GRN6yr6h_cCNgZmy_OHS6M'>#</a> <a class='ts' name='$EiJ1e36NX6GbyeDfS-C_-GRN6yr6h_cCNgZmy_OHS6M' href='https://matrix.to/#/!ksYpYHcVftKsUAsdMa:matrix.org/$EiJ1e36NX6GbyeDfS-C_-GRN6yr6h_cCNgZmy_OHS6M' target='_blank'>2025-09-16 15:43</a>&ensp;<span class='u' style='color:#be2950'>clearloop</span>: can you pass that, from my logs <code>0x7003387fc23f422113a94dd5abc0b4fa31eae0108b4ac9ea6a133ffd14e315fb</code> is the parent <code>00000004</code> want
+
+<pre><code class=''>DEBUG  read: message(length): Info
+DEBUG write: message(21): Info
+DEBUG  read: message(length): Initialize(len=21)
+DEBUG write: message(33): StateRoot(0xe174c1ea94e21958db28c9ea621f09ae2b360a9ecb6047afdbf94827d216e1db)
+
+DEBUG  read: message(length): ImportBlock(slot=1, hash=0x252ff7a523a698b91e872f90f3f046fac90b80869bf9c7cf2000d627f4e7df3e)
+DEBUG import: importing block(1)=0x252ff7a523a698b91e872f90f3f046fac90b80869bf9c7cf2000d627f4e7df3e, best block: 0
+ WARN failed to import block: BadCoreIndex
+DEBUG write: message(14): Error(BadCoreIndex)
+
+DEBUG  read: message(length): ImportBlock(slot=1, hash=0x7003387fc23f422113a94dd5abc0b4fa31eae0108b4ac9ea6a133ffd14e315fb)
+DEBUG import: importing block(1)=0x7003387fc23f422113a94dd5abc0b4fa31eae0108b4ac9ea6a133ffd14e315fb, best block: 0
+DEBUG write: message(33): StateRoot(0x25b1bd54e8d0d5c82202ae51de2d378b8dfa13f637fe75bda672484c25e1c6a6)
+
+DEBUG  read: message(length): ImportBlock(slot=1, hash=0xe63b5fa906678415f5b15ae6514d44b35e4dafa497f52a1640cbf374811b9c89)
+DEBUG import: importing block(1)=0xe63b5fa906678415f5b15ae6514d44b35e4dafa497f52a1640cbf374811b9c89, best block: 1
+ WARN import: Fallback state to 0
+ WARN failed to import block: Parent mismatch, expected: 0x7003387fc23f422113a94dd5abc0b4fa31eae0108b4ac9ea6a133ffd14e315fb, got: 0x2bf11dc5e1c7b9bbaafc2c8533017abc12daeb0baf22c92509ad50f7875e5716
+</code></pre> <span class="edited">(edited)</span></div>
+<div class='msg'><a class='ts' href='#$GsUplgIUt_oiHALntW2joCIuwQgbRKLPKbXfwzUbnEg'>#</a> <a class='ts' name='$GsUplgIUt_oiHALntW2joCIuwQgbRKLPKbXfwzUbnEg' href='https://matrix.to/#/!ksYpYHcVftKsUAsdMa:matrix.org/$GsUplgIUt_oiHALntW2joCIuwQgbRKLPKbXfwzUbnEg' target='_blank'>2025-09-16 16:39</a>&ensp;<span class='u' style='color:#c9419d'>davxy</span>: &gt; I think there is a problem in the fork tests at 00000004
+
+I don&#x27;t see any issue
+
+&gt; I&#x27;m seeing the parent of 00000004 to be the one from the initialize in 00000001
+
+Correct
+
+Given the filename number associated to each block, the chain graph of the blocks (attempted to be imported) up to 7 should be:
+
+<pre><code class=''>1--+--2
+   +--3
+   +--4--+--5
+         +--6--7
+</code></pre> <span class="edited">(edited)</span></div>
+<div class='msg'><a class='ts' href='#$psO5-0AlG8j6N4-jM_lKevv4LQmooKpfSwte7meIH0A'>#</a> <a class='ts' name='$psO5-0AlG8j6N4-jM_lKevv4LQmooKpfSwte7meIH0A' href='https://matrix.to/#/!ksYpYHcVftKsUAsdMa:matrix.org/$psO5-0AlG8j6N4-jM_lKevv4LQmooKpfSwte7meIH0A' target='_blank'>2025-09-16 16:43</a>&ensp;<span class='u' style='color:#c9419d'>davxy</span>: From the replies, it appears that:
+
+- Blocks **2** and **5** fail to be imported.  
+- Blocks **3** and **4** are successfully imported (actual fork).  
+
+According to the fuzzer protocol, the chain is extended using the **last successfully imported block**.  
+
+In other words, you will **never** see blocks 3 and 4 successfully imported and then the chain extended from block 3.
+</div>
+<div class='msg'><a class='ts' href='#$H_Isb-pvbbTvcv_BwyVvIDMN1HSUrtoxzmPSw9Ustj4'>#</a> <a class='ts' name='$H_Isb-pvbbTvcv_BwyVvIDMN1HSUrtoxzmPSw9Ustj4' href='https://matrix.to/#/!ksYpYHcVftKsUAsdMa:matrix.org/$H_Isb-pvbbTvcv_BwyVvIDMN1HSUrtoxzmPSw9Ustj4' target='_blank'>2025-09-16 16:43</a>&ensp;<span class='u' style='color:#c9419d'>davxy</span>: <a href="https://github.com/davxy/jam-conformance/tree/main/fuzz-proto#example-session" rel="noopener" target="_blank">https://github.com/davxy/jam-conformance/tree/main/fuzz-proto#example-session</a></div>
+<div class='msg'><a class='ts' href='#$T2CwuXJ23chzxTFe5Qo99kxteAW50gsowQtNQKKMLko'>#</a> <a class='ts' name='$T2CwuXJ23chzxTFe5Qo99kxteAW50gsowQtNQKKMLko' href='https://matrix.to/#/!ksYpYHcVftKsUAsdMa:matrix.org/$T2CwuXJ23chzxTFe5Qo99kxteAW50gsowQtNQKKMLko' target='_blank'>2025-09-16 20:42</a>&ensp;<span class='u' style='color:#c67452'>sourabhniyogi</span>: After teams get through  &quot;minifuzz&quot; this week and a round or two of ancestry + forks this week and next, can we wrap up 0.7.0 and move collectively onto 0.7.1, say, on week of Sept 29?
+
+Since there isn&#x27;t _that_ much happening on 0.7.2, perhaps we can jump from 0.7.0 to <a href="https://github.com/gavofyork/graypaper/releases/tag/v0.7.2" rel="noopener" target="_blank">0.7.2</a>? <span class="edited">(edited)</span></div>
