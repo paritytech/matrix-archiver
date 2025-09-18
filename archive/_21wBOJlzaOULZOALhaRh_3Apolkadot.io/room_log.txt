@@ -1,5 +1,5 @@
 # room: #jam:polkadot.io
-# exported: 2025-09-17 03:21 UTC
+# exported: 2025-09-18 03:22 UTC
 2024-04-20 02:08 johnjiao123: 
 2024-04-20 02:09 johnjiao123: 
 2024-05-30 21:48 nradko: Hey everyone,
@@ -11415,3 +11415,31 @@ And now I see. The Gray paper outlines how the networks Balances (NB) are baked 
 So it’s not a service at all. I assumed we would have to bring DOT over as a service. 
 
 This is actually good to know. Thank you again. 
+2025-09-17 15:20 danicuki: Will M1 submissions begin to be accepted once the fuzzer test software for 0.7.0 is complete? 
+2025-09-17 17:36 sourabhniyogi: Given [Rule 21](https://jam.web3.foundation/rules) - Prizes are paid no earlier than the ratification by the Polkadot Fellowship of version 1.0 of the JAM protocol.", can someone explain (probably re-explain 😅) why submitting an M1 submission amidst 0.7.x => 0.9.x is useful?  
+
+My guess is we don't have 1.0 ratification until Q4 2025 + Q1 2026 and this ratification, given 0.5 => 0.7 took the first 9 months of 2025 -- is this a good guess?
+2025-09-17 17:39 danicuki: ☝️
+2025-09-17 18:55 sourabhniyogi: Lol -- always good to make the judge, jury and executioner happy.  But I don't see the reason why we should be in a rush to submit. 
+2025-09-17 19:22 sourabhniyogi: By submitting faster, M1 prize money is not going to be paid any faster, but maybe we can feel secure / less anxious knowing that some of our sweat and tears will have been worth it -- is that it?   
+
+I'm a little dismayed to hear that some of us cannot afford to make it out to sub0 in Buenos Aires  .. or maybe since we doing so well without even having an online meeting, we should save ourselves a couple days and [checking ticket prices...] a couple grand by not going and keep on building?  
+2025-09-17 19:53 danicuki: > <@sourabhniyogi:matrix.org> By submitting faster, M1 prize money is not going to be paid any faster, but maybe we can feel secure / less anxious knowing that some of our sweat and tears will have been worth it -- is that it?   
+> 
+> I'm a little dismayed to hear that some of us cannot afford to make it out to sub0 in Buenos Aires  .. or maybe since we doing so well without even having an online meeting, we should save ourselves a couple days and [checking ticket prices...] a couple grand by not going and keep on building?  
+
+I won’t be able to go to BA as well. There is gonna be a PBA JAM Course by December in Lisbon. Maybe it will be a good moment for us to meet again (before or after the PBA event), as some of JAM builders will be around anyway. 
+2025-09-17 19:57 clearloop: if there is any link about this? haven't been Lisbon yet, I have applicated PBA Bali and got rejected last time 🫠 [edited]
+2025-09-17 20:05 sourabhniyogi: https://sub0.gg/ 
+2025-09-17 20:05 sourabhniyogi: What is the PBA December link?
+2025-09-17 20:09 emielsebastiaan: On the Bali Jam panel Gavin mentioned the intention to get implementation teams started with discussions on SDKs in December. I suppose he meant at or around the JAM PBA Lisbon event. It would be great to get some soft commitment on dates for planning purposes. 
+2025-09-17 20:16 emielsebastiaan: https://polkadot.academy/jam/
+2025-09-17 21:04 sourabhniyogi: For better or worse, this would appear to be the budget-friendly Schelling point for JAM implementers 😥
+2025-09-18 01:44 ascriv: > <@sourabhniyogi:matrix.org> By submitting faster, M1 prize money is not going to be paid any faster, but maybe we can feel secure / less anxious knowing that some of our sweat and tears will have been worth it -- is that it?   
+> 
+> I'm a little dismayed to hear that some of us cannot afford to make it out to sub0 in Buenos Aires  .. or maybe since we doing so well without even having an online meeting, we should save ourselves a couple days and [checking ticket prices...] a couple grand by not going and keep on building?  
+
+Why wouldn’t earlier submissions get earlier prizes?
+2025-09-18 02:26 ascriv: > <@gav:polkadot.io> 0.7.0 is where I would be happy to accept M1 submissions. 
+
+I assumed this also meant prizes would go out when the submissions are verified, not by GP 1.0. Can we get some clarification on this?

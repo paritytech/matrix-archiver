@@ -1,5 +1,5 @@
 # room: #jam-conformance:matrix.org
-# exported: 2025-09-17 03:22 UTC
+# exported: 2025-09-18 03:23 UTC
 2025-08-20 15:56 erin: tomusdrw: i've set up the archiver to archive this also, so hopefully will be up starting tomorrow
 2025-08-21 06:33 ascriv: https://github.com/davxy/jam-conformance/issues/26 should we not discourage open source implementations (for now)? [edited]
 2025-08-21 10:27 oliver.tale-yazdi: I think open source repos are fine. Other implementors are just not supposed to look at it
@@ -805,6 +805,7 @@ Given the filename number associated to each block, the chain graph of the block
    +--4--+--5
          +--6--7
 ``` [edited]
+  ↳ 2025-09-17 07:09 clearloop: thanks! I found that our impl has sort of bugs on falling back
 2025-09-16 16:43 davxy: From the replies, it appears that:
 
 - Blocks **2** and **5** fail to be imported.  
@@ -818,3 +819,19 @@ In other words, you will **never** see blocks 3 and 4 successfully imported and 
 2025-09-16 20:42 sourabhniyogi: After teams get through  "minifuzz" this week and a round or two of ancestry + forks this week and next, can we wrap up 0.7.0 and move collectively onto 0.7.1, say, on week of Sept 29?
 
 Since there isn't _that_ much happening on 0.7.2, perhaps we can jump from 0.7.0 to [0.7.2](https://github.com/gavofyork/graypaper/releases/tag/v0.7.2)? [edited]
+2025-09-17 03:36 ascriv: Should L be 24 for the tiny config? Cant pass 1757862468 otherwise 
+2025-09-17 04:47 prematurata: > <@ascriv:matrix.org> Should L be 24 for the tiny config? Cant pass 1757862468 otherwise 
+
+Yes
+2025-09-17 04:48 prematurata: Anyone passing https://github.com/davxy/jam-conformance/discussions/79 can shred some light on this?
+2025-09-17 05:45 danicuki: > <@ascriv:matrix.org> Should L be 24 for the tiny config? Cant pass 1757862468 otherwise 
+
+Yes
+2025-09-17 08:26 0xjunha: https://github.com/davxy/jam-conformance/discussions/91
+2025-09-17 10:49 davxy: 
+2025-09-17 11:38 clearloop: anybody knows what's the case of faulty\_000000029 ? from `000000030`, I found that the trace expects block `0xb13b648e9030118a6bf912aaca95a78b66c86cbd41d112b21393d4b896eaf864` in the history via getting the state of `0x91fcda538898b174da9b61af42c141fb0e1549e4e0dfc1ca8caec4c6185eeea5` (and this is the last block get imported exactly in my target) while the block `0xbi3b6...` does not exists at all in my importing process [edited]
+2025-09-17 13:01 vinsystems: > <@clearloop:matrix.org> anybody knows what's the case of faulty\_000000029 ? from `000000030`, I found that the trace expects block `0xb13b648e9030118a6bf912aaca95a78b66c86cbd41d112b21393d4b896eaf864` in the history via getting the state of `0x91fcda538898b174da9b61af42c141fb0e1549e4e0dfc1ca8caec4c6185eeea5` (and this is the last block get imported exactly in my target) while the block `0xbi3b6...` does not exists at all in my importing process
+
+https://github.com/davxy/jam-conformance/tree/main/fuzz-proto/examples/v1#warning-faulty-session
+  ↳ 2025-09-17 13:02 clearloop: thank you so much! I have just spent hours on this 🤦‍♂️ [edited]
+2025-09-17 14:58 davxy: https://github.com/gavofyork/graypaper/pull/497
