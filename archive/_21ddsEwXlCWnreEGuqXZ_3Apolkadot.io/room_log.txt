@@ -1,5 +1,5 @@
 # room: #graypaper:polkadot.io
-# exported: 2025-09-18 03:23 UTC
+# exported: 2025-09-19 03:25 UTC
 2024-04-17 20:29 syed: https://matrix.to/#/!hyzRkDqDthePbodYFz:parity.io/$f_DMsIEcDXZegw6Sabnehzc-LrdDQkmq5MbxDDyoZxY?via=parity.io&via=web3.foundation
 
 2024-04-17 20:29 syed: 
@@ -6621,7 +6621,7 @@ My broader question is whether such hidden or implicit dependencies should be ex
 2025-09-10 19:46 r2rtnl: https://github.com/gavofyork/graypaper/pull/491
 2025-09-12 00:08 sourabhniyogi: Its 9/11, so like Happy  2nd birthday JAM! 
 
-Its been 2 years since some of started reading about JAM here: https://github.com/polkadot-fellows/RFCs/blob/gav-corejam/text/0031-corejam.md  [edited]
+Its been 2 years since some of us started reading about JAM here: https://github.com/polkadot-fellows/RFCs/blob/gav-corejam/text/0031-corejam.md  [edited]
 2025-09-12 00:09 sourabhniyogi: Very cool to see how much has changed, and how little has changed from the original RFC.
 2025-09-13 06:57 prematurata: I was looking into the pvm memory management in my implementation. I've seen others addressing the pvmmemory in regions (ro, rw, stack...).  Eg: https://github.com/davxy/jam-conformance/issues/76
 
@@ -6656,3 +6656,8 @@ From Wikipedia:
 2025-09-16 10:06 gav: It's unclear as to whether that assumption is correct.
 2025-09-16 10:10 gav: Furthermore Blake3, inherits its main datum from Blake2s as 32-bit, making it fastest on silicon of that architecture. I expect JAM nodes to be overwhelmingly 64-bit architecture, giving Blake2b an edge. They added a binary tree structure to it to help parallelise the processing, however this isn't too helpful unless the data is large enough to use a deep enough binary tree. Much of our hash input is itself quite close to 32 bytes and probably wouldn't. In reality hashing small data on 64-bit hardware the two are pretty similar in speed yet Blake2b is objectively and substantially more secure - even if, arguably, that security is redundant. [edited]
 2025-09-16 10:12 gav: On the latter point, just because there are no published attacks from academia doesn't mean that at the state level there are no weakening vectors known. Furthermore, in JAM we routinely *don't* use all 32 bytes of security from the hash, so it makes sense to be more conservative in the hash function itself.
+2025-09-18 10:23 vinsystems: Question about Ancestors in [Eq 11.35](https://graypaper.fluffylabs.dev/#/ab2cdbd/15e80215f602?v=0.7.2): In a real scenario where a validator node goes offline for a while (i.e. a power outage), how can we recover the missed headers? The GP says that the header chain is deterministic and calculable, but I don't find how we can recover it [edited]
+2025-09-18 10:25 dave: In the validator case you need to request the missing blocks using CE 128 and import them all in turn
+2025-09-18 10:28 dave: Currently there isn't a way of fetching headers only
+2025-09-18 10:29 dave: This might be sensible to add when we add the bits needed for warp sync
+2025-09-18 10:41 vinsystems: Got it, thank you!

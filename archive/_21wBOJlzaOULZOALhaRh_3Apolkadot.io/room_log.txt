@@ -1,5 +1,5 @@
 # room: #jam:polkadot.io
-# exported: 2025-09-18 03:22 UTC
+# exported: 2025-09-19 03:25 UTC
 2024-04-20 02:08 johnjiao123: 
 2024-04-20 02:09 johnjiao123: 
 2024-05-30 21:48 nradko: Hey everyone,
@@ -11443,3 +11443,5 @@ Why wouldn’t earlier submissions get earlier prizes?
 2025-09-18 02:26 ascriv: > <@gav:polkadot.io> 0.7.0 is where I would be happy to accept M1 submissions. 
 
 I assumed this also meant prizes would go out when the submissions are verified, not by GP 1.0. Can we get some clarification on this?
+2025-09-18 11:58 gav: The reading of the rules by [sourabhniyogi](https://matrix.to/#/@sourabhniyogi:matrix.org)is accurate. The intention is to avoid depletion of the prize pot before everyone has had a reasonable chance to compete for it. 
+2025-09-18 11:58 gav: However given the extended length of the project I am considering the possibility of loosening the rules. Possibly for the M1 and M2 milestones. 

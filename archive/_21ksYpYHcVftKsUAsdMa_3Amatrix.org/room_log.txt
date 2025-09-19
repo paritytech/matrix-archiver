@@ -1,5 +1,5 @@
 # room: #jam-conformance:matrix.org
-# exported: 2025-09-18 03:23 UTC
+# exported: 2025-09-19 03:25 UTC
 2025-08-20 15:56 erin: tomusdrw: i've set up the archiver to archive this also, so hopefully will be up starting tomorrow
 2025-08-21 06:33 ascriv: https://github.com/davxy/jam-conformance/issues/26 should we not discourage open source implementations (for now)? [edited]
 2025-08-21 10:27 oliver.tale-yazdi: I think open source repos are fine. Other implementors are just not supposed to look at it
@@ -835,3 +835,26 @@ Yes
 https://github.com/davxy/jam-conformance/tree/main/fuzz-proto/examples/v1#warning-faulty-session
   ↳ 2025-09-17 13:02 clearloop: thank you so much! I have just spent hours on this 🤦‍♂️ [edited]
 2025-09-17 14:58 davxy: https://github.com/gavofyork/graypaper/pull/497
+2025-09-18 06:46 dakkk:  It seems I'm having a similar issue with that trace
+2025-09-18 13:40 danicuki: > <@sourabhniyogi:matrix.org> After teams get through  "minifuzz" this week and a round or two of ancestry + forks this week and next, can we wrap up 0.7.0 and move collectively onto 0.7.1, say, on week of Sept 29?
+> 
+> Since there isn't _that_ much happening on 0.7.2, perhaps we can jump from 0.7.0 to [0.7.2](https://github.com/gavofyork/graypaper/releases/tag/v0.7.2)?
+
+I agree we should go directly to 0.7.2
+2025-09-18 14:12 clearloop: interesting, I just found that in the tracing tests (conformance reports/traces), there are programs have same code\_hash but different initial registers, ain't the code\_hash the hash of (metadata + standard program) that the initial registers should be fixed? [edited]
+2025-09-18 16:54 boymaas: When running the minifuzz, do other teams also verify whether the author_index is determined using:  https://graypaper.fluffylabs.dev/#/38c4e62/0e1c040e3104?v=0.7.0 in key mode, as part of their header validation. I observe a delta in my implementation **only during the first epoch** of the jamtestvectors traces and the minifuzzer protocol test.
+
+2025-09-18 19:13 sourabhniyogi: Poll: December 2025 In-person JAM Meetup @ PBA Lisbon
+ https://github.com/davxy/jam-conformance/discussions/93
+It would be fabulous if we had as many of the JAM implementer enrolled teams there as we possibly can!
+2025-09-18 19:16 emielsebastiaan: Does anyone have specific dates?
+2025-09-18 19:49 sourabhniyogi: Hello nikos -- we heard about the PBA JAM course way back in the JAM XP  May meetup -- it would be great to have JAM implementers assemble there.  Can you tell us about details so we can plan with you a bit?
+2025-09-18 19:50 wirednkod: sourabhniyogi: the dates are not final
+2025-09-18 19:50 wirednkod: we are recovering from PBA Bali and expecting some updates concerning the toaster - and then decide the final dates
+2025-09-18 19:51 wirednkod: I would suggest to avoid polls with specific dates as the one above - but i will keep the JAM community up to date as soon as we have the final dates
+2025-09-18 19:51 sourabhniyogi: Are you ok with 20-30 of JAM implementer headcount there?
+2025-09-18 19:52 wirednkod: i cannot provide a definite answer to that at the moment as it may sound like a promise
+2025-09-18 19:53 wirednkod: again - i would suggest for a bit of patience - im sure by the end of Sept we will have many more details to move forwrad
+2025-09-18 19:53 wirednkod: but at the moment neither the date nor the participant numbers or profile are 100% defined
+2025-09-18 19:53 sourabhniyogi: Absolutely, will be patient =)
+2025-09-18 19:54 wirednkod: thank you
