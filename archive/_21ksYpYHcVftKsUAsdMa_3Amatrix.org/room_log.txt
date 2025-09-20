@@ -1,5 +1,5 @@
 # room: #jam-conformance:matrix.org
-# exported: 2025-09-19 03:25 UTC
+# exported: 2025-09-20 03:21 UTC
 2025-08-20 15:56 erin: tomusdrw: i've set up the archiver to archive this also, so hopefully will be up starting tomorrow
 2025-08-21 06:33 ascriv: https://github.com/davxy/jam-conformance/issues/26 should we not discourage open source implementations (for now)? [edited]
 2025-08-21 10:27 oliver.tale-yazdi: I think open source repos are fine. Other implementors are just not supposed to look at it
@@ -858,3 +858,44 @@ It would be fabulous if we had as many of the JAM implementer enrolled teams the
 2025-09-18 19:53 wirednkod: but at the moment neither the date nor the participant numbers or profile are 100% defined
 2025-09-18 19:53 sourabhniyogi: Absolutely, will be patient =)
 2025-09-18 19:54 wirednkod: thank you
+2025-09-19 16:37 shimonchick: Is there something with the JIP-5 altnames? Its a very basic algorithm, but applying it yields different values for me. Can somebody confirm if the current JIP-5 altnames in https://docs.jamcha.in/basics/dev-accounts are correct?
+2025-09-19 18:09 sourabhniyogi: Hats off to Tianyi | SpaceJam ... with the FIRST JAM Implementation to match/beat Polkajam in performance!   
+2025-09-19 18:10 sourabhniyogi: As teams develop PVM recompilers, should we aim to have two entries in the dashboard like Polkajam or just one?
+2025-09-19 20:30 davxy: First of all, congrats to Spacejam for achieving such impressive results!  
+
+That said, we've now entered the sub-ms domain, where my workstation setup isn't  deterministic at all. 
+One run can be faster, and the next might not be.  
+
+To avoid encouraging pointless sub-ms races, I think it makes sense to round measurements to millisecond granularity 
+  ↳ 2025-09-19 21:48 clearloop: 0.05ms, it's driving me crazy 🫠 agree with not overkilling on this, from my side, I'm feeling exhausted indeed in the recent weeks, however I think the sub-ms in single dataset is still useful for checking if there are spaces to optimize XD for example, via seeing polkajam is faster in safrole/fallback, I know things can be done better, and I just found sth new can be optimized in our implementation, but I actually hope that I can't find since this stuff looks like endless XD [edited]
+2025-09-19 20:37 davxy: For example, one could gain some *pointless* advantage just by removing **all** the logs.  
+I've seen some implementations keep a few logs, while others completely removed them.  
+We even spotted implementations removing signature checking ;-) (quickly restored, of course).  
+
+Honestly, we don't care much about these micro-optimizations.  
+What really matters is avoiding spending orders of magnitude more time fuzzing a target compared to the baseline.
+2025-09-19 22:01 sourabhniyogi: Were the (now missing) logs useful to you?
+
+I believe shifting the focus from micro-optimizations to recompilation is important.  We've been conditioned to care about the small (\<50%) differences because of
+
+```
+(M3) HALF-SPEED: Conformance and 50% of required performance (including PVM impl): 100,000 DOT + 1,000 KSM
+(M4) FULL-SPEED: Conformance and 100% of required performance (including PVM impl): 100,000 DOT + 1,000 KSM
+```
+
+Its pretty obvious that performance is all about recompilation here, and I think its valuable to get more teams focussed on this.
+
+We know its not an thing for M1, but since we know with 100% certainty its a not-pointless goal for M3/M4, its entertainment now but useful entertainment while we're waiting for like, 1.0 ratification.
+
+Why not introduce at least 1M-10MM million gas of randomly generated \[but still valid\] PVM byte code interpretation to always consume > 10ms (for baseline polkajam) so we can improve performance on at least _some_ traces?
+
+By introducing this a > 10x factor, 50% differences become visible in `import_max`, and:
+
+1. we have a baby step towards PVM fuzzing
+2. recompiler teams can play a useful substantive M3 / M4 optimization game amidst M1 fuzzing.
+3. more teams will get engaged on recompiler (because we love optimizing)
+
+PVM fuzzing is valuable to attack, I presume, right within M1, is it not? [edited]
+2025-09-19 22:56 clearloop: my testing linux machine is likely 10x-20x slower than the fuzz machine, can confirm that some of our big optimizations were actually started from 1ms on my machine which could be just 0.1ms/0.05ms in the testing machine, however at the current level, for spacejam we won't optimize more
+ out of the performance part, I think we're feeling anxious mostly caused by there is no obvious threshold for the stable implementation, the performance of polkajam is really hard to chase ( we started from 20x~50x slower, and some parts of polkajam are still unbelievable/insane to us atm even we are in the same language ) and sometimes I'm feeling like I'm working like a slave to chase it 🫠
+ hope the threshold of M3/M4 or the baseline for the current M1 will not even in X ms but based on X0 ms or X00ms, which is for sth like: 「there are 6s in the block, if you can import most of blocks within 30ms avg on machine A, it's totally enough for the stability of our network, you have done a great job, I won't force you to archive 0.X ms since all we know there are indeed differences in impls」 [edited]
