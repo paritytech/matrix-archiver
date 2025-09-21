@@ -1,5 +1,5 @@
 # room: #jam:polkadot.io
-# exported: 2025-09-20 03:20 UTC
+# exported: 2025-09-21 03:30 UTC
 2024-04-20 02:08 johnjiao123: 
 2024-04-20 02:09 johnjiao123: 
 2024-05-30 21:48 nradko: Hey everyone,
@@ -11445,3 +11445,13 @@ Why wouldn’t earlier submissions get earlier prizes?
 I assumed this also meant prizes would go out when the submissions are verified, not by GP 1.0. Can we get some clarification on this?
 2025-09-18 11:58 gav: The reading of the rules by [sourabhniyogi](https://matrix.to/#/@sourabhniyogi:matrix.org)is accurate. The intention is to avoid depletion of the prize pot before everyone has had a reasonable chance to compete for it. 
 2025-09-18 11:58 gav: However given the extended length of the project I am considering the possibility of loosening the rules. Possibly for the M1 and M2 milestones. 
+2025-09-20 14:13 hitchhooker: 
+2025-09-20 14:34 sourabhniyogi: We have an awesomely clear idea about M1 conformance (and increasingly good resolution about what M3/M4 is about, at least for PVM) ... but not M2 -- can you provide guidance on M2 conformance requirements so those of us who are ready \[pretty much all enrolled teams\] can spend our extra hours on that most effectively for the rest of the year?
+
+If this can't be defined precisely because it sounds like a promise, perhaps a "soft target" proxy to focus teams works very well: "M2 conformance would be to author blocks and refine DOOM work packages with jamt alongside polkajam + another team in a tiny testnet for N hours". 
+
+Then the rules could be loosened (without premature ratification of 1.0) in a predictable way while ensuring everyone is focused on the next 2 milestones by having soft targets for both, something like "If you can include in your M(n) report how you met the soft targets of M(n+1) and M(n+2), then ___".  This keeps implementers focussed meeting the engineering goals of the M(n) hard target while also attempting the M(n+1) and M(n+2) soft targets and sacrifices nothing on desired conformance goals of the hard target.    Does that make sense? [edited]
+2025-09-20 14:57 hitchhooker: https://w3c.github.io/webtransport/#certificate-hashes
+
+for some reason(bigtech?) webtransport decided against bidirectional authentication - "does not provide any means of authenticating the client" per spec.
+does WebTransport's serverCertificateHashes work with self-signed certs on ipv6 addresses? like can chrome/firefox connect to https://[2001:db8::1]:4433 using cert hash verification? 
