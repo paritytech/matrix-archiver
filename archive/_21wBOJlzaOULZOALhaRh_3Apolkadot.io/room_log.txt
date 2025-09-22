@@ -1,5 +1,5 @@
 # room: #jam:polkadot.io
-# exported: 2025-09-21 03:30 UTC
+# exported: 2025-09-22 03:30 UTC
 2024-04-20 02:08 johnjiao123: 
 2024-04-20 02:09 johnjiao123: 
 2024-05-30 21:48 nradko: Hey everyone,
@@ -11454,4 +11454,6 @@ Then the rules could be loosened (without premature ratification of 1.0) in a pr
 2025-09-20 14:57 hitchhooker: https://w3c.github.io/webtransport/#certificate-hashes
 
 for some reason(bigtech?) webtransport decided against bidirectional authentication - "does not provide any means of authenticating the client" per spec.
-does WebTransport's serverCertificateHashes work with self-signed certs on ipv6 addresses? like can chrome/firefox connect to https://[2001:db8::1]:4433 using cert hash verification? 
+does WebTransport's serverCertificateHashes work with self-signed certs on ipv6 addresses? like can chrome/firefox connect to https://\[2001:db8::1\]:4433 using cert hash verification? 
+
+e: https://github.com/w3c/webtransport/issues/590 unresolved issue for p2p seems to be overcoming nat as usual... [edited]
