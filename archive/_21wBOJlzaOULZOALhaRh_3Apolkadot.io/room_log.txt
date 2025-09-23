@@ -1,5 +1,5 @@
 # room: #jam:polkadot.io
-# exported: 2025-09-22 03:30 UTC
+# exported: 2025-09-23 03:23 UTC
 2024-04-20 02:08 johnjiao123: 
 2024-04-20 02:09 johnjiao123: 
 2024-05-30 21:48 nradko: Hey everyone,
@@ -11457,3 +11457,9 @@ for some reason(bigtech?) webtransport decided against bidirectional authenticat
 does WebTransport's serverCertificateHashes work with self-signed certs on ipv6 addresses? like can chrome/firefox connect to https://\[2001:db8::1\]:4433 using cert hash verification? 
 
 e: https://github.com/w3c/webtransport/issues/590 unresolved issue for p2p seems to be overcoming nat as usual... [edited]
+2025-09-22 09:39 knight1205: Hi davxy ,
+
+Can you please update crates for jam sdk?
+Current released version is 0.1.22. I suppose it doesn't have latest changes till GP v0.7.
+2025-09-22 10:09 davxy: Martin: ^
+2025-09-22 12:10 dave: We're working on this. We're streamlining the publishing process and intend to update the crates much more regularly once that is done.
