@@ -1,5 +1,5 @@
 # room: #jam-conformance:matrix.org
-# exported: 2025-09-23 03:24 UTC
+# exported: 2025-09-24 03:25 UTC
 2025-08-20 15:56 erin: tomusdrw: i've set up the archiver to archive this also, so hopefully will be up starting tomorrow
 2025-08-21 06:33 ascriv: https://github.com/davxy/jam-conformance/issues/26 should we not discourage open source implementations (for now)? [edited]
 2025-08-21 10:27 oliver.tale-yazdi: I think open source repos are fine. Other implementors are just not supposed to look at it
@@ -950,3 +950,4 @@ Shouldn’t both reports be counted? Or should we simply follow the [formula (13
 2025-09-22 12:24 dave: IIRC Gav said the GP behaviour in this case is intentional, to keep things simple. I agree the counting behaviour you describe would probably be more useful. You can propose a GP change by making a PR in the GP repo, if the change is simple I think there's a fair chance of it being accepted
 2025-09-23 01:29 ycc3741: THX a lot
 2025-09-23 01:29 ycc3741: we will deal with it later
+2025-09-23 16:18 davxy: https://github.com/davxy/jam-conformance/discussions/98#discussioncomment-14488639

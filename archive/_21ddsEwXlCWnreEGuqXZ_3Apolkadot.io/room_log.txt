@@ -1,5 +1,5 @@
 # room: #graypaper:polkadot.io
-# exported: 2025-09-23 03:24 UTC
+# exported: 2025-09-24 03:24 UTC
 2024-04-17 20:29 syed: https://matrix.to/#/!hyzRkDqDthePbodYFz:parity.io/$f_DMsIEcDXZegw6Sabnehzc-LrdDQkmq5MbxDDyoZxY?via=parity.io&via=web3.foundation
 
 2024-04-17 20:29 syed: 
@@ -6661,3 +6661,6 @@ From Wikipedia:
 2025-09-18 10:28 dave: Currently there isn't a way of fetching headers only
 2025-09-18 10:29 dave: This might be sensible to add when we add the bits needed for warp sync
 2025-09-18 10:41 vinsystems: Got it, thank you!
+2025-09-23 14:56 ycc3741: gav - AFKish: If you happen to have some time, would you be so kind as to take a look at this issue? 
+https://github.com/gavofyork/graypaper/issues/498
+2025-09-23 14:56 ycc3741: thanks a lot
