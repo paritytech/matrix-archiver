@@ -1,5 +1,5 @@
 # room: #jam:polkadot.io
-# exported: 2025-09-25 03:26 UTC
+# exported: 2025-09-26 03:24 UTC
 2024-04-20 02:08 johnjiao123: 
 2024-04-20 02:09 johnjiao123: 
 2024-05-30 21:48 nradko: Hey everyone,
@@ -11463,3 +11463,13 @@ Can you please update crates for jam sdk?
 Current released version is 0.1.22. I suppose it doesn't have latest changes till GP v0.7.
 2025-09-22 10:09 davxy: Martin: ^
 2025-09-22 12:10 dave: We're working on this. We're streamlining the publishing process and intend to update the crates much more regularly once that is done.
+2025-09-25 07:10 hey_im_stas: Hey!
+
+I've created JAM Services Examples and SDKs repo.
+[Awesome JAM Service](https://github.com/DrEverr/JAM-Service-Demos)
+If you working on your demos and sdks, feel free to add your repo to this list, so it's easier for future users to find you.
+  ↳ 2025-09-25 12:31 oliver.tale-yazdi: I will proably open an MR later to add the JamBrains Service SDK: https://github.com/JamBrains/service-sdk  
+it was demoed at PBA
+2025-09-25 10:11 roysingh8368: Hii Team can anybody tell me how can HS and HV generated , proper flow i wanted to understand in the Safrole component.  [edited]
+2025-09-25 12:19 luke_jamixir: I doubt anyone is going to answer such a general question.
+Your going to have to be more specific then that 
