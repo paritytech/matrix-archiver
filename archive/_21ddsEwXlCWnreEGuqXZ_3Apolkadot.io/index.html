@@ -18,7 +18,7 @@ a:hover{color:#90caf9}
 em{font-style:italic}
 </style>
 <h1>#graypaper:polkadot.io</h1>
-<p><small>last updated 2025-09-27 03:21 UTC</small></p>
+<p><small>last updated 2025-09-28 03:30 UTC</small></p>
 <p><a href='room_log.txt'>⇩ plaintext</a> · <a href='../../'>⇦ all rooms</a></p>
 <hr>
 <div class='msg'><a class='ts' href='#$G0deSwnlYlCrSn5lIFL__hi6bgWVITql5VyahU4bzpI'>#</a> <a class='ts' name='$G0deSwnlYlCrSn5lIFL__hi6bgWVITql5VyahU4bzpI' href='https://matrix.to/#/!ddsEwXlCWnreEGuqXZ:polkadot.io/$G0deSwnlYlCrSn5lIFL__hi6bgWVITql5VyahU4bzpI' target='_blank'>2024-04-17 20:29</a>&ensp;<span class='u' style='color:#da6aa2'>syed</span>: <a href="https://matrix.to/#/!hyzRkDqDthePbodYFz:parity.io/$f_DMsIEcDXZegw6Sabnehzc-LrdDQkmq5MbxDDyoZxY?via=parity.io&amp;via=web3.foundation" rel="noopener" target="_blank">https://matrix.to/#/!hyzRkDqDthePbodYFz:parity.io/$f_DMsIEcDXZegw6Sabnehzc-LrdDQkmq5MbxDDyoZxY?via=parity.io&amp;via=web3.foundation</a>
@@ -6655,3 +6655,13 @@ From Wikipedia:
 <div class='msg'><a class='ts' href='#$iUQgYHBXIT5Ixb3VF1oa2pv8V5YS-ssyli1AY4UXGDg'>#</a> <a class='ts' name='$iUQgYHBXIT5Ixb3VF1oa2pv8V5YS-ssyli1AY4UXGDg' href='https://matrix.to/#/!ddsEwXlCWnreEGuqXZ:polkadot.io/$iUQgYHBXIT5Ixb3VF1oa2pv8V5YS-ssyli1AY4UXGDg' target='_blank'>2025-09-23 14:56</a>&ensp;<span class='u' style='color:#817ecb'>ycc3741</span>: gav - AFKish: If you happen to have some time, would you be so kind as to take a look at this issue? 
 <a href="https://github.com/gavofyork/graypaper/issues/498" rel="noopener" target="_blank">https://github.com/gavofyork/graypaper/issues/498</a></div>
 <div class='msg'><a class='ts' href='#$fZ_BjvILpnTHxARAemi1ELBLvLuwsxjwS4QD3W63pOY'>#</a> <a class='ts' name='$fZ_BjvILpnTHxARAemi1ELBLvLuwsxjwS4QD3W63pOY' href='https://matrix.to/#/!ddsEwXlCWnreEGuqXZ:polkadot.io/$fZ_BjvILpnTHxARAemi1ELBLvLuwsxjwS4QD3W63pOY' target='_blank'>2025-09-23 14:56</a>&ensp;<span class='u' style='color:#817ecb'>ycc3741</span>: thanks a lot</div>
+<div class='msg'><a class='ts' href='#$uDUlyJCMG-zDEZ7_R0mk-pgk3rflyLzTUMCvhSLwRlY'>#</a> <a class='ts' name='$uDUlyJCMG-zDEZ7_R0mk-pgk3rflyLzTUMCvhSLwRlY' href='https://matrix.to/#/!ddsEwXlCWnreEGuqXZ:polkadot.io/$uDUlyJCMG-zDEZ7_R0mk-pgk3rflyLzTUMCvhSLwRlY' target='_blank'>2025-09-27 18:24</a>&ensp;<span class='u' style='color:#db4dca'>celadari</span>: I have a doubt regarding security of transfers, for GP 0.7.2
+being debited is done by host call TRANSFER and being credited is done at accumulation invocation (eq B.9)
+
+let&#x27;s say S1 makes a transfer of 10 tokens to S2
+
+no matter what happens (if code of S2 fails or not) S2 will get the 10 tokens according to <a href="https://graypaper.fluffylabs.dev/#/ab2cdbd/2ffd032f1104?v=0.7.2" rel="noopener" target="_blank">eq B.9 ()</a>
+now code of S1 runs independently and if it fails, TRANSFER host call is not applied and S1 is not charged
+
+so either I am not seing something or one could &quot;generate&quot; mopney/balance no ? <span class="edited">(edited)</span></div>
+<div class='msg'><a class='ts' href='#$h7i_3JDrjK-SLjDQ5H7QnOv0f6HO1JoO-3ZV8vf9S3E'>#</a> <a class='ts' name='$h7i_3JDrjK-SLjDQ5H7QnOv0f6HO1JoO-3ZV8vf9S3E' href='https://matrix.to/#/!ddsEwXlCWnreEGuqXZ:polkadot.io/$h7i_3JDrjK-SLjDQ5H7QnOv0f6HO1JoO-3ZV8vf9S3E' target='_blank'>2025-09-27 18:46</a>&ensp;<span class='u' style='color:#db4dca'>celadari</span>: Nevermind :) </div>

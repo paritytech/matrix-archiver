@@ -1,5 +1,5 @@
 # room: #graypaper:polkadot.io
-# exported: 2025-09-27 03:21 UTC
+# exported: 2025-09-28 03:30 UTC
 2024-04-17 20:29 syed: https://matrix.to/#/!hyzRkDqDthePbodYFz:parity.io/$f_DMsIEcDXZegw6Sabnehzc-LrdDQkmq5MbxDDyoZxY?via=parity.io&via=web3.foundation
 
 2024-04-17 20:29 syed: 
@@ -6664,3 +6664,13 @@ From Wikipedia:
 2025-09-23 14:56 ycc3741: gav - AFKish: If you happen to have some time, would you be so kind as to take a look at this issue? 
 https://github.com/gavofyork/graypaper/issues/498
 2025-09-23 14:56 ycc3741: thanks a lot
+2025-09-27 18:24 celadari: I have a doubt regarding security of transfers, for GP 0.7.2
+being debited is done by host call TRANSFER and being credited is done at accumulation invocation (eq B.9)
+
+let's say S1 makes a transfer of 10 tokens to S2
+
+no matter what happens (if code of S2 fails or not) S2 will get the 10 tokens according to [eq B.9 ()](https://graypaper.fluffylabs.dev/#/ab2cdbd/2ffd032f1104?v=0.7.2)
+now code of S1 runs independently and if it fails, TRANSFER host call is not applied and S1 is not charged
+
+so either I am not seing something or one could "generate" mopney/balance no ? [edited]
+2025-09-27 18:46 celadari: Nevermind :) 
