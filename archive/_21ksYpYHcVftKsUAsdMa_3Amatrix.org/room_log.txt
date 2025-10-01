@@ -1,5 +1,5 @@
 # room: #jam-conformance:matrix.org
-# exported: 2025-09-30 03:24 UTC
+# exported: 2025-10-01 03:33 UTC
 2025-08-20 15:56 erin: tomusdrw: i've set up the archiver to archive this also, so hopefully will be up starting tomorrow
 2025-08-21 06:33 ascriv: https://github.com/davxy/jam-conformance/issues/26 should we not discourage open source implementations (for now)? [edited]
 2025-08-21 10:27 oliver.tale-yazdi: I think open source repos are fine. Other implementors are just not supposed to look at it
@@ -956,3 +956,7 @@ Do you think it is worth at this point to have tests that use on_transfer?
 2025-09-25 16:33 prematurata: in my case i found other issues not directly related to ontransfer so it was worth it I'd say
 2025-09-25 18:43 davxy: Keep in mind that it is not mandatory to pass every case. You may decide that some are not worth addressing and leave them as is.  
 This is the final batch for 0.7.0; after this, we will move on to 0.7.1.
+2025-09-30 07:45 danicuki: > <@davxy:matrix.org> Keep in mind that it is not mandatory to pass every case. You may decide that some are not worth addressing and leave them as is.  
+> This is the final batch for 0.7.0; after this, we will move on to 0.7.1.
+
+Wouldnt worth to move directly to 0.7.2? We at Jamixir already have 0.7.2 ready to be fuzzed. 
