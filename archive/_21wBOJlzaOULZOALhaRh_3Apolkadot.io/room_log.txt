@@ -1,5 +1,5 @@
 # room: #jam:polkadot.io
-# exported: 2025-10-02 03:22 UTC
+# exported: 2025-10-03 03:22 UTC
 2024-04-20 02:08 johnjiao123: 
 2024-04-20 02:09 johnjiao123: 
 2024-05-30 21:48 nradko: Hey everyone,
@@ -11473,3 +11473,26 @@ it was demoed at PBA
 2025-09-25 10:11 roysingh8368: Hii Team can anybody tell me how can HS and HV generated , proper flow i wanted to understand in the Safrole component.  [edited]
 2025-09-25 12:19 luke_jamixir: I doubt anyone is going to answer such a general question.
 Your going to have to be more specific then that 
+2025-10-02 17:14 clearloop: Hi there, our service sdk [jade](https://github.com/spacejamapp/jade/tree/main) is now ready to be hacked!  for the quickstart of jade
+
+```bash
+cargo install jade
+jade new my-service
+cd my-service
+cargo test
+```
+
+for the recent releases:
+
+- now `jade` is using dependencies from `spacejam` directly
+- introduced the [system interface of SpaceVM](https://docs.rs/spacevm-sys/0.0.12-patch-1/spacevm_sys/) (both compiler and interpreter)
+- I just found that I have written [a instruction table for PVM](https://pvm.spacejam.app/) months ago...feel free to check it out for fun
+- [our website](https://spacejam.app/) is open sourced and updated with more links
+
+I have prepared [2 simple issues in jade](https://github.com/spacejamapp/jade/issues) for new devs in JAM that don't know where to start, which are about
+
+- the skill of reading graypaper
+- understanding how host call works in the services
+- writing service tests using `jade`
+
+happy hacking! [edited]
