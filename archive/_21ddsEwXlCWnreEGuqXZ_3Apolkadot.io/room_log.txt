@@ -1,5 +1,5 @@
 # room: #graypaper:polkadot.io
-# exported: 2025-10-03 03:22 UTC
+# exported: 2025-10-04 03:19 UTC
 2024-04-17 20:29 syed: https://matrix.to/#/!hyzRkDqDthePbodYFz:parity.io/$f_DMsIEcDXZegw6Sabnehzc-LrdDQkmq5MbxDDyoZxY?via=parity.io&via=web3.foundation
 
 2024-04-17 20:29 syed: 
@@ -6674,3 +6674,12 @@ now code of S1 runs independently and if it fails, TRANSFER host call is not app
 
 so either I am not seing something or one could "generate" mopney/balance no ? [edited]
 2025-09-27 18:46 celadari: Nevermind :) 
+2025-10-03 17:17 sourabhniyogi: JAM + PVM is "bare metal", imposing few constraints on the types/formats of work package extrinsics (... state witnesses, txs) and JAM D3L segments in `export` and the `refine` output.  This is in sharp contrast to Substrate which had strongly typed extrinsic parameters and storage (attached to runtimes) embedded in a full model of types with commonly reused pallets.
+
+Being free to do whatever we want with our JAM services is cool, but for JAM service interoperability (say, between 2+ rollup hosting services doing "smart contract interpretation" between xVM, yVM + zVM), it is clearly valuable to impose types and structure on JAM D3L "objects" so xyz state changes may be consistently written to JAM state. Right now there is no structure whatsoever, intentionally.
+
+I get that this is intentionally outside JAM protocol and that service builders are free to just roll their own in D3L exported out of `refine` with xyz integration in `accumulate` -- but I believe we should prefer something like "accords" between xyz service builders to achieve service network effects ( x state interacting with y state interacting with z state ) sought earlier for parachains.  How do you imagine service builders impose additional structure on JAM D3L formats/types and address [Cross-service Work-Item Entanglement](https://github.com/gavofyork/graypaper/issues/134) better?
+
+Distant but related: If D3L holds objects worth keeping around for up to 28 days, with a D3L refresh mechanism then D3L could hold objects (code, types, data) for longer.   If immutable objects can be held forever so long as there is a service with a balance, then the function of accumulate for xyz VM is largely to record the latest version of whatever is held in D3L.  Part of the service "accord" between xyz could be to adhere to this model between D3L and JAM state.  Services adhering to additional D3L structure as part of a smart contract service accord would sacrifice a degree of "bare metal" flexibility to win service interoperability.  What are the set of accords we can imagine here?
+
+If we do not seek this set, we end up with isolated services -- no different than todays isolated rollups/parachains.   How could we do better in the JAM era? [edited]

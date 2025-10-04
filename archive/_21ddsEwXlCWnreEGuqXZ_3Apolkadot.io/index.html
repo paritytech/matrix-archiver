@@ -18,7 +18,7 @@ a:hover{color:#90caf9}
 em{font-style:italic}
 </style>
 <h1>#graypaper:polkadot.io</h1>
-<p><small>last updated 2025-10-03 03:22 UTC</small></p>
+<p><small>last updated 2025-10-04 03:19 UTC</small></p>
 <p><a href='room_log.txt'>⇩ plaintext</a> · <a href='../../'>⇦ all rooms</a></p>
 <hr>
 <div class='msg'><a class='ts' href='#$G0deSwnlYlCrSn5lIFL__hi6bgWVITql5VyahU4bzpI'>#</a> <a class='ts' name='$G0deSwnlYlCrSn5lIFL__hi6bgWVITql5VyahU4bzpI' href='https://matrix.to/#/!ddsEwXlCWnreEGuqXZ:polkadot.io/$G0deSwnlYlCrSn5lIFL__hi6bgWVITql5VyahU4bzpI' target='_blank'>2024-04-17 20:29</a>&ensp;<span class='u' style='color:#da6aa2'>syed</span>: <a href="https://matrix.to/#/!hyzRkDqDthePbodYFz:parity.io/$f_DMsIEcDXZegw6Sabnehzc-LrdDQkmq5MbxDDyoZxY?via=parity.io&amp;via=web3.foundation" rel="noopener" target="_blank">https://matrix.to/#/!hyzRkDqDthePbodYFz:parity.io/$f_DMsIEcDXZegw6Sabnehzc-LrdDQkmq5MbxDDyoZxY?via=parity.io&amp;via=web3.foundation</a>
@@ -6665,3 +6665,12 @@ now code of S1 runs independently and if it fails, TRANSFER host call is not app
 
 so either I am not seing something or one could &quot;generate&quot; mopney/balance no ? <span class="edited">(edited)</span></div>
 <div class='msg'><a class='ts' href='#$h7i_3JDrjK-SLjDQ5H7QnOv0f6HO1JoO-3ZV8vf9S3E'>#</a> <a class='ts' name='$h7i_3JDrjK-SLjDQ5H7QnOv0f6HO1JoO-3ZV8vf9S3E' href='https://matrix.to/#/!ddsEwXlCWnreEGuqXZ:polkadot.io/$h7i_3JDrjK-SLjDQ5H7QnOv0f6HO1JoO-3ZV8vf9S3E' target='_blank'>2025-09-27 18:46</a>&ensp;<span class='u' style='color:#db4dca'>celadari</span>: Nevermind :) </div>
+<div class='msg'><a class='ts' href='#$3BtlLUfADzYVJ0fkw_bPHWlujDejQY3KcBZxo-on3W8'>#</a> <a class='ts' name='$3BtlLUfADzYVJ0fkw_bPHWlujDejQY3KcBZxo-on3W8' href='https://matrix.to/#/!ddsEwXlCWnreEGuqXZ:polkadot.io/$3BtlLUfADzYVJ0fkw_bPHWlujDejQY3KcBZxo-on3W8' target='_blank'>2025-10-03 17:17</a>&ensp;<span class='u' style='color:#c67452'>sourabhniyogi</span>: JAM + PVM is &quot;bare metal&quot;, imposing few constraints on the types/formats of work package extrinsics (... state witnesses, txs) and JAM D3L segments in <code>export</code> and the <code>refine</code> output.  This is in sharp contrast to Substrate which had strongly typed extrinsic parameters and storage (attached to runtimes) embedded in a full model of types with commonly reused pallets.
+
+Being free to do whatever we want with our JAM services is cool, but for JAM service interoperability (say, between 2+ rollup hosting services doing &quot;smart contract interpretation&quot; between xVM, yVM + zVM), it is clearly valuable to impose types and structure on JAM D3L &quot;objects&quot; so xyz state changes may be consistently written to JAM state. Right now there is no structure whatsoever, intentionally.
+
+I get that this is intentionally outside JAM protocol and that service builders are free to just roll their own in D3L exported out of <code>refine</code> with xyz integration in <code>accumulate</code> -- but I believe we should prefer something like &quot;accords&quot; between xyz service builders to achieve service network effects ( x state interacting with y state interacting with z state ) sought earlier for parachains.  How do you imagine service builders impose additional structure on JAM D3L formats/types and address <a href="https://github.com/gavofyork/graypaper/issues/134" rel="noopener" target="_blank">Cross-service Work-Item Entanglement</a> better?
+
+Distant but related: If D3L holds objects worth keeping around for up to 28 days, with a D3L refresh mechanism then D3L could hold objects (code, types, data) for longer.   If immutable objects can be held forever so long as there is a service with a balance, then the function of accumulate for xyz VM is largely to record the latest version of whatever is held in D3L.  Part of the service &quot;accord&quot; between xyz could be to adhere to this model between D3L and JAM state.  Services adhering to additional D3L structure as part of a smart contract service accord would sacrifice a degree of &quot;bare metal&quot; flexibility to win service interoperability.  What are the set of accords we can imagine here?
+
+If we do not seek this set, we end up with isolated services -- no different than todays isolated rollups/parachains.   How could we do better in the JAM era? <span class="edited">(edited)</span></div>

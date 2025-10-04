@@ -1,5 +1,5 @@
 # room: #jam-conformance:matrix.org
-# exported: 2025-10-03 03:22 UTC
+# exported: 2025-10-04 03:19 UTC
 2025-08-20 15:56 erin: tomusdrw: i've set up the archiver to archive this also, so hopefully will be up starting tomorrow
 2025-08-21 06:33 ascriv: https://github.com/davxy/jam-conformance/issues/26 should we not discourage open source implementations (for now)? [edited]
 2025-08-21 10:27 oliver.tale-yazdi: I think open source repos are fine. Other implementors are just not supposed to look at it
@@ -964,3 +964,7 @@ Wouldnt worth to move directly to 0.7.2? We at Jamixir already have 0.7.2 ready 
 2025-10-01 17:15 davxy: 0.7.1 vectors and fuzzer are nearly done. Code under review :-)
 2025-10-02 19:25 shimonchick: On JAMSNP CE131/132 what does the attempt bit mean? Does it signalize which of the 2 protocols to apply? https://docs.jamcha.in/knowledge/advanced/simple-networking/spec#ce-131132-safrole-ticket-distribution
 2025-10-02 20:12 dave: Each validator generates 2 tickets per epoch, attempt indicates which one this is [edited]
+2025-10-03 17:36 davxy: 0.7.1 test vectors RC
+
+https://github.com/davxy/jam-test-vectors/pull/96
+2025-10-03 17:38 davxy: If you have a 0.7.1 target available, just drop a message in your jam-conformance issue
