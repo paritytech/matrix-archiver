@@ -18,7 +18,7 @@ a:hover{color:#90caf9}
 em{font-style:italic}
 </style>
 <h1>#graypaper:polkadot.io</h1>
-<p><small>last updated 2025-10-04 03:19 UTC</small></p>
+<p><small>last updated 2025-10-05 03:29 UTC</small></p>
 <p><a href='room_log.txt'>⇩ plaintext</a> · <a href='../../'>⇦ all rooms</a></p>
 <hr>
 <div class='msg'><a class='ts' href='#$G0deSwnlYlCrSn5lIFL__hi6bgWVITql5VyahU4bzpI'>#</a> <a class='ts' name='$G0deSwnlYlCrSn5lIFL__hi6bgWVITql5VyahU4bzpI' href='https://matrix.to/#/!ddsEwXlCWnreEGuqXZ:polkadot.io/$G0deSwnlYlCrSn5lIFL__hi6bgWVITql5VyahU4bzpI' target='_blank'>2024-04-17 20:29</a>&ensp;<span class='u' style='color:#da6aa2'>syed</span>: <a href="https://matrix.to/#/!hyzRkDqDthePbodYFz:parity.io/$f_DMsIEcDXZegw6Sabnehzc-LrdDQkmq5MbxDDyoZxY?via=parity.io&amp;via=web3.foundation" rel="noopener" target="_blank">https://matrix.to/#/!hyzRkDqDthePbodYFz:parity.io/$f_DMsIEcDXZegw6Sabnehzc-LrdDQkmq5MbxDDyoZxY?via=parity.io&amp;via=web3.foundation</a>
@@ -6674,3 +6674,20 @@ I get that this is intentionally outside JAM protocol and that service builders 
 Distant but related: If D3L holds objects worth keeping around for up to 28 days, with a D3L refresh mechanism then D3L could hold objects (code, types, data) for longer.   If immutable objects can be held forever so long as there is a service with a balance, then the function of accumulate for xyz VM is largely to record the latest version of whatever is held in D3L.  Part of the service &quot;accord&quot; between xyz could be to adhere to this model between D3L and JAM state.  Services adhering to additional D3L structure as part of a smart contract service accord would sacrifice a degree of &quot;bare metal&quot; flexibility to win service interoperability.  What are the set of accords we can imagine here?
 
 If we do not seek this set, we end up with isolated services -- no different than todays isolated rollups/parachains.   How could we do better in the JAM era? <span class="edited">(edited)</span></div>
+<div class='msg'><a class='ts' href='#$rd9MUCg1UK_t8wpURII7yEUUUNt1-Er59ORBV8fiXCQ'>#</a> <a class='ts' name='$rd9MUCg1UK_t8wpURII7yEUUUNt1-Er59ORBV8fiXCQ' href='https://matrix.to/#/!ddsEwXlCWnreEGuqXZ:polkadot.io/$rd9MUCg1UK_t8wpURII7yEUUUNt1-Er59ORBV8fiXCQ' target='_blank'>2025-10-04 12:44</a>&ensp;<span class='u' style='color:#2979b3'>hitchhooker</span>: why not just add 5th entry point for premise and ape systemd&#x27;s transaction builder logic for coscheduling? it&#x27;s the clear winner in unix for coordinating interdependent processes.
+
+systemd does exactly what jam needs: <a href="https://github.com/systemd/systemd/blob/main/src/core/transaction.c#L928" rel="noopener" target="_blank">https://github.com/systemd/systemd/blob/main/src/core/transaction.c#L928</a>
+- transaction_add_job_and_dependencies() - collect all job dependencies 
+- transaction_verify_order() - verify no conflicts/cycles
+- transaction_activate() - execute atomically or abort entirely
+
+maps to jam:
+- premise() checks preconditions like transaction_add_job_and_dependencies()
+- jam core verifies dependencies like transaction_verify_order()
+- accumulate() applies atomically like transaction_apply()</div>
+<div class='msg'><a class='ts' href='#$iYHe9amZYuWKze0K19M8wzf_UX73JX_q0tddHgCTqsU'>#</a> <a class='ts' name='$iYHe9amZYuWKze0K19M8wzf_UX73JX_q0tddHgCTqsU' href='https://matrix.to/#/!ddsEwXlCWnreEGuqXZ:polkadot.io/$iYHe9amZYuWKze0K19M8wzf_UX73JX_q0tddHgCTqsU' target='_blank'>2025-10-04 12:46</a>&ensp;<span class='u' style='color:#cd8957'>gav</span>: Services are not intended to be co scheduled as part of JAM. Please note that JAM has no concept of transactions and the accumulation stage is designed to be entirely async. <span class="edited">(edited)</span></div>
+<div class='msg'><a class='ts' href='#$SVdajnankemsdlaOZMK_hLl4cn8X2bIrkxz59OlwcE8'>#</a> <a class='ts' name='$SVdajnankemsdlaOZMK_hLl4cn8X2bIrkxz59OlwcE8' href='https://matrix.to/#/!ddsEwXlCWnreEGuqXZ:polkadot.io/$SVdajnankemsdlaOZMK_hLl4cn8X2bIrkxz59OlwcE8' target='_blank'>2025-10-04 12:46</a>&ensp;<span class='u' style='color:#cd8957'>gav</span>: Any co-scheduling happens within a work package, effectively during Refinement where all compute is sync. <span class="edited">(edited)</span></div>
+<div class='msg'><a class='ts' href='#$ICDD9cnnASt1RrndGXh5qCkYbQMJD9ywxUxf50qypvs'>#</a> <a class='ts' name='$ICDD9cnnASt1RrndGXh5qCkYbQMJD9ywxUxf50qypvs' href='https://matrix.to/#/!ddsEwXlCWnreEGuqXZ:polkadot.io/$ICDD9cnnASt1RrndGXh5qCkYbQMJD9ywxUxf50qypvs' target='_blank'>2025-10-04 12:47</a>&ensp;<span class='u' style='color:#cd8957'>gav</span>: If you’re interested, you might like to prototype a service or CoreVM alteration which implements your idea for co-scheduling. </div>
+<div class='msg'><a class='ts' href='#$xUYIIB_EXegYlrvJG5fAo_9_3RpoAe0_paPAyKGAKaY'>#</a> <a class='ts' name='$xUYIIB_EXegYlrvJG5fAo_9_3RpoAe0_paPAyKGAKaY' href='https://matrix.to/#/!ddsEwXlCWnreEGuqXZ:polkadot.io/$xUYIIB_EXegYlrvJG5fAo_9_3RpoAe0_paPAyKGAKaY' target='_blank'>2025-10-04 14:56</a>&ensp;<span class='u' style='color:#c457c5'>vinsystems</span>: Hi, I have a question about the combination of accumulate with on_transfer. The accumulate invokation takes as one of its arguments the concatenation of the transfers and Operand tuples.
+Does this mean that at this point there could be both transfers and Operand tuples? <span class="edited">(edited)</span></div>
+<div class='msg'><a class='ts' href='#$1QlM51AVqKE5S792e_icTRvY1iUWk-mqQBviiqiBhVI'>#</a> <a class='ts' name='$1QlM51AVqKE5S792e_icTRvY1iUWk-mqQBviiqiBhVI' href='https://matrix.to/#/!ddsEwXlCWnreEGuqXZ:polkadot.io/$1QlM51AVqKE5S792e_icTRvY1iUWk-mqQBviiqiBhVI' target='_blank'>2025-10-04 14:59</a>&ensp;<span class='u' style='color:#cd8957'>gav</span>: Yes</div>

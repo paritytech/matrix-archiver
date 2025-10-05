@@ -1,5 +1,5 @@
 # room: #graypaper:polkadot.io
-# exported: 2025-10-04 03:19 UTC
+# exported: 2025-10-05 03:29 UTC
 2024-04-17 20:29 syed: https://matrix.to/#/!hyzRkDqDthePbodYFz:parity.io/$f_DMsIEcDXZegw6Sabnehzc-LrdDQkmq5MbxDDyoZxY?via=parity.io&via=web3.foundation
 
 2024-04-17 20:29 syed: 
@@ -6683,3 +6683,20 @@ I get that this is intentionally outside JAM protocol and that service builders 
 Distant but related: If D3L holds objects worth keeping around for up to 28 days, with a D3L refresh mechanism then D3L could hold objects (code, types, data) for longer.   If immutable objects can be held forever so long as there is a service with a balance, then the function of accumulate for xyz VM is largely to record the latest version of whatever is held in D3L.  Part of the service "accord" between xyz could be to adhere to this model between D3L and JAM state.  Services adhering to additional D3L structure as part of a smart contract service accord would sacrifice a degree of "bare metal" flexibility to win service interoperability.  What are the set of accords we can imagine here?
 
 If we do not seek this set, we end up with isolated services -- no different than todays isolated rollups/parachains.   How could we do better in the JAM era? [edited]
+2025-10-04 12:44 hitchhooker: why not just add 5th entry point for premise and ape systemd's transaction builder logic for coscheduling? it's the clear winner in unix for coordinating interdependent processes.
+
+systemd does exactly what jam needs: https://github.com/systemd/systemd/blob/main/src/core/transaction.c#L928
+- transaction_add_job_and_dependencies() - collect all job dependencies 
+- transaction_verify_order() - verify no conflicts/cycles
+- transaction_activate() - execute atomically or abort entirely
+
+maps to jam:
+- premise() checks preconditions like transaction_add_job_and_dependencies()
+- jam core verifies dependencies like transaction_verify_order()
+- accumulate() applies atomically like transaction_apply()
+2025-10-04 12:46 gav: Services are not intended to be co scheduled as part of JAM. Please note that JAM has no concept of transactions and the accumulation stage is designed to be entirely async. [edited]
+2025-10-04 12:46 gav: Any co-scheduling happens within a work package, effectively during Refinement where all compute is sync. [edited]
+2025-10-04 12:47 gav: If you’re interested, you might like to prototype a service or CoreVM alteration which implements your idea for co-scheduling. 
+2025-10-04 14:56 vinsystems: Hi, I have a question about the combination of accumulate with on_transfer. The accumulate invokation takes as one of its arguments the concatenation of the transfers and Operand tuples.
+Does this mean that at this point there could be both transfers and Operand tuples? [edited]
+2025-10-04 14:59 gav: Yes
