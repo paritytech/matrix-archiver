@@ -1,5 +1,5 @@
 # room: #jam:polkadot.io
-# exported: 2025-10-06 03:26 UTC
+# exported: 2025-10-07 03:23 UTC
 2024-04-20 02:08 johnjiao123: 
 2024-04-20 02:09 johnjiao123: 
 2024-05-30 21:48 nradko: Hey everyone,
@@ -11496,3 +11496,12 @@ I have prepared [2 simple issues in jade](https://github.com/spacejamapp/jade/is
 - writing service tests using `jade`
 
 happy hacking! [edited]
+2025-10-06 11:14 anish1222: Hello,
+
+i have done with M1 and for M2 i am stuck with networking part please anyone tell me that how can i connect with another node (wanted to know the node, ) ?.. what is Jam-duna
+2025-10-06 11:26 dave: The network protocol is described here: https://github.com/zdave-parity/jam-np/blob/main/simple.md [edited]
+2025-10-06 11:27 dave: I think there are quite a few implementations available to test against now. Parity's implementation is available here (binary-only for now): https://github.com/paritytech/polkajam-releases
+2025-10-06 19:25 davxy: > I have done with M1
+
+What is your impl?
+2025-10-06 20:22 shimonchick: is this still relevant as of GP 7.1 ? https://github.com/w3f/jamtestvectors/blob/master/trie/merkle.py
