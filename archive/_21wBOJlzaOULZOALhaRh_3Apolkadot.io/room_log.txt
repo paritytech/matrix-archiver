@@ -1,5 +1,5 @@
 # room: #jam:polkadot.io
-# exported: 2025-10-07 03:23 UTC
+# exported: 2025-10-08 03:23 UTC
 2024-04-20 02:08 johnjiao123: 
 2024-04-20 02:09 johnjiao123: 
 2024-05-30 21:48 nradko: Hey everyone,
@@ -11505,3 +11505,14 @@ i have done with M1 and for M2 i am stuck with networking part please anyone tel
 
 What is your impl?
 2025-10-06 20:22 shimonchick: is this still relevant as of GP 7.1 ? https://github.com/w3f/jamtestvectors/blob/master/trie/merkle.py
+2025-10-07 07:30 arkadiy: This is an up to date version. Not sure why it is not merged yet:
+https://github.com/w3f/jamtestvectors/pull/14
+2025-10-07 08:23 shimonchick: thank you
+2025-10-07 14:21 shimonchick: Should an M1 implementation comply with the SCALE codec test vectors if we have the GP compliant variable length encoding done? https://github.com/w3f/jamtestvectors/blob/master/codec/README.md
+2025-10-07 14:44 dave: You should use davxy's fork here, sorry about the confusion: https://github.com/davxy/jam-test-vectors [edited]
+2025-10-07 14:44 dave: The codec vectors there should match the GP codec
+2025-10-07 19:18 shimonchick: am i missing something, or are both master and v0.7.1 of the fork also using SCALE instead of GP variable length encoding?
+2025-10-07 21:19 dave: That fork should be using the GP codec. If you think there's an error in the test vectors please open an issue
+2025-10-07 21:29 davxy: Both the master branch in the w3f repo and my fork should be using JAM variable-length encoding.  
+Where exactly have you found the "classic" SCALE varlen encoding being used? [edited]
+2025-10-08 02:25 sourabhniyogi: Any news on the dates/location for this, which is now less than 8-10 weeks from now I gather?
