@@ -1,5 +1,5 @@
 # room: #jam:polkadot.io
-# exported: 2025-10-08 03:23 UTC
+# exported: 2025-10-09 03:25 UTC
 2024-04-20 02:08 johnjiao123: 
 2024-04-20 02:09 johnjiao123: 
 2024-05-30 21:48 nradko: Hey everyone,
@@ -11516,3 +11516,7 @@ https://github.com/w3f/jamtestvectors/pull/14
 2025-10-07 21:29 davxy: Both the master branch in the w3f repo and my fork should be using JAM variable-length encoding.  
 Where exactly have you found the "classic" SCALE varlen encoding being used? [edited]
 2025-10-08 02:25 sourabhniyogi: Any news on the dates/location for this, which is now less than 8-10 weeks from now I gather?
+2025-10-08 19:56 dhruv245: Hi, is there any dates of when the submission of M1 and M2 will open. My team has completed both of them, so can I know the next steps?
+2025-10-08 20:49 davxy: Hi! Could I ask what is implementation?  
+Also, have you implemented the fuzzer protocol for M1?  
+You can find more info here: https://github.com/davxy/jam-conformance/tree/main/fuzz-proto
