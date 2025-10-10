@@ -1,5 +1,5 @@
 # room: #jam-conformance:matrix.org
-# exported: 2025-10-09 03:25 UTC
+# exported: 2025-10-10 03:26 UTC
 2025-08-20 15:56 erin: tomusdrw: i've set up the archiver to archive this also, so hopefully will be up starting tomorrow
 2025-08-21 06:33 ascriv: https://github.com/davxy/jam-conformance/issues/26 should we not discourage open source implementations (for now)? [edited]
 2025-08-21 10:27 oliver.tale-yazdi: I think open source repos are fine. Other implementors are just not supposed to look at it
@@ -971,3 +971,20 @@ https://github.com/davxy/jam-test-vectors/pull/96
 2025-10-08 20:16 emielsebastiaan: Can anyone confirm, please? 
 
 https://github.com/davxy/jam-test-vectors/issues/100
+2025-10-09 04:01 tvvkk7: We also found the same issue. 
+Service 0 miss a storage item.
+2025-10-09 12:01 danicuki: > <@tvvkk7:matrix.org> We also found the same issue. 
+> Service 0 miss a storage item.
+
+We didn't find this issue on our side. Could you point on GP formulas what we are eventually missing?
+2025-10-09 12:02 prematurata: i dont see that problem either but i do have this https://github.com/davxy/jam-test-vectors/issues/101
+2025-10-09 12:15 tvvkk7: The write host call will append a new storage item. 
+You can see the service items changes from 2 to 3.
+2025-10-09 13:03 danicuki: The only write to storage is this on our side:
+```
+0x7472616e73666572726564 => 0x0200000064000000000000006769667400000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
+```
+
+and as far as I saw, our final services storages are identical to those on the vectors. 
+2025-10-09 13:20 tvvkk7: Yes, we write a storage, but the post-state storage is empty in the [test vector](https://github.com/davxy/jam-test-vectors/blob/372204dfba44c5652fbccd974d2da596a2352205/stf/accumulate/tiny/transfer_for_ejected_service-1.json#L376)
+2025-10-09 16:45 davxy: https://github.com/davxy/jam-test-vectors/pull/102

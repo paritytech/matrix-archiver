@@ -1,5 +1,5 @@
 # room: #jam:polkadot.io
-# exported: 2025-10-09 03:25 UTC
+# exported: 2025-10-10 03:25 UTC
 2024-04-20 02:08 johnjiao123: 
 2024-04-20 02:09 johnjiao123: 
 2024-05-30 21:48 nradko: Hey everyone,
@@ -11520,3 +11520,14 @@ Where exactly have you found the "classic" SCALE varlen encoding being used? [ed
 2025-10-08 20:49 davxy: Hi! Could I ask what is implementation?  
 Also, have you implemented the fuzzer protocol for M1?  
 You can find more info here: https://github.com/davxy/jam-conformance/tree/main/fuzz-proto
+2025-10-09 06:52 jan: As you may or may not know, I'm working on the new gas cost model for JAM. I'm finally at a point where I will be merging the initial implementation of the new gas cost model into PolkaVM, and updating the GP to include it.
+
+So I'm looking for volunteers. The task is simple: commit to implement the new gas cost model in your PVM based on my draft changes to the GP in a timely manner (say, under a week), run some new test vectors I'll prepare (these will be a new kind of test vectors, and won't involve executing any code in your PVM, but only checking the calculated gas costs), and report any feedback you might have.
+
+Note that this will *not* give you any advantage wrt the JAM prize; all of this will be public, and you will not be getting "early access" to anything; the only difference is 1) you give me a commitment to implement this quickly and give feedback, and 2) you'll be implementing something that's not in the GP (yet), so it might be unclear, scuffed, incomplete or still change in a substantial manner. The new gas cost algorithm is complex yet will be a critical part of JAM, so the whole point of this exercise is to get a third-party implementation *before* it hits the GP, so that we can iron out the issues as fast as possible.
+
+Message me if you're interested, and once I have a draft of the GP changes (which, again - will be public; this ain't an early access program) I'll ping you with a link.
+2025-10-09 11:42 hitchhooker: has jamnp-s been tested to be able to overcome chinese ISPs blocking QUIC traffic?
+https://labs.apnic.net/presentations/store/2023-03-01-quic-apricot.pdf
+https://www.youtube.com/watch?v=Vc9QiE1CgpE&t=3450s
+2025-10-09 12:01 dave: It uses QUIC so if that is blocked it's not going to work

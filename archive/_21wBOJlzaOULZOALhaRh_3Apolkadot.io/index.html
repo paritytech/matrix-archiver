@@ -18,7 +18,7 @@ a:hover{color:#90caf9}
 em{font-style:italic}
 </style>
 <h1>#jam:polkadot.io</h1>
-<p><small>last updated 2025-10-09 03:25 UTC</small></p>
+<p><small>last updated 2025-10-10 03:25 UTC</small></p>
 <p><a href='room_log.txt'>⇩ plaintext</a> · <a href='../../'>⇦ all rooms</a></p>
 <hr>
 <div class='msg'><a class='ts' href='#$we4SYXTHwmKn094X9Zs_7mWUOoUVh4icvVdxD83RZfs'>#</a> <a class='ts' name='$we4SYXTHwmKn094X9Zs_7mWUOoUVh4icvVdxD83RZfs' href='https://matrix.to/#/!wBOJlzaOULZOALhaRh:polkadot.io/$we4SYXTHwmKn094X9Zs_7mWUOoUVh4icvVdxD83RZfs' target='_blank'>2024-04-20 02:08</a>&ensp;<span class='u' style='color:#d0709e'>johnjiao123</span>: </div>
@@ -11416,3 +11416,14 @@ Where exactly have you found the &quot;classic&quot; SCALE varlen encoding being
 <div class='msg'><a class='ts' href='#$X1bfFO3-GeGTugMozSACgmInos4Rh_JuOpEcSeC0ol0'>#</a> <a class='ts' name='$X1bfFO3-GeGTugMozSACgmInos4Rh_JuOpEcSeC0ol0' href='https://matrix.to/#/!wBOJlzaOULZOALhaRh:polkadot.io/$X1bfFO3-GeGTugMozSACgmInos4Rh_JuOpEcSeC0ol0' target='_blank'>2025-10-08 20:49</a>&ensp;<span class='u' style='color:#c9419d'>davxy</span>: Hi! Could I ask what is implementation?  
 Also, have you implemented the fuzzer protocol for M1?  
 You can find more info here: <a href="https://github.com/davxy/jam-conformance/tree/main/fuzz-proto" rel="noopener" target="_blank">https://github.com/davxy/jam-conformance/tree/main/fuzz-proto</a></div>
+<div class='msg'><a class='ts' href='#$No0zUcndumAcU5oWM3iF7zPF2aoG24wSuG56VEJnPbs'>#</a> <a class='ts' name='$No0zUcndumAcU5oWM3iF7zPF2aoG24wSuG56VEJnPbs' href='https://matrix.to/#/!wBOJlzaOULZOALhaRh:polkadot.io/$No0zUcndumAcU5oWM3iF7zPF2aoG24wSuG56VEJnPbs' target='_blank'>2025-10-09 06:52</a>&ensp;<span class='u' style='color:#da5c80'>jan</span>: As you may or may not know, I&#x27;m working on the new gas cost model for JAM. I&#x27;m finally at a point where I will be merging the initial implementation of the new gas cost model into PolkaVM, and updating the GP to include it.
+
+So I&#x27;m looking for volunteers. The task is simple: commit to implement the new gas cost model in your PVM based on my draft changes to the GP in a timely manner (say, under a week), run some new test vectors I&#x27;ll prepare (these will be a new kind of test vectors, and won&#x27;t involve executing any code in your PVM, but only checking the calculated gas costs), and report any feedback you might have.
+
+Note that this will <em>not</em> give you any advantage wrt the JAM prize; all of this will be public, and you will not be getting &quot;early access&quot; to anything; the only difference is 1) you give me a commitment to implement this quickly and give feedback, and 2) you&#x27;ll be implementing something that&#x27;s not in the GP (yet), so it might be unclear, scuffed, incomplete or still change in a substantial manner. The new gas cost algorithm is complex yet will be a critical part of JAM, so the whole point of this exercise is to get a third-party implementation <em>before</em> it hits the GP, so that we can iron out the issues as fast as possible.
+
+Message me if you&#x27;re interested, and once I have a draft of the GP changes (which, again - will be public; this ain&#x27;t an early access program) I&#x27;ll ping you with a link.</div>
+<div class='msg'><a class='ts' href='#$sDIoZq493PAGfbD6ZzJ1k91f8ieTrjZfcq5zYow_Ru0'>#</a> <a class='ts' name='$sDIoZq493PAGfbD6ZzJ1k91f8ieTrjZfcq5zYow_Ru0' href='https://matrix.to/#/!wBOJlzaOULZOALhaRh:polkadot.io/$sDIoZq493PAGfbD6ZzJ1k91f8ieTrjZfcq5zYow_Ru0' target='_blank'>2025-10-09 11:42</a>&ensp;<span class='u' style='color:#2979b3'>hitchhooker</span>: has jamnp-s been tested to be able to overcome chinese ISPs blocking QUIC traffic?
+<a href="https://labs.apnic.net/presentations/store/2023-03-01-quic-apricot.pdf" rel="noopener" target="_blank">https://labs.apnic.net/presentations/store/2023-03-01-quic-apricot.pdf</a>
+<a href="https://www.youtube.com/watch?v=Vc9QiE1CgpE&amp;t=3450s" rel="noopener" target="_blank">https://www.youtube.com/watch?v=Vc9QiE1CgpE&amp;t=3450s</a></div>
+<div class='msg'><a class='ts' href='#$iNcRHcUOMC5QUs2VaML4dmY1awGOV9Sz4QSAtuCg8kI'>#</a> <a class='ts' name='$iNcRHcUOMC5QUs2VaML4dmY1awGOV9Sz4QSAtuCg8kI' href='https://matrix.to/#/!wBOJlzaOULZOALhaRh:polkadot.io/$iNcRHcUOMC5QUs2VaML4dmY1awGOV9Sz4QSAtuCg8kI' target='_blank'>2025-10-09 12:01</a>&ensp;<span class='u' style='color:#c65779'>dave</span>: It uses QUIC so if that is blocked it&#x27;s not going to work</div>

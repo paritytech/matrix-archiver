@@ -18,7 +18,7 @@ a:hover{color:#90caf9}
 em{font-style:italic}
 </style>
 <h1>#jam-conformance:matrix.org</h1>
-<p><small>last updated 2025-10-09 03:25 UTC</small></p>
+<p><small>last updated 2025-10-10 03:26 UTC</small></p>
 <p><a href='room_log.txt'>⇩ plaintext</a> · <a href='../../'>⇦ all rooms</a></p>
 <hr>
 <div class='msg'><a class='ts' href='#$_9hLINsChVG8rufQkmbqp-fIbsNyK1YqpS3C9S7QZHU'>#</a> <a class='ts' name='$_9hLINsChVG8rufQkmbqp-fIbsNyK1YqpS3C9S7QZHU' href='https://matrix.to/#/!ksYpYHcVftKsUAsdMa:matrix.org/$_9hLINsChVG8rufQkmbqp-fIbsNyK1YqpS3C9S7QZHU' target='_blank'>2025-08-20 15:56</a>&ensp;<span class='u' style='color:#787fdf'>erin</span>: tomusdrw: i&#x27;ve set up the archiver to archive this also, so hopefully will be up starting tomorrow</div>
@@ -980,3 +980,19 @@ Wouldnt worth to move directly to 0.7.2? We at Jamixir already have 0.7.2 ready 
 <div class='msg'><a class='ts' href='#$wybqSv0-8o71rBhAcAk_SDiDsc57oDYDhO15dpnSCyA'>#</a> <a class='ts' name='$wybqSv0-8o71rBhAcAk_SDiDsc57oDYDhO15dpnSCyA' href='https://matrix.to/#/!ksYpYHcVftKsUAsdMa:matrix.org/$wybqSv0-8o71rBhAcAk_SDiDsc57oDYDhO15dpnSCyA' target='_blank'>2025-10-08 20:16</a>&ensp;<span class='u' style='color:#a23bc7'>emielsebastiaan</span>: Can anyone confirm, please? 
 
 <a href="https://github.com/davxy/jam-test-vectors/issues/100" rel="noopener" target="_blank">https://github.com/davxy/jam-test-vectors/issues/100</a></div>
+<div class='msg'><a class='ts' href='#$UMi9NbmmVaPF4Cv-sf3MW9RT6xXKJXC6sjifCA9cyTg'>#</a> <a class='ts' name='$UMi9NbmmVaPF4Cv-sf3MW9RT6xXKJXC6sjifCA9cyTg' href='https://matrix.to/#/!ksYpYHcVftKsUAsdMa:matrix.org/$UMi9NbmmVaPF4Cv-sf3MW9RT6xXKJXC6sjifCA9cyTg' target='_blank'>2025-10-09 04:01</a>&ensp;<span class='u' style='color:#994dd2'>tvvkk7</span>: We also found the same issue. 
+Service 0 miss a storage item.</div>
+<div class='msg'><a class='ts' href='#$3jF6csK5qJsYNN5rER4Jm_y6WVc2vQ9wuPAdaz1uBc8'>#</a> <a class='ts' name='$3jF6csK5qJsYNN5rER4Jm_y6WVc2vQ9wuPAdaz1uBc8' href='https://matrix.to/#/!ksYpYHcVftKsUAsdMa:matrix.org/$3jF6csK5qJsYNN5rER4Jm_y6WVc2vQ9wuPAdaz1uBc8' target='_blank'>2025-10-09 12:01</a>&ensp;<span class='u' style='color:#4977cf'>danicuki</span>: &gt; &lt;@tvvkk7:matrix.org&gt; We also found the same issue. 
+&gt; Service 0 miss a storage item.
+
+We didn&#x27;t find this issue on our side. Could you point on GP formulas what we are eventually missing?</div>
+<div class='msg'><a class='ts' href='#$OILie_NK_9fjcoBR8X-_gAZ78cKOuSR-uSmblTLWcgg'>#</a> <a class='ts' name='$OILie_NK_9fjcoBR8X-_gAZ78cKOuSR-uSmblTLWcgg' href='https://matrix.to/#/!ksYpYHcVftKsUAsdMa:matrix.org/$OILie_NK_9fjcoBR8X-_gAZ78cKOuSR-uSmblTLWcgg' target='_blank'>2025-10-09 12:02</a>&ensp;<span class='u' style='color:#5c84c9'>prematurata</span>: i dont see that problem either but i do have this <a href="https://github.com/davxy/jam-test-vectors/issues/101" rel="noopener" target="_blank">https://github.com/davxy/jam-test-vectors/issues/101</a></div>
+<div class='msg'><a class='ts' href='#$Dm8KIIaJW6FUt32xJ2gyhBHQio_iODcnS6bl0o5wTQM'>#</a> <a class='ts' name='$Dm8KIIaJW6FUt32xJ2gyhBHQio_iODcnS6bl0o5wTQM' href='https://matrix.to/#/!ksYpYHcVftKsUAsdMa:matrix.org/$Dm8KIIaJW6FUt32xJ2gyhBHQio_iODcnS6bl0o5wTQM' target='_blank'>2025-10-09 12:15</a>&ensp;<span class='u' style='color:#994dd2'>tvvkk7</span>: The write host call will append a new storage item. 
+You can see the service items changes from 2 to 3.</div>
+<div class='msg'><a class='ts' href='#$VOMhxWztx-fa_sPUT-Djlztn3Vc9WIjMa2nP3IzWFc4'>#</a> <a class='ts' name='$VOMhxWztx-fa_sPUT-Djlztn3Vc9WIjMa2nP3IzWFc4' href='https://matrix.to/#/!ksYpYHcVftKsUAsdMa:matrix.org/$VOMhxWztx-fa_sPUT-Djlztn3Vc9WIjMa2nP3IzWFc4' target='_blank'>2025-10-09 13:03</a>&ensp;<span class='u' style='color:#4977cf'>danicuki</span>: The only write to storage is this on our side:
+<pre><code class=''>0x7472616e73666572726564 =&gt; 0x0200000064000000000000006769667400000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
+</code></pre>
+
+and as far as I saw, our final services storages are identical to those on the vectors. </div>
+<div class='msg'><a class='ts' href='#$FENvQSotJYkJnUlOYbQiH_xA5IbkUeaB7_HA6p5hIcY'>#</a> <a class='ts' name='$FENvQSotJYkJnUlOYbQiH_xA5IbkUeaB7_HA6p5hIcY' href='https://matrix.to/#/!ksYpYHcVftKsUAsdMa:matrix.org/$FENvQSotJYkJnUlOYbQiH_xA5IbkUeaB7_HA6p5hIcY' target='_blank'>2025-10-09 13:20</a>&ensp;<span class='u' style='color:#994dd2'>tvvkk7</span>: Yes, we write a storage, but the post-state storage is empty in the <a href="https://github.com/davxy/jam-test-vectors/blob/372204dfba44c5652fbccd974d2da596a2352205/stf/accumulate/tiny/transfer_for_ejected_service-1.json#L376" rel="noopener" target="_blank">test vector</a></div>
+<div class='msg'><a class='ts' href='#$e8g3UVCk6Dr6Cc99Q2DvoRwH1c_WQa0eaErgXgTNZ6c'>#</a> <a class='ts' name='$e8g3UVCk6Dr6Cc99Q2DvoRwH1c_WQa0eaErgXgTNZ6c' href='https://matrix.to/#/!ksYpYHcVftKsUAsdMa:matrix.org/$e8g3UVCk6Dr6Cc99Q2DvoRwH1c_WQa0eaErgXgTNZ6c' target='_blank'>2025-10-09 16:45</a>&ensp;<span class='u' style='color:#c9419d'>davxy</span>: <a href="https://github.com/davxy/jam-test-vectors/pull/102" rel="noopener" target="_blank">https://github.com/davxy/jam-test-vectors/pull/102</a></div>
