@@ -1,5 +1,5 @@
 # room: #jam:polkadot.io
-# exported: 2025-10-10 03:25 UTC
+# exported: 2025-10-11 03:20 UTC
 2024-04-20 02:08 johnjiao123: 
 2024-04-20 02:09 johnjiao123: 
 2024-05-30 21:48 nradko: Hey everyone,
@@ -11531,3 +11531,6 @@ Message me if you're interested, and once I have a draft of the GP changes (whic
 https://labs.apnic.net/presentations/store/2023-03-01-quic-apricot.pdf
 https://www.youtube.com/watch?v=Vc9QiE1CgpE&t=3450s
 2025-10-09 12:01 dave: It uses QUIC so if that is blocked it's not going to work
+2025-10-10 13:27 gav: Meh - it’s base layer tech. They won’t block it forever. 
+2025-10-10 13:57 hitchhooker: https://gfw.report/publications/usenixsecurity25/en/#sec:7-circumvention
+seems like custom(or rfc9369) quic versioning, 65535 default port for validators would help a lot to overcome it [edited]
