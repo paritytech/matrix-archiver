@@ -18,7 +18,7 @@ a:hover{color:#90caf9}
 em{font-style:italic}
 </style>
 <h1>#jam-conformance:matrix.org</h1>
-<p><small>last updated 2025-10-11 03:21 UTC</small></p>
+<p><small>last updated 2025-10-12 03:27 UTC</small></p>
 <p><a href='room_log.txt'>⇩ plaintext</a> · <a href='../../'>⇦ all rooms</a></p>
 <hr>
 <div class='msg'><a class='ts' href='#$_9hLINsChVG8rufQkmbqp-fIbsNyK1YqpS3C9S7QZHU'>#</a> <a class='ts' name='$_9hLINsChVG8rufQkmbqp-fIbsNyK1YqpS3C9S7QZHU' href='https://matrix.to/#/!ksYpYHcVftKsUAsdMa:matrix.org/$_9hLINsChVG8rufQkmbqp-fIbsNyK1YqpS3C9S7QZHU' target='_blank'>2025-08-20 15:56</a>&ensp;<span class='u' style='color:#787fdf'>erin</span>: tomusdrw: i&#x27;ve set up the archiver to archive this also, so hopefully will be up starting tomorrow</div>
@@ -996,3 +996,11 @@ You can see the service items changes from 2 to 3.</div>
 and as far as I saw, our final services storages are identical to those on the vectors. </div>
 <div class='msg'><a class='ts' href='#$FENvQSotJYkJnUlOYbQiH_xA5IbkUeaB7_HA6p5hIcY'>#</a> <a class='ts' name='$FENvQSotJYkJnUlOYbQiH_xA5IbkUeaB7_HA6p5hIcY' href='https://matrix.to/#/!ksYpYHcVftKsUAsdMa:matrix.org/$FENvQSotJYkJnUlOYbQiH_xA5IbkUeaB7_HA6p5hIcY' target='_blank'>2025-10-09 13:20</a>&ensp;<span class='u' style='color:#994dd2'>tvvkk7</span>: Yes, we write a storage, but the post-state storage is empty in the <a href="https://github.com/davxy/jam-test-vectors/blob/372204dfba44c5652fbccd974d2da596a2352205/stf/accumulate/tiny/transfer_for_ejected_service-1.json#L376" rel="noopener" target="_blank">test vector</a></div>
 <div class='msg'><a class='ts' href='#$e8g3UVCk6Dr6Cc99Q2DvoRwH1c_WQa0eaErgXgTNZ6c'>#</a> <a class='ts' name='$e8g3UVCk6Dr6Cc99Q2DvoRwH1c_WQa0eaErgXgTNZ6c' href='https://matrix.to/#/!ksYpYHcVftKsUAsdMa:matrix.org/$e8g3UVCk6Dr6Cc99Q2DvoRwH1c_WQa0eaErgXgTNZ6c' target='_blank'>2025-10-09 16:45</a>&ensp;<span class='u' style='color:#c9419d'>davxy</span>: <a href="https://github.com/davxy/jam-test-vectors/pull/102" rel="noopener" target="_blank">https://github.com/davxy/jam-test-vectors/pull/102</a></div>
+<div class='msg'><a class='ts' href='#$FBaSnCcpHSIjgRg9Ij8ZjRI5yVYwl4SvD5xGNLaPxz8'>#</a> <a class='ts' name='$FBaSnCcpHSIjgRg9Ij8ZjRI5yVYwl4SvD5xGNLaPxz8' href='https://matrix.to/#/!ksYpYHcVftKsUAsdMa:matrix.org/$FBaSnCcpHSIjgRg9Ij8ZjRI5yVYwl4SvD5xGNLaPxz8' target='_blank'>2025-10-11 10:19</a>&ensp;<span class='u' style='color:#c9419d'>davxy</span>: It seems there has been a regression affecting the alignment of our implementations after the 0.7.1 release.
+While the implementations remain aligned for basic public test vectors, issues appear as soon as I instantiate our <em>fuzzy</em> service.
+
+To encourage independent debugging and avoid excessive back-and-forth, I’ve published a trace set that instantiates and executes this service in the simplest for (i.e. it doesn&#x27;t do anything particular).
+Please run it on your side and report any issues in the PR
+
+<a href="https://github.com/davxy/jam-test-vectors/pull/103" rel="noopener" target="_blank">https://github.com/davxy/jam-test-vectors/pull/103</a></div>
+<div class='msg reply'><a class='ts' href='#$Awf3Y89T0jDGEehwcu8ARiO0T8na22Ks_y6Nz-oqgII'>#</a> <a class='ts' name='$Awf3Y89T0jDGEehwcu8ARiO0T8na22Ks_y6Nz-oqgII' href='https://matrix.to/#/!ksYpYHcVftKsUAsdMa:matrix.org/$Awf3Y89T0jDGEehwcu8ARiO0T8na22Ks_y6Nz-oqgII' target='_blank'>2025-10-11 10:44</a>&ensp;<span class='u' style='color:#bfaf39'>dakkk</span>: it seems we have a discrepancy on services&#x27; balances in many tests; I will investigate further [35 failed, 165 passed] <span class="edited">(edited)</span></div>
