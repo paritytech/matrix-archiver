@@ -1,5 +1,5 @@
 # room: #jam-conformance:matrix.org
-# exported: 2025-10-12 03:27 UTC
+# exported: 2025-10-13 03:33 UTC
 2025-08-20 15:56 erin: tomusdrw: i've set up the archiver to archive this also, so hopefully will be up starting tomorrow
 2025-08-21 06:33 ascriv: https://github.com/davxy/jam-conformance/issues/26 should we not discourage open source implementations (for now)? [edited]
 2025-08-21 10:27 oliver.tale-yazdi: I think open source repos are fine. Other implementors are just not supposed to look at it
@@ -991,8 +991,8 @@ and as far as I saw, our final services storages are identical to those on the v
 2025-10-11 10:19 davxy: It seems there has been a regression affecting the alignment of our implementations after the 0.7.1 release.
 While the implementations remain aligned for basic public test vectors, issues appear as soon as I instantiate our *fuzzy* service.
 
-To encourage independent debugging and avoid excessive back-and-forth, I’ve published a trace set that instantiates and executes this service in the simplest for (i.e. it doesn't do anything particular).
+To encourage independent debugging and avoid excessive back-and-forth, I’ve published a trace set that instantiates and executes this service in the simplest form (i.e. it doesn't do anything particular).
 Please run it on your side and report any issues in the PR
 
-https://github.com/davxy/jam-test-vectors/pull/103
+https://github.com/davxy/jam-test-vectors/pull/103 [edited]
   ↳ 2025-10-11 10:44 dakkk: it seems we have a discrepancy on services' balances in many tests; I will investigate further [35 failed, 165 passed] [edited]
