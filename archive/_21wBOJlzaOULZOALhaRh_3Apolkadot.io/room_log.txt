@@ -1,5 +1,5 @@
 # room: #jam:polkadot.io
-# exported: 2025-10-14 03:25 UTC
+# exported: 2025-10-15 03:29 UTC
 2024-04-20 02:08 johnjiao123: 
 2024-04-20 02:09 johnjiao123: 
 2024-05-30 21:48 nradko: Hey everyone,
@@ -11535,3 +11535,20 @@ https://www.youtube.com/watch?v=Vc9QiE1CgpE&t=3450s
 2025-10-10 13:57 hitchhooker: https://gfw.report/publications/usenixsecurity25/en/#sec:7-circumvention
 seems like custom(or rfc9369) quic versioning, 65535 default port for validators would help a lot to overcome it [edited]
 2025-10-11 23:32 nomadbitcoin: 
+2025-10-14 08:12 dhruv245: Yes, the fuzzer protocol is implemented and everything upto M2 is complete
+2025-10-14 08:13 dhruv245: davxy: 
+2025-10-14 08:14 dhruv245: Can you give me a ping on telegram: @Dhruv245 (https://t.me/Dhruv245). As I check this chat very minimum
+2025-10-14 12:37 shimonchick: how does one prove their M1 test vectors are passing? Is supplying a binary that runs along with open sourced unit tests work, or perhaps the implementation should generate same files as the test vectors for given case?
+2025-10-14 13:18 danicuki: How do we represent `None` or `Some(None)` in RPC returns? https://github.com/jamixir/JIPs/blob/main/JIP-2.md - is there a standard? JIP-2 doesn't explicitly define.
+2025-10-14 13:19 danicuki: you provide the binaries to be fuzzed. Take a look here: https://github.com/davxy/jam-conformance/
+2025-10-14 15:03 igankevich: We recently changed RPC API to use BASE64 encoding for all binary data, including hashes, preimages, segments and other similar types. According to our benchmarks it is much faster to encode a byte array to a BASE64 string and send than to encode it as JSON and send, even for small arrays. This statement is true for both Rust and Javascript-based clients.
+
+You can find the relevant JIP PR here: https://github.com/polkadot-fellows/JIPs/pull/9
+2025-10-14 17:50 aang114: image.jpg
+2025-10-14 17:50 aang114: Hi, does anyone know if the state component θ is supposed to be ordered by the service index? Because one of our failing fuzzer tests seems to be because θ is not ordered by service index. Thanks [edited]
+2025-10-14 18:00 jaymansfield: C(16) shows that order matters for θ and dictionaries default to order by key (C.10). I sort them in JavaJAM. [edited]
+2025-10-14 18:28 aang114: I see. I'll do the same then. Thanks man
+
+But now I'm wondering how would we sort it we had 2 elements in θ with the same service index then 🤔?
+2025-10-14 18:28 aang114: e.g: if we had the elements (2, 0x00) and (2, 0x01)
+2025-10-15 00:57 ascriv: Then you order based on the second elements’ lexicographic order I believe  [edited]
