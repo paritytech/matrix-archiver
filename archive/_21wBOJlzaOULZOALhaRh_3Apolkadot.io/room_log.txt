@@ -1,5 +1,5 @@
 # room: #jam:polkadot.io
-# exported: 2025-10-15 03:29 UTC
+# exported: 2025-10-16 03:28 UTC
 2024-04-20 02:08 johnjiao123: 
 2024-04-20 02:09 johnjiao123: 
 2024-05-30 21:48 nradko: Hey everyone,
@@ -11552,3 +11552,12 @@ You can find the relevant JIP PR here: https://github.com/polkadot-fellows/JIPs/
 But now I'm wondering how would we sort it we had 2 elements in θ with the same service index then 🤔?
 2025-10-14 18:28 aang114: e.g: if we had the elements (2, 0x00) and (2, 0x01)
 2025-10-15 00:57 ascriv: Then you order based on the second elements’ lexicographic order I believe  [edited]
+2025-10-15 06:57 vinsystems: Is there a possibility of accumulate twice the same service in the same block?
+2025-10-15 07:21 gav: Yes
+2025-10-15 07:22 gav: That is indeed the meaning of lexicographic ordering. 
+2025-10-15 07:22 gav: Think dictionary. 
+2025-10-15 07:24 gav: As long as we’re only dealing with tuples of scalar values then there’s a well-defined lexicographic order.  [edited]
+2025-10-15 07:25 gav: And it extends to other things like sequences and sets as long as you’re only comparing like with like (we don’t define how to compare a sequence with a scalar in the GP because it is never needed) [edited]
+2025-10-15 12:16 dhruv245: Hi, I wanted to check if there are any confirmed dates for the submission of M1 and M2. 
+
+My team has already completed both modules, so I’d like to know the next steps.

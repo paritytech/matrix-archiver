@@ -18,7 +18,7 @@ a:hover{color:#90caf9}
 em{font-style:italic}
 </style>
 <h1>#jam-conformance:matrix.org</h1>
-<p><small>last updated 2025-10-15 03:29 UTC</small></p>
+<p><small>last updated 2025-10-16 03:29 UTC</small></p>
 <p><a href='room_log.txt'>⇩ plaintext</a> · <a href='../../'>⇦ all rooms</a></p>
 <hr>
 <div class='msg'><a class='ts' href='#$_9hLINsChVG8rufQkmbqp-fIbsNyK1YqpS3C9S7QZHU'>#</a> <a class='ts' name='$_9hLINsChVG8rufQkmbqp-fIbsNyK1YqpS3C9S7QZHU' href='https://matrix.to/#/!ksYpYHcVftKsUAsdMa:matrix.org/$_9hLINsChVG8rufQkmbqp-fIbsNyK1YqpS3C9S7QZHU' target='_blank'>2025-08-20 15:56</a>&ensp;<span class='u' style='color:#787fdf'>erin</span>: tomusdrw: i&#x27;ve set up the archiver to archive this also, so hopefully will be up starting tomorrow</div>
@@ -1007,3 +1007,24 @@ Please run it on your side and report any issues in the PR
 <div class='msg'><a class='ts' href='#$XB445qRL6jXgE0QcigkfObBCDELEqtXQUAoAifk1V8M'>#</a> <a class='ts' name='$XB445qRL6jXgE0QcigkfObBCDELEqtXQUAoAifk1V8M' href='https://matrix.to/#/!ksYpYHcVftKsUAsdMa:matrix.org/$XB445qRL6jXgE0QcigkfObBCDELEqtXQUAoAifk1V8M' target='_blank'>2025-10-14 17:54</a>&ensp;<span class='u' style='color:#2a9dc1'>aang114</span>: image.jpg</div>
 <div class='msg'><a class='ts' href='#$-yY2IngMGuRgmxyiCTvxrNPVjNIybYjzrZRFJaxVjWw'>#</a> <a class='ts' name='$-yY2IngMGuRgmxyiCTvxrNPVjNIybYjzrZRFJaxVjWw' href='https://matrix.to/#/!ksYpYHcVftKsUAsdMa:matrix.org/$-yY2IngMGuRgmxyiCTvxrNPVjNIybYjzrZRFJaxVjWw' target='_blank'>2025-10-14 17:55</a>&ensp;<span class='u' style='color:#2a9dc1'>aang114</span>: Hi, does anyone know if the state component θ is supposed to be ordered by the service index? Because one of our failing fuzzer tests seems to be because θ is not ordered by service index (i.e <a href="https://github.com/davxy/jam-conformance/blob/main/fuzz-reports/0.7.0/reports/gossamer/1757406598/report.json#L73-L74)." rel="noopener" target="_blank">https://github.com/davxy/jam-conformance/blob/main/fuzz-reports/0.7.0/reports/gossamer/1757406598/report.json#L73-L74).</a> Thanks</div>
 <div class='msg'><a class='ts' href='#$35SQr3IxOddJvT0hAKzZiIa5bmph5E4f6bFsbPbB7SE'>#</a> <a class='ts' name='$35SQr3IxOddJvT0hAKzZiIa5bmph5E4f6bFsbPbB7SE' href='https://matrix.to/#/!ksYpYHcVftKsUAsdMa:matrix.org/$35SQr3IxOddJvT0hAKzZiIa5bmph5E4f6bFsbPbB7SE' target='_blank'>2025-10-14 18:09</a>&ensp;<span class='u' style='color:#d470bf'>jaymansfield</span>: Replied in &quot;Let&#x27;s JAM&quot;.</div>
+<div class='msg'><a class='ts' href='#$x5E9my803WLO_CpUpkDuELo_V7PV6S0WNMiqlmlXo3w'>#</a> <a class='ts' name='$x5E9my803WLO_CpUpkDuELo_V7PV6S0WNMiqlmlXo3w' href='https://matrix.to/#/!ksYpYHcVftKsUAsdMa:matrix.org/$x5E9my803WLO_CpUpkDuELo_V7PV6S0WNMiqlmlXo3w' target='_blank'>2025-10-15 18:42</a>&ensp;<span class='u' style='color:#be2950'>clearloop</span>: anybody can share the trace of <code>accumulate::test_accumulate_ready_queued_reports_1</code> ?
+
+<pre><code class=''>    DEBUG accumulate: host call: 1
+    DEBUG accumulate: fetch kind: 0
+    DEBUG accumulate: host call: 1
+    DEBUG accumulate: fetch kind: 0
+     INFO service: This is Accumulate in the Test Service 6c1h with 9 items
+    DEBUG accumulate: host call: 1
+    DEBUG accumulate: fetch kind: 14
+    DEBUG accumulate: host call: 1
+    DEBUG accumulate: fetch kind: 14
+    TRACE accumulate: PVM execution continued for service 1729, reason: Halt
+    DEBUG accumulate: Service 1729 used 2980 gas during accumulation
+    test accumulate::test_accumulate_ready_queued_reports_1 ... FAILED
+
+---
+
+gas mismatched, expected 35811, got 35758
+</code></pre>
+
+I found that I can pass the basic type check of accumulate items (transfers + operands) but it looks like my operands got no-op, have checked that my operands match the definition in <code>0.7.1</code> so currently no ideas what to debug now XD <span class="edited">(edited)</span></div>

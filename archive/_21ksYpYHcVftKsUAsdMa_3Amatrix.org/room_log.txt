@@ -1,5 +1,5 @@
 # room: #jam-conformance:matrix.org
-# exported: 2025-10-15 03:29 UTC
+# exported: 2025-10-16 03:29 UTC
 2025-08-20 15:56 erin: tomusdrw: i've set up the archiver to archive this also, so hopefully will be up starting tomorrow
 2025-08-21 06:33 ascriv: https://github.com/davxy/jam-conformance/issues/26 should we not discourage open source implementations (for now)? [edited]
 2025-08-21 10:27 oliver.tale-yazdi: I think open source repos are fine. Other implementors are just not supposed to look at it
@@ -999,3 +999,25 @@ https://github.com/davxy/jam-test-vectors/pull/103 [edited]
 2025-10-14 17:54 aang114: image.jpg
 2025-10-14 17:55 aang114: Hi, does anyone know if the state component θ is supposed to be ordered by the service index? Because one of our failing fuzzer tests seems to be because θ is not ordered by service index (i.e https://github.com/davxy/jam-conformance/blob/main/fuzz-reports/0.7.0/reports/gossamer/1757406598/report.json#L73-L74). Thanks
 2025-10-14 18:09 jaymansfield: Replied in "Let's JAM".
+2025-10-15 18:42 clearloop: anybody can share the trace of `accumulate::test_accumulate_ready_queued_reports_1` ?
+
+```
+    DEBUG accumulate: host call: 1
+    DEBUG accumulate: fetch kind: 0
+    DEBUG accumulate: host call: 1
+    DEBUG accumulate: fetch kind: 0
+     INFO service: This is Accumulate in the Test Service 6c1h with 9 items
+    DEBUG accumulate: host call: 1
+    DEBUG accumulate: fetch kind: 14
+    DEBUG accumulate: host call: 1
+    DEBUG accumulate: fetch kind: 14
+    TRACE accumulate: PVM execution continued for service 1729, reason: Halt
+    DEBUG accumulate: Service 1729 used 2980 gas during accumulation
+    test accumulate::test_accumulate_ready_queued_reports_1 ... FAILED
+
+---
+
+gas mismatched, expected 35811, got 35758
+```
+
+I found that I can pass the basic type check of accumulate items (transfers + operands) but it looks like my operands got no-op, have checked that my operands match the definition in `0.7.1` so currently no ideas what to debug now XD [edited]
