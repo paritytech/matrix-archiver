@@ -1,5 +1,5 @@
 # room: #jam-conformance:matrix.org
-# exported: 2025-10-16 03:29 UTC
+# exported: 2025-10-17 03:27 UTC
 2025-08-20 15:56 erin: tomusdrw: i've set up the archiver to archive this also, so hopefully will be up starting tomorrow
 2025-08-21 06:33 ascriv: https://github.com/davxy/jam-conformance/issues/26 should we not discourage open source implementations (for now)? [edited]
 2025-08-21 10:27 oliver.tale-yazdi: I think open source repos are fine. Other implementors are just not supposed to look at it
@@ -1017,7 +1017,32 @@ https://github.com/davxy/jam-test-vectors/pull/103 [edited]
 
 ---
 
-gas mismatched, expected 35811, got 35758
+gas mismatched, expected 2980, got 16240
 ```
 
 I found that I can pass the basic type check of accumulate items (transfers + operands) but it looks like my operands got no-op, have checked that my operands match the definition in `0.7.1` so currently no ideas what to debug now XD [edited]
+  ↳ 2025-10-16 11:24 clearloop: solved, encoding problem indeed
+2025-10-16 18:33 aang114: Hi guys, one of the failing fuzzer traces of ours is **1758622000**, where the only difference is the difference in χV (i.e in the delegator service index).
+
+But based on my understanding, in GP 0.7.0, χV cannot be updated unless the "designate" host-call is called.
+
+However, it does not seem that the "designate" host-call is being called for the trace **1758622000**. Since I noticed that others implementors had the exact same difference, **could i confirm if anyone was able to solve this trace?** Thanks
+
+CC: ascriv | Jamzilla  Junha | FastRoll [edited]
+2025-10-16 18:36 aang114: image.png
+2025-10-16 18:36 aang114: As you can see above, only the v\* service index can update χV (by updating v'). And if v\* is not the manager service index, it can only update χV if the "designate" host-call is called. [edited]
+2025-10-16 19:19 davxy: [@danicuki:matrix.org](https://matrix.to/#/@danicuki:matrix.org) 
+
+Minor state diffs - mostly the kind of issues that you and the other teams have already faced in previous iterations.  
+Before the 0.7.0 fuzzing campaign, the diffs were mostly about simple GP misinterpretations. Now the nodes are getting more robust, and most discrepancies stem from features introduced in 0.7.1 or from hostcalls we hadn't tested before excercising less trivial behaviors.  
+The "fuzzy" service now tests almost all hostcalls.  
+We'll submit some reports for 0.7.1 in the coming days, by the way.  
+Have you already checked the fuzzy trace set?
+
+https://github.com/davxy/jam-test-vectors/tree/master/traces/fuzzy
+2025-10-16 19:34 davxy: These particular "fuzzy" traces will be renamed to "fuzzy-light".  
+Another "fuzzy" set will be added to cover a broader range of hostcalls.
+2025-10-16 20:53 sourabhniyogi: davxy: For "based on my experiments there is still NO target I can fuzz continuously for minutes in a row. " can you advise what teams should do to replicate  "for minutes in a row" case and replicate your observations when it fails? 
+2025-10-16 21:02 jaymansfield: > <@sourabhniyogi:matrix.org> davxy: For "based on my experiments there is still NO target I can fuzz continuously for minutes in a row. " can you advise what teams should do to replicate  "for minutes in a row" case and replicate your observations when it fails? 
+
+He clarified right above your post. Looks like he was referring to fuzzing without encountering state diffs, and not actual running time based failures.

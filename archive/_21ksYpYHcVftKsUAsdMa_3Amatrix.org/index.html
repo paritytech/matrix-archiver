@@ -18,7 +18,7 @@ a:hover{color:#90caf9}
 em{font-style:italic}
 </style>
 <h1>#jam-conformance:matrix.org</h1>
-<p><small>last updated 2025-10-16 03:29 UTC</small></p>
+<p><small>last updated 2025-10-17 03:27 UTC</small></p>
 <p><a href='room_log.txt'>⇩ plaintext</a> · <a href='../../'>⇦ all rooms</a></p>
 <hr>
 <div class='msg'><a class='ts' href='#$_9hLINsChVG8rufQkmbqp-fIbsNyK1YqpS3C9S7QZHU'>#</a> <a class='ts' name='$_9hLINsChVG8rufQkmbqp-fIbsNyK1YqpS3C9S7QZHU' href='https://matrix.to/#/!ksYpYHcVftKsUAsdMa:matrix.org/$_9hLINsChVG8rufQkmbqp-fIbsNyK1YqpS3C9S7QZHU' target='_blank'>2025-08-20 15:56</a>&ensp;<span class='u' style='color:#787fdf'>erin</span>: tomusdrw: i&#x27;ve set up the archiver to archive this also, so hopefully will be up starting tomorrow</div>
@@ -1024,7 +1024,32 @@ Please run it on your side and report any issues in the PR
 
 ---
 
-gas mismatched, expected 35811, got 35758
+gas mismatched, expected 2980, got 16240
 </code></pre>
 
 I found that I can pass the basic type check of accumulate items (transfers + operands) but it looks like my operands got no-op, have checked that my operands match the definition in <code>0.7.1</code> so currently no ideas what to debug now XD <span class="edited">(edited)</span></div>
+<div class='msg reply'><a class='ts' href='#$a7V3atuEQUiK4pGo6bx-9Zc6dXaw3nyzRdae3IvT0Jg'>#</a> <a class='ts' name='$a7V3atuEQUiK4pGo6bx-9Zc6dXaw3nyzRdae3IvT0Jg' href='https://matrix.to/#/!ksYpYHcVftKsUAsdMa:matrix.org/$a7V3atuEQUiK4pGo6bx-9Zc6dXaw3nyzRdae3IvT0Jg' target='_blank'>2025-10-16 11:24</a>&ensp;<span class='u' style='color:#be2950'>clearloop</span>: solved, encoding problem indeed</div>
+<div class='msg'><a class='ts' href='#$kCQq-c5OS38dJBo_3bwqxNG2BM0S0hI5LhKE2PcfJYw'>#</a> <a class='ts' name='$kCQq-c5OS38dJBo_3bwqxNG2BM0S0hI5LhKE2PcfJYw' href='https://matrix.to/#/!ksYpYHcVftKsUAsdMa:matrix.org/$kCQq-c5OS38dJBo_3bwqxNG2BM0S0hI5LhKE2PcfJYw' target='_blank'>2025-10-16 18:33</a>&ensp;<span class='u' style='color:#2a9dc1'>aang114</span>: Hi guys, one of the failing fuzzer traces of ours is **1758622000**, where the only difference is the difference in χV (i.e in the delegator service index).
+
+But based on my understanding, in GP 0.7.0, χV cannot be updated unless the &quot;designate&quot; host-call is called.
+
+However, it does not seem that the &quot;designate&quot; host-call is being called for the trace **1758622000**. Since I noticed that others implementors had the exact same difference, **could i confirm if anyone was able to solve this trace?** Thanks
+
+CC: ascriv | Jamzilla  Junha | FastRoll <span class="edited">(edited)</span></div>
+<div class='msg'><a class='ts' href='#$SfNtJPDC-lewOtLT7bXmDsu0f6F6XsEN2OyEwIRHSRA'>#</a> <a class='ts' name='$SfNtJPDC-lewOtLT7bXmDsu0f6F6XsEN2OyEwIRHSRA' href='https://matrix.to/#/!ksYpYHcVftKsUAsdMa:matrix.org/$SfNtJPDC-lewOtLT7bXmDsu0f6F6XsEN2OyEwIRHSRA' target='_blank'>2025-10-16 18:36</a>&ensp;<span class='u' style='color:#2a9dc1'>aang114</span>: image.png</div>
+<div class='msg'><a class='ts' href='#$7Uewq6-C0taaZG22QRNEzFfxGZN_r19yXgNI3Q5x_ug'>#</a> <a class='ts' name='$7Uewq6-C0taaZG22QRNEzFfxGZN_r19yXgNI3Q5x_ug' href='https://matrix.to/#/!ksYpYHcVftKsUAsdMa:matrix.org/$7Uewq6-C0taaZG22QRNEzFfxGZN_r19yXgNI3Q5x_ug' target='_blank'>2025-10-16 18:36</a>&ensp;<span class='u' style='color:#2a9dc1'>aang114</span>: As you can see above, only the v\* service index can update χV (by updating v&#x27;). And if v\* is not the manager service index, it can only update χV if the &quot;designate&quot; host-call is called. <span class="edited">(edited)</span></div>
+<div class='msg'><a class='ts' href='#$WmRslj3khzpu3SaCegKD3OVcI-1Z50p-Csjkjyx6JB8'>#</a> <a class='ts' name='$WmRslj3khzpu3SaCegKD3OVcI-1Z50p-Csjkjyx6JB8' href='https://matrix.to/#/!ksYpYHcVftKsUAsdMa:matrix.org/$WmRslj3khzpu3SaCegKD3OVcI-1Z50p-Csjkjyx6JB8' target='_blank'>2025-10-16 19:19</a>&ensp;<span class='u' style='color:#c9419d'>davxy</span>: <a href="https://matrix.to/#/@danicuki:matrix.org" rel="noopener" target="_blank">@danicuki:matrix.org</a> 
+
+Minor state diffs - mostly the kind of issues that you and the other teams have already faced in previous iterations.  
+Before the 0.7.0 fuzzing campaign, the diffs were mostly about simple GP misinterpretations. Now the nodes are getting more robust, and most discrepancies stem from features introduced in 0.7.1 or from hostcalls we hadn&#x27;t tested before excercising less trivial behaviors.  
+The &quot;fuzzy&quot; service now tests almost all hostcalls.  
+We&#x27;ll submit some reports for 0.7.1 in the coming days, by the way.  
+Have you already checked the fuzzy trace set?
+
+<a href="https://github.com/davxy/jam-test-vectors/tree/master/traces/fuzzy" rel="noopener" target="_blank">https://github.com/davxy/jam-test-vectors/tree/master/traces/fuzzy</a></div>
+<div class='msg'><a class='ts' href='#$tn-NQ5siYGroUTrvs6ga21jTO0dIax6FRA5-a3QJrSk'>#</a> <a class='ts' name='$tn-NQ5siYGroUTrvs6ga21jTO0dIax6FRA5-a3QJrSk' href='https://matrix.to/#/!ksYpYHcVftKsUAsdMa:matrix.org/$tn-NQ5siYGroUTrvs6ga21jTO0dIax6FRA5-a3QJrSk' target='_blank'>2025-10-16 19:34</a>&ensp;<span class='u' style='color:#c9419d'>davxy</span>: These particular &quot;fuzzy&quot; traces will be renamed to &quot;fuzzy-light&quot;.  
+Another &quot;fuzzy&quot; set will be added to cover a broader range of hostcalls.</div>
+<div class='msg'><a class='ts' href='#$D8T0sZiZS1dbi4iLn4yUz9-bveNd7l9zwjwjmqaAZGc'>#</a> <a class='ts' name='$D8T0sZiZS1dbi4iLn4yUz9-bveNd7l9zwjwjmqaAZGc' href='https://matrix.to/#/!ksYpYHcVftKsUAsdMa:matrix.org/$D8T0sZiZS1dbi4iLn4yUz9-bveNd7l9zwjwjmqaAZGc' target='_blank'>2025-10-16 20:53</a>&ensp;<span class='u' style='color:#c67452'>sourabhniyogi</span>: davxy: For &quot;based on my experiments there is still NO target I can fuzz continuously for minutes in a row. &quot; can you advise what teams should do to replicate  &quot;for minutes in a row&quot; case and replicate your observations when it fails? </div>
+<div class='msg'><a class='ts' href='#$WughYjGf1h4fAWeX7OHfcESmQCpcTGr0UIiHlw94Jb8'>#</a> <a class='ts' name='$WughYjGf1h4fAWeX7OHfcESmQCpcTGr0UIiHlw94Jb8' href='https://matrix.to/#/!ksYpYHcVftKsUAsdMa:matrix.org/$WughYjGf1h4fAWeX7OHfcESmQCpcTGr0UIiHlw94Jb8' target='_blank'>2025-10-16 21:02</a>&ensp;<span class='u' style='color:#d470bf'>jaymansfield</span>: &gt; &lt;@sourabhniyogi:matrix.org&gt; davxy: For &quot;based on my experiments there is still NO target I can fuzz continuously for minutes in a row. &quot; can you advise what teams should do to replicate  &quot;for minutes in a row&quot; case and replicate your observations when it fails? 
+
+He clarified right above your post. Looks like he was referring to fuzzing without encountering state diffs, and not actual running time based failures.</div>

@@ -18,7 +18,7 @@ a:hover{color:#90caf9}
 em{font-style:italic}
 </style>
 <h1>#jam:polkadot.io</h1>
-<p><small>last updated 2025-10-16 03:28 UTC</small></p>
+<p><small>last updated 2025-10-17 03:26 UTC</small></p>
 <p><a href='room_log.txt'>⇩ plaintext</a> · <a href='../../'>⇦ all rooms</a></p>
 <hr>
 <div class='msg'><a class='ts' href='#$we4SYXTHwmKn094X9Zs_7mWUOoUVh4icvVdxD83RZfs'>#</a> <a class='ts' name='$we4SYXTHwmKn094X9Zs_7mWUOoUVh4icvVdxD83RZfs' href='https://matrix.to/#/!wBOJlzaOULZOALhaRh:polkadot.io/$we4SYXTHwmKn094X9Zs_7mWUOoUVh4icvVdxD83RZfs' target='_blank'>2024-04-20 02:08</a>&ensp;<span class='u' style='color:#d0709e'>johnjiao123</span>: </div>
@@ -11457,3 +11457,25 @@ But now I&#x27;m wondering how would we sort it we had 2 elements in θ with the
 <div class='msg'><a class='ts' href='#$2Xb6-caNc-6KY00C3dXmYtNC_c-LHHkIn-Amot0wRdI'>#</a> <a class='ts' name='$2Xb6-caNc-6KY00C3dXmYtNC_c-LHHkIn-Amot0wRdI' href='https://matrix.to/#/!wBOJlzaOULZOALhaRh:polkadot.io/$2Xb6-caNc-6KY00C3dXmYtNC_c-LHHkIn-Amot0wRdI' target='_blank'>2025-10-15 12:16</a>&ensp;<span class='u' style='color:#47c036'>dhruv245</span>: Hi, I wanted to check if there are any confirmed dates for the submission of M1 and M2. 
 
 My team has already completed both modules, so I’d like to know the next steps.</div>
+<div class='msg'><a class='ts' href='#$9FZYku_Lym-6jOhyZspPD-AhnbmcA9isCynmyXnk3SA'>#</a> <a class='ts' name='$9FZYku_Lym-6jOhyZspPD-AhnbmcA9isCynmyXnk3SA' href='https://matrix.to/#/!wBOJlzaOULZOALhaRh:polkadot.io/$9FZYku_Lym-6jOhyZspPD-AhnbmcA9isCynmyXnk3SA' target='_blank'>2025-10-16 04:34</a>&ensp;<span class='u' style='color:#c9419d'>davxy</span>: The fuzzer for M1 is maturing, and I know W3F is planning to start using it to test targets officially. That said, based on my experiments **there is still NO target I can fuzz continuously for minutes in a row**. Things have improved **a lot** over the past couple of months, but that&#x27;s not enough yet as targets need to be fuzzed for days. My impression is that longer-running fuzzing will arrive soon, at least for some implementations.
+
+My suggestions:
+- Join the teams listed <a href="https://github.com/davxy/jam-conformance/issues" rel="noopener" target="_blank">here</a> so we can quickly review your M1 work.
+- Keep the discussion public, I will not take private conversations on Telegram or other closed channels.
+</div>
+<div class='msg'><a class='ts' href='#$D2L4_dyZnPtryZvJOdIq-q3kL2poXEMiJfeoAyXYVEo'>#</a> <a class='ts' name='$D2L4_dyZnPtryZvJOdIq-q3kL2poXEMiJfeoAyXYVEo' href='https://matrix.to/#/!wBOJlzaOULZOALhaRh:polkadot.io/$D2L4_dyZnPtryZvJOdIq-q3kL2poXEMiJfeoAyXYVEo' target='_blank'>2025-10-16 10:17</a>&ensp;<span class='u' style='color:#5c84c9'>prematurata</span>: about jam-np <code>the &amp;quot;path to the start key&amp;quot; should terminate either at a fork node with an all-zeroes hash in the branch that would be taken for the start key, or at a leaf node with a different key</code>
+
+This means that in case the key is not found, if the given start key should be in the empty branch, would i just need to return the &quot;parent branch node&quot; or ???
+
+</div>
+<div class='msg'><a class='ts' href='#$kmhxwTRYaJehyViEzo95aQhF4FBtli9xjZIGYE_p_f4'>#</a> <a class='ts' name='$kmhxwTRYaJehyViEzo95aQhF4FBtli9xjZIGYE_p_f4' href='https://matrix.to/#/!wBOJlzaOULZOALhaRh:polkadot.io/$kmhxwTRYaJehyViEzo95aQhF4FBtli9xjZIGYE_p_f4' target='_blank'>2025-10-16 10:58</a>&ensp;<span class='u' style='color:#c65779'>dave</span>: Yeah you should include the node with the empty branch in the boundary node list in that case</div>
+<div class='msg'><a class='ts' href='#$vWTpgTPDeE0vuLeQtXIbV2o9qcN9n_2NAL0sTAsCvFs'>#</a> <a class='ts' name='$vWTpgTPDeE0vuLeQtXIbV2o9qcN9n_2NAL0sTAsCvFs' href='https://matrix.to/#/!wBOJlzaOULZOALhaRh:polkadot.io/$vWTpgTPDeE0vuLeQtXIbV2o9qcN9n_2NAL0sTAsCvFs' target='_blank'>2025-10-16 12:51</a>&ensp;<span class='u' style='color:#5c84c9'>prematurata</span>: tkz</div>
+<div class='msg'><a class='ts' href='#$CAhcsLa6W_8GJFd0HhPRqcthzB0mVWNkF4dIZ5nsIoE'>#</a> <a class='ts' name='$CAhcsLa6W_8GJFd0HhPRqcthzB0mVWNkF4dIZ5nsIoE' href='https://matrix.to/#/!wBOJlzaOULZOALhaRh:polkadot.io/$CAhcsLa6W_8GJFd0HhPRqcthzB0mVWNkF4dIZ5nsIoE' target='_blank'>2025-10-16 17:15</a>&ensp;<span class='u' style='color:#4977cf'>danicuki</span>: &gt; &lt;@davxy:matrix.org&gt; The fuzzer for M1 is maturing, and I know W3F is planning to start using it to test targets officially. That said, based on my experiments **there is still NO target I can fuzz continuously for minutes in a row**. Things have improved **a lot** over the past couple of months, but that&#x27;s not enough yet as targets need to be fuzzed for days. My impression is that longer-running fuzzing will arrive soon, at least for some implementations.
+&gt; 
+&gt; My suggestions:
+&gt; - Join the teams listed <a href="https://github.com/davxy/jam-conformance/issues" rel="noopener" target="_blank">here</a> so we can quickly review your M1 work.
+&gt; - Keep the discussion public, I will not take private conversations on Telegram or other closed channels.
+&gt; 
+
+What are the issues you encountered when fuzzing continuously? Nodes crash? Memory overload? </div>
+<div class='msg'><a class='ts' href='#$WVEHr2N9LtHZZy3SCUfQcHiSQIE-fe48OJmN7EcdD1o'>#</a> <a class='ts' name='$WVEHr2N9LtHZZy3SCUfQcHiSQIE-fe48OJmN7EcdD1o' href='https://matrix.to/#/!wBOJlzaOULZOALhaRh:polkadot.io/$WVEHr2N9LtHZZy3SCUfQcHiSQIE-fe48OJmN7EcdD1o' target='_blank'>2025-10-16 19:19</a>&ensp;<span class='u' style='color:#c9419d'>davxy</span>: See jam-conformance chan</div>

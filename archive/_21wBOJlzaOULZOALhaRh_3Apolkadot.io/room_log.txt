@@ -1,5 +1,5 @@
 # room: #jam:polkadot.io
-# exported: 2025-10-16 03:28 UTC
+# exported: 2025-10-17 03:26 UTC
 2024-04-20 02:08 johnjiao123: 
 2024-04-20 02:09 johnjiao123: 
 2024-05-30 21:48 nradko: Hey everyone,
@@ -11561,3 +11561,25 @@ But now I'm wondering how would we sort it we had 2 elements in θ with the same
 2025-10-15 12:16 dhruv245: Hi, I wanted to check if there are any confirmed dates for the submission of M1 and M2. 
 
 My team has already completed both modules, so I’d like to know the next steps.
+2025-10-16 04:34 davxy: The fuzzer for M1 is maturing, and I know W3F is planning to start using it to test targets officially. That said, based on my experiments **there is still NO target I can fuzz continuously for minutes in a row**. Things have improved **a lot** over the past couple of months, but that's not enough yet as targets need to be fuzzed for days. My impression is that longer-running fuzzing will arrive soon, at least for some implementations.
+
+My suggestions:
+- Join the teams listed [here](https://github.com/davxy/jam-conformance/issues) so we can quickly review your M1 work.
+- Keep the discussion public, I will not take private conversations on Telegram or other closed channels.
+
+2025-10-16 10:17 prematurata: about jam-np `the "path to the start key" should terminate either at a fork node with an all-zeroes hash in the branch that would be taken for the start key, or at a leaf node with a different key`
+
+This means that in case the key is not found, if the given start key should be in the empty branch, would i just need to return the "parent branch node" or ???
+
+
+2025-10-16 10:58 dave: Yeah you should include the node with the empty branch in the boundary node list in that case
+2025-10-16 12:51 prematurata: tkz
+2025-10-16 17:15 danicuki: > <@davxy:matrix.org> The fuzzer for M1 is maturing, and I know W3F is planning to start using it to test targets officially. That said, based on my experiments **there is still NO target I can fuzz continuously for minutes in a row**. Things have improved **a lot** over the past couple of months, but that's not enough yet as targets need to be fuzzed for days. My impression is that longer-running fuzzing will arrive soon, at least for some implementations.
+> 
+> My suggestions:
+> - Join the teams listed [here](https://github.com/davxy/jam-conformance/issues) so we can quickly review your M1 work.
+> - Keep the discussion public, I will not take private conversations on Telegram or other closed channels.
+> 
+
+What are the issues you encountered when fuzzing continuously? Nodes crash? Memory overload? 
+2025-10-16 19:19 davxy: See jam-conformance chan
