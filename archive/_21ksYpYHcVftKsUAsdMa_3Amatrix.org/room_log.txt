@@ -1,5 +1,5 @@
 # room: #jam-conformance:matrix.org
-# exported: 2025-10-17 03:27 UTC
+# exported: 2025-10-18 03:22 UTC
 2025-08-20 15:56 erin: tomusdrw: i've set up the archiver to archive this also, so hopefully will be up starting tomorrow
 2025-08-21 06:33 ascriv: https://github.com/davxy/jam-conformance/issues/26 should we not discourage open source implementations (for now)? [edited]
 2025-08-21 10:27 oliver.tale-yazdi: I think open source repos are fine. Other implementors are just not supposed to look at it
@@ -1046,3 +1046,9 @@ Another "fuzzy" set will be added to cover a broader range of hostcalls.
 2025-10-16 21:02 jaymansfield: > <@sourabhniyogi:matrix.org> davxy: For "based on my experiments there is still NO target I can fuzz continuously for minutes in a row. " can you advise what teams should do to replicate  "for minutes in a row" case and replicate your observations when it fails? 
 
 He clarified right above your post. Looks like he was referring to fuzzing without encountering state diffs, and not actual running time based failures.
+2025-10-17 08:03 ascriv: Bless is called, and that one modifies the designate service index. But I’m still getting the wrong output for now because even though the manager modifies the designate service, (12.17) says we should use the designate service returned by the accumulation of the manager’s returned designate service. Might just leave this test since I think that might be a bug in 0.7.0 anyway  [edited]
+2025-10-17 08:16 danicuki: our impl works with `fuzzy` set. There was a bug related to transfer amounts that we fixed recently based on these traces. Thanks
+2025-10-17 15:39 aang114: 
+2025-10-17 15:40 aang114: yes exactly. that's good that we are in agreement. i'll leave it too then. Thanks :)
+2025-10-17 17:11 sourabhniyogi: Hi nikos-pba nikos Many of us are planning our holiday travels of Nov/Dec and I wanted to check one last time if there is anything happening on https://polkadot.academy/jam/ ?   
+2025-10-17 17:29 wirednkod: Hey sourabhniyogi - thank you for the ping. I will have more details beginning of next week - after a meeting with Gav that we will understand at what stage the hardware is, that will define the academy days. Apologies for the delay - but we are still identifying all the parameters that will define the most suitable days for executing the JAM course
