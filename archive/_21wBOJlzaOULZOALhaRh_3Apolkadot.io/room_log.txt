@@ -1,5 +1,5 @@
 # room: #jam:polkadot.io
-# exported: 2025-10-19 03:33 UTC
+# exported: 2025-10-20 03:35 UTC
 2024-04-20 02:08 johnjiao123: 
 2024-04-20 02:09 johnjiao123: 
 2024-05-30 21:48 nradko: Hey everyone,
@@ -11584,3 +11584,8 @@ This means that in case the key is not found, if the given start key should be i
 What are the issues you encountered when fuzzing continuously? Nodes crash? Memory overload? 
 2025-10-16 19:19 davxy: See jam-conformance chan
 2025-10-17 07:10 prematurata: also about boundary nodes. there is no len++ so i guess that is implicit... but i was wondering. since we have to-start-boundary-nodes and to-end-boundary-nodes. I dont see a real ordering enforced between the 2 sets
+2025-10-19 10:16 shimonchick: Are these tests still relevant? https://github.com/koute/jamtestvectors/blob/master_pvm_initial/pvm/README.md
+Looking at the immediate value instructions, they did not seem to have length prefixes
+  ↳ 2025-10-19 18:16 jan: Not sure what you mean by "they did not seem to have length prefixes", but these should still be correct (sans perhaps a few minor gas discrepancies, which will become irrelevant very soon due to the new gas cost model)
+2025-10-20 00:58 dhruv245: 
+2025-10-20 00:58 dhruv245: Yes, it crashes in few minutes
