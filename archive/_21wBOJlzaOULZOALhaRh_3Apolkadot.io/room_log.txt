@@ -1,5 +1,5 @@
 # room: #jam:polkadot.io
-# exported: 2025-10-20 03:35 UTC
+# exported: 2025-10-21 03:30 UTC
 2024-04-20 02:08 johnjiao123: 
 2024-04-20 02:09 johnjiao123: 
 2024-05-30 21:48 nradko: Hey everyone,
@@ -11589,3 +11589,13 @@ Looking at the immediate value instructions, they did not seem to have length pr
   ↳ 2025-10-19 18:16 jan: Not sure what you mean by "they did not seem to have length prefixes", but these should still be correct (sans perhaps a few minor gas discrepancies, which will become irrelevant very soon due to the new gas cost model)
 2025-10-20 00:58 dhruv245: 
 2025-10-20 00:58 dhruv245: Yes, it crashes in few minutes
+2025-10-20 07:52 anish1222: 
+2025-10-20 09:44 jan: For those interested, draft of the new gas cost model and the new test vectors are now publicly available here: https://github.com/koute/new-gas-cost-model/tree/master
+Of course, for now this is *unofficial* and is not part of the GP proper (and can have errors/issues). A couple of teams volunteered to implement this before it lands (and their feedback will heavily influence when/how it will land). If anyone else still wants to join in and try implementing it in your client then you're welcome too.
+  ↳ 2025-10-20 13:39 cisco: Is it possible to implement in an interpreter? We still don't have our recompiler 😅
+  ↳ 2025-10-20 14:30 dakkk: why not?
+  ↳ 2025-10-20 14:40 cisco: Just wanted to check 🤷 I volunteer as well [edited]
+  ↳ 2025-10-21 01:13 jan: Yes. Once it lands in the GP even the interpreters will have to implement it.
+  ↳ 2025-10-21 01:14 jan: Great! Feel free to message me if you have any questions/feedback.
+2025-10-20 17:13 shimonchick: Can someone point me to how the instruction operand distance (in bytes) would get calculated for the PVM test vectors (where there is no bitmask)? 
+2025-10-20 19:00 jan: There is bitmask.
