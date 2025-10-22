@@ -1,5 +1,5 @@
 # room: #jam-conformance:matrix.org
-# exported: 2025-10-21 03:31 UTC
+# exported: 2025-10-22 03:33 UTC
 2025-08-20 15:56 erin: tomusdrw: i've set up the archiver to archive this also, so hopefully will be up starting tomorrow
 2025-08-21 06:33 ascriv: https://github.com/davxy/jam-conformance/issues/26 should we not discourage open source implementations (for now)? [edited]
 2025-08-21 10:27 oliver.tale-yazdi: I think open source repos are fine. Other implementors are just not supposed to look at it
@@ -1052,3 +1052,17 @@ He clarified right above your post. Looks like he was referring to fuzzing witho
 2025-10-17 15:40 aang114: yes exactly. that's good that we are in agreement. i'll leave it too then. Thanks :)
 2025-10-17 17:11 sourabhniyogi: Hi nikos-pba nikos Many of us are planning our holiday travels of Nov/Dec and I wanted to check one last time if there is anything happening on https://polkadot.academy/jam/ ?   
 2025-10-17 17:29 wirednkod: Hey sourabhniyogi - thank you for the ping. I will have more details beginning of next week - after a meeting with Gav that we will understand at what stage the hardware is, that will define the academy days. Apologies for the delay - but we are still identifying all the parameters that will define the most suitable days for executing the JAM course
+2025-10-21 11:06 clearloop: anybody met this in the fuzzy test set (`00000046`)?
+
+```
+    DEBUG accumulate: account info: ServiceInfo { version: 0, code: [253, 146, 241, 84, 20, 126, 246, 152, 123, 145, 212, 198, 252, 157, 249, 25, 128, 6, 224, 88, 135, 58, 167, 53, 219, 156, 200, 47, 95, 228, 85, 144], balance: 204657, accumulate: 10000, transfer: 10000, total: 147033, offset: 0, items: 2, creation: 4, update: 41, parent: 0 }
+     WARN service: Panic handler called!
+     WARN service: Panic message: panicked at services/fuzzy-service/src/instruction.rs:1011:9:
+    zombify - unexpected items count 0 after cleanup!!!
+```
+
+we have `2` items which matches the expected result while the `zombify` service says we have 0 items, seems that this is not caused by encoding problems since I have checked the encoding order in both `0.7.1` and `0.7.2` for the `info` host call [edited]
+2025-10-21 11:30 davxy: This may be a bug in the fuzzy service. As far as your state root matches the expected root you can ignore it.
+I'll update the traces soon anyway
+2025-10-21 16:20 sourabhniyogi: Is there a new fuzzy set somewhere already, or coming soon? 
+2025-10-21 16:24 davxy: Very soon 
