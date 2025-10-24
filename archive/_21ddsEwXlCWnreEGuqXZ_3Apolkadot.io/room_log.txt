@@ -1,5 +1,5 @@
 # room: #graypaper:polkadot.io
-# exported: 2025-10-23 03:28 UTC
+# exported: 2025-10-24 03:26 UTC
 2024-04-17 20:29 syed: https://matrix.to/#/!hyzRkDqDthePbodYFz:parity.io/$f_DMsIEcDXZegw6Sabnehzc-LrdDQkmq5MbxDDyoZxY?via=parity.io&via=web3.foundation
 
 2024-04-17 20:29 syed: 
@@ -6700,3 +6700,9 @@ maps to jam:
 2025-10-04 14:56 vinsystems: Hi, I have a question about the combination of accumulate with on_transfer. The accumulate invokation takes as one of its arguments the concatenation of the transfers and Operand tuples.
 Does this mean that at this point there could be both transfers and Operand tuples? [edited]
 2025-10-04 14:59 gav: Yes
+2025-10-23 19:37 sourabhniyogi: Could there be a way  via `fetch` (or is there already some way), for a single service accumulation (delta_1) for a specific service X to know that its the _last_ (delta_1) in a sequence of multiple single service accumulations for that service X, so that this last accumulation can integrate the whole sequence?
+
+The first in the sequence can know, but the last cannot, as far as I can tell.  Check? [edited]
+2025-10-23 19:59 gav: No. Service accumulation continues as long as any of them make a transfer. No service’s accumulation can know what happens in another which is happening contemporaneously. Therefore it’s not possible. 
+2025-10-23 20:00 gav: Best you could do is have services make a transfer to some integrator service. 
+2025-10-23 20:02 gav: But then the integrator would need to know what services are going to send to it before it does the integration rather than blindly accrue and do everything at the end of the block when “everything is finished”. 

@@ -1,5 +1,5 @@
 # room: #jam:polkadot.io
-# exported: 2025-10-23 03:28 UTC
+# exported: 2025-10-24 03:26 UTC
 2024-04-20 02:08 johnjiao123: 
 2024-04-20 02:09 johnjiao123: 
 2024-05-30 21:48 nradko: Hey everyone,
@@ -11597,6 +11597,8 @@ Of course, for now this is *unofficial* and is not part of the GP proper (and ca
   ↳ 2025-10-20 14:40 cisco: Just wanted to check 🤷 I volunteer as well [edited]
   ↳ 2025-10-21 01:13 jan: Yes. Once it lands in the GP even the interpreters will have to implement it.
   ↳ 2025-10-21 01:14 jan: Great! Feel free to message me if you have any questions/feedback.
+  ↳ 2025-10-23 15:18 tomusdrw: image.png
+  ↳ 2025-10-23 15:18 tomusdrw: How to understand this comparison (formula A.52)? Does that mean that all elements `{A, L, S, M, D}` must be less or equal?
 2025-10-20 17:13 shimonchick: Can someone point me to how the instruction operand distance (in bytes) would get calculated for the PVM test vectors (where there is no bitmask)? 
 2025-10-20 19:00 jan: There is bitmask.
 2025-10-21 12:14 sourabhniyogi: What is the plan to get the gas model for the host functions, especially the storage/IO intensive ones (read/write+import/export)?
@@ -11702,3 +11704,5 @@ But I wouldn't hinge the argument on cost when comparing Web2 to Web3; we could 
 2025-10-22 17:26 dave: FYI there is a reasonably stable spec for the JAM node telemetry interface here: https://github.com/polkadot-fellows/JIPs/pull/8. As with the SNP spec, we won't change things at this point without good reason! We are currently developing a front-end for this which will collate telemetry events from connected nodes and display them in interesting and hopefully useful ways :). We will likely require nodes to implement this before we will allow them to run on the toaster.
 2025-10-22 17:40 gav: The crypto to give a threshold deterministic random value required a trusted set up last time I checked. [Alistair](https://matrix.to/#/@alistair:web3.foundation)?
 2025-10-22 17:52 alistair: Not a trusted setup, a distributed key generation protocol. Which is as simple as them all generating something and then aggregating these.
+2025-10-23 04:35 jan: It's turing complete, so technically you can run anything. It really depends on what exactly you mean by "Linux container". Is it unmodified Linux AMD64 executables? It's going to be painfully slow because you'll be running them under an interpreter. Is it a bunch of programs recompiled to PVM plus a Linux syscall emulation layer? Feasible, would run relatively fast, but would need work to make it happen.
+2025-10-23 08:03 vinsystems: I mean taking the [LXC source code](https://github.com/lxc/lxc) and porting/adapting it to run on CoreVM. I don't intend to execute unmodified AMD64 binaries directly, but rather to recompile LXC and its dependencies, leveraging the Linux syscall emulation that has been implemented in CoreVM. I know it would require modifications to CoreVM and that not all LXC features would be available, but the goal would be to achieve at least a basic virtualized Linux user space: an isolated environment where you can start a rootfs and run multiple processes.
