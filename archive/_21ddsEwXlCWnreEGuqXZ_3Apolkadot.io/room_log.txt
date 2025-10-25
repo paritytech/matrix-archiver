@@ -1,5 +1,5 @@
 # room: #graypaper:polkadot.io
-# exported: 2025-10-24 03:26 UTC
+# exported: 2025-10-25 03:27 UTC
 2024-04-17 20:29 syed: https://matrix.to/#/!hyzRkDqDthePbodYFz:parity.io/$f_DMsIEcDXZegw6Sabnehzc-LrdDQkmq5MbxDDyoZxY?via=parity.io&via=web3.foundation
 
 2024-04-17 20:29 syed: 
@@ -6706,3 +6706,13 @@ The first in the sequence can know, but the last cannot, as far as I can tell.  
 2025-10-23 19:59 gav: No. Service accumulation continues as long as any of them make a transfer. No service’s accumulation can know what happens in another which is happening contemporaneously. Therefore it’s not possible. 
 2025-10-23 20:00 gav: Best you could do is have services make a transfer to some integrator service. 
 2025-10-23 20:02 gav: But then the integrator would need to know what services are going to send to it before it does the integration rather than blindly accrue and do everything at the end of the block when “everything is finished”. 
+2025-10-24 18:26 sourabhniyogi: image.png
+2025-10-24 18:29 sourabhniyogi: Is there a recorded lecture where you explain all the numbers in this diagram in detail?   Now that the gas model is becoming clearer and we're imminently ready to test it on the Toaster or something tiny for our services, I think an update of the above would be useful!  
+2025-10-24 18:33 gav: That’s a rather old image and according estimation. Estimations of eventual emergent system performance will change as we understand the protocol better, with the eventual numbers being the product of empirical analysis. Anyway for this specific diagram, a later version (still 12+ months out of date) was 2 MB/s on the right when the WP size was revised from 15 to 12 MB.  [edited]
+2025-10-24 18:37 gav: The gray paper and its analysis is where you should look for the most current estimations. And otherwise understand that perfect information doesn’t come from guesswork 2+ years out from a production implementation but rather from experiments and experience. [edited]
+2025-10-24 18:38 gav: To the extent you can contribute experience, please do. 
+2025-10-24 18:39 gav: Overall, the gas model has been eye-opening to all involved. It involved a lot of consideration and innovation and we are quite confident that what we have now is a quite optimal solution  [edited]
+2025-10-24 18:42 sourabhniyogi: Can we do a JAM implementers meetup to get your Toaster experience in Dec (PBA) similar to the May event, or should service implementers report on their experience in Feb/Mar after testing out their services in the Toaster.
+2025-10-24 18:43 gav: We are hopeful that we will have toaster results in the coming weeks, but it has been a long journey of optimisation. 
+2025-10-24 18:43 gav: Other teams will probably need to take the same journey. 
+2025-10-24 18:45 gav: Otherwise, I’d expect teams taking part in the PBA JAM hackathon Dec-Mar to do their own experiments and draw their own experience. 
