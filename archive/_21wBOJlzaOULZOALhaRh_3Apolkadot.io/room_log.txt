@@ -1,5 +1,5 @@
 # room: #jam:polkadot.io
-# exported: 2025-10-25 03:27 UTC
+# exported: 2025-10-26 03:31 UTC
 2024-04-20 02:08 johnjiao123: 
 2024-04-20 02:09 johnjiao123: 
 2024-05-30 21:48 nradko: Hey everyone,
@@ -11604,6 +11604,8 @@ Of course, for now this is *unofficial* and is not part of the GP proper (and ca
  [edited]
   ↳ 2025-10-24 11:03 cisco: In the README it says test vectors use L2HIT
   ↳ 2025-10-24 16:46 cisco: The functions `š` and `ř` are not explicitly defined. I would've expected them to be defined per group of instructions [edited]
+  ↳ 2025-10-25 19:01 cisco: Screenshot 2025-10-25 at 4.01.06 pm.png
+  ↳ 2025-10-25 19:01 cisco: There's no mention of where `j` comes from in `r_j`. Should it be n? [edited]
 2025-10-20 17:13 shimonchick: Can someone point me to how the instruction operand distance (in bytes) would get calculated for the PVM test vectors (where there is no bitmask)? 
 2025-10-20 19:00 jan: There is bitmask.
 2025-10-21 12:14 sourabhniyogi: What is the plan to get the gas model for the host functions, especially the storage/IO intensive ones (read/write+import/export)?
