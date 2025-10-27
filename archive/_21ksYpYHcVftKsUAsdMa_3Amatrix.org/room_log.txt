@@ -1,5 +1,5 @@
 # room: #jam-conformance:matrix.org
-# exported: 2025-10-26 03:32 UTC
+# exported: 2025-10-27 03:38 UTC
 2025-08-20 15:56 erin: tomusdrw: i've set up the archiver to archive this also, so hopefully will be up starting tomorrow
 2025-08-21 06:33 ascriv: https://github.com/davxy/jam-conformance/issues/26 should we not discourage open source implementations (for now)? [edited]
 2025-08-21 10:27 oliver.tale-yazdi: I think open source repos are fine. Other implementors are just not supposed to look at it
@@ -1066,3 +1066,14 @@ we have `2` items which matches the expected result while the `zombify` service 
 I'll update the traces soon anyway
 2025-10-21 16:20 sourabhniyogi: Is there a new fuzzy set somewhere already, or coming soon? 
 2025-10-21 16:24 davxy: Very soon 
+2025-10-26 16:23 aang114: Hi, could I please confirm that [1758819527/00000598.json](https://github.com/davxy/jam-conformance/blob/main/fuzz-reports/0.7.0/traces/1758819527/00000598.json) and [1758708840/00000958.json](https://github.com/davxy/jam-conformance/blob/main/fuzz-reports/0.7.0/traces/1758708840/00000958.json) are **invalid trace files** since the post-state state-root is `0x0000000000000000000000000000000000000000000000000000000000000000` and the post-state keyvals are empty? Thanks
+  ↳ 2025-10-26 21:18 vinsystems: https://github.com/davxy/jam-conformance/discussions/99 
+2025-10-26 18:15 hanayukii: Clarification: should vStar be assigned to the next PartialStateSet.Designate for subsequent runs of  Δ* ?
+https://graypaper.fluffylabs.dev/#/38c4e62/17b60117b601?v=0.7.0
+From our recent test results and discussion between the PVM and Accumulation implementations, we observed that in Δ* updating PartialStateSet.Designate with vStar seems necessary to make the Chi data correct in some cases, also for the following PVM work. This behavior appears reasonable by the opinion on PVM side. however, we couldn’t find explicit statement in the Graypaper (both v0.7.0 or v0.7.2) indicating that PartialStateSet.Designate must be updated with vStar before the subsequent Δ₁ calls in Δ*
+
+Formula from 0.7.0 (12.17)
+(m′, a, v, z′) = Δ₁(e, w, f, m)
+v′ = (∆1(e, w, f , v∗)e)v
+
+We’d like to confirm whether this update — assigning vStar to PartialStateSet.Designate — is intended by the spec or defined elsewhere in the Graypaper, or if we are misunderstanding the intended semantics. Thanks! 

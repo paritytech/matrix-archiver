@@ -1,5 +1,5 @@
 # room: #jam:polkadot.io
-# exported: 2025-10-26 03:31 UTC
+# exported: 2025-10-27 03:38 UTC
 2024-04-20 02:08 johnjiao123: 
 2024-04-20 02:09 johnjiao123: 
 2024-05-30 21:48 nradko: Hey everyone,
@@ -11717,3 +11717,26 @@ But I wouldn't hinge the argument on cost when comparing Web2 to Web3; we could 
 2025-10-24 20:47 jaymansfield: > <@dave:parity.io> FYI there is a reasonably stable spec for the JAM node telemetry interface here: https://github.com/polkadot-fellows/JIPs/pull/8. As with the SNP spec, we won't change things at this point without good reason! We are currently developing a front-end for this which will collate telemetry events from connected nodes and display them in interesting and hopefully useful ways :). We will likely require nodes to implement this before we will allow them to run on the toaster.
 
 Is there a target date of when you expect the frontend to be available? Any chance implementers could get access to dev versions of it so we can start to validate our telemetry implementations (even if it doesn’t support full event coverage yet)?
+2025-10-26 21:54 celadari: Hi, I have a doubt regarding a specific test vector `different-core-same-guarantors` https://github.com/davxy/jam-test-vectors/blob/master/stf/reports/tiny/different\_core\_same\_guarantors-1.json\`
+
+we have two work reports with same `lookup_anchor` and different `lookup_anchor_slot`:
+
+```json
+"context": {
+                        ....
+                        "lookup_anchor": "0x16bda47e5a68daf53c39ddee8af4ecaced7e87f3f0ac9da5a6f4f9e41350d319",
+                        "lookup_anchor_slot": 6,
+                    },
+```
+
+and
+
+```json
+"context": {
+                        ...
+                        "lookup_anchor": "0x16bda47e5a68daf53c39ddee8af4ecaced7e87f3f0ac9da5a6f4f9e41350d319",
+                        "lookup_anchor_slot": 10,
+                    },
+```
+
+according to https://graypaper.fluffylabs.dev/#/1c979cb/15f00215f902?v=0.7.1 that would require us to have stored two headers with the same hash but different time slot => not possible [edited]

@@ -18,7 +18,7 @@ a:hover{color:#90caf9}
 em{font-style:italic}
 </style>
 <h1>#jam-conformance:matrix.org</h1>
-<p><small>last updated 2025-10-26 03:32 UTC</small></p>
+<p><small>last updated 2025-10-27 03:38 UTC</small></p>
 <p><a href='room_log.txt'>⇩ plaintext</a> · <a href='../../'>⇦ all rooms</a></p>
 <hr>
 <div class='msg'><a class='ts' href='#$_9hLINsChVG8rufQkmbqp-fIbsNyK1YqpS3C9S7QZHU'>#</a> <a class='ts' name='$_9hLINsChVG8rufQkmbqp-fIbsNyK1YqpS3C9S7QZHU' href='https://matrix.to/#/!ksYpYHcVftKsUAsdMa:matrix.org/$_9hLINsChVG8rufQkmbqp-fIbsNyK1YqpS3C9S7QZHU' target='_blank'>2025-08-20 15:56</a>&ensp;<span class='u' style='color:#787fdf'>erin</span>: tomusdrw: i&#x27;ve set up the archiver to archive this also, so hopefully will be up starting tomorrow</div>
@@ -1072,3 +1072,14 @@ we have <code>2</code> items which matches the expected result while the <code>z
 I&#x27;ll update the traces soon anyway</div>
 <div class='msg'><a class='ts' href='#$n8OGIwiRJuoUHSrMuMtCoZ1apyKlbbOsQzqWWSZgK_A'>#</a> <a class='ts' name='$n8OGIwiRJuoUHSrMuMtCoZ1apyKlbbOsQzqWWSZgK_A' href='https://matrix.to/#/!ksYpYHcVftKsUAsdMa:matrix.org/$n8OGIwiRJuoUHSrMuMtCoZ1apyKlbbOsQzqWWSZgK_A' target='_blank'>2025-10-21 16:20</a>&ensp;<span class='u' style='color:#c67452'>sourabhniyogi</span>: Is there a new fuzzy set somewhere already, or coming soon? </div>
 <div class='msg'><a class='ts' href='#$yXj0sQLgBjaZUjkFGxTDJ7pblqQjH1QOgpC7vC1Qmwo'>#</a> <a class='ts' name='$yXj0sQLgBjaZUjkFGxTDJ7pblqQjH1QOgpC7vC1Qmwo' href='https://matrix.to/#/!ksYpYHcVftKsUAsdMa:matrix.org/$yXj0sQLgBjaZUjkFGxTDJ7pblqQjH1QOgpC7vC1Qmwo' target='_blank'>2025-10-21 16:24</a>&ensp;<span class='u' style='color:#c9419d'>davxy</span>: Very soon </div>
+<div class='msg'><a class='ts' href='#$3XFesyGeVWlXJMkQzf42qRpMOAy2khNLaKe3fnq8FiY'>#</a> <a class='ts' name='$3XFesyGeVWlXJMkQzf42qRpMOAy2khNLaKe3fnq8FiY' href='https://matrix.to/#/!ksYpYHcVftKsUAsdMa:matrix.org/$3XFesyGeVWlXJMkQzf42qRpMOAy2khNLaKe3fnq8FiY' target='_blank'>2025-10-26 16:23</a>&ensp;<span class='u' style='color:#2a9dc1'>aang114</span>: Hi, could I please confirm that <a href="https://github.com/davxy/jam-conformance/blob/main/fuzz-reports/0.7.0/traces/1758819527/00000598.json" rel="noopener" target="_blank">1758819527/00000598.json</a> and <a href="https://github.com/davxy/jam-conformance/blob/main/fuzz-reports/0.7.0/traces/1758708840/00000958.json" rel="noopener" target="_blank">1758708840/00000958.json</a> are **invalid trace files** since the post-state state-root is <code>0x0000000000000000000000000000000000000000000000000000000000000000</code> and the post-state keyvals are empty? Thanks</div>
+<div class='msg reply'><a class='ts' href='#$s50KkRDGH6VbJpLx7HX-lmbch6VDy_NUcdd0-UK_s3g'>#</a> <a class='ts' name='$s50KkRDGH6VbJpLx7HX-lmbch6VDy_NUcdd0-UK_s3g' href='https://matrix.to/#/!ksYpYHcVftKsUAsdMa:matrix.org/$s50KkRDGH6VbJpLx7HX-lmbch6VDy_NUcdd0-UK_s3g' target='_blank'>2025-10-26 21:18</a>&ensp;<span class='u' style='color:#c457c5'>vinsystems</span>: <a href="https://github.com/davxy/jam-conformance/discussions/99" rel="noopener" target="_blank">https://github.com/davxy/jam-conformance/discussions/99</a> </div>
+<div class='msg'><a class='ts' href='#$MHRT5qPRCcsbEHHNRkznUnI7xcQVnleIOHVXVzBUjaE'>#</a> <a class='ts' name='$MHRT5qPRCcsbEHHNRkznUnI7xcQVnleIOHVXVzBUjaE' href='https://matrix.to/#/!ksYpYHcVftKsUAsdMa:matrix.org/$MHRT5qPRCcsbEHHNRkznUnI7xcQVnleIOHVXVzBUjaE' target='_blank'>2025-10-26 18:15</a>&ensp;<span class='u' style='color:#554bb9'>hanayukii</span>: Clarification: should vStar be assigned to the next PartialStateSet.Designate for subsequent runs of  Δ* ?
+<a href="https://graypaper.fluffylabs.dev/#/38c4e62/17b60117b601?v=0.7.0" rel="noopener" target="_blank">https://graypaper.fluffylabs.dev/#/38c4e62/17b60117b601?v=0.7.0</a>
+From our recent test results and discussion between the PVM and Accumulation implementations, we observed that in Δ* updating PartialStateSet.Designate with vStar seems necessary to make the Chi data correct in some cases, also for the following PVM work. This behavior appears reasonable by the opinion on PVM side. however, we couldn’t find explicit statement in the Graypaper (both v0.7.0 or v0.7.2) indicating that PartialStateSet.Designate must be updated with vStar before the subsequent Δ₁ calls in Δ*
+
+Formula from 0.7.0 (12.17)
+(m′, a, v, z′) = Δ₁(e, w, f, m)
+v′ = (∆1(e, w, f , v∗)e)v
+
+We’d like to confirm whether this update — assigning vStar to PartialStateSet.Designate — is intended by the spec or defined elsewhere in the Graypaper, or if we are misunderstanding the intended semantics. Thanks! </div>

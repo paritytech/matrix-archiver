@@ -18,7 +18,7 @@ a:hover{color:#90caf9}
 em{font-style:italic}
 </style>
 <h1>#jam:polkadot.io</h1>
-<p><small>last updated 2025-10-26 03:31 UTC</small></p>
+<p><small>last updated 2025-10-27 03:38 UTC</small></p>
 <p><a href='room_log.txt'>⇩ plaintext</a> · <a href='../../'>⇦ all rooms</a></p>
 <hr>
 <div class='msg'><a class='ts' href='#$we4SYXTHwmKn094X9Zs_7mWUOoUVh4icvVdxD83RZfs'>#</a> <a class='ts' name='$we4SYXTHwmKn094X9Zs_7mWUOoUVh4icvVdxD83RZfs' href='https://matrix.to/#/!wBOJlzaOULZOALhaRh:polkadot.io/$we4SYXTHwmKn094X9Zs_7mWUOoUVh4icvVdxD83RZfs' target='_blank'>2024-04-20 02:08</a>&ensp;<span class='u' style='color:#d0709e'>johnjiao123</span>: </div>
@@ -11613,3 +11613,24 @@ But I wouldn&#x27;t hinge the argument on cost when comparing Web2 to Web3; we c
 <div class='msg'><a class='ts' href='#$ZEnlQsZ-uOYH_zX-2dQaLsmqdrUJZqHln-qvObkCOiM'>#</a> <a class='ts' name='$ZEnlQsZ-uOYH_zX-2dQaLsmqdrUJZqHln-qvObkCOiM' href='https://matrix.to/#/!wBOJlzaOULZOALhaRh:polkadot.io/$ZEnlQsZ-uOYH_zX-2dQaLsmqdrUJZqHln-qvObkCOiM' target='_blank'>2025-10-24 20:47</a>&ensp;<span class='u' style='color:#d470bf'>jaymansfield</span>: &gt; &lt;@dave:parity.io&gt; FYI there is a reasonably stable spec for the JAM node telemetry interface here: <a href="https://github.com/polkadot-fellows/JIPs/pull/8." rel="noopener" target="_blank">https://github.com/polkadot-fellows/JIPs/pull/8.</a> As with the SNP spec, we won&#x27;t change things at this point without good reason! We are currently developing a front-end for this which will collate telemetry events from connected nodes and display them in interesting and hopefully useful ways :). We will likely require nodes to implement this before we will allow them to run on the toaster.
 
 Is there a target date of when you expect the frontend to be available? Any chance implementers could get access to dev versions of it so we can start to validate our telemetry implementations (even if it doesn’t support full event coverage yet)?</div>
+<div class='msg'><a class='ts' href='#$6aOiPATGeF2Ikl_ivBQCECeew3Z0WtCnkVVlg8TzrbE'>#</a> <a class='ts' name='$6aOiPATGeF2Ikl_ivBQCECeew3Z0WtCnkVVlg8TzrbE' href='https://matrix.to/#/!wBOJlzaOULZOALhaRh:polkadot.io/$6aOiPATGeF2Ikl_ivBQCECeew3Z0WtCnkVVlg8TzrbE' target='_blank'>2025-10-26 21:54</a>&ensp;<span class='u' style='color:#db4dca'>celadari</span>: Hi, I have a doubt regarding a specific test vector <code>different-core-same-guarantors</code> <a href="https://github.com/davxy/jam-test-vectors/blob/master/stf/reports/tiny/different\_core\_same\_guarantors-1.json\`" rel="noopener" target="_blank">https://github.com/davxy/jam-test-vectors/blob/master/stf/reports/tiny/different\_core\_same\_guarantors-1.json\`</a>
+
+we have two work reports with same <code>lookup_anchor</code> and different <code>lookup_anchor_slot</code>:
+
+<pre><code class='json'>&quot;context&quot;: {
+                        ....
+                        &quot;lookup_anchor&quot;: &quot;0x16bda47e5a68daf53c39ddee8af4ecaced7e87f3f0ac9da5a6f4f9e41350d319&quot;,
+                        &quot;lookup_anchor_slot&quot;: 6,
+                    },
+</code></pre>
+
+and
+
+<pre><code class='json'>&quot;context&quot;: {
+                        ...
+                        &quot;lookup_anchor&quot;: &quot;0x16bda47e5a68daf53c39ddee8af4ecaced7e87f3f0ac9da5a6f4f9e41350d319&quot;,
+                        &quot;lookup_anchor_slot&quot;: 10,
+                    },
+</code></pre>
+
+according to <a href="https://graypaper.fluffylabs.dev/#/1c979cb/15f00215f902?v=0.7.1" rel="noopener" target="_blank">https://graypaper.fluffylabs.dev/#/1c979cb/15f00215f902?v=0.7.1</a> that would require us to have stored two headers with the same hash but different time slot =&gt; not possible <span class="edited">(edited)</span></div>
