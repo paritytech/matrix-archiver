@@ -1,5 +1,5 @@
 # room: #jam:polkadot.io
-# exported: 2025-10-27 03:38 UTC
+# exported: 2025-10-28 03:31 UTC
 2024-04-20 02:08 johnjiao123: 
 2024-04-20 02:09 johnjiao123: 
 2024-05-30 21:48 nradko: Hey everyone,
@@ -11740,3 +11740,7 @@ and
 ```
 
 according to https://graypaper.fluffylabs.dev/#/1c979cb/15f00215f902?v=0.7.1 that would require us to have stored two headers with the same hash but different time slot => not possible [edited]
+2025-10-27 17:08 igankevich: This would require implementing all system calls that LXC uses, in particular process creation and networking. This would take some time, but otherwise I don't see much of a problem to do that. The only remaining question is "Why?" 😃 LXC is basically a `chroot` with namespace-based isolation for processes, network, root file system etc. PolkaVM gives much higher degree of isolation and also full reproducibility. If your goal is to protect the program and the outside world from each other, you can just run it on CoreVM without LXC.
+2025-10-27 19:41 dave: Tonight's PolkaJam release (https://github.com/paritytech/polkajam-releases) should include a `jam-telemetry-dumper` binary which you can use for debugging. It simply accepts connections from nodes and dumps any received events straight to stdout without any processing. The `polkajam` and `polkajam-testnet` binaries in the release should support the `--telemetry` flag which you can point at this. I believe erin intends to release a more interesting CLI frontend later this week. The web frontend should be usable by the end of the year, although it likely won't be feature-complete.
+2025-10-27 19:56 xlchen: could the telemetry frontend to be public so people can contribute?
+2025-10-27 19:57 dave: It's in a separate repo to PolkaJam so we should be able to make it public yeah
