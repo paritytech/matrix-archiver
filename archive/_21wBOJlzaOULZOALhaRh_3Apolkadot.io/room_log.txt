@@ -1,5 +1,5 @@
 # room: #jam:polkadot.io
-# exported: 2025-10-28 03:31 UTC
+# exported: 2025-10-29 03:35 UTC
 2024-04-20 02:08 johnjiao123: 
 2024-04-20 02:09 johnjiao123: 
 2024-05-30 21:48 nradko: Hey everyone,
@@ -11744,3 +11744,43 @@ according to https://graypaper.fluffylabs.dev/#/1c979cb/15f00215f902?v=0.7.1 tha
 2025-10-27 19:41 dave: Tonight's PolkaJam release (https://github.com/paritytech/polkajam-releases) should include a `jam-telemetry-dumper` binary which you can use for debugging. It simply accepts connections from nodes and dumps any received events straight to stdout without any processing. The `polkajam` and `polkajam-testnet` binaries in the release should support the `--telemetry` flag which you can point at this. I believe erin intends to release a more interesting CLI frontend later this week. The web frontend should be usable by the end of the year, although it likely won't be feature-complete.
 2025-10-27 19:56 xlchen: could the telemetry frontend to be public so people can contribute?
 2025-10-27 19:57 dave: It's in a separate repo to PolkaJam so we should be able to make it public yeah
+2025-10-28 08:14 vinsystems: Thanks for the feedback, Ivan! You're right that implementing the necessary syscalls (like those for process creation and networking) would take some effort, but it's good to hear it's feasible in principle.
+
+The basic Linux user space setup I mentioned is really just a first step to validate the concept and ensure the syscall emulation layer holds up under something like LXC's isolation features. But the final goal is enabling a more complete Linux environment (including full networking support). That way, we could provide a seamless migration path for existing web2 services to web3, with minimal changes required. 
+
+Imagine porting over running applications or services directly into JAM without major rewrites (leveraging LXC-like containers to bridge the gap). Do you think that's a compelling use case, or are there other hurdles I'm missing? [edited]
+2025-10-28 09:26 igankevich: > Imagine porting over running applications or services directly into JAM without major rewrites (leveraging LXC-like containers to bridge the gap). Do you think that's a compelling use case, or are there other hurdles I'm missing?
+
+It would be awesome to port applications of course 😃
+
+Arguably the most valuable offer of application container platforms is their hubs. Hence, I think, the most straightforward approach to port an application would be to pull Docker/LXC/whatever image from a hub, convert it to CoreVM FS image and run the entry point inside CoreVM. This is how [Singularity](https://github.com/sylabs/singularity) entered the scene as a new application container platform back in the days: you just type `singularity shell docker://ubuntu:latest` and it "steals" Ubuntu image from the Docker hub, converts it to its own format, and launches the shell. It should be possible (and not that difficult!) to write a similar CLI tool for CoreVM.
+
+Please also keep in mind that there is no Internet access inside CoreVM, so most Docker commands (e.g. `docker pull`, `lxc create`) inside CoreVM will not work. This kinda defeats the purpose of porting application container platforms to CoreVM, isn't it? (It might not work outside either because CoreVM needs riscv64 architecture and most images are built for different architectures.)
+
+My point is that running LXC/Docker inside CoreVM is not that transparent due to a lack of access to hubs. A more user-friendly way of running "old" containerized applications on CoreVM would be to do that directly via a converter tool that I mentioned above. Eventually it would make sense to create an on-chain hub with riscv64 images stored in e.g. IPFS or something to not depend on web2 hubs.
+2025-10-28 11:04 gav: [Bernar | Vinwolf](https://matrix.to/#/@vinsystems:matrix.org)^^^ see this 
+2025-10-28 11:05 gav: Just dropping nginx or Postgres into a Linux container hosted in CoreVM isn’t going to achieve anything useful. At least not directly.  [edited]
+2025-10-28 11:10 gav: The latency is high (multiples of 6 seconds for Polkadot, maybe multiples of single seconds for Kusama if things go well). There is no networking.
+2025-10-28 11:10 gav: This is a Web3 platform for hosting appropriately architected Web3 software.  [edited]
+2025-10-28 11:11 gav: The “endpoint” for Web3 isn’t “Web2 but on many (public) nodes”.  [edited]
+2025-10-28 11:12 gav: (Not is it on just “many nodes” - that’s distributed computing and it’s what Google already does in its data centres.) [edited]
+2025-10-28 11:16 gav: Bitcoin isn’t “legacy banking software but extended on to many nodes”. 
+2025-10-28 11:16 gav: Rather it is its own protocol, utilising game theoretic and cryptographic mechanisms to deliver a certain service *a bit like* the services that banks provide. 
+2025-10-28 11:17 gav: So it will be with other vestiges of Web3. 
+2025-10-28 11:20 gav: The difference between Web3 stuff and Web2 is the trust architecture. And while JAM provides some really good improvements in terms of coherence, performance and compute environment, that doesn’t alter the need to consider and design the services which run on it from the ground up. 
+2025-10-28 11:21 gav: It just means that development, scaling and integration will be much easier to achieve together without throwing decentralisation and resilience to the wind. 
+2025-10-28 11:22 gav: It could nevertheless be fun to get LXC working in CoreVM, but probably more as a 💪 demo than anything really that useful. 
+2025-10-28 11:27 alice_und_bob: what I typically find very helpful when considering ideas like these in systems design is to think in terms of tradeoffs. What am I gaining and what am I giving? On the most basic level in system properties
+
+Typical Web2 properties are: large amounts of storage, compute, low latency...
+Typical Web3 properties are: censorship resistance, verifiability + privacy if you add ZK
+
+So when considering an idea like "nginx on JAM", you can ask: what do I get and what do I give?
+
+You might get a time saver on not having to reimplement the stack and you gain verifiability, but what is that good for for a simple web server? And what you give is performance and more money.
+
+So the tradeoffs don't yield a very attractive result in this case [edited]
+2025-10-28 11:29 alice_und_bob: but the idea of tradeoff implies is that you typically can't have all the positives at once. usually something has to give so that you gain something else
+2025-10-28 11:33 alice_und_bob: for distributed ledgers one shortcut question I often go to is: what are truths that everyone / a lot of people want to agree on?
+
+if the application in question contains truths / calculations that a lot of people want to agree on, it makes sense to put it on-chain. the serving of files from a server to a single user is not something that everyone has a strong need to verify/agree on

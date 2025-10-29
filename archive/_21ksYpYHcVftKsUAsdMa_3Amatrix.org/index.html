@@ -18,7 +18,7 @@ a:hover{color:#90caf9}
 em{font-style:italic}
 </style>
 <h1>#jam-conformance:matrix.org</h1>
-<p><small>last updated 2025-10-28 03:31 UTC</small></p>
+<p><small>last updated 2025-10-29 03:36 UTC</small></p>
 <p><a href='room_log.txt'>⇩ plaintext</a> · <a href='../../'>⇦ all rooms</a></p>
 <hr>
 <div class='msg'><a class='ts' href='#$_9hLINsChVG8rufQkmbqp-fIbsNyK1YqpS3C9S7QZHU'>#</a> <a class='ts' name='$_9hLINsChVG8rufQkmbqp-fIbsNyK1YqpS3C9S7QZHU' href='https://matrix.to/#/!ksYpYHcVftKsUAsdMa:matrix.org/$_9hLINsChVG8rufQkmbqp-fIbsNyK1YqpS3C9S7QZHU' target='_blank'>2025-08-20 15:56</a>&ensp;<span class='u' style='color:#787fdf'>erin</span>: tomusdrw: i&#x27;ve set up the archiver to archive this also, so hopefully will be up starting tomorrow</div>
@@ -1089,3 +1089,28 @@ We’d like to confirm whether this update — assigning vStar to PartialStateSe
 
 Please prioritize addressing **1** first, as it will likely resolve most of the reports listed in **2**.
 </div>
+<div class='msg'><a class='ts' href='#$-8IBr29vSJYBG-0jR0wIQ-LPiFeCOW4fd7MZibufxTA'>#</a> <a class='ts' name='$-8IBr29vSJYBG-0jR0wIQ-LPiFeCOW4fd7MZibufxTA' href='https://matrix.to/#/!ksYpYHcVftKsUAsdMa:matrix.org/$-8IBr29vSJYBG-0jR0wIQ-LPiFeCOW4fd7MZibufxTA' target='_blank'>2025-10-28 23:56</a>&ensp;<span class='u' style='color:#db4dca'>celadari</span>: Hi, I have a doubt regarding a specific test vector <code>different-core-same-guarantors</code> <a href="https://github.com/davxy/jam-test-vectors/blob/master/stf/reports/tiny/different\_core\_same\_guarantors-1.json\`" rel="noopener" target="_blank">https://github.com/davxy/jam-test-vectors/blob/master/stf/reports/tiny/different\_core\_same\_guarantors-1.json\`</a>
+
+we have two work reports with same <code>lookup_anchor</code> and different <code>lookup_anchor_slot</code>:
+
+<pre><code class='json'>&quot;context&quot;: {
+                        ....
+                        &quot;lookup_anchor&quot;: &quot;0x16bda47e5a68daf53c39ddee8af4ecaced7e87f3f0ac9da5a6f4f9e41350d319&quot;,
+                        &quot;lookup_anchor_slot&quot;: 6,
+                    },
+</code></pre>
+
+and
+
+<pre><code class='json'>&quot;context&quot;: {
+                        ...
+                        &quot;lookup_anchor&quot;: &quot;0x16bda47e5a68daf53c39ddee8af4ecaced7e87f3f0ac9da5a6f4f9e41350d319&quot;,
+                        &quot;lookup_anchor_slot&quot;: 10,
+                    },
+</code></pre>
+
+according to <a href="https://graypaper.fluffylabs.dev/#/1c979cb/15f00215f902?v=0.7.1" rel="noopener" target="_blank">https://graypaper.fluffylabs.dev/#/1c979cb/15f00215f902?v=0.7.1</a> that would require us to have stored two headers with the same hash but different time slot =&gt; not possible
+
+Is there something I&#x27;m missing ?
+
+PS: I originally posted this message in the Let&#x27;s JAM chat room but this chat may actually be a better fit for my question</div>

@@ -1,5 +1,5 @@
 # room: #jam-conformance:matrix.org
-# exported: 2025-10-28 03:31 UTC
+# exported: 2025-10-29 03:36 UTC
 2025-08-20 15:56 erin: tomusdrw: i've set up the archiver to archive this also, so hopefully will be up starting tomorrow
 2025-08-21 06:33 ascriv: https://github.com/davxy/jam-conformance/issues/26 should we not discourage open source implementations (for now)? [edited]
 2025-08-21 10:27 oliver.tale-yazdi: I think open source repos are fine. Other implementors are just not supposed to look at it
@@ -1083,3 +1083,30 @@ We’d like to confirm whether this update — assigning vStar to PartialStateSe
 
 Please prioritize addressing **1** first, as it will likely resolve most of the reports listed in **2**.
 
+2025-10-28 23:56 celadari: Hi, I have a doubt regarding a specific test vector `different-core-same-guarantors` https://github.com/davxy/jam-test-vectors/blob/master/stf/reports/tiny/different\_core\_same\_guarantors-1.json\`
+
+we have two work reports with same `lookup_anchor` and different `lookup_anchor_slot`:
+
+```json
+"context": {
+                        ....
+                        "lookup_anchor": "0x16bda47e5a68daf53c39ddee8af4ecaced7e87f3f0ac9da5a6f4f9e41350d319",
+                        "lookup_anchor_slot": 6,
+                    },
+```
+
+and
+
+```json
+"context": {
+                        ...
+                        "lookup_anchor": "0x16bda47e5a68daf53c39ddee8af4ecaced7e87f3f0ac9da5a6f4f9e41350d319",
+                        "lookup_anchor_slot": 10,
+                    },
+```
+
+according to https://graypaper.fluffylabs.dev/#/1c979cb/15f00215f902?v=0.7.1 that would require us to have stored two headers with the same hash but different time slot => not possible
+
+Is there something I'm missing ?
+
+PS: I originally posted this message in the Let's JAM chat room but this chat may actually be a better fit for my question
