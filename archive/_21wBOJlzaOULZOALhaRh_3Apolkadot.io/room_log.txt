@@ -1,5 +1,5 @@
 # room: #jam:polkadot.io
-# exported: 2025-10-29 03:35 UTC
+# exported: 2025-10-30 03:32 UTC
 2024-04-20 02:08 johnjiao123: 
 2024-04-20 02:09 johnjiao123: 
 2024-05-30 21:48 nradko: Hey everyone,
@@ -11784,3 +11784,14 @@ So the tradeoffs don't yield a very attractive result in this case [edited]
 2025-10-28 11:33 alice_und_bob: for distributed ledgers one shortcut question I often go to is: what are truths that everyone / a lot of people want to agree on?
 
 if the application in question contains truths / calculations that a lot of people want to agree on, it makes sense to put it on-chain. the serving of files from a server to a single user is not something that everyone has a strong need to verify/agree on
+2025-10-29 19:09 erin: Hello everyone, I've released a telemetry server which is compatible with JIP-3 for JAM nodes. You can find the release binaries [here](https://github.com/paritytech/jamtart/releases/tag/v0.1.0)
+
+This consists of two parts, the backend (telemetry server) which stores emitted events from connected nodes in postgres. The recommended way to run this is in docker, but you can find a variety of helper scripts in the repo to modify to your environment as needed.
+
+The other part is the cli interface, which is TUI, called tart-dash.
+
+If anyone has any problems, suggestions, or otherwise, please ping me!
+2025-10-29 19:12 erin: Screenshot 2025-10-29 at 19.12.00.png
+2025-10-29 19:13 erin: This will be improved upon in the coming days/weeks both according to the spec and your feedback if you have any. :)
+
+A more fully-featured web UI is also in active development.
