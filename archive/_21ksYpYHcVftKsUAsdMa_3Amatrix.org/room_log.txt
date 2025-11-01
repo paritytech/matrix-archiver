@@ -1,5 +1,5 @@
 # room: #jam-conformance:matrix.org
-# exported: 2025-10-31 03:33 UTC
+# exported: 2025-11-01 03:33 UTC
 2025-08-20 15:56 erin: tomusdrw: i've set up the archiver to archive this also, so hopefully will be up starting tomorrow
 2025-08-21 06:33 ascriv: https://github.com/davxy/jam-conformance/issues/26 should we not discourage open source implementations (for now)? [edited]
 2025-08-21 10:27 oliver.tale-yazdi: I think open source repos are fine. Other implementors are just not supposed to look at it
@@ -1113,3 +1113,4 @@ PS: I originally posted this message in the Let's JAM chat room but this chat ma
 2025-10-29 08:16 davxy: 
 2025-10-29 09:01 davxy: Fixed
   ↳ 2025-10-29 12:07 celadari: Thanks :)
+2025-10-31 09:32 greywolve: Could anyone share a PVM trace for t[his storage trace](https://github.com/davxy/jam-test-vectors/blob/master/traces/storage/00000014.json) ? Since v0.7.1 we seem to be using more gas than required, but we get the correct service post state. So it's been really tough to debug. (also failing 13, 17, 39 and 95, in that batch in a similar way) [edited]
