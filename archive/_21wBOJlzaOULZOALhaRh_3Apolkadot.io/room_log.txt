@@ -1,5 +1,5 @@
 # room: #jam:polkadot.io
-# exported: 2025-11-03 03:36 UTC
+# exported: 2025-11-04 03:32 UTC
 2024-04-20 02:08 johnjiao123: 
 2024-04-20 02:09 johnjiao123: 
 2024-05-30 21:48 nradko: Hey everyone,
@@ -8667,6 +8667,10 @@ or if this is metadata but it is prefixed with length 71 [edited]
   ↳ 2025-05-29 06:31 clearloop: it's indeed metadata, works after fixing my Y function
   ↳ 2025-05-29 07:31 greywolve: yeah we ran into this too, was just the metadata
   ↳ 2025-05-29 07:33 greywolve: specified [here](https://graypaper.fluffylabs.dev/#/9a08063/109a01109a01?v=0.6.6).
+  ↳ 2025-11-03 11:22 shimonchick: What did it turn out to be? It doesnt seem to be decodable by either deblob or the Y function after taking away the first 71 bytes of metadata on our side. [edited]
+  ↳ 2025-11-03 12:52 shimonchick: How would you find the end of the metadata?
+  ↳ 2025-11-03 13:15 qiwei: [metadata](https://graypaper.fluffylabs.dev/#/1c979cb/10e40110e501?v=0.7.1) has a length prefix that tells the length
+  ↳ 2025-11-03 13:18 shimonchick: For anyone wondering about this in the future, Preimage code blobs are encoding metadata length, then metadata, then using Y function instead of deblob. Effectively the Y function would've started 72 bytes after the beginning of the preimage blob. Also Y function uses little endian.
 2025-05-29 12:28 arjanz: 
 2025-05-29 12:30 arjanz: When we wanted to use the `dev-spec.json` exported from `polkajam` as genesis, we ran into some issues with the is-authorized invocation (B.1).
 
@@ -11802,3 +11806,4 @@ A more fully-featured web UI is also in active development.
 I would also like to thank shwchg and tomusdrw in particular, as their feedback was instrumental in getting the draft to this state. Thanks!
 
 Ideally I'm aiming to get the new gas cost model into the GP proper sometime this month. There's still a lot of work needed (speccing out the block-based gas charging, some hostcall tweaks, etc.), but the hardest part is now done (getting the gas cost model itself specced) and with the way things are going there is a significant possibility that this new gas cost model could become part of the M1 milestone (it will *definitely* be part of M2) depending on how fast I can get it into GP and how much more time it will take for the W3F to get ready to accept submissions. So I just wanted to communicate this so that there are no surprises - if you have the free time and are twiddling your thumbs waiting for the M1 milestone testing to open it might be a good idea to start implementing the new gas cost model already, as at this point the algorithm is very unlikely to change.
+2025-11-03 12:45 shimonchick: ^ can somebody help clarify the format here? thanks 🙏
