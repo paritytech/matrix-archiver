@@ -1,5 +1,5 @@
 # room: #jam-conformance:matrix.org
-# exported: 2025-11-04 03:33 UTC
+# exported: 2025-11-05 03:33 UTC
 2025-08-20 15:56 erin: tomusdrw: i've set up the archiver to archive this also, so hopefully will be up starting tomorrow
 2025-08-21 06:33 ascriv: https://github.com/davxy/jam-conformance/issues/26 should we not discourage open source implementations (for now)? [edited]
 2025-08-21 10:27 oliver.tale-yazdi: I think open source repos are fine. Other implementors are just not supposed to look at it
@@ -1115,3 +1115,9 @@ PS: I originally posted this message in the Let's JAM chat room but this chat ma
   ↳ 2025-10-29 12:07 celadari: Thanks :)
 2025-10-31 09:32 greywolve: Could anyone share a PVM trace for t[his storage trace](https://github.com/davxy/jam-test-vectors/blob/master/traces/storage/00000014.json) ? Since v0.7.1 we seem to be using more gas than required, but we get the correct service post state. So it's been really tough to debug. (also failing 13, 17, 39 and 95, in that batch in a similar way) [edited]
 2025-11-03 12:01 danicuki: GM. Are the binaries on `fuzz-proto/examples/v1/faulty/` updated to latest 0.7.1? They seem to still be on version 0.7.0 and not compatible other files
+2025-11-04 18:34 davxy: Needs to be updated, I filed an issue to remember it :-)
+2025-11-04 18:35 davxy: I've updated the REPORTS table.
+First stop on the road to glory: passing the fuzzy traces in the jam-test-vectors repo...
+
+https://github.com/davxy/jam-conformance/tree/main/fuzz-reports
+2025-11-04 18:35 davxy: (jam-test-vectors traces are now included in the table as well)

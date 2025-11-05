@@ -1,5 +1,5 @@
 # room: #graypaper:polkadot.io
-# exported: 2025-11-04 03:32 UTC
+# exported: 2025-11-05 03:33 UTC
 2024-04-17 20:29 syed: https://matrix.to/#/!hyzRkDqDthePbodYFz:parity.io/$f_DMsIEcDXZegw6Sabnehzc-LrdDQkmq5MbxDDyoZxY?via=parity.io&via=web3.foundation
 
 2024-04-17 20:29 syed: 
@@ -6716,3 +6716,10 @@ The first in the sequence can know, but the last cannot, as far as I can tell.  
 2025-10-24 18:43 gav: We are hopeful that we will have toaster results in the coming weeks, but it has been a long journey of optimisation. 
 2025-10-24 18:43 gav: Other teams will probably need to take the same journey. 
 2025-10-24 18:45 gav: Otherwise, I’d expect teams taking part in the PBA JAM hackathon Dec-Mar to do their own experiments and draw their own experience. 
+2025-11-04 23:19 sourabhniyogi: The `fetch` host function does not presently provide access to the JAM parent state root, which is the authoritative commitment of everything in JAM State.
+
+A rollup host service would typically be expected to include some kind of state root in a rollup's block for proofs of inclusion, historical lookups, etc., where having the JAM parent state root for each accumulate would be valuable to include in a rollup block.
+
+Is it reasonable to add a case to `fetch` for this, or add it after entropy here https://graypaper.fluffylabs.dev/#/ab2cdbd/30c40030c400?v=0.7.2 for "case 1"?
+
+I recognize that the `yield` or 32-byte accumulate roots provides an ample alternative for a rollup host's commitments going into C(16), wherein proofs of inclusion can be generated with C(16) alone, without yet another fetch case.  But for backwards compatibility with rollups expectations of a rollup host (eg for historical lookups of any commitment by the rollup against some JAM State root), it would be good to have the JAM State root as well.  Is this a reasonable ask? [edited]
