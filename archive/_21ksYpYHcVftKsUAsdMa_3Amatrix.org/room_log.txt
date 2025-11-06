@@ -1,5 +1,5 @@
 # room: #jam-conformance:matrix.org
-# exported: 2025-11-05 03:33 UTC
+# exported: 2025-11-06 03:35 UTC
 2025-08-20 15:56 erin: tomusdrw: i've set up the archiver to archive this also, so hopefully will be up starting tomorrow
 2025-08-21 06:33 ascriv: https://github.com/davxy/jam-conformance/issues/26 should we not discourage open source implementations (for now)? [edited]
 2025-08-21 10:27 oliver.tale-yazdi: I think open source repos are fine. Other implementors are just not supposed to look at it
@@ -1121,3 +1121,20 @@ First stop on the road to glory: passing the fuzzy traces in the jam-test-vector
 
 https://github.com/davxy/jam-conformance/tree/main/fuzz-reports
 2025-11-04 18:35 davxy: (jam-test-vectors traces are now included in the table as well)
+2025-11-05 17:04 celadari: Hi,
+
+Can I kindly request to use `preimages-blob` and `preimages-status` in testvectors `stf/preimages` like in testvectors `stf/accumulate` (instead of ~~`preimages`~~ and ~~`lookup-meta`~~)
+
+in `stf/preimages`:
+https://github.com/davxy/jam-test-vectors/blob/84213c3fa619f26d77f61601a7dd77048f6bbf7a/stf/preimages/preimages.asn#L28
+
+in `stf/accumulate`:
+https://github.com/davxy/jam-test-vectors/blob/84213c3fa619f26d77f61601a7dd77048f6bbf7a/stf/accumulate/accumulate.asn#L38
+
+it would help us a lot with parsing to always keep the same between testvectors :)
+2025-11-05 17:29 davxy: It's possible, but it should actually be done the other way around (which is more correct and closer to the GP): modify the preimages-status key in `std/preimages` to also store the requested pre-image length. If you agree, please open an issue in my jam-test-vectors fork so I can update it before 0.7.2 vectors are released. [edited]
+  ↳ 2025-11-05 17:39 celadari: Sure !
+
+I just made the ticket
+https://github.com/davxy/jam-test-vectors/issues/107
+2025-11-05 17:40 jaymansfield: Hey davxy, how close are we from 0.7.2 vectors?

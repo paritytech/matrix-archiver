@@ -18,7 +18,7 @@ a:hover{color:#90caf9}
 em{font-style:italic}
 </style>
 <h1>#jam-conformance:matrix.org</h1>
-<p><small>last updated 2025-11-05 03:33 UTC</small></p>
+<p><small>last updated 2025-11-06 03:35 UTC</small></p>
 <p><a href='room_log.txt'>⇩ plaintext</a> · <a href='../../'>⇦ all rooms</a></p>
 <hr>
 <div class='msg'><a class='ts' href='#$_9hLINsChVG8rufQkmbqp-fIbsNyK1YqpS3C9S7QZHU'>#</a> <a class='ts' name='$_9hLINsChVG8rufQkmbqp-fIbsNyK1YqpS3C9S7QZHU' href='https://matrix.to/#/!ksYpYHcVftKsUAsdMa:matrix.org/$_9hLINsChVG8rufQkmbqp-fIbsNyK1YqpS3C9S7QZHU' target='_blank'>2025-08-20 15:56</a>&ensp;<span class='u' style='color:#787fdf'>erin</span>: tomusdrw: i&#x27;ve set up the archiver to archive this also, so hopefully will be up starting tomorrow</div>
@@ -1125,3 +1125,20 @@ First stop on the road to glory: passing the fuzzy traces in the jam-test-vector
 
 <a href="https://github.com/davxy/jam-conformance/tree/main/fuzz-reports" rel="noopener" target="_blank">https://github.com/davxy/jam-conformance/tree/main/fuzz-reports</a></div>
 <div class='msg'><a class='ts' href='#$u6GELTowlQpXTZQOL19QVLYhnGiZdeRXZa6zCClD4CE'>#</a> <a class='ts' name='$u6GELTowlQpXTZQOL19QVLYhnGiZdeRXZa6zCClD4CE' href='https://matrix.to/#/!ksYpYHcVftKsUAsdMa:matrix.org/$u6GELTowlQpXTZQOL19QVLYhnGiZdeRXZa6zCClD4CE' target='_blank'>2025-11-04 18:35</a>&ensp;<span class='u' style='color:#c9419d'>davxy</span>: (jam-test-vectors traces are now included in the table as well)</div>
+<div class='msg'><a class='ts' href='#$T8lAyRfpEIYkiEbcy_O5h6J8TGY3e-1dSw3SGKUWGps'>#</a> <a class='ts' name='$T8lAyRfpEIYkiEbcy_O5h6J8TGY3e-1dSw3SGKUWGps' href='https://matrix.to/#/!ksYpYHcVftKsUAsdMa:matrix.org/$T8lAyRfpEIYkiEbcy_O5h6J8TGY3e-1dSw3SGKUWGps' target='_blank'>2025-11-05 17:04</a>&ensp;<span class='u' style='color:#db4dca'>celadari</span>: Hi,
+
+Can I kindly request to use <code>preimages-blob</code> and <code>preimages-status</code> in testvectors <code>stf/preimages</code> like in testvectors <code>stf/accumulate</code> (instead of ~~<code>preimages</code>~~ and ~~<code>lookup-meta</code>~~)
+
+in <code>stf/preimages</code>:
+<a href="https://github.com/davxy/jam-test-vectors/blob/84213c3fa619f26d77f61601a7dd77048f6bbf7a/stf/preimages/preimages.asn#L28" rel="noopener" target="_blank">https://github.com/davxy/jam-test-vectors/blob/84213c3fa619f26d77f61601a7dd77048f6bbf7a/stf/preimages/preimages.asn#L28</a>
+
+in <code>stf/accumulate</code>:
+<a href="https://github.com/davxy/jam-test-vectors/blob/84213c3fa619f26d77f61601a7dd77048f6bbf7a/stf/accumulate/accumulate.asn#L38" rel="noopener" target="_blank">https://github.com/davxy/jam-test-vectors/blob/84213c3fa619f26d77f61601a7dd77048f6bbf7a/stf/accumulate/accumulate.asn#L38</a>
+
+it would help us a lot with parsing to always keep the same between testvectors :)</div>
+<div class='msg'><a class='ts' href='#$iv2AgBHngUlt1ZkVGXTL3H87TXSKdolDnyxhgUlOKPs'>#</a> <a class='ts' name='$iv2AgBHngUlt1ZkVGXTL3H87TXSKdolDnyxhgUlOKPs' href='https://matrix.to/#/!ksYpYHcVftKsUAsdMa:matrix.org/$iv2AgBHngUlt1ZkVGXTL3H87TXSKdolDnyxhgUlOKPs' target='_blank'>2025-11-05 17:29</a>&ensp;<span class='u' style='color:#c9419d'>davxy</span>: It&#x27;s possible, but it should actually be done the other way around (which is more correct and closer to the GP): modify the preimages-status key in <code>std/preimages</code> to also store the requested pre-image length. If you agree, please open an issue in my jam-test-vectors fork so I can update it before 0.7.2 vectors are released. <span class="edited">(edited)</span></div>
+<div class='msg reply'><a class='ts' href='#$LFWN4nfC_UOmlHeRHWnWIePzrvHN0g_SbGAUUOYSX2c'>#</a> <a class='ts' name='$LFWN4nfC_UOmlHeRHWnWIePzrvHN0g_SbGAUUOYSX2c' href='https://matrix.to/#/!ksYpYHcVftKsUAsdMa:matrix.org/$LFWN4nfC_UOmlHeRHWnWIePzrvHN0g_SbGAUUOYSX2c' target='_blank'>2025-11-05 17:39</a>&ensp;<span class='u' style='color:#db4dca'>celadari</span>: Sure !
+
+I just made the ticket
+<a href="https://github.com/davxy/jam-test-vectors/issues/107" rel="noopener" target="_blank">https://github.com/davxy/jam-test-vectors/issues/107</a></div>
+<div class='msg'><a class='ts' href='#$at1sJv30pUbVYPuV_Uu_vFy6HnsmdHBNCatZed6J6i0'>#</a> <a class='ts' name='$at1sJv30pUbVYPuV_Uu_vFy6HnsmdHBNCatZed6J6i0' href='https://matrix.to/#/!ksYpYHcVftKsUAsdMa:matrix.org/$at1sJv30pUbVYPuV_Uu_vFy6HnsmdHBNCatZed6J6i0' target='_blank'>2025-11-05 17:40</a>&ensp;<span class='u' style='color:#d470bf'>jaymansfield</span>: Hey davxy, how close are we from 0.7.2 vectors?</div>
