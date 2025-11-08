@@ -1,5 +1,5 @@
 # room: #jam:polkadot.io
-# exported: 2025-11-07 03:32 UTC
+# exported: 2025-11-08 03:27 UTC
 2024-04-20 02:08 johnjiao123: 
 2024-04-20 02:09 johnjiao123: 
 2024-05-30 21:48 nradko: Hey everyone,
@@ -11807,3 +11807,25 @@ I would also like to thank shwchg and tomusdrw in particular, as their feedback 
 
 Ideally I'm aiming to get the new gas cost model into the GP proper sometime this month. There's still a lot of work needed (speccing out the block-based gas charging, some hostcall tweaks, etc.), but the hardest part is now done (getting the gas cost model itself specced) and with the way things are going there is a significant possibility that this new gas cost model could become part of the M1 milestone (it will *definitely* be part of M2) depending on how fast I can get it into GP and how much more time it will take for the W3F to get ready to accept submissions. So I just wanted to communicate this so that there are no surprises - if you have the free time and are twiddling your thumbs waiting for the M1 milestone testing to open it might be a good idea to start implementing the new gas cost model already, as at this point the algorithm is very unlikely to change.
 2025-11-03 12:45 shimonchick: ^ can somebody help clarify the format here? thanks 🙏
+  ↳ 2025-11-07 13:00 clearloop: there is metadata perfixed in the standard format
+2025-11-07 11:00 shimonchick: Are signatures in https://github.com/davxy/jam-test-vectors/tree/master/traces/fallback generated based on the reference bandersnatch vrf implementation here: https://github.com/davxy/ark-vrf/blob/main/src/ietf.rs ?
+2025-11-07 19:28 sourabhniyogi: We are coding up the new JAM-NP additions CE 147+148 (+ what we can infer from the [GRANDPA](https://github.com/zdave-parity/jam-np/pull/6)) alongside the Telemetry wiring, eager to test out TART this month, should be exciting!   Some questions:
+
+1. Happily, the "event ID" parts all made sense and fell into place quite nicely.  For Event ID `u64`, the JIP-3 approach to Telemetry events is always intra-node -- that is, everyone's Event IDs are generated locally and are never shared except with the telemetry server ... but never \*inter-\*node, so far as I can tell.  This intra-node-only approach is perfect for logging/visualizing the behavior of individual nodes, but it doesn't assist in visualizing the behavior across nodes (unless TART does a lot of amazing guesswork to stitch all the different nodes' eventIDs together!).   The EventID could have optional or required bytes beyond the present u64, to model the key already present in JAM-NP
+
+- epoch (CE131/132): for ticketing (events 80-84)
+- work package hash (CE133/134/135): for refining/auditing by builder/guarantor/auditor (90-113)
+- erasureRoot (CE137/138/139/140/147): for assuring/DA (events 120-153)
+- segmentsRoot (CE148): for assuring/DA (events 160-178)
+- preimagehash (CE142/143): for preimages (events 190-199)
+- peerID (UP0/..): for peering (events 20-28, 60-61)
+- header hash (UP0/CE128/141): for authoring/importing/assuring (events 40-48, 62-68, 11+12?)
+Having an additional key (already present in JAM-NP) to support inter-node event analysis could eliminate TART guesswork and map onto other distributed telemetry systems.  What do you think?
+
+2. For [CE 148: Segment request](https://github.com/zdave-parity/jam-np/blob/main/simple.md#ce-148-segment-request) -- is the `[Segment] [Import-Proof]` suppose to mean
+(a) send the segment for the first index, then the import proof for the first segment, then the segment for the second index, then the import proof for the second segment, etc. OR
+(b) send all the segments back to back, then all the import proofs back to back for the same segment in the same order
+
+Also, for the import proof, these are just CDT justifications for the segment alone, yes?
+
+3. For Telemetry [161: Segments-root mapped](https://github.com/polkadot-fellows/JIPs/blob/main/JIP-3.md#161-segments-root-mapped) -- In 160, we can map a requested hash (which can be a Work package hash OR Segments-Root) with the information in the Segment Root Lookup.  But for 161 we need to map Segments-Root to Erasure-Root with a disk lookup... just to provide a telemetry signal, which seems wrong.  Is this a concern?   Perhaps you meant Work Package Hash instead of Erasure-Root? [edited]

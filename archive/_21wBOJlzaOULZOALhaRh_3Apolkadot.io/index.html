@@ -18,7 +18,7 @@ a:hover{color:#90caf9}
 em{font-style:italic}
 </style>
 <h1>#jam:polkadot.io</h1>
-<p><small>last updated 2025-11-07 03:32 UTC</small></p>
+<p><small>last updated 2025-11-08 03:27 UTC</small></p>
 <p><a href='room_log.txt'>⇩ plaintext</a> · <a href='../../'>⇦ all rooms</a></p>
 <hr>
 <div class='msg'><a class='ts' href='#$we4SYXTHwmKn094X9Zs_7mWUOoUVh4icvVdxD83RZfs'>#</a> <a class='ts' name='$we4SYXTHwmKn094X9Zs_7mWUOoUVh4icvVdxD83RZfs' href='https://matrix.to/#/!wBOJlzaOULZOALhaRh:polkadot.io/$we4SYXTHwmKn094X9Zs_7mWUOoUVh4icvVdxD83RZfs' target='_blank'>2024-04-20 02:08</a>&ensp;<span class='u' style='color:#d0709e'>johnjiao123</span>: </div>
@@ -11701,3 +11701,25 @@ I would also like to thank shwchg and tomusdrw in particular, as their feedback 
 
 Ideally I&#x27;m aiming to get the new gas cost model into the GP proper sometime this month. There&#x27;s still a lot of work needed (speccing out the block-based gas charging, some hostcall tweaks, etc.), but the hardest part is now done (getting the gas cost model itself specced) and with the way things are going there is a significant possibility that this new gas cost model could become part of the M1 milestone (it will <em>definitely</em> be part of M2) depending on how fast I can get it into GP and how much more time it will take for the W3F to get ready to accept submissions. So I just wanted to communicate this so that there are no surprises - if you have the free time and are twiddling your thumbs waiting for the M1 milestone testing to open it might be a good idea to start implementing the new gas cost model already, as at this point the algorithm is very unlikely to change.</div>
 <div class='msg'><a class='ts' href='#$-M6t6s86xsIE2ovDiwFMXtyig2yJEkkMWB7MpoPj6_M'>#</a> <a class='ts' name='$-M6t6s86xsIE2ovDiwFMXtyig2yJEkkMWB7MpoPj6_M' href='https://matrix.to/#/!wBOJlzaOULZOALhaRh:polkadot.io/$-M6t6s86xsIE2ovDiwFMXtyig2yJEkkMWB7MpoPj6_M' target='_blank'>2025-11-03 12:45</a>&ensp;<span class='u' style='color:#cf85c2'>shimonchick</span>: ^ can somebody help clarify the format here? thanks 🙏</div>
+<div class='msg reply'><a class='ts' href='#$YWzuWOrCF4dmAo9jEzVJtK-9ZiTV-1Wj3hbCwZXpWOc'>#</a> <a class='ts' name='$YWzuWOrCF4dmAo9jEzVJtK-9ZiTV-1Wj3hbCwZXpWOc' href='https://matrix.to/#/!wBOJlzaOULZOALhaRh:polkadot.io/$YWzuWOrCF4dmAo9jEzVJtK-9ZiTV-1Wj3hbCwZXpWOc' target='_blank'>2025-11-07 13:00</a>&ensp;<span class='u' style='color:#be2950'>clearloop</span>: there is metadata perfixed in the standard format</div>
+<div class='msg'><a class='ts' href='#$Kc_Acadk33-UHYqkQ9fSoefSvO83GcPsrteEHX7V6CM'>#</a> <a class='ts' name='$Kc_Acadk33-UHYqkQ9fSoefSvO83GcPsrteEHX7V6CM' href='https://matrix.to/#/!wBOJlzaOULZOALhaRh:polkadot.io/$Kc_Acadk33-UHYqkQ9fSoefSvO83GcPsrteEHX7V6CM' target='_blank'>2025-11-07 11:00</a>&ensp;<span class='u' style='color:#cf85c2'>shimonchick</span>: Are signatures in <a href="https://github.com/davxy/jam-test-vectors/tree/master/traces/fallback" rel="noopener" target="_blank">https://github.com/davxy/jam-test-vectors/tree/master/traces/fallback</a> generated based on the reference bandersnatch vrf implementation here: <a href="https://github.com/davxy/ark-vrf/blob/main/src/ietf.rs" rel="noopener" target="_blank">https://github.com/davxy/ark-vrf/blob/main/src/ietf.rs</a> ?</div>
+<div class='msg'><a class='ts' href='#$syXlhi9YQd0sNeCNPxy7v_RjFrGt7gUto5BhCfXvsQk'>#</a> <a class='ts' name='$syXlhi9YQd0sNeCNPxy7v_RjFrGt7gUto5BhCfXvsQk' href='https://matrix.to/#/!wBOJlzaOULZOALhaRh:polkadot.io/$syXlhi9YQd0sNeCNPxy7v_RjFrGt7gUto5BhCfXvsQk' target='_blank'>2025-11-07 19:28</a>&ensp;<span class='u' style='color:#c67452'>sourabhniyogi</span>: We are coding up the new JAM-NP additions CE 147+148 (+ what we can infer from the <a href="https://github.com/zdave-parity/jam-np/pull/6" rel="noopener" target="_blank">GRANDPA</a>) alongside the Telemetry wiring, eager to test out TART this month, should be exciting!   Some questions:
+
+1. Happily, the &quot;event ID&quot; parts all made sense and fell into place quite nicely.  For Event ID <code>u64</code>, the JIP-3 approach to Telemetry events is always intra-node -- that is, everyone&#x27;s Event IDs are generated locally and are never shared except with the telemetry server ... but never \*inter-\*node, so far as I can tell.  This intra-node-only approach is perfect for logging/visualizing the behavior of individual nodes, but it doesn&#x27;t assist in visualizing the behavior across nodes (unless TART does a lot of amazing guesswork to stitch all the different nodes&#x27; eventIDs together!).   The EventID could have optional or required bytes beyond the present u64, to model the key already present in JAM-NP
+
+- epoch (CE131/132): for ticketing (events 80-84)
+- work package hash (CE133/134/135): for refining/auditing by builder/guarantor/auditor (90-113)
+- erasureRoot (CE137/138/139/140/147): for assuring/DA (events 120-153)
+- segmentsRoot (CE148): for assuring/DA (events 160-178)
+- preimagehash (CE142/143): for preimages (events 190-199)
+- peerID (UP0/..): for peering (events 20-28, 60-61)
+- header hash (UP0/CE128/141): for authoring/importing/assuring (events 40-48, 62-68, 11+12?)
+Having an additional key (already present in JAM-NP) to support inter-node event analysis could eliminate TART guesswork and map onto other distributed telemetry systems.  What do you think?
+
+2. For <a href="https://github.com/zdave-parity/jam-np/blob/main/simple.md#ce-148-segment-request" rel="noopener" target="_blank">CE 148: Segment request</a> -- is the <code>[Segment] [Import-Proof]</code> suppose to mean
+(a) send the segment for the first index, then the import proof for the first segment, then the segment for the second index, then the import proof for the second segment, etc. OR
+(b) send all the segments back to back, then all the import proofs back to back for the same segment in the same order
+
+Also, for the import proof, these are just CDT justifications for the segment alone, yes?
+
+3. For Telemetry <a href="https://github.com/polkadot-fellows/JIPs/blob/main/JIP-3.md#161-segments-root-mapped" rel="noopener" target="_blank">161: Segments-root mapped</a> -- In 160, we can map a requested hash (which can be a Work package hash OR Segments-Root) with the information in the Segment Root Lookup.  But for 161 we need to map Segments-Root to Erasure-Root with a disk lookup... just to provide a telemetry signal, which seems wrong.  Is this a concern?   Perhaps you meant Work Package Hash instead of Erasure-Root? <span class="edited">(edited)</span></div>
