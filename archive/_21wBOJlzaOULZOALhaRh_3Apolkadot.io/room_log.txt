@@ -1,5 +1,5 @@
 # room: #jam:polkadot.io
-# exported: 2025-11-08 03:27 UTC
+# exported: 2025-11-09 03:33 UTC
 2024-04-20 02:08 johnjiao123: 
 2024-04-20 02:09 johnjiao123: 
 2024-05-30 21:48 nradko: Hey everyone,
@@ -11829,3 +11829,6 @@ Having an additional key (already present in JAM-NP) to support inter-node event
 Also, for the import proof, these are just CDT justifications for the segment alone, yes?
 
 3. For Telemetry [161: Segments-root mapped](https://github.com/polkadot-fellows/JIPs/blob/main/JIP-3.md#161-segments-root-mapped) -- In 160, we can map a requested hash (which can be a Work package hash OR Segments-Root) with the information in the Segment Root Lookup.  But for 161 we need to map Segments-Root to Erasure-Root with a disk lookup... just to provide a telemetry signal, which seems wrong.  Is this a concern?   Perhaps you meant Work Package Hash instead of Erasure-Root? [edited]
+2025-11-08 14:53 danicuki: Screenshot 2025-11-07 at 18.49.59.png
+2025-11-08 14:53 danicuki: Jamixir is on TART 😃
+2025-11-08 14:56 danicuki: As far as I understood, TART always stores pair (node_id, event_id) for events, so, events are tied to nodes also. If all nodes connect to the same Telemetry Server, theoretically telemetry has all data it needs to measure cross-nodes. Does this make sense?

@@ -1,5 +1,5 @@
 # room: #graypaper:polkadot.io
-# exported: 2025-11-08 03:27 UTC
+# exported: 2025-11-09 03:33 UTC
 2024-04-17 20:29 syed: https://matrix.to/#/!hyzRkDqDthePbodYFz:parity.io/$f_DMsIEcDXZegw6Sabnehzc-LrdDQkmq5MbxDDyoZxY?via=parity.io&via=web3.foundation
 
 2024-04-17 20:29 syed: 
@@ -6723,3 +6723,7 @@ A rollup host service would typically be expected to include some kind of state 
 Is it reasonable to add a case to `fetch` for this, or add it after entropy here https://graypaper.fluffylabs.dev/#/ab2cdbd/30c40030c400?v=0.7.2 for "case 1"?  If you permitted state root of the header in, you could allow the [whole block header](https://graypaper.fluffylabs.dev/#/ab2cdbd/0c67000c6700?v=0.7.2) and let the service copy whatever it wants from JAM block header into its own rollup blocks.
 
 I recognize that a rollup host service can have its `accumulate` invocation use the `yield` host function or 32-byte accumulate roots to get an ample alternative for a rollup host's commitments going into JAM State C(16), wherein proofs of inclusion can be generated with C(16) alone, without yet another fetch case.  But for backwards compatibility with rollups expectations of a rollup host (eg for historical lookups of any commitment by the rollup against some JAM State root included in the rollups "block"), it would be good to have the JAM State root as well.  Is this a reasonable ask? [edited]
+2025-11-08 13:25 gav: It certainly doesn't sound desperately harmful:) happy to be pragmatic. If you want to submit the relevant changes in a PR, we can review and try to get it in prior to 0.8. [edited]
+2025-11-08 21:58 vinsystems: What should we return if the lookup key doesn't exist in the [provide](https://graypaper.fluffylabs.dev/#/1c979cb/380904381204?v=0.7.1) hostcall?
+
+HUH? [edited]
