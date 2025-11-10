@@ -18,7 +18,7 @@ a:hover{color:#90caf9}
 em{font-style:italic}
 </style>
 <h1>#jam:polkadot.io</h1>
-<p><small>last updated 2025-11-09 03:33 UTC</small></p>
+<p><small>last updated 2025-11-10 03:38 UTC</small></p>
 <p><a href='room_log.txt'>⇩ plaintext</a> · <a href='../../'>⇦ all rooms</a></p>
 <hr>
 <div class='msg'><a class='ts' href='#$we4SYXTHwmKn094X9Zs_7mWUOoUVh4icvVdxD83RZfs'>#</a> <a class='ts' name='$we4SYXTHwmKn094X9Zs_7mWUOoUVh4icvVdxD83RZfs' href='https://matrix.to/#/!wBOJlzaOULZOALhaRh:polkadot.io/$we4SYXTHwmKn094X9Zs_7mWUOoUVh4icvVdxD83RZfs' target='_blank'>2024-04-20 02:08</a>&ensp;<span class='u' style='color:#d0709e'>johnjiao123</span>: </div>
@@ -11726,3 +11726,50 @@ Also, for the import proof, these are just CDT justifications for the segment al
 <div class='msg'><a class='ts' href='#$EVp91U3L8bS3qK35tzNuYC9SMTWgV0t49nhiN53-hq8'>#</a> <a class='ts' name='$EVp91U3L8bS3qK35tzNuYC9SMTWgV0t49nhiN53-hq8' href='https://matrix.to/#/!wBOJlzaOULZOALhaRh:polkadot.io/$EVp91U3L8bS3qK35tzNuYC9SMTWgV0t49nhiN53-hq8' target='_blank'>2025-11-08 14:53</a>&ensp;<span class='u' style='color:#4977cf'>danicuki</span>: Screenshot 2025-11-07 at 18.49.59.png</div>
 <div class='msg'><a class='ts' href='#$pOKzBt8v6HIiGnEFHg4Ex2tYA_oWj3GmainmDMXW5fA'>#</a> <a class='ts' name='$pOKzBt8v6HIiGnEFHg4Ex2tYA_oWj3GmainmDMXW5fA' href='https://matrix.to/#/!wBOJlzaOULZOALhaRh:polkadot.io/$pOKzBt8v6HIiGnEFHg4Ex2tYA_oWj3GmainmDMXW5fA' target='_blank'>2025-11-08 14:53</a>&ensp;<span class='u' style='color:#4977cf'>danicuki</span>: Jamixir is on TART 😃</div>
 <div class='msg'><a class='ts' href='#$cUnAB8jAx-Nk2ZAotsmv1SwazJGX7brVPf1XFKxHxoM'>#</a> <a class='ts' name='$cUnAB8jAx-Nk2ZAotsmv1SwazJGX7brVPf1XFKxHxoM' href='https://matrix.to/#/!wBOJlzaOULZOALhaRh:polkadot.io/$cUnAB8jAx-Nk2ZAotsmv1SwazJGX7brVPf1XFKxHxoM' target='_blank'>2025-11-08 14:56</a>&ensp;<span class='u' style='color:#4977cf'>danicuki</span>: As far as I understood, TART always stores pair (node_id, event_id) for events, so, events are tied to nodes also. If all nodes connect to the same Telemetry Server, theoretically telemetry has all data it needs to measure cross-nodes. Does this make sense?</div>
+<div class='msg'><a class='ts' href='#$Tbwd-ofMYVaNFlyNSLEAOhWi_-GF8m8bp1QtwOluggg'>#</a> <a class='ts' name='$Tbwd-ofMYVaNFlyNSLEAOhWi_-GF8m8bp1QtwOluggg' href='https://matrix.to/#/!wBOJlzaOULZOALhaRh:polkadot.io/$Tbwd-ofMYVaNFlyNSLEAOhWi_-GF8m8bp1QtwOluggg' target='_blank'>2025-11-09 20:01</a>&ensp;<span class='u' style='color:#c65779'>dave</span>: &gt; &lt;@sourabhniyogi:matrix.org&gt; We are coding up the new JAM-NP additions CE 147+148 (+ what we can infer from the <a href="https://github.com/zdave-parity/jam-np/pull/6" rel="noopener" target="_blank">GRANDPA</a>) alongside the Telemetry wiring, eager to test out TART this month, should be exciting!   Some questions:
+&gt; 
+&gt; 1. Happily, the &quot;event ID&quot; parts all made sense and fell into place quite nicely.  For Event ID <code>u64</code>, the JIP-3 approach to Telemetry events is always intra-node -- that is, everyone&#x27;s Event IDs are generated locally and are never shared except with the telemetry server ... but never \*inter-\*node, so far as I can tell.  This intra-node-only approach is perfect for logging/visualizing the behavior of individual nodes, but it doesn&#x27;t assist in visualizing the behavior across nodes (unless TART does a lot of amazing guesswork to stitch all the different nodes&#x27; eventIDs together!).   The EventID could have optional or required bytes beyond the present u64, to model the key already present in JAM-NP
+&gt; 
+&gt; - epoch (CE131/132): for ticketing (events 80-84)
+&gt; - work package hash (CE133/134/135): for refining/auditing by builder/guarantor/auditor (90-113)
+&gt; - erasureRoot (CE137/138/139/140/147): for assuring/DA (events 120-153)
+&gt; - segmentsRoot (CE148): for assuring/DA (events 160-178)
+&gt; - preimagehash (CE142/143): for preimages (events 190-199)
+&gt; - peerID (UP0/..): for peering (events 20-28, 60-61)
+&gt; - header hash (UP0/CE128/141): for authoring/importing/assuring (events 40-48, 62-68, 11+12?)
+&gt; Having an additional key (already present in JAM-NP) to support inter-node event analysis could eliminate TART guesswork and map onto other distributed telemetry systems.  What do you think?
+&gt; 
+&gt; 2. For <a href="https://github.com/zdave-parity/jam-np/blob/main/simple.md#ce-148-segment-request" rel="noopener" target="_blank">CE 148: Segment request</a> -- is the <code>[Segment] [Import-Proof]</code> suppose to mean
+&gt; (a) send the segment for the first index, then the import proof for the first segment, then the segment for the second index, then the import proof for the second segment, etc. OR
+&gt; (b) send all the segments back to back, then all the import proofs back to back for the same segment in the same order
+&gt; 
+&gt; Also, for the import proof, these are just CDT justifications for the segment alone, yes?
+&gt; 
+&gt; 3. For Telemetry <a href="https://github.com/polkadot-fellows/JIPs/blob/main/JIP-3.md#161-segments-root-mapped" rel="noopener" target="_blank">161: Segments-root mapped</a> -- In 160, we can map a requested hash (which can be a Work package hash OR Segments-Root) with the information in the Segment Root Lookup.  But for 161 we need to map Segments-Root to Erasure-Root with a disk lookup... just to provide a telemetry signal, which seems wrong.  Is this a concern?   Perhaps you meant Work Package Hash instead of Erasure-Root?
+
+Re 1, yes, event IDs are only for intra-node event linking. For inter-node event linking I expect TART to use things like work-package hash, header hash, peer ID, and so on, as you suggest. These things are provided as soon as they are known, eg the work-package hash is provided in 94: Work-package received. There might be specific instances where I&#x27;ve forgotten to include this stuff, but in general I do not understand what your concern is... perhaps you could elaborate? If the concern is that TART might miss say the 94 event and then not know the work-package hash for a submission from a builder, then yes, that can happen... it hopefully shouldn&#x27;t happen often though!
+
+Re 2, I do not believe this is ambiguous? The answer is (b).
+
+&gt; Also, for the import proof, these are just CDT justifications for the segment alone, yes?
+
+Yes, I&#x27;ll clarify this. They&#x27;re the same as the import proofs that go in work-package bundles.
+
+Re 3 if you don&#x27;t perform this mapping then don&#x27;t emit an event -- the event description says &quot;Emitted when a segments-root is mapped to an erasure-root for the purpose of segment recovery&quot;. For direct recovery from a previous guarantor you do not need to do this mapping, but for sharded recovery you do -- segment shards are requested by erasure root. The purpose of this event is to allow TART to link things together.</div>
+<div class='msg reply'><a class='ts' href='#$k5zhBrJZI4oQRv6AsVSL5DfhpAyJqgd0uwaOmANLw5w'>#</a> <a class='ts' name='$k5zhBrJZI4oQRv6AsVSL5DfhpAyJqgd0uwaOmANLw5w' href='https://matrix.to/#/!wBOJlzaOULZOALhaRh:polkadot.io/$k5zhBrJZI4oQRv6AsVSL5DfhpAyJqgd0uwaOmANLw5w' target='_blank'>2025-11-09 20:06</a>&ensp;<span class='u' style='color:#c67452'>sourabhniyogi</span>: For (1) that is the concern -- having to do heuristic inference.  Being able to cover both TART (easy!) and cross-node spans with Jaeger is what I want.  
+
+For (2), got it, thank you for clarifying!
+
+For (3), ok, thank you, now its clear!</div>
+<div class='msg reply'><a class='ts' href='#$w0T_OZv0MrgoN9MVtjjX9PvzXDX1LagXg8t0iREL0hI'>#</a> <a class='ts' name='$w0T_OZv0MrgoN9MVtjjX9PvzXDX1LagXg8t0iREL0hI' href='https://matrix.to/#/!wBOJlzaOULZOALhaRh:polkadot.io/$w0T_OZv0MrgoN9MVtjjX9PvzXDX1LagXg8t0iREL0hI' target='_blank'>2025-11-09 21:42</a>&ensp;<span class='u' style='color:#c65779'>dave</span>: &gt; &lt;@dave:parity.io&gt; Re 1, yes, event IDs are only for intra-node event linking. For inter-node event linking I expect TART to use things like work-package hash, header hash, peer ID, and so on, as you suggest. These things are provided as soon as they are known, eg the work-package hash is provided in 94: Work-package received. There might be specific instances where I&#x27;ve forgotten to include this stuff, but in general I do not understand what your concern is... perhaps you could elaborate? If the concern is that TART might miss say the 94 event and then not know the work-package hash for a submission from a builder, then yes, that can happen... it hopefully shouldn&#x27;t happen often though!
+&gt; Re 2, I do not believe this is ambiguous? The answer is (b).
+&gt; &gt; Also, for the import proof, these are just CDT justifications for the segment alone, yes?
+&gt; Yes, I&#x27;ll clarify this. They&#x27;re the same as the import proofs that go in work-package bundles.
+&gt; Re 3 if you don&#x27;t perform this mapping then don&#x27;t emit an event -- the event description says &quot;Emitted when a segments-root is mapped to an erasure-root for the purpose of segment recovery&quot;. For direct recovery from a previous guarantor you do not need to do this mapping, but for sharded recovery you do -- segment shards are requested by erasure root. The purpose of this event is to allow TART to link things together.
+
+What do you mean by &quot;cross-node spans with Jaeger&quot;? JIP-3 is specifically for TART. If it&#x27;s useful for other things as well that&#x27;s great of course...</div>
+<div class='msg'><a class='ts' href='#$4fOsVckexBl84XWo04apGHTPs1QHfhw9kAa86C8A8_c'>#</a> <a class='ts' name='$4fOsVckexBl84XWo04apGHTPs1QHfhw9kAa86C8A8_c' href='https://matrix.to/#/!wBOJlzaOULZOALhaRh:polkadot.io/$4fOsVckexBl84XWo04apGHTPs1QHfhw9kAa86C8A8_c' target='_blank'>2025-11-09 22:35</a>&ensp;<span class='u' style='color:#cdc232'>oliver.tale-yazdi</span>: Just wanted to drop this here; a minimal code playground for services in C: <a href="https://playground.jamcha.in/" rel="noopener" target="_blank">https://playground.jamcha.in/</a> using the JamBrains Service SDK.  
+Only the accumulate entry point is currently available. You can check out the PBA example to see the storage API and the accumulation stats in the UI.
+
+The Playground server code is private since it is in a monorepo with our JAM client, but the service SDK and examples are public here: <a href="https://github.com/JamBrains/service-sdk" rel="noopener" target="_blank">https://github.com/JamBrains/service-sdk</a></div>
+<div class='msg'><a class='ts' href='#$e0-x3cz_rce0NdxiRCAOcVJ35NZ4vuMeuRLXR_NwsmU'>#</a> <a class='ts' name='$e0-x3cz_rce0NdxiRCAOcVJ35NZ4vuMeuRLXR_NwsmU' href='https://matrix.to/#/!wBOJlzaOULZOALhaRh:polkadot.io/$e0-x3cz_rce0NdxiRCAOcVJ35NZ4vuMeuRLXR_NwsmU' target='_blank'>2025-11-09 22:35</a>&ensp;<span class='u' style='color:#cdc232'>oliver.tale-yazdi</span>: I also got an embedded Python interpreter to run in a JAM service, but it is a bit experimental</div>

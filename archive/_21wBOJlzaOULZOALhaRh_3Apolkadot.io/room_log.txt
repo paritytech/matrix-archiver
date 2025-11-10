@@ -1,5 +1,5 @@
 # room: #jam:polkadot.io
-# exported: 2025-11-09 03:33 UTC
+# exported: 2025-11-10 03:38 UTC
 2024-04-20 02:08 johnjiao123: 
 2024-04-20 02:09 johnjiao123: 
 2024-05-30 21:48 nradko: Hey everyone,
@@ -11832,3 +11832,50 @@ Also, for the import proof, these are just CDT justifications for the segment al
 2025-11-08 14:53 danicuki: Screenshot 2025-11-07 at 18.49.59.png
 2025-11-08 14:53 danicuki: Jamixir is on TART 😃
 2025-11-08 14:56 danicuki: As far as I understood, TART always stores pair (node_id, event_id) for events, so, events are tied to nodes also. If all nodes connect to the same Telemetry Server, theoretically telemetry has all data it needs to measure cross-nodes. Does this make sense?
+2025-11-09 20:01 dave: > <@sourabhniyogi:matrix.org> We are coding up the new JAM-NP additions CE 147+148 (+ what we can infer from the [GRANDPA](https://github.com/zdave-parity/jam-np/pull/6)) alongside the Telemetry wiring, eager to test out TART this month, should be exciting!   Some questions:
+> 
+> 1. Happily, the "event ID" parts all made sense and fell into place quite nicely.  For Event ID `u64`, the JIP-3 approach to Telemetry events is always intra-node -- that is, everyone's Event IDs are generated locally and are never shared except with the telemetry server ... but never \*inter-\*node, so far as I can tell.  This intra-node-only approach is perfect for logging/visualizing the behavior of individual nodes, but it doesn't assist in visualizing the behavior across nodes (unless TART does a lot of amazing guesswork to stitch all the different nodes' eventIDs together!).   The EventID could have optional or required bytes beyond the present u64, to model the key already present in JAM-NP
+> 
+> - epoch (CE131/132): for ticketing (events 80-84)
+> - work package hash (CE133/134/135): for refining/auditing by builder/guarantor/auditor (90-113)
+> - erasureRoot (CE137/138/139/140/147): for assuring/DA (events 120-153)
+> - segmentsRoot (CE148): for assuring/DA (events 160-178)
+> - preimagehash (CE142/143): for preimages (events 190-199)
+> - peerID (UP0/..): for peering (events 20-28, 60-61)
+> - header hash (UP0/CE128/141): for authoring/importing/assuring (events 40-48, 62-68, 11+12?)
+> Having an additional key (already present in JAM-NP) to support inter-node event analysis could eliminate TART guesswork and map onto other distributed telemetry systems.  What do you think?
+> 
+> 2. For [CE 148: Segment request](https://github.com/zdave-parity/jam-np/blob/main/simple.md#ce-148-segment-request) -- is the `[Segment] [Import-Proof]` suppose to mean
+> (a) send the segment for the first index, then the import proof for the first segment, then the segment for the second index, then the import proof for the second segment, etc. OR
+> (b) send all the segments back to back, then all the import proofs back to back for the same segment in the same order
+> 
+> Also, for the import proof, these are just CDT justifications for the segment alone, yes?
+> 
+> 3. For Telemetry [161: Segments-root mapped](https://github.com/polkadot-fellows/JIPs/blob/main/JIP-3.md#161-segments-root-mapped) -- In 160, we can map a requested hash (which can be a Work package hash OR Segments-Root) with the information in the Segment Root Lookup.  But for 161 we need to map Segments-Root to Erasure-Root with a disk lookup... just to provide a telemetry signal, which seems wrong.  Is this a concern?   Perhaps you meant Work Package Hash instead of Erasure-Root?
+
+Re 1, yes, event IDs are only for intra-node event linking. For inter-node event linking I expect TART to use things like work-package hash, header hash, peer ID, and so on, as you suggest. These things are provided as soon as they are known, eg the work-package hash is provided in 94: Work-package received. There might be specific instances where I've forgotten to include this stuff, but in general I do not understand what your concern is... perhaps you could elaborate? If the concern is that TART might miss say the 94 event and then not know the work-package hash for a submission from a builder, then yes, that can happen... it hopefully shouldn't happen often though!
+
+Re 2, I do not believe this is ambiguous? The answer is (b).
+
+> Also, for the import proof, these are just CDT justifications for the segment alone, yes?
+
+Yes, I'll clarify this. They're the same as the import proofs that go in work-package bundles.
+
+Re 3 if you don't perform this mapping then don't emit an event -- the event description says "Emitted when a segments-root is mapped to an erasure-root for the purpose of segment recovery". For direct recovery from a previous guarantor you do not need to do this mapping, but for sharded recovery you do -- segment shards are requested by erasure root. The purpose of this event is to allow TART to link things together.
+  ↳ 2025-11-09 20:06 sourabhniyogi: For (1) that is the concern -- having to do heuristic inference.  Being able to cover both TART (easy!) and cross-node spans with Jaeger is what I want.  
+
+For (2), got it, thank you for clarifying!
+
+For (3), ok, thank you, now its clear!
+  ↳ 2025-11-09 21:42 dave: > <@dave:parity.io> Re 1, yes, event IDs are only for intra-node event linking. For inter-node event linking I expect TART to use things like work-package hash, header hash, peer ID, and so on, as you suggest. These things are provided as soon as they are known, eg the work-package hash is provided in 94: Work-package received. There might be specific instances where I've forgotten to include this stuff, but in general I do not understand what your concern is... perhaps you could elaborate? If the concern is that TART might miss say the 94 event and then not know the work-package hash for a submission from a builder, then yes, that can happen... it hopefully shouldn't happen often though!
+> Re 2, I do not believe this is ambiguous? The answer is (b).
+> > Also, for the import proof, these are just CDT justifications for the segment alone, yes?
+> Yes, I'll clarify this. They're the same as the import proofs that go in work-package bundles.
+> Re 3 if you don't perform this mapping then don't emit an event -- the event description says "Emitted when a segments-root is mapped to an erasure-root for the purpose of segment recovery". For direct recovery from a previous guarantor you do not need to do this mapping, but for sharded recovery you do -- segment shards are requested by erasure root. The purpose of this event is to allow TART to link things together.
+
+What do you mean by "cross-node spans with Jaeger"? JIP-3 is specifically for TART. If it's useful for other things as well that's great of course...
+2025-11-09 22:35 oliver.tale-yazdi: Just wanted to drop this here; a minimal code playground for services in C: https://playground.jamcha.in/ using the JamBrains Service SDK.  
+Only the accumulate entry point is currently available. You can check out the PBA example to see the storage API and the accumulation stats in the UI.
+
+The Playground server code is private since it is in a monorepo with our JAM client, but the service SDK and examples are public here: https://github.com/JamBrains/service-sdk
+2025-11-09 22:35 oliver.tale-yazdi: I also got an embedded Python interpreter to run in a JAM service, but it is a bit experimental
