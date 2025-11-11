@@ -1,5 +1,5 @@
 # room: #jam-conformance:matrix.org
-# exported: 2025-11-10 03:38 UTC
+# exported: 2025-11-11 03:34 UTC
 2025-08-20 15:56 erin: tomusdrw: i've set up the archiver to archive this also, so hopefully will be up starting tomorrow
 2025-08-21 06:33 ascriv: https://github.com/davxy/jam-conformance/issues/26 should we not discourage open source implementations (for now)? [edited]
 2025-08-21 10:27 oliver.tale-yazdi: I think open source repos are fine. Other implementors are just not supposed to look at it
@@ -1138,3 +1138,12 @@ it would help us a lot with parsing to always keep the same between testvectors 
 I just made the ticket
 https://github.com/davxy/jam-test-vectors/issues/107
 2025-11-05 17:40 jaymansfield: Hey davxy, how close are we from 0.7.2 vectors?
+2025-11-10 17:40 davxy: Introducing the changes for version 0.7.2 should be straightforward, so we might roll them out next week 
+2025-11-10 17:42 davxy: Important stuff ...
+[New test vectors](https://github.com/davxy/jam-conformance/pull/112) added to jam-conformance repo, this time targeting ed25519 crypto implementations.
+These excercise very edge cases addressed by [ZIP-215](https://zips.z.cash/zip-0215), but that are quite easily exploitable by an attacker, so verifying compliance is important.
+Currently identified compliant libraries: `ed25519-consensus` (Rust), `ed25519-zebra` (Rust), `ed25519consensus` (Go).
+If you're not using one of these libraries is very probable that you will fail test vectors processing.
+In that case open an issue in the repository indicating which library you are using (for tracking only, not for fixing :))).
+If switching libraries is not an option, the changes should be straightforward in most cases, but needs changes in the library itself
+

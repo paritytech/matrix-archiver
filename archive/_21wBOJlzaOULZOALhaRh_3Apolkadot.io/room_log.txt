@@ -1,5 +1,5 @@
 # room: #jam:polkadot.io
-# exported: 2025-11-10 03:38 UTC
+# exported: 2025-11-11 03:33 UTC
 2024-04-20 02:08 johnjiao123: 
 2024-04-20 02:09 johnjiao123: 
 2024-05-30 21:48 nradko: Hey everyone,
@@ -11874,6 +11874,11 @@ For (3), ok, thank you, now its clear!
 > Re 3 if you don't perform this mapping then don't emit an event -- the event description says "Emitted when a segments-root is mapped to an erasure-root for the purpose of segment recovery". For direct recovery from a previous guarantor you do not need to do this mapping, but for sharded recovery you do -- segment shards are requested by erasure root. The purpose of this event is to allow TART to link things together.
 
 What do you mean by "cross-node spans with Jaeger"? JIP-3 is specifically for TART. If it's useful for other things as well that's great of course...
+  ↳ 2025-11-10 19:42 sourabhniyogi: It doesn't matter, since you're rolling your own here, but here is a reference if you're curious to compare the interface
+
+https://opentelemetry.io/docs/languages/rust/getting-started/ 
+
+
 2025-11-09 22:35 oliver.tale-yazdi: Just wanted to drop this here; a minimal code playground for services in C: https://playground.jamcha.in/ using the JamBrains Service SDK.  
 Only the accumulate entry point is currently available. You can check out the PBA example to see the storage API and the accumulation stats in the UI.
 

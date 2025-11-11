@@ -18,7 +18,7 @@ a:hover{color:#90caf9}
 em{font-style:italic}
 </style>
 <h1>#jam-conformance:matrix.org</h1>
-<p><small>last updated 2025-11-10 03:38 UTC</small></p>
+<p><small>last updated 2025-11-11 03:34 UTC</small></p>
 <p><a href='room_log.txt'>⇩ plaintext</a> · <a href='../../'>⇦ all rooms</a></p>
 <hr>
 <div class='msg'><a class='ts' href='#$_9hLINsChVG8rufQkmbqp-fIbsNyK1YqpS3C9S7QZHU'>#</a> <a class='ts' name='$_9hLINsChVG8rufQkmbqp-fIbsNyK1YqpS3C9S7QZHU' href='https://matrix.to/#/!ksYpYHcVftKsUAsdMa:matrix.org/$_9hLINsChVG8rufQkmbqp-fIbsNyK1YqpS3C9S7QZHU' target='_blank'>2025-08-20 15:56</a>&ensp;<span class='u' style='color:#787fdf'>erin</span>: tomusdrw: i&#x27;ve set up the archiver to archive this also, so hopefully will be up starting tomorrow</div>
@@ -1142,3 +1142,12 @@ it would help us a lot with parsing to always keep the same between testvectors 
 I just made the ticket
 <a href="https://github.com/davxy/jam-test-vectors/issues/107" rel="noopener" target="_blank">https://github.com/davxy/jam-test-vectors/issues/107</a></div>
 <div class='msg'><a class='ts' href='#$at1sJv30pUbVYPuV_Uu_vFy6HnsmdHBNCatZed6J6i0'>#</a> <a class='ts' name='$at1sJv30pUbVYPuV_Uu_vFy6HnsmdHBNCatZed6J6i0' href='https://matrix.to/#/!ksYpYHcVftKsUAsdMa:matrix.org/$at1sJv30pUbVYPuV_Uu_vFy6HnsmdHBNCatZed6J6i0' target='_blank'>2025-11-05 17:40</a>&ensp;<span class='u' style='color:#d470bf'>jaymansfield</span>: Hey davxy, how close are we from 0.7.2 vectors?</div>
+<div class='msg'><a class='ts' href='#$7coYxn0ymei1aET7dbKPG9BFVhQxV2N5eXaXEtHoKH4'>#</a> <a class='ts' name='$7coYxn0ymei1aET7dbKPG9BFVhQxV2N5eXaXEtHoKH4' href='https://matrix.to/#/!ksYpYHcVftKsUAsdMa:matrix.org/$7coYxn0ymei1aET7dbKPG9BFVhQxV2N5eXaXEtHoKH4' target='_blank'>2025-11-10 17:40</a>&ensp;<span class='u' style='color:#c9419d'>davxy</span>: Introducing the changes for version 0.7.2 should be straightforward, so we might roll them out next week </div>
+<div class='msg'><a class='ts' href='#$J3EyoiN2lFkX7815TH1TpCffUtoacoZQnsizVgpvHk8'>#</a> <a class='ts' name='$J3EyoiN2lFkX7815TH1TpCffUtoacoZQnsizVgpvHk8' href='https://matrix.to/#/!ksYpYHcVftKsUAsdMa:matrix.org/$J3EyoiN2lFkX7815TH1TpCffUtoacoZQnsizVgpvHk8' target='_blank'>2025-11-10 17:42</a>&ensp;<span class='u' style='color:#c9419d'>davxy</span>: Important stuff ...
+<a href="https://github.com/davxy/jam-conformance/pull/112" rel="noopener" target="_blank">New test vectors</a> added to jam-conformance repo, this time targeting ed25519 crypto implementations.
+These excercise very edge cases addressed by <a href="https://zips.z.cash/zip-0215" rel="noopener" target="_blank">ZIP-215</a>, but that are quite easily exploitable by an attacker, so verifying compliance is important.
+Currently identified compliant libraries: <code>ed25519-consensus</code> (Rust), <code>ed25519-zebra</code> (Rust), <code>ed25519consensus</code> (Go).
+If you&#x27;re not using one of these libraries is very probable that you will fail test vectors processing.
+In that case open an issue in the repository indicating which library you are using (for tracking only, not for fixing :))).
+If switching libraries is not an option, the changes should be straightforward in most cases, but needs changes in the library itself
+</div>
