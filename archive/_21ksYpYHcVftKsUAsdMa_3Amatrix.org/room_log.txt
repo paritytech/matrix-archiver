@@ -1,5 +1,5 @@
 # room: #jam-conformance:matrix.org
-# exported: 2025-11-11 03:34 UTC
+# exported: 2025-11-12 03:34 UTC
 2025-08-20 15:56 erin: tomusdrw: i've set up the archiver to archive this also, so hopefully will be up starting tomorrow
 2025-08-21 06:33 ascriv: https://github.com/davxy/jam-conformance/issues/26 should we not discourage open source implementations (for now)? [edited]
 2025-08-21 10:27 oliver.tale-yazdi: I think open source repos are fine. Other implementors are just not supposed to look at it
@@ -1147,3 +1147,5 @@ If you're not using one of these libraries is very probable that you will fail t
 In that case open an issue in the repository indicating which library you are using (for tracking only, not for fixing :))).
 If switching libraries is not an option, the changes should be straightforward in most cases, but needs changes in the library itself
 
+2025-11-11 09:40 clearloop: davxy: If the zombify service integrates the info host call with the encoding order defined in https://graypaper.fluffylabs.dev/#/1c979cb/33920033ba00?v=0.7.1 ? all of our failing tests in fuzzy_light are related with the zombify service, I found it likely caused by the info call bcz once I hardcode an empty code hash to the result info, the panic disappeared, so either our encoding is incorrect or there is any condition based on code hash in the zombify service
+  ↳ 2025-11-11 10:04 clearloop: okay, I found it is a bug in my impl, now the registers provide length [edited]
