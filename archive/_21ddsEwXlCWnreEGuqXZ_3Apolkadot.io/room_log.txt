@@ -1,5 +1,5 @@
 # room: #graypaper:polkadot.io
-# exported: 2025-11-13 03:35 UTC
+# exported: 2025-11-14 03:34 UTC
 2024-04-17 20:29 syed: https://matrix.to/#/!hyzRkDqDthePbodYFz:parity.io/$f_DMsIEcDXZegw6Sabnehzc-LrdDQkmq5MbxDDyoZxY?via=parity.io&via=web3.foundation
 
 2024-04-17 20:29 syed: 
@@ -6727,3 +6727,13 @@ I recognize that a rollup host service can have its `accumulate` invocation use 
 2025-11-08 21:58 vinsystems: What should we return if the lookup key doesn't exist in the [provide](https://graypaper.fluffylabs.dev/#/1c979cb/380904381204?v=0.7.1) hostcall?
 
 HUH? [edited]
+2025-11-13 14:06 jaymansfield: Hello I have a question about JIP-2/JIP-3.
+
+Should JIP-2's submitWorkPackage and submitWorkPackageBundle RPC methods emit a JIP-3 work package submission event for telemetry so that it can be tracked? If so what should be used for the Peer ID attribute in the event since we don't have a builder address?
+2025-11-13 14:57 dave: This plausibly could be tracked but the work-package events in JIP-3 at the moment are only intended to be emitted by guarantors [edited]
+2025-11-13 14:58 dave: So the `submitWorkPackage` RPC should send the work-package to the guarantors assigned to the given core, and it will first appear in telemetry when those guarantors emit events for it
+2025-11-13 15:02 jaymansfield: Oh I misunderstood the intent of the rpc method. I thought they were for builders to submit straight to a guarantor, not for the rpc server to redistribute to the correct guarantor after receiving it. Okay in this case an event wouldn't make sense. Thanks. [edited]
+2025-11-13 15:08 dave: In general validator nodes should not expose RPC. I think polkajam currently always runs an RPC server, we should maybe change this. RPC is really only intended as a stop-gap until we have light client stuff, to avoid needing to have tools/builders embed a full node. It's only expected to be used to communicate between eg a builder and a node running on the same machine. [edited]
+2025-11-13 15:11 jaymansfield: Actually one other question. When a guarantor receives a work package for a core they are not assigned too, should it be rejected immediately or queued until they are correctly assigned? [edited]
+2025-11-13 15:14 dave: To some extent this is up to you, though it's probably sensible to have some standard behaviour that builders can rely on. PolkaJam currently accepts from 1 slot before the assignment up until the end of the assignment
+2025-11-13 15:14 dave: Outside of this it immediately rejects
