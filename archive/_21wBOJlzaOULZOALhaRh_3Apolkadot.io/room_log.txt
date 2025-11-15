@@ -1,5 +1,5 @@
 # room: #jam:polkadot.io
-# exported: 2025-11-14 03:33 UTC
+# exported: 2025-11-15 03:30 UTC
 2024-04-20 02:08 johnjiao123: 
 2024-04-20 02:09 johnjiao123: 
 2024-05-30 21:48 nradko: Hey everyone,
@@ -11895,3 +11895,13 @@ The Playground server code is private since it is in a monorepo with our JAM cli
 happy to help!
   ↳ 2025-11-12 00:46 erin: also good to know the default terminal doesn't provide a good experience - thanks for the feedback, I can look into that
   ↳ 2025-11-12 17:33 danicuki: I tested it into VSCode embedded terminal and it works fine as well. 
+2025-11-14 18:56 danicuki: I have a doubt about https://github.com/polkadot-fellows/JIPs/blob/main/JIP-4.md:
+
+What is the purpose of bootnodes? Genesis state already contains a list of current (and next) validators. Shouldn't this be enough to know where to connect?
+2025-11-14 19:06 dave: After the chain has been running for a while genesis validators are unlikely to still be running
+2025-11-14 19:07 dave: IDK if this bootnodes list in the chainspec will be the long-term solution to this, possibly bootnodes will be published somewhere else (eg IPFS)
+2025-11-14 22:08 danicuki: > <@dave:parity.io> After the chain has been running for a while genesis validators are unlikely to still be running
+
+Sure, but the validator list is updated on every epoch and nodes should renew their connections to eventual new validators on the list. I still don’t understand the need for an “external” source of information about nodes. 
+2025-11-14 22:09 dave: You need some entry point to the network?
+2025-11-15 02:39 jaymansfield: It's more about new nodes joining the network. A new node would only have the genesis information to start. If the genesis validators were no longer online, they could not start requesting blocks to sync as they wouldn't know the current validators (yet).
