@@ -1,5 +1,5 @@
 # room: #jam:polkadot.io
-# exported: 2025-11-15 03:30 UTC
+# exported: 2025-11-16 03:36 UTC
 2024-04-20 02:08 johnjiao123: 
 2024-04-20 02:09 johnjiao123: 
 2024-05-30 21:48 nradko: Hey everyone,
@@ -11905,3 +11905,10 @@ What is the purpose of bootnodes? Genesis state already contains a list of curre
 Sure, but the validator list is updated on every epoch and nodes should renew their connections to eventual new validators on the list. I still don’t understand the need for an “external” source of information about nodes. 
 2025-11-14 22:09 dave: You need some entry point to the network?
 2025-11-15 02:39 jaymansfield: It's more about new nodes joining the network. A new node would only have the genesis information to start. If the genesis validators were no longer online, they could not start requesting blocks to sync as they wouldn't know the current validators (yet).
+2025-11-15 16:10 shimonchick: Hello. I am currently investigating the test vector preimage and executing the code we are getting a JIP-1 Log Host call saying "Panic handler called!" and then falling in a loop that exhausts gas. I wanted to ask for some additional info perhaps on when this panic handler gets triggered
+2025-11-15 19:08 rustybot: > <@shimonchick:matrix.org> Hello. I am currently investigating the test vector preimage and executing the code we are getting a JIP-1 Log Host call saying "Panic handler called!" and then falling in a loop that exhausts gas. I wanted to ask for some additional info perhaps on when this panic handler gets triggered
+
+Which exact vector are you referring to? By the way, the "fuzzy" service may trigger panics quite often and "intentionally".
+  ↳ 2025-11-15 21:14 shimonchick: I am investigating accumulation using preimage from https://github.com/davxy/jam-test-vectors/blob/84213c3fa619f26d77f61601a7dd77048f6bbf7a/traces/preimages_light/00000002.json . 
+  ↳ 2025-11-15 21:15 shimonchick: Are the preimages used in the traces supposed to be successfully accumulatable?
+  ↳ 2025-11-15 22:04 shimonchick: This preimage seems to not have any writes to the stack in the first instructions, causing the first fetch host call to fail, causing the panic loop that exhausts gas [edited]
