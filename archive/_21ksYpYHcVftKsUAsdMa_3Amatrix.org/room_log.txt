@@ -1,5 +1,5 @@
 # room: #jam-conformance:matrix.org
-# exported: 2025-11-16 03:37 UTC
+# exported: 2025-11-17 03:37 UTC
 2025-08-20 15:56 erin: tomusdrw: i've set up the archiver to archive this also, so hopefully will be up starting tomorrow
 2025-08-21 06:33 ascriv: https://github.com/davxy/jam-conformance/issues/26 should we not discourage open source implementations (for now)? [edited]
 2025-08-21 10:27 oliver.tale-yazdi: I think open source repos are fine. Other implementors are just not supposed to look at it
@@ -1155,3 +1155,9 @@ If switching libraries is not an option, the changes should be straightforward i
 - (very short term) I would like to prepare the 0.7.2 release.
 - (short term) We are coordinating the handover of fuzzing operations to a dedicated W3F team.
 - (medium term) Another dedicated team should handle the prototyping of the M2 fuzzer. [edited]
+2025-11-16 21:14 danicuki: Hi. I am getting "invalid extrinsic hash" validation on cases. 1761653121, 1761654464, 1761664166
+Could someone help me sharing the "unhashed" extrinsic binary (Formula 5.5  - a = [ET (ET ),EP (EP ),g,EA(EA),ED (ED )] ? It is hard to debug without this raw binary.
+? Thank in advance
+  ↳ 2025-11-16 21:26 celadari: Did you check you have the right encoding (sometimes the order of some fields change subtlety between versions) ?
+
+You can check for the .bin file to make sure you have the right encoding (except g...)
