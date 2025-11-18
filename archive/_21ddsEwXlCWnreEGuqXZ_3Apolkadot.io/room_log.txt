@@ -1,5 +1,5 @@
 # room: #graypaper:polkadot.io
-# exported: 2025-11-17 03:37 UTC
+# exported: 2025-11-18 03:33 UTC
 2024-04-17 20:29 syed: https://matrix.to/#/!hyzRkDqDthePbodYFz:parity.io/$f_DMsIEcDXZegw6Sabnehzc-LrdDQkmq5MbxDDyoZxY?via=parity.io&via=web3.foundation
 
 2024-04-17 20:29 syed: 
@@ -6760,3 +6760,18 @@ Yeah
 2025-11-14 22:33 bkchr: David Emett: did you looked into zk warp proofs? 
 2025-11-14 22:35 dave: No, Matthew Halpin has been implementing grandpa and speccing the network stuff for it, think he has integrated the polkadot grandpa stuff with minimal changes [edited]
 2025-11-14 22:35 dave: If you have suggestions he is the one to talk to :)
+2025-11-17 19:28 sourabhniyogi: I believe the notion of a JAM light client should be broadened from a "JAM-only" light client to something that tracks one or more JAM services.
+
+My assumption is that the economics of storing rollup blocks or service user data in JAM state vs JAM DA will lead to almost all service user data being stored in JAM DA.  JAM State becomes an index into JAM DA.  You only want the minimal data in JAM State to allow light clients to detect relevant events for their services.  
+
+Basically, for any service, a JAM services user’s light client must be able to scan JAM State for events relevant to that specific service, so it knows when to fetch additional data from JAM DA.  GP does not prescribe how this should work; it is up to each JAM Service to define how their light clients detect and locate relevant events.
+
+EVM/YP's log Bloom filters, BIP-157/158, and ZIP-307 all basically have a "might this block contain my data" -- where only if that test passes, should there be deeper fetch to get the whole block.  False positives are acceptable, but false negatives are not.  In a JAM setting, where rollup blocks and almost all service user data live inside JAM DA, it is undesirable for every service user to download every rollup block just to check whether an event is relevant to them.
+
+Not sure why Polkadot lost this kind of check (or I missed something) -- JAM CoreChains service will reintroduce it maybe?
+
+I don't think we need to change anything in GP to accommodate this notion, or even try to develop a cross-service light standard (since what ZIP-307 like systems needs are totally different which are different from EVM/YP log bloom filters) but would be nice to get the above assumption validated.  
+
+Its insanely great that we have so many JAM implementations ready to be light clients, where the JAM service-aware light client is basically a small tweak away from the JAM aware one, which will be attractive to any JAM service builder. [edited]
+2025-11-17 20:19 gav: Bloom filters seemed like a vaguely good idea back in 2014, but given the usage Ethereum got they quickly got saturated to the point of uselessness. They are also totally attackable. That’s why we never introduced them in Substrate.  [edited]
+2025-11-17 23:16 sourabhniyogi: I'll see if we can learn + code up Verkle tree properly (instead of Sparse Merkle Trees) evolving per epoch for this JAM Service light client problem...  

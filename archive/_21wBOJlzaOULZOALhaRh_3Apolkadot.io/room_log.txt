@@ -1,5 +1,5 @@
 # room: #jam:polkadot.io
-# exported: 2025-11-17 03:36 UTC
+# exported: 2025-11-18 03:33 UTC
 2024-04-20 02:08 johnjiao123: 
 2024-04-20 02:09 johnjiao123: 
 2024-05-30 21:48 nradko: Hey everyone,
@@ -11912,3 +11912,7 @@ Which exact vector are you referring to? By the way, the "fuzzy" service may tri
   ↳ 2025-11-15 21:14 shimonchick: I am investigating accumulation using preimage from https://github.com/davxy/jam-test-vectors/blob/84213c3fa619f26d77f61601a7dd77048f6bbf7a/traces/preimages_light/00000002.json . 
   ↳ 2025-11-15 21:15 shimonchick: Are the preimages used in the traces supposed to be successfully accumulatable?
   ↳ 2025-11-15 22:04 shimonchick: This preimage seems to not have any writes to the stack in the first instructions, causing the first fetch host call to fail, causing the panic loop that exhausts gas [edited]
+2025-11-17 14:03 decentration: davxy: can i get a sanity check that the accumulate conformance test vectors have real blobs that can be executed through the pvm? i'm assuming yes
+2025-11-17 14:21 davxy: yes
+2025-11-17 14:46 decentration: oh and crucially i am running it on your 0.7.1 branch, just checking it works for that version
+  ↳ 2025-11-17 17:59 shimonchick: doubling on that question

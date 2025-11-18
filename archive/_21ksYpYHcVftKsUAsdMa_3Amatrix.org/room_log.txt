@@ -1,5 +1,5 @@
 # room: #jam-conformance:matrix.org
-# exported: 2025-11-17 03:37 UTC
+# exported: 2025-11-18 03:34 UTC
 2025-08-20 15:56 erin: tomusdrw: i've set up the archiver to archive this also, so hopefully will be up starting tomorrow
 2025-08-21 06:33 ascriv: https://github.com/davxy/jam-conformance/issues/26 should we not discourage open source implementations (for now)? [edited]
 2025-08-21 10:27 oliver.tale-yazdi: I think open source repos are fine. Other implementors are just not supposed to look at it
@@ -1161,3 +1161,31 @@ Could someone help me sharing the "unhashed" extrinsic binary (Formula 5.5  - a 
   ↳ 2025-11-16 21:26 celadari: Did you check you have the right encoding (sometimes the order of some fields change subtlety between versions) ?
 
 You can check for the .bin file to make sure you have the right encoding (except g...)
+  ↳ 2025-11-17 07:24 danicuki: > <@celadari:matrix.org> Did you check you have the right encoding (sometimes the order of some fields change subtlety between versions) ?
+> 
+> You can check for the .bin file to make sure you have the right encoding (except g...)
+
+I checked and seems to be correct on my side. That’s why would help to have someone else’s encoded binary. 
+  ↳ 2025-11-17 08:16 danicuki: What’s strange is that all other blocks are ok, so seems to be something very specific to these 3 cases. 
+  ↳ 2025-11-17 11:57 tomusdrw: ```
+0x03170a2e7597b7b7e3d84c05391d139a62b157e78786d8c082f29dcf4c11131403170a2e7597b7b7e3d84c05391d139a62b157e78786d8c082f29dcf4c111314828f41a8fa6f27c857bac5b4821eadfe3ef588c6ba15abb105dea6eee3f10a07c9b19dee24aae44e05fc5fdfd8cacf49e1c153f5ef7f3224db91806d0b6fff46ab29e6dc16755d0071eba349ebda225d15e4f910cb474549c47e95cb85ecc4d6
+```
+That's for `jam-conformance/fuzz-reports/0.7.1/traces/1761653121/00000188.json` in our impl. Let me know if this helps or you need anything else.
+  ↳ 2025-11-17 14:02 danicuki: Thanks for the help. 188 is ok here. I need 190, that's where the difference appears
+  ↳ 2025-11-17 21:03 tomusdrw: `0x03170a2e7597b7b7e3d84c05391d139a62b157e78786d8c082f29dcf4c11131403170a2e7597b7b7e3d84c05391d139a62b157e78786d8c082f29dcf4c111314e4e03701c1ca531383c65ce6dc33c73ec1bf2f03a233c3c932b74dc970e647b3d7ee619e36bc3fdc58e59067edf50e3464143c7cfac83c1a226a1d374ee71c7fab29e6dc16755d0071eba349ebda225d15e4f910cb474549c47e95cb85ecc4d6` here you go - that's from 190
+2025-11-17 11:18 davxy: New batch for 0.7.1:
+
+https://github.com/davxy/jam-conformance/pull/115
+  ↳ 2025-11-17 11:46 clearloop: when will this getting merged? still have 1 report not passed in my local version
+2025-11-17 11:19 davxy: I think this is the last one before jumping into 0.7.2
+2025-11-17 11:24 davxy: For a couple implementations, it has become hard to trigger a diff or a crash without adding block mutations, which is a good sign 
+2025-11-17 11:50 clearloop: curious if there is sorting for drawn validators, for trace `1761654684`, the program ends with an designate instruction which updates the drawn list however it doesn't match what expects in the test, just have one state diff in drawn validators
+
+```
+    DEBUG accumulate: designate-ed25519: validators=["ab0084d01534b31c1dd87c81645fd762482a90027754041ca1b56133d0466c06", "ad93247bd01307550ec7acd757ce6fb805fcf73db364063265b30a949e90d933", "f30aa5444688b3cab47697b37d5cac5707bb3289e986b19b17db437206931a8d", "4418fb8c85bb3985394a8c2756d3643457ce614546202a2f50b093d762499ace", "cab2b9ff25c2410fbe9b8a717abb298c716a03983c98ceb4def2087500b8e341", "8b8c5d436f92ecf605421e873a99ec528761eb52a88a2f9a057b3b3003e6f32a"]
+---
+    DEBUG polkajam-ed25519: ["ab0084d01534b31c1dd87c81645fd762482a90027754041ca1b56133d0466c06", "8b8c5d436f92ecf605421e873a99ec528761eb52a88a2f9a057b3b3003e6f32a", "4418fb8c85bb3985394a8c2756d3643457ce614546202a2f50b093d762499ace", "cab2b9ff25c2410fbe9b8a717abb298c716a03983c98ceb4def2087500b8e341", "ad93247bd01307550ec7acd757ce6fb805fcf73db364063265b30a949e90d933", "f30aa5444688b3cab47697b37d5cac5707bb3289e986b19b17db437206931a8d"]
+    DEBUG spacejam-ed25519: ["ab0084d01534b31c1dd87c81645fd762482a90027754041ca1b56133d0466c06", "ad93247bd01307550ec7acd757ce6fb805fcf73db364063265b30a949e90d933", "f30aa5444688b3cab47697b37d5cac5707bb3289e986b19b17db437206931a8d", "4418fb8c85bb3985394a8c2756d3643457ce614546202a2f50b093d762499ace", "cab2b9ff25c2410fbe9b8a717abb298c716a03983c98ceb4def2087500b8e341", "8b8c5d436f92ecf605421e873a99ec528761eb52a88a2f9a057b3b3003e6f32a"]
+``` [edited]
+2025-11-17 13:13 prematurata: https://github.com/davxy/jam-conformance/discussions/116
+2025-11-17 14:24 clearloop: https://github.com/davxy/jam-conformance/discussions/117
