@@ -18,7 +18,7 @@ a:hover{color:#90caf9}
 em{font-style:italic}
 </style>
 <h1>#graypaper:polkadot.io</h1>
-<p><small>last updated 2025-11-18 03:33 UTC</small></p>
+<p><small>last updated 2025-11-19 03:34 UTC</small></p>
 <p><a href='room_log.txt'>⇩ plaintext</a> · <a href='../../'>⇦ all rooms</a></p>
 <hr>
 <div class='msg'><a class='ts' href='#$G0deSwnlYlCrSn5lIFL__hi6bgWVITql5VyahU4bzpI'>#</a> <a class='ts' name='$G0deSwnlYlCrSn5lIFL__hi6bgWVITql5VyahU4bzpI' href='https://matrix.to/#/!ddsEwXlCWnreEGuqXZ:polkadot.io/$G0deSwnlYlCrSn5lIFL__hi6bgWVITql5VyahU4bzpI' target='_blank'>2024-04-17 20:29</a>&ensp;<span class='u' style='color:#da6aa2'>syed</span>: <a href="https://matrix.to/#/!hyzRkDqDthePbodYFz:parity.io/$f_DMsIEcDXZegw6Sabnehzc-LrdDQkmq5MbxDDyoZxY?via=parity.io&amp;via=web3.foundation" rel="noopener" target="_blank">https://matrix.to/#/!hyzRkDqDthePbodYFz:parity.io/$f_DMsIEcDXZegw6Sabnehzc-LrdDQkmq5MbxDDyoZxY?via=parity.io&amp;via=web3.foundation</a>
@@ -6761,8 +6761,8 @@ EVM/YP&#x27;s log Bloom filters, BIP-157/158, and ZIP-307 all basically have a &
 
 Not sure why Polkadot lost this kind of check (or I missed something) -- JAM CoreChains service will reintroduce it maybe?
 
-I don&#x27;t think we need to change anything in GP to accommodate this notion, or even try to develop a cross-service light standard (since what ZIP-307 like systems needs are totally different which are different from EVM/YP log bloom filters) but would be nice to get the above assumption validated.  
+I don&#x27;t think we need to change anything in GP to accommodate this notion, or even try to develop a cross-service light standard (since what ZIP-307 like systems needs are totally different from EVM/YP log bloom filters in what they need to do) but would be nice to get the above assumption validated.  
 
-Its insanely great that we have so many JAM implementations ready to be light clients, where the JAM service-aware light client is basically a small tweak away from the JAM aware one, which will be attractive to any JAM service builder. <span class="edited">(edited)</span></div>
+Its insanely great that we have so many JAM implementations ready to be light clients, where the JAM service-aware light client is basically a small tweak away from the JAM-only one, which will be attractive to any JAM service builder. <span class="edited">(edited)</span></div>
 <div class='msg'><a class='ts' href='#$4oBETxKyIRnW5_31V8dyOKbPIq7JPXDDyjB8QfM3P4s'>#</a> <a class='ts' name='$4oBETxKyIRnW5_31V8dyOKbPIq7JPXDDyjB8QfM3P4s' href='https://matrix.to/#/!ddsEwXlCWnreEGuqXZ:polkadot.io/$4oBETxKyIRnW5_31V8dyOKbPIq7JPXDDyjB8QfM3P4s' target='_blank'>2025-11-17 20:19</a>&ensp;<span class='u' style='color:#cd8957'>gav</span>: Bloom filters seemed like a vaguely good idea back in 2014, but given the usage Ethereum got they quickly got saturated to the point of uselessness. They are also totally attackable. That’s why we never introduced them in Substrate.  <span class="edited">(edited)</span></div>
 <div class='msg'><a class='ts' href='#$D8sJN-V1vwrFDysumrpP9RtVaSR0vggipatsjuqY_gA'>#</a> <a class='ts' name='$D8sJN-V1vwrFDysumrpP9RtVaSR0vggipatsjuqY_gA' href='https://matrix.to/#/!ddsEwXlCWnreEGuqXZ:polkadot.io/$D8sJN-V1vwrFDysumrpP9RtVaSR0vggipatsjuqY_gA' target='_blank'>2025-11-17 23:16</a>&ensp;<span class='u' style='color:#c67452'>sourabhniyogi</span>: I&#x27;ll see if we can learn + code up Verkle tree properly (instead of Sparse Merkle Trees) evolving per epoch for this JAM Service light client problem...  </div>

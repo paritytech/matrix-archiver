@@ -1,5 +1,5 @@
 # room: #jam-conformance:matrix.org
-# exported: 2025-11-18 03:34 UTC
+# exported: 2025-11-19 03:34 UTC
 2025-08-20 15:56 erin: tomusdrw: i've set up the archiver to archive this also, so hopefully will be up starting tomorrow
 2025-08-21 06:33 ascriv: https://github.com/davxy/jam-conformance/issues/26 should we not discourage open source implementations (for now)? [edited]
 2025-08-21 10:27 oliver.tale-yazdi: I think open source repos are fine. Other implementors are just not supposed to look at it
@@ -1173,6 +1173,12 @@ I checked and seems to be correct on my side. That’s why would help to have so
 That's for `jam-conformance/fuzz-reports/0.7.1/traces/1761653121/00000188.json` in our impl. Let me know if this helps or you need anything else.
   ↳ 2025-11-17 14:02 danicuki: Thanks for the help. 188 is ok here. I need 190, that's where the difference appears
   ↳ 2025-11-17 21:03 tomusdrw: `0x03170a2e7597b7b7e3d84c05391d139a62b157e78786d8c082f29dcf4c11131403170a2e7597b7b7e3d84c05391d139a62b157e78786d8c082f29dcf4c111314e4e03701c1ca531383c65ce6dc33c73ec1bf2f03a233c3c932b74dc970e647b3d7ee619e36bc3fdc58e59067edf50e3464143c7cfac83c1a226a1d374ee71c7fab29e6dc16755d0071eba349ebda225d15e4f910cb474549c47e95cb85ecc4d6` here you go - that's from 190
+  ↳ 2025-11-18 08:58 danicuki: this helped a lot. I know now that my diff is in `g`. One last ask: could you provide the unhashed raw `g` binary ?
+  ↳ 2025-11-18 10:53 tomusdrw: ```
+0x019aeef530233f70494f3277d66de35f606040c4a5968525ffba283d1078830a1825000000030000952f23655eeb6275733c465cce2765c235f03fc962fe4bf2ca6e9afa86121eb39214aac263c25f4c23763c58231b1e8e9a85e0191e40d07463a5524953ad810a0400011ac2eae26820496f48ad13a4b9fe69cafb78760c4b53f3e296dea490486f300c111565d8655e0135d60ff122f4b04e4e6c065b264a25fde45a8a08b5796f070500bd9663694c8b3f841a106ba1c9165e9e8939dceb4f2546d64029ca98c50489719654432f5ad8a1e63ccff7f4345b26686190d8e486e505eb0b3edb3c8088270d
+```
+  ↳ 2025-11-18 10:53 tomusdrw: here it is
+  ↳ 2025-11-18 14:53 danicuki: thank you so much. This helped me a lot and I found the bug! <3
 2025-11-17 11:18 davxy: New batch for 0.7.1:
 
 https://github.com/davxy/jam-conformance/pull/115
@@ -1189,3 +1195,4 @@ https://github.com/davxy/jam-conformance/pull/115
 ``` [edited]
 2025-11-17 13:13 prematurata: https://github.com/davxy/jam-conformance/discussions/116
 2025-11-17 14:24 clearloop: https://github.com/davxy/jam-conformance/discussions/117
+2025-11-18 10:53 tomusdrw: 
