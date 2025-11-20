@@ -1,5 +1,5 @@
 # room: #graypaper:polkadot.io
-# exported: 2025-11-19 03:34 UTC
+# exported: 2025-11-20 03:33 UTC
 2024-04-17 20:29 syed: https://matrix.to/#/!hyzRkDqDthePbodYFz:parity.io/$f_DMsIEcDXZegw6Sabnehzc-LrdDQkmq5MbxDDyoZxY?via=parity.io&via=web3.foundation
 
 2024-04-17 20:29 syed: 
@@ -6775,3 +6775,14 @@ I don't think we need to change anything in GP to accommodate this notion, or ev
 Its insanely great that we have so many JAM implementations ready to be light clients, where the JAM service-aware light client is basically a small tweak away from the JAM-only one, which will be attractive to any JAM service builder. [edited]
 2025-11-17 20:19 gav: Bloom filters seemed like a vaguely good idea back in 2014, but given the usage Ethereum got they quickly got saturated to the point of uselessness. They are also totally attackable. That’s why we never introduced them in Substrate.  [edited]
 2025-11-17 23:16 sourabhniyogi: I'll see if we can learn + code up Verkle tree properly (instead of Sparse Merkle Trees) evolving per epoch for this JAM Service light client problem...  
+2025-11-19 14:16 sourabhniyogi: JAM meticulously meters every byte written to JAM State and JAM DA in service account and service statistics, enabling a precise solution to the age old problem of "storage rent" by charging service accounts AWS-style.
+This could be way fairer than lazily pricing it into an `write` gas costs (ala SSTORE), but is this the actual plan?  When will we know the final storage pricing model for GP vs Polkadot?
+
+JAM encourages, but does not require, getting away from age old expectations of immutability by having JAM Service designers use JAM State serve as a index into JAM DA, forcing JAM DA refreshes for any sane service design that uses it. The feature/bug of immutability is replaced with the feature/bug of forgetfulness, but its not meticulously perfect: as far as I can tell, even with a storage rent deduction per service, with the way `eject` and `write` are right now,  JAM State can still be bloated with "evicted zombie services" that, even after they were charged rent down to below threshold balance, still occupy JAM State space forever.  This is because we can only use `eject`  when every last byte is deleted with `write`+`forget`, BUT only the service itself can clean up after itself.  Check?
+
+If so, can JAM have a `delete` process (either yet another host function or (yipes!) a variation on `write`/`forget`/`eject`) that would enable another service to minimize JAM State bloat for such evicted services?  
+
+Having such a clean freak would keep not only DA 100% clean and paid for, but also JAM State.  After all this meticulous byte counting, I think this is worth winning.  Ideally, a parent service that spawned many child services would have an incentive to clean up after itself, or maybe a good samaritan could be given one, or it would cost nothing.
+2025-11-19 14:25 gav: Any data stored in JAM state must be “paid for” via a deposit. 
+2025-11-19 14:25 gav: That is the case for zombie state. If the service wants to reclaim its deposit, it’ll need to clear its storage. 
+2025-11-19 14:26 gav: DA is limited to a 28 day cycle after which it forgets. Work Packages can place data in for 28 days under the general economics of Coretime.  [edited]

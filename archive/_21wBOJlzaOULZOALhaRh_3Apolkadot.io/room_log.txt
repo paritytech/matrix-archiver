@@ -1,5 +1,5 @@
 # room: #jam:polkadot.io
-# exported: 2025-11-19 03:33 UTC
+# exported: 2025-11-20 03:32 UTC
 2024-04-20 02:08 johnjiao123: 
 2024-04-20 02:09 johnjiao123: 
 2024-05-30 21:48 nradko: Hey everyone,
@@ -11916,3 +11916,12 @@ Which exact vector are you referring to? By the way, the "fuzzy" service may tri
 2025-11-17 14:21 davxy: yes
 2025-11-17 14:46 decentration: oh and crucially i am running it on your 0.7.1 branch, just checking it works for that version
   ↳ 2025-11-17 17:59 shimonchick: doubling on that question
+2025-11-19 10:37 danicuki: Hey nikos, is March 2026 date confirmed for the JAM course? https://polkadot.academy/jam/ - do you have further details?
+2025-11-19 10:38 wirednkod: hey danicuki | Jamixir - yes but still under finalization. thats why I have not communicated a final date yet
+  ↳ 2025-11-19 10:39 danicuki: If you have at least dates and location confirmed, JAM community members can start planning.
+  ↳ 2025-11-19 10:40 danicuki: anyway nikos , thanks for the prompt reply [edited]
+  ↳ 2025-11-19 10:40 wirednkod: Location seems like to be in Lisbon for sure [edited]
+  ↳ 2025-11-19 10:41 wirednkod: and dates around end of Feb - beginning of March
+  ↳ 2025-11-19 10:41 wirednkod: final confirmation pending though
+  ↳ 2025-11-19 15:12 clearloop: I assume we will have the testnet at that time?
+  ↳ 2025-11-19 16:33 gav: That’s absolutely the aim yes. 
