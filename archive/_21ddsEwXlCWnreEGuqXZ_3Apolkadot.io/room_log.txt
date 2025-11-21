@@ -1,5 +1,5 @@
 # room: #graypaper:polkadot.io
-# exported: 2025-11-20 03:33 UTC
+# exported: 2025-11-21 03:33 UTC
 2024-04-17 20:29 syed: https://matrix.to/#/!hyzRkDqDthePbodYFz:parity.io/$f_DMsIEcDXZegw6Sabnehzc-LrdDQkmq5MbxDDyoZxY?via=parity.io&via=web3.foundation
 
 2024-04-17 20:29 syed: 
@@ -6786,3 +6786,41 @@ Having such a clean freak would keep not only DA 100% clean and paid for, but al
 2025-11-19 14:25 gav: Any data stored in JAM state must be “paid for” via a deposit. 
 2025-11-19 14:25 gav: That is the case for zombie state. If the service wants to reclaim its deposit, it’ll need to clear its storage. 
 2025-11-19 14:26 gav: DA is limited to a 28 day cycle after which it forgets. Work Packages can place data in for 28 days under the general economics of Coretime.  [edited]
+2025-11-20 15:05 sourabhniyogi: Is it too late to replace the Binary Merkle Tree with a Verkle tree?   
+
+Because we only get 12mb per workpackage, the content of the WP ends up being dominated by BMT proofs against a recent JAM state root faster than rollup block/txs.   But if we replace BMT with Verkle trees, the % of the WP chewed up by state witness proofs stays reasonable.     
+
+We can whine over the compute time it takes to build a JAM Verkle root (instead of BMT IO with SSDs and hashing more and more as JAM state gets fatter), but its about how many JAM DA objects rollup blocks need to access, which is empirical in the end.   Perhaps there is an even better witness compression approach we should like better?
+
+If its too late, no problem, just trying to kill 3 birds with one stone.  
+2025-11-20 15:10 dave: What's the use case for including JAM state proofs in work-packages? If your work-package assumes some JAM state then you can verify this directly against the relevant state in accumulate, either by including the expected state in refine output, or a hash of it, or something like that. No need for a full state proof?
+2025-11-20 19:33 kianenigma: I think sourabhniyogi is drawing an analogy to the current parachain protocol where in the refine part you need to send a BMT proof of the state that you need to compute upon in refine. In this context, it makes sense and I can confirm that empirically we see that in parachains proof size is the first bottleneck to be reached compared to computation time. 
+
+But it is also worth noting:
+
+1. what other applications can be written on JAM that don't require a state-rollup fashion BMT proof for refine
+2. refine now have access to DA, so maybe the usage of state proofs are less relevant now
+
+I don't know how much overhead Verkle tree adds fwiw. 
+2025-11-20 19:34 bkchr: This makes no real sense
+2025-11-20 19:35 bkchr: Even in Polkadot your parachain can use whatever witness format you want  [edited]
+2025-11-20 19:35 bkchr: Aka you could already use Verkle Trees
+2025-11-20 19:35 bkchr: Same applies for JAM
+2025-11-20 19:40 bkchr: The refine code will be responsible to decode the witness and to feed it to the execution
+2025-11-20 19:40 bkchr: As `validate_block` does this right now in Polkadot 
+2025-11-20 19:42 kianenigma: I mean the _cumulus-standard way of Polkadot_ I guess :) but you are right overall, the state format of the JAM chain doesn't matter to services, in the same way that the state format of the relay chain doesn't matter in Polkadot today. [edited]
+2025-11-20 19:52 bkchr: sourabhniyogi: or do you want to read JAM state in your service? 
+2025-11-20 20:18 sourabhniyogi: The use case is the central "rollup host" use case -- in particular, that refine does rollup STF for execution with witnesses (in my case, that N objectids have xyz specific versions in JAM DA \[hash, indexstart, indexend\] against some refine context state root), and accumulate basically writes new pointers to JAM DA (that M objectIDs have some new object versions) aggregating across many cores in ordering a new rollup block, provided there are no conflicts.
+
+Totally get that a rollup service can do whatever witness compression it likes for refine to do the rollup execution, and JAM doesn't have to change BMT at all.  Yes, we can do our service design with the builder computing Verkle roots and the "builder" providing more compact state witness proofs with Verkle than with BMT.   I'm just seeing the obvious fact that the rollup transactions are getting dwarfed by the BMT state witnesses and need a better plan.  But if I'm doing this (what seems to be shadow) computation for good reasons, then JAM state proofs against BMT could have a different basis.  Not a showstopper though.
+
+I haven't checked how much PVM gas N BMT verifies as JAM state size increases from 10MM to 1B keys exactly (I'm sure you guys have been there and done that!) -- I assumed all witness verification all should be done on `refine` rather than `accumulate` because, simply put, we don't get a lot of gas to work with in `accumulate` relative to `refine`.   Its pretty clear `accumulate` should spend its gas on IO centric `read` and `write` (amidst conflict resolution from multiple cores) rather than the computation work of verifying proofs, which certainly should be done in `refine`.   Of course its _possible_, but its not what JAM is optimized for.   Will check this regardless. [edited]
+2025-11-20 20:41 bkchr: But the DA layer doesn't have a BMT? Or do I misunderstand something? 
+2025-11-20 20:42 bkchr: Also not sure why you talk about verifying inside `accumulate`? 
+2025-11-20 21:36 dave: There are BMTs for DA; we build a BMT for the segments exported by a work-package. IDK if this is what you're talking about Sourabh? You are to some extent free to verify imported data however you like but there is "builtin" verification of segments imported by exports root + index. That is also what you need to request a segment from the DA system so if you eg want to have pointers to DA in your service state then these really need to be (or at least contain) exports root + index. All that said I'm not sure I understand what the BMT proofs would be needed for in this rollup case, if you could clarify this that would be helpful. As others have said for a Polkadot-style rollup the rollup state would be separate from JAM state and could use whatever format you like
+2025-11-21 01:40 jeff: There is a BMT across the chunks sent to different validators, with which you prove the validity of each chunk, and which the approval checkers aka auditors validate by reconstructing the erasure coding.  This is by far the most efficient method to validate the availability.  In particular, availability is tightly integrated into elves.   [edited]
+2025-11-21 01:43 jeff: Verkle trees require pairings, so they're incredibly slow for verify operations, and even slower for proving.  And they're slow for update operations too.  You can batch the pairings but the marginal cost would always remain higher than any common signature scheme, and even after batching the verification remains crazy expensive. 
+
+Afaik accumulate should never have the CPU time even for fast signatures, but definitely not for pairings, so while a service can change its storage it cannot realistically ever access Verkle trees from accumulate.  This is not really a problem, since accumulate should be mostly unused anyways once people optimise.  Accumulate can definitely copy Verkle tree roots around though, just like it copies around Merkle tree roots now.  And accumulate can handle messages that demand reliable delivery using BMTs again just like now.  And other similar tasks work fine too.
+
+Verkle trees would never be post-quantum either, not that this matters short term, nor hopefully in our lifetimes, but it's bad for optics, so one could easily imagine governance excluding Verkle tree based services from handling some assets. [edited]

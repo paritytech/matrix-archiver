@@ -1,5 +1,5 @@
 # room: #jam-conformance:matrix.org
-# exported: 2025-11-20 03:33 UTC
+# exported: 2025-11-21 03:33 UTC
 2025-08-20 15:56 erin: tomusdrw: i've set up the archiver to archive this also, so hopefully will be up starting tomorrow
 2025-08-21 06:33 ascriv: https://github.com/davxy/jam-conformance/issues/26 should we not discourage open source implementations (for now)? [edited]
 2025-08-21 10:27 oliver.tale-yazdi: I think open source repos are fine. Other implementors are just not supposed to look at it
@@ -1179,6 +1179,13 @@ That's for `jam-conformance/fuzz-reports/0.7.1/traces/1761653121/00000188.json` 
 ```
   ↳ 2025-11-18 10:53 tomusdrw: here it is
   ↳ 2025-11-18 14:53 danicuki: thank you so much. This helped me a lot and I found the bug! <3
+  ↳ 2025-11-20 07:44 hey_im_stas: FYI — at FluffyLabs we’re using our Codec Tool to compare blob diffs:
+(https://codec.fluffylabs.dev/
+)
+
+It automatically detects the blob type, but you can also select it manually from the dropdown. After pasting the expected blob and the actual blob (or vice versa), the tool displays the decoded differences on the right-hand side.
+  ↳ 2025-11-20 07:48 hey_im_stas: Maybe not necessarily useful in this specific case, but still worth mentioning.
+  ↳ 2025-11-20 13:37 danicuki: Awesome. Thanks for the tip. 
 2025-11-17 11:18 davxy: New batch for 0.7.1:
 
 https://github.com/davxy/jam-conformance/pull/115
