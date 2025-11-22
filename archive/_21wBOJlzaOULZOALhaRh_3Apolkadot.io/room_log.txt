@@ -1,5 +1,5 @@
 # room: #jam:polkadot.io
-# exported: 2025-11-21 03:33 UTC
+# exported: 2025-11-22 03:29 UTC
 2024-04-20 02:08 johnjiao123: 
 2024-04-20 02:09 johnjiao123: 
 2024-05-30 21:48 nradko: Hey everyone,
@@ -11916,6 +11916,7 @@ Which exact vector are you referring to? By the way, the "fuzzy" service may tri
 2025-11-17 14:21 davxy: yes
 2025-11-17 14:46 decentration: oh and crucially i am running it on your 0.7.1 branch, just checking it works for that version
   ↳ 2025-11-17 17:59 shimonchick: doubling on that question
+  ↳ 2025-11-21 09:02 decentration: https://matrix.to/#/!wBOJlzaOULZOALhaRh:polkadot.io/$tWGuCf9sIAk9winXFVw1APVPrRgUt9psfq3sHJPqHQ8?via=polkadot.io&via=matrix.org&via=parity.io
 2025-11-19 10:37 danicuki: Hey nikos, is March 2026 date confirmed for the JAM course? https://polkadot.academy/jam/ - do you have further details?
 2025-11-19 10:38 wirednkod: hey danicuki | Jamixir - yes but still under finalization. thats why I have not communicated a final date yet
   ↳ 2025-11-19 10:39 danicuki: If you have at least dates and location confirmed, JAM community members can start planning.
@@ -11933,7 +11934,44 @@ Also, is there any update regarding the early resolution of the M1 milestones? I
 
 The algorithm itself is pretty much final; once I'm finished with some extra bits and bobs I'll be making a PR soon-ish (possibly as soon as next week) to get this into GP proper. [edited]
   ↳ 2025-11-20 22:02 gav: And once it’s in the GP, that’ll probably be 0.8.0. 
+  ↳ 2025-11-21 07:32 dakkk: so the first release accepted for M1 will be 0.8.0?
+
+and 0.8.0 is likely 0.7.2 + new gas model + other fixes?
 2025-11-20 11:12 decentration: can anyone provide a conformance vector that they can confirm executes with 0.7.1 version? 
 2025-11-20 12:06 rustybot: WDYM? Are you aware of the  [jam conformance](https://matrix.to/#/#jam-conformance:matrix.org) matrix room and [repo](https://github.com/davxy/jam-conformance)?
  [edited]
 2025-11-20 12:08 rustybot: You will find many vectors there, as well as room for conformance-related discussions
+2025-11-21 04:33 shwchg: Hi I have some question about the grandpa and [jam-np pr#6](https://github.com/zdave-parity/jam-np/pull/6)
+
+1. Is the authority set the same as the validator set?
+
+2. Regarding CE151, what is the definition of a slot here?
+
+3. Regarding CE153, how do you determine that “the message size is too big”?
+Also, could you provide a more detailed explanation on how to use this CE?
+  ↳ 2025-11-21 10:39 matt_halpin: 1. Yes. I'll change those to validator set for consistency.
+  ↳ 2025-11-21 10:40 matt_halpin: 2. This is slot as defined in the GP (section 4.8)
+  ↳ 2025-11-21 10:42 matt_halpin: 3. This is really a networking/performance trade off and could be implementation specific. Will see if we need it to be explicitly specified.
+  ↳ 2025-11-21 10:44 matt_halpin: wrt CE153 there is more of an explanation on using warp sync fragments to sync finality in the Grandpa section above. Let me know if you need any other information.
+  ↳ 2025-11-21 11:04 shwchg: thanks!
+follow up question
+
+1. if we are using the validator set. we can get rid of the `authority id` and change the `ed25519pub` in the `Signed Message`... to `validator index`? 
+
+2. so the slot is the node's latest state? what's the usage for that slot
+  ↳ 2025-11-21 13:28 matt_halpin: 1. tbh Signed Message doesn't really need the public key at all as it's the same as the peer key that was used in the connection. I'll look at removing it.
+  ↳ 2025-11-21 13:30 matt_halpin: 2. This is to broadcast the latest slot that a validator is voting on. This is so that other validators can know if they're behind others. If all validators are operating normally they should all be voting on the same slot.
+2025-11-21 07:49 ascriv: I’m trying to understand the long-term economics of JAM.
+
+From what I’ve gathered, there’s an intention over the medium-long term to move toward a Polkadot-native stablecoin that would be used both for validator compensation and for paying for JAM execution.
+
+If that’s correct, I’m wondering how DOT’s long-term intrinsic value is expected to be maintained. In particular: if the stablecoin is backed uniquely by DOT, does DOT have additional independent utility in the JAM system that gives it non-circular intrinsic value?
+
+I’d really appreciate clarification on how the economic separation works between the reserve asset (DOT), the operational currency (the stablecoin), and the JAM execution markets.
+ [edited]
+2025-11-21 07:50 ascriv: 
+2025-11-21 08:14 xlchen: dot is the only token that can be used to pay for storage deposits on jam chain
+2025-11-21 10:38 matt_halpin: 
+2025-11-21 15:32 charliewinston14: Hi I have a question about auditing. If a node temporarily loses network connectivity and misses the positive judgments sent by auditors, how can it determine if a block is considered audited? Since there is no way to request these again, does it then need to then wait for grandpa votes?
+2025-11-21 15:37 dave: I believe you should just treat it like any other missed judgment
+2025-11-21 17:29 p.odowd: 

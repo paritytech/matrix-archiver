@@ -1,5 +1,5 @@
 # room: #jam-conformance:matrix.org
-# exported: 2025-11-21 03:33 UTC
+# exported: 2025-11-22 03:30 UTC
 2025-08-20 15:56 erin: tomusdrw: i've set up the archiver to archive this also, so hopefully will be up starting tomorrow
 2025-08-21 06:33 ascriv: https://github.com/davxy/jam-conformance/issues/26 should we not discourage open source implementations (for now)? [edited]
 2025-08-21 10:27 oliver.tale-yazdi: I think open source repos are fine. Other implementors are just not supposed to look at it
@@ -1204,3 +1204,20 @@ https://github.com/davxy/jam-conformance/pull/115
 2025-11-17 14:24 clearloop: https://github.com/davxy/jam-conformance/discussions/117
 2025-11-18 10:53 tomusdrw: 
 2025-11-19 14:00 danicuki: It's been a wild month, catching super hidden corner case bugs. Great work!
+2025-11-21 15:58 emielsebastiaan: What are the realistic preconditions that still need to be met before W3F can accept M1 submissions, and what timeline should teams reasonably expect for that process? 
+(Asking for a friend.)
+2025-11-21 20:31 davxy: We are currently transferring knowledge about the fuzzing tools to the w3f auditors team. I expect this process to be completed within one month. After that, timelines and next steps will be up to w3f.
+
+As one of the fuzzer devs, I can confirm that the minimum supported GP version is 0.7.1. Earlier versions lacked many features, and the engine was still buggy and immature, similar to your implementation two months ago. We did not backport all fixes and instead moved forward.
+
+The fuzzer for 0.7.1 will be properly tagged.
+
+Since we'll release a 0.7.2 node and fuzzer very soon (hopefuly next week), it may make more sense to target 0.7.2 because:
+1. The changes from 0.7.1 to 0.7.2 are trivial.
+2. 0.7.2 is the current GP version.
+3. Our 0.7.1 already includes a few 0.7.2 changes (accidentally included and never reverted)
+
+IMO, 0.7.2 is the right version to accept for the M1 official audit starting in early January.
+
+Of course my word is not authoritative. I'm not the one handing out the prize! [edited]
+2025-11-21 20:45 emielsebastiaan: Thank you, Davide. We want to express our appreciation for all the feedback we’ve received from the fuzzer activities so far; we wouldn’t be as far along without it.
