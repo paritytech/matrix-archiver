@@ -18,7 +18,7 @@ a:hover{color:#90caf9}
 em{font-style:italic}
 </style>
 <h1>#jam:polkadot.io</h1>
-<p><small>last updated 2025-11-23 03:43 UTC</small></p>
+<p><small>last updated 2025-11-24 03:41 UTC</small></p>
 <p><a href='room_log.txt'>⇩ plaintext</a> · <a href='../../'>⇦ all rooms</a></p>
 <hr>
 <div class='msg'><a class='ts' href='#$we4SYXTHwmKn094X9Zs_7mWUOoUVh4icvVdxD83RZfs'>#</a> <a class='ts' name='$we4SYXTHwmKn094X9Zs_7mWUOoUVh4icvVdxD83RZfs' href='https://matrix.to/#/!wBOJlzaOULZOALhaRh:polkadot.io/$we4SYXTHwmKn094X9Zs_7mWUOoUVh4icvVdxD83RZfs' target='_blank'>2024-04-20 02:08</a>&ensp;<span class='u' style='color:#d0709e'>johnjiao123</span>: </div>
@@ -11855,6 +11855,8 @@ follow up question
 2. so the slot is the node&#x27;s latest state? what&#x27;s the usage for that slot</div>
 <div class='msg reply'><a class='ts' href='#$W7KR6jCbRZEoL-8URuelkhphWqXjQXwJFCQBTTZhIwk'>#</a> <a class='ts' name='$W7KR6jCbRZEoL-8URuelkhphWqXjQXwJFCQBTTZhIwk' href='https://matrix.to/#/!wBOJlzaOULZOALhaRh:polkadot.io/$W7KR6jCbRZEoL-8URuelkhphWqXjQXwJFCQBTTZhIwk' target='_blank'>2025-11-21 13:28</a>&ensp;<span class='u' style='color:#bd3fa7'>matt_halpin</span>: 1. tbh Signed Message doesn&#x27;t really need the public key at all as it&#x27;s the same as the peer key that was used in the connection. I&#x27;ll look at removing it.</div>
 <div class='msg reply'><a class='ts' href='#$f1r0bvmYA-eRth5hTXfgLXVthBpLEX7v9NDy92RS5I4'>#</a> <a class='ts' name='$f1r0bvmYA-eRth5hTXfgLXVthBpLEX7v9NDy92RS5I4' href='https://matrix.to/#/!wBOJlzaOULZOALhaRh:polkadot.io/$f1r0bvmYA-eRth5hTXfgLXVthBpLEX7v9NDy92RS5I4' target='_blank'>2025-11-21 13:30</a>&ensp;<span class='u' style='color:#bd3fa7'>matt_halpin</span>: 2. This is to broadcast the latest slot that a validator is voting on. This is so that other validators can know if they&#x27;re behind others. If all validators are operating normally they should all be voting on the same slot.</div>
+<div class='msg reply'><a class='ts' href='#$iK0_YvUocDbPOMcrltIGraiTY22iPFatJY5wEnCbMvQ'>#</a> <a class='ts' name='$iK0_YvUocDbPOMcrltIGraiTY22iPFatJY5wEnCbMvQ' href='https://matrix.to/#/!wBOJlzaOULZOALhaRh:polkadot.io/$iK0_YvUocDbPOMcrltIGraiTY22iPFatJY5wEnCbMvQ' target='_blank'>2025-11-23 08:59</a>&ensp;<span class='u' style='color:#5adda3'>shwchg</span>: Matthew Halpin: 
+So I need to reset the round and change the validator set right after I apply/audit the block from new epoch?</div>
 <div class='msg'><a class='ts' href='#$-KI_Ifnqa-r7JTLZjRprlSQU378Pg35eG5IDlPkOTbc'>#</a> <a class='ts' name='$-KI_Ifnqa-r7JTLZjRprlSQU378Pg35eG5IDlPkOTbc' href='https://matrix.to/#/!wBOJlzaOULZOALhaRh:polkadot.io/$-KI_Ifnqa-r7JTLZjRprlSQU378Pg35eG5IDlPkOTbc' target='_blank'>2025-11-21 07:49</a>&ensp;<span class='u' style='color:#4036ac'>ascriv</span>: I’m trying to understand the long-term economics of JAM.
 
 From what I’ve gathered, there’s an intention over the medium-long term to move toward a Polkadot-native stablecoin that would be used both for validator compensation and for paying for JAM execution.
@@ -11869,3 +11871,14 @@ I’d really appreciate clarification on how the economic separation works betwe
 <div class='msg'><a class='ts' href='#$X69eofzF8i30Am6mz5nelCQHt7R9-zBA1l3oviG881o'>#</a> <a class='ts' name='$X69eofzF8i30Am6mz5nelCQHt7R9-zBA1l3oviG881o' href='https://matrix.to/#/!wBOJlzaOULZOALhaRh:polkadot.io/$X69eofzF8i30Am6mz5nelCQHt7R9-zBA1l3oviG881o' target='_blank'>2025-11-21 15:32</a>&ensp;<span class='u' style='color:#7875cf'>charliewinston14</span>: Hi I have a question about auditing. If a node temporarily loses network connectivity and misses the positive judgments sent by auditors, how can it determine if a block is considered audited? Since there is no way to request these again, does it then need to then wait for grandpa votes?</div>
 <div class='msg'><a class='ts' href='#$IBRp_VW497xCmBt3_I6BIngMuS68tWdf8RMrZAYNVVs'>#</a> <a class='ts' name='$IBRp_VW497xCmBt3_I6BIngMuS68tWdf8RMrZAYNVVs' href='https://matrix.to/#/!wBOJlzaOULZOALhaRh:polkadot.io/$IBRp_VW497xCmBt3_I6BIngMuS68tWdf8RMrZAYNVVs' target='_blank'>2025-11-21 15:37</a>&ensp;<span class='u' style='color:#c65779'>dave</span>: I believe you should just treat it like any other missed judgment</div>
 <div class='msg'><a class='ts' href='#$cLlmftRvfUVDfzAh1Y8Uwgfw05l58FQSa254nESB0to'>#</a> <a class='ts' name='$cLlmftRvfUVDfzAh1Y8Uwgfw05l58FQSa254nESB0to' href='https://matrix.to/#/!wBOJlzaOULZOALhaRh:polkadot.io/$cLlmftRvfUVDfzAh1Y8Uwgfw05l58FQSa254nESB0to' target='_blank'>2025-11-21 17:29</a>&ensp;<span class='u' style='color:#ce7b38'>p.odowd</span>: </div>
+<div class='msg'><a class='ts' href='#$HODY1YE5oia51Coov80-FzdI06D2wPTrCX0JLDF2o4k'>#</a> <a class='ts' name='$HODY1YE5oia51Coov80-FzdI06D2wPTrCX0JLDF2o4k' href='https://matrix.to/#/!wBOJlzaOULZOALhaRh:polkadot.io/$HODY1YE5oia51Coov80-FzdI06D2wPTrCX0JLDF2o4k' target='_blank'>2025-11-24 02:52</a>&ensp;<span class='u' style='color:#2979b3'>hitchhooker</span>: Basti.await: you mention last developer call need for fast proofs for jam light clients. ligerito could be good fit. <a href="https://crates.io/crates/ligerito" rel="noopener" target="_blank">https://crates.io/crates/ligerito</a> 
+~1.5s proving for 64mb blocks
+<pre><code class=''>[I] alice@atomman ~ $ ligerito generate --size 24 | ligerito prove --size 24 | ligerito verify --size 24
+Generating 2^24 = 16777216 elements with pattern &#x27;random&#x27;
+prove: 2^24 GF(2^32), sha256 [release SIMD]
+result: 1543.41ms, 1.09e7 elem/s, 246771 bytes
+verify: 2^24 GF(2^32), 246771 bytes, sha256 transcript
+Verifier: Got initial challenges: [BinaryElem32(BinaryPoly32(4128906081)), BinaryElem32(BinaryPoly32(4080384293)), BinaryElem32(BinaryPoly32(2606407059)), BinaryElem32(BinaryPoly32(3200350211)), BinaryElem32(BinaryPoly32(141099347)), BinaryElem32(BinaryPoly32(3708897727))]
+result: VALID 249.40ms
+VALID
+</code></pre></div>

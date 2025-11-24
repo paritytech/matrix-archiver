@@ -1,5 +1,5 @@
 # room: #jam:polkadot.io
-# exported: 2025-11-23 03:43 UTC
+# exported: 2025-11-24 03:41 UTC
 2024-04-20 02:08 johnjiao123: 
 2024-04-20 02:09 johnjiao123: 
 2024-05-30 21:48 nradko: Hey everyone,
@@ -11961,6 +11961,8 @@ follow up question
 2. so the slot is the node's latest state? what's the usage for that slot
   ↳ 2025-11-21 13:28 matt_halpin: 1. tbh Signed Message doesn't really need the public key at all as it's the same as the peer key that was used in the connection. I'll look at removing it.
   ↳ 2025-11-21 13:30 matt_halpin: 2. This is to broadcast the latest slot that a validator is voting on. This is so that other validators can know if they're behind others. If all validators are operating normally they should all be voting on the same slot.
+  ↳ 2025-11-23 08:59 shwchg: Matthew Halpin: 
+So I need to reset the round and change the validator set right after I apply/audit the block from new epoch?
 2025-11-21 07:49 ascriv: I’m trying to understand the long-term economics of JAM.
 
 From what I’ve gathered, there’s an intention over the medium-long term to move toward a Polkadot-native stablecoin that would be used both for validator compensation and for paying for JAM execution.
@@ -11975,3 +11977,15 @@ I’d really appreciate clarification on how the economic separation works betwe
 2025-11-21 15:32 charliewinston14: Hi I have a question about auditing. If a node temporarily loses network connectivity and misses the positive judgments sent by auditors, how can it determine if a block is considered audited? Since there is no way to request these again, does it then need to then wait for grandpa votes?
 2025-11-21 15:37 dave: I believe you should just treat it like any other missed judgment
 2025-11-21 17:29 p.odowd: 
+2025-11-24 02:52 hitchhooker: Basti.await: you mention last developer call need for fast proofs for jam light clients. ligerito could be good fit. https://crates.io/crates/ligerito 
+~1.5s proving for 64mb blocks
+```
+[I] alice@atomman ~ $ ligerito generate --size 24 | ligerito prove --size 24 | ligerito verify --size 24
+Generating 2^24 = 16777216 elements with pattern 'random'
+prove: 2^24 GF(2^32), sha256 [release SIMD]
+result: 1543.41ms, 1.09e7 elem/s, 246771 bytes
+verify: 2^24 GF(2^32), 246771 bytes, sha256 transcript
+Verifier: Got initial challenges: [BinaryElem32(BinaryPoly32(4128906081)), BinaryElem32(BinaryPoly32(4080384293)), BinaryElem32(BinaryPoly32(2606407059)), BinaryElem32(BinaryPoly32(3200350211)), BinaryElem32(BinaryPoly32(141099347)), BinaryElem32(BinaryPoly32(3708897727))]
+result: VALID 249.40ms
+VALID
+```
