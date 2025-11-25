@@ -1,5 +1,5 @@
 # room: #jam:polkadot.io
-# exported: 2025-11-24 03:41 UTC
+# exported: 2025-11-25 03:35 UTC
 2024-04-20 02:08 johnjiao123: 
 2024-04-20 02:09 johnjiao123: 
 2024-05-30 21:48 nradko: Hey everyone,
@@ -11989,3 +11989,4 @@ Verifier: Got initial challenges: [BinaryElem32(BinaryPoly32(4128906081)), Binar
 result: VALID 249.40ms
 VALID
 ```
+  ↳ 2025-11-24 08:21 bkchr: Yeah I'm not an expert in this topic :D Probably jeff is the better person to talk to about this. But as this is your library and if you may get some time, seeing a real working example of proving grandpa era changes would be nice
