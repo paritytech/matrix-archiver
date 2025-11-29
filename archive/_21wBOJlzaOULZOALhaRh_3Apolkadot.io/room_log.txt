@@ -1,5 +1,5 @@
 # room: #jam:polkadot.io
-# exported: 2025-11-28 03:33 UTC
+# exported: 2025-11-29 03:33 UTC
 2024-04-20 02:08 johnjiao123: 
 2024-04-20 02:09 johnjiao123: 
 2024-05-30 21:48 nradko: Hey everyone,
@@ -11963,6 +11963,15 @@ follow up question
   ↳ 2025-11-21 13:30 matt_halpin: 2. This is to broadcast the latest slot that a validator is voting on. This is so that other validators can know if they're behind others. If all validators are operating normally they should all be voting on the same slot.
   ↳ 2025-11-23 08:59 shwchg: Matthew Halpin: 
 So I need to reset the round and change the validator set right after I apply/audit the block from new epoch?
+  ↳ 2025-11-24 15:03 matt_halpin: You change validator set (and reset round number to 0) after finalizing a set change block. In normal operation the first block of an epoch will be a set change block.
+  ↳ 2025-11-24 16:31 sourabhniyogi: For [CE153 'Warp sync fragments'](https://github.com/zdave-parity/jam-np/blob/03df0dbd14dea41980423d7aab821924ddd79c74/simple.md#grandpa), with `Grandpa Justification = Round Number ++ Set Id ++ Commit ++ Votes Ancestries` and `Votes Ancestries = len++[Header]`, all responders have to store every `Commit = Header Hash ++ Slot ++ len++[Signed Precommit]` votes for every validator set since the genesis set to respond.  Check?
+
+How is the light node receiver supposed to verify `Signed Precommit` vote unless there is a way to fetch and validate the validators pub keys for each set (from the previous set change).  I believe the `Ed25519 Public` exists in `Signed Precommit` to not need to fetch any old state.  However, I think there has to be a BMT proof for the entire validator set against the Header's StateRoot as well, or instead of this -- otherwise a node could lie to the light client?  Then the last BMT proof the light client would verify would be the current/upcoming validator set doing votes in the current epoch/round.  We need proofs against JAM State root within headers basically.
+
+Actually, I was hoping for a super tight connection between Sec 18 (with a very compact aggregate BLS Signature) and Sec 19 Grandpa to be part of CE153.   Because, at the end of the day, the light client has the same problem as what "third party" systems have (what Sec 18 is supposed to solve with BLS aggregate signatures) in this warp sync process.  We should want the majority of the light sync process to consist of verifying Validator set's aggregate BLS signatures and verifying the BLS pub keys against the state root finalized at each epoch.  However, the problem is the BLS signatures are about hashes of MMR content and the Grandpa votes are about header hashes, and it may be essential to bring these into alignment?   Could we have a different CE153 design based off aggregate BLS signatures? [edited]
+  ↳ 2025-11-25 10:00 matt_halpin: Responders need to store justifications for all set change blocks since genesis.
+There is a warp sync fragment (header and justification) for every set change block. Being set change blocks the headers include epoch markers, which include Ed25519 public keys for all the new validators, as described in GP section 6.6. These are the validator keys needed for verifying the justification of the next set change block. Does that make sense or have I missed something?
+  ↳ 2025-11-25 20:09 sourabhniyogi: Makes enough sense to execute on 
 2025-11-21 07:49 ascriv: I’m trying to understand the long-term economics of JAM.
 
 From what I’ve gathered, there’s an intention over the medium-long term to move toward a Polkadot-native stablecoin that would be used both for validator compensation and for paying for JAM execution.
@@ -11990,3 +11999,66 @@ result: VALID 249.40ms
 VALID
 ```
   ↳ 2025-11-24 08:21 bkchr: Yeah I'm not an expert in this topic :D Probably jeff is the better person to talk to about this. But as this is your library and if you may get some time, seeing a real working example of proving grandpa era changes would be nice
+2025-11-24 19:52 sourabhniyogi: Is it a silly or great idea to have fast proof generation done within `refine` so we don't need off-refine proving?  
+  ↳ 2025-11-24 20:06 bkchr: Why do proof generation inside of refine? Sounds too costly to me.
+  ↳ 2025-11-24 20:08 sourabhniyogi: We get 5B gas in refine.  With 300ms-600ms proving time, and with PVM gas tracking time accurately @  1B gas/sec (check?), 300ms-600ms is not costly because, at least with Polkadot's CoreTime model, neither the core time buyer nor WP builder pay for gas -- instead, the core time buyer pays for CoreTime, in a "all you can eat this month" type way, and the builder submits `refine` able WPs to a core.   Right? [edited]
+  ↳ 2025-11-24 21:29 bkchr: Not sure I understand you? 
+  ↳ 2025-11-24 21:30 bkchr: What you mean by all you can eat? You still need to pay for the all you can eat 
+  ↳ 2025-11-24 21:32 sourabhniyogi: Yes, via CoreTime auctions, not by paying for gas.   Once you pay for your coretime, you don't care if your refines cost 4.4B gas or 5B.  So you can afford to throw a 600ms proof into your refine.
+  ↳ 2025-11-24 21:33 bkchr: This assumes that core time is dirt cheap?
+  ↳ 2025-11-24 21:34 bkchr: I still don't get why you want to build a proof on chain, when you can just build if off chain?
+  ↳ 2025-11-24 21:35 sourabhniyogi: Whatever it costs, it costs that.   The point is that once you pay for that, it doesn't cost extra to do it within refine.  So "sounds too costly" doesn't make sense.
+  ↳ 2025-11-24 21:37 bkchr: Why do you want to do this in refine? What is the advantage of this?
+  ↳ 2025-11-24 21:42 sourabhniyogi: Fast proofs for service-aware jam light clients that doesn't require additional off-chain infrastructure, or additional off-chain costs.  Simpler = better =)
+  ↳ 2025-11-24 21:45 bkchr: But someone will need to build the refine operation
+  ↳ 2025-11-24 21:45 bkchr: Aka they will need to run it before once
+  ↳ 2025-11-24 21:45 bkchr: Aka you need off-chain architecture any way
+  ↳ 2025-11-24 23:26 sourabhniyogi: Yes, the service builder => guarantor => auditor all do the same `refine` operation with the service builder being the first actor to do the refine, then guarantors then auditors, with a dozen or so actors.    
+
+Many people currently call this `refine` process "off-chain architecture" to help them fit into their blockchain-centric view of the world.    I think its useful to get away from this "off-chain architecture" because JAM organizes refine "off-chain architecture" as a key solution to the 'sharding problem'.   It will take people some time to stop considering the `refine` process mere "off-chain architecture" and one that provides massive DA and even light client proof generation if its "fast".  
+
+If I can generate a compact proof for light clients for a JAM Service   within refine cheaply ("cheaply" for me is < 10% of available `refine` gas  of 5B right now) without even more "off-chain architecture" than what JAMs "off-chain" architecture already provides, why *wouldn't* I include this into refine?  
+  ↳ 2025-11-25 05:53 bkchr: Because it should be actually much cheaper to not do it in refine. And you probably don't need to have consensus around building a proof (which jam will provide you when you do it in refine) 
+  ↳ 2025-11-25 13:54 sourabhniyogi: I can tell you've made up your mind about this.  Ok, I'm sold!
+2025-11-24 21:49 emielsebastiaan: I have a question regarding Rule 13 of the JAM Prize.
+
+Rule 13 states: "Following the accepted completion of each milestone, teams may nominate one Fellowship candidate/member to be promoted directly to rank III and (optionally) a second candidate/member to rank II (more information about the ranks can be found in the Polkadot Fellowship Manifesto)."
+
+Could anyone clarify how this should be interpreted in practice?
+
+1. Nominations after Milestone 1. Does this mean that after completing Milestone 1, our team may nominate one person for direct promotion to Rank III, and one person for direct promotion to Rank II?
+
+For example: A team member acting as chief architect of our PyJAMaz implementation could be put forward for Rank III, and another team member who architected major subsystems (e.g. PVM, networking, telemetry) could be put forward for Rank II. Is this the correct understanding?
+
+
+2. Expectations for such Fellowship members: Beyond the general descriptions in the Fellowship Manifesto, are there any additional expectations or aims for members promoted through the JAM Milestone achievement mechanism?
+
+For example: Since the milestone work is already remunerated through the JAM Prize, I assume it does not count as Fellowship contribution. But what types of JAM-related activities would be encouraged for Fellowship members?
+- SDK development?
+- M1 Delivery peer review?
+- Broader ecosystem support for the implementation?
+
+I’d love to hear if there are already emerging norms or expectations around this especially for teams working on JAM implementations.
+  ↳ 2025-11-24 23:53 celadari: I'm not sure but I think the work for jam is covered by the fellowship.
+M1 is a prize and huge part of it is in vested dot and most people need to pay their rent, their food etc
+
+Now if you want to advance in the ranks further then I guess more work would be expected 🤔
+  ↳ 2025-11-25 06:27 dakkk: Jan Bujak: 
+2025-11-25 08:27 wirednkod: GM all - Not sure if this is the best channel to ask but here I go. While structuring the JAM Course of PBA - I have some questions for the teams that build on JAM:
+A - Do you use specific tools that makes it easier for you to build a service? 
+B - As a team - do you have an SDK (e.g.  https://hackmd.io/@polkadot/jamsdk or http://github.com/spacejamapp/jade) 
+C - If you answer no on B - are you planning on having one ready? And if yes - when?
+  ↳ 2025-11-25 09:00 emielsebastiaan: A. Our team (PyJAMaz) experimented with building services roughly half a year ago when Parity's SDK was released.
+We stopped with this activity when the SDK was no longer available for the 0.6.7+ or 0.6.8+ range.
+I noticed a new release for the PVM Builder was published 6 days ago (https://crates.io/crates/jam-pvm-builder/versions).
+
+B. We have a very very very early prototype of a minimal SDK which would allow for Python(esk) built services for JAM/PVM. 
+
+C. It is not a priority since all our resources are currently in the last mile M1 conformance and M2 Delivery. I doubt we have anything worthwhile ready in February/March for the JAM Course of PBA.
+  ↳ 2025-11-25 10:10 wirednkod: Thank you Emiel 
+  ↳ 2025-11-25 15:36 sourabhniyogi: A. Polkatool
+B. No
+C. Yes, mid-2026, but can accelerate to March! [edited]
+  ↳ 2025-11-25 15:43 wirednkod: Thank you sourabhniyogi . Can you please give me a link to the Polkatool?
+  ↳ 2025-11-26 22:48 sourabhniyogi: https://github.com/paritytech/polkavm/tree/master/tools/polkatool
+2025-11-25 08:58 emielsebastiaan: 

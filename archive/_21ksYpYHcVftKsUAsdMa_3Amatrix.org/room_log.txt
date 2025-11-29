@@ -1,5 +1,5 @@
 # room: #jam-conformance:matrix.org
-# exported: 2025-11-28 03:34 UTC
+# exported: 2025-11-29 03:34 UTC
 2025-08-20 15:56 erin: tomusdrw: i've set up the archiver to archive this also, so hopefully will be up starting tomorrow
 2025-08-21 06:33 ascriv: https://github.com/davxy/jam-conformance/issues/26 should we not discourage open source implementations (for now)? [edited]
 2025-08-21 10:27 oliver.tale-yazdi: I think open source repos are fine. Other implementors are just not supposed to look at it
@@ -1221,3 +1221,95 @@ IMO, 0.7.2 is the right version to accept for the M1 official audit starting in 
 
 Of course my word is not authoritative. I'm not the one handing out the prize! [edited]
 2025-11-21 20:45 emielsebastiaan: Thank you, Davide. We want to express our appreciation for all the feedback we’ve received from the fuzzer activities so far; we wouldn’t be as far along without it.
+2025-11-24 18:12 danicuki: Doubt about `info` host call. On 0.7.1, it uses w11 and w12 for f and l. On 0.7.2 it uses w9 and w10. Which one are you using on current conformance reports?
+2025-11-24 20:09 davxy: Our implementation unintentionally included the changes formally introduced in version 0.7.2 from the very beginning. When this was noticed, I opened https://github.com/gavofyork/graypaper/pull/480 (also mentioned in 0.7.0 vectors https://github.com/davxy/jam-test-vectors/pull/90)
+2025-11-24 20:12 danicuki: Thanks for clarification.
+2025-11-24 20:54 celadari: Hi davxy,
+Kind reminder of https://github.com/davxy/jam-test-vectors/issues/107 if you can harmonize test vectors json formats betwen `stf/preimages` and `stf/accumulate` for version 0.7.2 please :)
+2025-11-24 21:17 davxy: I'll do it in https://github.com/davxy/jam-test-vectors/pull/108
+  ↳ 2025-11-24 21:26 celadari: Thanks
+2025-11-25 08:27 nikos-pba: GM all - Not sure if this is the best channel to ask but here I go. While structuring the JAM Course for PBA I have some questions for the teams that build on JAM:
+A - Do you use specific tools that makes it easier for you to build a service? 
+B - As a team - do you have an SDK (e.g.  https://hackmd.io/@polkadot/jamsdk or http://github.com/spacejamapp/jade) 
+C - If you answer no on B - are you planning on having one ready? And if yes - when? [edited]
+  ↳ 2025-11-25 15:46 oliver.tale-yazdi: Shilling this again https://playground.jamcha.in/ together with our C SDK https://github.com/JamBrains/service-sdk/
+  ↳ 2025-11-25 15:47 oliver.tale-yazdi: Cisco used that in his presentation at the last PBA afaik
+  ↳ 2025-11-25 15:47 nikos-pba: This is already noted dear sir 😉 
+  ↳ 2025-11-25 15:47 nikos-pba: But thank you anyways Oliver Tale-Yazdi 🙏
+2025-11-25 15:42 hanayukii: image.png
+2025-11-25 15:42 hanayukii: Hi, we would like to double-check the expected behavior of the VRF seal validation(Hs validation) in the current test vectors.
+
+During our implementation and debugging across many combinations, we discovered:
+When validating VRF seal using the postState, all test vectors pass.
+But when validating using the priorState, at least two test vectors fail during header seal verification.
+
+After our internal discussion, based on the attach diagrams and the slot-transition flow:
+
+From the logic side we assume the VRF seal for the importing block should be validated look more likely to built from priorState?
+
+Because the importing block header exists before entering the STF, and the postState is only produced after executing the STF, so postState should not influence validation of the block being imported.
+
+However, in the current test vectors:
+Using postState → all pass
+Using priorState → at least two vectors fail
+1756832925/00000024.json (post:ticket, prior:bandersnatch)
+1756814312/00000025.json Expected H_s error can only reproduced on postState
+
+So we would like to confirm:
+Is the expected behavior of the test vectors to validate using postState?
+If postState is indeed expected, we would like to understand:
+Based on the diagram Why VRF validation of an importing block depends on postState?
+  ↳ 2025-11-25 16:02 oliver.tale-yazdi: The current header and state do not know if the next slot author will produce a block.  
+So only the kappa_prime state (check definition of H_a) can tell you who can seal [edited]
+2025-11-25 16:02 dave: This is covered in section 6 of the GP, would suggest you check your implementation against that
+2025-11-25 16:03 davxy: Some of the post-state bits  must be used (e.g., the validator set). The GP expressions should be aligned with this
+2025-11-25 17:20 davxy: FYI, I removed the reports table from the README because it was too cumbersome to maintain. The result summaries are now published [here](https://github.com/davxy/jam-conformance/tree/main/fuzz-reports/0.7.1/summaries)
+
+2025-11-26 10:11 danicuki: GM jammers. Could anyone help us providing a PVM trace for cases `1763488212` (block 189) and `1763371998` (block 1108)
+  ↳ 2025-11-26 22:12 tomusdrw: I just rolled out an update at http://state.fluffylabs.dev/ where you can load the STF file and see our execution log with host call traces. Let me know if you need something more low-level.
+  ↳ 2025-11-27 10:12 arjanz: Regarding `1763488212`, you may want to verify your constants. We spent 2 days before discovering we had a different `W_C` resulting in a storage item diff (constant was written in storage key `9fd75...ecbf2`)
+  ↳ 2025-11-27 10:23 arjanz: Here are our logs when running these traces on our fuzzer target in verbose mode: https://gist.github.com/arjanz/a0202e7a329a01aff2bb33ba4ec18783
+  ↳ 2025-11-27 20:47 danicuki: > <@arjanz:matrix.org> Regarding `1763488212`, you may want to verify your constants. We spent 2 days before discovering we had a different `W_C` resulting in a storage item diff (constant was written in storage key `9fd75...ecbf2`)
+
+Indeed I discovered this morning that the issue was exactly the Constants. Thanks for the help. 
+2025-11-26 13:44 hanayukii: 
+Sorry I didn't described the question clear, our cases all passed by using the state after safrole stf, but we think it looks a bit conflict with the attatched diagram(prior(11) + import_block(12) -> post(12)), so we just want to clarify it this is expected to validate after the stf.
+What, we would like to clarify one specific question regarding how the single JSON test vectors are generated.
+
+For each JSON test case, the file contains:
+preState
+postState
+header (including the VRF seal Hs)
+
+Our question is:
+ Is the VRF seal (Hs) inside the header generated using this json test case’s postState, or using the previous block’s postState (i.e., the preState of the current JSON)?  [edited]
+2025-11-26 14:44 dave: This is all specified in the GP, sections 5&6. preState = sigma, postState = sigma', header = H. IDK where the diagram is from but it is presumably only intended to give a high-level overview. The formal definition of the STF is in the GP. If that is insufficient then we can fix it, but I believe it covers your question. Have you read sections 5&6 of the GP?
+2025-11-26 22:40 sourabhniyogi: For anyone who needs 0.7.1 PVM Traces for either jam-test-vectors or jam-conformance, we posted ours here:
+ https://github.com/jam-duna/jamtestnet/
+We use the same format as JavaJAM for PVM Traces.  
+
+It would be great to have an online-meetup -- at the very least to see each others faces -- may I suggest Dec 9 or 16 at 5pm Lisbon time?
+2025-11-27 14:29 danicuki: Thanks @sourab. This is really helput. Great idea to have a meetup. Dec 9 would be great
+2025-11-27 14:32 danicuki: Could someone share the hex string of the fetch binary (c)?   I believe there is a difference in our implementation constants, which is causing mismatch with conformance tests. This is our c value:
+```
+0x0a00000000000000010000000000000064000000000000000200200000000c000000809698000000000080f0fa020000000000ca9a3b00000000002d3101000000000800100008000300180000000300080006005000040080000500060000fa00008070d20000093d0004000000000c00000204000000c0000080000000000c00000a000000
+```
+
+2025-11-27 14:41 danicuki: A good idea would be to have this binary documented in the conformance tests README file, it is an easy easy to check if a node is running with the same config as expected by the conformance tests
+2025-11-27 15:38 dave: Hmm ideally the protocol parameters would be included in the tests themselves. In any case it is possible to get the tiny params out of `polkajam` with `polkajam --chain=dev dump-spec spec.json`. That will write out the spec for the built-in "dev" chain (which uses the tiny params) to `spec.json` as per JIP-4 (https://github.com/polkadot-fellows/JIPs/blob/main/JIP-4.md). The `protocol_parameters` field has the same format as the binary returned by the PVM fetch host-call.
+2025-11-27 17:03 danicuki: Indeed we were using 0.7.2 value for W\_B - thanks for the help [edited]
+2025-11-28 14:16 davxy: Hey. Please try our 0.7.2 test vectors, including both STF and traces.
+
+https://github.com/davxy/jam-test-vectors/pull/108
+
+2025-11-28 15:04 dakkk: > <@davxy:matrix.org> Hey. Please try our 0.7.2 test vectors, including both STF and traces.
+> 
+> https://github.com/davxy/jam-test-vectors/pull/108
+> 
+
+I can't see updated traces in this PR
+2025-11-28 15:23 jaymansfield: Seeing the same. Only stf/accumulate and stf/reports folders look to be updated.
+2025-11-28 15:39 davxy: Oops, just pushed now.
+2025-11-28 20:29 davxy: FYI: upcoming PolkaJam nighty release implements GP v0.7.2.
+
+Breaking change for Safrole tickets distribution (CE 131/132): our previous impl was incorrectly including the current epoch index (i.e., target epoch index - 1). We are now aligned with CE 131/132, and the epoch index is set to the epoch in which the ticket will actually be used (the target epoch index).
