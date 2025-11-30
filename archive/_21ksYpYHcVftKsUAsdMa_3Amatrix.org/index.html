@@ -18,7 +18,7 @@ a:hover{color:#90caf9}
 em{font-style:italic}
 </style>
 <h1>#jam-conformance:matrix.org</h1>
-<p><small>last updated 2025-11-29 03:34 UTC</small></p>
+<p><small>last updated 2025-11-30 03:44 UTC</small></p>
 <p><a href='room_log.txt'>⇩ plaintext</a> · <a href='../../'>⇦ all rooms</a></p>
 <hr>
 <div class='msg'><a class='ts' href='#$_9hLINsChVG8rufQkmbqp-fIbsNyK1YqpS3C9S7QZHU'>#</a> <a class='ts' name='$_9hLINsChVG8rufQkmbqp-fIbsNyK1YqpS3C9S7QZHU' href='https://matrix.to/#/!ksYpYHcVftKsUAsdMa:matrix.org/$_9hLINsChVG8rufQkmbqp-fIbsNyK1YqpS3C9S7QZHU' target='_blank'>2025-08-20 15:56</a>&ensp;<span class='u' style='color:#787fdf'>erin</span>: tomusdrw: i&#x27;ve set up the archiver to archive this also, so hopefully will be up starting tomorrow</div>
@@ -1313,3 +1313,5 @@ I can&#x27;t see updated traces in this PR</div>
 <div class='msg'><a class='ts' href='#$NAbKIaLfHCFCog8phOfgcN3IOIznCx7QF558HNnTKSM'>#</a> <a class='ts' name='$NAbKIaLfHCFCog8phOfgcN3IOIznCx7QF558HNnTKSM' href='https://matrix.to/#/!ksYpYHcVftKsUAsdMa:matrix.org/$NAbKIaLfHCFCog8phOfgcN3IOIznCx7QF558HNnTKSM' target='_blank'>2025-11-28 20:29</a>&ensp;<span class='u' style='color:#c9419d'>davxy</span>: FYI: upcoming PolkaJam nighty release implements GP v0.7.2.
 
 Breaking change for Safrole tickets distribution (CE 131/132): our previous impl was incorrectly including the current epoch index (i.e., target epoch index - 1). We are now aligned with CE 131/132, and the epoch index is set to the epoch in which the ticket will actually be used (the target epoch index).</div>
+<div class='msg'><a class='ts' href='#$HQXEjbZ8_XRDG8dZjRwx58txArzV3FkJaZe0k755E-E'>#</a> <a class='ts' name='$HQXEjbZ8_XRDG8dZjRwx58txArzV3FkJaZe0k755E-E' href='https://matrix.to/#/!ksYpYHcVftKsUAsdMa:matrix.org/$HQXEjbZ8_XRDG8dZjRwx58txArzV3FkJaZe0k755E-E' target='_blank'>2025-11-29 12:15</a>&ensp;<span class='u' style='color:#c9419d'>davxy</span>: Oh, I forgot to mention another Out-of-GP breaking change: we are now compliant with the <a href="https://github.com/polkadot-fellows/JIPs/blob/main/JIP-1.md#host-call-specification" rel="noopener" target="_blank">JIP-1</a> log specification (return <code>WHAT</code> and consume 10 gas units).</div>
+<div class='msg'><a class='ts' href='#$ltRZ2wmxZZvKYNDRld7qtEZ08XI-8-Qf_z5SQwuKD9k'>#</a> <a class='ts' name='$ltRZ2wmxZZvKYNDRld7qtEZ08XI-8-Qf_z5SQwuKD9k' href='https://matrix.to/#/!ksYpYHcVftKsUAsdMa:matrix.org/$ltRZ2wmxZZvKYNDRld7qtEZ08XI-8-Qf_z5SQwuKD9k' target='_blank'>2025-11-29 12:33</a>&ensp;<span class='u' style='color:#c9419d'>davxy</span>: These breaking changes will be explicitly included in the polkajam 0.7.2 release notes, which will be published once we receive some feedback on the test vectors rc</div>

@@ -1,5 +1,5 @@
 # room: #jam:polkadot.io
-# exported: 2025-11-29 03:33 UTC
+# exported: 2025-11-30 03:43 UTC
 2024-04-20 02:08 johnjiao123: 
 2024-04-20 02:09 johnjiao123: 
 2024-05-30 21:48 nradko: Hey everyone,
@@ -11972,6 +11972,13 @@ Actually, I was hoping for a super tight connection between Sec 18 (with a very 
   ↳ 2025-11-25 10:00 matt_halpin: Responders need to store justifications for all set change blocks since genesis.
 There is a warp sync fragment (header and justification) for every set change block. Being set change blocks the headers include epoch markers, which include Ed25519 public keys for all the new validators, as described in GP section 6.6. These are the validator keys needed for verifying the justification of the next set change block. Does that make sense or have I missed something?
   ↳ 2025-11-25 20:09 sourabhniyogi: Makes enough sense to execute on 
+  ↳ 2025-11-29 03:59 sourabhniyogi: Matthew Halpin:   Where are you getting the "stakes" of the validators from?  
+
+I believe the end game is to get it from AssetHub staking module  but in the meantime we need some kind of JAM State or JAM DA plan instead of "oh, they are all the same value" (which works as a stub but not much more).  
+
+Is getting from JAM DA even a possibility or should we use a place in JAM State to hold stakes
+  ↳ 2025-11-29 11:33 dave: Staking is not part of JAM really, it will be handled by a service. JAM nodes don't need to know about stakes, they just get told the validator sets by this service using the designate-validators host call. Some channel is needed back to this service to get misbehaving validators slashed of course, I don't know exactly how that will work. Guarantor/auditor misbehaviour is recorded on chain already by the disputes stuff. I don't think there is anything to record eg GRANDPA or Safrole equivocations, not sure what exactly is needed there but I would guess something...
+  ↳ 2025-11-29 11:44 bkchr: For safrole it is basically the equivocating headers and a proof that the validator was part of the active set in the slashable period 
 2025-11-21 07:49 ascriv: I’m trying to understand the long-term economics of JAM.
 
 From what I’ve gathered, there’s an intention over the medium-long term to move toward a Polkadot-native stablecoin that would be used both for validator compensation and for paying for JAM execution.
@@ -12062,3 +12069,5 @@ C. Yes, mid-2026, but can accelerate to March! [edited]
   ↳ 2025-11-25 15:43 wirednkod: Thank you sourabhniyogi . Can you please give me a link to the Polkatool?
   ↳ 2025-11-26 22:48 sourabhniyogi: https://github.com/paritytech/polkavm/tree/master/tools/polkatool
 2025-11-25 08:58 emielsebastiaan: 
+2025-11-29 10:30 gav: Validators won’t have stakes; there are no plans to use PoS for validator selection. 
+2025-11-29 11:59 gav: Grandpa misbehaviour will be handled in the same way - some logic on the parachains which handles validator selection. 

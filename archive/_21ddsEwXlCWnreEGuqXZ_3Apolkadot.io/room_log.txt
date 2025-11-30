@@ -1,5 +1,5 @@
 # room: #graypaper:polkadot.io
-# exported: 2025-11-29 03:34 UTC
+# exported: 2025-11-30 03:44 UTC
 2024-04-17 20:29 syed: https://matrix.to/#/!hyzRkDqDthePbodYFz:parity.io/$f_DMsIEcDXZegw6Sabnehzc-LrdDQkmq5MbxDDyoZxY?via=parity.io&via=web3.foundation
 
 2024-04-17 20:29 syed: 
@@ -6837,3 +6837,46 @@ I also made the mistake of thinking accumulate would order txs through some orde
 To take the most common use case of transfers, if Alice sends 1USD to Bob, and it touches the Alice shard, the Bob shard and a shard representing Alices tx + receipt -- well, that single action results in 3 shard commitments.  Another tx from Charlie to Dave will touch 3 different shards, in all likelihood.  If Alice to Bob and Charlie to Dave touch disjoint sets of shards, then the builder can put them in the same WP on the same core.  With W\_R=48K, a refine/core can only output 6K shard commitments, thus each refine/core can output only 2K transfer txns, but across 341 cores you could get 698K transactions -- if you were lucky and didn't hit the "birthday paradox" -- if this happens every 6s, that's basically > 100% of a 100K TPS Spammening.    You can definitely do a LOT more as multiple cores get hits on the same shard, and so long as the builder queues up WPs with prereqs, everything should work without too much jamming up at all.  I think we hit the IO bottleneck of updating 2MM keys (6K * 341) every accumulate.
 
 A change of basis is not required.  Thank you all again. [edited]
+2025-11-24 15:28 danicuki: I have a doubt about host call `info = 5`:
+
+the first condition is `v = ∇ ∨ No⋅⋅⋅+l ⊆/  V∗`
+
+but `v` will never be ∇, as it is defined as a binary or `nil`
+
+in this case, the return condition `v = ∅` shouldn't come first?   
+
+2025-11-25 02:39 sourabhniyogi: What are the rewards vs penalties for an assurer for providing vs not providing assurances in the very long 28 day window after the immediate assurance?  If > 2/3 of assurers just forgot their JAM DA content after N days for N \< 28, what happens?  Do we just say "honest behavior is well-defined and expected of at least 2/3 of validators" as [here](https://graypaper.fluffylabs.dev/#/ab2cdbd/19c50519c505?v=0.7.2) and consider the [CE141 assurance](https://github.com/zdave-parity/jam-np/blob/main/simple.md#ce-141-assurance-distribution) sufficient, or is there a JAM DA sampling process for the entire 28 day period that will result in rewards/penalties accordingly?
+
+It seems that Polkadot's Coretime revenue model (thought of as costs for core computing only AFAICT) could map JAM DA core statistics (export counts) into costs for service users and thus payments to honest storers who pass long-term JAM DA sampling processes, as a reward.   There is a reference of "validators vote on their impression of each other's efforts" [here](https://graypaper.fluffylabs.dev/#/ab2cdbd/188105188105?v=0.7.2) but not clear how we're going to mechanize this -- is this a  concern to be addressed within GP or outside GP? [edited]
+2025-11-25 07:42 ascriv: Thinking about the on-transfer change in 0.7.1: it seems now that a service only receives the incoming balance in the accumulate invocation (B.9), then it will be common for a transfer not to actually reach its destination, in the case that the receiver is accumulating in the same batch as the sender, e.g.
+
+Is this intentional? [edited]
+2025-11-25 07:46 ascriv: Ah I think I understand, receiving services are forced to accumulate in the following batch [edited]
+2025-11-25 08:35 jeff: That sounds like the paper miss-described the design, probably because it's not exactly part of the relay chain, and so the paper doesn't need to describe it.
+
+Approval checking aka auditing work payouts must be based upon "opinions", and regulated using a tit-for-tat game, because few other designs make sense.  Validators should participate in this game, but it never goes onto the RC, and nor does anything else too rleated to payments, so if they do it wrong then that's only bad for the validator operation, not bad for the network.
+
+Availability is inherently too subjective even to do payout by "opinions."  Instead we need a statistical micropayment tit-for-tat game which uses some reweighting internally based upon the approval payouts.
+
+All this is spelled out in RFC#119.
+
+Polkadot does not care about availability after a few hours, or really even after a few min.  If a parachain or service moves quickly, then availability is much too slow for block building anyways, hence all our censorship resistance work for asset hub.
+
+28 day availability really fits a very different niche:  slow stateless services.
+
+Stateless services are awesome because they cannot be captured, so you can make them very resilient without doing the ugly complex censorship resistance shit.  We'd love to get the validator election off of asset hub and into a stateless service for example, but that's a relatively "speedy" stateless service.  Of course stateless services are not really stateless, they just use whole past blocks in availability as state, but this means they cannot handle "accounts" or other db tables like entities, only big blocks of data.
+
+You can fetch smaller chunks out of these past blocks aka work packages, but if you're doing reconstruction then you're slowed down by making all those network connections, and reconstructing 10k from each of 10 blocks costs vastly more than reconstructing 100k from one block, so this service must run slowly.  Also, you must validate all those chunks, which requires something like blake3, which never gets mentioned in the paper.
+
+There is obviously no sampling of the validity of the availability chunks except within the auditing process itself.  There is no need to sample availability presence because this is covered by our 2/3rd honesty assumption.  Now over 28 days that 2/3rd honesty assumption maybe unreasonable.  This is the issue you raised.  Sampling cannot fix this.
+
+In fact, there is no good way to map the current validator set to past epochs:  Imagine f(i,v,j) is the position for epoch i of a validator v in epoch j > i.  f(i,v,i) is the actual position of v in epoch i.   If j>k>i and f(i,v,k) is defined, aka v was a validator in epoch k, then f(i,v,j) = f(i,v,k).  There is no mapping f that satisfies this.  In english, we'd have to keep moving the chunks around, which could break our asymptotics in availability.
+
+We thus cannot incentivise the current validators to have the chunks, so we must incentivise the old validators to remain active, which sounds expensive.
+
+There do exist half ways sane payment schemes:
+
+We charge services a LOT more if they want the 28 day availability.  We have each block declare a "rewards pre-message" `Vec<(Epoch,BitField)>` and use it to increment some `Map<Epoch,Vec<u16>>`, which goes into state, but we keep the scheme stateless by allowing the builder to "stiff" its providers.  We eventually send payment messages based upon these.  We then have validators track `Map<Builder,Vec<u16>>` across all services, and when they see themselves getting stiffed then they get revenge by probabilistically stiffing that builder of chunks.  All builders stif, but if builders still too much then get stiffed on chunks, and they cannot build blocks anymore.
+
+This sort of thing easily gets more complex than its worth, so maybe we just hope the availability provides a backup, but actually use archive nodes whenever possible. [edited]
+2025-11-25 08:57 jeff: At a high level, there is a subtle lie in all blockchain ideology that paying for protocols makes them better.  It's kinda the opposite that paying for the protocol in the protocol makes it worse, so the right approach is to make the protocol work well first, and then we figure out later how to pay for it without fucking up the working protocol.  This may result in a payment scheme that scares people, but real life runs on such approximations.  yolo [edited]
