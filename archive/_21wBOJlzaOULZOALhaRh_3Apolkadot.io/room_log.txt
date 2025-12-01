@@ -1,5 +1,5 @@
 # room: #jam:polkadot.io
-# exported: 2025-11-30 03:43 UTC
+# exported: 2025-12-01 03:47 UTC
 2024-04-20 02:08 johnjiao123: 
 2024-04-20 02:09 johnjiao123: 
 2024-05-30 21:48 nradko: Hey everyone,
@@ -12071,3 +12071,9 @@ C. Yes, mid-2026, but can accelerate to March! [edited]
 2025-11-25 08:58 emielsebastiaan: 
 2025-11-29 10:30 gav: Validators won’t have stakes; there are no plans to use PoS for validator selection. 
 2025-11-29 11:59 gav: Grandpa misbehaviour will be handled in the same way - some logic on the parachains which handles validator selection. 
+2025-11-30 16:07 sourabhniyogi: Ok, we can proceed with implementing GRANDPA with a "all validators have weight 1" approach, no problem, but I clearly have a PoS mind virus:  If validators won't have stakes, what are we to slash if there is no stake to slash?  
+
+Is slashing a $100-200k/yr salary (and maybe a reputation) a sufficient penalty in a new JAM era relative to slashing a $1-2MM stake?   
+
+What is the status of Phragmen elections and NPoS in a JAM cutover?  
+2025-11-30 23:13 gav: Slashing alone helps only if participants care about the risk. Most validators don’t have much to slash. Nominators don’t care about the risk.
