@@ -1,5 +1,5 @@
 # room: #jam-conformance:matrix.org
-# exported: 2025-12-01 03:48 UTC
+# exported: 2025-12-02 03:38 UTC
 2025-08-20 15:56 erin: tomusdrw: i've set up the archiver to archive this also, so hopefully will be up starting tomorrow
 2025-08-21 06:33 ascriv: https://github.com/davxy/jam-conformance/issues/26 should we not discourage open source implementations (for now)? [edited]
 2025-08-21 10:27 oliver.tale-yazdi: I think open source repos are fine. Other implementors are just not supposed to look at it
@@ -1318,3 +1318,11 @@ Breaking change for Safrole tickets distribution (CE 131/132): our previous impl
 2025-11-30 15:45 celadari: Hi sourabhniyogi we wanted to ask you something about the stack trace of this test vector https://github.com/jam-duna/jamtestnet/blob/main/jam-test-vectors/0.7.1/fuzzy_light/00000011.log.gz
 
 Is this stack trace only for invocation of service index = 0 ? In your running code do you have an invocation of serviceIndex = 1809622522 as well ? [edited]
+2025-12-01 15:13 dakkk: Jampy is passing the new vectors (I also uploaded a 0.7.2 version of the target)
+2025-12-01 16:31 danicuki: We noticed that log host call is charging 10. Previously, as far as I remember, it shouldn't charge any gas. 
+2025-12-01 16:31 dave: ^^^
+2025-12-01 16:37 danicuki: Ok, thanks. I missed that one. [edited]
+2025-12-01 16:39 danicuki: Now jamixir is passing all test vectors as well as traces
+2025-12-02 00:07 sourabhniyogi: Can we get an 0.7.1 => 0.7.2 update of https://paritytech.github.io/jam-conformance-dashboard/ (with fuzzy + fuzzy-light and maybe preimages and preimage-light) in the next week and do some performance competitions again, with a view to getting all our Baseline Audit Time (days) down again?  
+
+I understand some of us went a little overboard  in Aug/Sept 😅 optimizing ... but I think it was a valuable lesson and worth repeating before the handoff over to this new w3f team 😢... who are they? [edited]
