@@ -18,7 +18,7 @@ a:hover{color:#90caf9}
 em{font-style:italic}
 </style>
 <h1>#jam:polkadot.io</h1>
-<p><small>last updated 2025-12-02 03:38 UTC</small></p>
+<p><small>last updated 2025-12-03 03:37 UTC</small></p>
 <p><a href='room_log.txt'>⇩ plaintext</a> · <a href='../../'>⇦ all rooms</a></p>
 <hr>
 <div class='msg'><a class='ts' href='#$we4SYXTHwmKn094X9Zs_7mWUOoUVh4icvVdxD83RZfs'>#</a> <a class='ts' name='$we4SYXTHwmKn094X9Zs_7mWUOoUVh4icvVdxD83RZfs' href='https://matrix.to/#/!wBOJlzaOULZOALhaRh:polkadot.io/$we4SYXTHwmKn094X9Zs_7mWUOoUVh4icvVdxD83RZfs' target='_blank'>2024-04-20 02:08</a>&ensp;<span class='u' style='color:#d0709e'>johnjiao123</span>: </div>
@@ -11989,3 +11989,13 @@ Re identifying features I&#x27;m not sure if that makes sense for validators spe
 
 In the case of the existing JIPs, whether a validator node implements these or not is only really of concern to the node operator, not to anyone else. JIP-1 should not be enabled on a real validator node; it is for debugging only and enabling it on a real node is almost certainly a security issue (the fixed gas charge is unlikely to be sufficient to cover the actual cost of logging). JIP-2 should _never_ be publicly exposed as it requires the two sides to trust each other. If enabled on a real validator node JIP-3 should only connect to a private telemetry server, it really is not safe to send that information to a third party. It also probably doesn&#x27;t make sense to do that anyway as it would use a big chunk of your bandwidth. <span class="edited">(edited)</span></div>
 <div class='msg'><a class='ts' href='#$gz5mem7-MQ0h5XSelR-d0UwsfqHVs83CFJYVXxgDlnw'>#</a> <a class='ts' name='$gz5mem7-MQ0h5XSelR-d0UwsfqHVs83CFJYVXxgDlnw' href='https://matrix.to/#/!wBOJlzaOULZOALhaRh:polkadot.io/$gz5mem7-MQ0h5XSelR-d0UwsfqHVs83CFJYVXxgDlnw' target='_blank'>2025-12-02 01:19</a>&ensp;<span class='u' style='color:#c67452'>sourabhniyogi</span>: We&#x27;re going to need a lot less cathedral and a lot more bazaar to get anywhere with this 1K =)</div>
+<div class='msg'><a class='ts' href='#$3s-n8ztGrl4ogKyqY-PYjEmpbMOVlBFQPzoz2y7vhU8'>#</a> <a class='ts' name='$3s-n8ztGrl4ogKyqY-PYjEmpbMOVlBFQPzoz2y7vhU8' href='https://matrix.to/#/!wBOJlzaOULZOALhaRh:polkadot.io/$3s-n8ztGrl4ogKyqY-PYjEmpbMOVlBFQPzoz2y7vhU8' target='_blank'>2025-12-02 05:14</a>&ensp;<span class='u' style='color:#cb735c'>prasad-kumkar</span>: Hi all! We’re releasing an independent implementation of bandersnatch-vrfs in Python - **<a href="https://github.com/Chainscore/dot-ring" rel="noopener" target="_blank">Dotring</a>**. If you are interested in testing, reviewing, or integrating it for your implementation, please feel free to reach out!
+
+<a href="https://github.com/Chainscore/dot-ring" rel="noopener" target="_blank">https://github.com/Chainscore/dot-ring</a>
+
+Benchmarks - <a href="https://github.com/Chainscore/dot-ring/blob/main/docs/BENCHMARK.md" rel="noopener" target="_blank">https://github.com/Chainscore/dot-ring/blob/main/docs/BENCHMARK.md</a>
+Documentation - <a href="https://dotring.chainscore.finance" rel="noopener" target="_blank">https://dotring.chainscore.finance</a>
+Pypi - <a href="https://pypi.org/project/dot-ring" rel="noopener" target="_blank">https://pypi.org/project/dot-ring</a></div>
+<div class='msg'><a class='ts' href='#$nE6ORi8HA_ema4Ig0dq2nhJgiLbqeye_r5v-eNclS4U'>#</a> <a class='ts' name='$nE6ORi8HA_ema4Ig0dq2nhJgiLbqeye_r5v-eNclS4U' href='https://matrix.to/#/!wBOJlzaOULZOALhaRh:polkadot.io/$nE6ORi8HA_ema4Ig0dq2nhJgiLbqeye_r5v-eNclS4U' target='_blank'>2025-12-02 05:15</a>&ensp;<span class='u' style='color:#bd5ab8'>philoniare</span>: Hi everyone,
+
+I’m currently integrating our PVM implementation with the accumulation layer. We’re passing all standard PVM tests, but encountering failures specifically in the accumulation tests when our host functions are exercised. Before creating a full suite of custom tests, I wanted to ask whether there are any community-contributed host function call tests available for the PVM. If such tests exist, are they permitted for use under the competition rules?</div>

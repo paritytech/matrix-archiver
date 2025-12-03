@@ -1,5 +1,5 @@
 # room: #graypaper:polkadot.io
-# exported: 2025-12-02 03:38 UTC
+# exported: 2025-12-03 03:38 UTC
 2024-04-17 20:29 syed: https://matrix.to/#/!hyzRkDqDthePbodYFz:parity.io/$f_DMsIEcDXZegw6Sabnehzc-LrdDQkmq5MbxDDyoZxY?via=parity.io&via=web3.foundation
 
 2024-04-17 20:29 syed: 
@@ -6880,3 +6880,43 @@ We charge services a LOT more if they want the 28 day availability.  We have eac
 
 This sort of thing easily gets more complex than its worth, so maybe we just hope the availability provides a backup, but actually use archive nodes whenever possible. [edited]
 2025-11-25 08:57 jeff: At a high level, there is a subtle lie in all blockchain ideology that paying for protocols makes them better.  It's kinda the opposite that paying for the protocol in the protocol makes it worse, so the right approach is to make the protocol work well first, and then we figure out later how to pay for it without fucking up the working protocol.  This may result in a payment scheme that scares people, but real life runs on such approximations.  yolo [edited]
+2025-12-02 07:26 ascriv: It seems clear that JAM will benefit greatly from a source of randomness which is as secure as the network itself. After doing a bit of digging it seems a good way to do this is to periodically have a distributed key generation + threshold VRF signature (maybe every epoch). I don’t think this fits into the refine/accumulate model, so it can’t happen as a service. Does this mean it would have to happen on the consensus level? [edited]
+2025-12-02 11:49 danicuki: Isn't the on-chain entropy eta this source of randomness?
+2025-12-02 12:56 ascriv: The block producer of the block controls the vrf ouput placed in the block seal. Then, that same producer can construct the entropy before its accumulated 
+2025-12-02 12:57 ascriv: So if this producer is malicious they can rig a billion dollar lottery, e.g. 
+2025-12-02 12:58 ascriv: We need something that  assumes there could be at most 1/3 misbehaving validators, which we can do with the dkg/threshold vrf thing 
+2025-12-02 12:58 davxy: The VRF in the block header does not prevent omission. The producer still sees the VRF output before publishing the block and can discard the block if the value is unfavorable. This introduces some bias in the onchain randomness used by the service.
+
+A commit-reveal scheme implemented at the service level is a better choice for high stake games (eg lotteries).
+
+Randomness from block's vrf is still fine for non-critical or lower-stake pseudo-random data requirements [edited]
+2025-12-02 12:59 ascriv: Could you explain how a commit reveal scheme based randomness service would work?
+2025-12-02 13:06 davxy: Participants first submit a hash of their secret (commit), which the service stores. Later, in the reveal phase, they submit the actual secret, and the service verifies it against the commit. The service combines all revealed secrets to produce the final random value. Non-revealing participants can be penalized (e.g., via a deposit that is slashed). The randomness remains unpredictable and unbiasable until the reveal phase.
+
+This is the basic idea, variants are possible. For example, the final random value can be generated once a specified number of participants have revealed, without requiring everyone to do so.
+2025-12-02 13:35 danicuki: As I understood, this solution is on the service level, not protocol level. So, we don't have a protocol level randomness? 
+2025-12-02 13:45 davxy: You have eta, you can use it as randomness source. But has the limitations I just mentioned. For high stake games (eg lotteries) the commit-reveal scheme at service level is stronger [edited]
+2025-12-02 13:45 jaymansfield: hey davxy, has a 0.7.2 compatible polkajam been released?
+2025-12-02 13:46 davxy: Yes, as I wrote:
+
+> A commit-reveal scheme implemented at the service level is a better choice
+2025-12-02 13:48 davxy: Yeah, but it has not been tagged yet
+2025-12-02 14:30 ascriv: If there’s a service in the future who decides that the security of this entropy isn’t high enough, would it be possible for jam to support the DKG+threshold vrf scheme ?
+2025-12-02 14:49 ascriv: Also a question about PoP: for extremely high-value lotteries, PoP validators don’t have large stake to slash, so the economic deterrent is limited. Does this mean JAM isn’t meant to secure very high-stakes randomness, and such applications should rely on hybrid or external beacons?
+2025-12-02 15:45 gav: Future means of validator selection have yet to be finalised and formalised. Polkadot will continue to target the highest resilience. Validator selection is entirely divorced from the JAM protocol and need not be a consideration here. 
+2025-12-02 15:46 gav: I appreciate there is interest but it is OT for JAM/GP channels. 
+2025-12-02 18:14 gav: As far as I’m aware, threshold VRF schemes require some trusted setup whenever participants change. [@jeff:web3.foundation](https://matrix.to/#/@jeff:web3.foundation)? [edited]
+2025-12-02 18:22 gav: Resilient (perfectly secure, trustless) randomness is still hard afaik. Stakes don’t help all that much and Polkadot will in any case move away from slashability soon (even before any PoP mechanism for validator selection).
+2025-12-02 20:36 danicuki: > <@gav:polkadot.io> Resilient (perfectly secure, trustless) randomness is still hard afaik. Stakes don’t help all that much and Polkadot will in any case move away from slashability soon (even before any PoP mechanism for validator selection).
+
+Is there any good technical article / research explaining why slashability is not the best choice now, comparing it with other consensus mechanisms ? 
+2025-12-02 20:43 jaymansfield: I'm not sure if this is the reason, but if you think about it the majority of validators on polkadot don't self-stake very much and rely on nominators to get active. If they were to misbehave, it would be their nominators that get punished and not really the malicious validator themselves. 
+2025-12-02 21:27 gav: What technical article says it *is*?
+2025-12-02 21:27 gav: Indeed. 
+2025-12-02 21:58 sourabhniyogi: Does this fly?
+ https://research.web3.foundation/Polkadot/security/slashing/amounts
+
+I think JAM people should be able to sell the change out of PoS when faced with the finest minds in Web3 outside Polkadot ...  and don't get why this would be off-topic given how central staking has been to security.  Not that many of us are familiar with what is surely a ton of history on minimum self-staking requirements, (or lack thereof) -- I think education here is going to be valuable, even if this is not part of JAM protocol, no?
+2025-12-02 22:13 bkchr: https://forum.polkadot.network/t/proposal-dynamic-allocation-pool-dap/15878 gives some insights into the planed changes.
+2025-12-03 00:28 gav: Minds should absolutely be equipped!
+But this isn’t the right forum for discussing what is ultimately a separate concern to JAM. 

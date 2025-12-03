@@ -1,5 +1,5 @@
 # room: #jam:polkadot.io
-# exported: 2025-12-02 03:38 UTC
+# exported: 2025-12-03 03:37 UTC
 2024-04-20 02:08 johnjiao123: 
 2024-04-20 02:09 johnjiao123: 
 2024-05-30 21:48 nradko: Hey everyone,
@@ -12096,3 +12096,13 @@ Re identifying features I'm not sure if that makes sense for validators specific
 
 In the case of the existing JIPs, whether a validator node implements these or not is only really of concern to the node operator, not to anyone else. JIP-1 should not be enabled on a real validator node; it is for debugging only and enabling it on a real node is almost certainly a security issue (the fixed gas charge is unlikely to be sufficient to cover the actual cost of logging). JIP-2 should _never_ be publicly exposed as it requires the two sides to trust each other. If enabled on a real validator node JIP-3 should only connect to a private telemetry server, it really is not safe to send that information to a third party. It also probably doesn't make sense to do that anyway as it would use a big chunk of your bandwidth. [edited]
 2025-12-02 01:19 sourabhniyogi: We're going to need a lot less cathedral and a lot more bazaar to get anywhere with this 1K =)
+2025-12-02 05:14 prasad-kumkar: Hi all! We’re releasing an independent implementation of bandersnatch-vrfs in Python - **[Dotring](https://github.com/Chainscore/dot-ring)**. If you are interested in testing, reviewing, or integrating it for your implementation, please feel free to reach out!
+
+https://github.com/Chainscore/dot-ring
+
+Benchmarks - https://github.com/Chainscore/dot-ring/blob/main/docs/BENCHMARK.md
+Documentation - https://dotring.chainscore.finance
+Pypi - https://pypi.org/project/dot-ring
+2025-12-02 05:15 philoniare: Hi everyone,
+
+I’m currently integrating our PVM implementation with the accumulation layer. We’re passing all standard PVM tests, but encountering failures specifically in the accumulation tests when our host functions are exercised. Before creating a full suite of custom tests, I wanted to ask whether there are any community-contributed host function call tests available for the PVM. If such tests exist, are they permitted for use under the competition rules?
