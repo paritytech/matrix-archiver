@@ -1,5 +1,5 @@
 # room: #jam-conformance:matrix.org
-# exported: 2025-12-03 03:38 UTC
+# exported: 2025-12-04 03:39 UTC
 2025-08-20 15:56 erin: tomusdrw: i've set up the archiver to archive this also, so hopefully will be up starting tomorrow
 2025-08-21 06:33 ascriv: https://github.com/davxy/jam-conformance/issues/26 should we not discourage open source implementations (for now)? [edited]
 2025-08-21 10:27 oliver.tale-yazdi: I think open source repos are fine. Other implementors are just not supposed to look at it
@@ -1326,3 +1326,13 @@ Is this stack trace only for invocation of service index = 0 ? In your running c
 2025-12-02 00:07 sourabhniyogi: Can we get an 0.7.1 => 0.7.2 update of https://paritytech.github.io/jam-conformance-dashboard/ (with fuzzy + fuzzy-light and maybe preimages and preimage-light) in the next week and do some performance competitions again, with a view to getting all our Baseline Audit Time (days) down again?  
 
 I understand some of us went a little overboard  in Aug/Sept 😅 optimizing ... but I think it was a valuable lesson and worth repeating before the handoff over to this new w3f team 😢... who are they? [edited]
+2025-12-03 17:53 sourabhniyogi: Jan Bujak For your [new gas model](https://github.com/koute/new-gas-cost-model/tree/master) can we get your [write up](https://github.com/koute/new-gas-cost-model/blob/master/graypaper.pdf) into 0.7.3 with a PR?   It would be great to wrap up the 0.7.x series this month/year with this biggie =) [edited]
+2025-12-03 18:04 jan: Once the new gas cost model is merged into the GP that will become the 0.8.x.
+
+Nevertheless, I _am_ working on getting it in the GP, however it's not that trivial as I still need to finish implementing and speccing a few extra changes (add a memory limit, add a formula to calculate memory access gas costs based on this limit, actually calculate the coefficients for that formula, switch the gas to per-block metering, remove the `sbrk` instruction and add a hostcall replacement, etc.). I'd also like it to be immediately usable, that is: once it lands in the GP we should have the test vectors, the polkajam binary, and the JAM prize fuzzer (for the W3F folks) immediately available.
+
+There is no real point in getting it in the GP if it's incomplete and/or it's not actually fully usable yet.
+
+The major and most important part of the model is already in my draft, so there's nothing stopping you (or anyone else) from implementing it. The algorithm itself is final and will not change in the immediate future. [edited]
+2025-12-03 18:07 jan: I could rush it, but ultimately that won't change anything because the amount of work will not change, and half-assing it will just create *more* work for everyone involved.
+2025-12-04 00:47 decentration: am i able to find a conformant blob that is simpler than the one in accumulate test vectors (0.7.1) i am having some pains processing the blob to produce the expected `accumulate_gas_used`

@@ -1,5 +1,5 @@
 # room: #graypaper:polkadot.io
-# exported: 2025-12-03 03:38 UTC
+# exported: 2025-12-04 03:39 UTC
 2024-04-17 20:29 syed: https://matrix.to/#/!hyzRkDqDthePbodYFz:parity.io/$f_DMsIEcDXZegw6Sabnehzc-LrdDQkmq5MbxDDyoZxY?via=parity.io&via=web3.foundation
 
 2024-04-17 20:29 syed: 
@@ -6920,3 +6920,40 @@ I think JAM people should be able to sell the change out of PoS when faced with 
 2025-12-02 22:13 bkchr: https://forum.polkadot.network/t/proposal-dynamic-allocation-pool-dap/15878 gives some insights into the planed changes.
 2025-12-03 00:28 gav: Minds should absolutely be equipped!
 But this isn’t the right forum for discussing what is ultimately a separate concern to JAM. 
+2025-12-03 10:02 jeff: Yes, you need a DKG to distribute the key shares to the current participants.  You can keep the public key the same if you do this among the old ones, but that's more something.
+
+We prove in the sassafras paper that the "slowly secure randomness" from sassafras is secure enough for sassafras' internal usage.  We know that "quickly secure randomness" from a DKG plus threshold VRF yields a 40% improvement in elves, so eventually polkadot (jam or before) shall deploy this, but.. [edited]
+2025-12-03 10:21 jeff: There were several different DKG plus threshold VRF design choices, including:
+
+- ristretto with only threshold VRF outputs, but not threshold signatures, would not hurt our CPU time.
+- secp256k1 could yield a better bitcoin bridge, but it's messy to really do this.
+- Alistair's BLS flavour would yield encryption to the future, but hurts CPU time, although GLV helped.  This is now mostly Alistair & Elizabeth's baby.  I tell applications people like ideal labs to use drand for this for now, because drand avoids us paying the CPU cost, but longer term we'd love to have this as an option in our threat model.
+- We have a DKG-only-plus-reveal-no-VRF design that's post-quantum, since post-quantum VRFs have serious limitation.  This has some bandwidth overhead, but no significant CPU time.
+
+All of these give faster randomness.  All of these need a dedicate parachain/service that runs the DKG. 
+
+All of these require adjustments to the soft pre-elves consensus, which does not yet exist even in current polkadot:  https://github.com/polkadot-fellows/RFCs/pull/144  Nobody has worked on the DKG failure question here.
+
+We think the DKG-only PQ thing makes the most sense longer term, and Sergey started implementing, so maybe we jump directly to this.
+
+Anyways:  
+- You have have slow randomness from sassafras in JAM like in polkadot today.  
+- You can have fast 30 second randomness and encryption-to-the-future from drand now, but . 
+- We'll provide some fast 6 second randomness eventually.
+- We'll likely provide some fast-ish encryption-to-the-future, but how fast depends upon the CPU costs.
+- JAM and the gray paper need fixes to their elves, service/collator protocols, and gossip, before even thinking about the soft pre-elves consensus parts. 
+
+2025-12-03 10:24 jeff: I originally envisioned elves as working based upon "permanent excludability" more than slashing.  In fact, our analysis wound up depending upon the amount slashed, but slashing delegated stake is not really the same as the slashing in our security assumptions, so we're kinda back to "permanent excludability" but modeling based upon self stake, which remains slashable, and loss of future income. 
+ [edited]
+2025-12-03 10:26 jeff: I've forgotten Jonas' numbers but I think 10k DOTs was the current plan for validator self stake and slashing risk. 
+2025-12-03 10:28 jeff: Of course other options are possible, but it's harder to translate things like "I signed a contract with the community which someone might take me to court over" into our model, and some of that sort of thing might work less well in some jurisdictions.  We cannot satisfy all jurisdictions anyways because of bandwidth requirements but this could cost us more than we'd like. 
+2025-12-03 10:29 jeff: Also right now nobody is openly thinking about the underlying competition to become a validator.  This was solved by delegation, and may still partially be solved that way, but if it changes much then there is a large design space there.  In this, self-stake is both good and bad.
+2025-12-03 12:43 sigsigsig: jeff: very interesting, thank you for this. i am interested in how permanent exclusion can be enforced from an anti-sybil perspective, and also in further discourse with regard to slashing delegated versus non-delegated stake, if you are able to expand or point me in the direction of said discussions ( :
+2025-12-03 13:18 jeff: We do not have an analysis that works on that principle alone, ala my original gambler's ruin ideas were likely only intuitive, not quantitative.  Instead, we always trace back to some value at risk as a proportion of the total value of the network:  https://eprint.iacr.org/2024/961 
+2025-12-03 13:18 jeff: We'll likely assume people can be permanently excluded, and then do some "KYC" etc on them to make this true-ish so that the future rewards part makes sense, or ask for more self stake if anonymous.  [edited]
+2025-12-03 13:20 jeff: It's fine to have soft intuitive things that we think justify more rigid security assumptions, but we should actually try to make those parts true.
+2025-12-03 14:45 gav: Economic rationalisations of PoS security are worthless if the staking token becomes of so little value because, for example, of the staking economics running the price into the ground.  [edited]
+2025-12-03 14:49 gav: In any case, this is totally OT in this channel. 
+2025-12-03 18:55 danicuki: Question about the Erasure Coding Appendix H: 
+All values in this section are "hard coded" - 1023 validators and 341 cores. Wouldn't be better to define all hard coded values (684, 342, 4104, etc) in terms of defined constants in Appendix I (W\_P, W\_E, etc)? If you think this is a good idea, I can make a PR with this change to the GP. [edited]
+2025-12-04 00:49 sourabhniyogi: With some luck, the 0.8 features of [Self-hosted parameters](https://github.com/gavofyork/graypaper/issues/324) and [Provide a more optimal EC parameterization for work bundles](https://github.com/gavofyork/graypaper/issues/97) should make V (thus C and W_E) dynamic -- ideally signaled in the Epoch mark to match CE 153.    

@@ -1,5 +1,5 @@
 # room: #jam:polkadot.io
-# exported: 2025-12-03 03:37 UTC
+# exported: 2025-12-04 03:38 UTC
 2024-04-20 02:08 johnjiao123: 
 2024-04-20 02:09 johnjiao123: 
 2024-05-30 21:48 nradko: Hey everyone,
@@ -12106,3 +12106,11 @@ Pypi - https://pypi.org/project/dot-ring
 2025-12-02 05:15 philoniare: Hi everyone,
 
 I’m currently integrating our PVM implementation with the accumulation layer. We’re passing all standard PVM tests, but encountering failures specifically in the accumulation tests when our host functions are exercised. Before creating a full suite of custom tests, I wanted to ask whether there are any community-contributed host function call tests available for the PVM. If such tests exist, are they permitted for use under the competition rules?
+2025-12-03 18:07 danicuki: As far as I know, the existing tests are those in the vectors and conformance tests, which are more like an "acceptance test", other than unit testing each host function. 
+2025-12-03 18:09 danicuki: Talking about tests, are there any test vectors for Paged Proofs, erasure root and other refine (Chapter 14) related stuff? 
+2025-12-03 18:10 dakkk: not yet afaik 
+2025-12-03 19:23 sourabhniyogi: To speed things up, I believe its valuable for us to follow davxy 's example in doing community test vectors for refine, being publishers instead of just subscribers, being proactive rather than just passive.   We tried doing this earlier at the start of the year, but in retrospect it was a kindergarten effort relative to the pro-grade effort we've all gone through in jam-test-vectors and jam-conformance the last 6 months.    Little test vectors, even if imperfect, from the hungry+unpaid ;) ... would be a fine start as it gets other people learning and doing.   Once you get a a few bundles refined you'll want to do this:
+https://github.com/davxy/jam-conformance/pull/70
+and we can compare notes and go pro-grade.  I would prefer going full bazaar here with no hand-holding, its really time to grow up. [edited]
+2025-12-03 19:37 danicuki: If you were in kindergarten 6 months ago, I wasn't even born... 😂
+Maybe I am in kindergarten now, eager to catch up and be able to contribute more
