@@ -1,5 +1,5 @@
 # room: #jam:polkadot.io
-# exported: 2025-12-04 03:38 UTC
+# exported: 2025-12-05 03:37 UTC
 2024-04-20 02:08 johnjiao123: 
 2024-04-20 02:09 johnjiao123: 
 2024-05-30 21:48 nradko: Hey everyone,
@@ -12114,3 +12114,42 @@ https://github.com/davxy/jam-conformance/pull/70
 and we can compare notes and go pro-grade.  I would prefer going full bazaar here with no hand-holding, its really time to grow up. [edited]
 2025-12-03 19:37 danicuki: If you were in kindergarten 6 months ago, I wasn't even born... 😂
 Maybe I am in kindergarten now, eager to catch up and be able to contribute more
+2025-12-04 13:05 danicuki: I have some doubts about [CE-137](https://docs.jamcha.in/knowledge/advanced/simple-networking/spec#ce-137-shard-distribution)
+ - The T function in the Graypaper (H.2) returns just a list of (B U H), while the Justification in the protocol is defined as [0 ++ Hash OR 1 ++ Hash ++ Hash]
+- Is there anywhere the formal specification for the shard validation, something like 
+
+`fn validate_shard(shard_bin, erasure_root, justification): boolean`
+
+2025-12-04 14:01 dave: B = Hash ++ Hash in this case, the leaves are pairs of hashes
+2025-12-04 14:02 dave: The GP formally specifies this stuff
+2025-12-04 16:45 danicuki: 
+2025-12-04 17:21 danicuki: sure, I am struggling to match the definitions on JAMNSP with the formulas in the GP. We have many things called "Justification" with different meanings:
+
+ - Formula E.5 J_x is called justification
+ - Formula 14.15 J is called justification
+ - JAMSNP calls T (Formula E.2) justification
+
+None of the GP formula mention "pairs of hashes"
+
+Sorry if this is a dumb question, all this things are new to me.
+2025-12-04 17:30 dave: See the definition of u here https://graypaper.fluffylabs.dev/#/ab2cdbd/1c75011c9301?v=0.7.2
+2025-12-04 17:31 dave: The elements of the list passed into M_B are essentially pairs of hashes
+2025-12-04 17:32 dave: One of the hashes is the hash of the bundle shard, the other is the root of the tree of segment shards [edited]
+2025-12-04 17:33 dave: See b^clubs and s^clubs just below
+2025-12-04 17:34 dave: u is the erasure root and a CE 137 justification is basically a (co)path from one of these hash pairs to the erasure root, it's a fairly regular Merkle proof [edited]
+2025-12-04 23:31 sourabhniyogi: https://github.com/jam-duna/jamtestnet/issues/139 attempts a tutorial (with diagrams!) -- since nothing has changed on this (?), I believe you could use [these](https://github.com/jam-duna/jamtestnet/tree/0.6.4.0/guarantees) as a "can you get the same spec" test case.   We can dust up the fuzzer refine features if others were also so inclined.  A work report derivation for the jamt circa 0.7.2 would seem to be useful as a small holy grail =)
+
+What new CEs (129, 146?, 147?, 148?) have been added in [polkajam 0.7.2](https://github.com/paritytech/polkajam-releases/releases/tag/v0.1.27) that we can check out and confirm alignment on?  Are  [Grandpa CEs 149-153](https://github.com/zdave-parity/jam-np/pull/6) activatable somehow?  
+2025-12-04 23:57 dave: Ah sorry, not sure we announced the new ones. 147&148 have been added for directly requesting bundles/segments. You don't _need_ to implement these; if a direct request for a bundle/segment fails the requesting node should fall back to recovery via shards. 146 was added to allow builders to provide the content of imported segments, saving the primary guarantor from having to fetch them. Commit that added these protocols here: https://github.com/zdave-parity/jam-np/commit/7c502af98db291bf85d4eb25dc9a8124fd5cc7c8
+2025-12-04 23:58 dave: Re the Grandpa protocols, these are not yet available in polkajam, but we're starting to merge the grandpa branch into master so hopefully they will be available soonish :)
+2025-12-05 01:38 sourabhniyogi: [This ETH data point](https://x.com/sassal0x/status/1996442356464361817)   reminds me of the following anxiety re "implementation identifier": what if the majority of validators, seeing something like [jam-conformance-dashboard](https://paritytech.github.io/jam-conformance-dashboard/) in say, 2-3  years from now, overwhelmingly pick the #1 and #2 clients due to performance (lets say spacejam) and reputation (parity, being the eco leader)?
+
+I would bet that the end game in JAM client diversity with N clients is extremely unlikely to be anything like 1/N and instead have > 2/3 be on the top #1 / #2 clients in this way.  The ETH situation, if you believe this tweets data, is 70% on the top 2, 90% on the top 4.
+
+If nothing incentivizes client diversity and continuous competition (e.g. rewards to be in the top 4 clients), wouldn't client diversity tend to gravitate to "winner-take-all" endpoints?  
+
+At least part why I wanted a byte or two for validator metadata is to not only reward validators ala RFC 119 (who will pick the least buggy clients to give them the most rewards), but also client implementers, who need a sustainable path.
+
+Transparency into which validator uses what client, publicly visible performance (even if subjective ala RFC 119), and a sustainable path for client implementers to compete to be in the top 3 to earn some of the validator rewards seems important.  Validators _should_ make decisions about which clients to pick based on this transparent information.  What am I missing? [edited]
+2025-12-05 01:42 sourabhniyogi: Why would JAM, following "Strong Web3" principles, want to hide its equivalent of [this](https://clientdiversity.org/#distribution)?
+2025-12-05 02:46 ascriv: I have similar concerns regarding validator client diversity in the long term, seems like operators will choose from top 1 or 2 most popular/performant, except for perhaps operators who themselves were jam implementors [edited]

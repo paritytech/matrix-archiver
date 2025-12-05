@@ -1,5 +1,5 @@
 # room: #graypaper:polkadot.io
-# exported: 2025-12-04 03:39 UTC
+# exported: 2025-12-05 03:38 UTC
 2024-04-17 20:29 syed: https://matrix.to/#/!hyzRkDqDthePbodYFz:parity.io/$f_DMsIEcDXZegw6Sabnehzc-LrdDQkmq5MbxDDyoZxY?via=parity.io&via=web3.foundation
 
 2024-04-17 20:29 syed: 
@@ -6957,3 +6957,6 @@ Anyways:
 2025-12-03 18:55 danicuki: Question about the Erasure Coding Appendix H: 
 All values in this section are "hard coded" - 1023 validators and 341 cores. Wouldn't be better to define all hard coded values (684, 342, 4104, etc) in terms of defined constants in Appendix I (W\_P, W\_E, etc)? If you think this is a good idea, I can make a PR with this change to the GP. [edited]
 2025-12-04 00:49 sourabhniyogi: With some luck, the 0.8 features of [Self-hosted parameters](https://github.com/gavofyork/graypaper/issues/324) and [Provide a more optimal EC parameterization for work bundles](https://github.com/gavofyork/graypaper/issues/97) should make V (thus C and W_E) dynamic -- ideally signaled in the Epoch mark to match CE 153.    
+2025-12-04 14:12 danicuki: Should the subscripts for Justification J and L (14.11) be also parametrized? Now they are hard coded as '6'. Is it correct to assume that they should be subscripted by W_P? 
+2025-12-04 14:16 dave: No, that they are both 6 is a coincidence. The subscript 6 is derived from the size of a segment. That is at least currently fixed.
+2025-12-04 14:21 dave: The subscript 6 = log2(64), with 64 being the number of pages proven by a proof page. 64 is the largest number that works with the current segment size.
