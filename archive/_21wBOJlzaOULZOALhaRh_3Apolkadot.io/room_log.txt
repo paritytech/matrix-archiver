@@ -1,5 +1,5 @@
 # room: #jam:polkadot.io
-# exported: 2025-12-05 03:37 UTC
+# exported: 2025-12-06 03:33 UTC
 2024-04-20 02:08 johnjiao123: 
 2024-04-20 02:09 johnjiao123: 
 2024-05-30 21:48 nradko: Hey everyone,
@@ -12153,3 +12153,8 @@ At least part why I wanted a byte or two for validator metadata is to not only r
 Transparency into which validator uses what client, publicly visible performance (even if subjective ala RFC 119), and a sustainable path for client implementers to compete to be in the top 3 to earn some of the validator rewards seems important.  Validators _should_ make decisions about which clients to pick based on this transparent information.  What am I missing? [edited]
 2025-12-05 01:42 sourabhniyogi: Why would JAM, following "Strong Web3" principles, want to hide its equivalent of [this](https://clientdiversity.org/#distribution)?
 2025-12-05 02:46 ascriv: I have similar concerns regarding validator client diversity in the long term, seems like operators will choose from top 1 or 2 most popular/performant, except for perhaps operators who themselves were jam implementors [edited]
+2025-12-05 04:27 gav: Why would you expect nodes to declare honestly?
+2025-12-05 06:27 sourabhniyogi: 1. In the beginning, lazy defaults and selfish tech support for validators not run by JAM implementers.  JAM implementer teams will not spoof if they are running validators themselves.  Since self-staking is gone, I would expect JAM implementer teams to dominate the validator set but quickly fall into some power law distribution where the top 2-4 make up 70-90%.  Why would we expect these implementer nodes to declare dishonestly?
+2. For client implementations, even with 100% conformance, any actual spoofing attached to xyz public key will be detectable.  If reputation relates to honesty down to client bits, spoofing could be frowned upon.
+3. Otherwise, I think its naive to expect 100% honesty and would cheer Robin Hood on in taking away from the #1/#2 and giving it to the meritorious #7/#9 esp with client diversity actively valued.   A progressive Strong Web3 agenda could justify "dishonestly" spoofing to the point where it becomes 'optimistic funding' for everyones beloved JAM implementers. [edited]
+2025-12-05 23:17 gav: I agree, it’s naive. 

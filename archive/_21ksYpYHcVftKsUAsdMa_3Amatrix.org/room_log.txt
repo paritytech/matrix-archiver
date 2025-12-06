@@ -1,5 +1,5 @@
 # room: #jam-conformance:matrix.org
-# exported: 2025-12-05 03:38 UTC
+# exported: 2025-12-06 03:36 UTC
 2025-08-20 15:56 erin: tomusdrw: i've set up the archiver to archive this also, so hopefully will be up starting tomorrow
 2025-08-21 06:33 ascriv: https://github.com/davxy/jam-conformance/issues/26 should we not discourage open source implementations (for now)? [edited]
 2025-08-21 10:27 oliver.tale-yazdi: I think open source repos are fine. Other implementors are just not supposed to look at it
@@ -1272,6 +1272,7 @@ So only the kappa_prime state (check definition of H_a) can tell you who can sea
   ↳ 2025-11-27 20:47 danicuki: > <@arjanz:matrix.org> Regarding `1763488212`, you may want to verify your constants. We spent 2 days before discovering we had a different `W_C` resulting in a storage item diff (constant was written in storage key `9fd75...ecbf2`)
 
 Indeed I discovered this morning that the issue was exactly the Constants. Thanks for the help. 
+  ↳ 2025-12-05 19:00 boymaas: Was this W_C different from the 4M value?
 2025-11-26 13:44 hanayukii: 
 Sorry I didn't described the question clear, our cases all passed by using the state after safrole stf, but we think it looks a bit conflict with the attatched diagram(prior(11) + import_block(12) -> post(12)), so we just want to clarify it this is expected to validate after the stf.
 What, we would like to clarify one specific question regarding how the single JSON test vectors are generated.
@@ -1336,3 +1337,52 @@ There is no real point in getting it in the GP if it's incomplete and/or it's no
 The major and most important part of the model is already in my draft, so there's nothing stopping you (or anyone else) from implementing it. The algorithm itself is final and will not change in the immediate future. [edited]
 2025-12-03 18:07 jan: I could rush it, but ultimately that won't change anything because the amount of work will not change, and half-assing it will just create *more* work for everyone involved.
 2025-12-04 00:47 decentration: am i able to find a conformant blob that is simpler than the one in accumulate test vectors (0.7.1) i am having some pains processing the blob to produce the expected `accumulate_gas_used`
+2025-12-05 10:40 dakkk: If there's no real point in open-sourcing the tex right now, what is the point of keeping it private? not a criticism, just a curiosity
+2025-12-05 12:44 jan: I'm not keeping it private. The PDF is uploaded hence the changes are fully public. I haven't uploaded the tex just because I didn't see a point. If you want me to upload it for some inexplicable reason (you like the challenge of reading nigh inscrutable TeX equations instead of nicely typeset math?) then just say so.
+2025-12-05 12:55 bamzedev: This [trace](https://github.com/davxy/jam-conformance/blob/main/fuzz-reports/0.7.1/traces/1763487981/00000050.bin), same as this [trace](https://github.com/davxy/jam-conformance/blob/main/fuzz-reports/0.7.1/traces/1763488328/00000050.bin) seems to be broken (empty pre and post state), can someone else confirm?
+  ↳ 2025-12-05 13:22 oliver.tale-yazdi: I was pinging Davide yesterday with the exact same question. Both `50.bin` files do not decode for us and also do not have corresponding `.json` files, which is odd.   
+I guess they are either broken on purpose or leftovers
+  ↳ 2025-12-05 13:35 dakkk: > <@bamzedev:matrix.org> This [trace](https://github.com/davxy/jam-conformance/blob/main/fuzz-reports/0.7.1/traces/1763487981/00000050.bin), same as this [trace](https://github.com/davxy/jam-conformance/blob/main/fuzz-reports/0.7.1/traces/1763488328/00000050.bin) seems to be broken (empty pre and post state), can someone else confirm?
+
+Same
+  ↳ 2025-12-05 13:59 jaymansfield: Try decoding just the prestate + block from the bin file. From what I can remember these were mutated (invalid) blocks.
+  ↳ 2025-12-05 15:30 davxy: I'll have a look
+2025-12-05 17:51 sourabhniyogi: Jan Bujak:  We attempted to refine with `jamt` (doom WPs, we think...) in a 5+1 polkajam+us 0.7.2 testnet this week and found the following:
+1. `machine` 
+2. `invoke`
+3. **NO** `page` host call to set up any pages memory
+so, our client hit a memory violation error.  Based on our understanding, it is an absolute requirement to a [`pages` host call to setup page-level access](https://graypaper.fluffylabs.dev/#/ab2cdbd/344d03344d03?v=0.7.2) after  `machine` because of [machine having inaccessibility as the default](https://graypaper.fluffylabs.dev/#/ab2cdbd/34a50034a500?v=0.7.2) -- yes?
+2025-12-05 17:54 jan: Yes, by default inner VM has its whole address space inaccessible. So if not populated beforehand it will generate a page fault that the toplevel VM needs to handle and resume execution.
+2025-12-05 17:55 sourabhniyogi: ok got it - this means 0.7.2 polkajam has a bug then?  
+2025-12-05 17:55 jan: I don't know. Either polkajam has a bug, or your client has a bug.
+2025-12-05 17:56 dave: I don't think CoreVM maps any pages up front, it just maps them in response to page faults
+2025-12-05 17:56 jan: But, what do you mean by "memory violation error"?
+2025-12-05 17:56 dave: Why do you think there is a polkajam bug?
+2025-12-05 17:57 jan: Assuming the toplevel VM doesn't set up any pages then resuming the inner VM would just trigger a segfault in the inner VM again.
+2025-12-05 17:58 sourabhniyogi: We hit a page fault and you have a "maps them in response to page faults" type approach intentionally.  Got it.  Will look for the page fault => `pages` setup [edited]
+2025-12-05 17:58 jan: Did you not implement a page faulting mechanism for inner VMs?
+2025-12-05 18:00 sourabhniyogi: We did for recompiler not for interpreter -- thanks for explaining
+2025-12-05 18:00 jan: Well, obviously any time your interpreter behaves differently than the recompiler you will have a bug.
+2025-12-05 18:01 jan: I'd suggest writing a fuzz test or something to make sure they're in sync.
+2025-12-05 18:02 jan: Or implement a single-stepping mechanism for both, and then run a progrem simultaneously in both and at every step compare the state. (That's what I do in PolkaVM.)
+2025-12-05 18:02 jan: Makes it very easy to debug recompiler bugs.
+2025-12-05 18:17 sourabhniyogi: Will follow your single-stepping advice, so we can get out of the log comparison business, which gets insane to do very quickly.  Great tip!  Do you think refine fuzzer protocol should incorporate this "compare every single-step" approach?  
+
+Having seen so many tiny memory issues, I think it could help, though maybe at the basic block level instead of the instruction level?? [edited]
+2025-12-05 18:28 jan: Fuzzer - no. For conformance fuzzying it's totally redundant since the final state will be different anyway in the vast majority of cases, and it would just massively slow down the testing.
+2025-12-05 18:30 jan: If you'd ask me this is only really useful on instruction level, because then you will know exactly where the issue is. If you do it on a basic block level then you still have to spend the effort to analyze.
+2025-12-05 18:30 dave: Can I ask what the issues you're having with log comparison are? I would think this is the way to go, with a standard log format, as then we can compare logs between implementations
+2025-12-05 18:31 jan: Yes, as Dave says, in general you need to consider what you want to use it for.
+2025-12-05 18:31 dave: For the fuzzer I assume you get a seed or something out on failure and can then rerun with all the logs etc enabled
+2025-12-05 18:33 jan: Note that you need some form of single stepping to even be able to print out logs to know e.g. that your implementation of instruction X is wrong, otherwise you can only essentially debug when your execution would have been interrupted naturally.
+2025-12-05 18:33 dave: We could of course define a standard interface for single-stepping, this just seems more complicated to me than defining a standard log format
+2025-12-05 18:34 sourabhniyogi: If you have a difference at gas 100MM (or 1B), and each line in a log is like 100 bytes, you have 10GB (or 100GB) of log data, times 2 for 2 backends.  We're not going to trade files that big between ourselves, even if its compressed.
+2025-12-05 18:35 dave: With single-stepping in sync you have to run the two impls on the same machine anyway?
+2025-12-05 18:36 dave: Of course 100GB of log data is pretty unwieldy but it can also be useful in its own right
+2025-12-05 18:41 jan: So in case this wasn't clear, my point was essentially only this: single stepping is useful if you need to debug your recompiler and/or make sure its behavior matches your interpreter. That's it. In the interpreter you can just add logging calls before each instruction (be it text or binary logs) and compare that with another implementation, no problem. But you *can't* really do this easily in the recompiler. Sure, you could codegen some code that would generate those prints, but at this point it's just a better idea to implement a generic mechanism of single stepping, and then not only you can add logs, but you can also run your recompiler step-by-step with your interpreter and "automatically" find the exact place where they disagree, without having to compare any logs.
+
+That's it.
+2025-12-05 18:45 sourabhniyogi: If we can get a pile of jamt pvm logs for multiple WP that polkajam+us agree on (in generating the same availability spec/work report hash), we'll post it in a bucket somewhere.  Thanks!
+2025-12-05 19:31 boymaas: Conformance traces v0.7.1: Do they use polkajam --chain=dev params exactly? (PolkaJam v0.1.26)
+  Found L mismatch which I used in v0.7.0 tests (24 vs 14,400). Are the exact constants used to run the jam-conformance traces documented somewhere? For v0.7.1 and v0.7.2?
+2025-12-05 19:34 dave: IDK, would have to investigate. Possibly davxy or Alexandre Pinto can answer...
