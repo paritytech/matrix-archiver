@@ -1,5 +1,5 @@
 # room: #jam-conformance:matrix.org
-# exported: 2025-12-06 03:36 UTC
+# exported: 2025-12-07 03:44 UTC
 2025-08-20 15:56 erin: tomusdrw: i've set up the archiver to archive this also, so hopefully will be up starting tomorrow
 2025-08-21 06:33 ascriv: https://github.com/davxy/jam-conformance/issues/26 should we not discourage open source implementations (for now)? [edited]
 2025-08-21 10:27 oliver.tale-yazdi: I think open source repos are fine. Other implementors are just not supposed to look at it
@@ -1386,3 +1386,21 @@ That's it.
 2025-12-05 19:31 boymaas: Conformance traces v0.7.1: Do they use polkajam --chain=dev params exactly? (PolkaJam v0.1.26)
   Found L mismatch which I used in v0.7.0 tests (24 vs 14,400). Are the exact constants used to run the jam-conformance traces documented somewhere? For v0.7.1 and v0.7.2?
 2025-12-05 19:34 dave: IDK, would have to investigate. Possibly davxy or Alexandre Pinto can answer...
+2025-12-06 07:29 clearloop: the reports say we can pass `1763489605` however in local env we can't, I can see the latest block should be failed (slot is the  same as the last success block), while the test expects state modifications, if this trace is legit? [edited]
+2025-12-06 12:36 dakkk: I'd like to print it with a white background; I also would like to reference tex symbols directly on my code, like I did with other part of the GP. 
+2025-12-06 17:33 sourabhniyogi: What is the responsibility of a _new_ validator (who has just been added via `designate`) to get old shards and old segments via [CE 137](https://github.com/zdave-parity/jam-np/blob/main/simple.md#ce-137-shard-distribution), [CE138](https://github.com/zdave-parity/jam-np/blob/main/simple.md#ce-138-audit-shard-request), [CE139/140](https://github.com/zdave-parity/jam-np/blob/main/simple.md#ce-139140-segment-shard-request), ... -- if the answer is "nothing", doesn't this imply an expectation that old validators who assured JAM DA for the last 28 days have a long 28-day unbonding period? 
+
+The [shard assignment](https://github.com/zdave-parity/jam-np/blob/main/simple.md#shard-assignment) scheme appears to only apply to the immediate shards required to be held by current validator sets, with a new validator not assuming any responsibility of older validators at all? [edited]
+2025-12-06 20:43 danicuki: > <@sourabhniyogi:matrix.org> What is the responsibility of a _new_ validator (who has just been added via `designate`) to get old shards and old segments via [CE 137](https://github.com/zdave-parity/jam-np/blob/main/simple.md#ce-137-shard-distribution), [CE138](https://github.com/zdave-parity/jam-np/blob/main/simple.md#ce-138-audit-shard-request), [CE139/140](https://github.com/zdave-parity/jam-np/blob/main/simple.md#ce-139140-segment-shard-request), ... -- if the answer is "nothing", doesn't this imply an expectation that old validators who assured JAM DA for the last 28 days have a long 28-day unbonding period? 
+> 
+> The [shard assignment](https://github.com/zdave-parity/jam-np/blob/main/simple.md#shard-assignment) scheme appears to only apply to the immediate shards required to be held by current validator sets, with a new validator not assuming any responsibility of older validators at all?
+
+Good question. 
+2025-12-06 20:46 dave: > <@sourabhniyogi:matrix.org> What is the responsibility of a _new_ validator (who has just been added via `designate`) to get old shards and old segments via [CE 137](https://github.com/zdave-parity/jam-np/blob/main/simple.md#ce-137-shard-distribution), [CE138](https://github.com/zdave-parity/jam-np/blob/main/simple.md#ce-138-audit-shard-request), [CE139/140](https://github.com/zdave-parity/jam-np/blob/main/simple.md#ce-139140-segment-shard-request), ... -- if the answer is "nothing", doesn't this imply an expectation that old validators who assured JAM DA for the last 28 days have a long 28-day unbonding period? 
+> 
+> The [shard assignment](https://github.com/zdave-parity/jam-np/blob/main/simple.md#shard-assignment) scheme appears to only apply to the immediate shards required to be held by current validator sets, with a new validator not assuming any responsibility of older validators at all?
+
+New validators don't request old shards. This has been discussed before, you can probably find the discussion in the Matrix logs if you can figure out the right search terms 😅
+2025-12-06 20:48 dave: Idk about the unbonding period, not sure if there is even a way to punish validators which don't keep their segment shards
+2025-12-06 20:49 dave: Maybe something will be added at some point but I don't think it's an easy problem to solve
+2025-12-06 20:51 sourabhniyogi: Yipes, I was both afraid of and expecting this -- the lack of staking / unbonding / slashing is a serious problem, but its true to "bare metal" expectations:  It means service builder will have to take on this task themselves, securing JAM DA chunks because .. JAM does not, by itself, do so.  Its "Someone else's \[off topic\] problem" to reward JAM Storage providers apparently!  =) [edited]

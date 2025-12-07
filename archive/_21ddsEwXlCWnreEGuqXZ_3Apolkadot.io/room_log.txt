@@ -1,5 +1,5 @@
 # room: #graypaper:polkadot.io
-# exported: 2025-12-06 03:35 UTC
+# exported: 2025-12-07 03:44 UTC
 2024-04-17 20:29 syed: https://matrix.to/#/!hyzRkDqDthePbodYFz:parity.io/$f_DMsIEcDXZegw6Sabnehzc-LrdDQkmq5MbxDDyoZxY?via=parity.io&via=web3.foundation
 
 2024-04-17 20:29 syed: 
@@ -6960,3 +6960,8 @@ All values in this section are "hard coded" - 1023 validators and 341 cores. Wou
 2025-12-04 14:12 danicuki: Should the subscripts for Justification J and L (14.11) be also parametrized? Now they are hard coded as '6'. Is it correct to assume that they should be subscripted by W_P? 
 2025-12-04 14:16 dave: No, that they are both 6 is a coincidence. The subscript 6 is derived from the size of a segment. That is at least currently fixed.
 2025-12-04 14:21 dave: The subscript 6 = log2(64), with 64 being the number of pages proven by a proof page. 64 is the largest number that works with the current segment size.
+2025-12-06 21:38 sourabhniyogi: I've been bugged by your super honest "you're slowed down by making all those network connections", "actually use archive nodes whenever possible" and "we charge services a LOT more if they want the 28 day availability" for the last couple of weeks -- at the core, this is because I've had excessively rosy ideas of what JAM DA was supposed to guarantee.
+
+But, since validators have nothing at stake, no 28 day unbonding period, no slashing, and old validators can be flipped out with no actual requirement for new validators to secure old JAM DA chunks ... it seems serious service builders should just forget that JAM (on its own anyway) secures its JAM DA segments beyond the M hours needed to audit/finalize, and develop their own long-term storage solution, with its own rewards/payment system following  something like `Map\<Builder,Vec\<u16>>`, or pretending that "store on ipfs" is actually real, or, yipes, just paying Cloudflare etc. and hoping no one calls BS on the subtle lie =)
+
+Should we be bothered about this squeezing long-term responsibility out of one system (JAM) and throwing it over to storage systems run by \[shamelessly centralized\] service operators/builders, or is there a way to salvage hopes of what JAM DA can actually guarantee beyond M hours? [edited]
