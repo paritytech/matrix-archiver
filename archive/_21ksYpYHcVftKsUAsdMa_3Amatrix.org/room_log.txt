@@ -1,5 +1,5 @@
 # room: #jam-conformance:matrix.org
-# exported: 2025-12-08 03:41 UTC
+# exported: 2025-12-09 03:38 UTC
 2025-08-20 15:56 erin: tomusdrw: i've set up the archiver to archive this also, so hopefully will be up starting tomorrow
 2025-08-21 06:33 ascriv: https://github.com/davxy/jam-conformance/issues/26 should we not discourage open source implementations (for now)? [edited]
 2025-08-21 10:27 oliver.tale-yazdi: I think open source repos are fine. Other implementors are just not supposed to look at it
@@ -1415,3 +1415,18 @@ INFO [boot] Bootstrap Service Accumulate, 0h @2 $18446744073709551399
 WARN Panic handler called!
 WARN Panic message: panicked at crates/jam-pvm-common/src/host_calls.rs:202:46:\x0ahost call returns correct type; qed: Error
 ```
+2025-12-08 05:37 rustybot: > <@shimonchick:matrix.org> I am trying to run accumulation on block 2 from preimage-light traces, and getting the following error from log host call. Any suggestion what it means is appreciated:
+> ```
+> INFO [boot] Bootstrap Service Accumulate, 0h @2 $18446744073709551399
+> WARN Panic handler called!
+> WARN Panic message: panicked at crates/jam-pvm-common/src/host_calls.rs:202:46:\x0ahost call returns correct type; qed: Error
+> ```
+
+This occurs in the sdk support functions for `fetch` hostcall (not `log`) specifically when it attempts to decode the data returned by your hostcall
+2025-12-08 21:06 sourabhniyogi: **JAM Implementers Dec Call**
+Tuesday, 9 December · 9am PT / 5pm Lisbon / 6pm Berlin
+Google Meet joining info Video call link: https://meet.google.com/sek-nctz-kry
+
+_Agenda:_ (please add your topics!) https://hackmd.io/@sourabhniyogi/jamimplementers
+
+

@@ -18,7 +18,7 @@ a:hover{color:#90caf9}
 em{font-style:italic}
 </style>
 <h1>#jam-conformance:matrix.org</h1>
-<p><small>last updated 2025-12-08 03:41 UTC</small></p>
+<p><small>last updated 2025-12-09 03:38 UTC</small></p>
 <p><a href='room_log.txt'>⇩ plaintext</a> · <a href='../../'>⇦ all rooms</a></p>
 <hr>
 <div class='msg'><a class='ts' href='#$_9hLINsChVG8rufQkmbqp-fIbsNyK1YqpS3C9S7QZHU'>#</a> <a class='ts' name='$_9hLINsChVG8rufQkmbqp-fIbsNyK1YqpS3C9S7QZHU' href='https://matrix.to/#/!ksYpYHcVftKsUAsdMa:matrix.org/$_9hLINsChVG8rufQkmbqp-fIbsNyK1YqpS3C9S7QZHU' target='_blank'>2025-08-20 15:56</a>&ensp;<span class='u' style='color:#787fdf'>erin</span>: tomusdrw: i&#x27;ve set up the archiver to archive this also, so hopefully will be up starting tomorrow</div>
@@ -1414,3 +1414,17 @@ New validators don&#x27;t request old shards. This has been discussed before, yo
 WARN Panic handler called!
 WARN Panic message: panicked at crates/jam-pvm-common/src/host_calls.rs:202:46:\x0ahost call returns correct type; qed: Error
 </code></pre></div>
+<div class='msg'><a class='ts' href='#$0UqwnzBn7218U1RfQdcrADjFA1PTaHovMPNIQh_9l3A'>#</a> <a class='ts' name='$0UqwnzBn7218U1RfQdcrADjFA1PTaHovMPNIQh_9l3A' href='https://matrix.to/#/!ksYpYHcVftKsUAsdMa:matrix.org/$0UqwnzBn7218U1RfQdcrADjFA1PTaHovMPNIQh_9l3A' target='_blank'>2025-12-08 05:37</a>&ensp;<span class='u' style='color:#b332c3'>rustybot</span>: &gt; &lt;@shimonchick:matrix.org&gt; I am trying to run accumulation on block 2 from preimage-light traces, and getting the following error from log host call. Any suggestion what it means is appreciated:
+&gt; <pre><code class=''>&gt; INFO [boot] Bootstrap Service Accumulate, 0h @2 $18446744073709551399
+&gt; WARN Panic handler called!
+&gt; WARN Panic message: panicked at crates/jam-pvm-common/src/host_calls.rs:202:46:\x0ahost call returns correct type; qed: Error
+&gt; </code></pre>
+
+This occurs in the sdk support functions for <code>fetch</code> hostcall (not <code>log</code>) specifically when it attempts to decode the data returned by your hostcall</div>
+<div class='msg'><a class='ts' href='#$nqkulFuNYWfNOOibKwDEnq59zkzFaZ1Vi9x1HVQ8-mI'>#</a> <a class='ts' name='$nqkulFuNYWfNOOibKwDEnq59zkzFaZ1Vi9x1HVQ8-mI' href='https://matrix.to/#/!ksYpYHcVftKsUAsdMa:matrix.org/$nqkulFuNYWfNOOibKwDEnq59zkzFaZ1Vi9x1HVQ8-mI' target='_blank'>2025-12-08 21:06</a>&ensp;<span class='u' style='color:#c67452'>sourabhniyogi</span>: **JAM Implementers Dec Call**
+Tuesday, 9 December · 9am PT / 5pm Lisbon / 6pm Berlin
+Google Meet joining info Video call link: <a href="https://meet.google.com/sek-nctz-kry" rel="noopener" target="_blank">https://meet.google.com/sek-nctz-kry</a>
+
+_Agenda:_ (please add your topics!) <a href="https://hackmd.io/@sourabhniyogi/jamimplementers" rel="noopener" target="_blank">https://hackmd.io/@sourabhniyogi/jamimplementers</a>
+
+</div>
