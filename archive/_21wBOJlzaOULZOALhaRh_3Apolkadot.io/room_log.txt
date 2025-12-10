@@ -1,5 +1,5 @@
 # room: #jam:polkadot.io
-# exported: 2025-12-09 03:37 UTC
+# exported: 2025-12-10 03:41 UTC
 2024-04-20 02:08 johnjiao123: 
 2024-04-20 02:09 johnjiao123: 
 2024-05-30 21:48 nradko: Hey everyone,
@@ -12161,3 +12161,7 @@ Transparency into which validator uses what client, publicly visible performance
 2025-12-08 03:40 shimonchick: In accumulation context, do we need the raw/unprocessed work item data? how would we resolve it from the work reports? If i am understanding correctly selector 14 of the host function FETCH needs access to the work item, even in accumulation invocation, right?
 2025-12-08 12:48 gav: No. Selector 14 is only enabled if bold-i is non-null. Under Accumulation it is null. [edited]
 2025-12-08 12:55 gav: bold-i doesn't represent the unprocessed data. It represents the _accumulation inputs_. These are either deferred-transfers or operand-tuples (see eq 12.15). [edited]
+2025-12-09 10:25 davxy: This PR has been mentioned a couple of times in the jam-conformance channel. It covers an important point of ed25519 signatures that could go easily overlooked: https://github.com/davxy/jam-conformance/pull/112 [edited]
+2025-12-09 11:24 jeff: hehe yay cofactor etc chaos :) [edited]
+2025-12-09 11:33 jeff: https://hdevalence.ca/blog/2020-10-04-its-25519am/
+
