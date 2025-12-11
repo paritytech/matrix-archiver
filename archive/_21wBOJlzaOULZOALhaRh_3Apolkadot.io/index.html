@@ -18,7 +18,7 @@ a:hover{color:#90caf9}
 em{font-style:italic}
 </style>
 <h1>#jam:polkadot.io</h1>
-<p><small>last updated 2025-12-10 03:41 UTC</small></p>
+<p><small>last updated 2025-12-11 03:42 UTC</small></p>
 <p><a href='room_log.txt'>⇩ plaintext</a> · <a href='../../'>⇦ all rooms</a></p>
 <hr>
 <div class='msg'><a class='ts' href='#$we4SYXTHwmKn094X9Zs_7mWUOoUVh4icvVdxD83RZfs'>#</a> <a class='ts' name='$we4SYXTHwmKn094X9Zs_7mWUOoUVh4icvVdxD83RZfs' href='https://matrix.to/#/!wBOJlzaOULZOALhaRh:polkadot.io/$we4SYXTHwmKn094X9Zs_7mWUOoUVh4icvVdxD83RZfs' target='_blank'>2024-04-20 02:08</a>&ensp;<span class='u' style='color:#d0709e'>johnjiao123</span>: </div>
@@ -12058,3 +12058,24 @@ Transparency into which validator uses what client, publicly visible performance
 <div class='msg'><a class='ts' href='#$BbJ7JYeDiQvom0eDohjHmjQkRIon6CaRX-gLWT91uSU'>#</a> <a class='ts' name='$BbJ7JYeDiQvom0eDohjHmjQkRIon6CaRX-gLWT91uSU' href='https://matrix.to/#/!wBOJlzaOULZOALhaRh:polkadot.io/$BbJ7JYeDiQvom0eDohjHmjQkRIon6CaRX-gLWT91uSU' target='_blank'>2025-12-09 11:24</a>&ensp;<span class='u' style='color:#b9329c'>jeff</span>: hehe yay cofactor etc chaos :) <span class="edited">(edited)</span></div>
 <div class='msg'><a class='ts' href='#$R4eejBmEICDri0A_fhkCK6jZBISPXL50HJhF8GgrbTw'>#</a> <a class='ts' name='$R4eejBmEICDri0A_fhkCK6jZBISPXL50HJhF8GgrbTw' href='https://matrix.to/#/!wBOJlzaOULZOALhaRh:polkadot.io/$R4eejBmEICDri0A_fhkCK6jZBISPXL50HJhF8GgrbTw' target='_blank'>2025-12-09 11:33</a>&ensp;<span class='u' style='color:#b9329c'>jeff</span>: <a href="https://hdevalence.ca/blog/2020-10-04-its-25519am/" rel="noopener" target="_blank">https://hdevalence.ca/blog/2020-10-04-its-25519am/</a>
 </div>
+<div class='msg'><a class='ts' href='#$rJsrqME1GSVl9VnZ8uijXrLb96dJbboaL6UQ6NryTmA'>#</a> <a class='ts' name='$rJsrqME1GSVl9VnZ8uijXrLb96dJbboaL6UQ6NryTmA' href='https://matrix.to/#/!wBOJlzaOULZOALhaRh:polkadot.io/$rJsrqME1GSVl9VnZ8uijXrLb96dJbboaL6UQ6NryTmA' target='_blank'>2025-12-10 21:53</a>&ensp;<span class='u' style='color:#4977cf'>danicuki</span>: Hey everyone! 👋
+
+I finally managed to run DOOM on JAM (super fun! <a href="https://youtu.be/riyYJo-CKWE?si=cCw5-HIgHnwmvWeH)," rel="noopener" target="_blank">https://youtu.be/riyYJo-CKWE?si=cCw5-HIgHnwmvWeH),</a> but I still feel there are some cloudy parts of the workflow. In particular, I’d love help understanding:
+	•	How exactly a CoreVM service is created — what’s happening under the hood?
+	•	What the builder is really doing — what are the contents/structure of the work packages it keeps submitting?
+	•	How to take another arbitrary program/game and make it run on JAM — is there a clear process for compiling something new to PVM and packaging it as a service? How difficult is it supposed to be?
+
+Would anyone be open to running a small online workshop or walkthrough for the community?
+I think a step-by-step session would help a lot of us start experimenting with new ideas and services on JAM.
+
+Thanks! 🙏✨
+</div>
+<div class='msg'><a class='ts' href='#$sX3R6HmxKV4_j_W8M3evPewKXr9ILhoaecn-7FKEP4w'>#</a> <a class='ts' name='$sX3R6HmxKV4_j_W8M3evPewKXr9ILhoaecn-7FKEP4w' href='https://matrix.to/#/!wBOJlzaOULZOALhaRh:polkadot.io/$sX3R6HmxKV4_j_W8M3evPewKXr9ILhoaecn-7FKEP4w' target='_blank'>2025-12-10 21:57</a>&ensp;<span class='u' style='color:#c65779'>dave</span>: Not really an answer to your questions _but_ it is possible to look at the source for <code>jamt</code> and CoreVM now, I believe all the crates are on crates.io</div>
+<div class='msg'><a class='ts' href='#$6SIR9-IcI9EqnefXeLNuf_V-iFnHodDWSTs9BAzocew'>#</a> <a class='ts' name='$6SIR9-IcI9EqnefXeLNuf_V-iFnHodDWSTs9BAzocew' href='https://matrix.to/#/!wBOJlzaOULZOALhaRh:polkadot.io/$6SIR9-IcI9EqnefXeLNuf_V-iFnHodDWSTs9BAzocew' target='_blank'>2025-12-10 22:10</a>&ensp;<span class='u' style='color:#c65779'>dave</span>: Re compiling something new, it depends if you mean as a JAM service or for CoreVM.
+
+For CoreVM you can use <a href="https://github.com/paritytech/polkaports," rel="noopener" target="_blank">https://github.com/paritytech/polkaports,</a> I believe this is how Quake is built although for historical reasons DOOM works a bit differently.
+
+If you want to make your own JAM service, the <code>jam-pvm-common</code> crate (<a href="https://docs.rs/jam-pvm-common/0.1.26/jam_pvm_common/)" rel="noopener" target="_blank">https://docs.rs/jam-pvm-common/0.1.26/jam_pvm_common/)</a> is the main crate to look at for Parity&#x27;s SDK. You can build a PVM blob using <code>jam-pvm-build</code> (<a href="https://crates.io/crates/jam-pvm-build)." rel="noopener" target="_blank">https://crates.io/crates/jam-pvm-build).</a>
+
+You don&#x27;t need to use Parity&#x27;s SDK though, other teams have their own SDKs and you can of course make your own :D</div>
+<div class='msg'><a class='ts' href='#$_EsoQqMjIiflaeNzGVgbJQXVmaIxmoDl92x14xJXD7g'>#</a> <a class='ts' name='$_EsoQqMjIiflaeNzGVgbJQXVmaIxmoDl92x14xJXD7g' href='https://matrix.to/#/!wBOJlzaOULZOALhaRh:polkadot.io/$_EsoQqMjIiflaeNzGVgbJQXVmaIxmoDl92x14xJXD7g' target='_blank'>2025-12-11 02:26</a>&ensp;<span class='u' style='color:#d470bf'>jaymansfield</span>: The 0.7.2 version of polkajam seems to be using the 0.7.1 value of the WB constant still, at least in in the rpc parameters() call. (Ex: &quot;max_input&quot;:13794305)</div>

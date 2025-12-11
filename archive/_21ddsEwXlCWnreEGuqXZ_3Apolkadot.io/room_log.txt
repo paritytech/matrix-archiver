@@ -1,5 +1,5 @@
 # room: #graypaper:polkadot.io
-# exported: 2025-12-10 03:41 UTC
+# exported: 2025-12-11 03:43 UTC
 2024-04-17 20:29 syed: https://matrix.to/#/!hyzRkDqDthePbodYFz:parity.io/$f_DMsIEcDXZegw6Sabnehzc-LrdDQkmq5MbxDDyoZxY?via=parity.io&via=web3.foundation
 
 2024-04-17 20:29 syed: 
@@ -6971,3 +6971,8 @@ sourabhniyogi: This tone is unacceptable except between friends. No overly famil
 2025-12-07 14:01 gav: If you have a specific point to raise concerning the GP, do ensure that it is well-referenced to the GP. This is not the place for speculation about behavioural psychology or the underlying and perfectly well-stated assumptions of ELVES. Again, I've had to warn you for flagrant off-topic conversation before. I won't warn on this again, either.
 2025-12-07 14:02 gav: JAM, as a protocol, explicitly avoids tackling the issue of validator selection. I expect no further discussion of it in this channel.
 2025-12-07 17:39 sourabhniyogi: I see.
+2025-12-10 16:20 jan: In case anyone's interested, the PR with the new gas cost model is now open:
+
+https://github.com/gavofyork/graypaper/pull/508
+
+Of course it still needs to be reviewed. Any feedback is highly appreciated. [edited]

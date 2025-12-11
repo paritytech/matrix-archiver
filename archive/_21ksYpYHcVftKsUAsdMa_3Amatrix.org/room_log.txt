@@ -1,5 +1,5 @@
 # room: #jam-conformance:matrix.org
-# exported: 2025-12-10 03:42 UTC
+# exported: 2025-12-11 03:43 UTC
 2025-08-20 15:56 erin: tomusdrw: i've set up the archiver to archive this also, so hopefully will be up starting tomorrow
 2025-08-21 06:33 ascriv: https://github.com/davxy/jam-conformance/issues/26 should we not discourage open source implementations (for now)? [edited]
 2025-08-21 10:27 oliver.tale-yazdi: I think open source repos are fine. Other implementors are just not supposed to look at it
@@ -1437,3 +1437,10 @@ I plan to merge these vectors, so their visibility will decrease.
 2025-12-09 21:21 sourabhniyogi: Thank you for the 10-11 teams who joined in today!  Lets do it again on Jan 6 or 13. 
   
 Our team will post doom PVM traces matching whatever JIP spec anyone posts (binary first, with script to map polkajam into binary for memory mutation) along with some "easy" availability spec derivations, also with whatever work report derivation format anyone comes up with.   
+2025-12-10 11:12 tomusdrw: Following up on the discussions about PVM logging, I drafted some proposal: https://github.com/tomusdrw/JIPs/pull/1 curious about your thoughts around that. Feel free to comment directly in the PR (it's on my fork), not fully formed proposal to w3f repo yet.
+2025-12-10 19:01 danicuki: As promises, here is the short (straight to the point) tutorial to run DOOM locally (with polkajam binaries). 
+
+https://www.youtube.com/watch?v=riyYJo-CKWE
+2025-12-10 19:43 sourabhniyogi: Interested in JAM In-person Meetup in March (dates TBD but nikos-pba -> @wirednkod:matrix.org is point person; location expected to be Lisbon)
+
+Respond here as your plans develop: https://github.com/davxy/jam-conformance/discussions/93
