@@ -1,5 +1,5 @@
 # room: #jam-conformance:matrix.org
-# exported: 2025-12-11 03:43 UTC
+# exported: 2025-12-12 03:42 UTC
 2025-08-20 15:56 erin: tomusdrw: i've set up the archiver to archive this also, so hopefully will be up starting tomorrow
 2025-08-21 06:33 ascriv: https://github.com/davxy/jam-conformance/issues/26 should we not discourage open source implementations (for now)? [edited]
 2025-08-21 10:27 oliver.tale-yazdi: I think open source repos are fine. Other implementors are just not supposed to look at it
@@ -1441,6 +1441,26 @@ Our team will post doom PVM traces matching whatever JIP spec anyone posts (bina
 2025-12-10 19:01 danicuki: As promises, here is the short (straight to the point) tutorial to run DOOM locally (with polkajam binaries). 
 
 https://www.youtube.com/watch?v=riyYJo-CKWE
-2025-12-10 19:43 sourabhniyogi: Interested in JAM In-person Meetup in March (dates TBD but nikos-pba -> @wirednkod:matrix.org is point person; location expected to be Lisbon)
+2025-12-10 19:43 sourabhniyogi: Interested in JAM In-person Meetup in March (dates TBD but pauline-pba  is point person; location expected to be Lisbon)
 
-Respond here as your plans develop: https://github.com/davxy/jam-conformance/discussions/93
+Respond here as your plans develop: https://github.com/davxy/jam-conformance/discussions/93 [edited]
+2025-12-11 10:31 nikos-pba: sourabhniyogi: Since yesterday I am no longer in the PBA team. As a result - I am no longer the contact person. Please contact pauline-pba about any information concerning JAM course 
+2025-12-11 17:53 sourabhniyogi: On this weeks call, danicuki | Jamixir brought up Erasure Coding, which is necessary to generate work reports.  AFAICT, nothing on erasure coding has changed.  The erasure coding test vectors are here:
+
+https://github.com/w3f/jamtestvectors/tree/master/erasure
+
+and you may find this helpful
+https://github.com/javajamio/javajam-trace/tree/main/erasure\_coding
+https://github.com/jam-duna/jamtestnet/tree/main/erasurecoding
+If you are concerned about performance, see [GP Issue #97](https://github.com/gavofyork/graypaper/issues/97) which I take to mean something will change next year. [edited]
+2025-12-11 17:57 danicuki: Nice, please take a look https://github.com/jam-duna/jamtestnet/issues/139 - I could not get same results as you, even if our EC implementation match the test vectors
+2025-12-11 17:59 sourabhniyogi: I will nominate you to generate a JIP for work report derivation =).  We will try something like Jan Bujak (ooo, be back next year) suggestion [here](https://github.com/tomusdrw/JIPs/pull/1#issuecomment-3637030827) to see how it feels. 
+
+2025-12-11 19:33 danicuki: Do you believe this is a JIP? Or it is more a test vector specification? I am ok with what you already proposed here (maybe with one or other addition): https://github.com/jam-duna/jamtestnet/blob/0.6.4.0/guarantees/0x09cf25b4b22e936f6108cc7e74a6b31e10ea50de0e2041543d03cfdebd484dbf.json#L168-L173
+2025-12-11 20:17 sourabhniyogi: No.  After thinking about Jan's intuition and the nested structure of refine + accumulate (and how much excess time we have spent this year on decoding/encoding adding/removing/moving some  attribute, reordered, etc.) its smarter to dump everything into directories with flat highly compressible files, which can cover PVM traces and ordered accumulation and work report derivations.  This  disturbs natural engineering sensibilities, but in the end, what matters is reducing debugging time, not pleasing some "did you output the log according to spec", since the logs are throwaway and only serve the goal of debugging.
+2025-12-11 21:24 boymaas: That makes sense. I assume there will also be separate files for memory writes and reads. This will save enormous amount of time running through traces. 
+2025-12-11 22:05 sourabhniyogi: News: https://forum.polkadot.network/t/ensuring-jam-development-sustainability-is-it-time-for-a-dedicated-jam-bounty-program/16229/8  
+Follow: [Radha](https://x.com/DrW3RK)
+2025-12-12 03:13 ascriv: @Radha welcome, and thanks for taking on the M1 submission evaluation.
+
+When there’s clarity on the timeline for M1 prize distribution (subject to submissions being deemed valid), it would be helpful if you could share an update here. [edited]

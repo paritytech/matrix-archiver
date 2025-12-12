@@ -1,5 +1,5 @@
 # room: #jam:polkadot.io
-# exported: 2025-12-11 03:42 UTC
+# exported: 2025-12-12 03:41 UTC
 2024-04-20 02:08 johnjiao123: 
 2024-04-20 02:09 johnjiao123: 
 2024-05-30 21:48 nradko: Hey everyone,
@@ -12186,3 +12186,7 @@ If you want to make your own JAM service, the `jam-pvm-common` crate (https://do
 
 You don't need to use Parity's SDK though, other teams have their own SDKs and you can of course make your own :D
 2025-12-11 02:26 jaymansfield: The 0.7.2 version of polkajam seems to be using the 0.7.1 value of the WB constant still, at least in in the rpc parameters() call. (Ex: "max_input":13794305)
+2025-12-11 13:10 dave: What do you mean by the "0.7.2 version"? The nightly release has the correct value AFAIK. Until we start doing real releases I would recommend using the latest nightly build as that should contain all of the latest fixes.
+  ↳ 2025-12-11 13:35 jaymansfield: Looks like I was using an outdated spec file. Dumping the latest has the right value. Thank you.
+  ↳ 2025-12-11 13:55 rustybot: Tagged 0.7.2 should have the right WB value as well [edited]
+2025-12-11 13:11 jaymansfield: I am referring to the latest release supporting GP 0.7.2. Just verified again using nightly-2025-12-11 [edited]
