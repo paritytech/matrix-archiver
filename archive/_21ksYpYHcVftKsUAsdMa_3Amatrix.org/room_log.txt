@@ -1,5 +1,5 @@
 # room: #jam-conformance:matrix.org
-# exported: 2025-12-13 03:36 UTC
+# exported: 2025-12-14 03:45 UTC
 2025-08-20 15:56 erin: tomusdrw: i've set up the archiver to archive this also, so hopefully will be up starting tomorrow
 2025-08-21 06:33 ascriv: https://github.com/davxy/jam-conformance/issues/26 should we not discourage open source implementations (for now)? [edited]
 2025-08-21 10:27 oliver.tale-yazdi: I think open source repos are fine. Other implementors are just not supposed to look at it
@@ -1468,7 +1468,21 @@ When there’s clarity on the timeline for M1 prize distribution (subject to sub
 2025-12-12 19:03 davxy: FWIW Tlthe polkajam-based fuzzer workflow operates correctly with GP version 0.7.1 or later.
 2025-12-12 22:11 sourabhniyogi: Here is a draft on [PVM "Modular" tracing](https://github.com/jam-duna/jamtestnet/blob/main/TRACING.md) -- we got our work report difference on a doom jamt package down to just one byte (the very first leaked byte, which we believe is a child  reporting back to the parent, 7b vs 80 meaning 5 gas) -- if anyone else is working on this "Doom" WP Refine problem,  we would appreciate others posting "modular" PVM Traces so can figure out this last byte difference.  [doom.zip](https://cdn.jamduna.org/doom.zip) [edited]
 2025-12-13 00:47 tomusdrw: Frankly I don't really understand the idea of sharing full PVM logs. Since you have all of the parts put together already (I'm quite sure you are the only team to do that so far), why don't you just swap your VM with PolkaVM and print whatever instruction-traces you want from there? Just simply by swapping your VM to PolkaVM you will already know if this is VM-level issue or some higher-level problem. In the latter case I think figuring out what that could be will be super hard by analyzing single opcodes and registers (probably without debug symbols and even source code).
-2025-12-13 01:17 sourabhniyogi: Having a FFIable PVM for refinement makes a lot of sense.  
+2025-12-13 01:17 sourabhniyogi: Having a FFIable PVM for refinement makes a lot of sense. The size of the "print whatever instruction-traces you want" is a lot bigger than you know.  Or we are lazy about parsing it, not sure! [edited]
+2025-12-13 01:29 sourabhniyogi: Unless Jan gives us the advice that we should attempt a swap, I would not follow the swap advice - if it was an option it would have been a suggestion much earlier! [edited]
+2025-12-13 08:03 tomusdrw: We (typeberry) are pretty far from being able to refine doom and produce such traces, however:
 
-The size of the "print whatever instruction-traces you want" is a lot bigger than you know.
-2025-12-13 01:29 sourabhniyogi: Unless Jan gives us the advice that we should attempt a swap, I would not follow it.  
+1. If the issue with FFIng to PolkaVM is that you are afraid of violating some JAM prize rules, I'm guilty of already doing that for PVM Debugger. We have polkavm wrapped in [this api](https://github.com/FluffyLabs/pvm-debugger/issues/81) and wasm-bindgen, but I could try to output C-api instead so you don't have to take the risk :)
+2. Heck, if we all agreed on a generic PVM API (probably not necessarily a stepping one) we could swap between each of our intepreters/compilers easily, which adds to resilence (kind of like in Ethereum you can mix&match execution and consensus clients).
+3. If we had IO traces I would be able to just use our PVM to reproduce each execution even though I don't have full refine orchestration done or any host calls properly implemented (accessing db, pending changes, etc).
+
+By IO traces I mean what Jan also mentioned in the PR, so:
+
+1. SPI blob + Args blob
+2. At each ecalli: PC + Registers + Gas
+3. Trace what the host call should do with all of the data, e.g.: `read_memory(a, b) -> <blob>; set_register(7, WHO); set_memory(c, <blob2>);`
+
+Pretty much self-contained "Execution blob" that allows (re-)starting PVM at ecalli step. That's why I was trying to focus on that kind of traces in the JIP proposal. [edited]
+2025-12-13 15:51 sourabhniyogi: In response to [this API suggestion](https://github.com/davxy/jam-conformance/issues/76) Jan suggested [this](https://paritytech.github.io/matrix-archiver/archive/_21wBOJlzaOULZOALhaRh_3Apolkadot.io/index.html#$PPqn__aAWf5zP2-5bzDj1jwVT4XE1FufU2yKxGTqHHk) (aka dont look but do feel free to model an API its actually a requirement) -- where I believe the schelling point can be the [PolkaVM API](https://docs.rs/polkavm/latest/polkavm/struct.RawInstance.html).  We'll output one, maybe you could do PolkaVM for everyone else (our hero!), and probably whomever is doing a recompiler  ( Jason | JavaJAM + Prasad | Chainscore Labs ) can match ?
+
+We'll put in your 1+2+3 in "modular" form next week, make sense -- everyone here has seen first hand that our jam-conformance bugs are 80-90%+ on host call implementations in accumulate, and refine will probably be similar.  Thank you!
