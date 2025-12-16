@@ -1,5 +1,5 @@
 # room: #jam-conformance:matrix.org
-# exported: 2025-12-15 03:46 UTC
+# exported: 2025-12-16 03:43 UTC
 2025-08-20 15:56 erin: tomusdrw: i've set up the archiver to archive this also, so hopefully will be up starting tomorrow
 2025-08-21 06:33 ascriv: https://github.com/davxy/jam-conformance/issues/26 should we not discourage open source implementations (for now)? [edited]
 2025-08-21 10:27 oliver.tale-yazdi: I think open source repos are fine. Other implementors are just not supposed to look at it
@@ -1467,6 +1467,7 @@ When there’s clarity on the timeline for M1 prize distribution (subject to sub
 2025-12-12 14:13 sourabhniyogi: Is the fellowship ratifying 0.7 GP as per [this](https://github.com/w3f/jam-milestone-delivery/pull/16/changes#diff-6b12df05e78e85aae430081274429098a4965e123ab0ea8701ada94a0141047cR71)?
 2025-12-12 19:03 davxy: FWIW Tlthe polkajam-based fuzzer workflow operates correctly with GP version 0.7.1 or later.
 2025-12-12 22:11 sourabhniyogi: Here is a draft on [PVM "Modular" tracing](https://github.com/jam-duna/jamtestnet/blob/main/TRACING.md) -- we got our work report difference on a doom jamt package down to just one byte (the very first leaked byte, which we believe is a child  reporting back to the parent, 7b vs 80 meaning 5 gas) -- if anyone else is working on this "Doom" WP Refine problem,  we would appreciate others posting "modular" PVM Traces so can figure out this last byte difference.  [doom.zip](https://cdn.jamduna.org/doom.zip) [edited]
+  ↳ 2025-12-15 18:25 jaymansfield: I've also been working on trying to get doom to run on JavaJAM for the past week. I am now seeing the same gas difference of 5 in my calculated work reports when comparing to polkajam. 122365005 vs 122365010. 
 2025-12-13 00:47 tomusdrw: Frankly I don't really understand the idea of sharing full PVM logs. Since you have all of the parts put together already (I'm quite sure you are the only team to do that so far), why don't you just swap your VM with PolkaVM and print whatever instruction-traces you want from there? Just simply by swapping your VM to PolkaVM you will already know if this is VM-level issue or some higher-level problem. In the latter case I think figuring out what that could be will be super hard by analyzing single opcodes and registers (probably without debug symbols and even source code).
 2025-12-13 01:17 sourabhniyogi: Having a FFIable PVM for refinement makes a lot of sense. The size of the "print whatever instruction-traces you want" is a lot bigger than you know.  Or we are lazy about parsing it, not sure! [edited]
 2025-12-13 01:29 sourabhniyogi: Unless Jan gives us the advice that we should attempt a swap, I would not follow the swap advice - if it was an option it would have been a suggestion much earlier! [edited]

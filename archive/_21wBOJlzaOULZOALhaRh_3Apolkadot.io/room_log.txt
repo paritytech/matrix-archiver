@@ -1,5 +1,5 @@
 # room: #jam:polkadot.io
-# exported: 2025-12-15 03:45 UTC
+# exported: 2025-12-16 03:42 UTC
 2024-04-20 02:08 johnjiao123: 
 2024-04-20 02:09 johnjiao123: 
 2024-05-30 21:48 nradko: Hey everyone,
@@ -12192,3 +12192,37 @@ You don't need to use Parity's SDK though, other teams have their own SDKs and y
 2025-12-11 13:11 jaymansfield: I am referring to the latest release supporting GP 0.7.2. Just verified again using nightly-2025-12-11 [edited]
 2025-12-12 18:28 dave: FYI We've made a minor addition to CE 145: when sending a negative judgment, you now need to include the original guarantee. The guarantee is needed for the dispute to be included in an extrinsic. In the general case the original guarantee not have been seen by all validators, hence the change to distribute it with negative judgments.
 2025-12-12 18:28 dave: See https://github.com/zdave-parity/jam-np/commit/eb059ddeddc6f14c5bec2929ee5607699f610143
+2025-12-15 19:49 mkchung: How about [jam-np grandpa](https://github.com/zdave-parity/jam-np/pull/6)? Will polkajam support grandpa according to this proposed spec? Our nodes got disconnected from polkajam due to CE 149 not implemented.
+
+```
+2025-12-15 11:20:49 tokio-runtime-worker DEBUG jam_node::telemetry  PeerMisbehaved { peer: elfaiiixcuzmzroa34lajwp52cdsucikaxdviaoeuvnygdi3imtba, reason: "Unrecognised incoming stream protocol 149" }
+2025-12-15 11:20:49 tokio-runtime-worker DEBUG jam_node::telemetry  Disconnected { peer: elfaiiixcuzmzroa34lajwp52cdsucikaxdviaoeuvnygdi3imtba, terminator: Some(Local), reason: "Misbehaviour: Unrecognised incoming stream protocol 149" }
+```
+2025-12-15 20:03 dave: Yeah the current polkajam release doesn't have these. We're planning to get these enabled soon though...
+2025-12-15 20:24 mkchung: Can you also clarify [CE148](https://github.com/zdave-parity/jam-np/blob/main/simple.md#ce-148-segment-request) and the meaning of bracket "[]" in the spec?
+
+
+```
+Segment Index = u16
+Import-Proof = len++[Hash]
+
+Guarantor -> Guarantor
+
+--> [Segments-Root ++ len++[Segment Index]]
+--> FIN
+<-- [Segment]
+<-- [Import-Proof]
+<-- FIN
+``` 
+Does `[Segments-Root ++ len++[Segment Index]]` denote an array of "Segments-Root ++ len++[Segment Index]" -- where each element is Segments-Root ++ len++[Segment Index] such that a guarantor can request segments across multiple Segments-Root in one shot? Or do the brackets [] here simply indicate a "single contiguous byte payload" transmitted during the quick protocol, rather than a list?
+2025-12-15 20:26 dave: [] means a sequence yeah, guess this is not explicitly stated anywhere 😬
+2025-12-15 20:26 dave: > a guarantor can request segments across multiple Segments-Root in one shot
+
+Yes.
+2025-12-15 20:48 mkchung: So both CE 139/140 can also be requested with  "segments across multiple Segments-Root in one shot" (check?) 
+
+For [CE129](https://github.com/zdave-parity/jam-np/blob/main/simple.md#ce-129-state-request), is there an internally enforced maximum response size by polkajam?
+
+We attempted to issue a range scan with startKey = 0x00…00 and endKey = 0xff…ff to a PolkaJAM node in order to capture the "true" jam state from polkajam, but the response we received was nowhere near our requested maxSize (10000000 bytes), and more than half of the expected [Key ++ Value] pairs were missing from the response?
+2025-12-15 20:53 dave: Re 139/140 yes
+2025-12-15 20:55 dave: Re 129 IIRC yes. You should expect to make multiple requests to fetch a full state. You should preferably spread these over multiple nodes rather than making them all to a single node, when you do this you can even make the requests to different nodes in parallel
