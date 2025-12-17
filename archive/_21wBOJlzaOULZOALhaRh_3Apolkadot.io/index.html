@@ -18,7 +18,7 @@ a:hover{color:#90caf9}
 em{font-style:italic}
 </style>
 <h1>#jam:polkadot.io</h1>
-<p><small>last updated 2025-12-16 03:42 UTC</small></p>
+<p><small>last updated 2025-12-17 03:39 UTC</small></p>
 <p><a href='room_log.txt'>⇩ plaintext</a> · <a href='../../'>⇦ all rooms</a></p>
 <hr>
 <div class='msg'><a class='ts' href='#$we4SYXTHwmKn094X9Zs_7mWUOoUVh4icvVdxD83RZfs'>#</a> <a class='ts' name='$we4SYXTHwmKn094X9Zs_7mWUOoUVh4icvVdxD83RZfs' href='https://matrix.to/#/!wBOJlzaOULZOALhaRh:polkadot.io/$we4SYXTHwmKn094X9Zs_7mWUOoUVh4icvVdxD83RZfs' target='_blank'>2024-04-20 02:08</a>&ensp;<span class='u' style='color:#d0709e'>johnjiao123</span>: </div>
@@ -12117,3 +12117,17 @@ For <a href="https://github.com/zdave-parity/jam-np/blob/main/simple.md#ce-129-s
 We attempted to issue a range scan with startKey = 0x00…00 and endKey = 0xff…ff to a PolkaJAM node in order to capture the &quot;true&quot; jam state from polkajam, but the response we received was nowhere near our requested maxSize (10000000 bytes), and more than half of the expected [Key ++ Value] pairs were missing from the response?</div>
 <div class='msg'><a class='ts' href='#$UEM-gKa-NCz1yCKEN2vJsml_fHVjBg9CqZDCYi2iua4'>#</a> <a class='ts' name='$UEM-gKa-NCz1yCKEN2vJsml_fHVjBg9CqZDCYi2iua4' href='https://matrix.to/#/!wBOJlzaOULZOALhaRh:polkadot.io/$UEM-gKa-NCz1yCKEN2vJsml_fHVjBg9CqZDCYi2iua4' target='_blank'>2025-12-15 20:53</a>&ensp;<span class='u' style='color:#c65779'>dave</span>: Re 139/140 yes</div>
 <div class='msg'><a class='ts' href='#$MFX_Ku7O-c-9Daqp6J2I42lOaVa2mlGM-oiUiJEQ54U'>#</a> <a class='ts' name='$MFX_Ku7O-c-9Daqp6J2I42lOaVa2mlGM-oiUiJEQ54U' href='https://matrix.to/#/!wBOJlzaOULZOALhaRh:polkadot.io/$MFX_Ku7O-c-9Daqp6J2I42lOaVa2mlGM-oiUiJEQ54U' target='_blank'>2025-12-15 20:55</a>&ensp;<span class='u' style='color:#c65779'>dave</span>: Re 129 IIRC yes. You should expect to make multiple requests to fetch a full state. You should preferably spread these over multiple nodes rather than making them all to a single node, when you do this you can even make the requests to different nodes in parallel</div>
+<div class='msg'><a class='ts' href='#$o5OalSEaAihZAFF7bhsntMHFGO-524LLU6rCCvv8dYU'>#</a> <a class='ts' name='$o5OalSEaAihZAFF7bhsntMHFGO-524LLU6rCCvv8dYU' href='https://matrix.to/#/!wBOJlzaOULZOALhaRh:polkadot.io/$o5OalSEaAihZAFF7bhsntMHFGO-524LLU6rCCvv8dYU' target='_blank'>2025-12-16 11:41</a>&ensp;<span class='u' style='color:#4977cf'>danicuki</span>: I am trying to run quake on the polkavm-testnet. 
+
+1 - I successfully built the corevm binary following the <a href="https://github.com/paritytech/polkaports.git" rel="noopener" target="_blank">https://github.com/paritytech/polkaports.git</a> instructions.
+2- I deployed it on the jam testnet with <code>./jamt vm new quake.corevm 1000000000</code> (service_id 85dde8da)
+
+but when I try to build packages with corevm builder, I get this error:
+
+<pre><code class=''>./corevm-builder 85dde8da
+Building for CoreVM service with id 85dde8da
+Simulation error: CoreVM engine init error: ProgramBlob
+</code></pre>
+
+Does anyone can help me to fix this? </div>
+<div class='msg'><a class='ts' href='#$3RllYDr8V2mAKTvnrM3XSnHcGoz-wotVeyxh8iiYBj0'>#</a> <a class='ts' name='$3RllYDr8V2mAKTvnrM3XSnHcGoz-wotVeyxh8iiYBj0' href='https://matrix.to/#/!wBOJlzaOULZOALhaRh:polkadot.io/$3RllYDr8V2mAKTvnrM3XSnHcGoz-wotVeyxh8iiYBj0' target='_blank'>2025-12-16 20:17</a>&ensp;<span class='u' style='color:#cd8957'>gav</span>: <a href="https://matrix.to/#/@igankevich:parity.io" rel="noopener" target="_blank">Ivan</a>would be the man</div>

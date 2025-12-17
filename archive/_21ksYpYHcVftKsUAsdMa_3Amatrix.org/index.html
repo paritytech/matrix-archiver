@@ -18,7 +18,7 @@ a:hover{color:#90caf9}
 em{font-style:italic}
 </style>
 <h1>#jam-conformance:matrix.org</h1>
-<p><small>last updated 2025-12-16 03:43 UTC</small></p>
+<p><small>last updated 2025-12-17 03:40 UTC</small></p>
 <p><a href='room_log.txt'>⇩ plaintext</a> · <a href='../../'>⇦ all rooms</a></p>
 <hr>
 <div class='msg'><a class='ts' href='#$_9hLINsChVG8rufQkmbqp-fIbsNyK1YqpS3C9S7QZHU'>#</a> <a class='ts' name='$_9hLINsChVG8rufQkmbqp-fIbsNyK1YqpS3C9S7QZHU' href='https://matrix.to/#/!ksYpYHcVftKsUAsdMa:matrix.org/$_9hLINsChVG8rufQkmbqp-fIbsNyK1YqpS3C9S7QZHU' target='_blank'>2025-08-20 15:56</a>&ensp;<span class='u' style='color:#787fdf'>erin</span>: tomusdrw: i&#x27;ve set up the archiver to archive this also, so hopefully will be up starting tomorrow</div>
@@ -1485,3 +1485,24 @@ Pretty much self-contained &quot;Execution blob&quot; that allows (re-)starting 
 <div class='msg'><a class='ts' href='#$A9o62YSIp8ZrFyxHXJnsFOFosgrdyi0cGwNKNgIGHzo'>#</a> <a class='ts' name='$A9o62YSIp8ZrFyxHXJnsFOFosgrdyi0cGwNKNgIGHzo' href='https://matrix.to/#/!ksYpYHcVftKsUAsdMa:matrix.org/$A9o62YSIp8ZrFyxHXJnsFOFosgrdyi0cGwNKNgIGHzo' target='_blank'>2025-12-13 15:51</a>&ensp;<span class='u' style='color:#c67452'>sourabhniyogi</span>: In response to <a href="https://github.com/davxy/jam-conformance/issues/76" rel="noopener" target="_blank">this API suggestion</a> Jan suggested <a href="https://paritytech.github.io/matrix-archiver/archive/_21wBOJlzaOULZOALhaRh_3Apolkadot.io/index.html#$PPqn__aAWf5zP2-5bzDj1jwVT4XE1FufU2yKxGTqHHk" rel="noopener" target="_blank">this</a> (aka dont look but do feel free to model an API its actually a requirement) -- where I believe the schelling point can be the <a href="https://docs.rs/polkavm/latest/polkavm/struct.RawInstance.html" rel="noopener" target="_blank">PolkaVM API</a>.  We&#x27;ll output one, maybe you could do PolkaVM for everyone else (our hero!), and probably whomever is doing a recompiler  ( Jason | JavaJAM + Prasad | Chainscore Labs ) can match ?
 
 We&#x27;ll put in your 1+2+3 in &quot;modular&quot; form next week, make sense -- everyone here has seen first hand that our jam-conformance bugs are 80-90%+ on host call implementations in accumulate, and refine will probably be similar.  Thank you!</div>
+<div class='msg'><a class='ts' href='#$VXT64xEqhGvT0eg457HPgvjG29tW8MzmP7flEQN1cps'>#</a> <a class='ts' name='$VXT64xEqhGvT0eg457HPgvjG29tW8MzmP7flEQN1cps' href='https://matrix.to/#/!ksYpYHcVftKsUAsdMa:matrix.org/$VXT64xEqhGvT0eg457HPgvjG29tW8MzmP7flEQN1cps' target='_blank'>2025-12-16 15:33</a>&ensp;<span class='u' style='color:#aa9637'>piet</span>: Hey there, I just posted in the Polkadot forum but I don&#x27;t want to miss out on the chance of reaching all the JAM teams here directly:
+
+Thanks to danicuki | Jamixir , who discussed current issues of JAM teams with me directly, I&#x27;m happy to share our progress towards the first payouts of the JAM Prize. While we don&#x27;t offer a solution at this point in time to cover other parts of the &quot;unfunded areas&quot; of JAM development, that Daniel mentions in his <a href="https://forum.polkadot.network/t/ensuring-jam-development-sustainability-is-it-time-for-a-dedicated-jam-bounty-program/16229/10" rel="noopener" target="_blank">forum post</a>, I remain optimistic that, by staying in close communication, we can work together to identify viable paths forward.
+
+We at the Web3 Foundation are pleased to announce that we will begin processing Milestone 1 deliveries for the JAM Prize starting January 2026.
+
+We now have access to the necessary tooling (including the fuzzer) to test client conformance. With Gavin confirming that milestones may be accepted based on conformance to graypaper v0.7.2, we are ready to begin evaluations.
+
+Teams are invited to submit their Milestone 1 delivery via the following <a href="https://github.com/w3f/jam-milestone-delivery" rel="noopener" target="_blank">repository</a>.
+
+We will evaluate all clients that conform to the most recent graypaper version. Meaning graypaper v0.7.2 or later.
+
+Further details about the evaluation process will be communicated at a later stage. This will include, among other things, the required number of block imports a client must be able to process without error in order to be eligible for Milestone 1 payment.
+
+We’re looking forward to reviewing your submissions and taking another important step toward greater client diversity for JAM. <span class="edited">(edited)</span></div>
+<div class='msg reply'><a class='ts' href='#$TgoucsM8JsuJzcIrJDPGg3om08IcBZ2IJQYJhbW4Nb8'>#</a> <a class='ts' name='$TgoucsM8JsuJzcIrJDPGg3om08IcBZ2IJQYJhbW4Nb8' href='https://matrix.to/#/!ksYpYHcVftKsUAsdMa:matrix.org/$TgoucsM8JsuJzcIrJDPGg3om08IcBZ2IJQYJhbW4Nb8' target='_blank'>2025-12-16 18:20</a>&ensp;<span class='u' style='color:#cb735c'>prasad-kumkar</span>: One request: given that many implementations in set C and D–based languages does not have very performant PVM (though we aim to re-implement in low-level languages in M3), we hope it could be considered to not require fuzzing a very large number of blocks (eg. 50M-100M) that it might take months to test, or even longer when accounting for iterative fixes and re-testing</div>
+<div class='msg'><a class='ts' href='#$OULjtbbc3-sDvlYWSq6llNL78O9Fdc0yGEHwXS_HXXA'>#</a> <a class='ts' name='$OULjtbbc3-sDvlYWSq6llNL78O9Fdc0yGEHwXS_HXXA' href='https://matrix.to/#/!ksYpYHcVftKsUAsdMa:matrix.org/$OULjtbbc3-sDvlYWSq6llNL78O9Fdc0yGEHwXS_HXXA' target='_blank'>2025-12-16 17:07</a>&ensp;<span class='u' style='color:#4036ac'>ascriv</span>: Thanks for the update.
+
+Given the impact the delay had on implementers’ planning and runway, would it be possible at some point to share a brief retrospective on the main blockers (e.g. tooling, resourcing, dependencies), and what’s changed now?
+
+Clearer interim communication around those blockers would also be very helpful for teams planning runway and staffing for future milestones. <span class="edited">(edited)</span></div>

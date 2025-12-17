@@ -1,5 +1,5 @@
 # room: #jam-conformance:matrix.org
-# exported: 2025-12-16 03:43 UTC
+# exported: 2025-12-17 03:40 UTC
 2025-08-20 15:56 erin: tomusdrw: i've set up the archiver to archive this also, so hopefully will be up starting tomorrow
 2025-08-21 06:33 ascriv: https://github.com/davxy/jam-conformance/issues/26 should we not discourage open source implementations (for now)? [edited]
 2025-08-21 10:27 oliver.tale-yazdi: I think open source repos are fine. Other implementors are just not supposed to look at it
@@ -1487,3 +1487,24 @@ Pretty much self-contained "Execution blob" that allows (re-)starting PVM at eca
 2025-12-13 15:51 sourabhniyogi: In response to [this API suggestion](https://github.com/davxy/jam-conformance/issues/76) Jan suggested [this](https://paritytech.github.io/matrix-archiver/archive/_21wBOJlzaOULZOALhaRh_3Apolkadot.io/index.html#$PPqn__aAWf5zP2-5bzDj1jwVT4XE1FufU2yKxGTqHHk) (aka dont look but do feel free to model an API its actually a requirement) -- where I believe the schelling point can be the [PolkaVM API](https://docs.rs/polkavm/latest/polkavm/struct.RawInstance.html).  We'll output one, maybe you could do PolkaVM for everyone else (our hero!), and probably whomever is doing a recompiler  ( Jason | JavaJAM + Prasad | Chainscore Labs ) can match ?
 
 We'll put in your 1+2+3 in "modular" form next week, make sense -- everyone here has seen first hand that our jam-conformance bugs are 80-90%+ on host call implementations in accumulate, and refine will probably be similar.  Thank you!
+2025-12-16 15:33 piet: Hey there, I just posted in the Polkadot forum but I don't want to miss out on the chance of reaching all the JAM teams here directly:
+
+Thanks to danicuki | Jamixir , who discussed current issues of JAM teams with me directly, I'm happy to share our progress towards the first payouts of the JAM Prize. While we don't offer a solution at this point in time to cover other parts of the "unfunded areas" of JAM development, that Daniel mentions in his [forum post](https://forum.polkadot.network/t/ensuring-jam-development-sustainability-is-it-time-for-a-dedicated-jam-bounty-program/16229/10), I remain optimistic that, by staying in close communication, we can work together to identify viable paths forward.
+
+We at the Web3 Foundation are pleased to announce that we will begin processing Milestone 1 deliveries for the JAM Prize starting January 2026.
+
+We now have access to the necessary tooling (including the fuzzer) to test client conformance. With Gavin confirming that milestones may be accepted based on conformance to graypaper v0.7.2, we are ready to begin evaluations.
+
+Teams are invited to submit their Milestone 1 delivery via the following [repository](https://github.com/w3f/jam-milestone-delivery).
+
+We will evaluate all clients that conform to the most recent graypaper version. Meaning graypaper v0.7.2 or later.
+
+Further details about the evaluation process will be communicated at a later stage. This will include, among other things, the required number of block imports a client must be able to process without error in order to be eligible for Milestone 1 payment.
+
+We’re looking forward to reviewing your submissions and taking another important step toward greater client diversity for JAM. [edited]
+  ↳ 2025-12-16 18:20 prasad-kumkar: One request: given that many implementations in set C and D–based languages does not have very performant PVM (though we aim to re-implement in low-level languages in M3), we hope it could be considered to not require fuzzing a very large number of blocks (eg. 50M-100M) that it might take months to test, or even longer when accounting for iterative fixes and re-testing
+2025-12-16 17:07 ascriv: Thanks for the update.
+
+Given the impact the delay had on implementers’ planning and runway, would it be possible at some point to share a brief retrospective on the main blockers (e.g. tooling, resourcing, dependencies), and what’s changed now?
+
+Clearer interim communication around those blockers would also be very helpful for teams planning runway and staffing for future milestones. [edited]

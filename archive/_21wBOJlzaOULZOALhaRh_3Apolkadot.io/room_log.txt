@@ -1,5 +1,5 @@
 # room: #jam:polkadot.io
-# exported: 2025-12-16 03:42 UTC
+# exported: 2025-12-17 03:39 UTC
 2024-04-20 02:08 johnjiao123: 
 2024-04-20 02:09 johnjiao123: 
 2024-05-30 21:48 nradko: Hey everyone,
@@ -12226,3 +12226,18 @@ For [CE129](https://github.com/zdave-parity/jam-np/blob/main/simple.md#ce-129-st
 We attempted to issue a range scan with startKey = 0x00…00 and endKey = 0xff…ff to a PolkaJAM node in order to capture the "true" jam state from polkajam, but the response we received was nowhere near our requested maxSize (10000000 bytes), and more than half of the expected [Key ++ Value] pairs were missing from the response?
 2025-12-15 20:53 dave: Re 139/140 yes
 2025-12-15 20:55 dave: Re 129 IIRC yes. You should expect to make multiple requests to fetch a full state. You should preferably spread these over multiple nodes rather than making them all to a single node, when you do this you can even make the requests to different nodes in parallel
+2025-12-16 11:41 danicuki: I am trying to run quake on the polkavm-testnet. 
+
+1 - I successfully built the corevm binary following the https://github.com/paritytech/polkaports.git instructions.
+2- I deployed it on the jam testnet with `./jamt vm new quake.corevm 1000000000` (service_id 85dde8da)
+
+but when I try to build packages with corevm builder, I get this error:
+
+```
+./corevm-builder 85dde8da
+Building for CoreVM service with id 85dde8da
+Simulation error: CoreVM engine init error: ProgramBlob
+```
+
+Does anyone can help me to fix this? 
+2025-12-16 20:17 gav: [Ivan](https://matrix.to/#/@igankevich:parity.io)would be the man
