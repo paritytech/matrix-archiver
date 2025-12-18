@@ -1,5 +1,5 @@
 # room: #jam:polkadot.io
-# exported: 2025-12-17 03:39 UTC
+# exported: 2025-12-18 03:40 UTC
 2024-04-20 02:08 johnjiao123: 
 2024-04-20 02:09 johnjiao123: 
 2024-05-30 21:48 nradko: Hey everyone,
@@ -12241,3 +12241,10 @@ Simulation error: CoreVM engine init error: ProgramBlob
 
 Does anyone can help me to fix this? 
 2025-12-16 20:17 gav: [Ivan](https://matrix.to/#/@igankevich:parity.io)would be the man
+2025-12-17 22:35 emielsebastiaan: It was suggested I repost this here (previously posted in the JAM Conformance channel regarding looking back and looking forward). 
+
+For what it is worth, we have added a candid JAMdot Technologies retrospective to our milestone 1 delivery submission: https://github.com/w3f/jam-milestone-delivery/blob/ffa56fa241458620362ba9ac957f12ea479590a5/deliveries/jamdottech/pyjamaz-m1.md
+
+One key takeaway, in hindsight, is that expectations were set for us that milestone 1 audit submissions would open in Summer of 2025. In practice however, given the significant number of implementation disputes that emerged from Davide Galassi’s conformance fuzzing efforts, none of the teams were anywhere near true milestone 1 conformance at that time. As a result, our team came to view the period from August 2025 through December 2025 as an “informal milestone 1 conformance audit” phase. We are confident that we would not be as far along as we are today without the scrutiny, feedback, and iteration enabled during this period.
+
+That said, our team has had extensive and, at times, heated internal discussions around planning, uncertainty, and a shrinking financial runway. In this context, we would appreciate greater clarity on the process for Polkadot Fellowship membership eligibility that follows the achievement of milestone 1 conformance. Based on our reading of the JAM Prize rules, and especially everything we do not know, we assume that two members of our team would be eligible for nomination at Rank II and Rank III, respectively, and that they would be expected to substantiate their eligibility for those ranks based on their concrete contributions. From a financial planning perspective, Fellowship income would materially impact my team's ability to keep the project viable and maintain continuity of work. As such, we seek clarity from a humble and pragmatic standpoint to better align our planning with the realities of that process.
