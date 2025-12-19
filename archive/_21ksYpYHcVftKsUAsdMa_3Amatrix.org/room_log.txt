@@ -1,5 +1,5 @@
 # room: #jam-conformance:matrix.org
-# exported: 2025-12-18 03:41 UTC
+# exported: 2025-12-19 03:43 UTC
 2025-08-20 15:56 erin: tomusdrw: i've set up the archiver to archive this also, so hopefully will be up starting tomorrow
 2025-08-21 06:33 ascriv: https://github.com/davxy/jam-conformance/issues/26 should we not discourage open source implementations (for now)? [edited]
 2025-08-21 10:27 oliver.tale-yazdi: I think open source repos are fine. Other implementors are just not supposed to look at it
@@ -1520,3 +1520,9 @@ That said, our team (like many others) has had extensive and, at times, heated i
 > That said, our team (like many others) has had extensive and, at times, heated internal discussions around planning, uncertainty, and a shrinking financial runway. In this context, we would appreciate greater clarity on the process for Polkadot Fellowship membership eligibility that follows the achievement of milestone 1 conformance. Based on our reading of the JAM Prize rules, and especially everything we do not know, we assume that two members of our team would be eligible for nomination at Rank II and Rank III, respectively, and that they would be expected to substantiate their eligibility for those ranks based on their concrete contributions. From a financial planning perspective, Fellowship income would materially impact my team's ability to keep the project viable and maintain continuity of work. As such, we seek clarity from a humble and pragmatic standpoint to better align our planning with the realities of that process.
 
 For greater visibility, I suggest also posting the message in the Let's Jam channel, as I am not sure that everyone you want to reach is here.
+2025-12-18 07:04 ascriv: https://github.com/w3f/jam-milestone-delivery/blob/main/deliveries/milestone-delivery-template.md?plain=1#L28
+
+The first milestone submission requires "Gas, trie/DB, signature-verification, and availability (EC/DB) performance tests to be run on standard hardware"
+
+Could someone please clarify what would be considered sufficient for this requirement? [edited]
+2025-12-18 07:36 dakkk: I think this is not required for M1; the form is not targeted for M1 only

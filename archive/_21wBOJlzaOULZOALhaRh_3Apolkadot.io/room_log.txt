@@ -1,5 +1,5 @@
 # room: #jam:polkadot.io
-# exported: 2025-12-18 03:40 UTC
+# exported: 2025-12-19 03:42 UTC
 2024-04-20 02:08 johnjiao123: 
 2024-04-20 02:09 johnjiao123: 
 2024-05-30 21:48 nradko: Hey everyone,
@@ -12248,3 +12248,22 @@ For what it is worth, we have added a candid JAMdot Technologies retrospective t
 One key takeaway, in hindsight, is that expectations were set for us that milestone 1 audit submissions would open in Summer of 2025. In practice however, given the significant number of implementation disputes that emerged from Davide Galassi’s conformance fuzzing efforts, none of the teams were anywhere near true milestone 1 conformance at that time. As a result, our team came to view the period from August 2025 through December 2025 as an “informal milestone 1 conformance audit” phase. We are confident that we would not be as far along as we are today without the scrutiny, feedback, and iteration enabled during this period.
 
 That said, our team has had extensive and, at times, heated internal discussions around planning, uncertainty, and a shrinking financial runway. In this context, we would appreciate greater clarity on the process for Polkadot Fellowship membership eligibility that follows the achievement of milestone 1 conformance. Based on our reading of the JAM Prize rules, and especially everything we do not know, we assume that two members of our team would be eligible for nomination at Rank II and Rank III, respectively, and that they would be expected to substantiate their eligibility for those ranks based on their concrete contributions. From a financial planning perspective, Fellowship income would materially impact my team's ability to keep the project viable and maintain continuity of work. As such, we seek clarity from a humble and pragmatic standpoint to better align our planning with the realities of that process.
+2025-12-18 06:27 dhruv245: So, are the actual date of M1 submission released?
+2025-12-18 07:41 emielsebastiaan: Tentative January 2026 according to the Jam Conformance channel as per W3F.
+
+https://matrix.to/#/!ksYpYHcVftKsUAsdMa%3Amatrix.org/%24VXT64xEqhGvT0eg457HPgvjG29tW8MzmP7flEQN1cps [edited]
+2025-12-18 09:38 gav: As per the prize rules, M1 conformant implementations get to up-rank a team-member to rank III, disregarding the usual time requirements. It does not alter the other requirements of members; the individual claiming the up-rank will be expected to be an expert in their implementation and how it relates to the spec. The rank III defence is always done in person and the individual will be challenged to demonstrate knowledge, understanding, personal development and ethos in line with the Fellowship Manifesto. In general, I would expect that the team nominate the individual who is most knowledgable about both the Graypaper and their code. M1 conformance does *not* guarantee a rank, only the right to skip the time requirement. If there is no single individual who can fulfil the relevant requirements then a team may be unable to claim the concession. I can’t imagine this would happen much, but it may be the case where a team has deconstructed agency to an assembly-line level and splits apart Graypaper comprehension, code architecture and code writing. I’d also expect to find it if a team overused LLMs to create their codebase.
+
+The Fellowship induction/ process for rank II is generally not done in person and has substantially lesser requirements overall than for rank III. In terms of timing, I can’t speak for other high ranking members, but I’ll make myself available for the in-person defence as a priority once an M1 compliant implementer comes forward. 
+
+Finally, note that the Fellowship is a collective of humans. Teams, per se, have no representation in it.  [edited]
+2025-12-18 17:06 prasad-kumkar: Hey all, I’m sharing an IDE playground we’ve been working on - [jamcode.fun](https://jamcode.fun/) - for building, deploying and invoking services on JAM . 
+
+It works on a simulated execution environment, we’re testing this on live networks (localnet and a deployed tiny testnet) for services to be deployed and invoked realtime, but it’s a bit unstable for now. 
+
+We integrated our team’s SDK in C, C++ and Python, next we look to integrate jade Tianyi | SpaceJam, jam-brains Oliver Tale-Yazdi - OOO  and jam-sdk davxy. 
+
+Though it's quite early stage at the moment, simulation supports limited host calls and Python is transpiled (making it very restrictive). We’ll likely have a more usable deployment in the coming weeks or months.
+
+Appreciate any feedback! If anyone wants to integrate their SDK or testnet, please ping me.
+  ↳ 2025-12-18 17:33 clearloop: interesting, online IDE would be good for template/example sharing + quick view of the virtual machine, please feel free to ping me if meet any problems with jade
