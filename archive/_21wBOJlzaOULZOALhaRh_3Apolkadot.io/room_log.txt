@@ -1,5 +1,5 @@
 # room: #jam:polkadot.io
-# exported: 2025-12-19 03:42 UTC
+# exported: 2025-12-20 03:35 UTC
 2024-04-20 02:08 johnjiao123: 
 2024-04-20 02:09 johnjiao123: 
 2024-05-30 21:48 nradko: Hey everyone,
@@ -12267,3 +12267,7 @@ Though it's quite early stage at the moment, simulation supports limited host ca
 
 Appreciate any feedback! If anyone wants to integrate their SDK or testnet, please ping me.
   ↳ 2025-12-18 17:33 clearloop: interesting, online IDE would be good for template/example sharing + quick view of the virtual machine, please feel free to ping me if meet any problems with jade
+2025-12-19 11:13 harpreetgill: Hey everyone, can someone please update us on the major changes to the JAM?
+We have already completed the M1 and M2 parts, and we want to know if there have been any updates. Please let us know if there are any new changes so we can implement them.
+2025-12-19 11:25 dakkk: https://matrix.to/#/!ksYpYHcVftKsUAsdMa:matrix.org/$VXT64xEqhGvT0eg457HPgvjG29tW8MzmP7flEQN1cps?via=matrix.org&via=parity.io&via=web3.foundation
+2025-12-19 22:19 jaymansfield: Big week for JavaJAM. It can now refine the DOOM work packages and produce the same results as Polkajam!

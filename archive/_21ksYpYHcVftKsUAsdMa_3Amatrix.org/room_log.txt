@@ -1,5 +1,5 @@
 # room: #jam-conformance:matrix.org
-# exported: 2025-12-19 03:43 UTC
+# exported: 2025-12-20 03:36 UTC
 2025-08-20 15:56 erin: tomusdrw: i've set up the archiver to archive this also, so hopefully will be up starting tomorrow
 2025-08-21 06:33 ascriv: https://github.com/davxy/jam-conformance/issues/26 should we not discourage open source implementations (for now)? [edited]
 2025-08-21 10:27 oliver.tale-yazdi: I think open source repos are fine. Other implementors are just not supposed to look at it
@@ -1526,3 +1526,10 @@ The first milestone submission requires "Gas, trie/DB, signature-verification, a
 
 Could someone please clarify what would be considered sufficient for this requirement? [edited]
 2025-12-18 07:36 dakkk: I think this is not required for M1; the form is not targeted for M1 only
+2025-12-19 11:25 harpreetgill: hey there 
+2025-12-19 11:25 harpreetgill: am asking about the recent changes into jam test vector 
+  ↳ 2025-12-19 12:06 celadari: Which version ? 0.7.2 ?
+2025-12-19 11:26 harpreetgill: is it in the accumulation and reports ?
+2025-12-19 11:28 harpreetgill: as i see changes are made into accumulation and reports section with newer version 
+2025-12-19 15:07 shimonchick: In accumulation context, can we re-create the work item needed for fetch host call selector 14 from the work report?
+2025-12-19 15:36 ascriv: Those are accumulation inputs (12.15)
