@@ -1,5 +1,5 @@
 # room: #jam-conformance:matrix.org
-# exported: 2025-12-21 03:45 UTC
+# exported: 2025-12-22 03:46 UTC
 2025-08-20 15:56 erin: tomusdrw: i've set up the archiver to archive this also, so hopefully will be up starting tomorrow
 2025-08-21 06:33 ascriv: https://github.com/davxy/jam-conformance/issues/26 should we not discourage open source implementations (for now)? [edited]
 2025-08-21 10:27 oliver.tale-yazdi: I think open source repos are fine. Other implementors are just not supposed to look at it
@@ -1537,3 +1537,12 @@ Could someone please clarify what would be considered sufficient for this requir
 2025-12-20 05:28 unknowndev: I haven’t been actively working for a while, so sorry for the naive question, but is the polkajam-fuzz crate private? [edited]
 2025-12-20 12:16 piet: correct, the fuzzer maintained by Parity is closed source. Only certain traces, test vectors and results are published [here](https://github.com/davxy/jam-conformance) 
 2025-12-20 13:40 davxy: If you are using a ZIP-215-compliant library that is not listed [here](https://github.com/davxy/jam-conformance/pull/112), please report it in the PR.
+2025-12-21 09:44 prematurata: Can someone please compute the ring commitment of
+`[ "ff71c6c03ff88adb5ed52c9681de1629a54e702fc14729f6b50d2f0a76f185b3", "dee6d555b82024f1ccf8a1e37e60fa60fd40b1958c4bb3006af78647950e1b91", "7263d615d16adbe8f6888fa594f54941db9d2d7294be29d9c5f5dd69acc11ee0", "9326edb21e5541717fde24ec085000b28709847b8aab1ac51f84e94b37ca1b66", "0746846d17469fb2f95ef365efcab9f4e22fa1feb53111c995376be8019981cc", "151e5c8fe2b9d8a606966a79edd2f9e5db47e83947ce368ccba53bf6ba20a40b", ]`
+
+Apparently these are the posterior gamma p bander keys but i have a different computed posterior gamma z. For the curious these were taken from the `christmas-batch` - `1766243113` - block `58` [edited]
+2025-12-21 10:45 davxy: [Christmas batch](https://github.com/davxy/jam-conformance/pull/134)
+2025-12-21 10:49 davxy: https://github.com/davxy/jam-conformance/tree/christmas-batch/fuzz-reports/0.7.2/summaries
+2025-12-21 10:51 philoniare: Appreciate it, this is very helpful — best Christmas present of the year!
+2025-12-21 15:30 vinsystems: 
+2025-12-21 15:51 basedafdev: Are we allowed to use a monitoring tool like Sentry to capture and store error stack traces from fuzzer conformance test failures?
