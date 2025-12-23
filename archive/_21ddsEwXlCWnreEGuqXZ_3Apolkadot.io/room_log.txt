@@ -1,5 +1,5 @@
 # room: #graypaper:polkadot.io
-# exported: 2025-12-22 03:46 UTC
+# exported: 2025-12-23 03:44 UTC
 2024-04-17 20:29 syed: https://matrix.to/#/!hyzRkDqDthePbodYFz:parity.io/$f_DMsIEcDXZegw6Sabnehzc-LrdDQkmq5MbxDDyoZxY?via=parity.io&via=web3.foundation
 
 2024-04-17 20:29 syed: 
@@ -6964,3 +6964,50 @@ sourabhniyogi: This tone is unacceptable except between friends. No overly famil
 https://github.com/gavofyork/graypaper/pull/508
 
 Of course it still needs to be reviewed. Any feedback is highly appreciated. [edited]
+2025-12-22 12:08 dakkk: In the designate hostcall, we don't check if the designated validator keys are valid; so theoretically, an invalid key can arrive in iota. Am I correct? Is it an allowed behaviour? 
+2025-12-22 12:19 dave: IDK about Bandersnatch but at least for Ed25519 I believe all 32-byte values are "valid" public keys
+2025-12-22 12:22 dave: I think in practice the service calling designate should probably require that ownership of the private keys is proven, but that's not really a JAM thing as such
+2025-12-22 12:30 dakkk: > <@dave:parity.io> IDK about Bandersnatch but at least for Ed25519 I believe all 32-byte values are "valid" public keys
+
+This is not true for bandersnatch since it uses an elliptic curve
+2025-12-22 12:32 dave: Ed25519 also uses an elliptic curve? It is just defined in such a way that it works for all values, even ones that don't actually correspond to a proper point on the curve
+2025-12-22 12:32 dave: To answer your original question I think it is correct that there is no checking of the validator keys
+2025-12-22 12:33 dakkk: Mmh you were right, idk
+2025-12-22 12:36 dakkk: But if I try to use Public::deserialize\_compressed(&mut &pk\[..\]) from ark-vrf with the bandersnatch key "7263d615d16adbe8f6888fa594f54941db9d2d7294be29d9c5f5dd69acc11ee0", I get an "Invalid data" error. So I suppose that not every key in the domain is a valid bandersnatch key.
+
+My initial question derives from this case [edited]
+2025-12-22 12:37 dave: This is a question for davxy probably
+2025-12-22 12:38 prematurata: That key is exactly the key from my message in the christmas batch.  here. https://github.com/davxy/jam-conformance/pull/134#issuecomment-3681165208 
+
+I think that also why we have padding points no? [edited]
+2025-12-22 12:42 dakkk: Maybe, but why allow to insert invalid keys in those set if we can check before? Padding Is useful for removing offenders, which are unknown when iota Is updated  [edited]
+2025-12-22 12:42 dakkk: > <@prematurata:matrix.org> That key is exactly the key from my message in the christmas batch.  here. https://github.com/davxy/jam-conformance/pull/134#issuecomment-3681165208 
+> 
+> I think that also why we have padding points no?
+
+Oh, I have the same issue 
+2025-12-22 12:43 prematurata: you mean Why allowing the key to be in the set in the first place? Well I don't know if there is a reason for that. 
+2025-12-22 12:46 dakkk: Yep, that is my question
+2025-12-22 12:47 dave: I expect because it's simpler for the service calling designate
+2025-12-22 12:47 jaymansfield: > <@dakkk:matrix.org> But if I try to use Public::deserialize\_compressed(&mut &pk\[..\]) from ark-vrf with the bandersnatch key "7263d615d16adbe8f6888fa594f54941db9d2d7294be29d9c5f5dd69acc11ee0", I get an "Invalid data" error. So I suppose that not every key in the domain is a valid bandersnatch key.
+> 
+> My initial question derives from this case
+
+Try using Public::deserialize_compressed_unchecked instead.
+2025-12-22 12:48 dave: If invalid keys were rejected by designate it would have to contain logic to filter out invalid keys?
+2025-12-22 12:50 prematurata: hmm this is interesting. If i use this then my gamma_z works. 
+2025-12-22 12:50 dakkk: What does this unchecked do? It allows an invalid key? Then why do that?
+2025-12-22 12:52 prematurata: at first sight seems it does not check for point to be in curve. 
+2025-12-22 12:52 jaymansfield: See https://github.com/davxy/jam-conformance/issues/8#issuecomment-3182673324 [edited]
+2025-12-22 12:53 dave: GP explicitly says keys with no corresponding point should instead use the padding point for the ring VRF stuff, see Appendix G [edited]
+2025-12-22 12:54 dakkk: 
+2025-12-22 12:54 prematurata: Thanks I must have missed that
+2025-12-22 12:55 dakkk: 
+2025-12-22 13:00 dakkk: I read that and this fixed my issues with conformance, but I think this is not correct; we can assume that keys are always correct, but if we find an incorrect one it should be replaced (as I did) [edited]
+2025-12-22 13:03 prematurata: apparently unchecked verifies if it is in the curve:
+
+`which only verifies that the bytes correspond to a valid point on the Bandersnatch curve.` \< citing davxy [edited]
+2025-12-22 13:04 prematurata: so it is compliant with GP
+2025-12-22 13:04 dave: That looks correct to me. It's a little subtle as it permits public keys that aren't really "proper", but it does match what the GP says in appendix G AFAICT
+2025-12-22 13:05 dakkk: Ok fine
+2025-12-22 13:07 dave: I assume someone has verified that the crypto is not broken by allowing improper keys here

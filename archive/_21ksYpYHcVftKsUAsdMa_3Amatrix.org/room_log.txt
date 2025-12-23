@@ -1,5 +1,5 @@
 # room: #jam-conformance:matrix.org
-# exported: 2025-12-22 03:46 UTC
+# exported: 2025-12-23 03:44 UTC
 2025-08-20 15:56 erin: tomusdrw: i've set up the archiver to archive this also, so hopefully will be up starting tomorrow
 2025-08-21 06:33 ascriv: https://github.com/davxy/jam-conformance/issues/26 should we not discourage open source implementations (for now)? [edited]
 2025-08-21 10:27 oliver.tale-yazdi: I think open source repos are fine. Other implementors are just not supposed to look at it
@@ -1546,3 +1546,33 @@ Apparently these are the posterior gamma p bander keys but i have a different co
 2025-12-21 10:51 philoniare: Appreciate it, this is very helpful — best Christmas present of the year!
 2025-12-21 15:30 vinsystems: 
 2025-12-21 15:51 basedafdev: Are we allowed to use a monitoring tool like Sentry to capture and store error stack traces from fuzzer conformance test failures?
+2025-12-22 07:38 harpreetgill: Hey everyone 
+can we use in-build pvm , provided by jam polkadot 
+to build the M1 and M2 
+
+2025-12-22 11:00 john985: Yes, you can use it.
+2025-12-22 11:39 danicuki: > <@harpreetgill:matrix.org> Hey everyone 
+> can we use in-build pvm , provided by jam polkadot 
+> to build the M1 and M2 
+> 
+
+Yes you can, but there are specific rules for the JAM Prize: https://jam.web3.foundation/
+
+2
+NON-PVM VALIDATING NODE PATH
+2025-12-22 11:56 dakkk: But it says "For the purpose of performance testing", so I assume that you can use an existing PVM only for m3 and m4 (and my assumption should be correct since m1 and m2 prices are 100k, while m3 and m4 are 50k).
+
+Otherwise why implement a PVM since the price for m1 and m2 is the same?
+2025-12-22 11:57 dakkk: this "path" is for those that arrive at m3, and discover that their language is unable to provide the required performance
+2025-12-22 12:32 ascriv: > <@dakkk:matrix.org> this "path" is for those that arrive at m3, and discover that their language is unable to provide the required performance
+
+in that case can’t you also rewrite the pvm in rust since the pvm language can be whatever you want?
+2025-12-22 12:35 prematurata: I believe it was already clarified in the past that you can do that as long as it is your implementation [edited]
+2025-12-22 13:24 harpreetgill: Hi everyone,
+I have a question regarding the in-built PVM provided by JAM/Polkadot.
+
+Can we use this in-built PVM to build M1 and M2?
+If yes, does that mean such a project would only be eligible for submission under a non-PVM track, since we are not implementing a custom PVM ourselves?
+
+I had asked a similar question earlier, but I wanted to clarify this distinction more precisely.
+  ↳ 2025-12-22 13:34 dave: Please don't post the same message to multiple JAM channels, just post to the most relevant one
