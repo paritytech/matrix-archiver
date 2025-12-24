@@ -1,5 +1,5 @@
 # room: #jam:polkadot.io
-# exported: 2025-12-23 03:43 UTC
+# exported: 2025-12-24 03:42 UTC
 2024-04-20 02:08 johnjiao123: 
 2024-04-20 02:09 johnjiao123: 
 2024-05-30 21:48 nradko: Hey everyone,
@@ -12311,3 +12311,11 @@ So
 2025-12-22 13:49 dave: For details on the different paths (validating, non-PVM validating & light client) please see this page: https://jam.web3.foundation/
 2025-12-22 13:49 dhruv245: Like you have mentioned here
 2025-12-22 13:50 dave: I was talking about developing JAM services there, the milestones are for JAM node implementations not JAM services
+2025-12-23 08:57 ascriv: Could we please have some clarity on how exactly "half speed" and "full speed" will be measured for M3/M4? Would be useful to determine if/when I need to write a rust pvm [edited]
+2025-12-23 10:07 gav: It will be based on how fast the implementation can do certain network-observable reactions (ie patterns of JAMNP messages received & sent and how long it takes between a series of messages received and sending on correct onward messages).  Practically speaking it will likely be a simple timing component added to the M2 conformance tests.
+
+Both M3 and M4 times will be provided for various reactions. M4 should be in line with the need for Polkadot and a network with M4 nodes should, by definition, be able to run full speed. M3 will simply be a lesser target with the aim of still being useful (eg for Kusama) but only needing (very roughly) half of the work.
+
+The specific times for M4 have yet to be determined, but will in part be based on PolkaJAM and potentially other high-performance implementations, especially in areas where response time is a bottleneck to overall emergent network performance. Where we can relax times and still expect full network-level throughput, we will, to avoid the need for teams to match other implementations’ performance across the board.
+
+For present purposes, PolkaJAM may be used as a reasonable target for that behaviour. M2 conformance is where relevant Parity efforts are currently being focussed. Once this is done it should be a relatively short hop to M3&4 performance tests. 

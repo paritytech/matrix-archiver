@@ -1,5 +1,5 @@
 # room: #jam-conformance:matrix.org
-# exported: 2025-12-23 03:44 UTC
+# exported: 2025-12-24 03:43 UTC
 2025-08-20 15:56 erin: tomusdrw: i've set up the archiver to archive this also, so hopefully will be up starting tomorrow
 2025-08-21 06:33 ascriv: https://github.com/davxy/jam-conformance/issues/26 should we not discourage open source implementations (for now)? [edited]
 2025-08-21 10:27 oliver.tale-yazdi: I think open source repos are fine. Other implementors are just not supposed to look at it
@@ -1576,3 +1576,20 @@ If yes, does that mean such a project would only be eligible for submission unde
 
 I had asked a similar question earlier, but I wanted to clarify this distinction more precisely.
   ↳ 2025-12-22 13:34 dave: Please don't post the same message to multiple JAM channels, just post to the most relevant one
+2025-12-23 13:18 muddlebee: image.png
+2025-12-23 13:19 muddlebee: the extrinsic ordering in test vectors is different than what's mentioned in gray paper?
+
+https://github.com/davxy/jam-test-vectors/blob/master/codec/tiny/extrinsic.json
+
+
+  ↳ 2025-12-23 13:20 muddlebee: which one to follow as source of truth? the test vectors?
+I'm new :) pls dont mind me asking dumb questions..
+
+sorry, I just realized I asked in the wrong room 🤦‍♂️ [edited]
+  ↳ 2025-12-23 14:17 ascriv: source of truth is always the gray paper, FYI
+  ↳ 2025-12-23 14:34 rustybot: > <@muddlebee:matrix.org> which one to follow as source of truth? the test vectors?
+> 
+> I'm new :) pls dont mind me asking dumb questions..
+
+Refer to expression C.16
+2025-12-24 03:07 sourabhniyogi: For host function [`provide`](https://graypaper.fluffylabs.dev/#/ab2cdbd/382a03382a03?v=0.7.2), is there anything to prevent one "sending" service from "spamming" another service via useless preimages?  The intention is that the sending service is a "factory" service from https://github.com/gavofyork/graypaper/issues/311 where the sender is the creator (via `new`) but if the sender is not the creator, it appears to open up an attack where a service could receive a lot of preimages from an attacking service, potentially choking `write` after enough preimages are sent.  Am I missing something?
