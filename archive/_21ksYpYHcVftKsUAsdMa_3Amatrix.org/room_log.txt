@@ -1,5 +1,5 @@
 # room: #jam-conformance:matrix.org
-# exported: 2025-12-24 03:43 UTC
+# exported: 2025-12-25 03:44 UTC
 2025-08-20 15:56 erin: tomusdrw: i've set up the archiver to archive this also, so hopefully will be up starting tomorrow
 2025-08-21 06:33 ascriv: https://github.com/davxy/jam-conformance/issues/26 should we not discourage open source implementations (for now)? [edited]
 2025-08-21 10:27 oliver.tale-yazdi: I think open source repos are fine. Other implementors are just not supposed to look at it
@@ -1592,4 +1592,10 @@ sorry, I just realized I asked in the wrong room 🤦‍♂️ [edited]
 > I'm new :) pls dont mind me asking dumb questions..
 
 Refer to expression C.16
+  ↳ 2025-12-24 11:34 danicuki: json key/value (objects) do not imply order. Order is considered arbitrary and the test vectors don’t impose any order. 
 2025-12-24 03:07 sourabhniyogi: For host function [`provide`](https://graypaper.fluffylabs.dev/#/ab2cdbd/382a03382a03?v=0.7.2), is there anything to prevent one "sending" service from "spamming" another service via useless preimages?  The intention is that the sending service is a "factory" service from https://github.com/gavofyork/graypaper/issues/311 where the sender is the creator (via `new`) but if the sender is not the creator, it appears to open up an attack where a service could receive a lot of preimages from an attacking service, potentially choking `write` after enough preimages are sent.  Am I missing something?
+2025-12-24 06:49 tomusdrw: The preimage needs to be requested by the service first, and only then anyone can provide it. Otherwise it fails early with HUH.
+2025-12-24 13:27 sourabhniyogi: Got it (see [here](https://graypaper.fluffylabs.dev/#/ab2cdbd/380404380404?v=0.7.2)) thank you --  a `new` (from another "factory" service) or `solicit` must precede a successful `provide` -- thank you!
+
+If a service is bricked through a bad `upgrade` (which can only be done through a `solicit`) where "bad" means "cannot be upgraded again", is there any way that bricked service can be rescued? [edited]
+2025-12-24 15:18 shimonchick: After an Upgrade host call, if the codehash is set to zeros, if next block has guarantees for the previous service that used to have code, should the guarantee error out or be skipped?
