@@ -1,5 +1,5 @@
 # room: #jam:polkadot.io
-# exported: 2025-12-25 03:43 UTC
+# exported: 2025-12-26 03:42 UTC
 2024-04-20 02:08 johnjiao123: 
 2024-04-20 02:09 johnjiao123: 
 2024-05-30 21:48 nradko: Hey everyone,
@@ -12319,3 +12319,4 @@ Both M3 and M4 times will be provided for various reactions. M4 should be in lin
 The specific times for M4 have yet to be determined, but will in part be based on PolkaJAM and potentially other high-performance implementations, especially in areas where response time is a bottleneck to overall emergent network performance. Where we can relax times and still expect full network-level throughput, we will, to avoid the need for teams to match other implementations’ performance across the board.
 
 For present purposes, PolkaJAM may be used as a reasonable target for that behaviour. M2 conformance is where relevant Parity efforts are currently being focussed. Once this is done it should be a relatively short hop to M3&4 performance tests. 
+2025-12-25 06:08 hitchhooker: 
