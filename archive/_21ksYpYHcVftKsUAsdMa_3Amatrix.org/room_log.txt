@@ -1,5 +1,5 @@
 # room: #jam-conformance:matrix.org
-# exported: 2025-12-26 03:43 UTC
+# exported: 2025-12-27 03:41 UTC
 2025-08-20 15:56 erin: tomusdrw: i've set up the archiver to archive this also, so hopefully will be up starting tomorrow
 2025-08-21 06:33 ascriv: https://github.com/davxy/jam-conformance/issues/26 should we not discourage open source implementations (for now)? [edited]
 2025-08-21 10:27 oliver.tale-yazdi: I think open source repos are fine. Other implementors are just not supposed to look at it
@@ -1600,3 +1600,21 @@ Refer to expression C.16
 If a service is bricked through a bad `upgrade` (which can only be done through a `solicit`) where "bad" means "cannot be upgraded again", is there any way that bricked service can be rescued? [edited]
 2025-12-24 15:18 shimonchick: After an Upgrade host call, if the codehash is set to zeros, if next block has guarantees for the previous service that used to have code, should the guarantee error out or be skipped?
 2025-12-25 18:09 shimonchick: Has somebody noticed weird behavior with block 180 from the fuzzy set? Its an epoch rotation so fallback keys should be recalculated, but according to the post-state they are not. am i missing something?
+2025-12-26 10:08 shimonchick: Do minifuzz self-test examples exist for 0.7.2 ? We've developed an implementation that now passes 0.7.2 test vectors, but due to the 0.7.0 codec differences our state root differs for the previous version. Would it be sensible to get an eventual update on the minifuzz examples or do we need to go back and implement things properly for the previous version as well? [edited]
+2025-12-26 10:17 rustybot: > <@shimonchick:matrix.org> Do minifuzz self-test examples exist for 0.7.2 . We've developed an implementation that now passes 0.7.2 test vectors, but due to the 0.7.0 codec differences our state root differs for the previous version. Would it be sensible to get an eventual update on the minifuzz examples or do we need to go back and implement things properly for the previous version as well?
+
+The update has already been scheduled; see https://github.com/davxy/jam-conformance/issues/111.
+
+At this point, this is expected to be provided after the Christmas holidays.
+  ↳ 2025-12-26 10:25 shimonchick: Amazing, thanks 
+2025-12-26 18:49 celadari: Hi guys,
+
+Small question, about test conformance `1766243315_1733/00000003.json`, we see this
+
+```json
+"author_index": 65535,
+```
+
+I don't think this is valid according to GP https://graypaper.fluffylabs.dev/#/ab2cdbd/0c8e010c9601?v=0.7.2
+
+H\_A = Kappa'\[H\_I\] but we don't use the "cycle" symbol so from my understanding of the GP => author\_index should not be bigger than V ? [edited]
