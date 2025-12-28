@@ -1,5 +1,5 @@
 # room: #jam-conformance:matrix.org
-# exported: 2025-12-27 03:41 UTC
+# exported: 2025-12-28 03:47 UTC
 2025-08-20 15:56 erin: tomusdrw: i've set up the archiver to archive this also, so hopefully will be up starting tomorrow
 2025-08-21 06:33 ascriv: https://github.com/davxy/jam-conformance/issues/26 should we not discourage open source implementations (for now)? [edited]
 2025-08-21 10:27 oliver.tale-yazdi: I think open source repos are fine. Other implementors are just not supposed to look at it
@@ -1618,3 +1618,57 @@ Small question, about test conformance `1766243315_1733/00000003.json`, we see t
 I don't think this is valid according to GP https://graypaper.fluffylabs.dev/#/ab2cdbd/0c8e010c9601?v=0.7.2
 
 H\_A = Kappa'\[H\_I\] but we don't use the "cycle" symbol so from my understanding of the GP => author\_index should not be bigger than V ? [edited]
+2025-12-27 16:07 celadari: Hi guys,
+
+I have a doubt regarding jam-comformance test vector `1766243113` file 00000058.json    https://github.com/davxy/jam-conformance/blob/main/fuzz-reports/0.7.2/traces/1766243113/00000058.json
+
+For the following bandersnatch keys:
+
+```rust
+let public_keys = vec![
+        hex::decode("ff71c6c03ff88adb5ed52c9681de1629a54e702fc14729f6b50d2f0a76f185b3").expect("Decoding hex string failed"),
+        hex::decode("dee6d555b82024f1ccf8a1e37e60fa60fd40b1958c4bb3006af78647950e1b91").expect("Decoding hex string failed"),
+        hex::decode("7263d615d16adbe8f6888fa594f54941db9d2d7294be29d9c5f5dd69acc11ee0").expect("Decoding hex string failed"),
+        hex::decode("9326edb21e5541717fde24ec085000b28709847b8aab1ac51f84e94b37ca1b66").expect("Decoding hex string failed"),
+        hex::decode("0746846d17469fb2f95ef365efcab9f4e22fa1feb53111c995376be8019981cc").expect("Decoding hex string failed"),
+        hex::decode("151e5c8fe2b9d8a606966a79edd2f9e5db47e83947ce368ccba53bf6ba20a40b").expect("Decoding hex string failed"),
+    ];
+```
+
+we're supposed to get the following ring root `0xb44239ecc9ff5ad60c2791dfe1dcdafcc0e478d9eca63b24999750b724a0676deb70a059fab442fdb05b007fe22f93a585ba7b113e3fba1f1880b317a4748bb4f3446a35793ca94f8b75a6654fa259931eec4ede39e96a9da83f2c8785aa89f892e630ae2b14e758ab0960e372172203f4c9a41777dadd529971d7ab9d23ab29fe0e9c85ec450505dde7f5ac038274cf`   but we're
+
+actually getting `0xacfbe5e61d0b6b9a32476dd94ba74a6cca3634503f9dadb9cb164fd448d471a8c3e3f57e770c304944a744cfa43e07d9a888e4565c538749b08138d0d0eb4a1447d2e3f8504ee885b792925a9df49524637cd8d43177beeacfcb348babe9d90692e630ae2b14e758ab0960e372172203f4c9a41777dadd529971d7ab9d23ab29fe0e9c85ec450505dde7f5ac038274cf`
+
+Our ring roof construction is  based on https://github.com/davxy/bandersnatch-vrf-spec/blob/main/assets/example/src/main.rs
+
+Did someone also run into the same issue ?
+2025-12-27 16:15 dakkk: > <@celadari:matrix.org> Hi guys,
+> 
+> I have a doubt regarding jam-comformance test vector `1766243113` file 00000058.json    https://github.com/davxy/jam-conformance/blob/main/fuzz-reports/0.7.2/traces/1766243113/00000058.json
+> 
+> For the following bandersnatch keys:
+> 
+> ```rust
+> let public_keys = vec![
+>         hex::decode("ff71c6c03ff88adb5ed52c9681de1629a54e702fc14729f6b50d2f0a76f185b3").expect("Decoding hex string failed"),
+>         hex::decode("dee6d555b82024f1ccf8a1e37e60fa60fd40b1958c4bb3006af78647950e1b91").expect("Decoding hex string failed"),
+>         hex::decode("7263d615d16adbe8f6888fa594f54941db9d2d7294be29d9c5f5dd69acc11ee0").expect("Decoding hex string failed"),
+>         hex::decode("9326edb21e5541717fde24ec085000b28709847b8aab1ac51f84e94b37ca1b66").expect("Decoding hex string failed"),
+>         hex::decode("0746846d17469fb2f95ef365efcab9f4e22fa1feb53111c995376be8019981cc").expect("Decoding hex string failed"),
+>         hex::decode("151e5c8fe2b9d8a606966a79edd2f9e5db47e83947ce368ccba53bf6ba20a40b").expect("Decoding hex string failed"),
+>     ];
+> ```
+> 
+> we're supposed to get the following ring root `0xb44239ecc9ff5ad60c2791dfe1dcdafcc0e478d9eca63b24999750b724a0676deb70a059fab442fdb05b007fe22f93a585ba7b113e3fba1f1880b317a4748bb4f3446a35793ca94f8b75a6654fa259931eec4ede39e96a9da83f2c8785aa89f892e630ae2b14e758ab0960e372172203f4c9a41777dadd529971d7ab9d23ab29fe0e9c85ec450505dde7f5ac038274cf`   but we're
+> 
+> actually getting `0xacfbe5e61d0b6b9a32476dd94ba74a6cca3634503f9dadb9cb164fd448d471a8c3e3f57e770c304944a744cfa43e07d9a888e4565c538749b08138d0d0eb4a1447d2e3f8504ee885b792925a9df49524637cd8d43177beeacfcb348babe9d90692e630ae2b14e758ab0960e372172203f4c9a41777dadd529971d7ab9d23ab29fe0e9c85ec450505dde7f5ac038274cf`
+> 
+> Our ring roof construction is  based on https://github.com/davxy/bandersnatch-vrf-spec/blob/main/assets/example/src/main.rs
+> 
+> Did someone also run into the same issue ?
+
+We discussed this on graypaper Channel few days ago 
+  ↳ 2025-12-27 16:16 celadari: if you can point me to the discussion in GP, otherwise I'll scroll up :)
+  ↳ 2025-12-27 16:17 celadari: I think I found it
+  ↳ 2025-12-27 16:20 celadari: Thanks dakkk | JamPy 🫶 It solved my error ✨️
+  ↳ 2025-12-27 16:21 dakkk: Great, my pleasure 👍

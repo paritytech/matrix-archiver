@@ -18,7 +18,7 @@ a:hover{color:#90caf9}
 em{font-style:italic}
 </style>
 <h1>#jam-conformance:matrix.org</h1>
-<p><small>last updated 2025-12-27 03:41 UTC</small></p>
+<p><small>last updated 2025-12-28 03:47 UTC</small></p>
 <p><a href='room_log.txt'>⇩ plaintext</a> · <a href='../../'>⇦ all rooms</a></p>
 <hr>
 <div class='msg'><a class='ts' href='#$_9hLINsChVG8rufQkmbqp-fIbsNyK1YqpS3C9S7QZHU'>#</a> <a class='ts' name='$_9hLINsChVG8rufQkmbqp-fIbsNyK1YqpS3C9S7QZHU' href='https://matrix.to/#/!ksYpYHcVftKsUAsdMa:matrix.org/$_9hLINsChVG8rufQkmbqp-fIbsNyK1YqpS3C9S7QZHU' target='_blank'>2025-08-20 15:56</a>&ensp;<span class='u' style='color:#787fdf'>erin</span>: tomusdrw: i&#x27;ve set up the archiver to archive this also, so hopefully will be up starting tomorrow</div>
@@ -1615,3 +1615,55 @@ Small question, about test conformance <code>1766243315_1733/00000003.json</code
 I don&#x27;t think this is valid according to GP <a href="https://graypaper.fluffylabs.dev/#/ab2cdbd/0c8e010c9601?v=0.7.2" rel="noopener" target="_blank">https://graypaper.fluffylabs.dev/#/ab2cdbd/0c8e010c9601?v=0.7.2</a>
 
 H\_A = Kappa&#x27;\[H\_I\] but we don&#x27;t use the &quot;cycle&quot; symbol so from my understanding of the GP =&gt; author\_index should not be bigger than V ? <span class="edited">(edited)</span></div>
+<div class='msg'><a class='ts' href='#$s5v7T0EeQgvEA0NEcf18Vpvvws7cAUmK7NCRLYun9RI'>#</a> <a class='ts' name='$s5v7T0EeQgvEA0NEcf18Vpvvws7cAUmK7NCRLYun9RI' href='https://matrix.to/#/!ksYpYHcVftKsUAsdMa:matrix.org/$s5v7T0EeQgvEA0NEcf18Vpvvws7cAUmK7NCRLYun9RI' target='_blank'>2025-12-27 16:07</a>&ensp;<span class='u' style='color:#db4dca'>celadari</span>: Hi guys,
+
+I have a doubt regarding jam-comformance test vector <code>1766243113</code> file 00000058.json    <a href="https://github.com/davxy/jam-conformance/blob/main/fuzz-reports/0.7.2/traces/1766243113/00000058.json" rel="noopener" target="_blank">https://github.com/davxy/jam-conformance/blob/main/fuzz-reports/0.7.2/traces/1766243113/00000058.json</a>
+
+For the following bandersnatch keys:
+
+<pre><code class='rust'>let public_keys = vec![
+        hex::decode(&quot;ff71c6c03ff88adb5ed52c9681de1629a54e702fc14729f6b50d2f0a76f185b3&quot;).expect(&quot;Decoding hex string failed&quot;),
+        hex::decode(&quot;dee6d555b82024f1ccf8a1e37e60fa60fd40b1958c4bb3006af78647950e1b91&quot;).expect(&quot;Decoding hex string failed&quot;),
+        hex::decode(&quot;7263d615d16adbe8f6888fa594f54941db9d2d7294be29d9c5f5dd69acc11ee0&quot;).expect(&quot;Decoding hex string failed&quot;),
+        hex::decode(&quot;9326edb21e5541717fde24ec085000b28709847b8aab1ac51f84e94b37ca1b66&quot;).expect(&quot;Decoding hex string failed&quot;),
+        hex::decode(&quot;0746846d17469fb2f95ef365efcab9f4e22fa1feb53111c995376be8019981cc&quot;).expect(&quot;Decoding hex string failed&quot;),
+        hex::decode(&quot;151e5c8fe2b9d8a606966a79edd2f9e5db47e83947ce368ccba53bf6ba20a40b&quot;).expect(&quot;Decoding hex string failed&quot;),
+    ];
+</code></pre>
+
+we&#x27;re supposed to get the following ring root <code>0xb44239ecc9ff5ad60c2791dfe1dcdafcc0e478d9eca63b24999750b724a0676deb70a059fab442fdb05b007fe22f93a585ba7b113e3fba1f1880b317a4748bb4f3446a35793ca94f8b75a6654fa259931eec4ede39e96a9da83f2c8785aa89f892e630ae2b14e758ab0960e372172203f4c9a41777dadd529971d7ab9d23ab29fe0e9c85ec450505dde7f5ac038274cf</code>   but we&#x27;re
+
+actually getting <code>0xacfbe5e61d0b6b9a32476dd94ba74a6cca3634503f9dadb9cb164fd448d471a8c3e3f57e770c304944a744cfa43e07d9a888e4565c538749b08138d0d0eb4a1447d2e3f8504ee885b792925a9df49524637cd8d43177beeacfcb348babe9d90692e630ae2b14e758ab0960e372172203f4c9a41777dadd529971d7ab9d23ab29fe0e9c85ec450505dde7f5ac038274cf</code>
+
+Our ring roof construction is  based on <a href="https://github.com/davxy/bandersnatch-vrf-spec/blob/main/assets/example/src/main.rs" rel="noopener" target="_blank">https://github.com/davxy/bandersnatch-vrf-spec/blob/main/assets/example/src/main.rs</a>
+
+Did someone also run into the same issue ?</div>
+<div class='msg'><a class='ts' href='#$fVS39VASj3PdwkCvqZu0kxnH_IxanBqCgsl-WvP0gEI'>#</a> <a class='ts' name='$fVS39VASj3PdwkCvqZu0kxnH_IxanBqCgsl-WvP0gEI' href='https://matrix.to/#/!ksYpYHcVftKsUAsdMa:matrix.org/$fVS39VASj3PdwkCvqZu0kxnH_IxanBqCgsl-WvP0gEI' target='_blank'>2025-12-27 16:15</a>&ensp;<span class='u' style='color:#bfaf39'>dakkk</span>: &gt; &lt;@celadari:matrix.org&gt; Hi guys,
+&gt; 
+&gt; I have a doubt regarding jam-comformance test vector <code>1766243113</code> file 00000058.json    <a href="https://github.com/davxy/jam-conformance/blob/main/fuzz-reports/0.7.2/traces/1766243113/00000058.json" rel="noopener" target="_blank">https://github.com/davxy/jam-conformance/blob/main/fuzz-reports/0.7.2/traces/1766243113/00000058.json</a>
+&gt; 
+&gt; For the following bandersnatch keys:
+&gt; 
+&gt; <pre><code class='rust'>&gt; let public_keys = vec![
+&gt;         hex::decode(&quot;ff71c6c03ff88adb5ed52c9681de1629a54e702fc14729f6b50d2f0a76f185b3&quot;).expect(&quot;Decoding hex string failed&quot;),
+&gt;         hex::decode(&quot;dee6d555b82024f1ccf8a1e37e60fa60fd40b1958c4bb3006af78647950e1b91&quot;).expect(&quot;Decoding hex string failed&quot;),
+&gt;         hex::decode(&quot;7263d615d16adbe8f6888fa594f54941db9d2d7294be29d9c5f5dd69acc11ee0&quot;).expect(&quot;Decoding hex string failed&quot;),
+&gt;         hex::decode(&quot;9326edb21e5541717fde24ec085000b28709847b8aab1ac51f84e94b37ca1b66&quot;).expect(&quot;Decoding hex string failed&quot;),
+&gt;         hex::decode(&quot;0746846d17469fb2f95ef365efcab9f4e22fa1feb53111c995376be8019981cc&quot;).expect(&quot;Decoding hex string failed&quot;),
+&gt;         hex::decode(&quot;151e5c8fe2b9d8a606966a79edd2f9e5db47e83947ce368ccba53bf6ba20a40b&quot;).expect(&quot;Decoding hex string failed&quot;),
+&gt;     ];
+&gt; </code></pre>
+&gt; 
+&gt; we&#x27;re supposed to get the following ring root <code>0xb44239ecc9ff5ad60c2791dfe1dcdafcc0e478d9eca63b24999750b724a0676deb70a059fab442fdb05b007fe22f93a585ba7b113e3fba1f1880b317a4748bb4f3446a35793ca94f8b75a6654fa259931eec4ede39e96a9da83f2c8785aa89f892e630ae2b14e758ab0960e372172203f4c9a41777dadd529971d7ab9d23ab29fe0e9c85ec450505dde7f5ac038274cf</code>   but we&#x27;re
+&gt; 
+&gt; actually getting <code>0xacfbe5e61d0b6b9a32476dd94ba74a6cca3634503f9dadb9cb164fd448d471a8c3e3f57e770c304944a744cfa43e07d9a888e4565c538749b08138d0d0eb4a1447d2e3f8504ee885b792925a9df49524637cd8d43177beeacfcb348babe9d90692e630ae2b14e758ab0960e372172203f4c9a41777dadd529971d7ab9d23ab29fe0e9c85ec450505dde7f5ac038274cf</code>
+&gt; 
+&gt; Our ring roof construction is  based on <a href="https://github.com/davxy/bandersnatch-vrf-spec/blob/main/assets/example/src/main.rs" rel="noopener" target="_blank">https://github.com/davxy/bandersnatch-vrf-spec/blob/main/assets/example/src/main.rs</a>
+&gt; 
+&gt; Did someone also run into the same issue ?
+
+We discussed this on graypaper Channel few days ago </div>
+<div class='msg reply'><a class='ts' href='#$uXQg0gihc7y_aETVUKMsQ4nLHrlPXJVNgJCxN-zpb9U'>#</a> <a class='ts' name='$uXQg0gihc7y_aETVUKMsQ4nLHrlPXJVNgJCxN-zpb9U' href='https://matrix.to/#/!ksYpYHcVftKsUAsdMa:matrix.org/$uXQg0gihc7y_aETVUKMsQ4nLHrlPXJVNgJCxN-zpb9U' target='_blank'>2025-12-27 16:16</a>&ensp;<span class='u' style='color:#db4dca'>celadari</span>: if you can point me to the discussion in GP, otherwise I&#x27;ll scroll up :)</div>
+<div class='msg reply'><a class='ts' href='#$7OeUX7Q1IHyUd3kjnXaa_6_tkkTliPGYpEnw6QQYDMQ'>#</a> <a class='ts' name='$7OeUX7Q1IHyUd3kjnXaa_6_tkkTliPGYpEnw6QQYDMQ' href='https://matrix.to/#/!ksYpYHcVftKsUAsdMa:matrix.org/$7OeUX7Q1IHyUd3kjnXaa_6_tkkTliPGYpEnw6QQYDMQ' target='_blank'>2025-12-27 16:17</a>&ensp;<span class='u' style='color:#db4dca'>celadari</span>: I think I found it</div>
+<div class='msg reply'><a class='ts' href='#$E6Sy6WadUeKTrJbyZ2Cri1uU1MPQlNmlO4W2ztMjCNk'>#</a> <a class='ts' name='$E6Sy6WadUeKTrJbyZ2Cri1uU1MPQlNmlO4W2ztMjCNk' href='https://matrix.to/#/!ksYpYHcVftKsUAsdMa:matrix.org/$E6Sy6WadUeKTrJbyZ2Cri1uU1MPQlNmlO4W2ztMjCNk' target='_blank'>2025-12-27 16:20</a>&ensp;<span class='u' style='color:#db4dca'>celadari</span>: Thanks dakkk | JamPy 🫶 It solved my error ✨️</div>
+<div class='msg reply'><a class='ts' href='#$yYOaTYrd7jUI_NAWaRjMsjV4xqsKPoza-T1p4fIUSno'>#</a> <a class='ts' name='$yYOaTYrd7jUI_NAWaRjMsjV4xqsKPoza-T1p4fIUSno' href='https://matrix.to/#/!ksYpYHcVftKsUAsdMa:matrix.org/$yYOaTYrd7jUI_NAWaRjMsjV4xqsKPoza-T1p4fIUSno' target='_blank'>2025-12-27 16:21</a>&ensp;<span class='u' style='color:#bfaf39'>dakkk</span>: Great, my pleasure 👍</div>
