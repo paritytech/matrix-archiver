@@ -1,5 +1,5 @@
 # room: #graypaper:polkadot.io
-# exported: 2025-12-29 03:47 UTC
+# exported: 2025-12-30 03:45 UTC
 2024-04-17 20:29 syed: https://matrix.to/#/!hyzRkDqDthePbodYFz:parity.io/$f_DMsIEcDXZegw6Sabnehzc-LrdDQkmq5MbxDDyoZxY?via=parity.io&via=web3.foundation
 
 2024-04-17 20:29 syed: 
@@ -7011,3 +7011,8 @@ Try using Public::deserialize_compressed_unchecked instead.
 2025-12-22 13:04 dave: That looks correct to me. It's a little subtle as it permits public keys that aren't really "proper", but it does match what the GP says in appendix G AFAICT
 2025-12-22 13:05 dakkk: Ok fine
 2025-12-22 13:07 dave: I assume someone has verified that the crypto is not broken by allowing improper keys here
+2025-12-29 07:10 muddlebee: https://github.com/davxy/ark-vrf
+
+Is this the correct code implementation for bandersnatch - ring vrf?  
+I plan to create a wasm wrapper to call from my Java code.
+2025-12-29 14:28 danicuki: we use this one and it works
