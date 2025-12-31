@@ -1,5 +1,5 @@
 # room: #graypaper:polkadot.io
-# exported: 2025-12-30 03:45 UTC
+# exported: 2025-12-31 03:44 UTC
 2024-04-17 20:29 syed: https://matrix.to/#/!hyzRkDqDthePbodYFz:parity.io/$f_DMsIEcDXZegw6Sabnehzc-LrdDQkmq5MbxDDyoZxY?via=parity.io&via=web3.foundation
 
 2024-04-17 20:29 syed: 
@@ -7016,3 +7016,5 @@ Try using Public::deserialize_compressed_unchecked instead.
 Is this the correct code implementation for bandersnatch - ring vrf?  
 I plan to create a wasm wrapper to call from my Java code.
 2025-12-29 14:28 danicuki: we use this one and it works
+  ↳ 2025-12-30 17:26 muddlebee: thank you Daniel. Appreciate your guidance. 🙏
+2025-12-30 19:40 danicuki: In Equation 14.17 (Availability Specifier), is it possible that s is empty (no segments are exported)? If it is the case, how s_clubs is calculated?
