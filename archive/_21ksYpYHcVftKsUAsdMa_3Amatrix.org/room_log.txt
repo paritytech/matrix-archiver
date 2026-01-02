@@ -1,5 +1,5 @@
 # room: #jam-conformance:matrix.org
-# exported: 2026-01-01 03:48 UTC
+# exported: 2026-01-02 03:46 UTC
 2025-08-20 15:56 erin: tomusdrw: i've set up the archiver to archive this also, so hopefully will be up starting tomorrow
 2025-08-21 06:33 ascriv: https://github.com/davxy/jam-conformance/issues/26 should we not discourage open source implementations (for now)? [edited]
 2025-08-21 10:27 oliver.tale-yazdi: I think open source repos are fine. Other implementors are just not supposed to look at it
@@ -1672,3 +1672,5 @@ We discussed this on graypaper Channel few days ago
   ↳ 2025-12-27 16:17 celadari: I think I found it
   ↳ 2025-12-27 16:20 celadari: Thanks dakkk | JamPy 🫶 It solved my error ✨️
   ↳ 2025-12-27 16:21 dakkk: Great, my pleasure 👍
+2026-01-01 10:11 clearloop: if the fork logic is updated? for `1766241968`, after the main chain finalized at slot 9, the set has an incoming block `4294967292` which will be rejected, but it expects the post state at slot 8, reports say we can pass this test however in my local testing environment, I have no ideas how to process sets like this [edited]
+  ↳ 2026-01-01 21:21 clearloop: got if fixed by search the parent by hash, if not exists, reset the state
