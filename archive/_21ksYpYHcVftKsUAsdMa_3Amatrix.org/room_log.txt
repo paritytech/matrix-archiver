@@ -1,5 +1,5 @@
 # room: #jam-conformance:matrix.org
-# exported: 2026-01-04 03:48 UTC
+# exported: 2026-01-05 03:49 UTC
 2025-08-20 15:56 erin: tomusdrw: i've set up the archiver to archive this also, so hopefully will be up starting tomorrow
 2025-08-21 06:33 ascriv: https://github.com/davxy/jam-conformance/issues/26 should we not discourage open source implementations (for now)? [edited]
 2025-08-21 10:27 oliver.tale-yazdi: I think open source repos are fine. Other implementors are just not supposed to look at it
@@ -1674,3 +1674,19 @@ We discussed this on graypaper Channel few days ago
   ↳ 2025-12-27 16:21 dakkk: Great, my pleasure 👍
 2026-01-01 10:11 clearloop: if the fork logic is updated? for `1766241968`, after the main chain finalized at slot 9, the set has an incoming block `4294967292` which will be rejected, but it expects the post state at slot 8, reports say we can pass this test however in my local testing environment, I have no ideas how to process sets like this [edited]
   ↳ 2026-01-01 21:21 clearloop: got if fixed by search the parent by hash, if not exists, reset the state
+2026-01-04 07:04 clearloop: https://github.com/davxy/jam-conformance/discussions/145
+
+any team tried `1766565819_4872` locally? could you please recheck davxy ? 
+  ↳ 2026-01-04 11:48 yu2c: We tested spacejam fuzzer + our target, and both cases report invalid extrinsic hash for 00000040 and 00000041.
+However, when using our own fuzzer + the same target, we are able to reproduce the exact extrinsic hash as recorded in the block header.
+2026-01-04 08:11 dakkk: > <@clearloop:matrix.org> https://github.com/davxy/jam-conformance/discussions/145
+> 
+> any team tried `1766565819_4872` locally? could you please recheck davxy ? 
+
+Maybe the invalid extrinsic is the expected result? 
+  ↳ 2026-01-04 08:36 clearloop: nope, the post state expects the block to be accepted
+  ↳ 2026-01-04 10:40 dakkk: > <@clearloop:matrix.org> nope, the post state expects the block to be accepted
+
+I will check this afternoon on jampy 👍
+  ↳ 2026-01-04 14:33 jaymansfield: 39/41 pass. I reject 40 for duplicate core indexes in guarantees.
+  ↳ 2026-01-04 15:36 dakkk: I tested again on jampy, block 39 is ok, block 40 is rejected for invalid guarantee order, and block 41 is ok; the trace for block 40 has the same pre and post state root, so rejected the block is correct
