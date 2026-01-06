@@ -18,7 +18,7 @@ a:hover{color:#90caf9}
 em{font-style:italic}
 </style>
 <h1>#jam:polkadot.io</h1>
-<p><small>last updated 2026-01-05 03:48 UTC</small></p>
+<p><small>last updated 2026-01-06 03:45 UTC</small></p>
 <p><a href='room_log.txt'>⇩ plaintext</a> · <a href='../../'>⇦ all rooms</a></p>
 <hr>
 <div class='msg'><a class='ts' href='#$we4SYXTHwmKn094X9Zs_7mWUOoUVh4icvVdxD83RZfs'>#</a> <a class='ts' name='$we4SYXTHwmKn094X9Zs_7mWUOoUVh4icvVdxD83RZfs' href='https://matrix.to/#/!wBOJlzaOULZOALhaRh:polkadot.io/$we4SYXTHwmKn094X9Zs_7mWUOoUVh4icvVdxD83RZfs' target='_blank'>2024-04-20 02:08</a>&ensp;<span class='u' style='color:#d0709e'>johnjiao123</span>: </div>
@@ -12215,3 +12215,6 @@ For present purposes, PolkaJAM may be used as a reasonable target for that behav
  - Is the builder responsible for knowing to each validator it should send the work package? In this case, what criteria the builder uses to choose which of the 3 possible validators?</div>
 <div class='msg'><a class='ts' href='#$mcakN6rsuEtKzoP5suLlD7qouc_TH-jy1g7Dx0ctXwI'>#</a> <a class='ts' name='$mcakN6rsuEtKzoP5suLlD7qouc_TH-jy1g7Dx0ctXwI' href='https://matrix.to/#/!wBOJlzaOULZOALhaRh:polkadot.io/$mcakN6rsuEtKzoP5suLlD7qouc_TH-jy1g7Dx0ctXwI' target='_blank'>2026-01-01 11:54</a>&ensp;<span class='u' style='color:#c65779'>dave</span>: You should allow a bit of leeway but if the core is not currently assigned to you then you can just close the stream with an error</div>
 <div class='msg'><a class='ts' href='#$klg_7PGTRbwBIFlGBM7lOy2-ML_NattNVC0uTzl3d5k'>#</a> <a class='ts' name='$klg_7PGTRbwBIFlGBM7lOy2-ML_NattNVC0uTzl3d5k' href='https://matrix.to/#/!wBOJlzaOULZOALhaRh:polkadot.io/$klg_7PGTRbwBIFlGBM7lOy2-ML_NattNVC0uTzl3d5k' target='_blank'>2026-01-01 11:57</a>&ensp;<span class='u' style='color:#c65779'>dave</span>: Yes, the builder needs to decide which validator to send to. Picking randomly amongst the 3 assigned is a good start but obviously you may want to fall back to one of the others if submitting to the first randomly selected one doesn&#x27;t work</div>
+<div class='msg'><a class='ts' href='#$oWHP3O6efgxIA3aGbx8nZ01UbtEWUxBvm6pBQCLjX7U'>#</a> <a class='ts' name='$oWHP3O6efgxIA3aGbx8nZ01UbtEWUxBvm6pBQCLjX7U' href='https://matrix.to/#/!wBOJlzaOULZOALhaRh:polkadot.io/$oWHP3O6efgxIA3aGbx8nZ01UbtEWUxBvm6pBQCLjX7U' target='_blank'>2026-01-05 13:17</a>&ensp;<span class='u' style='color:#35a646'>igankevich</span>: This error means that the program blob lacks metadata.
+
+I&#x27;ve updated <code>polkaports</code> to fix the issue. Simply pull the repo and run setup &amp; quake compilation steps again. You might need to run <code>make clean</code> in <code>quake</code> directory to remove old program blob.</div>

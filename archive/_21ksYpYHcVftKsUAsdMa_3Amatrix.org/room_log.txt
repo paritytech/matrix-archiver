@@ -1,5 +1,5 @@
 # room: #jam-conformance:matrix.org
-# exported: 2026-01-05 03:49 UTC
+# exported: 2026-01-06 03:46 UTC
 2025-08-20 15:56 erin: tomusdrw: i've set up the archiver to archive this also, so hopefully will be up starting tomorrow
 2025-08-21 06:33 ascriv: https://github.com/davxy/jam-conformance/issues/26 should we not discourage open source implementations (for now)? [edited]
 2025-08-21 10:27 oliver.tale-yazdi: I think open source repos are fine. Other implementors are just not supposed to look at it
@@ -1690,3 +1690,4 @@ Maybe the invalid extrinsic is the expected result?
 I will check this afternoon on jampy 👍
   ↳ 2026-01-04 14:33 jaymansfield: 39/41 pass. I reject 40 for duplicate core indexes in guarantees.
   ↳ 2026-01-04 15:36 dakkk: I tested again on jampy, block 39 is ok, block 40 is rejected for invalid guarantee order, and block 41 is ok; the trace for block 40 has the same pre and post state root, so rejected the block is correct
+  ↳ 2026-01-05 16:06 clearloop: Thanks! so likely I got some problems in our implementations, I thought the ex hash check is conflict with other tests

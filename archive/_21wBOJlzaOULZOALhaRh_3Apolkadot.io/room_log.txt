@@ -1,5 +1,5 @@
 # room: #jam:polkadot.io
-# exported: 2026-01-05 03:48 UTC
+# exported: 2026-01-06 03:45 UTC
 2024-04-20 02:08 johnjiao123: 
 2024-04-20 02:09 johnjiao123: 
 2024-05-30 21:48 nradko: Hey everyone,
@@ -12325,3 +12325,6 @@ For present purposes, PolkaJAM may be used as a reasonable target for that behav
  - Is the builder responsible for knowing to each validator it should send the work package? In this case, what criteria the builder uses to choose which of the 3 possible validators?
 2026-01-01 11:54 dave: You should allow a bit of leeway but if the core is not currently assigned to you then you can just close the stream with an error
 2026-01-01 11:57 dave: Yes, the builder needs to decide which validator to send to. Picking randomly amongst the 3 assigned is a good start but obviously you may want to fall back to one of the others if submitting to the first randomly selected one doesn't work
+2026-01-05 13:17 igankevich: This error means that the program blob lacks metadata.
+
+I've updated `polkaports` to fix the issue. Simply pull the repo and run setup & quake compilation steps again. You might need to run `make clean` in `quake` directory to remove old program blob.
