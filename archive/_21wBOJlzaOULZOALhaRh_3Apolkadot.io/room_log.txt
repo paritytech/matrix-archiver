@@ -1,5 +1,5 @@
 # room: #jam:polkadot.io
-# exported: 2026-01-07 03:45 UTC
+# exported: 2026-01-08 03:44 UTC
 2024-04-20 02:08 johnjiao123: 
 2024-04-20 02:09 johnjiao123: 
 2024-05-30 21:48 nradko: Hey everyone,
@@ -12328,3 +12328,26 @@ For present purposes, PolkaJAM may be used as a reasonable target for that behav
 2026-01-05 13:17 igankevich: This error means that the program blob lacks metadata.
 
 I've updated `polkaports` to fix the issue. Simply pull the repo and run setup & quake compilation steps again. You might need to run `make clean` in `quake` directory to remove old program blob.
+2026-01-07 06:00 sisco0: Have a great day everyone! I am struggling to understand the Graypaper.
+Would getting more context about what is Polkadot would help me to understand it better?
+Is there any course that be recommended in this regard?
+
+Thank you! :)
+2026-01-07 07:02 dakkk: What are you struggling to understand and what is the goal of your understanding? [edited]
+2026-01-07 13:46 danicuki: Understanding the Graypaper is a long learning journey, even for people familiar with basics of blockchain and Polkadot. I suggest you to watch some of [Gav's lectures](https://graypaper.com/lectures/) and also some videos on [the news tab](https://graypaper.com/news/). I also published an [X super thread](https://x.com/danicuki/status/1909315806824964277) explaining some of the JAM Concepts. I hope this helps to start
+2026-01-07 16:42 jay_ztc: Hi folks, happy new years! Is there a standardized perf test suite for pvm implementations? I'm looking at the pinky benchmark used on polkavm developed by Jan Bujak 
+  ↳ 2026-01-07 17:51 jay_ztc: Thoughts on creating custom benchtool backends for pvm implementations?
+
+https://github.com/paritytech/polkavm/tree/master/tools/benchtool/src/backend
+  ↳ 2026-01-07 17:53 jan: Feel free to add your implementation there if you want.
+
+Although note that the M3/M4 PVM testing harness that I will be working on sometime this year will be designed for performance testing.
+  ↳ 2026-01-07 18:02 jay_ztc: Thanks for the quick response Jan Bujak 
+
+Are you thinking about covering host functions in the harness?
+  ↳ 2026-01-07 18:03 jan: Probably, since those will also have to be audited whether they meet the performance requirements. But initially only pure PVM.
+  ↳ 2026-01-07 18:43 jay_ztc: Makes sense, thanks for sharing your thoughts Jan Bujak
+
+I'm excited to follow your work on the harness, especially around the api for testing host functions.
+
+I'm using a generic pvm interface that is db agnostic- targeting reuse across projects & languages. It hides the host function complexity nicely. [edited]
