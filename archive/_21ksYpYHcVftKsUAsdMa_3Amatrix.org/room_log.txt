@@ -1,5 +1,5 @@
 # room: #jam-conformance:matrix.org
-# exported: 2026-01-08 03:45 UTC
+# exported: 2026-01-09 03:45 UTC
 2025-08-20 15:56 erin: tomusdrw: i've set up the archiver to archive this also, so hopefully will be up starting tomorrow
 2025-08-21 06:33 ascriv: https://github.com/davxy/jam-conformance/issues/26 should we not discourage open source implementations (for now)? [edited]
 2025-08-21 10:27 oliver.tale-yazdi: I think open source repos are fine. Other implementors are just not supposed to look at it
@@ -1695,3 +1695,9 @@ I will check this afternoon on jampy 👍
   ↳ 2026-01-06 11:40 clearloop: we were doing json decoding for our local tests that we failed to decode the `output_oversize` result which caused us failed to validate the signature for block `41`
  [edited]
 2026-01-07 17:20 decentration: hey davxy , im having a quite a hair pulling time executing service blob in v0.7.1, spending a long while trying to conform to it, is there a dissembled version of it for code hash `0xee79d0b64091d826e5317add07c3751dbd42a536cfc4482204adf0705561a92d`, which is in stf/accumulate of the davxy/jam-test-vectors? [edited]
+2026-01-08 12:16 davxy: https://github.com/davxy/jam-conformance/discussions/148
+2026-01-08 18:32 shimonchick: In what order are you processing extrinsics for a single block. I noticed that execution order matters and cannot be completely parallelized (for example assurances before guarantees and guarantees before accumulation). Also disputes before accumulation. I am curious if teams have found other practical tips [edited]
+2026-01-08 18:52 tomusdrw: > <@shimonchick:matrix.org> In what order are you processing extrinsics for a single block. I noticed that execution order matters and cannot be completely parallelized (for example assurances before guarantees and guarantees before accumulation). Also disputes before accumulation. I am curious if teams have found other practical tips
+
+Did you try checking in the Gray Paper?
+2026-01-08 22:17 davxy: https://github.com/davxy/jam-conformance/pull/147
