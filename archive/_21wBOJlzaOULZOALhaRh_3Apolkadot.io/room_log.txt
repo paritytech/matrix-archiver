@@ -1,5 +1,5 @@
 # room: #jam:polkadot.io
-# exported: 2026-01-09 03:45 UTC
+# exported: 2026-01-10 03:41 UTC
 2024-04-20 02:08 johnjiao123: 
 2024-04-20 02:09 johnjiao123: 
 2024-05-30 21:48 nradko: Hey everyone,
@@ -12333,6 +12333,7 @@ Would getting more context about what is Polkadot would help me to understand it
 Is there any course that be recommended in this regard?
 
 Thank you! :)
+  ↳ 2026-01-09 10:33 kianenigma: https://blog.kianenigma.com/posts/tech/demystifying-jam/
 2026-01-07 07:02 dakkk: What are you struggling to understand and what is the goal of your understanding? [edited]
 2026-01-07 13:46 danicuki: Understanding the Graypaper is a long learning journey, even for people familiar with basics of blockchain and Polkadot. I suggest you to watch some of [Gav's lectures](https://graypaper.com/lectures/) and also some videos on [the news tab](https://graypaper.com/news/). I also published an [X super thread](https://x.com/danicuki/status/1909315806824964277) explaining some of the JAM Concepts. I hope this helps to start
 2026-01-07 16:42 jay_ztc: Hi folks, happy new years! Is there a standardized perf test suite for pvm implementations? I'm looking at the pinky benchmark used on polkavm developed by Jan Bujak 
@@ -12351,3 +12352,14 @@ Are you thinking about covering host functions in the harness?
 I'm excited to follow your work on the harness, especially around the api for testing host functions.
 
 I'm using a generic pvm interface that is db agnostic- targeting reuse across projects & languages. It hides the host function complexity nicely. [edited]
+2026-01-09 14:16 fiono: Hey! How can I know in which languages JAM is already being implemented?
+  ↳ 2026-01-09 14:16 jan: https://graypaper.com/clients/
+2026-01-09 14:16 dakkk: > <@fiono:matrix.org> Hey! How can I know in which languages JAM is already being implemented?
+
+https://graypaper.com/clients/
+2026-01-09 19:31 sourabhniyogi: image.png
+2026-01-09 19:39 sourabhniyogi: Happy New Year -- very excited to see [15 M1 reports](https://github.com/w3f/jam-milestone-delivery/pulls) as of this moment and learn that the Toaster had 64 cores utilized from the above [Polkadot year end report](https://medium.com/polkadot-network/polkadot-roundup-2025-3c3c71c7e9c4).  I think we have enough teams with maybe compliant JAM Tart outputs to get in there and some of us try out non-tiny configurations in some high core using expts (not 341 but like 12 or 24)?  What should we do if we think we are ready?  Out of curiosity, does anyone know what happened in these 64 cores?
+
+We are ready to do C=3, 4, 6, 12 for our PoC services and need a plan of how to get out of tiny (which we can afford), but maybe not quite "full" (which we cannot, not for very long anyway).  Any advice on what we can do for the next few months would be appreciated.
+
+Is there a [March PBA JAM event](https://polkadot.academy/jam/) we can look forward to attending and maybe figure out next steps together? [edited]

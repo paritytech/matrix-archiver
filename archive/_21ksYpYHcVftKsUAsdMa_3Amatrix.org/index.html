@@ -18,7 +18,7 @@ a:hover{color:#90caf9}
 em{font-style:italic}
 </style>
 <h1>#jam-conformance:matrix.org</h1>
-<p><small>last updated 2026-01-09 03:45 UTC</small></p>
+<p><small>last updated 2026-01-10 03:42 UTC</small></p>
 <p><a href='room_log.txt'>⇩ plaintext</a> · <a href='../../'>⇦ all rooms</a></p>
 <hr>
 <div class='msg'><a class='ts' href='#$_9hLINsChVG8rufQkmbqp-fIbsNyK1YqpS3C9S7QZHU'>#</a> <a class='ts' name='$_9hLINsChVG8rufQkmbqp-fIbsNyK1YqpS3C9S7QZHU' href='https://matrix.to/#/!ksYpYHcVftKsUAsdMa:matrix.org/$_9hLINsChVG8rufQkmbqp-fIbsNyK1YqpS3C9S7QZHU' target='_blank'>2025-08-20 15:56</a>&ensp;<span class='u' style='color:#787fdf'>erin</span>: tomusdrw: i&#x27;ve set up the archiver to archive this also, so hopefully will be up starting tomorrow</div>
@@ -1696,3 +1696,132 @@ I will check this afternoon on jampy 👍</div>
 
 Did you try checking in the Gray Paper?</div>
 <div class='msg'><a class='ts' href='#$qH418wfHBlmhYEjB4tov4Q8ul_QWT4Ok6n5jaDuNDvQ'>#</a> <a class='ts' name='$qH418wfHBlmhYEjB4tov4Q8ul_QWT4Ok6n5jaDuNDvQ' href='https://matrix.to/#/!ksYpYHcVftKsUAsdMa:matrix.org/$qH418wfHBlmhYEjB4tov4Q8ul_QWT4Ok6n5jaDuNDvQ' target='_blank'>2026-01-08 22:17</a>&ensp;<span class='u' style='color:#c9419d'>davxy</span>: <a href="https://github.com/davxy/jam-conformance/pull/147" rel="noopener" target="_blank">https://github.com/davxy/jam-conformance/pull/147</a></div>
+<div class='msg'><a class='ts' href='#$8w7neO8cdky1hN_NOjBfQRC2r-cg-7tqMzWAq6CY_j4'>#</a> <a class='ts' name='$8w7neO8cdky1hN_NOjBfQRC2r-cg-7tqMzWAq6CY_j4' href='https://matrix.to/#/!ksYpYHcVftKsUAsdMa:matrix.org/$8w7neO8cdky1hN_NOjBfQRC2r-cg-7tqMzWAq6CY_j4' target='_blank'>2026-01-09 13:50</a>&ensp;<span class='u' style='color:#6f63cc'>decentration</span>: can someone let me know if they were able to successfully execute the service blob within the test vectors such as <a href="https://github.com/davxy/jam-test-vectors/blob/7037a037aa08c43ae98f758ad2e737c530446a02/stf/accumulate/tiny/process\_one\_immediate\_report-1.json#L110C38-L110C71496" rel="noopener" target="_blank">process_one_immediate_report-1</a>, which contains the service blob <code>id: 1729</code> on any version particularly <code>0.7.2</code>? I am able to pass vectors such as <code>work_ejected_for_service-1</code>, but when it comes to <code>1729</code> i am getting a a deadlock.
+
+If i put the blob into <a href="https://pvm.fluffylabs.dev/?#/" rel="noopener" target="_blank">fluffy labs debugger</a> and run it with typeberry/pvm, it also panicked:
+
+<pre><code class=''>Host Call
+PVM execution reached a log host call.
+
+Host Call:
+log
+(index: 100)
+Use generic UI
+Level:
+WARNING
+Message:
+Panic message: panicked at crates/jam-pvm-common/src/host_calls.rs:202:46:
+host call returns correct type; qed: Error
+Target: 0x0 (0 bytes)
+Message: 0xfefdf928 (117 bytes)
+</code></pre>
+
+so this has lead me to question the vector over my sanity. Any confirmation either way from anyone would be greatly appreciated. <span class="edited">(edited)</span></div>
+<div class='msg reply'><a class='ts' href='#$0Yq4KwytobdSAElU9WnSJSV655VzKOOwmFaJ6omVJfA'>#</a> <a class='ts' name='$0Yq4KwytobdSAElU9WnSJSV655VzKOOwmFaJ6omVJfA' href='https://matrix.to/#/!ksYpYHcVftKsUAsdMa:matrix.org/$0Yq4KwytobdSAElU9WnSJSV655VzKOOwmFaJ6omVJfA' target='_blank'>2026-01-09 14:35</a>&ensp;<span class='u' style='color:#48d03d'>tomusdrw</span>: here you can find the execution trace:
+
+<pre><code class=''>INFO  [test-runner] Preparing tests for 1 files.
+INFO  [test-runner] Running 1 tests.
+LOG   [test-runner] Tests registered successfully
+INFO  [test-runner] Running accumulate tests [1/1]
+LOG   [test-runner] [accumulate:ananas] running test from ../test-vectors/w3f-davxy_072/stf/accumulate/tiny/process_one_immediate_report-1.json (spec: tiny)
+TRACE [test-runner]  {
+  input: { slot: 43, reports: [ [WorkReport], [length]: 1 ] },
+  pre_state: {
+    slot: 42,
+    entropy: Bytes { raw: [Uint8Array], length: 32 },
+    ready_queue: [
+      [Array],      [Array],
+      [Array],      [Array],
+      [Array],      [Array],
+      [Array],      [Array],
+      [Array],      [Array],
+      [Array],      [Array],
+      [length]: 12
+    ],
+    accumulated: [
+      [Array],      [Array],
+      [Array],      [Array],
+      [Array],      [Array],
+      [Array],      [Array],
+      [Array],      [Array],
+      [Array],      [Array],
+      [length]: 12
+    ],
+    privileges: {
+      bless: 0,
+      assign: [Array],
+      designate: 0,
+      register: 0,
+      always_acc: [Array]
+    },
+    statistics: undefined,
+    accounts: [ [InMemoryService], [length]: 1 ]
+  },
+  output: { ok: Bytes { raw: [Uint8Array], length: 32 } },
+  post_state: {
+    slot: 43,
+    entropy: Bytes { raw: [Uint8Array], length: 32 },
+    ready_queue: [
+      [Array],      [Array],
+      [Array],      [Array],
+      [Array],      [Array],
+      [Array],      [Array],
+      [Array],      [Array],
+      [Array],      [Array],
+      [length]: 12
+    ],
+    accumulated: [
+      [Array],      [Array],
+      [Array],      [Array],
+      [Array],      [Array],
+      [Array],      [Array],
+      [Array],      [Array],
+      [Array],      [Array],
+      [length]: 12
+    ],
+    privileges: {
+      bless: 0,
+      assign: [Array],
+      designate: 0,
+      register: 0,
+      always_acc: [Array]
+    },
+    statistics: undefined,
+    accounts: [ [InMemoryService], [length]: 1 ]
+  }
+}
+LOG   [accumulate] Accumulating service 1729, transfers: 0 operands: 1 at slot: 43
+INSANE [host-calls-pvm] [1729] [PC: 17451] Invoking Fetch:1.  Gas: 99962. Regs: .
+TRACE [host-calls] [1729] FETCH(0) &lt;- 0x0a000000000000000100000000000000...00c0000080000000000c00000a000000 (134 bytes)
+INSANE [host-calls] [1729] FETCH(0) &lt;- 0x0a00000000000000010000000000000064000000000000000200200000000c000000809698000000000080f0fa020000000000ca9a3b00000000002d3101000000000800100008000300180000000300080006005000040080000500060000fa00008070d20000093d0004000000000c00000204000000c0000080000000000c00000a000000
+INSANE [host-calls-pvm] [1729] [PC: 17451] Result Fetch:1.  Gas: 99952. Regs: r07=134 (0x86).
+INSANE [host-calls-pvm] [1729] [PC: 17651] Invoking Fetch:1.  Gas: 99709. Regs: r07=206752 (0x327a0), r09=134 (0x86).
+TRACE [host-calls] [1729] FETCH(0) &lt;- 0x0a000000000000000100000000000000...00c0000080000000000c00000a000000 (134 bytes)
+INSANE [host-calls] [1729] FETCH(0) &lt;- 0x0a00000000000000010000000000000064000000000000000200200000000c000000809698000000000080f0fa020000000000ca9a3b00000000002d3101000000000800100008000300180000000300080006005000040080000500060000fa00008070d20000093d0004000000000c00000204000000c0000080000000000c00000a000000
+INSANE [host-calls-pvm] [1729] [PC: 17651] Result Fetch:1.  Gas: 99699. Regs: r07=134 (0x86), r09=134 (0x86).
+INSANE [host-calls-pvm] [1729] [PC: 2281] Invoking LogHostCall:100.  Gas: 98232. Regs: .
+TRACE [host-calls] [1729] LOG(1729, INFO(2), , This is Accumulate in the Test Service 6c1h with 1 items)
+INSANE [host-calls-pvm] [1729] [PC: 2281] Result LogHostCall:100.  Gas: 98222. Regs: .
+INSANE [host-calls-pvm] [1729] [PC: 17451] Invoking Fetch:1.  Gas: 98057. Regs: r10=14 (0xe).
+TRACE [host-calls] [1729] FETCH(14) &lt;- 0x01002a762f984bcb960c32e78fb31b64...d36b4ce7a69729081481c50119dbe400 (152 bytes)
+INSANE [host-calls] [1729] FETCH(14) &lt;- 0x01002a762f984bcb960c32e78fb31b648c3bab5b8ebc0ac2b945f936d30cdc4bec9c51f9df1925c1adae33dc75126996fe1200fe80fcc27e70c177fa259081296236bf52de5ab6e18f3a407ae0952c67b624a56a6eafd7c40feb2ade331a18b4c929038a8a7fea081877c200733e9aad0bdf3c1f43ea76cf5c3235d70dce8c58a84ac1a0860010efd36b4ce7a69729081481c50119dbe400
+INSANE [host-calls-pvm] [1729] [PC: 17451] Result Fetch:1.  Gas: 98047. Regs: r07=152 (0x98), r10=14 (0xe).
+INSANE [host-calls-pvm] [1729] [PC: 17651] Invoking Fetch:1.  Gas: 97768. Regs: r07=206752 (0x327a0), r09=152 (0x98), r10=14 (0xe).
+TRACE [host-calls] [1729] FETCH(14) &lt;- 0x01002a762f984bcb960c32e78fb31b64...d36b4ce7a69729081481c50119dbe400 (152 bytes)
+INSANE [host-calls] [1729] FETCH(14) &lt;- 0x01002a762f984bcb960c32e78fb31b648c3bab5b8ebc0ac2b945f936d30cdc4bec9c51f9df1925c1adae33dc75126996fe1200fe80fcc27e70c177fa259081296236bf52de5ab6e18f3a407ae0952c67b624a56a6eafd7c40feb2ade331a18b4c929038a8a7fea081877c200733e9aad0bdf3c1f43ea76cf5c3235d70dce8c58a84ac1a0860010efd36b4ce7a69729081481c50119dbe400
+INSANE [host-calls-pvm] [1729] [PC: 17651] Result Fetch:1.  Gas: 97758. Regs: r07=152 (0x98), r09=152 (0x98), r10=14 (0xe).
+INSANE [host-calls-pvm] [1729] [PC: 8301] Invoking Write:4.  Gas: 96005. Regs: r07=66232 (0x102b8), r08=4 (0x4), r09=207168 (0x32940), r10=16 (0x10).
+TRACE [host-calls] [1729] WRITE(0x6c617374, 0xefd36b4ce7a69729081481c50119dbe4 (16 bytes)) &lt;- OK: null
+INSANE [host-calls-pvm] [1729] [PC: 8301] Result Write:4.  Gas: 95995. Regs: r07=18446744073709551615 (0xffffffffffffffff), r08=4 (0x4), r09=207168 (0x32940), r10=16 (0x10).
+LOG   [accumulate] Accumulation successful for 1729. Consumed: 4364
+</code></pre>
+
+It does not work on the PVM debugger if you just keep clicking &quot;Run&quot; because the test calls FETCH two times (technically 4, but requests two different data types):
+
+1. The first request is for constants which the PVM debugger has hardcoded (so works fine)
+2. The second request is for operands which we don&#x27;t really have - the debugger passes the constants data again, and that fails.
+
+You can find the correct data in the execution trace, so pasting these as output in the debugger should give you the same result. <span class="edited">(edited)</span></div>
+<div class='msg reply'><a class='ts' href='#$FMw6TJVRKgI49TBPKIm7VW4V-RCuqtjvhxQFsuXR7gk'>#</a> <a class='ts' name='$FMw6TJVRKgI49TBPKIm7VW4V-RCuqtjvhxQFsuXR7gk' href='https://matrix.to/#/!ksYpYHcVftKsUAsdMa:matrix.org/$FMw6TJVRKgI49TBPKIm7VW4V-RCuqtjvhxQFsuXR7gk' target='_blank'>2026-01-09 20:22</a>&ensp;<span class='u' style='color:#6f63cc'>decentration</span>: hey thanks for this, i see now that i can reach HALT, and use 4262 out of the expected 4364 accumulate_gas_used, i am now wondering where that 102 gas went.
+
+could you share a link to those traces (if its shared in a public conformance repo somewhere)? </div>
