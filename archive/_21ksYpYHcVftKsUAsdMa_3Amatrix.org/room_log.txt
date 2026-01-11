@@ -1,5 +1,5 @@
 # room: #jam-conformance:matrix.org
-# exported: 2026-01-10 03:42 UTC
+# exported: 2026-01-11 03:47 UTC
 2025-08-20 15:56 erin: tomusdrw: i've set up the archiver to archive this also, so hopefully will be up starting tomorrow
 2025-08-21 06:33 ascriv: https://github.com/davxy/jam-conformance/issues/26 should we not discourage open source implementations (for now)? [edited]
 2025-08-21 10:27 oliver.tale-yazdi: I think open source repos are fine. Other implementors are just not supposed to look at it
@@ -1832,3 +1832,9 @@ You can find the correct data in the execution trace, so pasting these as output
   ↳ 2026-01-09 20:22 decentration: hey thanks for this, i see now that i can reach HALT, and use 4262 out of the expected 4364 accumulate_gas_used, i am now wondering where that 102 gas went.
 
 could you share a link to those traces (if its shared in a public conformance repo somewhere)? 
+2026-01-10 18:25 davxy: https://github.com/davxy/jam-conformance/pull/151
+2026-01-11 01:41 clearloop: for the conformance repo, if it is possible to move the `tar.gz` stuffs to releases? embedding them in the repo make it hard to pull new commits
+
+```
+Error downloading object: fuzz-proto/examples/0.7.0.tar.gz (c242cfa): Smudge error: Error downloading fuzz-proto/examples/0.7.0.tar.gz (c242cfa9e8565e27f3033a35a4407d87309e1e49ef85d6ea5fd16f937cd0ed35): batch response: This repository exceeded its LFS budget. The account responsible for the budget should increase it to restore access.
+``` [edited]
