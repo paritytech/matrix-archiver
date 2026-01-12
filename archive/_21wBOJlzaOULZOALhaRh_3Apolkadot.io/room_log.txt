@@ -1,5 +1,5 @@
 # room: #jam:polkadot.io
-# exported: 2026-01-11 03:47 UTC
+# exported: 2026-01-12 03:46 UTC
 2024-04-20 02:08 johnjiao123: 
 2024-04-20 02:09 johnjiao123: 
 2024-05-30 21:48 nradko: Hey everyone,
@@ -12365,3 +12365,5 @@ We are ready to do C=3, 4, 6, 12 for our PoC services and need a plan of how to 
 Is there a [March PBA JAM event](https://polkadot.academy/jam/) we can look forward to attending and maybe figure out next steps together? [edited]
 2026-01-10 16:22 gatesma: hey folks, really interested in learning more on JAM. How can one start to try code a service on JAM ? Are there example or docs emerging ? Is it at the stage one can do this ?
   ↳ 2026-01-10 17:54 cisco: You can start playing around with playground.jamcha.in
+  ↳ 2026-01-11 08:14 luke_jamixir: 1000044379.jpg
+2026-01-11 08:26 shimonchick: Is there something like a wishlist of JAM-related side projects/infra/helpers that aren't there yet but somebody would benefit from?
