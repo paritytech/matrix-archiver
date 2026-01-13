@@ -1,5 +1,5 @@
 # room: #jam:polkadot.io
-# exported: 2026-01-12 03:46 UTC
+# exported: 2026-01-13 03:44 UTC
 2024-04-20 02:08 johnjiao123: 
 2024-04-20 02:09 johnjiao123: 
 2024-05-30 21:48 nradko: Hey everyone,
@@ -12366,4 +12366,13 @@ Is there a [March PBA JAM event](https://polkadot.academy/jam/) we can look forw
 2026-01-10 16:22 gatesma: hey folks, really interested in learning more on JAM. How can one start to try code a service on JAM ? Are there example or docs emerging ? Is it at the stage one can do this ?
   ↳ 2026-01-10 17:54 cisco: You can start playing around with playground.jamcha.in
   ↳ 2026-01-11 08:14 luke_jamixir: 1000044379.jpg
+  ↳ 2026-01-12 13:30 cisco: We should definitely fix that 😅 There are a couple examples that work though
 2026-01-11 08:26 shimonchick: Is there something like a wishlist of JAM-related side projects/infra/helpers that aren't there yet but somebody would benefit from?
+2026-01-12 11:33 danicuki: > <@shimonchick:matrix.org> Is there something like a wishlist of JAM-related side projects/infra/helpers that aren't there yet but somebody would benefit from?
+
+Not that I know, but it seems to be a good idea to start collecting those ideas. 
+2026-01-12 20:05 michjord0001: Greetings everyone! 🍓 
+
+There's a weekly JAM Bookclub resuming this Wednesday from 19:00-20:00 CET online. They're currently discussing Chapter 9 of the Graypaper. It's a nice opportunity for people to revise/discuss/learn JAM with others. The focus is more on theory rather than implementation. 
+
+Feel free to join the conversation here: https://discord.gg/cvyqFaPV56

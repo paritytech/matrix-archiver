@@ -1,5 +1,5 @@
 # room: #graypaper:polkadot.io
-# exported: 2026-01-12 03:47 UTC
+# exported: 2026-01-13 03:45 UTC
 2024-04-17 20:29 syed: https://matrix.to/#/!hyzRkDqDthePbodYFz:parity.io/$f_DMsIEcDXZegw6Sabnehzc-LrdDQkmq5MbxDDyoZxY?via=parity.io&via=web3.foundation
 
 2024-04-17 20:29 syed: 
@@ -7018,3 +7018,8 @@ I plan to create a wasm wrapper to call from my Java code.
 2025-12-29 14:28 danicuki: we use this one and it works
   ↳ 2025-12-30 17:26 muddlebee: thank you Daniel. Appreciate your guidance. 🙏
 2025-12-30 19:40 danicuki: In Equation 14.17 (Availability Specifier), is it possible that s is empty (no segments are exported)? If it is the case, how s_clubs is calculated?
+2026-01-12 20:05 michjord0001: Greetings everyone! 🍓 
+
+There's a weekly JAM Bookclub resuming this Wednesday from 19:00-20:00 CET online. They're currently discussing Chapter 9 of the Graypaper. It's a nice opportunity for people to revise/discuss/learn JAM with others. The focus is more on theory rather than implementation. 
+
+Feel free to join the conversation here: https://discord.gg/cvyqFaPV56
