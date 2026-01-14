@@ -1,5 +1,5 @@
 # room: #jam-conformance:matrix.org
-# exported: 2026-01-13 03:45 UTC
+# exported: 2026-01-14 03:47 UTC
 2025-08-20 15:56 erin: tomusdrw: i've set up the archiver to archive this also, so hopefully will be up starting tomorrow
 2025-08-21 06:33 ascriv: https://github.com/davxy/jam-conformance/issues/26 should we not discourage open source implementations (for now)? [edited]
 2025-08-21 10:27 oliver.tale-yazdi: I think open source repos are fine. Other implementors are just not supposed to look at it
@@ -1844,3 +1844,9 @@ Error downloading object: fuzz-proto/examples/0.7.0.tar.gz (c242cfa): Smudge err
 GIT_LFS_SKIP_SMUDGE=1 git
 ```
 2026-01-12 16:29 davxy: 🎁  https://paritytech.github.io/jam-conformance-dashboard/ 
+2026-01-13 15:26 clearloop: if there is max depth for the forks in fuzz tests? the current forks in fuzz tests are tracking header hash but not just in one-slot level, which makes it hard to truncate the block history in memory [edited]
+2026-01-13 16:49 rustybot: > <@clearloop:matrix.org> if there is max depth for the forks in fuzz tests? the current forks in fuzz tests are tracking header hash but not slot, which makes it hard to truncate the block history in memory
+
+max fork depth is 1, new blocks are never built over mutations
+
+https://github.com/davxy/jam-conformance/blob/main/fuzz-proto/README.md#forking-m1
