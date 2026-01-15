@@ -1,5 +1,5 @@
 # room: #jam-conformance:matrix.org
-# exported: 2026-01-14 03:47 UTC
+# exported: 2026-01-15 03:46 UTC
 2025-08-20 15:56 erin: tomusdrw: i've set up the archiver to archive this also, so hopefully will be up starting tomorrow
 2025-08-21 06:33 ascriv: https://github.com/davxy/jam-conformance/issues/26 should we not discourage open source implementations (for now)? [edited]
 2025-08-21 10:27 oliver.tale-yazdi: I think open source repos are fine. Other implementors are just not supposed to look at it
@@ -1850,3 +1850,27 @@ GIT_LFS_SKIP_SMUDGE=1 git
 max fork depth is 1, new blocks are never built over mutations
 
 https://github.com/davxy/jam-conformance/blob/main/fuzz-proto/README.md#forking-m1
+  ↳ 2026-01-14 10:21 clearloop: for example, `1767872928_8840`, the blocks are queued like this:
+
+```
+37(genesis)
+-> 38
+  -> 39 (failed)
+  -> 39
+  -> 47
+```
+
+block 47 is a child of block 38, I was worrying about if there will be cases like block 48 has parent 37 previously, so likely the answer is no? [edited]
+  ↳ 2026-01-14 17:10 rustybot: > <@clearloop:matrix.org> for example, `1767872928_8840`, the blocks are queued like this:
+> 
+> ```
+> 37(genesis)
+> -> 38
+>       -> 39 (failed)
+>       -> 39
+>       -> 47
+> ```
+> 
+> block 47 is a child of block 38, I was worrying about if there will be cases like block 38 has parent 37 previously, so likely the answer is no?
+
+The answer is no

@@ -18,7 +18,7 @@ a:hover{color:#90caf9}
 em{font-style:italic}
 </style>
 <h1>#jam-conformance:matrix.org</h1>
-<p><small>last updated 2026-01-14 03:47 UTC</small></p>
+<p><small>last updated 2026-01-15 03:46 UTC</small></p>
 <p><a href='room_log.txt'>⇩ plaintext</a> · <a href='../../'>⇦ all rooms</a></p>
 <hr>
 <div class='msg'><a class='ts' href='#$_9hLINsChVG8rufQkmbqp-fIbsNyK1YqpS3C9S7QZHU'>#</a> <a class='ts' name='$_9hLINsChVG8rufQkmbqp-fIbsNyK1YqpS3C9S7QZHU' href='https://matrix.to/#/!ksYpYHcVftKsUAsdMa:matrix.org/$_9hLINsChVG8rufQkmbqp-fIbsNyK1YqpS3C9S7QZHU' target='_blank'>2025-08-20 15:56</a>&ensp;<span class='u' style='color:#787fdf'>erin</span>: tomusdrw: i&#x27;ve set up the archiver to archive this also, so hopefully will be up starting tomorrow</div>
@@ -1841,3 +1841,25 @@ You can find the correct data in the execution trace, so pasting these as output
 max fork depth is 1, new blocks are never built over mutations
 
 <a href="https://github.com/davxy/jam-conformance/blob/main/fuzz-proto/README.md#forking-m1" rel="noopener" target="_blank">https://github.com/davxy/jam-conformance/blob/main/fuzz-proto/README.md#forking-m1</a></div>
+<div class='msg reply'><a class='ts' href='#$-NJ3x0MYFJlIeh1tzkbEBmv5vhyOUzHPRiMM0ji2NCw'>#</a> <a class='ts' name='$-NJ3x0MYFJlIeh1tzkbEBmv5vhyOUzHPRiMM0ji2NCw' href='https://matrix.to/#/!ksYpYHcVftKsUAsdMa:matrix.org/$-NJ3x0MYFJlIeh1tzkbEBmv5vhyOUzHPRiMM0ji2NCw' target='_blank'>2026-01-14 10:21</a>&ensp;<span class='u' style='color:#be2950'>clearloop</span>: for example, <code>1767872928_8840</code>, the blocks are queued like this:
+
+<pre><code class=''>37(genesis)
+-&gt; 38
+  -&gt; 39 (failed)
+  -&gt; 39
+  -&gt; 47
+</code></pre>
+
+block 47 is a child of block 38, I was worrying about if there will be cases like block 48 has parent 37 previously, so likely the answer is no? <span class="edited">(edited)</span></div>
+<div class='msg reply'><a class='ts' href='#$u1ZAtlPpCsy68Dt2yAKfhPf94s5P6GR0N00NAP_AvhI'>#</a> <a class='ts' name='$u1ZAtlPpCsy68Dt2yAKfhPf94s5P6GR0N00NAP_AvhI' href='https://matrix.to/#/!ksYpYHcVftKsUAsdMa:matrix.org/$u1ZAtlPpCsy68Dt2yAKfhPf94s5P6GR0N00NAP_AvhI' target='_blank'>2026-01-14 17:10</a>&ensp;<span class='u' style='color:#b332c3'>rustybot</span>: &gt; &lt;@clearloop:matrix.org&gt; for example, <code>1767872928_8840</code>, the blocks are queued like this:
+&gt; 
+&gt; <pre><code class=''>&gt; 37(genesis)
+&gt; -&gt; 38
+&gt;       -&gt; 39 (failed)
+&gt;       -&gt; 39
+&gt;       -&gt; 47
+&gt; </code></pre>
+&gt; 
+&gt; block 47 is a child of block 38, I was worrying about if there will be cases like block 38 has parent 37 previously, so likely the answer is no?
+
+The answer is no</div>
