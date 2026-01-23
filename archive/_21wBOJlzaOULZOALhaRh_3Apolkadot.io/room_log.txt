@@ -1,5 +1,5 @@
 # room: #jam:polkadot.io
-# exported: 2026-01-22 03:46 UTC
+# exported: 2026-01-23 03:45 UTC
 2024-04-20 02:08 johnjiao123: 
 2024-04-20 02:09 johnjiao123: 
 2024-05-30 21:48 nradko: Hey everyone,
@@ -12376,3 +12376,30 @@ Not that I know, but it seems to be a good idea to start collecting those ideas.
 There's a weekly JAM Bookclub resuming this Wednesday from 19:00-20:00 CET online. They're currently discussing Chapter 9 of the Graypaper. It's a nice opportunity for people to revise/discuss/learn JAM with others. The focus is more on theory rather than implementation. 
 
 Feel free to join the conversation here: https://discord.gg/cvyqFaPV56
+2026-01-16 20:26 jaymansfield: JavaJAM has now achieved DOOM! https://x.com/javajam_io/status/2012258303334556084
+  ↳ 2026-01-18 15:25 jan: Nice work!
+
+I have to ask - how much FPS are you getting? (:
+  ↳ 2026-01-19 14:48 jaymansfield: Thanks! Is there a way to get corevm-monitor to display overall FPS? I'm still optimizing but for the most part the video is now continuous and I think my recompilers working good with it. Every 3-4 work packages I do see a slight lag in starting the next batch of frames but should have it fully seamless soon after a few more tweaks to my availability specifier generation.
+  ↳ 2026-01-22 16:12 jaymansfield: Jan Bujak: After a lot of optimization, JavaJAM can run it perfectly now: https://x.com/javajam_io/status/2014370097402441904
+2026-01-18 18:48 celadari: Hi all,
+quick clarification regarding prize payments.
+
+From email exchanges about ~1.5 years ago, we had the impression that prizes being paid out to individual team members’ addresses shouldn't be a problem.
+
+However, reading the current T&Cs (https://github.com/w3f/jam-milestone-delivery/blob/main/docs/T%26Cs.md), specifically section 8.5, it seems to suggest that only a single address can be provided for payment.
+
+Can someone from the W3F please confirm whether:
+- multiple recipient addresses (one per team member) are acceptable ?
+- or if indeed prizes must now be paid to a single address only ?
+
+Thanks in advance for the clarification
+2026-01-20 20:42 sourabhniyogi: Any news on https://polkadot.academy/jam/ being held this Spring? 
+2026-01-21 14:15 shimonchick: is it possible to create and export a work package to json using jamt for refinement testing purposes? or do i need to explicitly implement the rpc server to handle further conversions? Or maybe there is a simpler method? [edited]
+2026-01-21 18:28 dave: You don't _have_ to implement RPC. The intent with RPC is that you use it to talk to a regular (ie non-validator) node running on the same machine and then this node uses SNP to talk to JAM to actually submit packages for example. You can just use polkajam (or some other node which has an RPC impl) for this intermediate node if you haven't implemented RPC yourself. All the validator nodes can use your node impl
+2026-01-21 18:29 dave: FWIW I don't think jamt has a way of exporting things as JSON but I'm not an expert on it
+2026-01-22 16:04 danicuki: > <@shimonchick:matrix.org> is it possible to create and export a work package to json using jamt for refinement testing purposes? or do i need to explicitly implement the rpc server to handle further conversions? Or maybe there is a simpler method?
+
+I would say that implementing RPC is quite trivial (once you already have JAMSNP) and worth the invested time. 
+
+You don’t need to implement all methods, only those you think are useful for your debugging (even if at some point you will need most of them). 

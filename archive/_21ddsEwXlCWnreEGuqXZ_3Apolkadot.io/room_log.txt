@@ -1,5 +1,5 @@
 # room: #graypaper:polkadot.io
-# exported: 2026-01-22 03:47 UTC
+# exported: 2026-01-23 03:46 UTC
 2024-04-17 20:29 syed: https://matrix.to/#/!hyzRkDqDthePbodYFz:parity.io/$f_DMsIEcDXZegw6Sabnehzc-LrdDQkmq5MbxDDyoZxY?via=parity.io&via=web3.foundation
 
 2024-04-17 20:29 syed: 
@@ -7023,3 +7023,24 @@ I plan to create a wasm wrapper to call from my Java code.
 There's a weekly JAM Bookclub resuming this Wednesday from 19:00-20:00 CET online. They're currently discussing Chapter 9 of the Graypaper. It's a nice opportunity for people to revise/discuss/learn JAM with others. The focus is more on theory rather than implementation. 
 
 Feel free to join the conversation here: https://discord.gg/cvyqFaPV56
+2026-01-20 01:23 ascriv: I think there’s a corner case in gp which might need looking at: for branch and djump it’s able to “look ahead” to tell if we’re jumping to a basic block beginning and panic if so. But fallthrough can’t, so the counter would end up in a spot which isn’t a basic block beginning. Should we allow it to lookahead similarly for consistency between all terminating opcodes which aren’t trap?
+2026-01-20 01:23 ascriv: As an example for why this seems weird to me, if we just finished a block and the counter is now off the tape, we are supposed to spend 1 gas to run a trap if the block termination was a fallthrough, but panic immediately spending no gas if the block termination was a branch or djump  
+  ↳ 2026-01-20 03:50 jan: The main reason why jump doesn't "try" to jump to an invalid target is debugability, because if you panic immediately the program counter stays the same, so you know exactly where the invalid jump instruction was. If it tried to jump then the program counter would change, and you wouldn't know where the invalid jump instruction actually was.
+
+(Although, note that protocol-wise this doesn't matter because the instruction pointer is not meant to be observable after a panic within the bounds of the protocol.)
+
+But this doesn't really apply to fallthrough, since, well, it's defined to just go to the next instruction, and you need to be able to handle the case of the instruction pointer pointing somewhere invalid *anyway* for other corner cases, so why not just let that handle it in this case too and not overcomplicate fallthrough by having it to look ahead?
+
+Or in other words, in more practical terms: doing lookahead is *extra work*, fallthrough is a very common instruction, and the extra lookahead will only make a difference in corner cases which normally won't happen (that is: normal code won't trigger those corner cases). So to me the costs (more work, slower recompilation in general case) outweight the benefits (slightly more "elegant", I guess?).
+
+(That said, if someone can come up with a good counterargument then, as always, I'm willing to be convinced otherwise.)
+  ↳ 2026-01-20 04:04 ascriv: My only real argument is it seems to be more elegant/aesthetic/consistent, and at least with my impl there seems to be more work to handle the fact that fallthrough to invalid should still run the trap. To be specific, my core loop involves loading a block starting at the current counter, running that block, or panic if it doesn’t correspond to a block beginning. This handles the djump/branch case nicely but technically doesn’t match gp if the previous block ended in fallthrough. To fix this I can add a lookahead in djump/branch (panic if invalid) and then in the core loop run a mini trap if we try to load a block at a non block beginning  [edited]
+  ↳ 2026-01-20 04:05 ascriv: Slower recomp would definitely override my comparatively trivial qualm, haven’t implemented mine yet [edited]
+  ↳ 2026-01-20 04:12 jan: So at the beginning of your core loop you check whether the current instruction pointer is valid, and if it's not you panic?
+
+And how do you handle the case of e.g. an inner PVM having its initial instruction pointer set to an invalid value? Do you immediately panic when `invoke` is called without charging the inner PVM any gas?
+  ↳ 2026-01-20 04:22 ascriv: I am realising I implicitly assume at pvm start that the ic is at the beginning of a block, good point. No such assumption in gp [edited]
+  ↳ 2026-01-20 04:23 jan: Yeah, it doesn't necessarily have to be, although for jumps *within* the program this is enforced.
+  ↳ 2026-01-20 04:46 ascriv: In any case I think we need more “weird pvm stuff” in test cases 
+  ↳ 2026-01-20 04:46 jan: Yes.
+  ↳ 2026-01-20 04:47 jan: The new test vector format that will come with the new gas cost model will make it possible to test more of such corner cases.

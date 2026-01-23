@@ -1,5 +1,5 @@
 # room: #jam-conformance:matrix.org
-# exported: 2026-01-22 03:47 UTC
+# exported: 2026-01-23 03:46 UTC
 2025-08-20 15:56 erin: tomusdrw: i've set up the archiver to archive this also, so hopefully will be up starting tomorrow
 2025-08-21 06:33 ascriv: https://github.com/davxy/jam-conformance/issues/26 should we not discourage open source implementations (for now)? [edited]
 2025-08-21 10:27 oliver.tale-yazdi: I think open source repos are fine. Other implementors are just not supposed to look at it
@@ -1830,6 +1830,12 @@ It does not work on the PVM debugger if you just keep clicking "Run" because the
 
 You can find the correct data in the execution trace, so pasting these as output in the debugger should give you the same result. [edited]
   ↳ 2026-01-09 20:22 decentration: hey thanks for this, i see now that i can reach HALT, and use 4262 out of the expected 4364 accumulate\_gas\_used, i am now wondering where that 102 gas went. [edited]
+  ↳ 2026-01-20 22:18 decentration: hey tomusdrw im testing my pvm execution vs typeberry on the pvm-debugger, with the fetch operands you provided,  and they both match in terms of pvm instruction level execution, however there seems to be some kind of protocol overhead gas that i cannot work out where it comes from, where my implementation is 140 gas under Typeberry. Any idea where this protocol overhead is from? [edited]
+  ↳ 2026-01-21 10:38 tomusdrw: does your gas values after host calls match mine? gas difference might also mean that your implementation took different branches in the pvm code - which would signify that either it was fed with different data or it read that data incorrectly.
+  ↳ 2026-01-21 10:38 tomusdrw: I can also share instruction-level trace with gas after each and every instruction if that would help
+  ↳ 2026-01-21 10:39 tomusdrw: however you can just step over execution yourself in the debugger and compare at what point you start to diverge
+  ↳ 2026-01-21 22:03 decentration: ive done a 3 way pairwise comparison of traces of mine vs ananas vs typeberry, and i believe now i have made my pvm execution conformant in both instructions and gas, the way i was handling ecalli +host call was different.
+  ↳ 2026-01-21 22:03 decentration: that would help for a sanity check : )
 2026-01-10 18:25 davxy: https://github.com/davxy/jam-conformance/pull/151
 2026-01-11 01:41 clearloop: for the conformance repo, if it is possible to move the `tar.gz` stuffs to releases? embedding them in the repo make it hard to pull new commits
 
@@ -1876,3 +1882,28 @@ block 47 is a child of block 38, I was worrying about if there will be cases lik
 The answer is no
 2026-01-15 19:23 shimonchick: For trace 1766565819_2010 block 222 can we have the json as well as the .bin?
 2026-01-16 13:39 shimonchick: Also when are refine/auth invocation test vectors planned? Is there a timeline/roadmap published somewhere?
+2026-01-16 19:08 sourabhniyogi: I attempted to submit a Fellowship ref to ratify version 0.7.2 (based on [this PR](https://github.com/w3f/jam-milestone-delivery/pull/16/changes)) using https://collectives.subsquare.io/ with a system remark "Ratify 0.7.2 JAM https://github.com/gavofyork/graypaper/releases/tag/v0.7.2" but got a `Bad Origin` [here](https://collectives-polkadot.subscan.io/extrinsic/8025568-2) which I gather means that only a Fellowship member can submit refs?
+
+If I'm right about this, can someone actually in the fellowship submit a proposal to ratify 0.7.2 -- thank you!
+
+If not, let me know what I did wrong and I'll try again .. or maybe you can try yourself? [edited]
+2026-01-18 11:08 shimonchick: Does polkajam currently have a way to pass in a JIP-4 chainspec file? I couldnt find proper usage instructions
+  ↳ 2026-01-18 14:57 shimonchick: For future reference, use:
+```
+./polkajam --chain=dev dump-spec dev-spec.json
+./polkajam --chain=dev-spec.json run --dev-validator 0
+``` [edited]
+2026-01-18 13:32 dave: Yes, use `--chain=<path-to-chainspec-file>`
+2026-01-19 20:11 ascriv: I think there’s a corner case in gp which might need looking at: for branch and djump it’s able to “look ahead” to tell if we’re jumping to a basic block beginning and panic if so. But fallthrough can’t, so the counter would end up in a spot which isn’t a basic block beginning. Should we allow it to lookahead similarly for consistency between all terminating opcodes which aren’t trap? [edited]
+2026-01-19 20:39 ascriv: As an example for why this seems weird to me, if we just finished a block and the counter is now off the tape, we are supposed to spend 1 gas to run a trap if the block termination was a fallthrough, but panic immediately spending no gas if the block termination was a branch or djump   [edited]
+2026-01-20 17:17 shimonchick: Currently, is there a way to test/fuzz conformance with JAMNP? Other than connecting to polkajam nodes
+2026-01-22 16:10 ascriv: @[Piet | W3F] Quick check-in: is conformance testing still expected to start sometime this month, or has the timeline shifted? Just want to plan accordingly.
+2026-01-22 17:16 oliver.tale-yazdi: Cant speak for him ofc, but looks like at least the fuzzing for that has started https://github.com/w3f/jam-milestone-delivery/pull/12#issuecomment-3768891445
+2026-01-22 17:21 dakkk: the other question is whether they're proceeding in random order or by submission date [edited]
+2026-01-22 17:26 ascriv: Is W3F going by when the PR for the submission was opened? Several teams did this before they had valid 0.7.2 implementations (trivially true because some were made in June of last year), so I think it couldn't be the canonical ordering [edited]
+2026-01-22 17:26 ascriv: @[Piet | W3F] FYI^
+2026-01-22 17:44 emielsebastiaan: ima_69e561c.jpeg
+2026-01-22 17:44 emielsebastiaan: In addition to the questions regarding the timing and sequencing of audits, I would like to seek clarification on Gavin’s remark concerning submission and resubmission requirements relative to the most recently published Gray Paper version. This question is prompted in particular by the following comment: https://github.com/w3f/jam-milestone-delivery/pull/16#issuecomment-3778564389.
+
+Specifically, Gray Paper version 0.8 is expected to be published imminently. If W3F’s audit of a team’s M1 submission results in a dispute that necessitates changes to the implementation after the publication of version 0.8, would the revised submission be required to conform to Gray Paper 0.8 rather than the version that was current at the time of the original submission?
+2026-01-22 17:57 ascriv: looks like activity is happening here https://github.com/w3f/jam-conformance FYI all. worth a "watch" on this 
