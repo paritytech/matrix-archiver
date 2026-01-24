@@ -1,5 +1,5 @@
 # room: #graypaper:polkadot.io
-# exported: 2026-01-23 03:46 UTC
+# exported: 2026-01-24 03:44 UTC
 2024-04-17 20:29 syed: https://matrix.to/#/!hyzRkDqDthePbodYFz:parity.io/$f_DMsIEcDXZegw6Sabnehzc-LrdDQkmq5MbxDDyoZxY?via=parity.io&via=web3.foundation
 
 2024-04-17 20:29 syed: 
@@ -7041,6 +7041,9 @@ Or in other words, in more practical terms: doing lookahead is *extra work*, fal
 And how do you handle the case of e.g. an inner PVM having its initial instruction pointer set to an invalid value? Do you immediately panic when `invoke` is called without charging the inner PVM any gas?
   ↳ 2026-01-20 04:22 ascriv: I am realising I implicitly assume at pvm start that the ic is at the beginning of a block, good point. No such assumption in gp [edited]
   ↳ 2026-01-20 04:23 jan: Yeah, it doesn't necessarily have to be, although for jumps *within* the program this is enforced.
+  ↳ 2026-01-20 04:31 jan: In any case, I'm not convinced adding a lookahead to fallthrough is necessarily the right way to go, but, hmm, _maybe_ it wouldn't be a bad idea to have a more general mechanism to immediately panic when the instruction pointer is not "valid", simply to remove the corner case of having zero gas and an invalid instruction pointer at the same time. [edited]
+  ↳ 2026-01-20 04:41 ascriv: Because we shouldn’t spend gas if the pointer is at a weird location?
+  ↳ 2026-01-20 04:43 jan: Functionally I don't think there's anything wrong with it per se, but it is an obscure corner case that people might not necessarily handle correctly.
   ↳ 2026-01-20 04:46 ascriv: In any case I think we need more “weird pvm stuff” in test cases 
   ↳ 2026-01-20 04:46 jan: Yes.
   ↳ 2026-01-20 04:47 jan: The new test vector format that will come with the new gas cost model will make it possible to test more of such corner cases.
