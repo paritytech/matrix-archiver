@@ -1,5 +1,5 @@
 # room: #jam-conformance:matrix.org
-# exported: 2026-01-24 03:44 UTC
+# exported: 2026-01-25 03:48 UTC
 2025-08-20 15:56 erin: tomusdrw: i've set up the archiver to archive this also, so hopefully will be up starting tomorrow
 2025-08-21 06:33 ascriv: https://github.com/davxy/jam-conformance/issues/26 should we not discourage open source implementations (for now)? [edited]
 2025-08-21 10:27 oliver.tale-yazdi: I think open source repos are fine. Other implementors are just not supposed to look at it
@@ -1907,3 +1907,5 @@ If not, let me know what I did wrong and I'll try again .. or maybe you can try 
 
 Specifically, Gray Paper version 0.8 is expected to be published imminently. If W3F’s audit of a team’s M1 submission results in a dispute that necessitates changes to the implementation after the publication of version 0.8, would the revised submission be required to conform to Gray Paper 0.8 rather than the version that was current at the time of the original submission?
 2026-01-22 17:57 ascriv: looks like activity is happening here https://github.com/w3f/jam-conformance FYI all. worth a "watch" on this 
+2026-01-24 14:46 ascriv: boosting https://github.com/davxy/jam-conformance/discussions/160
+  ↳ 2026-01-24 14:58 clearloop: likely these are the two cases that all impls "failed" on them? [edited]
