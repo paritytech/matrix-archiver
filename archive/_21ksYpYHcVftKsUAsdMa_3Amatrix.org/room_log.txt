@@ -1,5 +1,5 @@
 # room: #jam-conformance:matrix.org
-# exported: 2026-01-25 03:48 UTC
+# exported: 2026-01-26 03:49 UTC
 2025-08-20 15:56 erin: tomusdrw: i've set up the archiver to archive this also, so hopefully will be up starting tomorrow
 2025-08-21 06:33 ascriv: https://github.com/davxy/jam-conformance/issues/26 should we not discourage open source implementations (for now)? [edited]
 2025-08-21 10:27 oliver.tale-yazdi: I think open source repos are fine. Other implementors are just not supposed to look at it
@@ -1909,3 +1909,7 @@ Specifically, Gray Paper version 0.8 is expected to be published imminently. If 
 2026-01-22 17:57 ascriv: looks like activity is happening here https://github.com/w3f/jam-conformance FYI all. worth a "watch" on this 
 2026-01-24 14:46 ascriv: boosting https://github.com/davxy/jam-conformance/discussions/160
   ↳ 2026-01-24 14:58 clearloop: likely these are the two cases that all impls "failed" on them? [edited]
+2026-01-25 14:57 piet: Hey all,
+
+We have shared initial results with a few teams and notified them about their shortcomings without clearly communicating our requirements for M1 conformance fuzzing. I’d like to quickly update all teams on this matter. We will require your implementations to complete **1 million steps** without error.  In order to accelerate the process, we might split it into 10 consecutive fuzzing runs, each with at least 100 thousand steps. Have a nice Sunday!
+2026-01-25 21:12 james233: Hi team, is their any demo implementation of PVM available? [edited]
