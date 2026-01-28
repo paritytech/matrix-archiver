@@ -1,5 +1,5 @@
 # room: #graypaper:polkadot.io
-# exported: 2026-01-27 03:47 UTC
+# exported: 2026-01-28 03:46 UTC
 2024-04-17 20:29 syed: https://matrix.to/#/!hyzRkDqDthePbodYFz:parity.io/$f_DMsIEcDXZegw6Sabnehzc-LrdDQkmq5MbxDDyoZxY?via=parity.io&via=web3.foundation
 
 2024-04-17 20:29 syed: 
@@ -7047,3 +7047,4 @@ And how do you handle the case of e.g. an inner PVM having its initial instructi
   ↳ 2026-01-20 04:46 ascriv: In any case I think we need more “weird pvm stuff” in test cases 
   ↳ 2026-01-20 04:46 jan: Yes.
   ↳ 2026-01-20 04:47 jan: The new test vector format that will come with the new gas cost model will make it possible to test more of such corner cases.
+2026-01-27 17:41 unskilledpigeon: Hello
