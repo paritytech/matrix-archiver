@@ -1,5 +1,5 @@
 # room: #jam-conformance:matrix.org
-# exported: 2026-01-30 03:57 UTC
+# exported: 2026-01-31 03:55 UTC
 2025-08-20 15:56 erin: tomusdrw: i've set up the archiver to archive this also, so hopefully will be up starting tomorrow
 2025-08-21 06:33 ascriv: https://github.com/davxy/jam-conformance/issues/26 should we not discourage open source implementations (for now)? [edited]
 2025-08-21 10:27 oliver.tale-yazdi: I think open source repos are fine. Other implementors are just not supposed to look at it
@@ -1930,3 +1930,19 @@ Do you generally plan to iterate with teams until they reach conformance, or is 
   ↳ 2026-01-27 13:17 shimonchick: Isnt it net-positive for everyone to have access to the traces and to have hardened implementations sooner? Essentially we are trading off fairer evaluation (or slower processing if someone goes to the back of the queue) for slower multi-client consensus 
   ↳ 2026-01-27 13:21 boymaas: Or remove the information asymmetry: do round-based evaluation. Each period all teams get fuzzed, all traces are public, everyone gets the same feedback simultaneously. Teams fix and prepare for the next round. When they pass, submission order determines priority.
   ↳ 2026-01-27 13:39 ascriv: Maybe something like all teams start on batch 0; every day there’s a run for every team for their current batch. if a team passes, their batch index increases. Results could be public or private [edited]
+2026-01-30 21:15 jaymansfield: Started a new discussion about a trace here: https://github.com/davxy/jam-conformance/discussions/164
+2026-01-30 21:33 dakkk: Can you link the point where you see the post state as 0? I can't find it and traces runs ok on jampy test runner
+2026-01-30 21:41 jaymansfield: 
+2026-01-30 21:45 dakkk: image.png
+2026-01-30 21:55 jaymansfield: Oops I had the wrong link. This one: https://github.com/w3f/jam-conformance/tree/pyjamaz_m1/fuzz-reports/0.7.2/traces/1769559762_4234
+2026-01-30 22:16 sourabhniyogi: 
+2026-01-30 22:18 ascriv: I would guess it's an issue with the trace itself, because traces for invalid block test vectors usually have the post state equalling the pre state (e.g. https://github.com/w3f/jam-conformance/blob/pyjamaz_m1/fuzz-reports/0.7.2/traces/1766243315_8065/00000038.json)
+
+
+2026-01-30 22:21 ascriv: but the trace in question (https://github.com/w3f/jam-conformance/blob/pyjamaz_m1/fuzz-reports/0.7.2/traces/1769559762_4234/00007689.json) ends with 
+
+ "post_state": {
+        "state_root": "0x0000000000000000000000000000000000000000000000000000000000000000",
+        "keyvals": []
+    }
+2026-01-30 22:21 ascriv: something wrong with when this trace was generated, maybe a fuzzer issue? dunno
