@@ -18,7 +18,7 @@ a:hover{color:#90caf9}
 em{font-style:italic}
 </style>
 <h1>#jam-conformance:matrix.org</h1>
-<p><small>last updated 2026-02-03 04:01 UTC</small></p>
+<p><small>last updated 2026-02-04 04:00 UTC</small></p>
 <p><a href='room_log.txt'>⇩ plaintext</a> · <a href='../../'>⇦ all rooms</a></p>
 <hr>
 <div class='msg'><a class='ts' href='#$_9hLINsChVG8rufQkmbqp-fIbsNyK1YqpS3C9S7QZHU'>#</a> <a class='ts' name='$_9hLINsChVG8rufQkmbqp-fIbsNyK1YqpS3C9S7QZHU' href='https://matrix.to/#/!ksYpYHcVftKsUAsdMa:matrix.org/$_9hLINsChVG8rufQkmbqp-fIbsNyK1YqpS3C9S7QZHU' target='_blank'>2025-08-20 15:56</a>&ensp;<span class='u' style='color:#787fdf'>erin</span>: tomusdrw: i&#x27;ve set up the archiver to archive this also, so hopefully will be up starting tomorrow</div>
@@ -1934,3 +1934,16 @@ Do you generally plan to iterate with teams until they reach conformance, or is 
         &quot;keyvals&quot;: []
     }</div>
 <div class='msg'><a class='ts' href='#$zqHZJyKzgmC_hbLrlaQMoSYcyZdrFzEHRAvjH-1pmNs'>#</a> <a class='ts' name='$zqHZJyKzgmC_hbLrlaQMoSYcyZdrFzEHRAvjH-1pmNs' href='https://matrix.to/#/!ksYpYHcVftKsUAsdMa:matrix.org/$zqHZJyKzgmC_hbLrlaQMoSYcyZdrFzEHRAvjH-1pmNs' target='_blank'>2026-01-30 22:21</a>&ensp;<span class='u' style='color:#4036ac'>ascriv</span>: something wrong with when this trace was generated, maybe a fuzzer issue? dunno</div>
+<div class='msg'><a class='ts' href='#$KKPi4l_7Kbd28Eq042i7gEtZIVRqWx5jQl-PQ9dDW9o'>#</a> <a class='ts' name='$KKPi4l_7Kbd28Eq042i7gEtZIVRqWx5jQl-PQ9dDW9o' href='https://matrix.to/#/!ksYpYHcVftKsUAsdMa:matrix.org/$KKPi4l_7Kbd28Eq042i7gEtZIVRqWx5jQl-PQ9dDW9o' target='_blank'>2026-02-04 01:09</a>&ensp;<span class='u' style='color:#c67452'>sourabhniyogi</span>: Congratulations to TSJAM on reaching 1MM steps -  We are so happy for you! 🥰🤗
+
+Concerning &quot;let me know if I should share to someone else. I just sent an invite in github for you to be acollaborator of the sourcecode.&quot; vs &quot;the rules of the JAM Prize require your repository of the JAM client to be open source&quot; here <a href="https://github.com/w3f/jam-milestone-delivery/pull/19#issuecomment-3841867798" rel="noopener" target="_blank">https://github.com/w3f/jam-milestone-delivery/pull/19#issuecomment-3841867798</a> ...  I had thought:
+
+- most teams would be (and are) closed source to support general &quot;clean room&quot; requirements that
+- every team would happily invite w3f + fellowship evaluators (who are not part of a JAM team).
+- every team would go &quot;full&quot; open source in M4/M5 timeframe in full accordance with Rule 26
+
+I believe this notion is worth aiming for, and that the &quot;I just sent an invite...&quot; pattern be dominant.  More than a few teams have M2/M3 type code (and more than few do not) I&#x27;m sure, and we should continue strive for max clean room compliance, which is best supported by the &quot;I just sent an invite...&quot; pattern, with most all teams continuing &quot;closed source&quot; for most of 2026.
+
+Did this notion disappear? <span class="edited">(edited)</span></div>
+<div class='msg'><a class='ts' href='#$pIBMVkt_eeMPGN5FF6gVuPpGzm_4ZKhJd8VgGZZGlp8'>#</a> <a class='ts' name='$pIBMVkt_eeMPGN5FF6gVuPpGzm_4ZKhJd8VgGZZGlp8' href='https://matrix.to/#/!ksYpYHcVftKsUAsdMa:matrix.org/$pIBMVkt_eeMPGN5FF6gVuPpGzm_4ZKhJd8VgGZZGlp8' target='_blank'>2026-02-04 02:49</a>&ensp;<span class='u' style='color:#cf85c2'>shimonchick</span>: Can somebody let me know what is the case with block 76 in this trace? Are there any padding points/invalid keys? <a href="https://github.com/w3f/jam-conformance/tree/pyjamaz_m1/fuzz-reports/0.7.2/traces/1768066437_2547" rel="noopener" target="_blank">https://github.com/w3f/jam-conformance/tree/pyjamaz_m1/fuzz-reports/0.7.2/traces/1768066437_2547</a>
+In my implementation it fails to verify the fallback signature, while it should process correctly</div>

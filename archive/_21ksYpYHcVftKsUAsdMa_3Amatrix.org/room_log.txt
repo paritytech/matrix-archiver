@@ -1,5 +1,5 @@
 # room: #jam-conformance:matrix.org
-# exported: 2026-02-03 04:01 UTC
+# exported: 2026-02-04 04:00 UTC
 2025-08-20 15:56 erin: tomusdrw: i've set up the archiver to archive this also, so hopefully will be up starting tomorrow
 2025-08-21 06:33 ascriv: https://github.com/davxy/jam-conformance/issues/26 should we not discourage open source implementations (for now)? [edited]
 2025-08-21 10:27 oliver.tale-yazdi: I think open source repos are fine. Other implementors are just not supposed to look at it
@@ -1946,3 +1946,16 @@ Do you generally plan to iterate with teams until they reach conformance, or is 
         "keyvals": []
     }
 2026-01-30 22:21 ascriv: something wrong with when this trace was generated, maybe a fuzzer issue? dunno
+2026-02-04 01:09 sourabhniyogi: Congratulations to TSJAM on reaching 1MM steps -  We are so happy for you! 🥰🤗
+
+Concerning "let me know if I should share to someone else. I just sent an invite in github for you to be acollaborator of the sourcecode." vs "the rules of the JAM Prize require your repository of the JAM client to be open source" here https://github.com/w3f/jam-milestone-delivery/pull/19#issuecomment-3841867798 ...  I had thought:
+
+- most teams would be (and are) closed source to support general "clean room" requirements that
+- every team would happily invite w3f + fellowship evaluators (who are not part of a JAM team).
+- every team would go "full" open source in M4/M5 timeframe in full accordance with Rule 26
+
+I believe this notion is worth aiming for, and that the "I just sent an invite..." pattern be dominant.  More than a few teams have M2/M3 type code (and more than few do not) I'm sure, and we should continue strive for max clean room compliance, which is best supported by the "I just sent an invite..." pattern, with most all teams continuing "closed source" for most of 2026.
+
+Did this notion disappear? [edited]
+2026-02-04 02:49 shimonchick: Can somebody let me know what is the case with block 76 in this trace? Are there any padding points/invalid keys? https://github.com/w3f/jam-conformance/tree/pyjamaz_m1/fuzz-reports/0.7.2/traces/1768066437_2547
+In my implementation it fails to verify the fallback signature, while it should process correctly
