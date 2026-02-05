@@ -1,5 +1,5 @@
 # room: #jam-conformance:matrix.org
-# exported: 2026-02-04 04:00 UTC
+# exported: 2026-02-05 04:00 UTC
 2025-08-20 15:56 erin: tomusdrw: i've set up the archiver to archive this also, so hopefully will be up starting tomorrow
 2025-08-21 06:33 ascriv: https://github.com/davxy/jam-conformance/issues/26 should we not discourage open source implementations (for now)? [edited]
 2025-08-21 10:27 oliver.tale-yazdi: I think open source repos are fine. Other implementors are just not supposed to look at it
@@ -1959,3 +1959,7 @@ I believe this notion is worth aiming for, and that the "I just sent an invite..
 Did this notion disappear? [edited]
 2026-02-04 02:49 shimonchick: Can somebody let me know what is the case with block 76 in this trace? Are there any padding points/invalid keys? https://github.com/w3f/jam-conformance/tree/pyjamaz_m1/fuzz-reports/0.7.2/traces/1768066437_2547
 In my implementation it fails to verify the fallback signature, while it should process correctly
+2026-02-04 09:27 clearloop: Anyone from w3f can help us connect `midegdugarova`? the performance page says we can be reviewed in 2 days, while after 1 month we don't even have a branch for checking our status XD, I asked on the PR and there is no response
+2026-02-04 09:30 piet: Hey Tianyi | SpaceJam , sorry for the delay on our side here. Mideg has a lot of other tasks outside of JAM. I'll check with her, but I'm confident that you will receive an update shortly. Thanks for the reminder. 
+  ↳ 2026-02-04 09:31 clearloop: thanks! 🙏
+2026-02-04 09:36 mideg: hi Tianyi | SpaceJam . the feedback will be shared shortly (by EOW)
