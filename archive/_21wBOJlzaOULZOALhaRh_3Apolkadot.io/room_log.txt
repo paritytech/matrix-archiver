@@ -1,5 +1,5 @@
 # room: #jam:polkadot.io
-# exported: 2026-02-06 04:00 UTC
+# exported: 2026-02-07 03:55 UTC
 2024-04-20 02:08 johnjiao123: 
 2024-04-20 02:09 johnjiao123: 
 2024-05-30 21:48 nradko: Hey everyone,
@@ -12414,3 +12414,6 @@ https://x.com/jamdottech/status/2016506194710401468?s=46&t=ThX7Y87rr1MIKyk6af4OX
 2026-01-29 11:55 jaymansfield: JavaJAMs recompiler supports both aarch64/x86. I actually started with aarch64 as it was a bit easier with the additional registers. I added in x86 instructions afterwards. [edited]
 2026-01-29 12:47 jan: I will be adding an aarch64 backend to PolkaVM once I'm done with all of the higher priority work (which will take quite some time). That said, the current official reference hardware for JAM is the Toaster, so the expectation is that you will need to have an amd64 recompiler, and any aarch64 recompiler you might have will not be evaluated in any way. Depending on how it's written and on what hardware you're running it may or may not be conformant with JAM's gas cost model.
 2026-01-29 12:52 jan: Also, FYI while I'm here - if you're using any of my tooling (e.g. `polkatool link` etc.) then you should temporarily pin it to version 0.29.0. Newer versions include some changes which are incompatible with GP 0.7.x. (Once GP 0.8.0 is out you can switch back to the newest version since I've recently introduced explicit versioning of the ISA so any potential incompatible changes will be isolated from the JAM-specific ISA.) [edited]
+2026-02-06 16:57 alxmirap: Hi everyone, for those interested in writing services for JAM, I've just added an introductory tutorial at `https://github.com/paritytech/jam_public/tree/main/services_tutorial`. It walks you through a very simple service, how to build and deploy it and make very basic queries. Then it goes into a deeper dive writing a more complex example service, mainly illustrating the differences between refinement and accumulation.
+
+This is a first version, and I plan to build more on it as time allows in the future. But for now it may be helpful for the community. I welcome any comments to improve on the rough edges.  🙏 😃
