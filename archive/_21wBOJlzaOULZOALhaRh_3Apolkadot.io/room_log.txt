@@ -1,5 +1,5 @@
 # room: #jam:polkadot.io
-# exported: 2026-02-07 03:55 UTC
+# exported: 2026-02-08 04:10 UTC
 2024-04-20 02:08 johnjiao123: 
 2024-04-20 02:09 johnjiao123: 
 2024-05-30 21:48 nradko: Hey everyone,
@@ -12417,3 +12417,13 @@ https://x.com/jamdottech/status/2016506194710401468?s=46&t=ThX7Y87rr1MIKyk6af4OX
 2026-02-06 16:57 alxmirap: Hi everyone, for those interested in writing services for JAM, I've just added an introductory tutorial at `https://github.com/paritytech/jam_public/tree/main/services_tutorial`. It walks you through a very simple service, how to build and deploy it and make very basic queries. Then it goes into a deeper dive writing a more complex example service, mainly illustrating the differences between refinement and accumulation.
 
 This is a first version, and I plan to build more on it as time allows in the future. But for now it may be helpful for the community. I welcome any comments to improve on the rough edges.  🙏 😃
+2026-02-07 15:03 shimonchick: Is there an upper limit on the number of QIUC streams that can be opened on a connection to a node?
+2026-02-07 19:30 dave: > <@shimonchick:matrix.org> Is there an upper limit on the number of QIUC streams that can be opened on a connection to a node?
+
+There are no limits published at the moment. It may make sense to agree on some once we've got full-scale networks running well on the toaster, for now I would say either don't worry about it or just do something you think is reasonable. The initial test networks on the toaster won't feature malicious nodes
+2026-02-07 19:41 w3nerick: > <@shimonchick:matrix.org> Is there an upper limit on the number of QIUC streams that can be opened on a connection to a node?
+
+Are you part of the Peanut team, the payment system 🥜? 👀
+2026-02-07 19:49 shimonchick: > <@w3nerick:matrix.org> Are you part of the Peanut team, the payment system 🥜? 👀
+
+Nah, just thought the name sounded fun
