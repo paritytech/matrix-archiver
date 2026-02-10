@@ -1,5 +1,5 @@
 # room: #jam-conformance:matrix.org
-# exported: 2026-02-09 04:04 UTC
+# exported: 2026-02-10 04:09 UTC
 2025-08-20 15:56 erin: tomusdrw: i've set up the archiver to archive this also, so hopefully will be up starting tomorrow
 2025-08-21 06:33 ascriv: https://github.com/davxy/jam-conformance/issues/26 should we not discourage open source implementations (for now)? [edited]
 2025-08-21 10:27 oliver.tale-yazdi: I think open source repos are fine. Other implementors are just not supposed to look at it
@@ -1965,3 +1965,26 @@ In my implementation it fails to verify the fallback signature, while it should 
 2026-02-04 09:36 mideg: hi Tianyi | SpaceJam . the feedback will be shared shortly (by EOW)
 2026-02-05 09:09 dakkk: it's a quite good concern, we spent hundreds of hours implementing and fixing our implementations [edited]
 2026-02-07 15:08 jaymansfield: Are there any estimates on when the M2 fuzzer will be ready?
+2026-02-09 17:05 ascriv: https://github.com/w3f/jam-conformance/blob/JamZig_m1/fuzz-reports/0.7.2/traces/1770288023_1035/00355791.json
+
+https://github.com/w3f/jam-conformance/blob/JamZig_m1/fuzz-reports/0.7.2/traces/1770288023_6356/00224075.json
+2026-02-09 17:06 ascriv: these two traces seem to have the same null post state issue observed previously, possibly a fuzzer error?
+2026-02-09 17:39 tomusdrw: > <@ascriv:matrix.org> these two traces seem to have the same null post state issue observed previously, possibly a fuzzer error?
+
+... or polkajam crash? 🙂
+2026-02-09 18:40 davxy: I'll have a look 
+2026-02-09 20:01 r2rtnl: I’m investigating several 0.7.2 fuzzer traces (e.g., 1766243113 and 1766243147) published in December that trigger rejection of ED25519 signatures on some assurance extrinsics.
+
+I’ve already updated the ED25519 implementation to match ZIP-215, and it passes all jam-conformance/crypto/ed25519 tests, but the issue persists.
+
+A review of GP and recent jam-conformance discussions didn’t surface any additional insights.
+
+Did any implementations need to make adjustments to ED25519 signature verification beyond what’s documented here? https://github.com/davxy/jam-conformance/tree/main/crypto/ed25519
+  ↳ 2026-02-09 20:30 shimonchick: Did you try verification using one of the other libraries reported to conform? [edited]
+  ↳ 2026-02-09 20:34 r2rtnl: Yes, I switched from libsodium to ed25519-consensus, which resolved several issues, but this one remains.
+2026-02-09 20:20 shimonchick: Does any other team have issues with the signature verification on block 76 on trace 1768066437_2547 ? Seems to be among the last remaining ones we're failing
+2026-02-09 20:26 r2rtnl: My implementation passes this trace. Searching the jam-conformance repo indicates that JAMDuna hit an issue with the same trace about a month ago:
+https://github.com/search?q=repo%3Adavxy%2Fjam-conformance%201768066437_2547%20report.json%20bad&type=code
+  ↳ 2026-02-09 20:28 shimonchick: I feel like i may have some weird race condition or order of operations mismatch before the validation. Since its an epoch transition block and the previous state is from block 71
+  ↳ 2026-02-09 21:03 r2rtnl: If you share enough context for a quick reproduction (the exact failing signature + your inputs), I can provide the corresponding inputs from my side that result in successful verification.
+  ↳ 2026-02-09 21:09 shimonchick: its fine. I was incorrectly recomputing seal keys on epoch transition and trying to validate fallback signature instead of ticket based one. I identified the issue, its a matter of time to get it patched
