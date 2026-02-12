@@ -1,5 +1,5 @@
 # room: #jam:polkadot.io
-# exported: 2026-02-11 04:06 UTC
+# exported: 2026-02-12 04:02 UTC
 2024-04-20 02:08 johnjiao123: 
 2024-04-20 02:09 johnjiao123: 
 2024-05-30 21:48 nradko: Hey everyone,
@@ -12427,3 +12427,26 @@ Are you part of the Peanut team, the payment system 🥜? 👀
 2026-02-07 19:49 shimonchick: > <@w3nerick:matrix.org> Are you part of the Peanut team, the payment system 🥜? 👀
 
 Nah, just thought the name sounded fun
+2026-02-11 10:11 shimonchick: Would it be possible to get some better docs on how common binaries like jamt work? (at least what WS RPC calls they make and what responses they expect to receive?). I have been reverse engineering the RPC server for some time now to comply with the unwritten expectations of jamt and unfortunately the polkajam RPC server also doesnt completely follow what was initially written in JIP-2. For example i want to understand what RPC calls would be expected to be emitted on subscriptions for this command:
+
+```
+./jamt vm new ./doom.corevm 1000000000
+
+Using CoreVM module corevm v0.1.27 by Parity Technologies <admin@parity.io>
+Guest identifies as PolkaDoom v0.1 by Parity Technologies <admin@parity.io>
+Waiting for two non-genesis blocks to be finalized...
+Providing CoreVM module code...
+Found Bootstrap service at #0: jam-bootstrap-service v0.1.27 by Parity Technologies <admin@parity.io>
+Solicited 4 items in package 0x282242ab85d3d1b9... with anchor at #5845239
+``` [edited]
+2026-02-11 11:06 dave: I believe JIP-2 is accurate, are there specific things you think are different between JIP-2 and what polkajam implements?
+2026-02-11 11:08 dave: We're not likely to document what RPC calls jamt makes as this isn't fixed and might change over time. If you have implemented JIP-2 and jamt doesn't work though we can get either JIP-2 or jamt fixed...
+2026-02-11 11:09 dave: For JIP-2 I assume you are looking here https://github.com/polkadot-fellows/JIPs/blob/main/JIP-2.md?
+  ↳ 2026-02-11 11:10 shimonchick: I was looking at https://docs.jamcha.in/advanced/rpc/jip2-node-rpc , It seems it hasnt been updated recently. There is "subscribeSyncStatus" thats missing
+  ↳ 2026-02-11 12:22 dave: Ok, that is somewhat out-of-date. The primary source for JIPs is this GH repo: https://github.com/polkadot-fellows/JIPs
+  ↳ 2026-02-11 12:25 dave: Oliver Tale-Yazdi: Any chance you could update docs.jamcha.in to fetch from or point to the GH repo instead of the old HackMD?
+  ↳ 2026-02-11 12:34 oliver.tale-yazdi: okay i will make a weekly redeploy
+  ↳ 2026-02-11 12:34 oliver.tale-yazdi: the JIP repo does not have a webpage, or?
+  ↳ 2026-02-11 12:35 dave: Not AFAIK, guess you can fetch the raw MD from https://raw.githubusercontent.com/polkadot-fellows/JIPs/refs/heads/main/JIP-2.md
+  ↳ 2026-02-11 13:33 oliver.tale-yazdi: fixed. https://docs.jamcha.in/advanced/rpc/jip2-node-rpc
+  ↳ 2026-02-11 13:37 dave: Thanks!
