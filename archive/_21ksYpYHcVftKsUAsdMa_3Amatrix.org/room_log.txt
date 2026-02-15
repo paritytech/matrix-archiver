@@ -1,5 +1,5 @@
 # room: #jam-conformance:matrix.org
-# exported: 2026-02-14 03:58 UTC
+# exported: 2026-02-15 04:03 UTC
 2025-08-20 15:56 erin: tomusdrw: i've set up the archiver to archive this also, so hopefully will be up starting tomorrow
 2025-08-21 06:33 ascriv: https://github.com/davxy/jam-conformance/issues/26 should we not discourage open source implementations (for now)? [edited]
 2025-08-21 10:27 oliver.tale-yazdi: I think open source repos are fine. Other implementors are just not supposed to look at it
@@ -1989,3 +1989,6 @@ https://github.com/search?q=repo%3Adavxy%2Fjam-conformance%201768066437_2547%20r
   ↳ 2026-02-09 21:03 r2rtnl: If you share enough context for a quick reproduction (the exact failing signature + your inputs), I can provide the corresponding inputs from my side that result in successful verification.
   ↳ 2026-02-09 21:09 shimonchick: its fine. I was incorrectly recomputing seal keys on epoch transition and trying to validate fallback signature instead of ticket based one. I identified the issue, its a matter of time to get it patched
 2026-02-13 14:37 clearloop: For nominating fellowship members, shall we add them in the milestone delivery PR or doing it somewhere else?
+  ↳ 2026-02-14 10:30 piet: Hey Tianyi | SpaceJam , it's fine for us at W3F if you put it into the delivery PR. Since W3F is not really involved in the process of promoting fellowship members, I suggest to ask fellowship members about it directly.
+2026-02-14 07:49 dakkk: Jampy and JamForge are waiting since the 29th of January for updates on their submission, because our assigned reviewer is OOO for sickness. In the meanwhile other teams are proceeding, leaving us behind for the fellowship review. Can we have some updates, or can be reassigned? Maybe Bader | W3F  can tell us something about it?
+2026-02-14 22:53 shimonchick: When evaluating the traces, how much is the timeout set to? there are traces that are failing in the summaries for us with timeout, however locally they are successfully running in 3-4sec
