@@ -1,5 +1,5 @@
 # room: #jam-conformance:matrix.org
-# exported: 2026-02-16 04:03 UTC
+# exported: 2026-02-17 04:02 UTC
 2025-08-20 15:56 erin: tomusdrw: i've set up the archiver to archive this also, so hopefully will be up starting tomorrow
 2025-08-21 06:33 ascriv: https://github.com/davxy/jam-conformance/issues/26 should we not discourage open source implementations (for now)? [edited]
 2025-08-21 10:27 oliver.tale-yazdi: I think open source repos are fine. Other implementors are just not supposed to look at it
@@ -1992,3 +1992,19 @@ https://github.com/search?q=repo%3Adavxy%2Fjam-conformance%201768066437_2547%20r
   ↳ 2026-02-14 10:30 piet: Hey Tianyi | SpaceJam , it's fine for us at W3F if you put it into the delivery PR. Since W3F is not really involved in the process of promoting fellowship members, I suggest to ask fellowship members about it directly.
 2026-02-14 07:49 dakkk: Jampy and JamForge are waiting since the 29th of January for updates on their submission, because our assigned reviewer is OOO for sickness. In the meanwhile other teams are proceeding, leaving us behind for the fellowship review. Can we have some updates, or can be reassigned? Maybe Bader | W3F  can tell us something about it?
 2026-02-14 22:53 shimonchick: When evaluating the traces, how much is the timeout set to? there are traces that are failing in the summaries for us with timeout, however locally they are successfully running in 3-4sec
+2026-02-16 09:09 davxy: https://github.com/davxy/jam-conformance/discussions/164#discussioncomment-15821415
+2026-02-16 10:46 piet: Based on the feedback from early teams, we have changed [rule 26 of the JamPrize](https://jam.web3.foundation/rules). It is no longer necessary to make the repository publicly accessible. Instead you simply have to invite relevant members from W3F and the Technical Fellowship upon request. The repository itself may be kept private. If you have already made your repository public for the evaluation process, you can change the visibility back to private at any time.
+2026-02-16 11:04 tomusdrw: IANAL but declaring that that the code has "clear and permissive open-source license" yet refusing to share the source code seems contradictory. I understand the reasoning behind that (I think) and I'm not against, but perhaps the license requirement should be relaxed as well to avoid any potential legal issues here (or having someone force the teams to share the code due to that?)?
+  ↳ 2026-02-16 11:47 tomusdrw: After a quick search, maybe the issue is not really there, since I guess claiming something is open source and not providing the source code can mostly be just a "reputational damage", not subject to any legal litigation. 
+The only issue might be if some GPL components are included in the source code (since that forces GPL on the entire codebase).
+So sorry for exaggerating :) [edited]
+2026-02-16 12:57 clearloop: if it is possible to introduce sort of github teams from w3f & Technical Fellowship for easy inviting since github supports granting access to teams [edited]
+2026-02-16 13:23 tomusdrw: 
+2026-02-16 15:32 prematurata: Hello all, do we know the fellowship process? My issue has been stale for a while now. 
+
+I don't have any visibility on the internal fellowship processes and so I have really no way to know if there was any progress made or not. Especially now that rule 26 was changed and other teams asked about granting access to the teams I think it would be beneficial for all to know a little bit more how the process works.
+2026-02-16 15:41 dakkk: Piet | W3F: I don't want to bother you, but can you please also have a look to this situation?
+2026-02-16 17:00 piet: Hey dakkk | JamPy , yes, I‘ll update you tomorrow evening. 
+2026-02-16 17:31 dakkk: > <@piet:web3.foundation> Hey dakkk | JamPy , yes, I‘ll update you tomorrow evening. 
+
+Great, thank you
