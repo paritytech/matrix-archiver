@@ -1,5 +1,5 @@
 # room: #jam-conformance:matrix.org
-# exported: 2026-02-17 04:02 UTC
+# exported: 2026-02-18 04:02 UTC
 2025-08-20 15:56 erin: tomusdrw: i've set up the archiver to archive this also, so hopefully will be up starting tomorrow
 2025-08-21 06:33 ascriv: https://github.com/davxy/jam-conformance/issues/26 should we not discourage open source implementations (for now)? [edited]
 2025-08-21 10:27 oliver.tale-yazdi: I think open source repos are fine. Other implementors are just not supposed to look at it
@@ -2004,7 +2004,13 @@ So sorry for exaggerating :) [edited]
 
 I don't have any visibility on the internal fellowship processes and so I have really no way to know if there was any progress made or not. Especially now that rule 26 was changed and other teams asked about granting access to the teams I think it would be beneficial for all to know a little bit more how the process works.
 2026-02-16 15:41 dakkk: Piet | W3F: I don't want to bother you, but can you please also have a look to this situation?
+  ↳ 2026-02-17 17:28 piet: Hey dakkk | JamPy , we will continue working on your submission on the 20th and update you with fuzzing results. Sorry for the delay. 
+  ↳ 2026-02-17 17:28 dakkk: ok, thank you for the update [edited]
 2026-02-16 17:00 piet: Hey dakkk | JamPy , yes, I‘ll update you tomorrow evening. 
 2026-02-16 17:31 dakkk: > <@piet:web3.foundation> Hey dakkk | JamPy , yes, I‘ll update you tomorrow evening. 
 
 Great, thank you
+2026-02-17 14:24 0xjunha: Regarding test cases: 1766243315_2277, 1766244122_5414, 1767872928_1994, 1766244251_1816 (with ticket attempt = 255)
+I realized test vectors expect "attempt" field of Tickets Extrinsic entries (`e` of [Graypaper 6.29](https://graypaper.fluffylabs.dev/#/ab2cdbd/0f68000f6800?v=0.7.2)) to be encoded using fixed-length encoding, whereas graypaper says we should use the general (compact) integer encoding ([Graypaper C.17](https://graypaper.fluffylabs.dev/#/ab2cdbd/3a48013a4801?v=0.7.2)). It seems most clients pass these cases, was there a consensus between teams to use fixed-length codec here? Should we update the GP? cc. davxy 
+2026-02-17 17:41 davxy: I'll have a look
+2026-02-17 18:09 ascriv: Yes I noticed this. I do think GP needs to be updated if we assume test vectors are correct [edited]
