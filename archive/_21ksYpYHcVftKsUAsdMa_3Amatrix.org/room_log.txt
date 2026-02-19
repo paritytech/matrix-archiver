@@ -1,5 +1,5 @@
 # room: #jam-conformance:matrix.org
-# exported: 2026-02-18 04:02 UTC
+# exported: 2026-02-19 04:02 UTC
 2025-08-20 15:56 erin: tomusdrw: i've set up the archiver to archive this also, so hopefully will be up starting tomorrow
 2025-08-21 06:33 ascriv: https://github.com/davxy/jam-conformance/issues/26 should we not discourage open source implementations (for now)? [edited]
 2025-08-21 10:27 oliver.tale-yazdi: I think open source repos are fine. Other implementors are just not supposed to look at it
@@ -2014,3 +2014,61 @@ Great, thank you
 I realized test vectors expect "attempt" field of Tickets Extrinsic entries (`e` of [Graypaper 6.29](https://graypaper.fluffylabs.dev/#/ab2cdbd/0f68000f6800?v=0.7.2)) to be encoded using fixed-length encoding, whereas graypaper says we should use the general (compact) integer encoding ([Graypaper C.17](https://graypaper.fluffylabs.dev/#/ab2cdbd/3a48013a4801?v=0.7.2)). It seems most clients pass these cases, was there a consensus between teams to use fixed-length codec here? Should we update the GP? cc. davxy 
 2026-02-17 17:41 davxy: I'll have a look
 2026-02-17 18:09 ascriv: Yes I noticed this. I do think GP needs to be updated if we assume test vectors are correct [edited]
+2026-02-18 08:27 davxy: There was an inconsistency in the engine (to not call it a bug XD).
+Ticket ID was not encoded as a compact integer; instead, we used a fixed-length encoding (here 1 byte).
+Under normal conditions this had no impact, since the ticket ID was expected to be 0 or 1.
+However, the fuzzer can mutate this field to any value in the range \[0..255\]. For values >= 128, the issue manifests: we encode them in a single byte, whereas we should be using the general integer codec (which uses 2 bytes here). [edited]
+2026-02-18 08:35 davxy: Even if this is a delicate moment for releasing breaking changes in the fuzzer, IMO for what concerns **this** particular issue we can release the fix **NOW** and include it in the 0.7.2 fuzzer.
+Including it in 0.7.2 should not introduce material risk, since targets will reject the block in both scenarios:
+
+- Before: rejection due to an invalid ticket signature.
+- After: rejection due to invalid ticket encoding.
+
+The difference is limited to the stage at which the block is rejected.
+The validation logic does not assert the specific reason for failure. This is intentional, as block processing may follow different internal paths and there is no mandated failure ordering.
+In short, if a block import is expected to fail, the precise rejection condition is not relevant to the test outcome. [edited]
+  ↳ 2026-02-18 13:55 jaymansfield: My implementation would not perform the same way. If the block can't be properly decoded it treats it as a malformed message and would close the fuzzer, rather then return an error since a missing byte is not really a STF failure. Easy change to make though we could just need a few of the old traces retired (or regenerated).
+  ↳ 2026-02-18 14:02 ascriv: Definitely worth a regeneration of traces imo as well 
+2026-02-18 08:38 davxy: **As a side note**: if you encounter any inconsistency with respect to the GP, do not attempt to silently adjust your implementation to make the fuzzer happy!
+Instead, open a discussion in [jam-conformance](https://github.com/davxy/jam-conformance/discussions). This is important because the GP is the authoritative source for the JAM protocol. [edited]
+2026-02-18 08:49 tomusdrw: 
+2026-02-18 09:58 polykrate: Hello everyone, I am building a Jam in Lisp and have troubles with the memory of the PVM, seems related to to SBRK and the avertissement in the readme on the vector traces
+did you patch the official PVM or did you do a PVM on your own ? 
+2026-02-18 10:00 0xjunha: Thanks for the clarification davxy ! 
+2026-02-18 10:11 dakkk: for official pvm do you mean polkavm? most of us don't use polkavm
+2026-02-18 10:12 ascriv: I believe my impl would crash on (what it thinks is) garbage block encoding actually. Others may do the same because block encoding issues are not covered in the test vectors. Can you update the test vectors please anyway so teams can make sure they are compliant? [edited]
+2026-02-18 10:14 ascriv: > <@davxy:matrix.org> **As a side note**: if you encounter any inconsistency with respect to the GP, do not attempt to silently adjust your implementation to make the fuzzer happy!
+> Instead, open a discussion in jam-conformance. This is important because the GP is the authoritative source for the JAM protocol.
+> 
+
+https://github.com/davxy/jam-conformance/discussions/66
+
+For what it’s worth this issue was brought up in September 
+2026-02-18 10:15 ascriv: image_56DB33E5-686C-4A80-B2DD-572C5EDCF6EF_1771409701.png
+2026-02-18 11:25 davxy: IIRC that was about the attempt for the ticket in the header. This is for the attempt in the ticket extrinsic. At the time we fixed only the first :-/
+2026-02-18 11:55 ascriv: Oh my mistake
+2026-02-18 12:58 polykrate: yes, I used PolkaVM 0.29 right now.
+Ok thanks, I'm gonna build a JamVM in Lisp 
+2026-02-18 13:33 dakkk: it's not mandatory to code your own; I think you can ask also on their repository directly if you have issue with it
+2026-02-18 13:34 polykrate: Thanks, I'm gonna try first to code my own 
+2026-02-18 13:52 shimonchick: Is JamVM a separate concept to PVM? 
+2026-02-18 13:53 shimonchick: > <@shimonchick:matrix.org> Is JamVM a separate concept to PVM? 
+
+My understanding is that you need to build your own if you want to participate in the contest
+2026-02-18 14:42 dakkk: That's not true; there is the non-pm validating node path (https://jam.web3.foundation/). Anyway those are off topics here, it's better to discusson on Let's JAM channel
+2026-02-18 14:48 jaymansfield: Screenshot 2026-02-18 at 9.47.38 AM.png
+2026-02-18 14:48 dakkk: you're right, my bad
+2026-02-18 14:54 yu2c: I have a question about `core index`: 
+in [GP](https://graypaper.fluffylabs.dev/#/ab2cdbd/413a00413a00?v=0.7.2) it's `u32`, 
+but in both [jam-test-vectors](https://github.com/davxy/jam-test-vectors/blob/95bd6f458d353c7d5198d79437cabe50eab890ac/lib/jam-types.asn#L84) and [jam-np](https://github.com/zdave-parity/jam-np/blob/main/simple.md#common-types) it's `u16`.
+2026-02-18 15:27 davxy: Your link points to N_S, which is the service identifier
+  ↳ 2026-02-18 15:36 yu2c: sorry, I misunderstood the `service id` and the `service index`
+2026-02-18 15:49 davxy: FYI ark-vrf 0.2.0 has been released. It may be worth adopting, as it introduces batching for ring VRF proofs (i.e., ticket verifications can be performed in batches).
+
+  ↳ 2026-02-18 15:56 shimonchick: Not to shill, but as an alternative I've built another package that does the same, for diversity (https://www.npmjs.com/package/@pbnjam/bandersnatch-vrf). There are multiple prover and verifier implementations, one is WASM binding around ark-vrf, the other is NAPI binding around rust implementation (not dependant on ark-vrf) [edited]
+  ↳ 2026-02-18 15:57 ascriv: Nice!
+  ↳ 2026-02-18 16:09 davxy: Mihail | PeanutButterAndJAM:  Would be nice to have all the available implementations listed here: https://github.com/davxy/bandersnatch-vrf-spec 
+  ↳ 2026-02-18 16:10 davxy: Where are your impl sources? 
+  ↳ 2026-02-18 16:20 shimonchick: https://github.com/Esscrypt/bandersnatch-vrf 
+2026-02-18 15:50 davxy: https://github.com/davxy/ark-vrf/blob/main/benches/SUMMARY.md
+2026-02-18 16:11 ascriv: Should we update the serialization of N in the chain parameters for the fetch host function to be E_1(N), since the ticket entry can only be 0...255? I guess the corner case could be N = 256 though. thoughts?
