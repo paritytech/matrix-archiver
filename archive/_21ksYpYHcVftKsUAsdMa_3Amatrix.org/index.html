@@ -18,7 +18,7 @@ a:hover{color:#90caf9}
 em{font-style:italic}
 </style>
 <h1>#jam-conformance:matrix.org</h1>
-<p><small>last updated 2026-02-19 04:02 UTC</small></p>
+<p><small>last updated 2026-02-20 04:00 UTC</small></p>
 <p><a href='room_log.txt'>⇩ plaintext</a> · <a href='../../'>⇦ all rooms</a></p>
 <hr>
 <div class='msg'><a class='ts' href='#$_9hLINsChVG8rufQkmbqp-fIbsNyK1YqpS3C9S7QZHU'>#</a> <a class='ts' name='$_9hLINsChVG8rufQkmbqp-fIbsNyK1YqpS3C9S7QZHU' href='https://matrix.to/#/!ksYpYHcVftKsUAsdMa:matrix.org/$_9hLINsChVG8rufQkmbqp-fIbsNyK1YqpS3C9S7QZHU' target='_blank'>2025-08-20 15:56</a>&ensp;<span class='u' style='color:#787fdf'>erin</span>: tomusdrw: i&#x27;ve set up the archiver to archive this also, so hopefully will be up starting tomorrow</div>
@@ -2060,3 +2060,7 @@ but in both <a href="https://github.com/davxy/jam-test-vectors/blob/95bd6f458d35
 <div class='msg reply'><a class='ts' href='#$F_C0tEkf63CTy4xGjJyG7gOe5amD98GDniX-Tk__HgI'>#</a> <a class='ts' name='$F_C0tEkf63CTy4xGjJyG7gOe5amD98GDniX-Tk__HgI' href='https://matrix.to/#/!ksYpYHcVftKsUAsdMa:matrix.org/$F_C0tEkf63CTy4xGjJyG7gOe5amD98GDniX-Tk__HgI' target='_blank'>2026-02-18 16:20</a>&ensp;<span class='u' style='color:#cf85c2'>shimonchick</span>: <a href="https://github.com/Esscrypt/bandersnatch-vrf" rel="noopener" target="_blank">https://github.com/Esscrypt/bandersnatch-vrf</a> </div>
 <div class='msg'><a class='ts' href='#$DPtr55wRWQT79jXp5jlRnJa9DYmtIrL3vHxNX8NIV_E'>#</a> <a class='ts' name='$DPtr55wRWQT79jXp5jlRnJa9DYmtIrL3vHxNX8NIV_E' href='https://matrix.to/#/!ksYpYHcVftKsUAsdMa:matrix.org/$DPtr55wRWQT79jXp5jlRnJa9DYmtIrL3vHxNX8NIV_E' target='_blank'>2026-02-18 15:50</a>&ensp;<span class='u' style='color:#c9419d'>davxy</span>: <a href="https://github.com/davxy/ark-vrf/blob/main/benches/SUMMARY.md" rel="noopener" target="_blank">https://github.com/davxy/ark-vrf/blob/main/benches/SUMMARY.md</a></div>
 <div class='msg'><a class='ts' href='#$GYcZGlWluMJBSNcYoFfpdO4772y_pK_VBqejeRwQD0M'>#</a> <a class='ts' name='$GYcZGlWluMJBSNcYoFfpdO4772y_pK_VBqejeRwQD0M' href='https://matrix.to/#/!ksYpYHcVftKsUAsdMa:matrix.org/$GYcZGlWluMJBSNcYoFfpdO4772y_pK_VBqejeRwQD0M' target='_blank'>2026-02-18 16:11</a>&ensp;<span class='u' style='color:#4036ac'>ascriv</span>: Should we update the serialization of N in the chain parameters for the fetch host function to be E_1(N), since the ticket entry can only be 0...255? I guess the corner case could be N = 256 though. thoughts?</div>
+<div class='msg'><a class='ts' href='#$wr3cizj4fozt4UIl74oHAFiSoAG8GKVPpSwS6gs0x3w'>#</a> <a class='ts' name='$wr3cizj4fozt4UIl74oHAFiSoAG8GKVPpSwS6gs0x3w' href='https://matrix.to/#/!ksYpYHcVftKsUAsdMa:matrix.org/$wr3cizj4fozt4UIl74oHAFiSoAG8GKVPpSwS6gs0x3w' target='_blank'>2026-02-19 06:40</a>&ensp;<span class='u' style='color:#c9419d'>davxy</span>: Your reasoning makes sense, but the entry will be removed with these upcoming changes:
+<a href="https://github.com/gavofyork/graypaper/pull/514" rel="noopener" target="_blank">https://github.com/gavofyork/graypaper/pull/514</a>
+
+tl;dr: tickets count is not constant anymore and set to ceil(2E/V)</div>
