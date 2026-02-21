@@ -1,5 +1,5 @@
 # room: #jam-conformance:matrix.org
-# exported: 2026-02-20 04:00 UTC
+# exported: 2026-02-21 03:55 UTC
 2025-08-20 15:56 erin: tomusdrw: i've set up the archiver to archive this also, so hopefully will be up starting tomorrow
 2025-08-21 06:33 ascriv: https://github.com/davxy/jam-conformance/issues/26 should we not discourage open source implementations (for now)? [edited]
 2025-08-21 10:27 oliver.tale-yazdi: I think open source repos are fine. Other implementors are just not supposed to look at it
@@ -2076,3 +2076,8 @@ but in both [jam-test-vectors](https://github.com/davxy/jam-test-vectors/blob/95
 https://github.com/gavofyork/graypaper/pull/514
 
 tl;dr: tickets count is not constant anymore and set to ceil(2E/V)
+2026-02-20 12:17 ascriv: R.e. The 2 week time limit after first fuzz failure, how do we account for delays that are out of the implementor’s control? (bug in polkajam/fuzzer, fuzzer operator delay, etc)
+2026-02-20 12:18 ascriv: Maybe it should be denominated in iteration count, not total time
+2026-02-20 12:19 ascriv: N fails and you’re requeued
+2026-02-20 17:22 aang114: 
+2026-02-21 00:16 clearloop: hi Anaelle LTD | Technical Fellowship Secretary ! if there is any updates for this? if the fellowship review starts right after passing the fuzz or will start in March, April or any specific time, if there is anything implementers can do for helping pushing the progress? [edited]
