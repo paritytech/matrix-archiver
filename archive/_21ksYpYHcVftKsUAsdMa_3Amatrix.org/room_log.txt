@@ -1,5 +1,5 @@
 # room: #jam-conformance:matrix.org
-# exported: 2026-02-21 03:55 UTC
+# exported: 2026-02-22 04:01 UTC
 2025-08-20 15:56 erin: tomusdrw: i've set up the archiver to archive this also, so hopefully will be up starting tomorrow
 2025-08-21 06:33 ascriv: https://github.com/davxy/jam-conformance/issues/26 should we not discourage open source implementations (for now)? [edited]
 2025-08-21 10:27 oliver.tale-yazdi: I think open source repos are fine. Other implementors are just not supposed to look at it
@@ -2006,6 +2006,8 @@ I don't have any visibility on the internal fellowship processes and so I have r
 2026-02-16 15:41 dakkk: Piet | W3F: I don't want to bother you, but can you please also have a look to this situation?
   ↳ 2026-02-17 17:28 piet: Hey dakkk | JamPy , we will continue working on your submission on the 20th and update you with fuzzing results. Sorry for the delay. 
   ↳ 2026-02-17 17:28 dakkk: ok, thank you for the update [edited]
+  ↳ 2026-02-21 08:19 piet: Hey dakkk | JamPy . Sorry that we didn‘t manage to update you on Friday.  We currently have a lot of the staff on sick leave (me included). I‘m confident that we will update you early next week. I understand your frustration about the slow process. At least the 14 days ratification period didn‘t start yet for your submission so you are not losing any valuable time here. 
+  ↳ 2026-02-21 08:23 dakkk: don't worry, and thank you for this update that calmed down my anxiety a lot (y) wishing you and all the team a speedy recovery!
 2026-02-16 17:00 piet: Hey dakkk | JamPy , yes, I‘ll update you tomorrow evening. 
 2026-02-16 17:31 dakkk: > <@piet:web3.foundation> Hey dakkk | JamPy , yes, I‘ll update you tomorrow evening. 
 
@@ -2081,3 +2083,7 @@ tl;dr: tickets count is not constant anymore and set to ceil(2E/V)
 2026-02-20 12:19 ascriv: N fails and you’re requeued
 2026-02-20 17:22 aang114: 
 2026-02-21 00:16 clearloop: hi Anaelle LTD | Technical Fellowship Secretary ! if there is any updates for this? if the fellowship review starts right after passing the fuzz or will start in March, April or any specific time, if there is anything implementers can do for helping pushing the progress? [edited]
+  ↳ 2026-02-22 00:03 anaelleltd: Hello Tianyi | SpaceJam.  The Fellowship is currently finalising its internal evaluation setups.
+  ↳ 2026-02-22 00:05 anaelleltd: The only thing I can say at this point in time is that teams that have passed W3F fuzzing checks will be contacted next when comes the time to to do code/commit/plagiarism checks (*as these require access to the team's repos). [edited]
+  ↳ 2026-02-22 00:06 anaelleltd: There is no set date at the moment for when this will take place. 
+  ↳ 2026-02-22 00:06 anaelleltd: Thanks.
