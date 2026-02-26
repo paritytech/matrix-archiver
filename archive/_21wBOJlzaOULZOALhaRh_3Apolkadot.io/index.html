@@ -18,7 +18,7 @@ a:hover{color:#90caf9}
 em{font-style:italic}
 </style>
 <h1>#jam:polkadot.io</h1>
-<p><small>last updated 2026-02-25 04:01 UTC</small></p>
+<p><small>last updated 2026-02-26 04:00 UTC</small></p>
 <p><a href='room_log.txt'>⇩ plaintext</a> · <a href='../../'>⇦ all rooms</a></p>
 <hr>
 <div class='msg'><a class='ts' href='#$we4SYXTHwmKn094X9Zs_7mWUOoUVh4icvVdxD83RZfs'>#</a> <a class='ts' name='$we4SYXTHwmKn094X9Zs_7mWUOoUVh4icvVdxD83RZfs' href='https://matrix.to/#/!wBOJlzaOULZOALhaRh:polkadot.io/$we4SYXTHwmKn094X9Zs_7mWUOoUVh4icvVdxD83RZfs' target='_blank'>2024-04-20 02:08</a>&ensp;<span class='u' style='color:#d0709e'>johnjiao123</span>: </div>
@@ -12339,3 +12339,50 @@ Solicited 4 items in package 0x282242ab85d3d1b9... with anchor at #5845239
 <div class='msg reply'><a class='ts' href='#$Fo7Gqyra0yNiDRSj25Jq6_s154FUsIc10yFe7W_cgNg'>#</a> <a class='ts' name='$Fo7Gqyra0yNiDRSj25Jq6_s154FUsIc10yFe7W_cgNg' href='https://matrix.to/#/!wBOJlzaOULZOALhaRh:polkadot.io/$Fo7Gqyra0yNiDRSj25Jq6_s154FUsIc10yFe7W_cgNg' target='_blank'>2026-02-11 12:35</a>&ensp;<span class='u' style='color:#c65779'>dave</span>: Not AFAIK, guess you can fetch the raw MD from <a href="https://raw.githubusercontent.com/polkadot-fellows/JIPs/refs/heads/main/JIP-2.md" rel="noopener" target="_blank">https://raw.githubusercontent.com/polkadot-fellows/JIPs/refs/heads/main/JIP-2.md</a></div>
 <div class='msg reply'><a class='ts' href='#$pCEzQMAsqEtfX4jtWemwRYQJkZipjqZS5FmJXukjNvI'>#</a> <a class='ts' name='$pCEzQMAsqEtfX4jtWemwRYQJkZipjqZS5FmJXukjNvI' href='https://matrix.to/#/!wBOJlzaOULZOALhaRh:polkadot.io/$pCEzQMAsqEtfX4jtWemwRYQJkZipjqZS5FmJXukjNvI' target='_blank'>2026-02-11 13:33</a>&ensp;<span class='u' style='color:#cdc232'>oliver.tale-yazdi</span>: fixed. <a href="https://docs.jamcha.in/advanced/rpc/jip2-node-rpc" rel="noopener" target="_blank">https://docs.jamcha.in/advanced/rpc/jip2-node-rpc</a></div>
 <div class='msg reply'><a class='ts' href='#$vZQBWcDsOB_NfTxD-9CHx7tyfLujSuHPlMybnmEajKk'>#</a> <a class='ts' name='$vZQBWcDsOB_NfTxD-9CHx7tyfLujSuHPlMybnmEajKk' href='https://matrix.to/#/!wBOJlzaOULZOALhaRh:polkadot.io/$vZQBWcDsOB_NfTxD-9CHx7tyfLujSuHPlMybnmEajKk' target='_blank'>2026-02-11 13:37</a>&ensp;<span class='u' style='color:#c65779'>dave</span>: Thanks!</div>
+<div class='msg'><a class='ts' href='#$9EtvKf86jPSM655rmBkXTcZMJTpZ817QeEjWUqC5Z_g'>#</a> <a class='ts' name='$9EtvKf86jPSM655rmBkXTcZMJTpZ817QeEjWUqC5Z_g' href='https://matrix.to/#/!wBOJlzaOULZOALhaRh:polkadot.io/$9EtvKf86jPSM655rmBkXTcZMJTpZ817QeEjWUqC5Z_g' target='_blank'>2026-02-25 04:49</a>&ensp;<span class='u' style='color:#5adda3'>shwchg</span>: Hi everyone,
+
+I’m Shawn, a member of JamDuna.
+
+During my implementation of the recompiler, I discovered that our recompiler frequently encounters errors in arithmetic-related instructions, particularly in the following areas:
+
+- Register Aliasing Conflicts: Data corruption occurs when the destination register overlaps with temporary computation registers.
+
+- Semantic Mismatch: For example, incorrect sign extension when translating PVM 32-bit instructions into a 64-bit x86 environment.
+
+- Hardware Boundary Behavior Differences: Subtle discrepancies such as division by zero handling, arithmetic overflow, and shift count limits.
+
+To systematically address these issues, I implemented an SMT-based (Satisfiability modulo theories)  approach to verify instruction-level equivalence.
+
+I am considering making this the topic of my master’s thesis, focusing on how to formally verify the correctness of a recompiler and how to effectively evaluate its performance.
+
+I would like to clarify the cleanroom rules and ask a few questions:
+
+1. Would it be possible to collaborate with other teams to obtain a black-box ABI for single-instruction-level translation testing?
+
+2. Am I allowed to use PolkaVM’s features—such as generating test data and performing differential testing between the interpreter and the recompiler?
+
+Thank you!</div>
+<div class='msg'><a class='ts' href='#$1Z6zNx_b5ooiSlAn2F9TKp2gGAeuylAFkX64h8Da8_s'>#</a> <a class='ts' name='$1Z6zNx_b5ooiSlAn2F9TKp2gGAeuylAFkX64h8Da8_s' href='https://matrix.to/#/!wBOJlzaOULZOALhaRh:polkadot.io/$1Z6zNx_b5ooiSlAn2F9TKp2gGAeuylAFkX64h8Da8_s' target='_blank'>2026-02-25 07:03</a>&ensp;<span class='u' style='color:#cd8957'>gav</span>: 2. Yes.</div>
+<div class='msg'><a class='ts' href='#$t3dIxCiiU3nb7XhPvlhiQkKt8yvsVmWdxdQyL4_tZNQ'>#</a> <a class='ts' name='$t3dIxCiiU3nb7XhPvlhiQkKt8yvsVmWdxdQyL4_tZNQ' href='https://matrix.to/#/!wBOJlzaOULZOALhaRh:polkadot.io/$t3dIxCiiU3nb7XhPvlhiQkKt8yvsVmWdxdQyL4_tZNQ' target='_blank'>2026-02-25 07:04</a>&ensp;<span class='u' style='color:#cd8957'>gav</span>: (I can&#x27;t really answer (1) - can&#x27;t speak for other teams)</div>
+<div class='msg'><a class='ts' href='#$uz_9K4HyqX5EiqZAfuvL33oh_DeQ_xItJFeq7HBTRIw'>#</a> <a class='ts' name='$uz_9K4HyqX5EiqZAfuvL33oh_DeQ_xItJFeq7HBTRIw' href='https://matrix.to/#/!wBOJlzaOULZOALhaRh:polkadot.io/$uz_9K4HyqX5EiqZAfuvL33oh_DeQ_xItJFeq7HBTRIw' target='_blank'>2026-02-25 07:51</a>&ensp;<span class='u' style='color:#5adda3'>shwchg</span>: Thank you for your response.
+
+The reason I’m asking about this is that, through this process, I would potentially be able to see:
+
+- Other teams’ registers mappings
+
+- Their generated x86 code combinations
+
+However, I have already consulted Jan beforehand, and he believes this should be acceptable.
+
+So regarding point (1), would this still be considered compliant with clean room principles?</div>
+<div class='msg'><a class='ts' href='#$feMJZXT80X9rp8CpZqcJp1Ry3zb8GkvsqXrza6S2REA'>#</a> <a class='ts' name='$feMJZXT80X9rp8CpZqcJp1Ry3zb8GkvsqXrza6S2REA' href='https://matrix.to/#/!wBOJlzaOULZOALhaRh:polkadot.io/$feMJZXT80X9rp8CpZqcJp1Ry3zb8GkvsqXrza6S2REA' target='_blank'>2026-02-25 08:14</a>&ensp;<span class='u' style='color:#cd8957'>gav</span>: Yes on both counts. I don&#x27;t see any problem. <span class="edited">(edited)</span></div>
+<div class='msg'><a class='ts' href='#$PnI-1e7bnYnSHdMZUTsmJompOy2aJfwWRkcUo-tfWpE'>#</a> <a class='ts' name='$PnI-1e7bnYnSHdMZUTsmJompOy2aJfwWRkcUo-tfWpE' href='https://matrix.to/#/!wBOJlzaOULZOALhaRh:polkadot.io/$PnI-1e7bnYnSHdMZUTsmJompOy2aJfwWRkcUo-tfWpE' target='_blank'>2026-02-25 08:37</a>&ensp;<span class='u' style='color:#5adda3'>shwchg</span>: That&#x27;s great!!
+
+PVM bytecode compilers may have difficulty triggering certain instruction patterns, and fuzz testing alone cannot provide 100% comprehensive coverage at the instruction level.
+
+If any other teams are interested, please feel free to leave a comment below or contact me directly. We can open a public channel to facilitate discussion and collaboration.
+
+I will report any bugs I discover to you as soon as they are fully validated (although my tool is still under development and not yet very efficient).
+
+In my thesis, I will document your errors anonymously. I will not attempt to infer your register mappings or analyze your generated x86 code. I will only record the observed discrepancies.</div>
+<div class='msg'><a class='ts' href='#$PIY-4z-YXN2bkiscH6wLH1DL-YpV81mIq2Nxgimn_Hk'>#</a> <a class='ts' name='$PIY-4z-YXN2bkiscH6wLH1DL-YpV81mIq2Nxgimn_Hk' href='https://matrix.to/#/!wBOJlzaOULZOALhaRh:polkadot.io/$PIY-4z-YXN2bkiscH6wLH1DL-YpV81mIq2Nxgimn_Hk' target='_blank'>2026-02-25 13:15</a>&ensp;<span class='u' style='color:#3c8ec8'>bmaas</span>: Hey JAM-ers. I’m in Lisbon until the 11th of march. Near the Parity office. Let me know if anyone wants to meetup about JAM.</div>

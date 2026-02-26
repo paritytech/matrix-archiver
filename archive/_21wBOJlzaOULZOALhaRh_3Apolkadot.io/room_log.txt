@@ -1,5 +1,5 @@
 # room: #jam:polkadot.io
-# exported: 2026-02-25 04:01 UTC
+# exported: 2026-02-26 04:00 UTC
 2024-04-20 02:08 johnjiao123: 
 2024-04-20 02:09 johnjiao123: 
 2024-05-30 21:48 nradko: Hey everyone,
@@ -12450,3 +12450,50 @@ Solicited 4 items in package 0x282242ab85d3d1b9... with anchor at #5845239
   ↳ 2026-02-11 12:35 dave: Not AFAIK, guess you can fetch the raw MD from https://raw.githubusercontent.com/polkadot-fellows/JIPs/refs/heads/main/JIP-2.md
   ↳ 2026-02-11 13:33 oliver.tale-yazdi: fixed. https://docs.jamcha.in/advanced/rpc/jip2-node-rpc
   ↳ 2026-02-11 13:37 dave: Thanks!
+2026-02-25 04:49 shwchg: Hi everyone,
+
+I’m Shawn, a member of JamDuna.
+
+During my implementation of the recompiler, I discovered that our recompiler frequently encounters errors in arithmetic-related instructions, particularly in the following areas:
+
+- Register Aliasing Conflicts: Data corruption occurs when the destination register overlaps with temporary computation registers.
+
+- Semantic Mismatch: For example, incorrect sign extension when translating PVM 32-bit instructions into a 64-bit x86 environment.
+
+- Hardware Boundary Behavior Differences: Subtle discrepancies such as division by zero handling, arithmetic overflow, and shift count limits.
+
+To systematically address these issues, I implemented an SMT-based (Satisfiability modulo theories)  approach to verify instruction-level equivalence.
+
+I am considering making this the topic of my master’s thesis, focusing on how to formally verify the correctness of a recompiler and how to effectively evaluate its performance.
+
+I would like to clarify the cleanroom rules and ask a few questions:
+
+1. Would it be possible to collaborate with other teams to obtain a black-box ABI for single-instruction-level translation testing?
+
+2. Am I allowed to use PolkaVM’s features—such as generating test data and performing differential testing between the interpreter and the recompiler?
+
+Thank you!
+2026-02-25 07:03 gav: 2. Yes.
+2026-02-25 07:04 gav: (I can't really answer (1) - can't speak for other teams)
+2026-02-25 07:51 shwchg: Thank you for your response.
+
+The reason I’m asking about this is that, through this process, I would potentially be able to see:
+
+- Other teams’ registers mappings
+
+- Their generated x86 code combinations
+
+However, I have already consulted Jan beforehand, and he believes this should be acceptable.
+
+So regarding point (1), would this still be considered compliant with clean room principles?
+2026-02-25 08:14 gav: Yes on both counts. I don't see any problem. [edited]
+2026-02-25 08:37 shwchg: That's great!!
+
+PVM bytecode compilers may have difficulty triggering certain instruction patterns, and fuzz testing alone cannot provide 100% comprehensive coverage at the instruction level.
+
+If any other teams are interested, please feel free to leave a comment below or contact me directly. We can open a public channel to facilitate discussion and collaboration.
+
+I will report any bugs I discover to you as soon as they are fully validated (although my tool is still under development and not yet very efficient).
+
+In my thesis, I will document your errors anonymously. I will not attempt to infer your register mappings or analyze your generated x86 code. I will only record the observed discrepancies.
+2026-02-25 13:15 bmaas: Hey JAM-ers. I’m in Lisbon until the 11th of march. Near the Parity office. Let me know if anyone wants to meetup about JAM.
