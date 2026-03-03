@@ -1,5 +1,5 @@
 # room: #jam:polkadot.io
-# exported: 2026-03-02 03:59 UTC
+# exported: 2026-03-03 04:00 UTC
 2024-04-20 02:08 johnjiao123: 
 2024-04-20 02:09 johnjiao123: 
 2024-05-30 21:48 nradko: Hey everyone,
@@ -12497,3 +12497,58 @@ I will report any bugs I discover to you as soon as they are fully validated (al
 
 In my thesis, I will document your errors anonymously. I will not attempt to infer your register mappings or analyze your generated x86 code. I will only record the observed discrepancies.
 2026-02-25 13:15 bmaas: Hey JAM-ers. I’m in Lisbon until the 11th of march. Near the Parity office. Let me know if anyone wants to meetup about JAM.
+2026-03-02 09:54 shimonchick: what do Polkajam logs like "Falling back to AURA for epoch X" mean?
+2026-03-02 10:17 dave: Didn't get enough safrole tickets
+2026-03-02 10:21 jeff: It should be graceful though, like if you get only a few then you just fill in the middle of the epoch with aura
+2026-03-02 10:40 dave: Hmm ok, currently it's all or nothing
+2026-03-02 11:48 shwchg: Hi everyone,
+
+If you're interested in participating in this testing effort or would like to discuss PVM, please feel free to join this public group.
+
+https://matrix.to/#/#jam-pvm:matrix.org
+2026-03-02 13:38 jeff: That's a bizarre design.  And I think davide's substrate implementation does not work that way.
+
+The beginning any end of the epoch are extra sensitive for the randomness of future epochs, so if we have only a few sassafras blocks we put them there.
+
+And we always put the "best" rVRF outputs at the beginning and end of the epoch. 
+
+That's the reason why we do the weird outside-in sorting.  Actually there are two equally correct ways to sort, but they could both be described as outside-in in different ways, but they have different notions of "best" rVRF outputs:  (1) small is good and pull out ever other block for the opposite end of the list.  (2) both big and small are good, so you sort the list normally, but then trim or pad the middle as required.
+
+In either case, the "worst" rVRF outputs land in the middle, so if you run out before you fill the epoch, then you just shove round robin assignments into the middle.  
+ [edited]
+2026-03-02 13:42 dave: I assume it is this way for simplicity. Maybe davxy can comment
+2026-03-02 13:43 jeff: We donno how much it impacts the randomness, but it does impact the randomness quality, so imho this way is wrong since the sorting must be done anyways to remove the excess ones.
+2026-03-02 13:45 jeff: You should be generating about 1.5 x to 2 x the number of tickets as could fit into the epoch.  If you guys made the optimisation of reducing that number than that's definitely wrong and could cause the error above under the normal variance of the ticket filter. 
+2026-03-02 13:46 jeff: Actually without this "fill aura in the middle" then you'd need way more than 2 x the number of tickets.  lol
+2026-03-02 13:46 dave: With current params each of the 1023 validators gets 2 tickets, there are 600 slots per epoch
+2026-03-02 13:46 dave: So it's ~3.4x
+2026-03-02 13:47 jeff: They do not have exactly 2 tickets.  They have an expected 2 tickets.  They must generate like say maybe 64 rVRF outputs, and the filter gives them an expected 2 tickets being allowed out of this.
+2026-03-02 13:48 jeff: It's not really 2 it's whatever is required for the epoch length
+2026-03-02 13:48 jeff: it's 2 per slot
+2026-03-02 13:49 jeff: if you have 100 validators and 1000 slots then you need 2000 tickets, so each validator should generate maybe 640 rVRF outputs and have an expected 20 be allowed, and they make the proof only for those. 
+2026-03-02 13:49 dave: I think right now they get exactly 2 VRF outputs
+2026-03-02 13:50 jeff: Yeah that's wrong, because then by the end of the epoch you know exactly who will make blocks, and the whole thing is less useful [edited]
+2026-03-02 13:51 jeff: Actually not exactly I guess, but still it's much less useful.
+2026-03-02 13:51 dave: Well if some validators have built 2 blocks already then you can rule them out, you don't know for sure
+2026-03-02 13:53 dave: If you think this stuff needs changing probably open an issue here: https://github.com/gavofyork/graypaper/issues
+2026-03-02 13:53 jeff: It depends how much over you goe
+2026-03-02 13:54 dave: I wouldn't think increasing the number of tickets per validator should be particularly problematic, IDK why the current number was chosen
+2026-03-02 13:54 dave: Having gradual fallback to round-robin would be a bigger change
+2026-03-02 13:59 dave: Not sure what you mean by "need 2000 tickets"? You mean 2000 that are considered for the lottery or something? Presumably you end up with 1 ticket per slot at the end?
+2026-03-02 13:59 jeff: 2000 are allowed into the gossip
+2026-03-02 13:59 jeff: yes
+2026-03-02 13:59 jeff: one per slot at the end
+2026-03-02 14:00 jeff: but you need to go 2-ish x over in the gossip so that you have good odds of being mostly full
+2026-03-02 14:00 jeff: And that's assuming you fill the middle of the epoch with aura
+2026-03-02 14:00 dave: Ok. At the moment each validator generates 2 tickets and they are both gossiped
+2026-03-02 14:00 jeff: so that going under is not too bad
+2026-03-02 14:01 dave: If you generate more tickets than you gossip, is the idea that this smooths out the distribution or something?
+2026-03-02 14:02 dave: Don't think I really understand this
+2026-03-02 14:09 jeff: You do not really generate the ticket, just check the output, which is fast.
+2026-03-02 14:09 jeff: It's so nobody has any idea what happens at the end of the epoch
+2026-03-02 14:09 jeff: unless its their ticket
+2026-03-02 14:22 dave: Ok I think I see. How do you decide whether to gossip a ticket or not? Is there a static cutoff or do you choose dynamically based on what tickets have been included so far?
+2026-03-02 14:22 jeff: https://github.com/gavofyork/graypaper/issues/516
+2026-03-02 14:22 jeff: It's just whatever is requires so that the expected value of the binomial distribution winds up being 2 per slot.
+2026-03-02 14:23 jeff: `num_validators / (32 num_slots)` probably [edited]
+2026-03-02 14:24 jeff: I mean that's the rate probability paramater for the bernouli trials  
