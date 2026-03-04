@@ -1,5 +1,5 @@
 # room: #jam-conformance:matrix.org
-# exported: 2026-03-03 04:01 UTC
+# exported: 2026-03-04 03:57 UTC
 2025-08-20 15:56 erin: tomusdrw: i've set up the archiver to archive this also, so hopefully will be up starting tomorrow
 2025-08-21 06:33 ascriv: https://github.com/davxy/jam-conformance/issues/26 should we not discourage open source implementations (for now)? [edited]
 2025-08-21 10:27 oliver.tale-yazdi: I think open source repos are fine. Other implementors are just not supposed to look at it
@@ -2008,6 +2008,13 @@ I don't have any visibility on the internal fellowship processes and so I have r
   ↳ 2026-02-17 17:28 dakkk: ok, thank you for the update [edited]
   ↳ 2026-02-21 08:19 piet: Hey dakkk | JamPy . Sorry that we didn‘t manage to update you on Friday.  We currently have a lot of the staff on sick leave (me included). I‘m confident that we will update you early next week. I understand your frustration about the slow process. At least the 14 days ratification period didn‘t start yet for your submission so you are not losing any valuable time here. 
   ↳ 2026-02-21 08:23 dakkk: don't worry, and thank you for this update that calmed down my anxiety a lot (y) wishing you and all the team a speedy recovery!
+  ↳ 2026-03-03 09:21 dakkk: Piet | W3F: a new maintainer has been assigned to my pull request, but no update is occuring since then; is everything ok? I see other pull requests going forward [edited]
+  ↳ 2026-03-03 09:23 piet: Mideg | W3F: 
+  ↳ 2026-03-03 09:26 mideg: > <@dakkk:matrix.org> Piet | W3F: a new maintainer has been assigned to my pull request, but no updated is occuring since then; is everything ok? I see other pull requests going forward
+
+Hi dakkk, apologies for the delay, I'm currently evaluating the project I started before, but will hopefully proceed with yours soon. 
+  ↳ 2026-03-03 09:29 dakkk: ok, thanks you for the update
+  ↳ 2026-03-03 09:42 dakkk: anyway, do you have any time estimation Mideg | W3F ?
 2026-02-16 17:00 piet: Hey dakkk | JamPy , yes, I‘ll update you tomorrow evening. 
 2026-02-16 17:31 dakkk: > <@piet:web3.foundation> Hey dakkk | JamPy , yes, I‘ll update you tomorrow evening. 
 
