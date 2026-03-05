@@ -1,5 +1,5 @@
 # room: #jam-conformance:matrix.org
-# exported: 2026-03-04 03:57 UTC
+# exported: 2026-03-05 03:59 UTC
 2025-08-20 15:56 erin: tomusdrw: i've set up the archiver to archive this also, so hopefully will be up starting tomorrow
 2025-08-21 06:33 ascriv: https://github.com/davxy/jam-conformance/issues/26 should we not discourage open source implementations (for now)? [edited]
 2025-08-21 10:27 oliver.tale-yazdi: I think open source repos are fine. Other implementors are just not supposed to look at it
@@ -2094,3 +2094,8 @@ tl;dr: tickets count is not constant anymore and set to ceil(2E/V)
   ↳ 2026-02-22 00:05 anaelleltd: The only thing I can say at this point in time is that teams that have passed W3F fuzzing checks will be contacted next when comes the time to to do code/commit/plagiarism checks (*as these require access to the team's repos). [edited]
   ↳ 2026-02-22 00:06 anaelleltd: There is no set date at the moment for when this will take place. 
   ↳ 2026-02-22 00:06 anaelleltd: Thanks.
+2026-03-04 13:10 polykrate: Hello everyone, I created the PR#42 for my JAM in Common Lisp and opened the repo on
+https://github.com/polykrate/JOTL  
+2026-03-04 13:38 ascriv: > <@ascriv:matrix.org> R.e. The 2 week time limit after first fuzz failure, how do we account for delays that are out of the implementor’s control? (bug in polkajam/fuzzer, fuzzer operator delay, etc)
+
+@[Piet | W3F] any thoughts on this?
