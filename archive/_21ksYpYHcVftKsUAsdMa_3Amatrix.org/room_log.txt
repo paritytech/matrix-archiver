@@ -1,5 +1,5 @@
 # room: #jam-conformance:matrix.org
-# exported: 2026-03-05 03:59 UTC
+# exported: 2026-03-06 03:57 UTC
 2025-08-20 15:56 erin: tomusdrw: i've set up the archiver to archive this also, so hopefully will be up starting tomorrow
 2025-08-21 06:33 ascriv: https://github.com/davxy/jam-conformance/issues/26 should we not discourage open source implementations (for now)? [edited]
 2025-08-21 10:27 oliver.tale-yazdi: I think open source repos are fine. Other implementors are just not supposed to look at it
@@ -2099,3 +2099,24 @@ https://github.com/polykrate/JOTL
 2026-03-04 13:38 ascriv: > <@ascriv:matrix.org> R.e. The 2 week time limit after first fuzz failure, how do we account for delays that are out of the implementor’s control? (bug in polkajam/fuzzer, fuzzer operator delay, etc)
 
 @[Piet | W3F] any thoughts on this?
+2026-03-05 15:51 sourabhniyogi: https://medium.com/web3foundation/returning-to-its-roots-web3-foundations-next-phase-0fa0c1db23ed
+
+"As part of this continuing realignment, several initiatives and programs such as JAM Prize, Polkadot Governance Support, Polkadot Wiki, Knowledge Base, Kusama Vision, and developer documentation will be evaluated and transitioned to other teams and organizations outside W3F."
+
+Who is the new steward of JAM Prize if not W3F?
+2026-03-05 16:20 emielsebastiaan: Fellowship would be a good candidate I assume. 
+2026-03-05 16:35 ascriv: Makes sense as a candidate, since Fellowship already handles judging.
+Can someone confirm the actual owner for program administration / payout coordination going forward, and whether the currently published JAM Prize rules/process remain in effect during the transition?
+2026-03-05 19:27 sourabhniyogi: Lets do a call next Tuesday 3/10? [edited]
+2026-03-05 19:49 ascriv: > <@sourabhniyogi:matrix.org> Lets do a call next Tuesday 3/10
+
+I’d join 
+2026-03-05 19:59 piet: The operational part of the JAM Prize will be transferred to Parity. W3F will continue to be the official host. 
+2026-03-05 21:50 danicuki: > <@sourabhniyogi:matrix.org> Lets do a call next Tuesday 3/10?
+
+Yes! 👍🏻 
+2026-03-05 22:15 ascriv: Would be great if someone from w3f could join 
+2026-03-05 22:21 piet: > <@ascriv:matrix.org> Would be great if someone from w3f could join 
+
+I‘ll join
+2026-03-06 00:26 sourabhniyogi: That's awesome -- lets say 8am PT / 4pm Lisbon / 11:59pm Beijing time on 3/10 tentatively if that works for you Piet | W3F ?
