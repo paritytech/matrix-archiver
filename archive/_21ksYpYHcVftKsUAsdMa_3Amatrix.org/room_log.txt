@@ -1,5 +1,5 @@
 # room: #jam-conformance:matrix.org
-# exported: 2026-03-06 03:57 UTC
+# exported: 2026-03-07 03:51 UTC
 2025-08-20 15:56 erin: tomusdrw: i've set up the archiver to archive this also, so hopefully will be up starting tomorrow
 2025-08-21 06:33 ascriv: https://github.com/davxy/jam-conformance/issues/26 should we not discourage open source implementations (for now)? [edited]
 2025-08-21 10:27 oliver.tale-yazdi: I think open source repos are fine. Other implementors are just not supposed to look at it
@@ -2120,3 +2120,9 @@ Yes! 👍🏻
 
 I‘ll join
 2026-03-06 00:26 sourabhniyogi: That's awesome -- lets say 8am PT / 4pm Lisbon / 11:59pm Beijing time on 3/10 tentatively if that works for you Piet | W3F ?
+  ↳ 2026-03-06 09:03 prematurata: hey soura, do you have an idea on which platform the call will take place? I'd like to join but need to prepare cause i'll most likely be in a car
+  ↳ 2026-03-06 13:23 danicuki: > <@prematurata:matrix.org> hey soura, do you have an idea on which platform the call will take place? I'd like to join but need to prepare cause i'll most likely be in a car
+
+Meet 
+  ↳ 2026-03-06 13:38 prematurata: Perfect. I guess you will drop the meet link here then?
+  ↳ 2026-03-06 17:52 sourabhniyogi: yes will do!
