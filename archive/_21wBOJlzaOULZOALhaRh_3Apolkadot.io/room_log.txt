@@ -1,5 +1,5 @@
 # room: #jam:polkadot.io
-# exported: 2026-03-10 03:56 UTC
+# exported: 2026-03-11 03:56 UTC
 2024-04-20 02:08 johnjiao123: 
 2024-04-20 02:09 johnjiao123: 
 2024-05-30 21:48 nradko: Hey everyone,
@@ -12552,3 +12552,15 @@ In either case, the "worst" rVRF outputs land in the middle, so if you run out b
 2026-03-02 14:22 jeff: It's just whatever is requires so that the expected value of the binomial distribution winds up being 2 per slot.
 2026-03-02 14:23 jeff: `num_validators / (32 num_slots)` probably [edited]
 2026-03-02 14:24 jeff: I mean that's the rate probability paramater for the bernouli trials  
+2026-03-10 11:20 danicuki: Radha: after the recent changes on W3F, who is in charge of the JAM prize now? Is it still you? We will have a community call today, so it would be nice if someone from W3F jumps in to clarify how things will evolve from now on. 
+  ↳ 2026-03-10 11:23 radha: Not me
+2026-03-10 11:21 dakkk: Piet | W3F already told us that he will join today [edited]
+2026-03-10 11:34 danicuki: About the Fellowship interview, does anyone know who is in charge to evaluate JAM M1 submissions? We already have 6 teams that passed are waiting for it... 
+2026-03-10 11:37 dakkk: I think Anaelle LTD | Technical Fellowship Secretary  is involved in this; maybe she can join this call, it would be awesome 👍️
+2026-03-10 11:52 bill: Parity and the Fellowship will be in charge of analyzing. I assume details will be forthcoming soon. [edited]
+2026-03-10 12:04 danicuki: Thanks Bill for the reply. It would be nice if we could know **who** in these two entities, so this person can join the call today to give us further information. We are all blind about next steps for the JAM prize. 
+2026-03-10 12:23 tomusdrw: given latest ai "revelations" would be awesome to give some clarity how no-ai rule is going to be enforced. since we are not allowed to look at each others code, we have to trust that this is actually being checked at all. for now it seems that after 1M blocks are fuzzed against reference impl (I personally don't even see anyone being open to discuss that the fuzzing fault might not be on the team side, and the team has to chase the fix to fit into the grace window) it's "congratulations", invoice and fellowship interview as the next steps.
+2026-03-10 15:13 finsig: I was unable to join the call. Was there any news about what’s next with W3F, conformance, and the prize?
+
+I have not participated much on here as I haven’t had much value to add over the past two years; working solo part-time, no prior meaningful blockchain experience nor much experience with a lot of the topics in the GP, way behind other teams. 
+2026-03-10 17:32 emielsebastiaan: Steve | Martlet: update here: https://matrix.to/#/%23jam-conformance%3Amatrix.org

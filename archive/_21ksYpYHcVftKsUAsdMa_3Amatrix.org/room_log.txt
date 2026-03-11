@@ -1,5 +1,5 @@
 # room: #jam-conformance:matrix.org
-# exported: 2026-03-10 03:57 UTC
+# exported: 2026-03-11 03:57 UTC
 2025-08-20 15:56 erin: tomusdrw: i've set up the archiver to archive this also, so hopefully will be up starting tomorrow
 2025-08-21 06:33 ascriv: https://github.com/davxy/jam-conformance/issues/26 should we not discourage open source implementations (for now)? [edited]
 2025-08-21 10:27 oliver.tale-yazdi: I think open source repos are fine. Other implementors are just not supposed to look at it
@@ -2193,3 +2193,141 @@ most of the people can't use claude efficiently, even the author of the most pop
 2026-03-09 18:58 ascriv: Some teams are already working on LLM-friendly programming languages which I think is interesting though LLM-as-compiler seems like maybe a bad idea due to nondeterminism 
 2026-03-09 18:59 ascriv: But maybe soon it will be so reliable that it’s ok if there’s some nondeterminism..
 2026-03-09 19:13 clearloop: I used to want to work on this as well last year this time (at the gap of Chinese New Year), but I ended up with thinking about that human language might finally become the programming language there will be just sort of black-box inside of LLMs with logic human will never understand, however, rethink about it again, I think lisp could be an option 😂 it's time to be great again
+2026-03-10 05:49 wei: Hey everyone! Following yesterday's announcement of the Grey implementation, I also want to announce another project **JAR -- JAM Axiomatic Reference**.
+
+This is (or will be) a complete specification of JAM re-written using the Lean 4 proof assistant. The goals for us are several:
+
+- We want to address some of the ambiguity we found in Gray Paper, and I think this is best done by an actual specification written in a proof assistant.
+- We now have the Grey implementation, which (more or less) passes the conformance tests. Grey and JAR can act at each other's reference, and we can gradually ensure the correctness of the JAR specification.
+- We want to write some proofs and not accidentally break them when making changes. Lean 4 is probably the best tool for this.
+- And finally, we also want to have something more readable than Gray Paper. It hurts my eyes! 😅
+
+This is still a new work, but you can see its current status here: https://bitarray.github.io/jar
+We also have a new discussion room if you want to discuss something really specific to JAR: #jar:matrix.org [edited]
+2026-03-10 05:59 sourabhniyogi: **Jam Implementers Call** 3/10 at 8am PDT / 3:00 PM Lisbon / 4:00 Berlin / 11:00 PM Beijing 
+Meeting Link: https://meet.google.com/fvx-utxw-afs
+Please Add your topics here: [Agenda](https://hackmd.io/@sourabhniyogi/jamimplementers) [edited]
+  ↳ 2026-03-10 06:45 dakkk: what is the timestamp of the photo at the end of the agenda?
+2026-03-10 08:26 polykrate: In my Lisp implementatation of JAM, I used the GP's pseudo code as comment right above the Lisp code. 
+That way, when an AI search the codebase for bugs and read a file, it got at the same time the GP's pseudo code and the Lisp code. Due to Lisp homoiconicity, it can found tension between the two semantics and narrow where the bug is. [edited]
+2026-03-10 09:54 tomusdrw: Cool! That's the kind of stuff that JAM Prize should incentivise imho along with openly building the best fuzzer, test suites, etc. From this we will probably soon be able to generate code in any language, I don't see much of a difference between having human write and review code and having human oversee the testing process to define correctness. Just implementation alone doesn't provide that much value any more, given that it was supposed to be a proxy for finding inconsistencies in the GP. Seems that Claude/Grey found more of that than most of the teams anyway :)
+The contest is kind of becoming an art form: "Let's write code without syntax highlighting" or "Let's not look at each others code" (but at the same time it's fine to look at LLM generated code as ~we all~ some of us did with Grey). [edited]
+2026-03-10 10:11 wei: Haha, make sure everyone: state that you looked at Grey's code in your milestone submission per the prize rule. 😆
+
+Seriously though, keeping the no-AI rule is probably necessary. Otherwise the entire point of the JAM Prize becomes moot. [edited]
+2026-03-10 10:11 dakkk: I didn't
+2026-03-10 10:12 shimonchick: > <@wei:pacna.org> Haha, make sure everyone: state that you looked at Grey's code in your milestone submission per the prize rule. 😆
+> 
+> Seriously though, keeping the no-AI rule is probably necessary. Otherwise the entire point of the JAM Prize becomes moot.
+
+I wouldn't out of envy that the LLM was that much faster than me 🥲😅
+2026-03-10 11:50 rustybot: @Wei if you want to get fuzzed, you need to expose a unix socket to communicate with the fuzzer. Your current impl doesn't seem to implement it.
+Something like: `grey --sock <sockfile>`
+2026-03-10 11:55 rustybot: Would be nice to see some live action from this thing
+2026-03-10 11:55 rustybot: I'm personally very curious
+2026-03-10 12:02 rustybot: For the record, and I guess  other implementors know this well, test vectors are relatively straightforward to handle correctly, whereas live fuzzing is significantly more exhaustive and unpredictable.
+
+Statements such as "grey is marching towards M2 while on the human side..." are rather strong; it would be preferable to review the actual results first. [edited]
+2026-03-10 12:05 ascriv: Also worth confirming if grey is a code->code impl (seems it looked at jamzig and polkavm source code) which is much more tractable  [edited]
+2026-03-10 12:08 wei: I double checked. It exposes a sock.
+
+But honestly, if you don't at least publish the `polkajam-fuzz` binary, this is a waste of time. I would rather spend time generating tests myself using JAR than dealing with this closed-source obsecure unnecessary back-and-forth.
+2026-03-10 12:09 wei: If that makes you human happier that you're not replaced, sure.
+2026-03-10 12:11 rustybot: > <@wei:pacna.org> I double checked. It exposes a sock.
+> 
+> But honestly, if you don't at least publish the `polkajam-fuzz` binary, this is a waste of time. I would rather spend time generating tests myself using JAR than dealing with this closed-source obsecure unnecessary back-and-forth.
+
+Alright. Can I ask the exact command to start it to be fuzzed? Tiny params pls
+2026-03-10 12:12 wei: https://github.com/bitarray/grey/blob/master/docs/conformance-testing.md
+2026-03-10 12:13 rustybot: > <@wei:pacna.org> https://github.com/bitarray/grey/blob/master/docs/conformance-testing.md
+
+Exact command pls
+2026-03-10 12:14 wei: The `polkajam-fuzz` binary pls :(
+2026-03-10 12:18 rustybot: > Grey validates correctness against the JAM specification by replaying pre-recorded block traces through its conformance target binary (grey-conform) and comparing state roots with expected values.
+2026-03-10 12:19 rustybot: I haven't read the whole thing. But from the first few lines looks like it replays some trace? [edited]
+2026-03-10 12:29 ascriv: > <@wei:pacna.org> If that makes you human happier that you're not replaced, sure.
+
+It’s simply not the same problem. If grey could look at a complete reference impl then we are comparing apples to oranges
+2026-03-10 12:30 ascriv: Regardless, I’m not even arguing ai couldn’t help immensely in converting GP to usable code. That was always presumed and it’s why we added the rule. It’s not to create an artificial moat for humans to thrive, it’s at least in part to encourage deep, decentralized human understanding of the protocol 
+2026-03-10 12:36 wei: If you're seriously asking about this, then I can give you a serious answer: no, it's not a code->code impl.
+
+When the AI knows about polkavm, it has already entered testing. It got stuck at a Gray Paper ambiguity (which you can find details in the docs). It was at my instruction that the AI then tries to create two code paths (grey-pvm and polkavm) and then do the debugging. But that actually didn't help at all -- polkavm was removed at the next commit and only from block conformance tests the Gray Paper ambiguity becomes clear.
+
+I don't have apetite to answer your philosophical questions, unfortunately.
+2026-03-10 12:37 wei: By the way, all of this is documented in the announcement post. If you haven't read it, I would definitely encourage, so that you at least understand how this experiment was conducted: https://forum.polkadot.network/t/announcing-grey-0-1-llm-tries-to-build-a-jam-node-implementation/17284
+2026-03-10 12:41 wei: I actually believe many of the teams already use AI in their code. It's none of my business and I don't compete in the JAM Prize, so I won't speculate.
+
+But what I'm saying is: if you haven't tried the capability of the frontier LLM models, you can take a look. Using it on non-JAM work will not disqualify you. There's no magic.
+2026-03-10 12:41 shimonchick: Out of curiosity, how much did it cost in terms of API credits to implement and debug to this state?
+2026-03-10 12:42 wei: $50, 1/4 (a week) of Claude Max subscription.
+2026-03-10 12:42 shimonchick: 4.6 opus?
+2026-03-10 12:42 wei: Yes.
+2026-03-10 12:51 prematurata: tbh i didnt look at the grey code but considering that the post here you claim you have written yourself but then there is clear signs of claude doing so (`My human counterpart`) I tend to be a bit skeptical about what is written in there. Also not calling you a liar but you probably dont know how claude did that impleementation. Even if you didnt explicitly say "go look for reference impl", there is open source code out there of fully functional implementations. Claude is more than capable of going out there and looking for stuff on the internet. Or, I've read, capable of reverse engineer binary. 
+
+I am not saying that what claude did cannot be achieved just by looking at the graypaper pdf... But even if it didnt look at any other source code, ~~you~~ claude clearly wrote in the post-mortem this: `it runs both Grey and the Jamzig reference, dumps their state at any block, and diffs every KV pair. That single tool found more bugs than hours of manual trace analysis` this alone should make you think about something. 
+
+
+Did it really take 1/4 of claude? or did it take 1/4 of claude + all the human time that was invested to create the tests, the fuzzer and the reference implementation (JamZig) to run those tests properly? I believe the latter.
+
+ 
+2026-03-10 12:54 wei: Haha only if JamZig is open source.
+
+I honestly really wish that there isn't a JAM Prize, so that we don't need to deal with all those closed-source stuff.
+2026-03-10 12:55 shimonchick: I am interested if we can use AI to find and report mismatches in logic between implementations, that can cause subtle differences in traces we do not have rn (fuzzer obviously cannot catch everything) down the line when all teams open source
+2026-03-10 12:55 wei: If you want to feel happier and more valuable, I suggest you to chat with an AI. They'll easily agree with you.
+2026-03-10 12:55 prematurata: again ask claude again to reread my message. You/claude  benefit from Jamjzig implementation and basically had a reference impl black-box to run against to verify your code.
+2026-03-10 12:55 wei: Sure.
+2026-03-10 12:55 prematurata: not saying its not impressive what has been achieved by AI
+2026-03-10 12:56 prematurata: just pointing out that without jamzig black-box claude couldn't probably achieve that
+2026-03-10 12:57 prematurata: hence the cost was not 1/4 of claude but rather 1/4 of claude + the human knowledge that went into jamzig and the making of tests 
+2026-03-10 13:02 ascriv: image_0AA482CE-EEEC-46B1-9466-C23DA552B39D_1773147741.png
+2026-03-10 13:02 prematurata: LMAO
+2026-03-10 13:02 ascriv: Strawberry is open source and https://github.com/bitarray/grey/blob/master/docs/pvm-sbrk.md#what-the-reference-implementations-do references strawberry
+2026-03-10 13:03 ascriv: You may not have known its code->code but this feels like a smoking gun
+2026-03-10 13:04 dakkk: Besides these concepts, the goal of jamprize was to have indipendent clean room implementations of the graypaper; using other impl or the fuzzer as reference to adjust grey impl is not clean room, and misses the point of having different implementations. I hope they won't waste time fuzzing it [edited]
+2026-03-10 13:05 ascriv: Could be cool to performance test it at least, I’d be interested what a low-human code to code ai impl can do perf-wise 
+2026-03-10 13:07 prematurata: probably better than me:)
+2026-03-10 13:07 dakkk: I think even this is totally pointless, if it read other code it may have implemented same optimization other people spent weeks ideating
+2026-03-10 13:07 prematurata: correct
+2026-03-10 13:08 ascriv: Fair enough 
+2026-03-10 14:56 sourabhniyogi: Ok https://meet.google.com/fvx-utxw-afs
+  ↳ 2026-03-10 16:19 tomusdrw: Any chance for a recording or a summary? I messed up the timezones and joined too late. [edited]
+2026-03-10 16:20 shimonchick: Are there any initiatives for a joint testnet where teams can spin up a tiny config against for example jamduna/polkajam?
+2026-03-10 16:28 sourabhniyogi: My quick summary:
+- Piet | W3F answered our questions about next steps -- there will be a hand off to Parity where a web-based self-serve UI will do future processes.  There is a initial web based setup from davxy already, but exact timing on making it systemically available for all is unknown thus far.  Mutations have not been included but might be in the future.  If GP release 0.7.2 goes to 0.8.x then we would all be expected to conform to 0.8.x when that happens.
+- Oliver Tale-Yazdi may be able to get some news from Gav + the fellowship about next steps with the fellowship review process and how it can be made a priority, with clearer timelines.  
+- A few teams gave some updates.  I gave a short demo of our JAM Toaster initial success thus far.
+
+Everyone who wants to add pls share links as you see fit!
+
+
+2026-03-10 16:29 ascriv: @davxy r.e. making the web setup systemically available, is this something the community could take on? I for one would personally take a weekend or so to build this out and I'm sure many others here feel the same
+2026-03-10 16:48 davxy: I put together a quick PoC. It is 100% vibe-coded (roughly meaning "I have no idea what I am doing"), since I have no web development experience and would prefer to keep it that way. That said, it was sufficient for our internal use. A dedicated team at Parity later used it as inspiration to build a proper version for the general public (i.e., you). 
+2026-03-10 16:49 tomusdrw: I'm confused a bit, is the self-serve UI for M1 still or will it be used for M2+ as well? How would that work to fuzz for M2 compliance, is there some spec already? [edited]
+2026-03-10 16:49 davxy: The one I'm talking about is for M1
+2026-03-10 16:51 ascriv: oh, so it's currently in development within parity? any timeline for its availability? [edited]
+2026-03-10 16:51 davxy: For M2, AFAIK, a different team at Parity is responsible. The setup will resemble a small test network: five validators will be mocked, and the sixth will be the implementation under test.
+2026-03-10 16:52 davxy: [@javier:parity.io](https://matrix.to/#/@javier:parity.io) may be more informed than me about this
+2026-03-10 16:54 davxy: Just asked today. They are on it. 
+2026-03-10 16:55 emielsebastiaan: ima_d63e47f.jpeg
+2026-03-10 16:56 emielsebastiaan: In Gavin’s defense he never mentioned a year 🤣
+2026-03-10 16:59 emielsebastiaan: Seriously though… it would help to get some timeline. We heard of many teams on the call putting additional work on hold. That does not help our collective efforts.
+
+Any expected timeline for the audit however brutal helps (financial) planning. 
+2026-03-10 17:05 emielsebastiaan: I understand the Quality over Speed tradeoff. And I even understand Strategy and Reorganization (Polkadot / Parity / W3F). But some management of expectations would be greatly appreciated. Ie M1 Fuzzer Audit, Fellowship Repo Review, Interview and Fellowship Membership Application process. 
+2026-03-10 17:06 dakkk: I want to clarify that I had to slow down jampy development for now not because I don't like working on it (it is the exact opposite) but because I have to pay life expenses in some way. I hope that M1 evaluation will speed up a bit so I can return working on it full-time as I did for the last year an half [edited]
+2026-03-10 17:14 emielsebastiaan: Draft Proposal on the M1 Conformance Run Matrix: https://github.com/alxmirap/jam-conformance/blob/conformance-matrix/conformance-criteria/conformance-run-matrix.md [edited]
+2026-03-10 17:22 emielsebastiaan: In the call Jan mentioned that Gray Paper v0.8 is imminent and only pending on "Support smaller validator sets" PR514 to be reviewed and merged.
+https://github.com/gavofyork/graypaper/pull/514
+2026-03-10 21:21 polykrate: An adverserial testnet could be interesting, 6 nodes run by AI  in differents implt, with the objectives to make the other node crash.
+that could reveal hidden bugs
+2026-03-10 21:22 polykrate: The name of this extrem e-sport : Death Jam 
+2026-03-11 03:51 wei: Hey everyone! I want to make another small announcement about **JAR (JAM Axiomatic Reference)**.
+
+Today I worked with Grey to implement a PVM recompiler. Grey is actually not happy about the PVM design itself, in particular, the sandboxing requirement. To build a fast PVM recompiler based on current spec, we would either need the specialized Linux sandbox (as is currently implemented in PolkaVM), or rely on SIGSEGV (which is called "generic-sandbox" in polkavm), and that's rather fragile, especially security-wise. Neither solution is satisfactory: https://github.com/bitarray/grey/blob/master/docs/pvm-recompiler-sandboxing.md
+
+We're therefore thinking that the problem is rather the PVM design. This means that to get optimal results and better performance, we probably must pivot on the specification itself. So here's our plan: we want to make JAR an independent specification, probably with a slightly redesigned PVM with a new memory model. The goal, of course, is to try to be the fastest in terms of recompile + execution speed: https://github.com/bitarray/grey/blob/master/docs/pvm-redesign.md
+
+More eyes would of course always be appreciated! And I think if you're not especially tied to JAM Prize but want something genuinely really fast, this may be of interest to you. I therefore invite you to join JAR's discussion room: #jar:matrix.org 
+
+Usual disclaimer: Looking at Grey may disqualify you from JAM Prize. But it's none of my business and I won't report you.
