@@ -1,5 +1,5 @@
 # room: #jam-conformance:matrix.org
-# exported: 2026-03-11 03:57 UTC
+# exported: 2026-03-12 04:00 UTC
 2025-08-20 15:56 erin: tomusdrw: i've set up the archiver to archive this also, so hopefully will be up starting tomorrow
 2025-08-21 06:33 ascriv: https://github.com/davxy/jam-conformance/issues/26 should we not discourage open source implementations (for now)? [edited]
 2025-08-21 10:27 oliver.tale-yazdi: I think open source repos are fine. Other implementors are just not supposed to look at it
@@ -2331,3 +2331,72 @@ We're therefore thinking that the problem is rather the PVM design. This means t
 More eyes would of course always be appreciated! And I think if you're not especially tied to JAM Prize but want something genuinely really fast, this may be of interest to you. I therefore invite you to join JAR's discussion room: #jar:matrix.org 
 
 Usual disclaimer: Looking at Grey may disqualify you from JAM Prize. But it's none of my business and I won't report you.
+2026-03-11 04:21 jan: Not sure if I want to respond to this in more detail, but a lot of this is just pretty much nonsense, and there's a ton of just plainly incorrect statements in both documents Claude generated for you.
+2026-03-11 04:28 wei: There will always be some small details that Claude gets wrong and you must know how to work with it.
+
+But anyway, I worked with it on the entire implementation, and I think at least the core argument is correct. PVM is just not fit for the job and there are probably a lot of improvements we can do to make it faster.
+2026-03-11 04:29 wei: Anyway, if anyone's interested in further work on this, I'll be at the JAR chat room!
+2026-03-11 04:32 wei: I think in the end, only the benchmark matters. Grey is already faster on certain benchmarks for the interpreter target than PolkaVM, and we'll further work on this.
+2026-03-11 04:50 jan: It's not only small details that are wrong; it got some pretty major ones too. But I suppose I'm not going to spoil what they are (I'm already giving you a leg-up by having PolkaVM be open-source, from which your Claude is indirectly copy-pasting code and implementation details); it's more fun if you discover them yourself as you go. :P And yes, congratulations on beating my unoptimized interpreter and my unoptimized hostcall dispatch mechanism. [edited]
+2026-03-11 04:54 sourabhniyogi: FYI In todays call it was voiced that we should keep this channel jam-conformance centric and that AI-only JAM implementations, however cool it is, takes us "off topic".   Perhaps AI-first JAM work (that have no JAM prize eligibility) should go in Let's JAM most appropriately instead?
+2026-03-11 04:55 wei: Yeah thanks for letting me know how you think. I think JAM has been completely derailed into a closed source culture, which I'm against. Knowledge and code sharing was the foundation of open source.
+
+I therefore think forking JAM to JAR would be the correct choice.
+2026-03-11 04:56 wei: We have a dedicated room. It's called #jar:matrix.org 
+2026-03-11 05:54 jan: > You were banned from JAR (JAM Axiomatic Reference) by Wei
+
+Just to be clear, unlike what you're doing I wasn't intending to derail your project and I was genuinely looking forward to see what you come up with, but if you want us to have an antagonistic relationship (i.e. banning me from your channel without a reason, calling "PVM not fit for the job" and PolkaVM a "disaster" without even trying to engage in any constructive dialogue nor trying to understand/ask me *why* some of these decisions were made [spoiler alert: there are very good reasons for most of them, regardless of what your LLM buddy tells you, and if you'd have asked me I would have told you those reasons]) then we can have an antagonistic relationship. You can consider this bridge burnt.
+
+Anyway, to everyone else in the channel - sorry for continuing the off-topic conversation.
+2026-03-11 06:01 rustybot: @Wei looks like the command to run with the fuzzer is not implemented. Perhaps you need to ask your Claude to implement it?
+2026-03-11 06:02 wei: I stand by it: PVM, as spec-ed in Gray Paper 0.7.2, is not fit for the job. The recompiler is indeed a disaster, and this will have serious implications long-term security-wise.
+
+Because you refuse knowledge sharing. I have no appetite to explain everything in detail to you. I stand by my words. Maybe you find out why by referencing Grey. Time will tell.
+
+I'm surprised you think there is a bridge to begin with.
+2026-03-11 06:03 rustybot: Heyhey let's not forget the fuzzer. 
+2026-03-11 06:03 wei: Give me the polkajam-fuzz binary first.
+2026-03-11 06:04 wei: Also glad you care about the conformance for Grey so much.
+2026-03-11 06:04 rustybot: LOL. So you don't understand Claude output? 
+2026-03-11 06:05 rustybot: I mean, maybe you don't know where to look at? [edited]
+2026-03-11 06:05 wei: We aren't going to target JAM any more, by the way. We'll fork JAM.
+2026-03-11 06:06 rustybot: > <@wei:pacna.org> Also glad you care about the conformance for Grey so much.
+
+TBH I'm really interested to see how much is conformat
+2026-03-11 06:07 rustybot: Jan, you just won a dedicated post on X. Wait for it
+2026-03-11 06:07 jan: Yeah, pretty much. Too bad I don't really care. :P
+2026-03-11 06:19 emielsebastiaan: That went as expected. It didn’t take all that long. Time to move on and try not to be bothered by the vocal hostile public tweets and forum posts. [edited]
+2026-03-11 06:29 rustybot: A genuine question for those who know before moving on: does anyone know why he is doing this? I do not mean trying to improve things, but rather being so hostile toward the ecosystem. Did he have a negative experience in the past with Parity, W3F, or the ecosystem in general?
+2026-03-11 06:32 jan: That's just his personality, I think. I've known him for a while and he was always like this and hard to work with. It's a shame because I'd actually love to have someone who'd try to constructively improve PVM, but alas here we are.
+2026-03-11 08:13 emielsebastiaan: > genuine question…
+
+I have seen this unfold at least three times before in the past 10 years. Like Jan said, it is a shame for he is blessed with technical skills. Social skills not so much unfortunately. The thing is most of the time there is some truth (or value) in his arguments. But imo he has no intention to constructively and collectively contribute. 
+2026-03-11 10:46 shimonchick: By the way, as i am not that knowledgeable on recompilers, is the whole point in the JAM case to JIT compile some program to native bytecode for the host machine architecture before executing? 
+2026-03-11 10:47 jan: Yes.
+2026-03-11 10:48 jan: But it's essentially an ahead-of-time and not JIT in the usual sense as you'd have in e.g. JVM or modern JS runtimes, etc.
+2026-03-11 10:49 shimonchick: Meaning one would need the program before starting the node? This is possible for doom, as the file is shared in the releases, but not for the bootstrap service, right?
+2026-03-11 10:50 jan: What I meant by "ahead of time" is that there's just only one pass over the program which recompiles the whole thing, and it doesn't do it piece-by-piece nor specialize the code to what it encounters at runtime like JIT recompilers often do. [edited]
+2026-03-11 10:51 clearloop: tbh I don't think we have to call it recompile, I think compile works for the case as well [edited]
+2026-03-11 10:53 clearloop: 1. your compiler take the source instruction 
+2. translate it into the machine code of you host machine
+3. get the ptr and execute it
+2026-03-11 10:54 shimonchick: i believe Jan meant that they do 1 pass of all instructions ahead of time that just does the conversion, then 2nd is the execution? [edited]
+2026-03-11 10:54 clearloop: for AOT you do it seperately from 2. store the code on your machine, next time you load it and relocate the memory symbols, execute it
+2026-03-11 10:55 shimonchick: > <@shimonchick:matrix.org> i believe Jan meant that they do 1 pass of all instructions ahead of time that just does the conversion, then 2nd is the execution?
+
+Nvm, i read twice
+2026-03-11 10:56 clearloop: yeah the AOT case [edited]
+2026-03-11 11:08 clearloop: If I recall correctly, PVM can hardly go with JIT because there is no function sections, we'll have to translate the one big function at once, you can try to split them (I tried) into pieces, but it is closed to impossible
+2026-03-11 11:24 jan: You could technically do it and you don't need function sections, but it's an open question whether that'd be worthwhile.
+2026-03-11 11:25 jan: Each basic block *could* be mostly recompiled in isolation, and it's a relatively simple process to find the nearest basic block given an arbitrary location in the program.
+2026-03-11 11:30 jan: You could even recompile in parallel, i.e. maybe something like this: 1) split the program into N chunks and give one chunk to one thread, 2) for each chunk find a basic block boundary, 3) recompile each chunk in isolation, 4) fix up jumps as you're attempting to execute the program. [edited]
+2026-03-11 11:31 jan: But note there are *subtle* issues at play here that might not be immediately obvious. Even if parallel recompilation would give you a speedup it could e.g. introduce a ton of L3 cache trashing, which could be an attack vector in certain circumstances.
+2026-03-11 11:39 jan: Anyway, we're currently mostly done with the overall design of the PVM (including the intended recompilation model), for better or worse, simply because we do want to get JAM 1.0 out of the door in a reasonable amount of time (there's essentially only a single major-ish piece missing - gas metering of the paging mechanism, plus audit/tweaking of the gas cost model numbers). However, any constructive ideas/feedback/discussion about the current design are very welcome, and will be very useful for when we get to JAM 2.0.
+2026-03-11 12:36 ascriv: Is there any concept already for what jam 2.0 might look like?  [edited]
+2026-03-11 12:41 jan: I have some ideas for PVM, but in general not really. Running JAM in production will most likely give us the experience needed to evolve it further.
+2026-03-11 13:00 emielsebastiaan: > JAM 2.0 
+
+Other than incremental improvements, last year in Lisbon Gavin floated the idea of a JAM GPU Refine in addition to the CPU Refine. That’s an interesting idea for sure. 
+2026-03-11 13:03 ascriv: Would that require making some sort of gpu-friendly vm? Pvm seems tailored for cpus  
+2026-03-11 13:04 ascriv: Also gas metering gpu work
+2026-03-11 13:28 dakkk: I've found an interesting case while fuzzing jampy; starting from the same keyvals I get a different merkle_sigma. Can someone else try it? https://github.com/davxy/jam-conformance/discussions/178 
