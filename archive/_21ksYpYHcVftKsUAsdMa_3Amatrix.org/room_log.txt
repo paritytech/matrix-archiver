@@ -1,5 +1,5 @@
 # room: #jam-conformance:matrix.org
-# exported: 2026-03-12 04:00 UTC
+# exported: 2026-03-13 03:59 UTC
 2025-08-20 15:56 erin: tomusdrw: i've set up the archiver to archive this also, so hopefully will be up starting tomorrow
 2025-08-21 06:33 ascriv: https://github.com/davxy/jam-conformance/issues/26 should we not discourage open source implementations (for now)? [edited]
 2025-08-21 10:27 oliver.tale-yazdi: I think open source repos are fine. Other implementors are just not supposed to look at it
@@ -2400,3 +2400,5 @@ Other than incremental improvements, last year in Lisbon Gavin floated the idea 
 2026-03-11 13:03 ascriv: Would that require making some sort of gpu-friendly vm? Pvm seems tailored for cpus  
 2026-03-11 13:04 ascriv: Also gas metering gpu work
 2026-03-11 13:28 dakkk: I've found an interesting case while fuzzing jampy; starting from the same keyvals I get a different merkle_sigma. Can someone else try it? https://github.com/davxy/jam-conformance/discussions/178 
+2026-03-12 14:49 oliver.tale-yazdi: Parity will assign a TPM to M1 conformance. I assume they will the be prodding the Fellowship to do the reviews and subsequent steps.  
+I dont have a timeline for this, but TPMs at Parity are normally expected to provide timelines, so we should get one once they took over.

@@ -1,5 +1,5 @@
 # room: #graypaper:polkadot.io
-# exported: 2026-03-12 04:00 UTC
+# exported: 2026-03-13 03:59 UTC
 2024-04-17 20:29 syed: https://matrix.to/#/!hyzRkDqDthePbodYFz:parity.io/$f_DMsIEcDXZegw6Sabnehzc-LrdDQkmq5MbxDDyoZxY?via=parity.io&via=web3.foundation
 
 2024-04-17 20:29 syed: 
@@ -7048,3 +7048,8 @@ And how do you handle the case of e.g. an inner PVM having its initial instructi
   ↳ 2026-01-20 04:46 jan: Yes.
   ↳ 2026-01-20 04:47 jan: The new test vector format that will come with the new gas cost model will make it possible to test more of such corner cases.
 2026-01-27 17:41 unskilledpigeon: Hello
+2026-03-12 10:47 sourabhniyogi: I believe we should resolve [516-Sassafras appears completely broken here](https://github.com/gavofyork/graypaper/issues/516) soon (eg this March) and its closely related  [PR 514 - Support smaller validator sets](https://github.com/gavofyork/graypaper/pull/514).
+
+It seems clear some basic probabilistic modeling for C \< 341 in practice (to graduate from tiny C=2 to something notably higher in the Toaster, in Kusama) is in order, and for us make some decisions on whether these issues are resolved in GP 0.7.x vs 0.8.
+
+Given the exceptionally long silence in this channel, perhaps this is a good time to get the GP Editorial Board to make a judgement on this non-gas-related issue, and start to design a process around this? [edited]
