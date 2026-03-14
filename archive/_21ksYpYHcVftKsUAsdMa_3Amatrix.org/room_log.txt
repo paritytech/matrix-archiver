@@ -1,5 +1,5 @@
 # room: #jam-conformance:matrix.org
-# exported: 2026-03-13 03:59 UTC
+# exported: 2026-03-14 03:58 UTC
 2025-08-20 15:56 erin: tomusdrw: i've set up the archiver to archive this also, so hopefully will be up starting tomorrow
 2025-08-21 06:33 ascriv: https://github.com/davxy/jam-conformance/issues/26 should we not discourage open source implementations (for now)? [edited]
 2025-08-21 10:27 oliver.tale-yazdi: I think open source repos are fine. Other implementors are just not supposed to look at it
@@ -2398,7 +2398,30 @@ Nvm, i read twice
 
 Other than incremental improvements, last year in Lisbon Gavin floated the idea of a JAM GPU Refine in addition to the CPU Refine. That’s an interesting idea for sure. 
 2026-03-11 13:03 ascriv: Would that require making some sort of gpu-friendly vm? Pvm seems tailored for cpus  
+  ↳ 2026-03-13 06:06 jan: PVM would be completely unusable in a GPU context.
+
+In general doing compute on a GPU is an entirely different beast, and would require a *very* different approach. Some points off the top of my head:
+
+- GPU compute is inherently non-deterministic.
+- GPU capabilities vary very strongly between different hardware; for CPUs their behavior, architecture and instruction sets are somewhat standardized and consistent (even between different vendors), while for GPUs that is not true even within a single vendor
+- Real world GPU workloads (e.g. in ML) often require a ton of persistent memory which needs to be attached to a *single* node for a considerable amount of time to make any useful progress (otherwise you'll be spending the vast majority of your time shuffling data around the network and not doing any useful work)
+- At least for machine-learning workloads, you probably wouldn't need gas metering because all of the types of kernels used in practice are essentially bounded when it comes to how much compute they're doing, and I think you might get away with just having a kernel verifier plus calculating the cost empirically.
+- High end GPU hardware is *much* more expensive than high end CPUs, *and* it's not just a simple "better hardware == faster compute, but you can still do the same compute on any hardware, just slower". You *need* higher end GPU hardware for some types of compute, otherwise you just *can't* run the workload at all (well, in theory you can, but the speed difference would be multiple orders of magnitude, which makes it practically useless)
+  ↳ 2026-03-13 06:07 jan: That said, the biggest challenge with GPU compute is, probably, the determinism issue. Unlike with a CPU-based VM you *can't* just validate the output of a computation and check whether it's bit-by-bit the same.
+  ↳ 2026-03-13 06:08 jan: Even on a *single* machine, with a *single GPU*, with exactly the same input data, for many GPU kernels you will get a slightly different answer when you run the computation twice!
+  ↳ 2026-03-13 06:12 jan: (And for your reference: this isn't speculation - I'm writing this partially based on experience, because in my, currently meager, spare time I do a lot of machine learning and train things such as LLMs, diffusion models, etc. with my own training stack that I've written from scratch, so I have some idea how all of this actually works behind the scenes because I've implemented it myself) [edited]
 2026-03-11 13:04 ascriv: Also gas metering gpu work
 2026-03-11 13:28 dakkk: I've found an interesting case while fuzzing jampy; starting from the same keyvals I get a different merkle_sigma. Can someone else try it? https://github.com/davxy/jam-conformance/discussions/178 
 2026-03-12 14:49 oliver.tale-yazdi: Parity will assign a TPM to M1 conformance. I assume they will the be prodding the Fellowship to do the reviews and subsequent steps.  
 I dont have a timeline for this, but TPMs at Parity are normally expected to provide timelines, so we should get one once they took over.
+2026-03-13 17:30 tomusdrw: If anyone would like to participate in an ongoing performance measurement please add a docker image with your implementation here:
+https://github.com/FluffyLabs/jam-testing
+I've already added all of the teams that had docker images in target.json
+  ↳ 2026-03-13 18:01 celadari: This is great initiative.
+I see in the sratus there is an error with jam4s image => can you give us a trace/log of the error please ? [edited]
+  ↳ 2026-03-13 19:28 polykrate: Gotta go fast
+I'm gonna try 
+  ↳ 2026-03-13 19:31 tomusdrw: https://github.com/FluffyLabs/jam-testing/actions/runs/23063095081 you can find everything in gha logs. it seems it's running out of heap space, I'll try to increase the memory available in docker.
+  ↳ 2026-03-13 22:02 celadari: Thanks ! Increasing available memory indeed solved it 🚀
+2026-03-13 17:33 tomusdrw: Also take a look at https://github.com/FluffyLabs/jam-testing/issues/1 if you know of any Fuzzer Sources available, I'm happy to add them as part of that repo as well and have ongoing public fuzzing of all targets. The requirement would be though, for each team to prepare & attach a gha runner that would be exclusive to their target.
+2026-03-13 19:27 polykrate: 
