@@ -1,5 +1,5 @@
 # room: #jam-conformance:matrix.org
-# exported: 2026-03-14 03:58 UTC
+# exported: 2026-03-15 04:09 UTC
 2025-08-20 15:56 erin: tomusdrw: i've set up the archiver to archive this also, so hopefully will be up starting tomorrow
 2025-08-21 06:33 ascriv: https://github.com/davxy/jam-conformance/issues/26 should we not discourage open source implementations (for now)? [edited]
 2025-08-21 10:27 oliver.tale-yazdi: I think open source repos are fine. Other implementors are just not supposed to look at it
@@ -2410,6 +2410,50 @@ In general doing compute on a GPU is an entirely different beast, and would requ
   ↳ 2026-03-13 06:07 jan: That said, the biggest challenge with GPU compute is, probably, the determinism issue. Unlike with a CPU-based VM you *can't* just validate the output of a computation and check whether it's bit-by-bit the same.
   ↳ 2026-03-13 06:08 jan: Even on a *single* machine, with a *single GPU*, with exactly the same input data, for many GPU kernels you will get a slightly different answer when you run the computation twice!
   ↳ 2026-03-13 06:12 jan: (And for your reference: this isn't speculation - I'm writing this partially based on experience, because in my, currently meager, spare time I do a lot of machine learning and train things such as LLMs, diffusion models, etc. with my own training stack that I've written from scratch, so I have some idea how all of this actually works behind the scenes because I've implemented it myself) [edited]
+  ↳ 2026-03-14 09:21 polykrate: Do you think the non determinism of the GPU compute is the result of language/syntax or hardware limitation ? 
+  ↳ 2026-03-14 11:47 lu_bubba: what about TEE?
+  ↳ 2026-03-14 11:54 jan: Probably the only way you could achieve guaranteed deterministic output is to only target one single specific GPU, and then target its hardware ISA directly (so that different GPU driver versions couldn't affect the output). Suffice to say, this isn't really practical, and it isn't how modern GPU compute stacks work.
+  ↳ 2026-03-14 11:55 jan: What about it? That isn't really related to GPU compute in any way?
+  ↳ 2026-03-14 11:58 lu_bubba: I mean, we need determinism just to compare execution outputs and verify their correctness. With deterministic cpu we can just compare the outputs 1to1 and with 2/3 guarantees agree on something.
+
+Do we really need the same concept for undeterministic gpu's or we can just use alternative ways to verify correctness of off-chain compute?
+  ↳ 2026-03-14 12:00 jan: What exact alternative ways to verify correctness? :P
+  ↳ 2026-03-14 12:01 jan: I'm not saying it necessarily cannot be done, but due to the nondeterminism issue it isn't exactly easy.
+  ↳ 2026-03-14 12:02 jan: You'd need to engineer the system in such a way so that it can distinguish the inaccuracies stemming from the nondeterministic nature of GPU compute from malicious outputs.
+  ↳ 2026-03-14 12:04 lu_bubba: I am no expert in TEE, I am just asking if you considered this in future plans or something. For example Near heavily relying on TEE to running gpu-intense workloads (LLM inference) and providing the commitments on-chain. Do you see some fundamental vulnerability here? Again, I am not insisting on anything, just exploring the gaps of my understanding based on the experience of those who may know more [edited]
+  ↳ 2026-03-14 12:27 jan: That is a very different model than JAM uses. JAM doesn't need any special hardware, and it depends mostly on determinism and game theory to make sure people don't cheat. It doesn't depend on any centralized point of failure for security. TEE does, as that depends on the big centralized hardware companies not being malicious, *and* it also depends on the implementations (which are relatively complex) being pretty much bug-free. So philosophically it's probably not a very great fit for JAM.
+
+And, of course, it doesn't really help with all of the other problems that decentralized GPU compute has (which, TEE or not, you would need to solve somehow).
+  ↳ 2026-03-14 12:30 jan: Besides, if you'd like to provide TEE-based GPU compute you could do it off-chain without really needing any special support from the JAM protocol itself.
+  ↳ 2026-03-14 12:49 jan: So I think, if we were to do GPU compute on JAM _natively_, we'd probably want it to be something that's more innovative than repackaging the already available centralized solutions in a blockchain form, although at this point I don't know how exactly that would look like, or whether that is even practically feasible. But even if we don't, if people are interested they could still bring some form of GPU compute onto JAM, just in an off-chain form. [edited]
+  ↳ 2026-03-14 13:05 ascriv: Could be interesting to explore a restricted program format for deterministic parallelism that the PVM could invoke as an accelerator
+  ↳ 2026-03-14 13:06 ascriv: Something that commodity GPUs could reliably compute deterministically  [edited]
+  ↳ 2026-03-14 13:09 ascriv: Something like a deterministic, hardware-agnostic analogue to CUDA
+  ↳ 2026-03-14 13:35 dave: The nondeterminism surely mostly arises from unpredictable ordering of threads? So if you eg use atomic ops what these return is going to be non-deterministic as it will depend on how far other threads got. When you write a GPU program you'll generally write it so the nondeterminism doesn't matter, but it can still be visible in eg output order. It might be possible to only provide higher-level primitives that are deterministic, but it's not obvious what these would be. Or we could apply constraints on how things are used so the nondeterminism isn't observable.
+  ↳ 2026-03-14 13:44 ascriv: Yeah that makes sense. It might require restricting the program model to deterministic primitives (map/reduce/scan style) or otherwise enforcing deterministic memory semantics so scheduling differences can’t affect observable results
+  ↳ 2026-03-14 13:47 ascriv: It seems fruitful to at least explore a tiny deterministic parallel kernel model and see if gas modeling and everything else even makes sense. If plausible can grow from there [edited]
+  ↳ 2026-03-14 14:52 jan: It's not only ordering of threads. On a low level things like e.g. exact FP semantics (e.g. in various corner cases) are not guaranteed to be the same between different hardware revisions, or even different driver versions AFAIK. And there's a _ton_ of behavior that is, essentially, undefined (e.g. open Nvidia's PTX docs, search for "undefined" and see how many matches you'll get). In practice that usually doesn't matter, but it starts to matter when you combine "100% determinism" and "permissionless" as your requirements. And for many practical workloads you _want_ to use functionality which doesn't guarantee determinism, be it run-to-run or simply across different hardware generations/vendors (e.g. for ML workloads you most definitely want to use the tensor cores in your GPU, otherwise you're leaving a ton of performance on the table).
+
+With enough engineering and tradeoffs you could make it work, maybe? It also heavily depends on the kinds of workloads we'd expect people to run. Running a bunch of expensive ZK math really fast? Might make practical sense. Training a non-toy transformer? No sane person would use it if it's not reasonably competitive with traditional cloud-rented hardware. [edited]
+  ↳ 2026-03-14 14:58 ascriv: Good points. we could restrict the model to integer / finite-field style workloads where deterministic parallel kernels are easier to define (e.g. ZK math, hashing, etc ). [edited]
+  ↳ 2026-03-14 14:59 jan: You could definitely define a restricted subset that you could guarantee is deterministic, but that is quite a big tradeoff, so the question is - how useful that would be, and would it be worth the cost?
+  ↳ 2026-03-14 15:00 jan: e.g. at least for most ML workloads that would make it unviable
+  ↳ 2026-03-14 15:17 ascriv: That makes sense. I wasn’t really thinking about ML workloads, more about things like ZK prover math where a lot of the cost is bulk finite-field operations or FFT/NTT stages over large buffers.
+
+In that case adding a small number of deterministic host calls (e.g. field vector ops, FFT stages, batched hashing) might cover a lot of the heavy work while still keeping the VM model simple [edited]
+  ↳ 2026-03-14 19:39 polykrate: I've been thinking since Common Lisp is homoiconic — code is data, so macros can rewrite the AST before compilation. I use that to compile arithmetic expressions into deterministic OpenCL C kernels:
+
+(f+ (f* a b) (f* c d)) → SSA with fixed eval order → OpenCL C with explicit temporaries
+
+No floats (integer field mod Goldilocks prime), no inter-thread reductions (balanced binary tree inlined per work-item). 
+
+Basically: the non-determinism comes from thread scheduling and FP semantics. Kill both, and the GPU becomes deterministic.
+
+I mean, on the paper it should work so I vibe coded it, do you know how I should test this hypothesis ? 
+
+
+
+  ↳ 2026-03-14 21:51 dave: I think nowadays everyone just implements the IEEE FP standards? IIRC the only freedom you really get as an implementer is to choose what to stick in the mantissa bits for NaNs. So you would probably need to insert a canonicalising stage before reinterpreting as int or storing to memory. But even if we can't do FP, integer-only could still be useful for eg implementing heavy crypto stuff as ascriv | Jamzilla says. As with PVM now you're not going to match native performance for various reasons, but it could still be useful.
 2026-03-11 13:04 ascriv: Also gas metering gpu work
 2026-03-11 13:28 dakkk: I've found an interesting case while fuzzing jampy; starting from the same keyvals I get a different merkle_sigma. Can someone else try it? https://github.com/davxy/jam-conformance/discussions/178 
 2026-03-12 14:49 oliver.tale-yazdi: Parity will assign a TPM to M1 conformance. I assume they will the be prodding the Fellowship to do the reviews and subsequent steps.  
@@ -2423,5 +2467,13 @@ I see in the sratus there is an error with jam4s image => can you give us a trac
 I'm gonna try 
   ↳ 2026-03-13 19:31 tomusdrw: https://github.com/FluffyLabs/jam-testing/actions/runs/23063095081 you can find everything in gha logs. it seems it's running out of heap space, I'll try to increase the memory available in docker.
   ↳ 2026-03-13 22:02 celadari: Thanks ! Increasing available memory indeed solved it 🚀
+  ↳ 2026-03-14 05:52 shimonchick: PBNj currently does not support forks. Would it be possible to skip this test on failure and continue with the others (or make it optional in CICD? tomusdrw 
+  ↳ 2026-03-14 09:25 tomusdrw: I don't think forks support is relevant here. afaict your implementation is failing to import the stf test vectors correctly: https://github.com/FluffyLabs/jam-testing/actions/runs/23083971750/job/67057793491 these are used for performance checks and I believe they don't have forks. We can't measure performance reliably if there is no correctness first.
+  ↳ 2026-03-14 09:25 tomusdrw: please inspect, because it might as well be some configuration issue on my side - let me know [edited]
+  ↳ 2026-03-14 11:04 shimonchick: Hm, definitely a bundling issue on my side. I will get that fixed, thank you 
+  ↳ 2026-03-14 11:51 ascriv: I see jamzilla-int failing on safrole and storage_light, but tried to reproduce locally and couldn't. could be some CI issue?
+  ↳ 2026-03-14 12:33 tomusdrw: Yeah, it's a misconfiguration. If the job was in the queue for more than 120minutes it would be cancelled. I've re-run, should be fine in ~15mins
 2026-03-13 17:33 tomusdrw: Also take a look at https://github.com/FluffyLabs/jam-testing/issues/1 if you know of any Fuzzer Sources available, I'm happy to add them as part of that repo as well and have ongoing public fuzzing of all targets. The requirement would be though, for each team to prepare & attach a gha runner that would be exclusive to their target.
 2026-03-13 19:27 polykrate: 
+2026-03-14 11:19 ascriv: looks like jamzilla-int failed on safrole and storage_light but i can't reproduce on my side. could you please confirm? [edited]
+2026-03-14 12:03 lu_bubba: 
