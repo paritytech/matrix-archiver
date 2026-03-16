@@ -1,5 +1,5 @@
 # room: #jam-conformance:matrix.org
-# exported: 2026-03-15 04:09 UTC
+# exported: 2026-03-16 04:13 UTC
 2025-08-20 15:56 erin: tomusdrw: i've set up the archiver to archive this also, so hopefully will be up starting tomorrow
 2025-08-21 06:33 ascriv: https://github.com/davxy/jam-conformance/issues/26 should we not discourage open source implementations (for now)? [edited]
 2025-08-21 10:27 oliver.tale-yazdi: I think open source repos are fine. Other implementors are just not supposed to look at it
@@ -2473,6 +2473,27 @@ I'm gonna try
   ↳ 2026-03-14 11:04 shimonchick: Hm, definitely a bundling issue on my side. I will get that fixed, thank you 
   ↳ 2026-03-14 11:51 ascriv: I see jamzilla-int failing on safrole and storage_light, but tried to reproduce locally and couldn't. could be some CI issue?
   ↳ 2026-03-14 12:33 tomusdrw: Yeah, it's a misconfiguration. If the job was in the queue for more than 120minutes it would be cancelled. I've re-run, should be fine in ~15mins
+  ↳ 2026-03-15 14:12 shimonchick: Can we have local usage instructions for the 2 docker containers?
+  ↳ 2026-03-15 16:48 tomusdrw: ```
+ ❯❯❯ npm exec tsx -- --test ./tests/picofuzz/storage.test.ts
+/Users/tomusdrw/workspace/fluffylabs/jam-testing/tests/common.ts:69
+    throw new Error("TARGET_NAME, TARGET_IMAGE, and TARGET_CMD environment variables are required");
+          ^
+
+Error: TARGET_NAME, TARGET_IMAGE, and TARGET_CMD environment variables are required
+    at getTargetConfig (/Users/tomusdrw/workspace/fluffylabs/jam-testing/tests/common.ts:69:11)
+    at runPicofuzzTest (/Users/tomusdrw/workspace/fluffylabs/jam-testing/tests/picofuzz/common.ts:18:18)
+    at <anonymous> (/Users/tomusdrw/workspace/fluffylabs/jam-testing/tests/picofuzz/storage.test.ts:4:1)
+    at ModuleJob.run (node:internal/modules/esm/module_job:430:25)
+    at async node:internal/modules/esm/loader:639:26
+    at async asyncRunEntryPointWithESMLoader (node:internal/modules/run_main:101:5)
+```
+This orchestrates the containers provided env variables.
+  ↳ 2026-03-15 16:50 tomusdrw: or you can just run without docker (i.e. start target, then start either minifuzz or picofuzz). Note the STF test vectors are also present here:
+https://github.com/davxy/jam-test-vectors/tree/95bd6f458d353c7d5198d79437cabe50eab890ac/traces
+
+as JSON/bin STF test vectors format
+  ↳ 2026-03-15 16:51 tomusdrw: You can load them here for inspection: https://state.fluffylabs.dev/
 2026-03-13 17:33 tomusdrw: Also take a look at https://github.com/FluffyLabs/jam-testing/issues/1 if you know of any Fuzzer Sources available, I'm happy to add them as part of that repo as well and have ongoing public fuzzing of all targets. The requirement would be though, for each team to prepare & attach a gha runner that would be exclusive to their target.
 2026-03-13 19:27 polykrate: 
 2026-03-14 11:19 ascriv: looks like jamzilla-int failed on safrole and storage_light but i can't reproduce on my side. could you please confirm? [edited]

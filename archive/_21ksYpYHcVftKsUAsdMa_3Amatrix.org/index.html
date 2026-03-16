@@ -18,7 +18,7 @@ a:hover{color:#90caf9}
 em{font-style:italic}
 </style>
 <h1>#jam-conformance:matrix.org</h1>
-<p><small>last updated 2026-03-15 04:09 UTC</small></p>
+<p><small>last updated 2026-03-16 04:13 UTC</small></p>
 <p><a href='room_log.txt'>⇩ plaintext</a> · <a href='../../'>⇦ all rooms</a></p>
 <hr>
 <div class='msg'><a class='ts' href='#$_9hLINsChVG8rufQkmbqp-fIbsNyK1YqpS3C9S7QZHU'>#</a> <a class='ts' name='$_9hLINsChVG8rufQkmbqp-fIbsNyK1YqpS3C9S7QZHU' href='https://matrix.to/#/!ksYpYHcVftKsUAsdMa:matrix.org/$_9hLINsChVG8rufQkmbqp-fIbsNyK1YqpS3C9S7QZHU' target='_blank'>2025-08-20 15:56</a>&ensp;<span class='u' style='color:#787fdf'>erin</span>: tomusdrw: i&#x27;ve set up the archiver to archive this also, so hopefully will be up starting tomorrow</div>
@@ -2461,6 +2461,26 @@ I&#x27;m gonna try </div>
 <div class='msg reply'><a class='ts' href='#$1B1W9Uy7HBH4BKCpBdJWj4-9WZuOLzu6ITLbBfRHf30'>#</a> <a class='ts' name='$1B1W9Uy7HBH4BKCpBdJWj4-9WZuOLzu6ITLbBfRHf30' href='https://matrix.to/#/!ksYpYHcVftKsUAsdMa:matrix.org/$1B1W9Uy7HBH4BKCpBdJWj4-9WZuOLzu6ITLbBfRHf30' target='_blank'>2026-03-14 11:04</a>&ensp;<span class='u' style='color:#cf85c2'>shimonchick</span>: Hm, definitely a bundling issue on my side. I will get that fixed, thank you </div>
 <div class='msg reply'><a class='ts' href='#$6mdzt4I6VankaP5ugY0oh9D5_fuzMAG_SGQeyWDF02A'>#</a> <a class='ts' name='$6mdzt4I6VankaP5ugY0oh9D5_fuzMAG_SGQeyWDF02A' href='https://matrix.to/#/!ksYpYHcVftKsUAsdMa:matrix.org/$6mdzt4I6VankaP5ugY0oh9D5_fuzMAG_SGQeyWDF02A' target='_blank'>2026-03-14 11:51</a>&ensp;<span class='u' style='color:#4036ac'>ascriv</span>: I see jamzilla-int failing on safrole and storage_light, but tried to reproduce locally and couldn&#x27;t. could be some CI issue?</div>
 <div class='msg reply'><a class='ts' href='#$AopoDL-zAJHuRbhowJpT-9nmnGZFHsOPPBm_Hr5Xh94'>#</a> <a class='ts' name='$AopoDL-zAJHuRbhowJpT-9nmnGZFHsOPPBm_Hr5Xh94' href='https://matrix.to/#/!ksYpYHcVftKsUAsdMa:matrix.org/$AopoDL-zAJHuRbhowJpT-9nmnGZFHsOPPBm_Hr5Xh94' target='_blank'>2026-03-14 12:33</a>&ensp;<span class='u' style='color:#48d03d'>tomusdrw</span>: Yeah, it&#x27;s a misconfiguration. If the job was in the queue for more than 120minutes it would be cancelled. I&#x27;ve re-run, should be fine in ~15mins</div>
+<div class='msg reply'><a class='ts' href='#$WKbZbq5eaFxHln-Uhp6KuDhWiwevlQlnPG0HV1EWYVg'>#</a> <a class='ts' name='$WKbZbq5eaFxHln-Uhp6KuDhWiwevlQlnPG0HV1EWYVg' href='https://matrix.to/#/!ksYpYHcVftKsUAsdMa:matrix.org/$WKbZbq5eaFxHln-Uhp6KuDhWiwevlQlnPG0HV1EWYVg' target='_blank'>2026-03-15 14:12</a>&ensp;<span class='u' style='color:#cf85c2'>shimonchick</span>: Can we have local usage instructions for the 2 docker containers?</div>
+<div class='msg reply'><a class='ts' href='#$T_qou87UhzWgw4d3mAILvkbdLwUKU_cJ7iyIU7Bz5pE'>#</a> <a class='ts' name='$T_qou87UhzWgw4d3mAILvkbdLwUKU_cJ7iyIU7Bz5pE' href='https://matrix.to/#/!ksYpYHcVftKsUAsdMa:matrix.org/$T_qou87UhzWgw4d3mAILvkbdLwUKU_cJ7iyIU7Bz5pE' target='_blank'>2026-03-15 16:48</a>&ensp;<span class='u' style='color:#48d03d'>tomusdrw</span>: <pre><code class=''> ❯❯❯ npm exec tsx -- --test ./tests/picofuzz/storage.test.ts
+/Users/tomusdrw/workspace/fluffylabs/jam-testing/tests/common.ts:69
+    throw new Error(&quot;TARGET_NAME, TARGET_IMAGE, and TARGET_CMD environment variables are required&quot;);
+          ^
+
+Error: TARGET_NAME, TARGET_IMAGE, and TARGET_CMD environment variables are required
+    at getTargetConfig (/Users/tomusdrw/workspace/fluffylabs/jam-testing/tests/common.ts:69:11)
+    at runPicofuzzTest (/Users/tomusdrw/workspace/fluffylabs/jam-testing/tests/picofuzz/common.ts:18:18)
+    at &lt;anonymous&gt; (/Users/tomusdrw/workspace/fluffylabs/jam-testing/tests/picofuzz/storage.test.ts:4:1)
+    at ModuleJob.run (node:internal/modules/esm/module_job:430:25)
+    at async node:internal/modules/esm/loader:639:26
+    at async asyncRunEntryPointWithESMLoader (node:internal/modules/run_main:101:5)
+</code></pre>
+This orchestrates the containers provided env variables.</div>
+<div class='msg reply'><a class='ts' href='#$AzMBkE7CGGI68cGr5pGDrxUZeTnyTUuSbYdTZIxPwNg'>#</a> <a class='ts' name='$AzMBkE7CGGI68cGr5pGDrxUZeTnyTUuSbYdTZIxPwNg' href='https://matrix.to/#/!ksYpYHcVftKsUAsdMa:matrix.org/$AzMBkE7CGGI68cGr5pGDrxUZeTnyTUuSbYdTZIxPwNg' target='_blank'>2026-03-15 16:50</a>&ensp;<span class='u' style='color:#48d03d'>tomusdrw</span>: or you can just run without docker (i.e. start target, then start either minifuzz or picofuzz). Note the STF test vectors are also present here:
+<a href="https://github.com/davxy/jam-test-vectors/tree/95bd6f458d353c7d5198d79437cabe50eab890ac/traces" rel="noopener" target="_blank">https://github.com/davxy/jam-test-vectors/tree/95bd6f458d353c7d5198d79437cabe50eab890ac/traces</a>
+
+as JSON/bin STF test vectors format</div>
+<div class='msg reply'><a class='ts' href='#$1HIjEMqGI9ylBhAh6HFmqHpNqArFyxzOm7UGOtBx4RA'>#</a> <a class='ts' name='$1HIjEMqGI9ylBhAh6HFmqHpNqArFyxzOm7UGOtBx4RA' href='https://matrix.to/#/!ksYpYHcVftKsUAsdMa:matrix.org/$1HIjEMqGI9ylBhAh6HFmqHpNqArFyxzOm7UGOtBx4RA' target='_blank'>2026-03-15 16:51</a>&ensp;<span class='u' style='color:#48d03d'>tomusdrw</span>: You can load them here for inspection: <a href="https://state.fluffylabs.dev/" rel="noopener" target="_blank">https://state.fluffylabs.dev/</a></div>
 <div class='msg'><a class='ts' href='#$Crg18uk6vflazircoC_ibKEFJso5R5iuPOucnORgpUA'>#</a> <a class='ts' name='$Crg18uk6vflazircoC_ibKEFJso5R5iuPOucnORgpUA' href='https://matrix.to/#/!ksYpYHcVftKsUAsdMa:matrix.org/$Crg18uk6vflazircoC_ibKEFJso5R5iuPOucnORgpUA' target='_blank'>2026-03-13 17:33</a>&ensp;<span class='u' style='color:#48d03d'>tomusdrw</span>: Also take a look at <a href="https://github.com/FluffyLabs/jam-testing/issues/1" rel="noopener" target="_blank">https://github.com/FluffyLabs/jam-testing/issues/1</a> if you know of any Fuzzer Sources available, I&#x27;m happy to add them as part of that repo as well and have ongoing public fuzzing of all targets. The requirement would be though, for each team to prepare &amp; attach a gha runner that would be exclusive to their target.</div>
 <div class='msg'><a class='ts' href='#$h-HDLP2iHcEvNiGoLWwlSR5V_6MQOE0Y1l0LQcn32a4'>#</a> <a class='ts' name='$h-HDLP2iHcEvNiGoLWwlSR5V_6MQOE0Y1l0LQcn32a4' href='https://matrix.to/#/!ksYpYHcVftKsUAsdMa:matrix.org/$h-HDLP2iHcEvNiGoLWwlSR5V_6MQOE0Y1l0LQcn32a4' target='_blank'>2026-03-13 19:27</a>&ensp;<span class='u' style='color:#44c3b0'>polykrate</span>: </div>
 <div class='msg'><a class='ts' href='#$2ISVzk175pBIOJfUpeEXYQ_8qIN64it4D3ZSRbJYBbM'>#</a> <a class='ts' name='$2ISVzk175pBIOJfUpeEXYQ_8qIN64it4D3ZSRbJYBbM' href='https://matrix.to/#/!ksYpYHcVftKsUAsdMa:matrix.org/$2ISVzk175pBIOJfUpeEXYQ_8qIN64it4D3ZSRbJYBbM' target='_blank'>2026-03-14 11:19</a>&ensp;<span class='u' style='color:#4036ac'>ascriv</span>: looks like jamzilla-int failed on safrole and storage_light but i can&#x27;t reproduce on my side. could you please confirm? <span class="edited">(edited)</span></div>
