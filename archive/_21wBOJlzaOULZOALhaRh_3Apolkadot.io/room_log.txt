@@ -1,5 +1,5 @@
 # room: #jam:polkadot.io
-# exported: 2026-03-16 04:12 UTC
+# exported: 2026-03-17 04:00 UTC
 2024-04-20 02:08 johnjiao123: 
 2024-04-20 02:09 johnjiao123: 
 2024-05-30 21:48 nradko: Hey everyone,
@@ -12564,3 +12564,40 @@ In either case, the "worst" rVRF outputs land in the middle, so if you run out b
 
 I have not participated much on here as I haven’t had much value to add over the past two years; working solo part-time, no prior meaningful blockchain experience nor much experience with a lot of the topics in the GP, way behind other teams. 
 2026-03-10 17:32 emielsebastiaan: Steve | Martlet: update here: https://matrix.to/#/%23jam-conformance%3Amatrix.org
+2026-03-16 13:00 danicuki: I think we may be facing a bit of a chicken-and-egg problem in the review process:
+
+• We need knowledgeable reviewers for JAM submissions, but currently most people with enough technical context are also JAM implementers.
+• Ideally reviewers should be impartial, but the pool of people familiar enough with JAM is still very small.
+• In the future, teams that pass milestones could potentially become reviewers, but the first milestones still require an initial set of qualified reviewers.
+• Even then, because of the prize structure, some conflicts of interest may still exist when existing teams review other submissions.
+
+Maybe the solution is not trying to find perfectly impartial reviewers (which might be unrealistic in such a small expert ecosystem), but designing a process that mitigates conflicts.
+
+For example:
+• multiple reviewers per milestone
+• conflict-of-interest declarations and recusal when appropriate
+• majority-based decisions instead of a single reviewer
+• public review reports explaining the reasoning
+
+Another possibility could be aligning incentives — for example reviewers staking some DOT and reviews being challengeable — but that might be more complex to implement.
+
+Curious to hear how others think this could best be handled.
+2026-03-16 21:38 xlchen: for reference, here is a (inactive) discussion issue about fellowship review https://github.com/polkadot-fellows/help-center/issues/14. I suggested to use AI tool to perform review but given that I am not allowed to look other's code, I need others whom can look the code to tell me if it works or not.
+2026-03-16 21:53 danicuki: > <@xlchen:matrix.org> for reference, here is a (inactive) discussion issue about fellowship review https://github.com/polkadot-fellows/help-center/issues/14. I suggested to use AI tool to perform review but given that I am not allowed to look other's code, I need others whom can look the code to tell me if it works or not.
+
+Right, and that’s where the deadlock seems to appear.
+
+The people who have enough technical context to properly evaluate a JAM implementation are mostly the implementers themselves. But if implementers cannot look at other teams’ code due to the prize rules, then the remaining reviewers may not have enough familiarity with the protocol to judge correctness.
+
+So we end up with a structural problem: the people who can evaluate the code cannot see it, and the people who can see it may not be able to evaluate it properly.
+2026-03-16 22:49 jaymansfield: > <@danicuki:matrix.org> Right, and that’s where the deadlock seems to appear.
+> 
+> The people who have enough technical context to properly evaluate a JAM implementation are mostly the implementers themselves. But if implementers cannot look at other teams’ code due to the prize rules, then the remaining reviewers may not have enough familiarity with the protocol to judge correctness.
+> 
+> So we end up with a structural problem: the people who can evaluate the code cannot see it, and the people who can see it may not be able to evaluate it properly.
+
+IMO code review should be about code quality and ensuring the submission looks like real dev work rather than AI generated output, which doesn’t really require deep JAM knowledge. Implementers would  definitely be better suited to validate the fuzzer results though
+2026-03-16 22:53 xlchen: yeah I think the main thing the reviewers needs to check is the code is not copy of some public code or AI generated garbage 
+2026-03-17 02:08 clearloop: yeah, I think given LSP + git history, test instructions + target language analyze tools, things are good to go, the problem may not about how hard to review it but wether start working on it, and ain't part of the goal of the JAM prize is for educating people about the knowledge of JAM? it's good chance for the people from parity or w3f who didn't join the JAM development to learn more about JAM, so I don't understand why it requires JAM knowledge, if you don't understand sort of details of an implementation of a team, you can always ping them to update some docs or even meet with them
+
+and the JAM specific logic or even including performance (part of quality), are actually already "reviewed" by the fuzz tools written by the polkajam team, so I believe the main problem needs to be solved is just start working on it [edited]

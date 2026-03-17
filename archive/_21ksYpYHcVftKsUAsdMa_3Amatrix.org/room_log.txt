@@ -1,5 +1,5 @@
 # room: #jam-conformance:matrix.org
-# exported: 2026-03-16 04:13 UTC
+# exported: 2026-03-17 04:01 UTC
 2025-08-20 15:56 erin: tomusdrw: i've set up the archiver to archive this also, so hopefully will be up starting tomorrow
 2025-08-21 06:33 ascriv: https://github.com/davxy/jam-conformance/issues/26 should we not discourage open source implementations (for now)? [edited]
 2025-08-21 10:27 oliver.tale-yazdi: I think open source repos are fine. Other implementors are just not supposed to look at it
@@ -2494,6 +2494,7 @@ https://github.com/davxy/jam-test-vectors/tree/95bd6f458d353c7d5198d79437cabe50e
 
 as JSON/bin STF test vectors format
   ↳ 2026-03-15 16:51 tomusdrw: You can load them here for inspection: https://state.fluffylabs.dev/
+  ↳ 2026-03-16 10:35 shimonchick: tomusdrw: i believe i got things bundled properly now, would it be possible to do a rerun on the storage_light tests?
 2026-03-13 17:33 tomusdrw: Also take a look at https://github.com/FluffyLabs/jam-testing/issues/1 if you know of any Fuzzer Sources available, I'm happy to add them as part of that repo as well and have ongoing public fuzzing of all targets. The requirement would be though, for each team to prepare & attach a gha runner that would be exclusive to their target.
 2026-03-13 19:27 polykrate: 
 2026-03-14 11:19 ascriv: looks like jamzilla-int failed on safrole and storage_light but i can't reproduce on my side. could you please confirm? [edited]

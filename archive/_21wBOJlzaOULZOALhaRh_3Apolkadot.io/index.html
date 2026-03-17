@@ -18,7 +18,7 @@ a:hover{color:#90caf9}
 em{font-style:italic}
 </style>
 <h1>#jam:polkadot.io</h1>
-<p><small>last updated 2026-03-16 04:12 UTC</small></p>
+<p><small>last updated 2026-03-17 04:00 UTC</small></p>
 <p><a href='room_log.txt'>⇩ plaintext</a> · <a href='../../'>⇦ all rooms</a></p>
 <hr>
 <div class='msg'><a class='ts' href='#$we4SYXTHwmKn094X9Zs_7mWUOoUVh4icvVdxD83RZfs'>#</a> <a class='ts' name='$we4SYXTHwmKn094X9Zs_7mWUOoUVh4icvVdxD83RZfs' href='https://matrix.to/#/!wBOJlzaOULZOALhaRh:polkadot.io/$we4SYXTHwmKn094X9Zs_7mWUOoUVh4icvVdxD83RZfs' target='_blank'>2024-04-20 02:08</a>&ensp;<span class='u' style='color:#d0709e'>johnjiao123</span>: </div>
@@ -12453,3 +12453,40 @@ In either case, the &quot;worst&quot; rVRF outputs land in the middle, so if you
 
 I have not participated much on here as I haven’t had much value to add over the past two years; working solo part-time, no prior meaningful blockchain experience nor much experience with a lot of the topics in the GP, way behind other teams. </div>
 <div class='msg'><a class='ts' href='#$cIPT8VDmYaRESJJF7FTbNUVzxAAtWWVAmcqETE3jMVY'>#</a> <a class='ts' name='$cIPT8VDmYaRESJJF7FTbNUVzxAAtWWVAmcqETE3jMVY' href='https://matrix.to/#/!wBOJlzaOULZOALhaRh:polkadot.io/$cIPT8VDmYaRESJJF7FTbNUVzxAAtWWVAmcqETE3jMVY' target='_blank'>2026-03-10 17:32</a>&ensp;<span class='u' style='color:#a23bc7'>emielsebastiaan</span>: Steve | Martlet: update here: <a href="https://matrix.to/#/%23jam-conformance%3Amatrix.org" rel="noopener" target="_blank">https://matrix.to/#/%23jam-conformance%3Amatrix.org</a></div>
+<div class='msg'><a class='ts' href='#$dUGvZtZC1cY-JOtrsLsV88VKMmNQeG4mekKavvimONI'>#</a> <a class='ts' name='$dUGvZtZC1cY-JOtrsLsV88VKMmNQeG4mekKavvimONI' href='https://matrix.to/#/!wBOJlzaOULZOALhaRh:polkadot.io/$dUGvZtZC1cY-JOtrsLsV88VKMmNQeG4mekKavvimONI' target='_blank'>2026-03-16 13:00</a>&ensp;<span class='u' style='color:#4977cf'>danicuki</span>: I think we may be facing a bit of a chicken-and-egg problem in the review process:
+
+• We need knowledgeable reviewers for JAM submissions, but currently most people with enough technical context are also JAM implementers.
+• Ideally reviewers should be impartial, but the pool of people familiar enough with JAM is still very small.
+• In the future, teams that pass milestones could potentially become reviewers, but the first milestones still require an initial set of qualified reviewers.
+• Even then, because of the prize structure, some conflicts of interest may still exist when existing teams review other submissions.
+
+Maybe the solution is not trying to find perfectly impartial reviewers (which might be unrealistic in such a small expert ecosystem), but designing a process that mitigates conflicts.
+
+For example:
+• multiple reviewers per milestone
+• conflict-of-interest declarations and recusal when appropriate
+• majority-based decisions instead of a single reviewer
+• public review reports explaining the reasoning
+
+Another possibility could be aligning incentives — for example reviewers staking some DOT and reviews being challengeable — but that might be more complex to implement.
+
+Curious to hear how others think this could best be handled.</div>
+<div class='msg'><a class='ts' href='#$RjiDYYdTlTjY2X0g-0Y5mNJxpa9uzGBJHdJXZM4A-d8'>#</a> <a class='ts' name='$RjiDYYdTlTjY2X0g-0Y5mNJxpa9uzGBJHdJXZM4A-d8' href='https://matrix.to/#/!wBOJlzaOULZOALhaRh:polkadot.io/$RjiDYYdTlTjY2X0g-0Y5mNJxpa9uzGBJHdJXZM4A-d8' target='_blank'>2026-03-16 21:38</a>&ensp;<span class='u' style='color:#4cbfa8'>xlchen</span>: for reference, here is a (inactive) discussion issue about fellowship review <a href="https://github.com/polkadot-fellows/help-center/issues/14." rel="noopener" target="_blank">https://github.com/polkadot-fellows/help-center/issues/14.</a> I suggested to use AI tool to perform review but given that I am not allowed to look other&#x27;s code, I need others whom can look the code to tell me if it works or not.</div>
+<div class='msg'><a class='ts' href='#$7upV_qPnwvyeTWsixRLAscd5jf13GmIcXu2zkIRaISU'>#</a> <a class='ts' name='$7upV_qPnwvyeTWsixRLAscd5jf13GmIcXu2zkIRaISU' href='https://matrix.to/#/!wBOJlzaOULZOALhaRh:polkadot.io/$7upV_qPnwvyeTWsixRLAscd5jf13GmIcXu2zkIRaISU' target='_blank'>2026-03-16 21:53</a>&ensp;<span class='u' style='color:#4977cf'>danicuki</span>: &gt; &lt;@xlchen:matrix.org&gt; for reference, here is a (inactive) discussion issue about fellowship review <a href="https://github.com/polkadot-fellows/help-center/issues/14." rel="noopener" target="_blank">https://github.com/polkadot-fellows/help-center/issues/14.</a> I suggested to use AI tool to perform review but given that I am not allowed to look other&#x27;s code, I need others whom can look the code to tell me if it works or not.
+
+Right, and that’s where the deadlock seems to appear.
+
+The people who have enough technical context to properly evaluate a JAM implementation are mostly the implementers themselves. But if implementers cannot look at other teams’ code due to the prize rules, then the remaining reviewers may not have enough familiarity with the protocol to judge correctness.
+
+So we end up with a structural problem: the people who can evaluate the code cannot see it, and the people who can see it may not be able to evaluate it properly.</div>
+<div class='msg'><a class='ts' href='#$HgzPlJcI1lvhHX7M6jHzCqyKidDpJWG7NGtp6WP4t0Y'>#</a> <a class='ts' name='$HgzPlJcI1lvhHX7M6jHzCqyKidDpJWG7NGtp6WP4t0Y' href='https://matrix.to/#/!wBOJlzaOULZOALhaRh:polkadot.io/$HgzPlJcI1lvhHX7M6jHzCqyKidDpJWG7NGtp6WP4t0Y' target='_blank'>2026-03-16 22:49</a>&ensp;<span class='u' style='color:#d470bf'>jaymansfield</span>: &gt; &lt;@danicuki:matrix.org&gt; Right, and that’s where the deadlock seems to appear.
+&gt; 
+&gt; The people who have enough technical context to properly evaluate a JAM implementation are mostly the implementers themselves. But if implementers cannot look at other teams’ code due to the prize rules, then the remaining reviewers may not have enough familiarity with the protocol to judge correctness.
+&gt; 
+&gt; So we end up with a structural problem: the people who can evaluate the code cannot see it, and the people who can see it may not be able to evaluate it properly.
+
+IMO code review should be about code quality and ensuring the submission looks like real dev work rather than AI generated output, which doesn’t really require deep JAM knowledge. Implementers would  definitely be better suited to validate the fuzzer results though</div>
+<div class='msg'><a class='ts' href='#$fR23U2AoBCPxCQCchvh0naDwGW-8A1-dhMIklMQfrEY'>#</a> <a class='ts' name='$fR23U2AoBCPxCQCchvh0naDwGW-8A1-dhMIklMQfrEY' href='https://matrix.to/#/!wBOJlzaOULZOALhaRh:polkadot.io/$fR23U2AoBCPxCQCchvh0naDwGW-8A1-dhMIklMQfrEY' target='_blank'>2026-03-16 22:53</a>&ensp;<span class='u' style='color:#4cbfa8'>xlchen</span>: yeah I think the main thing the reviewers needs to check is the code is not copy of some public code or AI generated garbage </div>
+<div class='msg'><a class='ts' href='#$fRN6OxIYQHJxcztFQtTFKfOYp5F4SVszTG41SirF17I'>#</a> <a class='ts' name='$fRN6OxIYQHJxcztFQtTFKfOYp5F4SVszTG41SirF17I' href='https://matrix.to/#/!wBOJlzaOULZOALhaRh:polkadot.io/$fRN6OxIYQHJxcztFQtTFKfOYp5F4SVszTG41SirF17I' target='_blank'>2026-03-17 02:08</a>&ensp;<span class='u' style='color:#be2950'>clearloop</span>: yeah, I think given LSP + git history, test instructions + target language analyze tools, things are good to go, the problem may not about how hard to review it but wether start working on it, and ain&#x27;t part of the goal of the JAM prize is for educating people about the knowledge of JAM? it&#x27;s good chance for the people from parity or w3f who didn&#x27;t join the JAM development to learn more about JAM, so I don&#x27;t understand why it requires JAM knowledge, if you don&#x27;t understand sort of details of an implementation of a team, you can always ping them to update some docs or even meet with them
+
+and the JAM specific logic or even including performance (part of quality), are actually already &quot;reviewed&quot; by the fuzz tools written by the polkajam team, so I believe the main problem needs to be solved is just start working on it <span class="edited">(edited)</span></div>
