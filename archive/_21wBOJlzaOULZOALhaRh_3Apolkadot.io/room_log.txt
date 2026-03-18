@@ -1,5 +1,5 @@
 # room: #jam:polkadot.io
-# exported: 2026-03-17 04:00 UTC
+# exported: 2026-03-18 04:02 UTC
 2024-04-20 02:08 johnjiao123: 
 2024-04-20 02:09 johnjiao123: 
 2024-05-30 21:48 nradko: Hey everyone,
@@ -12600,4 +12600,10 @@ IMO code review should be about code quality and ensuring the submission looks l
 2026-03-16 22:53 xlchen: yeah I think the main thing the reviewers needs to check is the code is not copy of some public code or AI generated garbage 
 2026-03-17 02:08 clearloop: yeah, I think given LSP + git history, test instructions + target language analyze tools, things are good to go, the problem may not about how hard to review it but wether start working on it, and ain't part of the goal of the JAM prize is for educating people about the knowledge of JAM? it's good chance for the people from parity or w3f who didn't join the JAM development to learn more about JAM, so I don't understand why it requires JAM knowledge, if you don't understand sort of details of an implementation of a team, you can always ping them to update some docs or even meet with them
 
-and the JAM specific logic or even including performance (part of quality), are actually already "reviewed" by the fuzz tools written by the polkajam team, so I believe the main problem needs to be solved is just start working on it [edited]
+and the JAM specific logic or even including performance (part of quality), are actually already "reviewed" by the fuzz tools written by the polkajam team, so I believe the main problem needs to be solved is just start working on it and the landscape would be interesting [edited]
+2026-03-17 17:14 sourabhniyogi: For the first 15 teams, I think social proof (me/you/everyone having seen these people in-person and asking questions here and there and online, getting stuck and unstuck visibly, building something or attempting something before others) trumps every code review.  I believe if you asked these 15 teams for their social proof judgements, it would match up code reviews extremely well, and I consider the social aspect (can you work with others) quite important.  
+
+For the "late" teams who never asked a single question and have so little to no social proof from other teams, and just deliver a M1/... compliant code base I would be super skeptical that they did "clean room" work.  I would doubt they will ever contribute anything to the JAM community in the future, and believe they should be scrutinized very carefully for the benefit of the teams who really did sincere work.   We should of course welcome new teams, but they should probably understand that social proof is not going away, and they may be held to a higher bar and higher level of scrutiny to make up for the lack of social proof.  
+
+Just my 0.02. [edited]
+2026-03-17 22:49 hendrik_b: 
