@@ -1,5 +1,5 @@
 # room: #jam-conformance:matrix.org
-# exported: 2026-03-18 04:03 UTC
+# exported: 2026-03-19 04:03 UTC
 2025-08-20 15:56 erin: tomusdrw: i've set up the archiver to archive this also, so hopefully will be up starting tomorrow
 2025-08-21 06:33 ascriv: https://github.com/davxy/jam-conformance/issues/26 should we not discourage open source implementations (for now)? [edited]
 2025-08-21 10:27 oliver.tale-yazdi: I think open source repos are fine. Other implementors are just not supposed to look at it
@@ -2496,7 +2496,45 @@ as JSON/bin STF test vectors format
   ↳ 2026-03-15 16:51 tomusdrw: You can load them here for inspection: https://state.fluffylabs.dev/
   ↳ 2026-03-16 10:35 shimonchick: tomusdrw: i believe i got things bundled properly now, would it be possible to do a rerun on the storage_light tests?
   ↳ 2026-03-17 08:08 tomusdrw: Mihail | PeanutButterAndJAM: tests are going to be run periodically so make sure to just monitor your runs. Each time it should also be pulling the latest docker image. If you believe that something is working incorrectly on the CI please open an issue and we can move the discussion there.
+  ↳ 2026-03-18 07:51 dakkk: tomusdrw: is this CI action stuck? https://github.com/FluffyLabs/jam-testing/actions/runs/23229795909/job/67520660895 [edited]
+  ↳ 2026-03-18 07:57 tomusdrw: It's running on turbojam's dedicated runner, it has a timeout of 23h. This is 10 x 100k blocks fuzing, I suspect it might take around 10h. It should not affect any jobs on the "demo/perf" runner though.
+  ↳ 2026-03-18 07:58 tomusdrw: You can actually see in the logs it's making progress:
+```
+[graymatter] [2026-03-18 07:25:40.522] [INF] Fuzzed 100000 in 2213.3 seconds, 45.18 blocks/s
+Fuzz run 4/10 completed successfully
+Starting fuzz run 5/10
+```
+  ↳ 2026-03-18 08:00 dakkk: got it; so in meanwhile we can't expect performance chart updates, right? 
+  ↳ 2026-03-18 08:02 tomusdrw: Actually we should! As I said, that job is running on a separate runner, the demo/perf runner is currently executing this job:
+https://github.com/FluffyLabs/jam-testing/actions/runs/23232218410
+
+But it's a bit odd, because I can see it when I go to "runners -> perf", but it doesn't show up when I filter "actions -> in progress".
+  ↳ 2026-03-18 08:04 dakkk: yep, performance actions are queued, but they don start; the only running CI is the 1M on graymatter -> turbojam, so I suspect this is blocking all the other
+  ↳ 2026-03-18 08:05 tomusdrw: Nah, running this job now: https://github.com/FluffyLabs/jam-testing/actions/runs/23231944693/job/67530431866 :) I think it just randomly picks a JOB from the queue, not the WORKFLOW.
+  ↳ 2026-03-18 08:07 tomusdrw: dakkk | JamPy: If you are interested in jampy-compiler results you can find raw values here from yesterday: https://github.com/FluffyLabs/jam-testing/actions/runs/23206114146 (see artifacts) [edited]
+  ↳ 2026-03-18 08:10 dakkk: mh I may need eyeglasses today; not really on jampy perf, I was interested in understanding the delay between a jampy release and its perf update
+  ↳ 2026-03-18 08:10 dakkk: sorry 😅
+  ↳ 2026-03-18 08:30 tomusdrw: I was thinking about creating a more fair queueing mechanism that will also make sure that the runner is close to 100% utilised. Currently all workflows are scheduled twice a day for exactly the same minute, since there is just one runner it should be picking up the jobs at random. However most of the day the runner is not used for anything.
+The idea would be to have something that triggers the job externally based on the queue + something that builds up the queue + a UI to view (or maybe reorder if needed) the queue. The goal would be to give each team an equal chunk of time on the runner, so naturally implementations that are faster would run more often or would be demo-fuzzed longer.
+But for now let's just observe how current (arguably simple) setup works and draw conclusions after few more days/weeks.
 2026-03-13 17:33 tomusdrw: Also take a look at https://github.com/FluffyLabs/jam-testing/issues/1 if you know of any Fuzzer Sources available, I'm happy to add them as part of that repo as well and have ongoing public fuzzing of all targets. The requirement would be though, for each team to prepare & attach a gha runner that would be exclusive to their target.
 2026-03-13 19:27 polykrate: 
 2026-03-14 11:19 ascriv: looks like jamzilla-int failed on safrole and storage_light but i can't reproduce on my side. could you please confirm? [edited]
 2026-03-14 12:03 lu_bubba: 
+2026-03-18 16:10 davxy: It has been a while since I last shared a trace batch.
+
+We have recently aligned our fuzzer implementation with the GP specification regarding the encoding of the `attempt` field in the `Ticket` within `TicketsExtrinsic`. Previously, this field was encoded as a fixed `u8`.
+Under under normal conditions (i.e., `ticket_id ∈ {0,1}`) there is no difference... However, with mutations enabled, the value can increase enough to trigger a different encoding if the implementation follows the GP (i.e., compact encoding).
+
+This batch primarily is to get aligned on this matters. Additional issues may of course surface on your side :-)
+
+If there are no pushbacks in the next few days, I will merge this PR and notify the W3F auditors team to switch to the updated fuzzer version that includes this fix.
+  ↳ 2026-03-19 02:04 celadari: Hey Davide,
+
+If we do, then shouldn't we also need to update as well ?
+
+- stf test vectors `safrole` for tiny size
+- stf test vectors `codec` for tiny size
+(tiny size because I think this is where ticked\_id can be bigger than 1 ) [edited]
+2026-03-18 16:10 davxy: https://github.com/davxy/jam-conformance/pull/181
+2026-03-18 16:11 davxy: \[Summary table\](https://github.com/davxy/jam-conformance/blob/trace-batch/fuzz-reports/0.7.2/summaries/summary-table.md ) [edited]
