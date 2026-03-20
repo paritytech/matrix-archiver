@@ -1,5 +1,5 @@
 # room: #jam-conformance:matrix.org
-# exported: 2026-03-19 04:03 UTC
+# exported: 2026-03-20 04:00 UTC
 2025-08-20 15:56 erin: tomusdrw: i've set up the archiver to archive this also, so hopefully will be up starting tomorrow
 2025-08-21 06:33 ascriv: https://github.com/davxy/jam-conformance/issues/26 should we not discourage open source implementations (for now)? [edited]
 2025-08-21 10:27 oliver.tale-yazdi: I think open source repos are fine. Other implementors are just not supposed to look at it
@@ -2536,5 +2536,16 @@ If we do, then shouldn't we also need to update as well ?
 - stf test vectors `safrole` for tiny size
 - stf test vectors `codec` for tiny size
 (tiny size because I think this is where ticked\_id can be bigger than 1 ) [edited]
+  ↳ 2026-03-19 07:56 rustybot: The issue manifests when attempt >= 128. This is where compact u8 gets encoded in 2 bytes instead of 1
+  ↳ 2026-03-19 08:15 dave: I don't get this, attempt>1 is invalid?
+  ↳ 2026-03-19 09:13 tomusdrw: To make it more heated 😈: Can we just drop the natural number encoding everywhere and define fixed lengths? While it makes sense in PVM to have small, canonical representation of the program blob. I think everywhere else it's net negative. Fixed-width encoding allows pre-computing sizes of all structures (obviously without variable length elements), allows preallocation, offset-lookups, etc. Fixed-width would also allow much better (human readable) error messages for decoding errors. Each implementation needs to inflate the "canonical encoding" to their own pointer-aligned layout anyway because of this, while fixed-width would allow no-copy reads much easier I feel.
+If the goal of natural numbers encoding is:
+1. to shave off few bytes in networking? - then maybe it's better to just introduce fast (streaming) compression instead?
+2. to shave off few bytes in database? - then there are much bigger gains here and it falls outside of the consensus
+3. to simplify the gray paper? - that's arguable as well - as we see it already created at least 2 rounds of misunderstandings afair (ticket attempt, service ids) and it's just a matter of explicitly stating ranges for some numbers
 2026-03-18 16:10 davxy: https://github.com/davxy/jam-conformance/pull/181
 2026-03-18 16:11 davxy: \[Summary table\](https://github.com/davxy/jam-conformance/blob/trace-batch/fuzz-reports/0.7.2/summaries/summary-table.md ) [edited]
+2026-03-19 16:15 ascriv: Is there a good reason why the GP uses compact encoding for ticket entry index instead of having it be a u8?  [edited]
+2026-03-19 19:07 rustybot: > <@ascriv:matrix.org> Is there a good reason why the GP uses compact encoding instead of having it be a u8? 
+
+It might be worth asking in the GP channel. 

@@ -1,5 +1,5 @@
 # room: #graypaper:polkadot.io
-# exported: 2026-03-19 04:03 UTC
+# exported: 2026-03-20 04:00 UTC
 2024-04-17 20:29 syed: https://matrix.to/#/!hyzRkDqDthePbodYFz:parity.io/$f_DMsIEcDXZegw6Sabnehzc-LrdDQkmq5MbxDDyoZxY?via=parity.io&via=web3.foundation
 
 2024-04-17 20:29 syed: 
@@ -7053,3 +7053,56 @@ And how do you handle the case of e.g. an inner PVM having its initial instructi
 It seems clear some basic probabilistic modeling for C \< 341 in practice (to graduate from tiny C=2 to something notably higher in the Toaster, in Kusama) is in order, and for us make some decisions on whether these issues are resolved in GP 0.7.x vs 0.8.
 
 Given the exceptionally long silence in this channel, perhaps this is a good time to get the GP Editorial Board to make a judgement on this non-gas-related issue, and start to design a process around this? [edited]
+2026-03-19 19:17 ascriv: Is there a good reason why the GP uses compact encoding for ticket entry index instead of having it be a u8?
+2026-03-19 20:23 bkchr: `SANE_MAX_PACKAGE_SIZE` is this somewhere declared in some spec? Because this is something all implementations should use the same value? 
+2026-03-19 20:24 bkchr: https://docs.rs/jam-std-common/latest/jam_std_common/constant.SANE_MAX_PACKAGE_SIZE.html declared here right now in the jam-std-common crate. 
+2026-03-19 20:38 sourabhniyogi: https://graypaper.fluffylabs.dev/#/ab2cdbd/448c00448c00?v=0.7.2 has for W_B =  13,791,360: The maximum size of the concatenated variable-size blobs, extrinsics and imported segments of a work-package, in octets. See equation 14.5.  
+  ↳ 2026-03-19 20:38 oliver.tale-yazdi: Yea that is for work bundle, i think for WP there is no limit?
+  ↳ 2026-03-19 20:39 bkchr: They gray paper doesn't seem to mention any limit
+  ↳ 2026-03-19 20:39 bkchr: But the Parity implementation for example uses this "sane limit" 
+  ↳ 2026-03-19 20:39 bkchr: Which kind of makes sense, because you otherwise you could force guarantors to download a lot of data
+  ↳ 2026-03-19 20:39 bkchr: Before you can call `is_authorized` [edited]
+  ↳ 2026-03-19 20:52 sourabhniyogi: Builder => First Guarantor (CE133) is the place where work package (not bundle) is used [146 use bundle] -- in principle, it could have a WP limit but this limit would have to be less than WB (since work package bundles contain work packages) to be "sane".
+
+Guarantor => Guarantor (CE134) and Auditor -> Guarantor (CE147) is about the bundle, and should require W\_B; all erasure encoding/decoding (Assurer -> Guarantor CE137, Auditor -> Assurer CE138) is about work package bundles not work packages [edited]
+  ↳ 2026-03-19 20:54 bkchr: sourabhniyogi: What you want to say by this? 
+  ↳ 2026-03-19 20:54 sourabhniyogi: WB is the limit for work packages but would only apply for CE133. [edited]
+  ↳ 2026-03-19 20:55 bkchr: Yeah, but did you read what I wrote above? 
+  ↳ 2026-03-19 20:55 bkchr: You can not make the work packge and work bundle limit the same
+  ↳ 2026-03-19 20:58 sourabhniyogi: Which part of JAM NP (like which CE) has guarantors downloading work packages?
+  ↳ 2026-03-19 20:58 bkchr: The builder sending the work package to the guarantor? Or how else does it ends up there? 
+  ↳ 2026-03-19 20:59 sourabhniyogi: CE133 is the only place where you could impose a WP limit -- https://github.com/zdave-parity/jam-np/blob/main/simple.md#ce-133-work-package-submission
+
+If you had a limit, it would be no more than WB.  Why do you need to make it less than that?
+  ↳ 2026-03-19 21:00 bkchr: sourabhniyogi: Did you read what I wrote above? 
+  ↳ 2026-03-19 21:00 bkchr: If `is_authorized` requires me to download 13MiB
+  ↳ 2026-03-19 21:00 bkchr: It is almost useless 
+  ↳ 2026-03-19 21:01 bkchr: You can just DOS the guarantors with junk
+  ↳ 2026-03-19 21:01 bkchr: And they would first need to swallow 13MiB before they find out that it is junk
+  ↳ 2026-03-19 21:03 bkchr: But yeah, CE133 should be  the place where the limit is imposed 
+  ↳ 2026-03-19 21:04 bkchr: The parity implementation already does this
+  ↳ 2026-03-19 21:04 bkchr: Which brings me back to my initial point, this limit should be documented
+  ↳ 2026-03-19 21:04 bkchr: And all should use the same 
+  ↳ 2026-03-19 21:05 sourabhniyogi: Malicious builders can DOS validators by opening lots of QUIC connections.  If the limit for a WP was 10x lower than WB, does that help reduce DOS threats in practice?  
+  ↳ 2026-03-19 21:09 bkchr: The limit is 66x lower 
+  ↳ 2026-03-19 21:10 bkchr: > Malicious builders can DOS validators by opening lots of QUIC connections. 
+
+No one said that you do not also need to be protected against this 
+  ↳ 2026-03-19 21:10 bkchr: (Not saying that this is easy)
+  ↳ 2026-03-19 21:11 sourabhniyogi: It may be best to put it as a CE133 addition here? https://github.com/zdave-parity/jam-np/blob/main/simple.md#ce-133-work-package-submission
+  ↳ 2026-03-19 21:11 bkchr: But limiting the WP size is much easier than protecting against DOS opening of connections 
+  ↳ 2026-03-19 21:11 bkchr: Yeah I can do this 
+  ↳ 2026-03-19 21:20 dave: Yeah makes sense to specify a limit for CE133 explicitly, so builders don't have to guess
+  ↳ 2026-03-19 21:22 dave: It helps against DoS a bit, I mean you can still send spam UDP packets but at least validators won't spend as many CPU cycles dealing with them
+  ↳ 2026-03-19 21:23 dave: Same limit should apply to CE146 FWIW
+  ↳ 2026-03-19 21:26 bkchr: Why does CE133 exists at all? Because it the builder should always be able to send CE146 or not? 
+  ↳ 2026-03-19 21:29 dave: Well it was the original one. The original design idea was that guarantors would download imports. Builders downloading imports is not great as they won't necessarily be able to connect and fetch them from validators quickly
+  ↳ 2026-03-19 21:30 dave: But maybe they just have the contents already and can send them
+  ↳ 2026-03-19 21:31 bkchr: But builders need the imports to run the execution once. For "send only builders" (that do not check that the executions ends etc), it probably makes sense
+  ↳ 2026-03-19 21:32 dave: Well builders don't necessarily need to execute
+  ↳ 2026-03-19 21:32 dave: Kind of depends on the service
+  ↳ 2026-03-19 21:32 bkchr: Yeah, this is what I meant as well
+  ↳ 2026-03-19 21:43 bkchr: CE146, I don't get why the segment roots are coming before the work package? 
+  ↳ 2026-03-19 21:47 dave: Well they're tiny and you can check them before the work-package if you want
+  ↳ 2026-03-19 21:50 bkchr: Yeah fine, just from the fact that it could have been aligned with CE133 would have made myself more happy :P But not that important
+  ↳ 2026-03-19 21:52 bkchr: https://github.com/zdave-parity/jam-np/pull/14
