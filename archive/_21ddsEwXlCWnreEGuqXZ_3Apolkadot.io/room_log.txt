@@ -1,5 +1,5 @@
 # room: #graypaper:polkadot.io
-# exported: 2026-03-20 04:00 UTC
+# exported: 2026-03-21 03:54 UTC
 2024-04-17 20:29 syed: https://matrix.to/#/!hyzRkDqDthePbodYFz:parity.io/$f_DMsIEcDXZegw6Sabnehzc-LrdDQkmq5MbxDDyoZxY?via=parity.io&via=web3.foundation
 
 2024-04-17 20:29 syed: 
@@ -7106,3 +7106,43 @@ No one said that you do not also need to be protected against this
   ↳ 2026-03-19 21:47 dave: Well they're tiny and you can check them before the work-package if you want
   ↳ 2026-03-19 21:50 bkchr: Yeah fine, just from the fact that it could have been aligned with CE133 would have made myself more happy :P But not that important
   ↳ 2026-03-19 21:52 bkchr: https://github.com/zdave-parity/jam-np/pull/14
+2026-03-20 11:40 bkchr: 
+2026-03-20 11:43 bkchr: I would like to propose the following changes:
+
+- RefineContext, remove the lookup anchor timeslot. The node can just look this up or is there any particular reason we need to have it there?
+- RefineContext, add the lookup anchor post state root
+- Expose the full lookup anchor/anchor header via a host function to refine/is_authorized context
+2026-03-20 12:01 dave: Lookup anchor is available to refine/is-auth via fetch already; the whole encoded WP is available
+2026-03-20 12:02 bkchr: Yeah but only the hash
+2026-03-20 12:02 bkchr: Or not? 
+2026-03-20 12:02 dave: Oh you want the header of that block?
+2026-03-20 12:02 dave: Sorry missed that
+2026-03-20 12:02 bkchr: Yeah. I could put it into the WP
+2026-03-20 12:02 bkchr: But the guarantoor needs to have it any way around
+2026-03-20 12:06 dave: Well it probably will do, not sure it's strictly true that it needs to have the header
+2026-03-20 12:08 bkchr: Probably the timeslot per anchor is enough, but no need to have this part of the refinecontext inside teh WP
+2026-03-20 12:09 dave: Anchor header cannot be made available as auditors may not have it
+2026-03-20 12:10 bkchr: Why?
+2026-03-20 12:10 dave: Could include in bundle I guess
+2026-03-20 12:11 bkchr: But if you don't see any big blockers for this, I will continue writing the parachain service plan. Assuming the stuff will be available. Then we can check the final document if my assumptions make sense
+2026-03-20 12:12 dave: We can probably make lookup anchor header available I would guess
+2026-03-20 12:15 dave: Maybe don't assume anchor header can be fetched. Lookup anchor is finalized so we assume everyone can get that. Auditing can happen outside of block context in the case of a negative judgment so auditors don't necessarily have the block that included the report or the anchor (which doesn't need to be finalised)
+2026-03-20 12:15 dave: So I think we would need to include it in the bundle, in which case probably it's better to just include what you need in the package
+2026-03-20 12:15 bkchr: I need the anchor timeslot :D In the "worst case" I can just add the header to teh WP
+2026-03-20 12:18 dave: Hmm ok we can probably include that in the context and verify on-chain? [edited]
+2026-03-20 12:19 bkchr: I mean I would also verify this in the service refine function
+2026-03-20 12:19 bkchr: We have the hash of the anchor 
+2026-03-20 12:19 bkchr: So that it easy
+2026-03-20 12:19 bkchr: My point is just that we would not need to add this to every WP
+2026-03-20 12:20 dave: I mean if you include the header in the package sure, thought you didn't want to do that?
+2026-03-20 12:20 bkchr: Yeah, my point being that this could be an "escape hatch" 
+2026-03-20 12:20 bkchr: If access to the header will not be available "natively" 
+2026-03-20 12:20 dave: > <@dave:parity.io> Hmm ok we can probably include that in the context and verify on-chain?
+
+I was proposing this to avoid that
+2026-03-20 12:21 bkchr: But if we add it to the context, we also add it to the WP? 
+2026-03-20 12:21 dave: Making the anchor header available natively I think would mean including it in the bundle meaning everyone would pay for it even if they didn't use it
+2026-03-20 12:21 dave: > <@bkchr:parity.io> But if we add it to the context, we also add it to the WP? 
+
+Yes but you don't need to include the whole header in the context, just the timeslot
+2026-03-20 12:22 dave: The timeslot can be trivially verified on-chain
