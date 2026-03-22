@@ -1,5 +1,5 @@
 # room: #jam:polkadot.io
-# exported: 2026-03-21 03:53 UTC
+# exported: 2026-03-22 04:01 UTC
 2024-04-20 02:08 johnjiao123: 
 2024-04-20 02:09 johnjiao123: 
 2024-05-30 21:48 nradko: Hey everyone,
@@ -12607,3 +12607,19 @@ For the "late" teams who never asked a single question and have so little to no 
 
 Just my 0.02. [edited]
 2026-03-17 22:49 hendrik_b: 
+2026-03-21 17:59 sourabhniyogi: This interview covers proof-of-useful-work ala SETI-at-Home, which reminded me of Gav's suggestion of SETI-at-home being a JAM demo dating to 2023: 
+
+https://x.com/saranormous/status/2035080458304987603
+
+May give you all some ideas of how to build JAM services for the agentic web 🥰
+2026-03-21 18:30 finsig: 
+> For the first 15 teams, I think social proof (me/you/everyone having seen these people in-person and asking questions here and there and online, getting stuck and unstuck visibly, building something or attempting something before others) trumps every code review.
+
+Social proof makes sense but I respectfully disagree with it trumping every code review. I opted to figure things out on my own rather than ask questions. I knew that other teams already passed vectors so whatever I was stuck on was something specific to my interpretation of the GP. My questions would have been more along the lines of “how is this supposed to work” or “how is this typically implemented” rather than “I think it should work this way, what I am missing”. 
+
+And also, from the outset, in 2024 at least, I recall the contest language saying that publicly stating intent to participate etc was optional and not required. Also care was taken (public archive etc) to ensure that private channels weren’t created that disadvantage others. Attendance of the in-person Thailand and Portugal events would have been based on timing and personal circumstances. 
+
+A more egalitarian alternative might be to have teams submit some things they got stuck on and how they worked through them. Implementers who have passed M1 should easily be able to recall running across the exact same obscure things.
+
+IMO significant weight should be given to the reasoning expressed through code over the timeframe of development. For example, it should be clear if one sincerely reasoned forward from the GP vs taking a TDD approach backward from the test vectors.
+
