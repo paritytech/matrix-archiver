@@ -1,5 +1,5 @@
 # room: #graypaper:polkadot.io
-# exported: 2026-03-22 04:02 UTC
+# exported: 2026-03-23 04:04 UTC
 2024-04-17 20:29 syed: https://matrix.to/#/!hyzRkDqDthePbodYFz:parity.io/$f_DMsIEcDXZegw6Sabnehzc-LrdDQkmq5MbxDDyoZxY?via=parity.io&via=web3.foundation
 
 2024-04-17 20:29 syed: 
@@ -7146,3 +7146,8 @@ I was proposing this to avoid that
 
 Yes but you don't need to include the whole header in the context, just the timeslot
 2026-03-20 12:22 dave: The timeslot can be trivially verified on-chain
+2026-03-22 12:30 r2rtnl: The four preimage-related host calls (solicit, forget, query, provide) accept the preimage length z as a 64-bit register value, but the preimage lookup dictionary defines its key as (hash, bloblength = N_{2^{32}}). This inconsistency causes the storage footprint to exceed its declared type for large z. Multiplying it with B_L to compute the balance threshold could compounds the problem if the constant is increased. Adding an explicit z ∉ bloblength → HUH guard to all four calls is proposed.
+
+https://github.com/gavofyork/graypaper/pull/520
+
+
