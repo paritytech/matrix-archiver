@@ -1,5 +1,5 @@
 # room: #jam-conformance:matrix.org
-# exported: 2026-03-23 04:04 UTC
+# exported: 2026-03-24 04:01 UTC
 2025-08-20 15:56 erin: tomusdrw: i've set up the archiver to archive this also, so hopefully will be up starting tomorrow
 2025-08-21 06:33 ascriv: https://github.com/davxy/jam-conformance/issues/26 should we not discourage open source implementations (for now)? [edited]
 2025-08-21 10:27 oliver.tale-yazdi: I think open source repos are fine. Other implementors are just not supposed to look at it
@@ -2554,3 +2554,34 @@ It might be worth asking in the GP channel.
 This is only a very small smoke test, but we hope it can serve as a starting point for using the PVM to verify the correctness of LLM inference in the future.
 
 https://github.com/ArcheLabs/pvm-llama-dot-smoke
+  ↳ 2026-03-23 09:00 tomusdrw: Looks super interesting from technical pov, but can you fill me in on use cases of verifiable llm responses? It seems to me that llms are fuzzy/random by default (and that's actually a feature), hence I feel I'm missing something. What app do you imagine utilizing this tech?
+  ↳ 2026-03-23 09:04 jan: LLMs are only indeterministic insofar as the GPU compute is concerned, because the kernels used to do the calculations are indeterministic (well, not _exactly_, it's a little more complicated than that, but in practice you can think of it as indeterministic). The "randomness" you're talking about is probably sampling, which itself is fully deterministic as long as you use the same RNG with the same seed. [edited]
+  ↳ 2026-03-23 09:10 jan: And for those uninitiated as to what "sampling" means: LLMs by default emit a _probability distribution_ for each token they generate. For example, if you get it to autocomplete a sentence "The color of this ball is \_\_\_" it will predict that the probability of token "red" is X, of token "green" is Y, of token blue is "Z", etc. So "sampling" here means essentially picking one of those tokens (the simplest way to do it is greedy sampling, i.e. pick the most probable token, which is fully deterministic as long as you give it the same probability distribution). [edited]
+  ↳ 2026-03-23 10:38 tomusdrw: Maybe let me rephrase my question: What is useful in being able to deterministically reproduce LLMs response?
+I was arguing that the "randomness/fuzziness" of llms are intended feature. I feel that for any problem you are seeking a deterministic LLM answer its better to ask LLM to generate a deterministic program for that problem and verify it's execution. However as I mentioned, I'm probably missing a lot here, so would like to explore the domain of problems that would need AI on a blockchain.
+  ↳ 2026-03-23 10:47 jan: > I was arguing that the "randomness/fuzziness" of llms are intended feature.
+
+The randomness/fuzziness due to compute nondeterminism is not an intended feature; it's a (usually tolerated) defect. The randomness due to sampling (which is deterministic) is an intended feature.
+
+> I feel that for any problem you are seeking a deterministic LLM answer its better to ask LLM to generate a deterministic program for that problem and verify it's execution.
+
+Here you are talking about sampling, which is entirely deterministic given the same seed.
+
+> Maybe let me rephrase my question: What is useful in being able to deterministically reproduce LLMs response?
+
+I can't comment on this since I don't really know of such use case myself (maybe OP can chime in here); I was just pointing out that the randomness/fuzziness you're talking about (the one that is a "feature") isn't actually nondeterministic (in the same way pseudo random number generators _look_ random and nondeterministic but are actually fully deterministic). [edited]
+  ↳ 2026-03-23 10:58 jan: The simplest way to understand this is maybe something like this: in theory LLM inference is always fully deterministic, as it's just (relatively simple) math. You give it an input, and it will _always_ give you the same output. The "it will say something else when asked the same thing twice" is just because it has a pseudo random number generator attached to it, and each time you're using a different seed.
+
+But in practice it involves a lot of floating point math, using optimized, imprecise kernels running on non-standard hardware (GPUs), and _this_ is where actual nondeterminism in injected.
+
+So going back to OP's project (note - I haven't looked at it in detail) - I think the aim is to essentially somehow prove that the inference was actually done with the model itself (possibly accounting for some fuzz factor due to non-determinism of compute), instead of the result being conjured out of thin air, and this isn't inherently incompatible with the pseudo-random sampler you attach at the end of an LLM to convert the probability distribution it generates into a token. [edited]
+  ↳ 2026-03-23 11:11 jan: > would like to explore the domain of problems that would need AI on a blockchain.
+
+Anyway, in my personal opinion the answer to this is probably... it's mostly because of hype, since AI is the new hot thing. (: At very least I haven't really seen a use case which makes sense to me, neither for inference nor (especially) for training.
+
+The big problem with AI is that, if you want to run the best models you need extremely expensive and powerful hardware, and that is pretty much practically impossible to "put on a blockchain" as-is (you need to make some nasty compromises). And if you don't need the best models and want to run inference in a decentralized fashion then... you can just run it locally, privately on your own GPU. [edited]
+  ↳ 2026-03-23 12:00 libingjiang: Yes, the "fuzziness" of LLMs mainly comes from the pseudo-randomness intentionally introduced during sampling. Tiny differences there can get amplified throughout the subsequent autoregressive generation process, which leads to branching outputs. That helps increase diversity in responses, but under fixed rules and a fixed seed, the process is still fundamentally deterministic. The real non-determinism mainly comes from the engineering implementation and hardware differences in the GPU compute stage, and that is also where verification becomes difficult.
+
+As for what this is actually useful for, I'd rather not lock it too early into one single scenario. AI is evolving very quickly, and I think it may end up serving forms that we still can't fully foresee today. For now, one fairly direct direction in my view is fast verification for distributed compute or inference services, without requiring participants to use the same hardware, and without needing to reproduce the entire inference pipeline. That said, I also agree that, at least for now, I haven't yet seen one especially clear and strong standalone use case. That is also part of the appeal of exploration.
+
+I also have some more immature and speculative thoughts: in the future, we may see some form of "open intelligence," where large numbers of smaller models specialized for particular domains, styles, or even specific individuals collaborate with each other. For example, you could have models of your favorite composer and lyricist work together on a song. In that kind of setting, whether for interaction, settlement, or dispute verification, we may need a lighter-weight way of verification.
