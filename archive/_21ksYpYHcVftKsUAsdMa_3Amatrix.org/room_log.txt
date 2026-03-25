@@ -1,5 +1,5 @@
 # room: #jam-conformance:matrix.org
-# exported: 2026-03-24 04:01 UTC
+# exported: 2026-03-25 04:02 UTC
 2025-08-20 15:56 erin: tomusdrw: i've set up the archiver to archive this also, so hopefully will be up starting tomorrow
 2025-08-21 06:33 ascriv: https://github.com/davxy/jam-conformance/issues/26 should we not discourage open source implementations (for now)? [edited]
 2025-08-21 10:27 oliver.tale-yazdi: I think open source repos are fine. Other implementors are just not supposed to look at it
@@ -2585,3 +2585,7 @@ The big problem with AI is that, if you want to run the best models you need ext
 As for what this is actually useful for, I'd rather not lock it too early into one single scenario. AI is evolving very quickly, and I think it may end up serving forms that we still can't fully foresee today. For now, one fairly direct direction in my view is fast verification for distributed compute or inference services, without requiring participants to use the same hardware, and without needing to reproduce the entire inference pipeline. That said, I also agree that, at least for now, I haven't yet seen one especially clear and strong standalone use case. That is also part of the appeal of exploration.
 
 I also have some more immature and speculative thoughts: in the future, we may see some form of "open intelligence," where large numbers of smaller models specialized for particular domains, styles, or even specific individuals collaborate with each other. For example, you could have models of your favorite composer and lyricist work together on a song. In that kind of setting, whether for interaction, settlement, or dispute verification, we may need a lighter-weight way of verification.
+2026-03-24 18:27 ascriv: > <@oliver.tale-yazdi:parity.io> Parity will assign a TPM to M1 conformance. I assume they will the be prodding the Fellowship to do the reviews and subsequent steps.  
+> I dont have a timeline for this, but TPMs at Parity are normally expected to provide timelines, so we should get one once they took over.
+
+just following up here, any updates on TPM assignment / timeline for M1 conformance?
