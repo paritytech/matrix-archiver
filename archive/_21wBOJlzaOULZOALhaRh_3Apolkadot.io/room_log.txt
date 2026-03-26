@@ -1,5 +1,5 @@
 # room: #jam:polkadot.io
-# exported: 2026-03-25 04:01 UTC
+# exported: 2026-03-26 04:07 UTC
 2024-04-20 02:08 johnjiao123: 
 2024-04-20 02:09 johnjiao123: 
 2024-05-30 21:48 nradko: Hey everyone,
@@ -12624,3 +12624,13 @@ A more egalitarian alternative might be to have teams submit some things they go
 IMO significant weight should be given to the reasoning expressed through code over the timeframe of development. For example, it should be clear if one sincerely reasoned forward from the GP vs taking a TDD approach backward from the test vectors.
 
 2026-03-23 11:45 jan: PSA: I've updated the PVM test vectors for GP 0.8; please do let me know if you find any issues with them. https://github.com/w3f/jamtestvectors/pull/3
+2026-03-25 04:42 0xjunha: Hi all, would anyone be able to share an update on the status of the M1 evaluation?
+
+I understand that responsibilities have recently shifted, so I was wondering whether there is any bottleneck implementers could help with (like reviewing other teams' code), or whether there are ongoing internal discussions among W3F, Parity, or the Fellowship.
+
+Not trying to rush anyone - just curious since this is a collective project I care about, and any update would help me plan the next few months. Thanks.
+2026-03-25 06:34 bill: Hi Junha - I have some discussions scheduled for this afternoon and hope to announce something by the end of the day today.
+2026-03-25 06:58 0xjunha: 
+2026-03-25 06:59 0xjunha: > <@bill:web3.foundation> Hi Junha - I have some discussions scheduled for this afternoon and hope to announce something by the end of the day today.
+
+Thanks Bill, appreciate the update. Looking forward to hearing more!

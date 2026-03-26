@@ -1,5 +1,5 @@
 # room: #jam-conformance:matrix.org
-# exported: 2026-03-25 04:02 UTC
+# exported: 2026-03-26 04:08 UTC
 2025-08-20 15:56 erin: tomusdrw: i've set up the archiver to archive this also, so hopefully will be up starting tomorrow
 2025-08-21 06:33 ascriv: https://github.com/davxy/jam-conformance/issues/26 should we not discourage open source implementations (for now)? [edited]
 2025-08-21 10:27 oliver.tale-yazdi: I think open source repos are fine. Other implementors are just not supposed to look at it
@@ -2589,3 +2589,5 @@ I also have some more immature and speculative thoughts: in the future, we may s
 > I dont have a timeline for this, but TPMs at Parity are normally expected to provide timelines, so we should get one once they took over.
 
 just following up here, any updates on TPM assignment / timeline for M1 conformance?
+2026-03-25 08:31 r2rtnl: https://github.com/davxy/jam-conformance/discussions/182
+2026-03-25 08:55 bill: I said this in another channel, we're discussing it today and I hope to have further information by the end of day today.

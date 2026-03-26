@@ -1,5 +1,5 @@
 # room: #graypaper:polkadot.io
-# exported: 2026-03-25 04:02 UTC
+# exported: 2026-03-26 04:08 UTC
 2024-04-17 20:29 syed: https://matrix.to/#/!hyzRkDqDthePbodYFz:parity.io/$f_DMsIEcDXZegw6Sabnehzc-LrdDQkmq5MbxDDyoZxY?via=parity.io&via=web3.foundation
 
 2024-04-17 20:29 syed: 
@@ -7151,3 +7151,37 @@ Yes but you don't need to include the whole header in the context, just the time
 https://github.com/gavofyork/graypaper/pull/520
 
 
+2026-03-25 10:02 tomusdrw: I'm not fully getting the purpose of the opcode bitmask in the program blob. It seems a bit redundant for me now (and blows up the size by 1/8th), given the new gas cost model requires a one pass over program blob anyway (unless I'm missing something). I understand it's used for the `skip` function definition, but I guess we could simply:
+1. Read the opcode at current PC
+2. Read the required arguments for that opcode (and move the pc beyond the args)
+
+Currently the arguments might also be marked as opcodes in the mask, so program:
+`c8 c8 07`
+Can either be interpreted as one `ADD (0xc8)` instruction or two `ADD (0xc8)` instructions depending on the bitmask (or obviously, `ADD, ADD, Invalid (0x07)`).
+
+I'm curious about the rationale for this, from my limited perspective it seems complicating things more than helping.
+  ↳ 2026-03-25 11:47 jan: The original rationale was to allow random access into the program, i.e. given an arbitrary program counter how do you tell whether it's valid to jump there? Without the bitmask you're always forced to do a full O(n) scan of the whole program. (Or use a constant-length instruction set encoding, which bloats up the size even more.)
+
+The new gas cost model doesn't require you to scan the full program; fundamentally it only requires you to process the program until the end of the basic block into which you're jumping into.
+That said, we have indeed effectively added a full scan requirement in GP 0.8 to simplify things for JAM 1.0, since (in the short-term) we'll be assuming an ahead-of-time recompiler anyway, and prevalidating a program simplifies certain corner cases (which now don't have to be specced because they now can't happen).
+
+Currently the bitmask is also used for the dispatch table at the start of JAM program blobs, where is authorized/refine/accumulate entry points are aligned so that they start at offsets 0/5/10.
+
+You're right that assuming the "every time you instantiate a program you do an O(n) scan" requirement is in place the bitmask is unnecessary. It is however still useful in cases where, for example, you'd want to prevalidate a program at upload time and then be able to jump into it later _without_ validating it again (that's how smart contracts on Polkadot with pallet-revive work), or if we assume that we'll want to relax the requirements and remove the mandatory prevalidation in the future (allowing other execution strategies than O(n) ahead of time recompilation, e.g. recompiler/interpreter hybrids, piece-wice JIT recompilation, etc.). [edited]
+  ↳ 2026-03-25 11:57 jan: Also, note, some instructions _do_ use the value of skip to decode the length of their arguments! So you'd still have to encode that length _somehow_ if you'd remove the bitmask. [edited]
+  ↳ 2026-03-25 14:16 tomusdrw: > Also, note, some instructions do use the value of skip to decode the length of their arguments! So you'd still have to encode that length somehow if you'd remove the bitmask.
+
+AFAIR this is only an edge case of 0 immediates being 0-length encoded, isn't it? Encoding them explicitly as one 0 byte has the same effect.
+
+> given an arbitrary program counter how do you tell whether it's valid to jump there?
+
+bitmask is not enough either, we need to know it's the beginning of basic block, don't we? That requires looking at the code as well.
+
+> The new gas cost model doesn't require you to scan the full program; fundamentally it only requires you to process the program until the end of the basic block into which you're jumping into.
+
+Fair point! I was assuming that gas costs will be pre-computed for each service anyway and stored separately instead of doing that on-demand. [edited]
+  ↳ 2026-03-25 14:18 tomusdrw: So overall it still seems that even if it's not strictly required it's very much beneficial to pre-validate the entire program and even memoize that prevalidation. Which IMHO adds more arguments in favour of getting rid of the bitmask?
+Don't have the numbers, but I feel that 1/8th drop in size of the program blob and code simplicity is probably worth it?
+  ↳ 2026-03-25 14:18 jan: > bitmask is not enough either, we need to know it's the beginning of basic block, don't we? That requires looking at the code as well.
+
+only for jumps within a program; the initial starting point can be anywhere (to allow e.g. to resume an inner VM in another block after it has encountered a pagefault in the previous block)
