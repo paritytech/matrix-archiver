@@ -1,5 +1,5 @@
 # room: #jam:polkadot.io
-# exported: 2026-03-26 04:07 UTC
+# exported: 2026-03-27 04:08 UTC
 2024-04-20 02:08 johnjiao123: 
 2024-04-20 02:09 johnjiao123: 
 2024-05-30 21:48 nradko: Hey everyone,
@@ -12634,3 +12634,5 @@ Not trying to rush anyone - just curious since this is a collective project I ca
 2026-03-25 06:59 0xjunha: > <@bill:web3.foundation> Hi Junha - I have some discussions scheduled for this afternoon and hope to announce something by the end of the day today.
 
 Thanks Bill, appreciate the update. Looking forward to hearing more!
+2026-03-26 13:36 emielsebastiaan: Any updates Bill | W3F ? Much appreciated. 
+2026-03-26 13:45 bill: We have a new POC/TPM at Parity. Unfortunately I am setting up details; the official announcement should be early next week. Thanks for your patience, everyone, while we work this all out.

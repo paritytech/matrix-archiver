@@ -1,5 +1,5 @@
 # room: #graypaper:polkadot.io
-# exported: 2026-03-26 04:08 UTC
+# exported: 2026-03-27 04:08 UTC
 2024-04-17 20:29 syed: https://matrix.to/#/!hyzRkDqDthePbodYFz:parity.io/$f_DMsIEcDXZegw6Sabnehzc-LrdDQkmq5MbxDDyoZxY?via=parity.io&via=web3.foundation
 
 2024-04-17 20:29 syed: 
@@ -7185,3 +7185,6 @@ Don't have the numbers, but I feel that 1/8th drop in size of the program blob a
   ↳ 2026-03-25 14:18 jan: > bitmask is not enough either, we need to know it's the beginning of basic block, don't we? That requires looking at the code as well.
 
 only for jumps within a program; the initial starting point can be anywhere (to allow e.g. to resume an inner VM in another block after it has encountered a pagefault in the previous block)
+  ↳ 2026-03-25 14:38 jan: Also, note, currently in JAM prevalidation isn't really a thing on the protocol level because for inner VMs you just stuff the raw bytes representing the program into the hostcall and you get a VM instance back (there isn't a separate "upload" nor "compile" step), so there isn't really a way for the client to cache anything (it'd have to hash the program blob before instantiating it, and, at least when I measured with the old gas cost model, with an optimized recompiler like mine always recompiling the program from scratch was faster than hashing it).
+
+Anyway, if you'd like then feel free to try to remove the bitmask (replacing it appropriately), measure the size difference on something substantial (e.g. DOOM; you can find a raw ELF for that in the PolkaVM repo), present how much that would save, and we can consider it. (:
