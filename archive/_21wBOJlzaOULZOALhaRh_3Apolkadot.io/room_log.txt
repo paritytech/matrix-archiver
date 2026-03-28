@@ -1,5 +1,5 @@
 # room: #jam:polkadot.io
-# exported: 2026-03-27 04:08 UTC
+# exported: 2026-03-28 04:01 UTC
 2024-04-20 02:08 johnjiao123: 
 2024-04-20 02:09 johnjiao123: 
 2024-05-30 21:48 nradko: Hey everyone,
@@ -12636,3 +12636,6 @@ Not trying to rush anyone - just curious since this is a collective project I ca
 Thanks Bill, appreciate the update. Looking forward to hearing more!
 2026-03-26 13:36 emielsebastiaan: Any updates Bill | W3F ? Much appreciated. 
 2026-03-26 13:45 bill: We have a new POC/TPM at Parity. Unfortunately I am setting up details; the official announcement should be early next week. Thanks for your patience, everyone, while we work this all out.
+2026-03-27 08:43 bill: Hi all - allow me to introduce Niki Lehel  from Parity, who will be taking over as TPM for the JAM Prize.
+
+Don't worry, I will still be around, although I have a [different remit](https://x.com/BillLaboon/status/2037443565488312595) now and won't be doing much hands-on.
