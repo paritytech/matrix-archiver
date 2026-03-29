@@ -1,5 +1,5 @@
 # room: #jam-conformance:matrix.org
-# exported: 2026-03-28 04:01 UTC
+# exported: 2026-03-29 04:12 UTC
 2025-08-20 15:56 erin: tomusdrw: i've set up the archiver to archive this also, so hopefully will be up starting tomorrow
 2025-08-21 06:33 ascriv: https://github.com/davxy/jam-conformance/issues/26 should we not discourage open source implementations (for now)? [edited]
 2025-08-21 10:27 oliver.tale-yazdi: I think open source repos are fine. Other implementors are just not supposed to look at it
@@ -2591,3 +2591,7 @@ I also have some more immature and speculative thoughts: in the future, we may s
 just following up here, any updates on TPM assignment / timeline for M1 conformance?
 2026-03-25 08:31 r2rtnl: https://github.com/davxy/jam-conformance/discussions/182
 2026-03-25 08:55 bill: I said this in another channel, we're discussing it today and I hope to have further information by the end of day today.
+2026-03-28 14:42 davxy: I've published ark-vrf 0.3 (spec reference: [draft 32](https://github.com/davxy/bandersnatch-vrf-spec/releases) ).
+This revision introduces several improvements, but also includes breaking changes.
+To preserve compatibility with existing test vectors and fuzzing setups, we will continue using ark-vrf 0.2.2 (spec draft 29) for now in JAM.
+Please stick to version 0.2.2 until the GP is updated to reference draft 32 or later.
