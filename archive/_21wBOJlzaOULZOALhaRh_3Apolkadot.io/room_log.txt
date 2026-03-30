@@ -1,5 +1,5 @@
 # room: #jam:polkadot.io
-# exported: 2026-03-29 04:11 UTC
+# exported: 2026-03-30 04:14 UTC
 2024-04-20 02:08 johnjiao123: 
 2024-04-20 02:09 johnjiao123: 
 2024-05-30 21:48 nradko: Hey everyone,
@@ -12644,3 +12644,8 @@ This revision introduces several improvements, but also includes breaking change
 To preserve compatibility with existing test vectors and fuzzing setups, we will continue using ark-vrf 0.2.2 (spec draft 29) for now in JAM.
 Please stick to version 0.2.2 until the GP is updated to reference draft 32 or later.
 
+2026-03-29 16:05 danicuki: > <@bill:web3.foundation> Hi all - allow me to introduce Niki Lehel  from Parity, who will be taking over as TPM for the JAM Prize.
+> 
+> Don't worry, I will still be around, although I have a [different remit](https://x.com/BillLaboon/status/2037443565488312595) now and won't be doing much hands-on.
+
+Thanks for the update. Eagerly waiting for next steps instructions from Niki Lehel 
