@@ -1,5 +1,5 @@
 # room: #jam:polkadot.io
-# exported: 2026-03-31 04:09 UTC
+# exported: 2026-04-01 04:15 UTC
 2024-04-20 02:08 johnjiao123: 
 2024-04-20 02:09 johnjiao123: 
 2024-05-30 21:48 nradko: Hey everyone,
@@ -12649,3 +12649,29 @@ Please stick to version 0.2.2 until the GP is updated to reference draft 32 or l
 > Don't worry, I will still be around, although I have a [different remit](https://x.com/BillLaboon/status/2037443565488312595) now and won't be doing much hands-on.
 
 Thanks for the update. Eagerly waiting for next steps instructions from Niki Lehel 
+2026-03-31 14:47 ascriv: @nikolett:parity.io would love to hear about next steps before you go out of office on the 3rd. Thanks!
+2026-03-31 19:14 david: Hi all,
+
+For teams that would like to request onboarding to the JAM Toaster could you please send me a direct messsage with some details:
+
+  - Team name
+  - An x86_64 binary
+  - Any relevant documentation (e.g. a README)
+  - A list of element usernames for all team members
+ 
+If you have any questions feel free to reach out
+
+2026-03-31 19:21 ascriv: > <@david:parity.io> Hi all,
+> 
+> For teams that would like to request onboarding to the JAM Toaster could you please send me a direct messsage with some details:
+> 
+>   - Team name
+>   - An x86_64 binary
+>   - Any relevant documentation (e.g. a README)
+>   - A list of element usernames for all team members
+>  
+> If you have any questions feel free to reach out
+> 
+
+I guess M2 compliance would be a prerequisite for toaster?
+2026-03-31 23:35 dave: You certainly need to have implemented the network protocol, there's not much point if you don't have that. We don't expect perfect implementations at this point though...
