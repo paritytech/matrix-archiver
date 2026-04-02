@@ -1,5 +1,5 @@
 # room: #jam:polkadot.io
-# exported: 2026-04-01 04:15 UTC
+# exported: 2026-04-02 04:04 UTC
 2024-04-20 02:08 johnjiao123: 
 2024-04-20 02:09 johnjiao123: 
 2024-05-30 21:48 nradko: Hey everyone,
@@ -12675,3 +12675,5 @@ If you have any questions feel free to reach out
 
 I guess M2 compliance would be a prerequisite for toaster?
 2026-03-31 23:35 dave: You certainly need to have implemented the network protocol, there's not much point if you don't have that. We don't expect perfect implementations at this point though...
+2026-04-01 11:13 oliver.tale-yazdi: How many JAM teams will be at the Web3 Summit? I was wondering if it makes sense to have a meetup there (before, during or after).  
+Please just put a ➕️ emoji on this message if you attend and would be interested in this. I will count the unique teams then.
