@@ -1,5 +1,5 @@
 # room: #jam:polkadot.io
-# exported: 2026-04-02 04:04 UTC
+# exported: 2026-04-03 04:05 UTC
 2024-04-20 02:08 johnjiao123: 
 2024-04-20 02:09 johnjiao123: 
 2024-05-30 21:48 nradko: Hey everyone,
@@ -12677,3 +12677,19 @@ I guess M2 compliance would be a prerequisite for toaster?
 2026-03-31 23:35 dave: You certainly need to have implemented the network protocol, there's not much point if you don't have that. We don't expect perfect implementations at this point though...
 2026-04-01 11:13 oliver.tale-yazdi: How many JAM teams will be at the Web3 Summit? I was wondering if it makes sense to have a meetup there (before, during or after).  
 Please just put a ➕️ emoji on this message if you attend and would be interested in this. I will count the unique teams then.
+2026-04-02 19:08 bkchr: Hey. So, right now we are finalizing the submission tool. We are pushing now to get this done ASAP (already works, but just needs some more testing). There will be a tool to submit the blobs and then they will be tested. If the tests are passing, you will get an interview with the Fellowship to do some checks that you actually understand what you have implemented. We are all aware of AI and that people use it all the time, but there is a huge difference between vibe coding something and actually understanding what you build there and how it works. The fellowship will do this. If this is passed as well, the fellowship will put a remark on chain that will tell the W3F to send the payments.
+  ↳ 2026-04-02 20:17 clearloop: if we'll need to update to 0.8 or just keep 0.7.4, since there are updates in GP recently, shall we re-do the process of the w3f review part?
+  ↳ 2026-04-02 20:53 bkchr: Tianyi | SpaceJam: What W3F review part? 
+  ↳ 2026-04-02 21:00 clearloop: https://github.com/w3f/jam-milestone-delivery
+  ↳ 2026-04-02 21:04 dakkk: > <@bkchr:parity.io> Tianyi | SpaceJam: What W3F review part? 
+
+Some of us already succeeded with the 1M blocks test. We then go directly to the fellowship review, right?
+  ↳ 2026-04-02 21:04 emielsebastiaan: Basti.await: I assume teams that have already passed the 1M step fuzzer audit will be scheduled for a Fellowship interview directly. Can you confirm?
+
+Tags and references to evidence can be found here in the PRs: https://github.com/w3f/jam-milestone-delivery [edited]
+  ↳ 2026-04-02 21:45 bkchr: I had heard that already some fuzzer tests were done, but did not know it was that much. Need to check that the fuzzer used, is actually the latest one. If yes, we can probably take these results and go ahead 
+  ↳ 2026-04-02 21:52 emielsebastiaan: Piet (W3F) or Davide (Parity) should be able to provide you with this information. It was fuzzed with the then most recent version of the Fuzzer. 
+
+In our case we passed in the second week of February. A couple of teams the week before and some others a few weeks later. 
+
+The full evidence (Fuzzer Reports) can be found in the different branches which were created for each audit in W3F's fork of Davide Galassi's conformance repository: https://github.com/w3f/jam-conformance In our specific case (for your convenience) here: https://github.com/w3f/jam-conformance/commit/e80313490721a212ddc946a0fb8f056a4b1303c3 [edited]
