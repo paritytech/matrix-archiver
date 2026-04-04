@@ -1,5 +1,5 @@
 # room: #jam:polkadot.io
-# exported: 2026-04-03 04:05 UTC
+# exported: 2026-04-04 04:00 UTC
 2024-04-20 02:08 johnjiao123: 
 2024-04-20 02:09 johnjiao123: 
 2024-05-30 21:48 nradko: Hey everyone,
@@ -12693,3 +12693,19 @@ Tags and references to evidence can be found here in the PRs: https://github.com
 In our case we passed in the second week of February. A couple of teams the week before and some others a few weeks later. 
 
 The full evidence (Fuzzer Reports) can be found in the different branches which were created for each audit in W3F's fork of Davide Galassi's conformance repository: https://github.com/w3f/jam-conformance In our specific case (for your convenience) here: https://github.com/w3f/jam-conformance/commit/e80313490721a212ddc946a0fb8f056a4b1303c3 [edited]
+  ↳ 2026-04-03 06:17 bill: Please note Piet is no longer with W3F, so you should talk with Davide about these
+  ↳ 2026-04-03 07:57 bkchr: > <@emielsebastiaan:matrix.org> Piet (W3F) or Davide (Parity) should be able to provide you with this information. It was fuzzed against the then most recent version of the Fuzzer. In our case we passed in the first week of February. 
+
+Ty. Yeah I will talk to Davide and then handle the rest. Ty you again for the pointers 
+  ↳ 2026-04-03 08:20 danicuki: We at Jamixir also passed the 1M blocks test: https://github.com/w3f/jam-milestone-delivery/pull/23#issuecomment-3983547627
+  ↳ 2026-04-03 08:27 dakkk: It's easy to verify who already passed the 1M blocks test because most of them have the "Fellowship review" badge in the milestone delivery pull requests + Jamixir
+
+JamZig, SpaceJam, Jampy, TSJAM, PyJAMaz, JavaJAM, Jamixir
+
+https://github.com/w3f/jam-milestone-delivery/pulls
+
+
+  ↳ 2026-04-03 08:29 bkchr: Yeah I have seen this. You don't all need to send each passed one. I will figure this out via the label 
+  ↳ 2026-04-03 20:48 danicuki: > <@bkchr:parity.io> Yeah I have seen this. You don't all need to send each passed one. I will figure this out via the label 
+
+Jamixir passed and does not have the label. 
