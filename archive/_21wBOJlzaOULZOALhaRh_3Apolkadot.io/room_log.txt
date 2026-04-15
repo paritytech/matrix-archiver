@@ -1,5 +1,5 @@
 # room: #jam:polkadot.io
-# exported: 2026-04-14 04:14 UTC
+# exported: 2026-04-15 04:14 UTC
 2024-04-20 02:08 johnjiao123: 
 2024-04-20 02:09 johnjiao123: 
 2024-05-30 21:48 nradko: Hey everyone,
@@ -12709,3 +12709,8 @@ https://github.com/w3f/jam-milestone-delivery/pulls
   ↳ 2026-04-03 20:48 danicuki: > <@bkchr:parity.io> Yeah I have seen this. You don't all need to send each passed one. I will figure this out via the label 
 
 Jamixir passed and does not have the label. 
+2026-04-13 16:56 sourabhniyogi: If you have implemented a JAM MMR/BMT/CDT/WBT/... proof verifier and haven't fully secured it:  https://x.com/hyperbridge/status/2043676789948461358 
+If { you, your favorite AI tool, smart contract auditor => jam service auditor, mythosical tools only available to trillionaire cos+govts, .. } can or cannot find this kind of bug, its a good in-ecosystem debate to have on how to win anti-fragility at all levels : if you have implementation diversity at one level (JAM) winning you anti-fragility there, how can you win anti-fragility at others?
+2026-04-14 11:32 ascriv: > <@bkchr:parity.io> Hey. So, right now we are finalizing the submission tool. We are pushing now to get this done ASAP (already works, but just needs some more testing). There will be a tool to submit the blobs and then they will be tested. If the tests are passing, you will get an interview with the Fellowship to do some checks that you actually understand what you have implemented. We are all aware of AI and that people use it all the time, but there is a huge difference between vibe coding something and actually understanding what you build there and how it works. The fellowship will do this. If this is passed as well, the fellowship will put a remark on chain that will tell the W3F to send the payments.
+
+Hey, just checking in, can we please have a status update on the submission tool? Thanks!
