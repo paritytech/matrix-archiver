@@ -1,5 +1,5 @@
 # room: #jam-conformance:matrix.org
-# exported: 2026-04-27 06:11 UTC
+# exported: 2026-04-28 06:14 UTC
 2025-08-20 15:56 erin: tomusdrw: i've set up the archiver to archive this also, so hopefully will be up starting tomorrow
 2025-08-21 06:33 ascriv: https://github.com/davxy/jam-conformance/issues/26 should we not discourage open source implementations (for now)? [edited]
 2025-08-21 10:27 oliver.tale-yazdi: I think open source repos are fine. Other implementors are just not supposed to look at it
@@ -2602,3 +2602,22 @@ Please stick to version 0.2.2 until the GP is updated to reference draft 32 or l
 2026-04-16 13:34 sourabhniyogi: Hi Niki Lehel - async thank you for joining us!  I believe most teams here have had an absolutely awesome 2025 building conformant JAM implementations with davxy leading the way but 2026 needs some leadership this spring/summer and I believe we are all eagerly looking to you for next steps.   
 
 Can you let us know what to expect so we may plan our next few months together?
+2026-04-21 08:26 davxy: https://github.com/davxy/jam-conformance/pull/186
+2026-04-21 12:36 dakkk: > <@davxy:matrix.org> https://github.com/davxy/jam-conformance/pull/186
+
+Does the issue with long runs with mutations on jampy seems fixed now?
+2026-04-21 13:24 davxy: I tried to fuzz your last version right now, there are  some regressions. Please have a look at the updated crosscheck matrix [edited]
+2026-04-21 16:56 dakkk: Ok, thx
+2026-04-21 18:15 dakkk: updated, it should be ok now 
+2026-04-27 14:39 davxy: @room in order to streamline targets submission and execution in the upcoming web app, we will require targets to be packaged within a Docker image.
+Some of you are already doing this. 
+For those currently providing a plain binary, the transition should be straightforward: considered that currently we simply run your binary inside a **vanilla debian-lite** container, you mostly need to extend that image and include your binary within it.
+Another improvement will be the standardization of the entry point and args. I will open a discussion in the jam-conformance repository about this, but the intended direction is for targets to support a super small set of options, such as:
+* spec=full/tiny: to run the target with either full or reduced jam parameters. Whether this is internally implemented via separate binaries or a single binary with CLI arguments is internal to your image.
+
+2026-04-27 14:52 davxy: https://github.com/davxy/jam-conformance/discussions/187
+2026-04-27 15:07 davxy: Please engage in the discussion if you have useful ideas about the std-args
+2026-04-27 15:08 davxy: I'd like to freeze these asap in order to share them with the webapp team  [edited]
+2026-04-27 15:30 dakkk: I think spec and sock are enough, since they were enough for so long; 
+jampy has also some parameters for enabling invokation tracing and pvm full trace, but during fuzzing I don't think they could be useful
+2026-04-27 16:00 davxy: In the discussion we're talking about using some well known env vars. Please have a look

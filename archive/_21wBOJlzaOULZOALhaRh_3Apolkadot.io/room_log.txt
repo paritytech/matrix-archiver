@@ -1,5 +1,5 @@
 # room: #jam:polkadot.io
-# exported: 2026-04-27 06:10 UTC
+# exported: 2026-04-28 06:14 UTC
 2024-04-20 02:08 johnjiao123: 
 2024-04-20 02:09 johnjiao123: 
 2024-05-30 21:48 nradko: Hey everyone,
@@ -12714,3 +12714,103 @@ If { you, your favorite AI tool, smart contract auditor => jam service auditor, 
 2026-04-14 11:32 ascriv: > <@bkchr:parity.io> Hey. So, right now we are finalizing the submission tool. We are pushing now to get this done ASAP (already works, but just needs some more testing). There will be a tool to submit the blobs and then they will be tested. If the tests are passing, you will get an interview with the Fellowship to do some checks that you actually understand what you have implemented. We are all aware of AI and that people use it all the time, but there is a huge difference between vibe coding something and actually understanding what you build there and how it works. The fellowship will do this. If this is passed as well, the fellowship will put a remark on chain that will tell the W3F to send the payments.
 
 Hey, just checking in, can we please have a status update on the submission tool? Thanks!
+2026-04-21 10:35 xlchen: Anything? and Niki Lehel - async ?
+2026-04-21 10:40 bkchr: > <@ascriv:matrix.org> Hey, just checking in, can we please have a status update on the submission tool? Thanks!
+
+Hey, sorry I was sick and then a lot of other stuff. I tried the tool yesterday and found some issues, we still need to resolve some rough edges 
+2026-04-21 11:37 emielsebastiaan: Can the teams that have passed the 1 million step audit proceed with the fellowship interviews to get a verdict on understanding and original work?Basti.await 
+2026-04-21 12:00 bkchr: > <@emielsebastiaan:matrix.org> Can the teams that have passed the 1 million step audit proceed with the fellowship interviews to get a verdict on understanding and original work?Basti.await 
+
+You talk about the w3f process or? AFAIK it used the wrong configuration for the fuzzer. Probably will not make a difference in reality, but we will still need to check again. However, I can promise you that we can do the fellowship checks in the order of the original reports to w3f
+2026-04-21 16:11 boymaas: I understand this is complex to coordinate. I understand decentralised organisations have constraints. But here's what I want to communicate: we built our schedules around your process.  Teams make decisions based on that approval having weight. 
+
+I am not asking to lower standards. I am asking to define them clearly, communicate them completely, and follow through consistently. If something passes, let it stay passed.
+
+You can imagine that going through a nerve wrecking auditing process the first time, hearing to go through this again after having modified the codebase with more optimizations and recompiler and other adjustments is not what you expect or want to hear. I expected to hear when the passing teams get a fellowship review and get M1 checked off so we can move on to M2.
+
+We're all professionals. Our time has value. Your process should reflect that.
+2026-04-21 16:31 rustybot: 
+2026-04-21 18:08 danicuki: > <@boymaas:matrix.org> I understand this is complex to coordinate. I understand decentralised organisations have constraints. But here's what I want to communicate: we built our schedules around your process.  Teams make decisions based on that approval having weight. 
+> 
+> I am not asking to lower standards. I am asking to define them clearly, communicate them completely, and follow through consistently. If something passes, let it stay passed.
+> 
+> You can imagine that going through a nerve wrecking auditing process the first time, hearing to go through this again after having modified the codebase with more optimizations and recompiler and other adjustments is not what you expect or want to hear. I expected to hear when the passing teams get a fellowship review and get M1 checked off so we can move on to M2.
+> 
+> We're all professionals. Our time has value. Your process should reflect that.
+
+I want to reinforce Boy’s point and add one more concern.
+
+Requiring teams that already passed the 1 million blocks step to go through it again is deeply unfair. It is not just a logistical inconvenience. It changes the meaning of “passed” after the fact.
+
+Teams planned their work, timelines, and technical priorities based on the process and guidance that were communicated. In previous communications, the understanding was that once a team passed this step, the next stage would be the fellowship interview. Changing that afterwards, especially on what feels like a moving target, is very hard to justify.
+
+I fully understand that the transition from the W3F team to a new evaluation setup creates complexity. I also understand the desire to ensure the process is correct. But that burden should not be pushed onto teams that already satisfied the requirements they were given at the time.
+
+If there was an internal mistake in configuration, that is unfortunate, but it should not invalidate the status of teams that acted in good faith and passed under the official process that was in place. Otherwise, no milestone can ever feel truly achieved, because teams remain exposed to retroactive changes.
+
+At a minimum, teams that already passed should proceed directly to the fellowship interview, exactly as previously indicated. If there are additional checks needed for future teams, that is a separate matter. But reopening completed steps for already approved teams is disrespectful to the time, effort, and trust that participants invested in this process.
+
+We are not asking for lower standards. We are asking for consistency, predictability, and respect for decisions already communicated.
+2026-04-21 18:10 danicuki: These process changes are not only frustrating at an administrative level. They are materially delaying JAM development itself.
+
+In our case, Jamixir has paused further development, waiting for M1 prize payment, as a matter of basic risk management. That was not our preferred choice, but with continued uncertainty around evaluation and payout, it would be irresponsible for us to keep committing substantial additional effort without closure on work that was already completed and previously understood to have passed.
+
+So this is not an abstract concern. Reopening completed steps has a direct impact on delivery, momentum, and the ability of teams to continue contributing to JAM.
+2026-04-21 18:13 ascriv: But on the other hand, if the parity process is different (and harder) than the w3f process  for technical conformance, this is unfair to other teams who didn’t get to go through a 1M block run [edited]
+2026-04-21 18:13 ascriv: If it’s the same (or easier), those who already passed should be able to pass again quickly 
+2026-04-21 18:14 ascriv: In either case, it stands to reason that teams that already passed should go through the 1m blocks again. Either because of fairness or because of triviality 
+2026-04-21 18:19 clearloop: or there is another option: fellowship review first, then before the payment, teams have to align to the latest changes again, or the impl updating stuffs are feeling like a dead loop [edited]
+2026-04-21 18:21 dakkk: When I started to work on jampy, I didn't expected that it would  took so much time to be evaluted; I had to stop working fulltime on jam some months ago, since after 20 months of work I needed to pay bills some way.
+Then I spent my work vacations in order to follow the days for the 1M milestone and now maybe it was worthless. What a journey! 😁   [edited]
+2026-04-21 18:27 danicuki: David Dorgan: I understand why teams that have not yet been evaluated may feel this is uneven, and I think that concern is legitimate.
+
+But I do not think the answer is to reopen steps that other teams already completed and were told they had passed. That would just spread the unfairness rather than resolve it.
+
+The better approach is:
+honor the results already issued under the process that was officially in place, and ensure that from now on all remaining teams are evaluated under a clearly defined and consistently applied process.
+
+That way, teams still waiting get clarity and equal treatment going forward, while teams that already passed are not retroactively pushed back into uncertainty.
+
+2026-04-21 18:28 ascriv: Maybe we can have more visibility into how the original 1m steps were done. If they were trivial (no mutations for example), I think it’s clear it should not be accepted as passing conformance [edited]
+2026-04-21 18:29 danicuki: When people pause paid work, use vacation time, or make risk decisions based on a communicated pass, that pass needs to mean something. 
+2026-04-21 18:38 danicuki: Suppose all teams pass the 1M step again, prepare for the interview, and then in a month another bug is found in the fuzzer or in the evaluation pipeline. Are teams supposed to restart again? And then again after the next issue?
+
+We cannot build around a process with no finality.
+
+Of course bugs should be fixed. Of course the process should improve. But those fixes must apply prospectively, not retroactively. Otherwise every milestone becomes provisional forever, and no team can reasonably rely on having passed anything.
+
+Make the fixes count from M2 onward, or for teams not yet evaluated under the revised process. But do not retroactively wipe out already completed work from teams that followed the official process in good faith.
+2026-04-21 18:42 ascriv: https://github.com/davxy/jam-conformance/blob/main/conformance-criteria/conformance-run-matrix.md
+
+the criteria is clear. if w3f didn't test these criteria, it's unfortunate, but teams need to pass these criteria to be eligible for M1.
+
+if they did, obviously teams shouldn't need to go through the process again [edited]
+2026-04-21 18:42 ascriv: Screenshot 2026-04-21 at 2.41.44 PM.png
+2026-04-21 19:41 bkchr: I can fully understand the frustration with the evaluation process so far. I also don't want to waste anyones time or whatever. We also don't want to always go back change the fuzzer and throw teams back. However, the people working on this so far were aware of what parameters they should use to run the fuzzer and not have done it. Obviously we will require that people pass the fuzzer to ensure that JAM implementations are compatible to each other. For sure we will use some fixed version of the fuzzer to evaluate the teams as otherwise this isn't fair and later submissions would have it harder to pass.
+
+That said, I'm fine to give early teams a "bonus" to let them go forward to the fellowship interview without all tests passing (assuming the implementation has a 90% passing rate). However, the final approval by the fellowship would still require the full fuzzer test suite to pass.
+2026-04-21 20:00 clearloop: Any date (for example May 1) for the pinned fuzzer version from the fellowship that we can work towards it?
+
+(hope it really pins this time, since we have had really a lot of pinned versions so far 🥲 0.6.4 -> 0.7.0 -> 0.7.2 and now the test vectors of 0.7.2 is keeping growing without a version bump [edited]
+2026-04-21 20:29 davxy: Just for clarity:
+
+- The test vectors in my repo are an informal contribution. They're not official (only de-facto), and were not part of the auditing team tests. I'm sharing them to help push JAM impl and get teams to M1 faster.
+- For context, when the jam-conformance project started, most teams stopped after just a few steps. Now we actually have a lot more solid implementations.
+- The test vectors aren't growing because the fuzzer is changing. It hasn't changed in a while. They grow because of how they're generated: in a loop. And I think new batches only makes your impl better. I typically run the fuzzer against your implementations, collect failures for each of you, cross-check them, publish the vectors, you fix issues, and then repeat. [edited]
+2026-04-22 04:29 jan: > Requiring teams that already passed the 1 million blocks step to go through it again is deeply unfair.
+
+I get your frustration, but isn't it the other way around? If fuzzer was misconfigured then it'd mean that some teams would have passed without being conformant, which would be unfair to those whose implementation *is* conformant and would have passed regardless.
+
+Let's say Team A's implementation was submitted first but is incomplete and not fully conformant. Team B's implementation was submitted last but is complete and fully conformant. Both pass 1M blocks with misconfigured fuzzer. Only Team B passes with properly configured fuzzer.
+
+Now, which of these hypothetical scenarios is more fair:
+
+A) We honor the results already issued. Team A gets the payout, Team B doesn't (because they were the last and the money ran out).
+B) We retest everyone regardless of whether they already "passed", but in the same order of submissions so that those who submitted first still have an advantage.
+
+(Note: I'm just a bystander here and I have no special visibility into this process, but I do wish that you guys get the money as soon as possible so that you can continue the work.)
+2026-04-22 06:05 emielsebastiaan: This is true. Nonetheless it is a mess which could have been avoided. I try hard not to use the word ‘easily’ as adjective. 
+
+I read most as venting frustration about this and pointing to the mess. I hope this mess will clear soon by seeing a transparant, clear and just process and appreciate all effort of the people trying to sort this out.
+2026-04-22 06:09 dakkk: Imo the issue here isn't that the fuzzer was misconfigured (that wasn't our fault btw), but that after 4 months we are in the same situation
+2026-04-22 13:08 ascriv: It would be really great if we can open up a line of communication with @[Niki Lehel - async]. Is this the best place for that?
