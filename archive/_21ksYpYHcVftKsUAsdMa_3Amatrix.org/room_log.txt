@@ -1,5 +1,5 @@
 # room: #jam-conformance:matrix.org
-# exported: 2026-04-28 06:14 UTC
+# exported: 2026-04-29 04:24 UTC
 2025-08-20 15:56 erin: tomusdrw: i've set up the archiver to archive this also, so hopefully will be up starting tomorrow
 2025-08-21 06:33 ascriv: https://github.com/davxy/jam-conformance/issues/26 should we not discourage open source implementations (for now)? [edited]
 2025-08-21 10:27 oliver.tale-yazdi: I think open source repos are fine. Other implementors are just not supposed to look at it
@@ -2621,3 +2621,32 @@ Another improvement will be the standardization of the entry point and args. I w
 2026-04-27 15:30 dakkk: I think spec and sock are enough, since they were enough for so long; 
 jampy has also some parameters for enabling invokation tracing and pvm full trace, but during fuzzing I don't think they could be useful
 2026-04-27 16:00 davxy: In the discussion we're talking about using some well known env vars. Please have a look
+2026-04-28 14:12 danicuki: We (and maybe) some other teams faced memory limit issues during our evaluation week. It would be important to understand the environment where these docker containers will run (how much RAM, CPU, etc will be available), so we can replicate same environment locally before submission. 
+2026-04-28 15:03 davxy: I'm not in charge of the infrastructure in any way, so personally I don't know.
+I can, of course, provide some direction to the people working on this.
+
+1. RAM: How much do you need? I imagine you have already estimated your application's requirements or the issues you faced were due to some memleak? (IIRC w3f audits used 8GB mem limit)
+2. CPU: This may be less critical; it primarily affects how quickly your target system processes blocks. [edited]
+2026-04-28 15:05 davxy: @room  Once your target is aligned with https://github.com/davxy/jam-conformance/blob/standard-target-packaging/fuzz-proto/README.md#standard-target-packaging, please leave a message on your dedicated issue. [edited]
+2026-04-28 15:29 jaymansfield: davxy: Hey, the updated specs mentioned the dockers entry point can't be overridden. I just wanted to double check, that means the "cmd" setting in targets.py will no longer be used at all? So these docker images must be "fuzz" specific then, and can no longer just be our full nodes that have an optional fuzz mode enabled with a flag? 
+2026-04-28 15:32 davxy: Interesting. Indeed having a single image is easier for you. What about adding an environment variable to run the fuzzer target? Like JAM_FUZZ=1?
+2026-04-28 15:33 davxy: If the provided image just contains the fuzzer target then you can just ignore it.
+2026-04-28 15:33 jaymansfield: An additional environment variable like that would definitely be much easier then having to produce two seperate docker images in order to keep one for a full node
+2026-04-28 15:35 jaymansfield: Although now that you mention it I can probably just trigger fuzz mode by the existence of JAM_FUZZ_SPEC. Nothing needed extra then.
+2026-04-28 15:35 davxy: right :-)
+2026-04-28 15:36 oliver.tale-yazdi: but then this line needs to change `JAM_FUZZ_SPEC, JAM_FUZZ_DATA_PATH and JAM_FUZZ_SOCK_PATH variables must be provided; targets MUST refuse to start if any are missing.` [edited]
+2026-04-28 15:40 davxy: So looks like the options are: 
+1. if JAM_FUZZ variable is defined then JAM_FUZZ_SPEC, JAM_FUZZ_DATA_PATH and JAM_FUZZ_SOCK_PATH are required
+2. if JAM_FUZZ_SPEC is defined then JAM_FUZZ_DATA_PATH and JAM_FUZZ_SOCK_PATH are required
+
+2026-04-28 15:41 davxy: Let's try this poll feat :-)
+2026-04-28 15:46 dakkk: Why make them mandatory? If someone want to allow both env and args, undefined env variables should be allowed. Jampy beahviour is:
+- env vars replace default values
+- optional cli args replace these values
+2026-04-28 15:49 oliver.tale-yazdi: the narrower the spec, the easier it is for everyone to be compliant  [edited]
+2026-04-28 15:56 dakkk: True, but I think we are overcomplicating requirements; if we know that the fuzzer will pass those env variables, the only thing we have to assure is that the target will use them
+  ↳ 2026-04-28 16:11 oliver.tale-yazdi: But having the `JAM_FUZZ` helps her. Not sure what you mean otherwise.  
+
+If just `JAM_FUZZ_SPEC` is set without `JAM_FUZZ` then you can treat that as standard way to set the spec.   
+For example for starting a node instead of the fuzzer
+2026-04-28 23:40 ascriv: is this final? https://github.com/davxy/jam-conformance/blob/standard-target-packaging/fuzz-proto/README.md#standard-target-packaging 
