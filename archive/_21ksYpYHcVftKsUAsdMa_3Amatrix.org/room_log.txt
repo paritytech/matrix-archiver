@@ -1,5 +1,5 @@
 # room: #jam-conformance:matrix.org
-# exported: 2026-04-29 04:24 UTC
+# exported: 2026-04-30 04:25 UTC
 2025-08-20 15:56 erin: tomusdrw: i've set up the archiver to archive this also, so hopefully will be up starting tomorrow
 2025-08-21 06:33 ascriv: https://github.com/davxy/jam-conformance/issues/26 should we not discourage open source implementations (for now)? [edited]
 2025-08-21 10:27 oliver.tale-yazdi: I think open source repos are fine. Other implementors are just not supposed to look at it
@@ -2650,3 +2650,7 @@ I can, of course, provide some direction to the people working on this.
 If just `JAM_FUZZ_SPEC` is set without `JAM_FUZZ` then you can treat that as standard way to set the spec.   
 For example for starting a node instead of the fuzzer
 2026-04-28 23:40 ascriv: is this final? https://github.com/davxy/jam-conformance/blob/standard-target-packaging/fuzz-proto/README.md#standard-target-packaging 
+2026-04-29 05:19 davxy: I need to add the JAM_FUZZ env var. Then I think so
+2026-04-29 07:28 davxy: merged
+2026-04-29 16:30 vinsystems: Hey davxy, could you provide any examples of the ancestors feature so that we can test it?
+2026-04-29 16:48 davxy: Not implemented yet. So not required by our fuzzer [edited]
