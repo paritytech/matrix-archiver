@@ -1,5 +1,5 @@
 # room: #jam:polkadot.io
-# exported: 2026-04-30 04:25 UTC
+# exported: 2026-05-01 04:34 UTC
 2024-04-20 02:08 johnjiao123: 
 2024-04-20 02:09 johnjiao123: 
 2024-05-30 21:48 nradko: Hey everyone,
@@ -12814,3 +12814,5 @@ B) We retest everyone regardless of whether they already "passed", but in the sa
 I read most as venting frustration about this and pointing to the mess. I hope this mess will clear soon by seeing a transparant, clear and just process and appreciate all effort of the people trying to sort this out.
 2026-04-22 06:09 dakkk: Imo the issue here isn't that the fuzzer was misconfigured (that wasn't our fault btw), but that after 4 months we are in the same situation
 2026-04-22 13:08 ascriv: It would be really great if we can open up a line of communication with @[Niki Lehel - async]. Is this the best place for that?
+2026-04-30 10:48 dakkk: Hi Bill | W3F , is the next TPM for the JAM Prize already nominated?
+2026-04-30 11:07 bill: Unfortunately no. I do not know who will be handling this from a Parity perspective yet.
