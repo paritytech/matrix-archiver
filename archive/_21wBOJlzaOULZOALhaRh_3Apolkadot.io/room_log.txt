@@ -1,5 +1,5 @@
 # room: #jam:polkadot.io
-# exported: 2026-05-02 04:17 UTC
+# exported: 2026-05-03 04:30 UTC
 2024-04-20 02:08 johnjiao123: 
 2024-04-20 02:09 johnjiao123: 
 2024-05-30 21:48 nradko: Hey everyone,
@@ -12816,3 +12816,11 @@ I read most as venting frustration about this and pointing to the mess. I hope t
 2026-04-22 13:08 ascriv: It would be really great if we can open up a line of communication with @[Niki Lehel - async]. Is this the best place for that?
 2026-04-30 10:48 dakkk: Hi Bill | W3F , is the next TPM for the JAM Prize already nominated?
 2026-04-30 11:07 bill: Unfortunately no. I do not know who will be handling this from a Parity perspective yet.
+2026-05-03 00:26 ewaddicor: This seems to be a perfect example of how decentralizing development causes chaos and ultimately fails. 
+2026-05-03 00:26 ewaddicor: Where is the accountability from W3F?
+2026-05-03 00:27 ewaddicor: JAM was announced in April 2024 and there is still no testnet. 
+2026-05-03 00:27 ewaddicor: What a joke. 
+2026-05-03 00:31 ewaddicor: Parity and W3F can't just disrupt people's livelihood like this. There needs to be a TPM nominated, evaluations completed, and prizes distributed ASAP. [edited]
+2026-05-03 00:32 ewaddicor: The remaining teams will lose interest and JAM will never be completed if this continues. 
+2026-05-03 00:33 ewaddicor: I truly don't understand how Parity and W3F can be run so poorly. 
+2026-05-03 00:37 ewaddicor: This is an EMBARRASSMENT 
