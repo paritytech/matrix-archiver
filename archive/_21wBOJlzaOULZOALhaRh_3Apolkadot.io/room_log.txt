@@ -1,5 +1,5 @@
 # room: #jam:polkadot.io
-# exported: 2026-05-03 04:30 UTC
+# exported: 2026-05-04 04:30 UTC
 2024-04-20 02:08 johnjiao123: 
 2024-04-20 02:09 johnjiao123: 
 2024-05-30 21:48 nradko: Hey everyone,
@@ -12824,3 +12824,38 @@ I read most as venting frustration about this and pointing to the mess. I hope t
 2026-05-03 00:32 ewaddicor: The remaining teams will lose interest and JAM will never be completed if this continues. 
 2026-05-03 00:33 ewaddicor: I truly don't understand how Parity and W3F can be run so poorly. 
 2026-05-03 00:37 ewaddicor: This is an EMBARRASSMENT 
+2026-05-03 14:10 bill: As I mentioned earlier in this channel, the responsibility to evaluate and give final assessment of JAM prizes are in the hands of Parity and the Polkadot Technical Fellowship. W3F can only provide prizes based on the final outcome communicated to us via the Technical Fellowship.
+
+I will continue to communicate any information that I have on this topic, or answer questions that people have, but unfortunately there is not much more that W3F can do.
+2026-05-03 14:19 ascriv: Speaking of which, who is the new parity TPM/owner now that Niki left? @[Basti.await] 
+2026-05-03 14:56 prenu: FAQs https://jam.web3.foundation/
+
+> **This all sounds too risky for me. Can we not have something closer to a regular service agreement?**
+>
+> No. [edited]
+2026-05-03 15:04 ewaddicor: Why is Parity not communicating w/ the JAM development teams?
+2026-05-03 15:04 prenu: > The prize will be paid out in the form of 25% unlocked and 75% locked DOTs with a two-year linear vesting via the on-chain vesting module.
+
+> One full milestone prize (100,000 DOT + 1,000 KSM) will be reserved for Milestone 5 (M5) in each language set; two full milestone prizes for M4 in each language set, three full milestone prizes for M3, four full milestone prizes for M2.
+2026-05-03 15:08 paub: we don't have a replacement yet, it will take a few months. In-between we are trying to get the prize issue moving with volunteers. I understand the frustration, no-one like delays.
+2026-05-03 15:16 ewaddicor: A few months until there is a replacement? So JAM development will essentially be stopped for that time?
+2026-05-03 15:18 ewaddicor: This is unacceptable. 
+2026-05-03 15:19 ascriv: I wonder if it makes sense for implementors to help out with the web app for evaluating M1? Since they have direct incentive. I’m sure there’s a way they can help while still keeping the tool itself totally neutral 
+2026-05-03 15:31 ewaddicor: Parity can't just put JAM developers on pause because they are having organizational issues. 
+2026-05-03 15:36 ewaddicor: It really feels like the ultimate insult. Parity has released a publicly available prize without having the resources to review submissions in a timely manner. 
+2026-05-03 15:41 ewaddicor: Parity needs to offer a resolution other than having their ecosystem developers pause for months 
+2026-05-03 21:11 paub: AFAIK Parity did not release a prize see https://jam.web3.foundation. Until very recently it had nothing to do with Parity. We are trying to help here.
+2026-05-03 21:17 xlchen: [Bill | W3F](https://matrix.to/#/@bill:web3.foundation) this isn’t going to anywhere if W3F say it is Parity job but Parity cannot allocate any resources
+2026-05-03 21:22 ewaddicor: The W3F announced a prize pool for JAM developers that required evaluation and resources from Parity... yet Parity didn't plan to allocate resources to this ahead of time? [edited]
+2026-05-03 21:23 ewaddicor: And now the JAM developers are facing the consequences of the two organizations' lack of communication and planning. [edited]
+2026-05-03 21:27 ascriv: We signed up knowing this risk, from my view the coin toss just landed the wrong way 
+2026-05-03 21:28 ascriv: It’s not contract work and they were clear about that
+2026-05-03 21:31 ewaddicor: I agree that there is no contract in place guaranteeing any of these prizes. However, there should have been an underlying understanding between W3F and Parity that milestone submissions would need to be evaluated. 
+2026-05-03 21:32 ewaddicor: And that months of delays due to staffing issues is unreasonable. 
+2026-05-03 21:33 ewaddicor: If not for the prize then for the JAM development timeline which is now being impacted significantly 
+2026-05-03 21:39 ascriv: Parity has their own priorities at the end of the day, and it seems jam has been deprioritized for the time being, which is unfortunate but it is what it is. I do think the idea of implementors helping finish up the web app is the way forward from here. Curious what @Pierre @[Basti.await] think about this
+2026-05-03 21:41 xlchen: yeah it will be great we can collaborate on building this decentralized protocol as a decentralized team, instead of being blocked by a single point
+2026-05-03 21:42 ewaddicor: Regardless of Parity's priorities at the moment, they did not communicate to W3F or the JAM developers that they wouldn't be able to properly support the development process.  [edited]
+2026-05-03 21:43 bkchr: The web app is almost finished. We just need to clean it up a little bit. I'm on it. 
+2026-05-03 21:44 ascriv: Great to hear !
+2026-05-03 21:44 bkchr: There was already some disussion started by davxy this week around the fuzzer docker images configuration
