@@ -1,5 +1,5 @@
 # room: #jam:polkadot.io
-# exported: 2026-05-04 04:30 UTC
+# exported: 2026-05-05 04:16 UTC
 2024-04-20 02:08 johnjiao123: 
 2024-04-20 02:09 johnjiao123: 
 2024-05-30 21:48 nradko: Hey everyone,
@@ -12859,3 +12859,11 @@ I will continue to communicate any information that I have on this topic, or ans
 2026-05-03 21:43 bkchr: The web app is almost finished. We just need to clean it up a little bit. I'm on it. 
 2026-05-03 21:44 ascriv: Great to hear !
 2026-05-03 21:44 bkchr: There was already some disussion started by davxy this week around the fuzzer docker images configuration
+2026-05-04 13:16 bkchr: Some of you already asked for "target hardware requirements" for the fuzzer, to ensure that the fuzzing does work as expected. I would actually like to reverse this and ask on how much memory you need. CPU should not be that important, in the worst case it just takes longer. Did not took a close look, but I would assume that 64GB should be enough for the fuzzer machine? If not, please tell us/me early :) 
+2026-05-04 13:20 dakkk: Tiny spec?
+2026-05-04 13:23 bkchr: Full and tiny
+2026-05-04 13:24 dakkk: tiny 64gb is enough for jampy; full maybe, but we never had a single full trace to test, idk for sure
+2026-05-04 13:28 jaymansfield: Would depend how many fuzz sessions can be done in parallel. I think the current fuzzing had 8gb dedicated for each docker instance.
+2026-05-04 13:30 bkchr: The question is about max memory` requirements per session. So, we can ensure that we have enough memory available for the jobs 
+2026-05-04 13:44 oliver.tale-yazdi: So far 8GB was plenty for us, but I guess it depends on how many keys the fuzzer will add to the Trie. If the fuzzer starts to add millions of service keys then we will need more mem
+2026-05-04 13:44 oliver.tale-yazdi: During normal fuzzing we use \<200 MB ram last time i profiled it (with tiny&full spec) [edited]
