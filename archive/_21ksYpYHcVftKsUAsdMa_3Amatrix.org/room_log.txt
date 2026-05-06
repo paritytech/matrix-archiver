@@ -1,5 +1,5 @@
 # room: #jam-conformance:matrix.org
-# exported: 2026-05-05 04:17 UTC
+# exported: 2026-05-06 04:27 UTC
 2025-08-20 15:56 erin: tomusdrw: i've set up the archiver to archive this also, so hopefully will be up starting tomorrow
 2025-08-21 06:33 ascriv: https://github.com/davxy/jam-conformance/issues/26 should we not discourage open source implementations (for now)? [edited]
 2025-08-21 10:27 oliver.tale-yazdi: I think open source repos are fine. Other implementors are just not supposed to look at it
@@ -2654,3 +2654,6 @@ For example for starting a node instead of the fuzzer
 2026-04-29 07:28 davxy: merged
 2026-04-29 16:30 vinsystems: Hey davxy, could you provide any examples of the ancestors feature so that we can test it?
 2026-04-29 16:48 davxy: Not implemented yet. So not required by our fuzzer [edited]
+2026-05-05 14:20 davxy: @room [13 out of 23 teams](https://github.com/davxy/jam-conformance/issues) have aligned their targets to the [standard target packaging](https://github.com/davxy/jam-conformance/tree/main/fuzz-proto#standard-target-packaging) requirements. This is a mandatory requirement to test your target using the upcoming self-service web application, so you may want to align yours soon. [edited]
+2026-05-05 15:03 dakkk: regarding this, does this self-service web applciation have a public status page to follow the testing, or is it meant to be private completely?
+2026-05-05 15:10 davxy: I am not working on it, so honestly I don't know these details. My assumption is that it is private, meaning you can only see the status of your own items.You may try to ask in the Let's Jam channel BTW

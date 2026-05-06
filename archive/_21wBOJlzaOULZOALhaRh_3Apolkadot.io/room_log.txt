@@ -1,5 +1,5 @@
 # room: #jam:polkadot.io
-# exported: 2026-05-05 04:16 UTC
+# exported: 2026-05-06 04:26 UTC
 2024-04-20 02:08 johnjiao123: 
 2024-04-20 02:09 johnjiao123: 
 2024-05-30 21:48 nradko: Hey everyone,
@@ -12867,3 +12867,10 @@ I will continue to communicate any information that I have on this topic, or ans
 2026-05-04 13:30 bkchr: The question is about max memory` requirements per session. So, we can ensure that we have enough memory available for the jobs 
 2026-05-04 13:44 oliver.tale-yazdi: So far 8GB was plenty for us, but I guess it depends on how many keys the fuzzer will add to the Trie. If the fuzzer starts to add millions of service keys then we will need more mem
 2026-05-04 13:44 oliver.tale-yazdi: During normal fuzzing we use \<200 MB ram last time i profiled it (with tiny&full spec) [edited]
+2026-05-05 15:13 dakkk: regarding the self-service web applciation, does it have a public status page to follow the testing of our impl, or is it meant to be private until fail / success?
+2026-05-05 16:13 bkchr: Hey, good that you are asking. I actually wanted to give an update, but then I was distracted. The web app is working and now very close to the state where I want to have it. Not perfect, but good enough for what we want to achieve. RIght now the repo is private. I'm pushing for getting it released EOW and if, not next week. Main task now is just to host it properly and have some machines ready for the fuzzing. Nothing crazy. 
+2026-05-05 18:28 dakkk: > <@bkchr:parity.io> Hey, good that you are asking. I actually wanted to give an update, but then I was distracted. The web app is working and now very close to the state where I want to have it. Not perfect, but good enough for what we want to achieve. RIght now the repo is private. I'm pushing for getting it released EOW and if, not next week. Main task now is just to host it properly and have some machines ready for the fuzzing. Nothing crazy. 
+
+Great; but I don't understand one thing, who will run this software? Implementers to test their impl or  W3f to test our impls? (Or both?) [edited]
+2026-05-05 18:34 bkchr: The software will be run by Parity. If your implementation passes, an attestation will be put on chain. With this you will be able to go to Anaelle LTD | Technical Fellowship Secretary to schedule a meeting with the Fellowship. 
+2026-05-05 18:35 bkchr: (Fuzzer is planned to be running on the toaster) 
