@@ -1,5 +1,5 @@
 # room: #graypaper:polkadot.io
-# exported: 2026-05-06 04:27 UTC
+# exported: 2026-05-07 04:27 UTC
 2024-04-17 20:29 syed: https://matrix.to/#/!hyzRkDqDthePbodYFz:parity.io/$f_DMsIEcDXZegw6Sabnehzc-LrdDQkmq5MbxDDyoZxY?via=parity.io&via=web3.foundation
 
 2024-04-17 20:29 syed: 
@@ -7189,3 +7189,6 @@ only for jumps within a program; the initial starting point can be anywhere (to 
 
 Anyway, if you'd like then feel free to try to remove the bitmask (replacing it appropriately), measure the size difference on something substantial (e.g. DOOM; you can find a raw ELF for that in the PolkaVM repo), present how much that would save, and we can consider it. (:
 2026-03-30 06:23 xlchen: any idea when gp 0.8 might be out? 
+2026-05-06 08:07 unskilledpigeon: what happen to JAM?
+did the foundation stopped this?
+I don’t see any update and news on graypaper.com/news. also the deliveries from the last year is pending for review.
