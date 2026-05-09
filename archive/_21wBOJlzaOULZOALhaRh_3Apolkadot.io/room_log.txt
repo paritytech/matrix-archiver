@@ -1,5 +1,5 @@
 # room: #jam:polkadot.io
-# exported: 2026-05-08 04:16 UTC
+# exported: 2026-05-09 04:19 UTC
 2024-04-20 02:08 johnjiao123: 
 2024-04-20 02:09 johnjiao123: 
 2024-05-30 21:48 nradko: Hey everyone,
@@ -12874,3 +12874,5 @@ I will continue to communicate any information that I have on this topic, or ans
 Great; but I don't understand one thing, who will run this software? Implementers to test their impl or  W3f to test our impls? (Or both?) [edited]
 2026-05-05 18:34 bkchr: The software will be run by Parity. If your implementation passes, an attestation will be put on chain. With this you will be able to go to Anaelle LTD | Technical Fellowship Secretary to schedule a meeting with the Fellowship. 
 2026-05-05 18:35 bkchr: (Fuzzer is planned to be running on the toaster) 
+2026-05-08 18:32 sourabhniyogi: Is https://github.com/zdave-parity/jam-np/pull/6 GRANDPA implemented in polkajam now David Emett  Matthew Halpin  -- we finally got our multi-builder rollup services together with authorizer pools/queues and wanted to test it in the Toaster for real against polkajam and Jason | JavaJAM 's implementation (and whomever else is M2-ready) locally and then in the Toaster in a long-lived kind of way.  
+2026-05-08 18:54 sourabhniyogi: We have not seen `polkajam` release notes here https://github.com/paritytech/polkajam-releases/releases since last December (when we last tested -- yipes, how time flies!) and I imagine we will have 0.7.2 vs 0.8.x  mismatch work to do in getting 100% compatibility again, can you advise on the latest state pls? [edited]
