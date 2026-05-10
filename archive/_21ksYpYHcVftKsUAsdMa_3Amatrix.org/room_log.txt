@@ -1,5 +1,5 @@
 # room: #jam-conformance:matrix.org
-# exported: 2026-05-09 04:20 UTC
+# exported: 2026-05-10 04:32 UTC
 2025-08-20 15:56 erin: tomusdrw: i've set up the archiver to archive this also, so hopefully will be up starting tomorrow
 2025-08-21 06:33 ascriv: https://github.com/davxy/jam-conformance/issues/26 should we not discourage open source implementations (for now)? [edited]
 2025-08-21 10:27 oliver.tale-yazdi: I think open source repos are fine. Other implementors are just not supposed to look at it
@@ -2663,3 +2663,9 @@ For example for starting a node instead of the fuzzer
 2026-05-08 11:11 tomusdrw: FYI: I've updated the "community perftesting/fuzzing" repo: https://github.com/FluffyLabs/jam-testing and we are now running fuzzing with full spec as well. Reproducing it locally is also possible, since it's using graymatter fuzz source in docker, so the exact commands can be seen in logs. That said, official perf data or vectors for full would be cool as well.
 2026-05-08 11:38 clearloop: found that spacejam got failed in the CI, any design about how to re-trigger it after an update
 2026-05-08 11:51 tomusdrw: All the jobs are running on a schedule and the runner is quite heavily utilized, so the best is just to wait until it auto runs again. I'm also tweaking memory requirements for full fuzzing now (settling on 8g for full and 2g for tiny (unless the target still fails)) [edited]
+2026-05-09 05:37 clearloop: btw if full is required? I remember tiny is enough [edited]
+2026-05-09 07:52 dakkk: not anymore; read here https://github.com/davxy/jam-conformance/blob/main/conformance-criteria/conformance-matrix.md
+2026-05-09 07:55 dakkk: 
+2026-05-09 13:44 dakkk: does it only generate empty blocks? [edited]
+2026-05-09 14:41 tomusdrw: Oliver Tale-Yazdi or Cisco will know best but I guess for now it's only valid, empty blocks. If anyone else has a fuzzer I'm happy to integrate it. Have it on my todo list to build one too (I wanted to focus on generating some random pvm programs and trigger more pvm parsing and host call edge cases) but not enough time yet.
+2026-05-09 16:23 oliver.tale-yazdi: Yes empty for now, as sanity check and to see that the infra works e2e 
