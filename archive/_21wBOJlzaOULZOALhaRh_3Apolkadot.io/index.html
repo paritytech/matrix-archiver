@@ -18,7 +18,7 @@ a:hover{color:#90caf9}
 em{font-style:italic}
 </style>
 <h1>#jam:polkadot.io</h1>
-<p><small>last updated 2026-05-14 04:30 UTC</small></p>
+<p><small>last updated 2026-05-15 04:34 UTC</small></p>
 <p><a href='room_log.txt'>⇩ plaintext</a> · <a href='../../'>⇦ all rooms</a></p>
 <hr>
 <div class='msg'><a class='ts' href='#$we4SYXTHwmKn094X9Zs_7mWUOoUVh4icvVdxD83RZfs'>#</a> <a class='ts' name='$we4SYXTHwmKn094X9Zs_7mWUOoUVh4icvVdxD83RZfs' href='https://matrix.to/#/!wBOJlzaOULZOALhaRh:polkadot.io/$we4SYXTHwmKn094X9Zs_7mWUOoUVh4icvVdxD83RZfs' target='_blank'>2024-04-20 02:08</a>&ensp;<span class='u' style='color:#d0709e'>johnjiao123</span>: </div>
@@ -12770,3 +12770,17 @@ Great; but I don&#x27;t understand one thing, who will run this software? Implem
 <div class='msg reply'><a class='ts' href='#$4ErU6dB5BuPhifOBra_X4wfoTlPzuFPgBsieH2EH8C8'>#</a> <a class='ts' name='$4ErU6dB5BuPhifOBra_X4wfoTlPzuFPgBsieH2EH8C8' href='https://matrix.to/#/!wBOJlzaOULZOALhaRh:polkadot.io/$4ErU6dB5BuPhifOBra_X4wfoTlPzuFPgBsieH2EH8C8' target='_blank'>2026-05-09 16:42</a>&ensp;<span class='u' style='color:#db4dca'>celadari</span>: &gt; &lt;@jan:parity.io&gt; Newest polkajam is not on 0.8.x yet to prevent disrupting the M1 milestone testing.
 
 We appreciate that</div>
+<div class='msg'><a class='ts' href='#$TYHeQYOWeJYp2wyly0rULNRkk3dawoFVvcyBMnL4DOs'>#</a> <a class='ts' name='$TYHeQYOWeJYp2wyly0rULNRkk3dawoFVvcyBMnL4DOs' href='https://matrix.to/#/!wBOJlzaOULZOALhaRh:polkadot.io/$TYHeQYOWeJYp2wyly0rULNRkk3dawoFVvcyBMnL4DOs' target='_blank'>2026-05-14 09:15</a>&ensp;<span class='u' style='color:#48d03d'>tomusdrw</span>: FYI: The last couple of months I&#x27;ve been working on WASM -&gt; PVM (re)compiler:
+<a href="https://github.com/tomusdrw/wasm-pvm" rel="noopener" target="_blank">https://github.com/tomusdrw/wasm-pvm</a>
+
+It&#x27;s was heavily AI-assisted, but surprisingly I think it works quite well. Recently I was able to recompile all existing polkadot runtimes to PVM (no running though, since I don&#x27;t have any environment for that (host call handlers, data, etc)).
+
+Obviously polkadot runtime are better compiled directly to PVM from Rust, but being able to translate arbitrary WASM programs to PVM has some benefits as well, for instance being able to compile wider range of programming languages and use WASM as an IR.</div>
+<div class='msg reply'><a class='ts' href='#$K8E5HQNNYAo66X7ggtjh3HnI6HR0QEEl8gsmNZM-Pew'>#</a> <a class='ts' name='$K8E5HQNNYAo66X7ggtjh3HnI6HR0QEEl8gsmNZM-Pew' href='https://matrix.to/#/!wBOJlzaOULZOALhaRh:polkadot.io/$K8E5HQNNYAo66X7ggtjh3HnI6HR0QEEl8gsmNZM-Pew' target='_blank'>2026-05-14 11:27</a>&ensp;<span class='u' style='color:#87cf8e'>dmitry.sinyavin</span>: Really cool, may also be used when <a href="https://github.com/paritytech/polkadot-sdk/pull/6704" rel="noopener" target="_blank">https://github.com/paritytech/polkadot-sdk/pull/6704</a> lands</div>
+<div class='msg'><a class='ts' href='#$KRDYdRz58MKl3yNHY6HRd-uYGb5kii8MzkpjV_Jshfo'>#</a> <a class='ts' name='$KRDYdRz58MKl3yNHY6HRd-uYGb5kii8MzkpjV_Jshfo' href='https://matrix.to/#/!wBOJlzaOULZOALhaRh:polkadot.io/$KRDYdRz58MKl3yNHY6HRd-uYGb5kii8MzkpjV_Jshfo' target='_blank'>2026-05-14 09:18</a>&ensp;<span class='u' style='color:#48d03d'>tomusdrw</span>: An application for this kind of re-compiler I always had in mind is AssemblyScript JAM SDK: github.com/tomusdrw/as-lan
+
+Surprisingly enough, some examples are smaller in size than Rust JAM-SDK even though they go through AS -&gt; WASM -&gt; PVM path.
+
+You can try it out to write services for JAM. IMHO it&#x27;s pretty cool to have a JavaScript-like language, with a really simple learning curve as an entrypoint for JAM. You can easily try it out with our other tool &quot;jammin&quot;: <a href="https://github.com/jammin-create/jammin-create-aslan" rel="noopener" target="_blank">https://github.com/jammin-create/jammin-create-aslan</a>
+
+Curious about your feedback :)</div>
