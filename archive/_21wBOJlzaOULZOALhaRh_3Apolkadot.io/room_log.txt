@@ -1,5 +1,5 @@
 # room: #jam:polkadot.io
-# exported: 2026-05-18 04:41 UTC
+# exported: 2026-05-19 04:37 UTC
 2024-04-20 02:08 johnjiao123: 
 2024-04-20 02:09 johnjiao123: 
 2024-05-30 21:48 nradko: Hey everyone,
@@ -12888,10 +12888,12 @@ It's was heavily AI-assisted, but surprisingly I think it works quite well. Rece
 
 Obviously polkadot runtime are better compiled directly to PVM from Rust, but being able to translate arbitrary WASM programs to PVM has some benefits as well, for instance being able to compile wider range of programming languages and use WASM as an IR.
   ↳ 2026-05-14 11:27 dmitry.sinyavin: Really cool, may also be used when https://github.com/paritytech/polkadot-sdk/pull/6704 lands
-2026-05-14 09:18 tomusdrw: An application for this kind of re-compiler I always had in mind is AssemblyScript JAM SDK: github.com/tomusdrw/as-lan
+2026-05-14 09:18 tomusdrw: An application for this kind of re-compiler I always had in mind is AssemblyScript JAM SDK: https://github.com/tomusdrw/as-lan
 
 Surprisingly enough, some examples are smaller in size than Rust JAM-SDK even though they go through AS -> WASM -> PVM path.
 
 You can try it out to write services for JAM. IMHO it's pretty cool to have a JavaScript-like language, with a really simple learning curve as an entrypoint for JAM. You can easily try it out with our other tool "jammin": https://github.com/jammin-create/jammin-create-aslan
 
-Curious about your feedback :)
+Curious about your feedback :) [edited]
+2026-05-18 10:37 emielsebastiaan: Basti.await: hi Basti, could we get an update on progress of the audit? 🙏🏻
+2026-05-18 10:40 bkchr: Yeah sorry for the silence. We are in the last rounds of testing and fixing some bugs. davxy just found and fixed some bug in the fuzzer
