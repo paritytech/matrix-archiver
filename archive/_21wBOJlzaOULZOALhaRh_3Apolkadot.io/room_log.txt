@@ -1,5 +1,5 @@
 # room: #jam:polkadot.io
-# exported: 2026-05-19 04:37 UTC
+# exported: 2026-05-20 04:38 UTC
 2024-04-20 02:08 johnjiao123: 
 2024-04-20 02:09 johnjiao123: 
 2024-05-30 21:48 nradko: Hey everyone,
@@ -12897,3 +12897,136 @@ You can try it out to write services for JAM. IMHO it's pretty cool to have a Ja
 Curious about your feedback :) [edited]
 2026-05-18 10:37 emielsebastiaan: Basti.await: hi Basti, could we get an update on progress of the audit? 🙏🏻
 2026-05-18 10:40 bkchr: Yeah sorry for the silence. We are in the last rounds of testing and fixing some bugs. davxy just found and fixed some bug in the fuzzer
+2026-05-19 10:18 bkchr: https://fuzz.jamtoaster.network we are ready! Ty for all the patience etc! The "app" is kind of self explaining. You register, get approved and then you can start fuzzing. If there are errors, you can download the logs etc. If all lanes are finished, you can attest this on chain. If this is done, please go to Anaelle LTD | Technical Fellowship Secretary with a link to your attestation to get a fellowship interview scheduled. As promised before, we will try to do these interviews in the order of the original registration in the W3F fuzzing repo. Please be so kind to report your number in the queue on your own. 
+
+Right now we only have 3 fuzzing machines running, if there is more demand we may need to spawn more, but let's see.
+
+HAPPY FUZZING!
+  ↳ 2026-05-19 11:03 jaymansfield: Registered
+  ↳ 2026-05-19 11:04 clearloop: Registered
+  ↳ 2026-05-19 12:25 libingjiang: Registered
+  ↳ 2026-05-19 18:06 ascriv: Registered
+2026-05-19 10:23 dakkk: the wallet we choose in this procedure is the one used for the prize payment, or is it unrelated?
+2026-05-19 10:23 bkchr: Unrelated 
+2026-05-19 10:23 bkchr: You will need to have some DOT in it 
+2026-05-19 10:24 bkchr: ~0.5 should be more than enough
+2026-05-19 10:26 dakkk: great, sent
+2026-05-19 10:29 bkchr: Approved you
+2026-05-19 10:29 bkchr: And tomusdrw 
+2026-05-19 11:16 emielsebastiaan: Basti.await: When I connect with the Polkadot-JS browser plugin it shows the general SS58 address encoding for the connected wallet and not the Polkadot SS58 address encoding on the submission website. The transaction has still been submitted in good order so it seems. But this might warrant some improvement on the submission side to avoid confusion.
+2026-05-19 11:28 dakkk: Basti.await: the site is offline rn (502 bad gateway)
+
+EDIT: back online [edited]
+2026-05-19 11:31 oliver.tale-yazdi: Does it make sense to use a team multisig for this or not? Do I need to sign whenever logging in to the page?
+2026-05-19 13:17 bkchr: No multisig support. One account to rule them all. 
+2026-05-19 13:17 bkchr: Yeah no idea, I also checked it and it was not reachable at all. 
+2026-05-19 13:55 tomusdrw: When can we expect the fuzz stuff to be run? After the minifuzz pass nothing really happens, so I'm not sure if we are queued, running or if there is some downtime currently. Asking in general - is it hours, days or weeks so that I can stop refreshing the tab :D
+2026-05-19 15:16 danicuki: Who approves teams? 
+2026-05-19 15:46 bkchr: Right now me 
+2026-05-19 15:46 bkchr: Apparently there was one thing we did not test, "overloading the queue". Fixes are incoming.
+2026-05-19 15:55 bkchr: Fuzzers will need to restart, but I will also register additional 8 fuzzer machines 
+2026-05-19 16:00 ascriv: If a team with a lower queue number starts after a team with a higher one, will the lower one preempt the higher?
+2026-05-19 16:00 bkchr: No. But there were some bugs 
+2026-05-19 16:01 ascriv: Ok so it’s basically first come first serve 
+2026-05-19 16:01 bkchr: Yes
+2026-05-19 16:01 bkchr: But then we have 11 fuzzers
+2026-05-19 16:03 ascriv: If a team fails on a single transition does it go to end of queue ?
+2026-05-19 16:04 bkchr: What you mean by transition? 
+2026-05-19 16:04 ascriv: Block import 
+2026-05-19 16:04 bkchr: If your job fails, you need to fix the bug any way? 
+2026-05-19 16:05 bkchr: But yeah you go to the back
+2026-05-19 16:05 ascriv: Ok so it will move on to a team that may be waiting 
+2026-05-19 16:06 bkchr: Yes 
+2026-05-19 16:24 r2rtnl: Basti.await: According to the conformance criteria, there should be seven fuzzer runs: L0, L1a, L1b, L2a, L2b, L3a, and L3b. However, the web fuzzer appears to skip L1a and L1b and jump straight to L2a. Is that expected, or is something misconfigured?
+
+EDIT: My current submission has been marked as “interrupted.” Is it safe to start a new run, or are you still fixing something on your end?
+
+https://github.com/davxy/jam-conformance/blob/main/conformance-criteria/conformance-matrix.md [edited]
+2026-05-19 16:33 ascriv: Screenshot 2026-05-19 at 11.33.29 AM.png
+2026-05-19 16:33 ascriv: i got this while registering, not sure what it means
+2026-05-19 16:53 bkchr: You can restart, but it should have done it automatically
+2026-05-19 16:53 bkchr: davxy: is the fuzzing master, but L1a/b is only for local testing AFAIK
+2026-05-19 16:53 bkchr: Do you get this all the time? 
+2026-05-19 16:58 jaymansfield: Screenshot 2026-05-19 at 12.57.55 PM.png
+2026-05-19 16:58 jaymansfield: Seeing this now
+2026-05-19 17:00 bkchr: Try to force reload/logout and login 
+2026-05-19 17:02 ascriv: > <@bkchr:parity.io> Do you get this all the time? 
+
+yes tried a few times. could it be somehow related to https://docs.polkadot.com/smart-contracts/for-eth-devs/accounts/#account-mapping-for-native-polkadot-accounts ?
+2026-05-19 17:26 shimonchick: Dang. All of this on the day im getting married and had a strict no laptop policy on the party. Hope 2 days delay is not an issue to register 😁
+2026-05-19 17:30 bkchr: > <@shimonchick:matrix.org> Dang. All of this on the day im getting married and had a strict no laptop policy on the party. Hope 2 days delay is not an issue to register 😁
+
+Congrats and enjoy the party 
+2026-05-19 17:30 bkchr: > <@ascriv:matrix.org> yes tried a few times. could it be somehow related to https://docs.polkadot.com/smart-contracts/for-eth-devs/accounts/#account-mapping-for-native-polkadot-accounts ?
+
+The app actually should handle this 
+2026-05-19 17:43 vinsystems: Same here. Were you be able to make the submission?
+2026-05-19 18:02 jaymansfield: Nope I still get the same error and I've tried everything. Signing out, fresh browser, manually clearing all cookies, etc. 
+2026-05-19 18:06 ascriv: > <@ascriv:matrix.org> yes tried a few times. could it be somehow related to https://docs.polkadot.com/smart-contracts/for-eth-devs/accounts/#account-mapping-for-native-polkadot-accounts ?
+
+for others with this issue: I fixed by calling the revive::mapAccount() extrinsic in polkadot.js on asset hub
+2026-05-19 18:10 bkchr: Will check because this should be done automatically 
+2026-05-19 18:43 davxy: l2a(b) is essentially l1a(b) with mutations applied. The assumption is that if you can pass the harder case, you should also be able to pass the easier one. This avoids going through a large number of additional steps that do not provide much value.
+2026-05-19 18:51 prematurata: Had only few minutes and tried but got: ```Chain rejected the submit call. Dry run failed: {"type":"Module","value":{"type":"Revive","value":{"type":"AccountUnmapped"}}}```  Tried to search in here but apparently this is new
+2026-05-19 18:55 ascriv: > <@ascriv:matrix.org> i got this while registering, not sure what it means
+
+@[prematurata | TSJam] 
+2026-05-19 18:55 ascriv: > <@ascriv:matrix.org> for others with this issue: I fixed by calling the revive::mapAccount() extrinsic in polkadot.js on asset hub
+
+Solution^
+2026-05-19 19:07 dakkk: my submission got interrupted with empty report (it was half %), and now I'm unable to resubmit
+
+it says:
+
+"Controller is not registered as a team. Register at /team first. "
+
+The revive thing doesn't work here [edited]
+  ↳ 2026-05-19 19:46 jaymansfield: A few of us have this same error after the interrupted run
+2026-05-19 19:07 ascriv: p.s. wonder if we should move this thread to jam conformance channel
+2026-05-19 20:26 mkchung: Anyone else has issue registering? Im seeing the following msg:
+```
+Chain rejected the submit call. { "type": "Invalid", "value": { "type": "ExhaustsResources" } }
+```
+
+
+  ↳ 2026-05-19 20:58 bkchr: Please try again. It was me 
+  ↳ 2026-05-19 21:05 mkchung: now seeing:
+```
+Chain rejected the submit call. Dry run failed: {"type":"Module","value":{"type":"Revive","value":{"type":"StorageDepositNotEnoughFunds"}}}
+```
+?
+  ↳ 2026-05-19 21:06 mkchung: Im using polkadot.js btw -- is there a recommend wallet to use ?
+  ↳ 2026-05-19 21:06 bkchr: Not related to the wallet. Should work with pjs or any other 
+  ↳ 2026-05-19 21:06 bkchr: I'm looking into it 
+  ↳ 2026-05-19 21:49 bkchr: mkchung: Please retry [edited]
+  ↳ 2026-05-19 21:49 bkchr: Works for me now 
+  ↳ 2026-05-19 21:51 mkchung: just did. It's under review now 🙏
+  ↳ 2026-05-19 21:55 bkchr: Jamduna? 
+2026-05-19 21:26 dakkk: Basti.await: now it says that I already have a fuzzing session running, but it was interrupted without reason before
+2026-05-19 21:26 dakkk: image.png
+2026-05-19 21:26 bkchr: Yeah your session is still scheduled. I had to restart the fuzzers and then restart the session, but the UI is not showing this correctly. I will probably just cancel the queued runs 
+2026-05-19 21:40 emielsebastiaan: Our (pyjamaz) session was interrupted a few minutes ago without any further reason after 300000+ steps on L2a. Could that have something to do with the restart you mentioned? Basti.await 
+2026-05-19 21:44 bkchr: Yes sorry, it was a mistake. Please reschedule. Bumpy start. 
+2026-05-19 21:44 bkchr: I'm also still waiting for more machines to speed up the fuzzing 
+2026-05-19 21:54 ascriv: Screenshot 2026-05-19 at 4.54.22 PM.png
+2026-05-19 21:55 ascriv: getting these messages after trying to sign in to the dashboard/submit image (i'm using a qr signer, could be related)
+2026-05-19 21:55 bkchr: Yeah it requires some raw signing
+2026-05-19 21:55 bkchr: Has it worked before? 
+2026-05-19 21:56 ascriv: nope. so airgapped QR signing isn't supported?
+2026-05-19 21:56 bkchr: Are you using Polkadot Vault? 
+2026-05-19 21:57 ascriv: yep
+2026-05-19 21:57 bkchr: Which extension? 
+2026-05-19 21:57 ascriv: pjs
+2026-05-19 21:59 bkchr: Vault should support raw signing. Maybe you could try talisman? Maybe a bug in the pjs extension
+2026-05-19 21:59 bkchr: https://github.com/novasamatech/parity-signer/issues/997 it supports signing utf8 text
+2026-05-19 21:59 bkchr: Was there any popup for a sign request?
+2026-05-19 22:02 ascriv: yes many which i signed which didn't seem to work
+2026-05-19 22:02 ascriv: i'll try talisman
+2026-05-19 22:04 ascriv: same issue^
+2026-05-19 22:05 ascriv: i checked the http response and see {"error":"auth: signature does not match signer"}, if that helps
+2026-05-19 22:08 ascriv: using parity signer app version 5.0.0
+2026-05-19 22:09 bkchr: I can check tomorrow. I'm now away from my computer 
+2026-05-19 22:11 jaymansfield: It’s working again with polkadot.js for me 
+2026-05-19 23:19 ascriv: > <@ascriv:matrix.org> using parity signer app version 5.0.0
+
+worked after updating to newest version of polkadot vault

@@ -1,5 +1,5 @@
 # room: #jam-conformance:matrix.org
-# exported: 2026-05-19 04:38 UTC
+# exported: 2026-05-20 04:39 UTC
 2025-08-20 15:56 erin: tomusdrw: i've set up the archiver to archive this also, so hopefully will be up starting tomorrow
 2025-08-21 06:33 ascriv: https://github.com/davxy/jam-conformance/issues/26 should we not discourage open source implementations (for now)? [edited]
 2025-08-21 10:27 oliver.tale-yazdi: I think open source repos are fine. Other implementors are just not supposed to look at it
@@ -2669,3 +2669,14 @@ For example for starting a node instead of the fuzzer
 2026-05-09 13:44 dakkk: does it only generate empty blocks? [edited]
 2026-05-09 14:41 tomusdrw: Oliver Tale-Yazdi or Cisco will know best but I guess for now it's only valid, empty blocks. If anyone else has a fuzzer I'm happy to integrate it. Have it on my todo list to build one too (I wanted to focus on generating some random pvm programs and trigger more pvm parsing and host call edge cases) but not enough time yet.
 2026-05-09 16:23 oliver.tale-yazdi: Yes empty for now, as sanity check and to see that the infra works e2e 
+2026-05-19 10:41 davxy: https://matrix.to/#/!wBOJlzaOULZOALhaRh:polkadot.io/$Da2rATuW6LbaY19qFVEVzMLN8coJWzYdolfxWuYPuEI?via=polkadot.io&via=matrix.org&via=parity.io
+2026-05-19 10:48 clearloop: is the remote fuzzer still using ENV or (now or soon) flags 
+
+https://github.com/davxy/jam-conformance/pull/206 [edited]
+2026-05-19 11:09 davxy: You just need to implement [std packaging](https://github.com/davxy/jam-conformance/blob/main/fuzz-proto/README.md#standard-target-packaging). IIRC you're already implemented it? [edited]
+  ↳ 2026-05-19 11:14 clearloop: yes, we support the exist std packaging, I'm at a hot path of editing my code rn, so if there is any updates, I'd like to wire the changes together
+2026-05-19 15:02 celadari: Btw, the address used to sign in the fuzzer needs to be the same as the address(es) to receive the prize or can be an individual one ?
+2026-05-19 15:14 nicholas: No it doesn't have to be but you will need to have some DOT on it.
+~0.5 should be more than enough
+  ↳ 2026-05-19 15:16 celadari: Thanks
+2026-05-20 03:23 timwu20: 
