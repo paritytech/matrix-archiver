@@ -1,5 +1,5 @@
 # room: #jam:polkadot.io
-# exported: 2026-05-20 04:38 UTC
+# exported: 2026-05-21 04:42 UTC
 2024-04-20 02:08 johnjiao123: 
 2024-04-20 02:09 johnjiao123: 
 2024-05-30 21:48 nradko: Hey everyone,
@@ -13030,3 +13030,84 @@ Chain rejected the submit call. Dry run failed: {"type":"Module","value":{"type"
 2026-05-19 23:19 ascriv: > <@ascriv:matrix.org> using parity signer app version 5.0.0
 
 worked after updating to newest version of polkadot vault
+2026-05-20 05:46 dakkk: now I started another session sinche the last was still terminated, but did I lost the spot in the queue? It says "queued" [edited]
+2026-05-20 08:09 r2rtnl: Both of my submissions have been marked as “interrupted” after cumulatively processing more than 1.2 million blocks.
+
+I also cannot start a new one because I get the following message: “You already have an active fuzz session running. Wait for it to finish, or click Abort on the running submission, then re-submit.”
+2026-05-20 09:59 dakkk: image.png
+2026-05-20 09:59 dakkk: interrupted again without any reason
+2026-05-20 11:16 bkchr: I'm looking into this and it was maybe a hearbeat issue
+2026-05-20 11:16 bkchr: What is your team name? 
+2026-05-20 11:18 dakkk: ok thx (y) anyway now it started again, please don't stop :P there is still an issue with logs api call, they returns 410 with `{"error":"Session owner unknown or offline"}`
+2026-05-20 11:32 bkchr: Have you restarted it? 
+2026-05-20 11:32 bkchr: Or was it automatically restarted? 
+2026-05-20 11:32 bkchr: Automatically or? 
+2026-05-20 11:35 ascriv: Screenshot 2026-05-20 at 6.35.49 AM.png
+2026-05-20 11:36 ascriv: getting this after attempting to download report
+2026-05-20 11:36 vinsystems: Same here
+2026-05-20 11:46 libingjiang: same here.
+2026-05-20 11:47 bkchr: bingjiang li | Jambda: Can you give me the session id 
+2026-05-20 11:50 dakkk: the last restarted automatically after being "interrupted"
+2026-05-20 11:51 bkchr: Can you try again to download
+2026-05-20 11:51 bkchr: Or check the logs
+2026-05-20 11:51 bkchr: Please do a hard refresh before
+2026-05-20 11:52 dakkk: now the logs are working again, the fuzzing is running, so everything seems ok now
+2026-05-20 11:52 bkchr: Perfect
+2026-05-20 11:52 bkchr: We now also have 11 fuzzer machines, so we have more running in parallel
+2026-05-20 12:08 ascriv: Screenshot 2026-05-20 at 7.08.35 AM.png
+2026-05-20 12:08 ascriv: also getting this when downloading report. should i just restart?
+2026-05-20 12:10 libingjiang: After restarting, it looks like it’s back to normal.
+2026-05-20 12:25 bkchr: Please try again, it should work
+2026-05-20 12:25 ascriv: works now, thanks
+2026-05-20 14:54 celadari: Hi,
+We had an error (quite early at 6,599 / 1,000,000) with `InvalidEpochMark`
+Basti.await can we have a trace of the error please ? : )
+(The team is jam4s) [edited]
+2026-05-20 15:03 celadari: Actually it was interrupted => was it interrupted because of failure or because of something else ?
+Basically the question is: Do we need to fix something or it was just the runner and we just need to relaunch ? [edited]
+2026-05-20 15:03 bkchr: Relaunch it 
+2026-05-20 15:03 bkchr: Interrupted is not your fault 
+2026-05-20 15:04 celadari: thanks : ) [edited]
+2026-05-20 15:10 oliver.tale-yazdi: After the `L2a`, will it go to `L2b` on its own or do i have to nudge it? It seems to wait for `L2b` but not starting
+  ↳ 2026-05-20 15:22 bkchr: Are you sure? From the admin UI it looks like the job is running
+  ↳ 2026-05-20 15:32 oliver.tale-yazdi: Screenshot 2026-05-20 at 17.32.24.png
+2026-05-20 17:00 danicuki: if we fail on L2b, the next try will start from scratch at L2a? Or will it skip L2a and go right to L2b? If so, maybe there should be a way to skip it, otherwise we need to wait for hours for something that already passed, just to get feedback on the next stage. Does it make sense?
+2026-05-20 17:50 bkchr: Every run uses a different random seed, so it could theoretically still find something 
+2026-05-20 18:03 ascriv: Maybe we could required a full “unsegmented” run for passing M1, but before that, could allow for segmented runs to help with iteration speed?
+2026-05-20 18:15 bkchr: Maybe @davxy could provide more traces for you to run this locally. I did not follow the process up to this point, but I had thought that you already had enough testing vectors. 
+2026-05-20 18:18 ascriv: I think the biggest gap is probably “full” test vectors 
+2026-05-20 18:20 dakkk: yep, we don't have any trace in "full" spec
+2026-05-20 18:31 davxy: Traces for the full spec have not been shared. I'll try to prepare a batch for you tomorrow.
+
+Where do you think is the best place to host all these traces? The jam-conformance repo is already getting quite large, and including full traces will make it even worse. Any suggestions?
+
+Github LFS is not an option as AFAIK has download quotas limits
+  ↳ 2026-05-20 19:23 clearloop: could be a tar file at github releases
+  ↳ 2026-05-20 20:24 danicuki: S3 or Google Cloud Storage
+  ↳ 2026-05-20 20:55 tomusdrw: bulletin chain 🙃
+2026-05-20 18:35 ascriv: how about:
+
+1. repo only contains manifest.json (for each trace, path + sha + size) + fetch script
+2. use cloudflare R2 for object store
+2026-05-20 18:41 r2rtnl: davxy: How much storage do you expect the full test vectors to take? If we are speaking about another couple of GBs, then, in my view, adding them directly to the repo should be fine.
+2026-05-20 19:06 celadari: What are the common reasons to get `Timeout waiting for peer` that others have encountered ?
+
+```sh
+2026-05-20 16:28:44 [s=15438] fuzz::fuzzer  Failed sending block to to target: Timeout waiting for peer
+2026-05-20 16:28:44 [s=15438] fuzz::fuzzer  Terminating after 50365 steps with result: Err(RemoteCommunication(Timeout))
+```
+2026-05-20 19:13 danicuki: In case a team has issues only in full spec, we will always have to wait many hours to see failing results (supposing tiny is working). Our run takes 6 hours. The fuzzer will still run all phases. I am suggesting just that the order (that now is fixed) changes, starting from the phase the team failed in the last run - and running those passed phases in the end. [edited]
+2026-05-20 19:20 boymaas: image.png
+2026-05-20 19:23 boymaas: Basti.await: I was AFK, so I did not see the announcement about the fuzzer. I just registered. I assumed that the release of an event requiring everyone's participation would be announced in advance, allowing everyone to prepare for it. Or did I miss this announcement earlier? What is the procedure here? I am a bit in the dark.
+2026-05-20 19:34 boymaas: IPFS
+2026-05-20 20:59 bkchr: Again, I was not assuming that the fuzzing is a debugging utility and more just a check up to continue to the next stage.
+2026-05-20 22:06 clearloop: what's the hardware config of the fuzz machines? I remember JAM built a data center last years
+  ↳ 2026-05-21 02:36 clearloop: ```
+INFO socket=/tmp/jam_fuzz/fuzz.sock, vm=compiler, cpu="AMD Ryzen Threadripper PRO 7995WX 96-Cores"     
+  (96 cores), ram=251.2 GB 
+```
+
+got it, much more than I need... [edited]
+2026-05-20 22:07 clearloop: glad to see the fuzz infra works, finally we have automation
+2026-05-20 22:17 danicuki: Screenshot 2026-05-20 at 23.16.44.png
+2026-05-20 22:17 danicuki: when I try to download full session for my run I get this error
