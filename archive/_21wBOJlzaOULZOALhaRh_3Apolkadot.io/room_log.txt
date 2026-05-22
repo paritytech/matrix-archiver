@@ -1,5 +1,5 @@
 # room: #jam:polkadot.io
-# exported: 2026-05-21 04:42 UTC
+# exported: 2026-05-22 04:37 UTC
 2024-04-20 02:08 johnjiao123: 
 2024-04-20 02:09 johnjiao123: 
 2024-05-30 21:48 nradko: Hey everyone,
@@ -13111,3 +13111,108 @@ got it, much more than I need... [edited]
 2026-05-20 22:07 clearloop: glad to see the fuzz infra works, finally we have automation
 2026-05-20 22:17 danicuki: Screenshot 2026-05-20 at 23.16.44.png
 2026-05-20 22:17 danicuki: when I try to download full session for my run I get this error
+2026-05-21 05:21 dakkk: 
+2026-05-21 05:21 dakkk: image.png
+2026-05-21 05:21 dakkk: the first impact with full spec for jampy was really hard 😁
+2026-05-21 06:00 clearloop: Screenshot 2026-05-21 at 14.00.39.png
+2026-05-21 06:00 clearloop: the web app says we passed l2a, while after downloading the report, I found we didn't (from the report, our binary stopped at ~70k, and I could not reproduce the failure on my local PC), I believe there could a bug in the UI [edited]
+2026-05-21 06:23 bkchr: > <@clearloop:matrix.org> the web app says we pass l2a, while after downloading the report, I found we didn't, I believe there is a bug in the UI
+> 
+> 
+
+Can you give me the link to the run? 
+  ↳ 2026-05-21 06:31 clearloop: https://fuzz.jamtoaster.network/submissions/t-0x4c448aa63cefe8ca36ce65ef0e8a8a8c4186d68b905eaf79468f90d6ead9707a-0-1-2-pre-4-6f3a4cda
+2026-05-21 07:43 r2rtnl: image.png
+2026-05-21 07:43 r2rtnl: Basti.await: TurboJam has passed all lanes, but publish results fails with the following message. Any advice? 
+2026-05-21 07:59 emielsebastiaan: You had me at Turbo lol 😝 
+2026-05-21 08:16 bkchr: > <@r2rtnl:matrix.org> Basti.await: TurboJam has passed all lanes, but publish results fails with the following message. Any advice? 
+
+Interesting error. Not have seen this before 😂 
+2026-05-21 08:19 tomusdrw: Basti.await: can you confirm the resources available for all targets? We are configured for 8G, but our OOM logs seem to indicate there is only 2G available (our target was not able to allocate after 2070M)
+  ↳ 2026-05-21 09:20 bkchr: AFAIK we do not set any limit, but maybe there is some default limit for docker or something like this. I will check it 
+  ↳ 2026-05-21 09:49 davxy: docker is run with 16 GB limit
+  ↳ 2026-05-21 09:51 davxy: https://github.com/davxy/jam-conformance/blob/717186809c5adeed4ac7f4ea94d21ba895bdfd4c/scripts/target.py#L492-L493
+  ↳ 2026-05-21 09:51 davxy: (assuming this has not been changed to run on the toaster)
+  ↳ 2026-05-21 12:42 bkchr: @tomusdrw can you share the run? 
+  ↳ 2026-05-21 14:16 bkchr: tomusdrw: Looks like this is an issue with your nodejs configuration, you need to increase the memory limit in your docker container
+2026-05-21 09:51 oliver.tale-yazdi: Screenshot 2026-05-21 at 11.51.44.png
+2026-05-21 09:52 oliver.tale-yazdi: When trying to send the TX. I see a 502 in the JS console
+2026-05-21 09:56 danicuki: I understand the fuzzer is not meant to be a debugging utility.
+
+But even as a gate, the current ordering creates avoidable dead time. If a team fails L2b, the next useful signal is whether L2b still fails. Running L2a first does not make the L2b signal stronger; it only delays it.
+
+I am not proposing to reduce coverage or reuse previous results. The final pass should still require all phases to pass in the current run with fresh seeds.
+
+The proposal is only:
+
+1. On retry, run the last failed phase first.
+2. If it fails, stop and report.
+3. If it passes, continue with the rest of the phases, including earlier ones.
+4. Only accept the submission if all phases pass in that run.
+
+That preserves the integrity of the check while making the submission loop much more practical for teams.
+2026-05-21 10:39 prematurata: Anyone have seen their restart automatically in L2a?
+2026-05-21 10:40 boymaas: Very interesting I was at >20% started at 11:14 and somehow the l2a started from the beginning at 21/05/2026, 12:32:39. Just noticed as well [edited]
+2026-05-21 10:41 prematurata: Damn it was almost done mine
+2026-05-21 10:42 prematurata: > <@danicuki:matrix.org> I understand the fuzzer is not meant to be a debugging utility.
+> 
+> But even as a gate, the current ordering creates avoidable dead time. If a team fails L2b, the next useful signal is whether L2b still fails. Running L2a first does not make the L2b signal stronger; it only delays it.
+> 
+> I am not proposing to reduce coverage or reuse previous results. The final pass should still require all phases to pass in the current run with fresh seeds.
+> 
+> The proposal is only:
+> 
+> 1. On retry, run the last failed phase first.
+> 2. If it fails, stop and report.
+> 3. If it passes, continue with the rest of the phases, including earlier ones.
+> 4. Only accept the submission if all phases pass in that run.
+> 
+> That preserves the integrity of the check while making the submission loop much more practical for teams.
+
+Or also allow the admin pick which one to run first
+2026-05-21 10:44 bkchr: Do you have the session id for me? 
+2026-05-21 10:45 boymaas: https://fuzz.jamtoaster.network/submissions/t-0x1c29671fc7140b513379355ecf0d94bf4ad1cada3ef94537c98fe68f59869700-gp0-7-2-202605210901-bec3fa2-ccda34c4
+2026-05-21 10:46 bkchr: (I did not touch anything, I will check what happened)
+2026-05-21 10:49 prematurata: https://fuzz.jamtoaster.network/submissions/t-0xb4ac19c9a723477c0b31ef41dd0cfd9539a3a8d763e6a6c4c96eba6eba5e4d7f-5643070c-110f3c9b
+2026-05-21 11:05 danicuki: Last run of L2a was marked as passed, but the report stats has only 256432 steps run. It went directly to L2b 
+2026-05-21 11:06 bkchr: Okay it is related to missed lease renewal. I have seen this yesterday already and to fix this I need to restart the fuzzers which will kill the jobs. So, I have not done this yet
+2026-05-21 11:17 boymaas: Allright, anything we can do to prevent this happening in our current runs? Or wil this happen at random? 
+2026-05-21 11:18 bkchr: Not your fault, but nothing you can prevent
+2026-05-21 14:03 emielsebastiaan: > <@bkchr:parity.io> Okay it is related to missed lease renewal. I have seen this yesterday already and to fix this I need to restart the fuzzers which will kill the jobs. So, I have not done this yet
+
+Please do NOT restart our fuzzer. It is crunching and it would be very unfortunate if ours was interrupted by a restart again. 
+2026-05-21 14:03 bkchr: This is the reason I do not have done this ;) 
+2026-05-21 14:04 bkchr: I don't want to get tarred and feathered
+2026-05-21 14:04 bkchr: Haha
+2026-05-21 14:04 ascriv: What should the policy be if a change needs to be made that requires shutting down the fuzzers? Maybe just don’t accept new submissions temporarily and allow existing ones to finish?
+2026-05-21 14:05 bkchr: Yeah sounds reasonable. 
+2026-05-21 14:06 emielsebastiaan: We expect to be done tomorrow midnight or maybe the day after extrapolating TurboJAM performance. 
+2026-05-21 14:06 ascriv: Ok let us know when to pause new submissions (or I guess you could probably enforce this technically)
+2026-05-21 14:15 davxy: Probable stop soon :-)
+2026-05-21 14:18 clearloop: do it, I gonna deploy a new version 🙂
+2026-05-21 14:21 jaymansfield: JavaJAM has passed the fuzzing but im not able to publish it on chain. Getting a "Authorize failed: Failed to assemble combined suite report" error.
+  ↳ 2026-05-21 14:22 bkchr: Yeah I'm just looking into this 
+  ↳ 2026-05-21 15:30 jaymansfield: Works now, thanks!
+2026-05-21 14:21 jaymansfield: Screenshot 2026-05-21 at 10.20.29 AM.png
+2026-05-21 14:51 oliver.tale-yazdi: Screenshot 2026-05-21 at 16.51.45.png
+  ↳ 2026-05-21 15:15 bkchr: Ups, it still mentions paseo xD 
+2026-05-21 14:52 oliver.tale-yazdi: Looking good now, thanks Basti!
+2026-05-21 14:52 oliver.tale-yazdi: (this shows after you click the button to send the transaction)
+2026-05-21 15:30 bkchr: Can you confirm it was fixed for you as well? 
+2026-05-21 15:48 r2rtnl: The issue is still present: "Authorize failed: Failed to resolve manifest digest for docker.io/r2rationality/turbojam-fuzz:v0.2.8: Registry docker.io did not return Docker-Content-Digest for r2rationality/turbojam-fuzz:v0.2.8"
+2026-05-21 16:15 dakkk: Basti.await: is there an api endpoint that given a session id we can get the progress without wallet signing? 
+2026-05-21 16:22 bkchr: Probably not right now, I can add one 
+2026-05-21 16:22 bkchr: > ghcr.io/chainscore/tessera:v0.7.2.5:v0.7.2.5	running	1603/1000000 (~81d 4h)
+
+This will take some time 🙈
+2026-05-21 16:23 bkchr: BTW I paused the fuzzer scheduling, so no new jobs will be started
+2026-05-21 16:23 bkchr: But we will not be able to wait 81d
+2026-05-21 17:17 ascriv: is "chaining" also paused? my L2a finished but L2b seems stuck in queued [edited]
+  ↳ 2026-05-21 17:59 bkchr: Should not be the case 
+2026-05-21 18:02 boymaas: image.png
+2026-05-21 18:02 boymaas: I am also stuck in L2b
+2026-05-21 18:10 ascriv: Screenshot 2026-05-21 at 1.10.10 PM.png
+2026-05-21 18:10 ascriv: L2b in queued state for 1 hour
+2026-05-21 18:49 shimonchick:  registered as well
+2026-05-21 19:21 bkchr: Yeah that will continue after the "unpause" 
+2026-05-21 22:34 xlchen: I guess it could be too late to do refactor to the fuzzer but it really should be just multiple independent worker process and a main controller process so that restart the controller does not need to impact the workers. The workers must already be running on separate machine right? So restart the controller server shouldn't impact the worker machines?
