@@ -1,5 +1,5 @@
 # room: #jam-conformance:matrix.org
-# exported: 2026-05-22 04:38 UTC
+# exported: 2026-05-23 04:29 UTC
 2025-08-20 15:56 erin: tomusdrw: i've set up the archiver to archive this also, so hopefully will be up starting tomorrow
 2025-08-21 06:33 ascriv: https://github.com/davxy/jam-conformance/issues/26 should we not discourage open source implementations (for now)? [edited]
 2025-08-21 10:27 oliver.tale-yazdi: I think open source repos are fine. Other implementors are just not supposed to look at it
@@ -2684,3 +2684,13 @@ https://github.com/davxy/jam-conformance/pull/206 [edited]
 2026-05-20 13:01 davxy: Currently it is not implemented.
 In the Initialize message the relative bit is not set (https://github.com/davxy/jam-conformance/blob/6c3f179b988f08e380c8d5fbb0ecdcaf9cceac01/fuzz-proto/fuzz-v1.asn#L26)
 2026-05-21 17:28 ascriv: we're implicitly doing jam conformance in the let's jam channel. should we make the merge explicit?
+2026-05-22 13:03 basedaf_dev: 
+2026-05-22 17:38 sourabhniyogi: I prefer we look ahead to next M2/M3 (hopefully you are encouraged from the exciting developments):
+
+- we have this be bleeding-edge JAM conformance presently davxy-world  (followed by M2/M3 stuff with JAM implementers, maybe not so much with @davxy but Jan Bujak (M3/M4) and however M2 works out with David Emett or someone else)
+- we have Let's JAM be Bastian-world fuzzing
+- we have GP be Gav-world, wherever he is
+
+What do you think of this?
+
+All channels are public, I believe its a good thing if fuzzing efforts are more public, put into a channel with 572 members rather than one with 113.  Could come in handy in tight spot. [edited]

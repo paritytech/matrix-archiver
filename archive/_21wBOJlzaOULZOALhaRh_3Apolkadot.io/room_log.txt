@@ -1,5 +1,5 @@
 # room: #jam:polkadot.io
-# exported: 2026-05-22 04:37 UTC
+# exported: 2026-05-23 04:28 UTC
 2024-04-20 02:08 johnjiao123: 
 2024-04-20 02:09 johnjiao123: 
 2024-05-30 21:48 nradko: Hey everyone,
@@ -13216,3 +13216,148 @@ This will take some time 🙈
 2026-05-21 18:49 shimonchick:  registered as well
 2026-05-21 19:21 bkchr: Yeah that will continue after the "unpause" 
 2026-05-21 22:34 xlchen: I guess it could be too late to do refactor to the fuzzer but it really should be just multiple independent worker process and a main controller process so that restart the controller does not need to impact the workers. The workers must already be running on separate machine right? So restart the controller server shouldn't impact the worker machines?
+2026-05-22 04:50 clearloop: when will the fuzzer unpause, will it introduces sort of parallel fuzzing for all 4 stages instead of blocking sequence? what happens to the teams passing the 4 stages, can teams re-use the fuzzer to test sort of new updates [edited]
+2026-05-22 05:06 bkchr: > <@xlchen:matrix.org> I guess it could be too late to do refactor to the fuzzer but it really should be just multiple independent worker process and a main controller process so that restart the controller does not need to impact the workers. The workers must already be running on separate machine right? So restart the controller server shouldn't impact the worker machines?
+
+When I talk about the fuzzers, I mean the worker. There are the fuzzer workers and the web logic itself 
+2026-05-22 05:34 dakkk: is there a planned eta for the unpause?
+2026-05-22 05:58 bkchr: > <@dakkk:matrix.org> is there a planned eta for the unpause?
+
+I wanted to wait for your run 
+2026-05-22 05:58 bkchr: Yesterday evening it was still 17h
+2026-05-22 05:59 dakkk: it never been 17h, it was 9 on start; it finished this night at 2.45 UTC+1
+2026-05-22 06:00 bkchr: > <@dakkk:matrix.org> it never been 17h, it was 9 on start; it finished this night at 2.45 UTC+1
+
+Hmm. Maybe I then mixed you up. I will check when I'm at my pc 
+2026-05-22 06:00 bkchr: Or it got faster towards the end 
+2026-05-22 06:00 dakkk: this is mine: 
+2026-05-22 06:00 dakkk: image.png
+2026-05-22 06:01 dakkk: the eta was always correct in the UI
+2026-05-22 06:04 bkchr: Okay I talked about pyjamaz 
+2026-05-22 06:04 bkchr: They still need ~8h
+2026-05-22 06:08 emielsebastiaan: Yes that’s us. I appreciate this Basti.await 
+2026-05-22 06:12 bkchr: Our friends from tesseract now need more than 198 days. We will not wait for them 🙈 
+2026-05-22 06:17 clearloop: I realized that elixir runs insanely fast once it can allocate enough resources, any elixir guy can explain the tech? danicuki | Jamixir Oliver Tale-Yazdi ? [edited]
+2026-05-22 06:18 dakkk: the benchmarks on https://fluffylabs.dev/jam-testing/ seems completly wrong, pyjamaz should be way faster than jampy
+2026-05-22 06:19 emielsebastiaan: Any reason you believe pyjamaz is not faster than JamPy? dakkk | JamPy 
+2026-05-22 06:20 clearloop: as the env can allocate 96 cores, 256GB memory things become totally different
+2026-05-22 06:20 dakkk: basti told us your pyjamaz needed more than 17h, jampy spent 9; maybe they're in different phases
+2026-05-22 06:21 emielsebastiaan: L2a ~ 24h
+L2b ~ 36h
+
+2026-05-22 06:44 clearloop: curious if you have parallel execution on processing extrinsic? guess jampy has but pyjamz doesn't
+
+if I'm not mistaken, the limit of the execution speed is mainly capped by the crypto related stuffs, since we are using the same libraries, we mostly have the similar speed whatever language we are using, the diff could be just pvm and the parallel execution of per extrinsic + either doing batch_verifying for sigs
+2026-05-22 06:44 dakkk: the cap is the pvm execution; I'm running accumulation in parallel, but even if jampy tiny fuzzing is faster, my full fuzzing is slower than pygiamaz [edited]
+2026-05-22 06:45 clearloop: not sure about it, we almost have the fastest pvm execution except polkajam, it takes us ~6h for l2a, similar as other interp implementations, as I can see from our history chat, either turboJam or JavaJam or GrayMatter, takes the same time, so I don't think PVM limits a lot at the fuzzer's env [edited]
+2026-05-22 06:53 dakkk: it depends, I think; if your pvms have similar performance, and the accumulation doesn't include heavy loads or a large number of services, then you're probably right
+2026-05-22 07:00 0xjunha: I registered two days ago and it is under review. Is there a way to see the queue status?
+  ↳ 2026-05-22 07:01 bkchr: What is the name of your team? 
+  ↳ 2026-05-22 07:01 bkchr: I'm not aware of all teams and do not approve all of them 
+  ↳ 2026-05-22 07:01 0xjunha: Screenshot 2026-05-22 at 4.01.44 PM.png
+  ↳ 2026-05-22 07:04 bkchr: I have approved you 
+  ↳ 2026-05-22 07:04 0xjunha: Wow that's great Thanks!
+2026-05-22 07:02 clearloop: I have batch verification for signatures, but no batch execution per graypaper join points for extrinsic, except that and a deeper compiler refactor I wont' do, I believe I have done all of the possible perf updates I can have, so I doubt that sort of parallel computation matters more at the fuzzer machine, since it has 96 cores, per core is slower, and spreading computation matters more, and this is exactly where elixir shines [edited]
+2026-05-22 07:09 0xjunha: Screenshot 2026-05-22 at 4.08.25 PM.png
+  ↳ 2026-05-22 07:09 0xjunha: fwiw found a typo in the hover - 100,000 vs. 1M
+2026-05-22 07:24 shimonchick: > <@bkchr:parity.io> Congrats and enjoy the party 
+
+I registered yesterday night, can i get the approval please?
+2026-05-22 07:53 emielsebastiaan: Yes I think elixer is the exception regarding performance. At least ours is as expected when comparing to the obvious faster ones. 
+2026-05-22 08:12 davxy: Curious, do you accumulate services in parallel?
+2026-05-22 08:19 emielsebastiaan: Yes we parallelize where we can. 5-10 slower than the fastest meets expectations imo and goes beyond expectations of the relative performance benchmark.
+2026-05-22 08:31 emielsebastiaan: All other things being equal perhaps pyjamaz being lower on the fallback benchmark explains our higher per step overhead in comparison to the faster ones and graymatter (elixir). The benchmark seems to show that our PVM should run significantly faster than graymatter’s. [edited]
+2026-05-22 08:32 emielsebastiaan: Anyway we need about 6 more hours on L2b. Thank you for your patience. 🙏🏻 [edited]
+2026-05-22 09:10 prematurata: davxy: 0.2.2 ark-vrf seeems to be compatible with 0.1.1 (in terms of spec) can you confirm?
+2026-05-22 09:15 davxy: The spec includes a guideline for deterministic nonce generation. In 0.1.1, the proposed nonce generation was vulnerable. As a result, 0.2.x produces different signatures, while still remaining compatible: signatures from 0.1.x can be verified by 0.2.x and vice versa.
+
+2026-05-22 09:17 prematurata: so it's almost a dropin replacement (apart from some changes `RingBuilderPcsParams`). 0.3+ does not look like compatible to me [edited]
+2026-05-22 09:19 davxy: versions 0.3+ are not compatible, as the scheme was improved. For JAM, we will continue using 0.2 for now (at least for v0.7.2) to avoid disrupting existing test vectors and related artifacts.
+
+2026-05-22 09:21 davxy: We could consider adopting the new version in 0.8, but it is not urgent
+2026-05-22 09:35 oliver.tale-yazdi: Now I am interested in what kinds of blocks are being fed into the fuzzer since we did not spend time optimizing GrayMatter at all.  
+We do have parallel accumulate but a slow single core PVM. Only thing I paid attention to was I/O latency against the Linux socket since that is on the hot path and overall memory usage
+  ↳ 2026-05-22 09:37 clearloop: It's said that elixir auto dispatch computation & lightweight concurrency to different cores is that true? if so at the 96 cores machine, you guys just write as normal? and the magic just happens?
+
+what a slow single core PVM do you mean? I thought in the PVM interpreter, you can drain the 96 cores as well [edited]
+  ↳ 2026-05-22 11:59 jan: Is there such a thing as a multi-core PVM? (:
+  ↳ 2026-05-22 12:04 jan: Nevertheless, trying to accelerate your PVMs using multiple cores is probably not the best use of your time. This is still a work-in-progress, but beyond the current GP 0.8 (0.9? depending how fast I can get it prototyped and specced) we'll want to tightly control what goes into the L3 cache of the core executing a given PVM instance, and considering how many VMs we want to run in parallel and the current hardware landscape we won't actually have many extra cores to spare.
+  ↳ 2026-05-22 12:11 clearloop: at this point, there could be actually an inverse one 😂 with NUMA adapted or not, I just realized that our execution got maximum ~30x ratio slower on the fuzzer machine comparing with the report I have from the jam-conformance repo, likely caused by that I didn't handle NUMA that our virtual memory of PVM got played by the 96 cores [edited]
+  ↳ 2026-05-22 12:13 jan: Do you run your PVMs in a separate process?
+  ↳ 2026-05-22 12:16 clearloop: good question, I actually load my compiled bytes in memory, allocate with mmap then execute
+  ↳ 2026-05-22 12:17 jan: So you do it within the same process?
+  ↳ 2026-05-22 12:17 clearloop: yes, but for batch execution, I have a rayon wrapper outside
+  ↳ 2026-05-22 12:18 clearloop: I don't want to spawn a process to handle it, feels dirty, but this actually inspires me a lot as well ...
+  ↳ 2026-05-22 12:18 jan: Well, you don't have to spawn a new process (and it's probably easier if you don't.)
+  ↳ 2026-05-22 12:20 clearloop: I'm about to try to bind cores first when NUMA is available not sure if it helps, that I'm eager to see my fuzz getting failed then I can deploy a new version of spacejam on it )) [edited]
+  ↳ 2026-05-22 12:21 jan: I'd be surprised if that would make such a colossal difference. [edited]
+  ↳ 2026-05-22 12:22 jan: (Although we *will* require people to properly bind their PVMs to appropriate cores for M3/M4, but that's more of a "this is needed so that the gas cost model doesn't break when attacked" and less of a "it will make it extremely slow in the average case")
+  ↳ 2026-05-22 14:13 oliver.tale-yazdi: I meant more in the other way if some teams have a global singleton PVM that serializes all execution.  
+PVM it self is single threaded for sure
+  ↳ 2026-05-22 14:14 oliver.tale-yazdi: It must be something about the workload that favours our impl, no clue honestly.  
+But we do everything functional, so parallelism / reversions are very cheap so far.
+
+will change when actually maintaining a Trie etc
+2026-05-22 13:17 boymaas: So the queue will be unpaused once all current sessions are finished and an upgrade of the conformance tool is done. Is that the idea here? Just asking as we are still on queued status. 
+2026-05-22 13:18 bkchr: Yes
+2026-05-22 13:18 emielsebastiaan: Less than 1h for our L2b to finish. 
+2026-05-22 14:09 emielsebastiaan: L2b for pyjamaz has finished Basti.await 
+2026-05-22 14:10 bkchr: Yeah seen it already, I'm working on it :D 
+2026-05-22 16:30 bkchr: Sorry for the delay, but we are back!
+  ↳ 2026-05-22 16:44 clearloop: what does the label "interrupted" mean? and there is no report to download
+  ↳ 2026-05-22 16:50 emielsebastiaan: Same message for pyjamaz: “interrupted” without any signs of error or downloadable report. Please advise. 
+  ↳ 2026-05-22 16:50 bkchr: They are still running if you click on them
+  ↳ 2026-05-22 16:53 emielsebastiaan: > <@bkchr:parity.io> They are still running if you click on them
+
+This is not visible for us in the UI. But if you say it is still running then no intervention is needed I suppose. Nothing to click on. 
+  ↳ 2026-05-22 16:57 emielsebastiaan: image.png
+  ↳ 2026-05-22 16:58 bkchr: Link please
+  ↳ 2026-05-22 17:00 clearloop: we've been stuck at 3196 for a while
+
+https://fuzz.jamtoaster.network/submissions/t-0x4c448aa63cefe8ca36ce65ef0e8a8a8c4186d68b905eaf79468f90d6ead9707a-0-1-2-pre-7-05adc87b
+  ↳ 2026-05-22 17:03 bkchr: They are back to queued 
+  ↳ 2026-05-22 17:57 clearloop: after `queued`, it still hangs, if abort & re-submit can get a fresh healthy status? [edited]
+2026-05-22 16:30 bkchr: Fuzzers are running again
+2026-05-22 16:49 bkchr: As requested `submissions/` pages are now public and do not requirea login
+2026-05-22 16:54 r2rtnl: Basti.await: Did you get a chance to look into the attestation publication issue? Noticed that JavaJam and <del>Gossamer</del>GrayMatter use ghcr.io, while TurboJam uses docker.io — could be registry-specific. [edited]
+  ↳ 2026-05-22 16:54 bkchr: r2rtnl: please give me the submissions link
+  ↳ 2026-05-22 16:55 r2rtnl: https://fuzz.jamtoaster.network/submissions/t-0x988068f9f4a32beb4122c7fe8f3ecd2fb42339682511cbbc6f82cc4e6ef89b25-v0-2-8-919fe30e
+2026-05-22 18:04 shimonchick: why does downloading the report yield 502? https://fuzz.jamtoaster.network/api/public/submissions/t-0xc6d054f89721795d9ca72e95a3dd476820cd380f577fd9ab4b835a510e75800a-main-61a862f-741d82ab
+2026-05-22 18:07 ascriv: Screenshot 2026-05-22 at 1.07.29 PM.png
+2026-05-22 18:07 ascriv: my l2b is still in queued state
+2026-05-22 18:12 prematurata: my L2a as well just restarted mine
+2026-05-22 18:15 ascriv: guess i'll restart
+2026-05-22 18:17 bkchr: Queued just means that all fuzzers are doing other work [edited]
+2026-05-22 18:18 ascriv: oops
+2026-05-22 18:19 ascriv: i figured since it was queue before the restart it should have been started unless there was a bug
+2026-05-22 18:20 prematurata: Damn i stopped mine as well Thinking it was ok :) lol
+2026-05-22 18:22 ascriv: Screenshot 2026-05-22 at 1.22.11 PM.png
+2026-05-22 18:22 ascriv: actually i'm not able to abort my queued submission [edited]
+2026-05-22 18:23 ascriv: Screenshot 2026-05-22 at 1.23.17 PM.png
+2026-05-22 18:23 ascriv: "session owner unknown or offline" @[Basti.await] 
+2026-05-22 18:24 ascriv: Screenshot 2026-05-22 at 1.24.23 PM.png
+2026-05-22 19:58 ascriv: ^all good, L2b running now, dunno what that was
+2026-05-22 20:17 celadari: image.png
+2026-05-22 20:18 celadari: We can't restart a process, the preflight failed this time (it passed on previous runs) saying stale state
+But because of this we CANNOT submit any new run 🥲 Can you check on it please Basti.await  ?
+2026-05-22 21:32 boymaas: image.png
+2026-05-22 21:33 boymaas: FYI I suspect all the machines are busy at the moment and once one comes free will continue the next phase. 
+  ↳ 2026-05-22 21:37 jaymansfield: Think that’s right. It goes queued when there’s no free spots. Just have to wait. 
+2026-05-22 21:57 dakkk: Basti.await: I'm trying to start the fuzzer, but it says that I have another fuzzing session even if I don't. Can you have a look a it?
+2026-05-22 21:58 dakkk: image.png
+2026-05-23 00:41 bkchr: Try again
+  ↳ 2026-05-23 01:10 libingjiang: Same here. I can’t restart it either. It shows: You already have an active fuzz session running. Wait for it to finish, or click Abort on the running submission, then re-submit.
+
+https://fuzz.jamtoaster.network/submissions/t-0x4a88912aadd2b981a2c472731f696ae05d8274bfe77c18957fac97b52ac0f761-v0-2-5-3d30261b
+  ↳ 2026-05-23 03:02 shwchg: Basti.await: 
+Same issue here. We can’t submit a new one either.
+It was blocked by this submission:
+https://fuzz.jamtoaster.network/submissions/t-0xe6b912626c9dfa3cd9e65b4412b19eb9d123edb1aa22d492a58a88091c483a7a-dd342fb6-3a57a736
+
+I tried to resubmit it after a while, but I got `hourly submission limit exceeded`, even though there was no active submission. [edited]
+2026-05-23 00:41 bkchr: @all, if you have an issue, please just post the link to the submissions page
+2026-05-23 00:41 bkchr: This is easier for me than any screenshot
+2026-05-23 02:06 clearloop: https://fuzz.jamtoaster.network/submissions/t-0x4c448aa63cefe8ca36ce65ef0e8a8a8c4186d68b905eaf79468f90d6ead9707a-0-1-2-pre-7-05adc87b
+
+likely our L3a was triggered by accident while L2b was running (and revealed a real bug I can reproduce), but after L2b finished, it just refreshes to `queued`, not sure if this is by design [edited]
+  ↳ 2026-05-23 02:32 clearloop: besides, there are duplicated publish results blocks in my UI with different suite hashes, same link [edited]
