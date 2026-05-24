@@ -1,5 +1,5 @@
 # room: #jam:polkadot.io
-# exported: 2026-05-23 04:28 UTC
+# exported: 2026-05-24 04:39 UTC
 2024-04-20 02:08 johnjiao123: 
 2024-04-20 02:09 johnjiao123: 
 2024-05-30 21:48 nradko: Hey everyone,
@@ -13193,6 +13193,9 @@ Please do NOT restart our fuzzer. It is crunching and it would be very unfortuna
 2026-05-21 14:21 jaymansfield: JavaJAM has passed the fuzzing but im not able to publish it on chain. Getting a "Authorize failed: Failed to assemble combined suite report" error.
   ↳ 2026-05-21 14:22 bkchr: Yeah I'm just looking into this 
   ↳ 2026-05-21 15:30 jaymansfield: Works now, thanks!
+  ↳ 2026-05-23 06:03 philoniare: image.png
+  ↳ 2026-05-23 06:03 philoniare: Basti.await: seeing the same for our run:
+https://fuzz.jamtoaster.network/submissions/t-0x8c00226393a2a05d5d65bf7590e3c091feb897f8303a7de52cd637106dee2b37-bd758a8-decc92e8
 2026-05-21 14:21 jaymansfield: Screenshot 2026-05-21 at 10.20.29 AM.png
 2026-05-21 14:51 oliver.tale-yazdi: Screenshot 2026-05-21 at 16.51.45.png
   ↳ 2026-05-21 15:15 bkchr: Ups, it still mentions paseo xD 
@@ -13298,6 +13301,7 @@ PVM it self is single threaded for sure
 But we do everything functional, so parallelism / reversions are very cheap so far.
 
 will change when actually maintaining a Trie etc
+  ↳ 2026-05-23 07:40 clearloop: you were right )) no differences at all and even slower now, I'll just accept it and wait 🥲 so likely either the blocks in the fuzzer are more complex, but still tricky that with compiler we can not even reach the polkjam-int level speed in stats, while in the performance table we were 2x at storage traces [edited]
 2026-05-22 13:17 boymaas: So the queue will be unpaused once all current sessions are finished and an upgrade of the conformance tool is done. Is that the idea here? Just asking as we are still on queued status. 
 2026-05-22 13:18 bkchr: Yes
 2026-05-22 13:18 emielsebastiaan: Less than 1h for our L2b to finish. 
@@ -13355,9 +13359,61 @@ It was blocked by this submission:
 https://fuzz.jamtoaster.network/submissions/t-0xe6b912626c9dfa3cd9e65b4412b19eb9d123edb1aa22d492a58a88091c483a7a-dd342fb6-3a57a736
 
 I tried to resubmit it after a while, but I got `hourly submission limit exceeded`, even though there was no active submission. [edited]
+  ↳ 2026-05-23 05:39 tomusdrw: Same:https://fuzz.jamtoaster.network/submissions/t-0x6cea49eaad9b65996e49f557e7e10afb2a7c9e935c69e1b8d384caa632baf83c-0-6-1-5ff31fd5
 2026-05-23 00:41 bkchr: @all, if you have an issue, please just post the link to the submissions page
 2026-05-23 00:41 bkchr: This is easier for me than any screenshot
 2026-05-23 02:06 clearloop: https://fuzz.jamtoaster.network/submissions/t-0x4c448aa63cefe8ca36ce65ef0e8a8a8c4186d68b905eaf79468f90d6ead9707a-0-1-2-pre-7-05adc87b
 
 likely our L3a was triggered by accident while L2b was running (and revealed a real bug I can reproduce), but after L2b finished, it just refreshes to `queued`, not sure if this is by design [edited]
   ↳ 2026-05-23 02:32 clearloop: besides, there are duplicated publish results blocks in my UI with different suite hashes, same link [edited]
+2026-05-23 06:21 boymaas: image.png
+2026-05-23 06:22 boymaas: All lanes passed, but when submitting I get Authorize failed.
+2026-05-23 06:24 dakkk: it worked now; but I'm unable to get the session zip from the last session https://fuzz.jamtoaster.network/submissions/t-0xf438d9b7ede483d500c3b9b32a40943233c27c61c6b8d5e92dc1e16ff2da6310-0-7-2-ff5943bb
+
+{"statusCode":500,"code":"ERR_FS_FILE_TOO_LARGE","error":"Internal Server Error","message":"File size (2389932199) is greater than 2 GiB"} [edited]
+2026-05-23 06:24 boymaas: https://fuzz.jamtoaster.network/submissions/t-0x1c29671fc7140b513379355ecf0d94bf4ad1cada3ef94537c98fe68f59869700-gp0-7-2-202605210901-bec3fa2-ccda34c4
+  ↳ 2026-05-23 06:39 boymaas: image.png
+  ↳ 2026-05-23 06:43 boymaas: Maybe something that can help. When downloading the reports I see the first one is timestamp based and the follow ups use report content digests I assume. 
+2026-05-23 06:30 boymaas: Authorize failed: Some lanes haven't completed yet — wait for the chain to finish. Basti.await the second one  passed, but does not have a download full report link, this is the one who finished and ran into  the queue pausing. This maybe could be a hint for the submssion error since that full report seems to be missing. Maybe due to the queue pausing on that one. [edited]
+2026-05-23 06:36 boymaas: 
+2026-05-23 07:55 vinsystems: Authorize failed: Some lanes haven't completed yet — wait for the chain to finish. Basti.await  https://fuzz.jamtoaster.network/submissions/t-0x284f936995ce2a5e402189e2c9d58225e225101e753faad7bcf1455df10a9419-0-3-19-008b2e9d
+2026-05-23 08:14 shimonchick: when trying to downlaod the full session auth seems to not be set up correctly and we get 502: {"error":"missing Authorization: JAM-Envelope <base64>"}
+2026-05-23 08:15 shimonchick: This is after signing a message with the registered wallet
+2026-05-23 09:20 bkchr: And Boy Maas | JamZig⚡ yours should be fixed. Please try again
+2026-05-23 09:23 boymaas: I still get: Authorize failed: Some lanes haven't completed yet — wait for the chain to finish. 
+  ↳ 2026-05-23 09:24 boymaas: Also cleared cookies, force reload, and authenticated cleanly. Still same error [edited]
+  ↳ 2026-05-23 09:30 boymaas: `/api/attestations/publish/suite`: Failed to load resource: the server responded with a status of 409 () 
+
+This is a message I get in the console.
+  ↳ 2026-05-23 09:51 vinsystems: Im getting: Authorize failed: Failed to assemble combined suite report
+  ↳ 2026-05-23 10:28 bkchr: I need to watch some football games. I will check later 
+  ↳ 2026-05-23 11:27 0xjunha: I'm getting the same message [edited]
+  ↳ 2026-05-23 14:27 emielsebastiaan: Same for us: https://fuzz.jamtoaster.network/submissions/t-0xcefbf7cfe1ffa3a8eb3af4bbf220281a230b3d075bd9842c9cae84b6e1fc5b13-v0-1-50-gp0-7-2-da35d663
+2026-05-23 12:37 shimonchick: For teams that passed, how long did L2A take you?
+2026-05-23 12:52 bmaas: ~6h
+2026-05-23 13:01 prematurata: ~10/11h
+2026-05-23 13:01 prematurata: L2b ~20h
+2026-05-23 13:03 ascriv: L2a 5h, L2b 20h
+2026-05-23 13:08 shimonchick: Bad, that means my implementation is at least 10x slower. I assume it's mostly due to PVM
+  ↳ 2026-05-23 13:13 shimonchick: I am thinking of ways to shave off some time off block import. I could batch signature verifications, i could cache merkle tree generation. I would end up saving ~100ms per block, but my main consumption seems to be the PVM. looks like i would need to optimize further there down the line 
+  ↳ 2026-05-23 13:15 shimonchick: Even when i ended up doing parallel PVM invocations in sub-processes for each service in Rust and my implementation is 10x+ slower than y'all. Im baffled what kind of wizardry teams did to achieve that ;d
+  ↳ 2026-05-23 13:57 prematurata: what programming language is your impl in?
+  ↳ 2026-05-23 14:10 shimonchick: Business logic is typescript with bun PVM is interpreted by Rust binding through NAPi
+  ↳ 2026-05-23 14:11 shimonchick: I had some experimental assemblyscript implementation of PVM but it wasnt nearly as fast as i had hoped
+  ↳ 2026-05-23 22:06 shimonchick: I feel dumb sometimes about not figuring out things like that sooner. I just realized my branch validation in the PVM execution was doing a lookup on every jump and i could precompute that. It made my implementation 6x faster 🫠 [edited]
+2026-05-23 13:08 shimonchick: Even when i rewrote it in rust
+2026-05-23 14:03 emielsebastiaan: image.png
+2026-05-23 14:04 emielsebastiaan: After successfully finishing we re unable to publish the result. 
+Error: "Authorize failed: Some lanes haven't completed yet — wait for the chain to finish."
+https://fuzz.jamtoaster.network/submissions/t-0xcefbf7cfe1ffa3a8eb3af4bbf220281a230b3d075bd9842c9cae84b6e1fc5b13-v0-1-50-gp0-7-2-da35d663
+2026-05-23 14:24 ascriv: https://fuzz.jamtoaster.network/submissions/t-0xfa6a0cb290729b119117d01854e8dc5bac29dbab75729a5c5b5ba20c7baef24b-sha-6a324b5-e495e30c
+2026-05-23 14:24 ascriv: L3a started for me before L2b finished, figured this isn't expected behavior so wanted to flag
+2026-05-23 18:02 shimonchick: what causes?:
+{"error":"missing Authorization: JAM-Envelope <base64>"}
+2026-05-23 20:27 ascriv: > <@emielsebastiaan:matrix.org> After successfully finishing we re unable to publish the result. 
+> Error: "Authorize failed: Some lanes haven't completed yet — wait for the chain to finish."
+> https://fuzz.jamtoaster.network/submissions/t-0xcefbf7cfe1ffa3a8eb3af4bbf220281a230b3d075bd9842c9cae84b6e1fc5b13-v0-1-50-gp0-7-2-da35d663
+
+Getting the same 
+2026-05-23 21:09 danicuki: same here
+2026-05-23 21:10 danicuki: Screenshot 2026-05-23 at 22.09.37.png
