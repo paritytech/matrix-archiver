@@ -1,5 +1,5 @@
 # room: #jam:polkadot.io
-# exported: 2026-05-24 04:39 UTC
+# exported: 2026-05-25 04:44 UTC
 2024-04-20 02:08 johnjiao123: 
 2024-04-20 02:09 johnjiao123: 
 2024-05-30 21:48 nradko: Hey everyone,
@@ -13410,6 +13410,10 @@ https://fuzz.jamtoaster.network/submissions/t-0xcefbf7cfe1ffa3a8eb3af4bbf220281a
 2026-05-23 14:24 ascriv: L3a started for me before L2b finished, figured this isn't expected behavior so wanted to flag
 2026-05-23 18:02 shimonchick: what causes?:
 {"error":"missing Authorization: JAM-Envelope <base64>"}
+  ↳ 2026-05-24 06:16 tomusdrw: Basti.await: happens when trying to download the report or logs for me
+  ↳ 2026-05-24 07:32 knight1205: Same [edited]
+  ↳ 2026-05-24 07:32 knight1205: Console gets filled with unauthorised errors
+  ↳ 2026-05-24 11:48 knight1205: Still not able to download reports. :/
 2026-05-23 20:27 ascriv: > <@emielsebastiaan:matrix.org> After successfully finishing we re unable to publish the result. 
 > Error: "Authorize failed: Some lanes haven't completed yet — wait for the chain to finish."
 > https://fuzz.jamtoaster.network/submissions/t-0xcefbf7cfe1ffa3a8eb3af4bbf220281a230b3d075bd9842c9cae84b6e1fc5b13-v0-1-50-gp0-7-2-da35d663
@@ -13417,3 +13421,43 @@ https://fuzz.jamtoaster.network/submissions/t-0xcefbf7cfe1ffa3a8eb3af4bbf220281a
 Getting the same 
 2026-05-23 21:09 danicuki: same here
 2026-05-23 21:10 danicuki: Screenshot 2026-05-23 at 22.09.37.png
+2026-05-24 08:31 prematurata: Anyone found a workaround? I am using chrome btw maybe other browsers pass the Auth header? can't really try now
+2026-05-24 08:37 prematurata: also i noticed that my submission is now accessible in incognito... was not the case before https://fuzz.jamtoaster.network/submissions/t-0xb4ac19c9a723477c0b31ef41dd0cfd9539a3a8d763e6a6c4c96eba6eba5e4d7f-2ef512ec-9b5bdbc6
+2026-05-24 08:38 dakkk: yes, I can access it as well; indeed it is useful so I can monitor my submission while afk 
+
+btw this is jampy, for par condicio; notfy me when I'll fail, I'm going to see america's cup 😁: https://fuzz.jamtoaster.network/submissions/t-0xf438d9b7ede483d500c3b9b32a40943233c27c61c6b8d5e92dc1e16ff2da6310-0-7-2-330e2cdf [edited]
+2026-05-24 10:49 xlchen: same here. https://fuzz.jamtoaster.network/submissions/t-0x8e851ed992228f2268ee8c614fe6075d3800060ae14098e0309413a0a81c4470-sha-6388e37-83481857
+2026-05-24 12:30 prematurata: Mine is a little different and shows `Authorize failed: Failed to assemble combined suite report` ...  suite endpoint shows ```{
+    "error": "Authorize failed: Failed to assemble combined suite report",
+    "detail": {
+        "error": "Failed to assemble combined suite report",
+        "detail": {
+            "kind": "lane-fetch-failed",
+            "preset": "L2a",
+            "sessionId": "a11652c85b98ca1838cdb77dae6a735d",
+            "reason": "fetch error: fetch failed"
+        }
+    }
+}```
+
+hopefully this helps debugging
+2026-05-24 20:53 bkchr: Should be fixed. At least for the report of tomusdrw it works now for me
+2026-05-24 20:53 bkchr: Please also try again
+2026-05-24 20:55 tomusdrw: 
+2026-05-24 20:56 tomusdrw: Yup, report works, thanks! Downloading full session fails though, but the error is different - the file exceeds 2Gs and the backend refuses to provide it.
+  ↳ 2026-05-24 21:04 bkchr: Do you need the full session? 
+  ↳ 2026-05-24 21:06 bkchr: A proper fix requires to restart the fuzzer binaries to stream the data. 
+2026-05-24 20:57 boymaas: I just tried. Still the "Authorize failed: Some lanes haven't completed yet — wait for the chain to finish." Error.
+2026-05-24 20:57 bkchr: Please give me the link
+2026-05-24 20:58 boymaas: [Authorize failed: Some lanes haven't completed yet — wait for the chain to finish.](https://fuzz.jamtoaster.network/submissions/t-0x1c29671fc7140b513379355ecf0d94bf4ad1cada3ef94537c98fe68f59869700-gp0-7-2-202605210901-bec3fa2-ccda34c4)
+2026-05-24 21:10 ascriv: https://fuzz.jamtoaster.network/submissions/t-0xfa6a0cb290729b119117d01854e8dc5bac29dbab75729a5c5b5ba20c7baef24b-sha-6a324b5-e495e30c
+
+Authorize failed: Failed to assemble combined suite report
+2026-05-24 21:11 ascriv: also have two "publish results" sections, one stuck in "waiting for L2a to start", one "ready to publish"
+2026-05-24 21:26 bkchr: 
+2026-05-24 22:05 bkchr: Please try again
+2026-05-24 22:14 boymaas: image.png
+2026-05-24 22:24 ascriv: > <@bkchr:parity.io> Please try again
+
+all good now, thanks!
+2026-05-24 23:36 emielsebastiaan: All good on our end too. Thank you. 
