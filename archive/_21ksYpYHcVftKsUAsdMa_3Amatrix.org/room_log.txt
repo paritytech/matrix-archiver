@@ -1,5 +1,5 @@
 # room: #jam-conformance:matrix.org
-# exported: 2026-05-25 04:45 UTC
+# exported: 2026-05-26 04:38 UTC
 2025-08-20 15:56 erin: tomusdrw: i've set up the archiver to archive this also, so hopefully will be up starting tomorrow
 2025-08-21 06:33 ascriv: https://github.com/davxy/jam-conformance/issues/26 should we not discourage open source implementations (for now)? [edited]
 2025-08-21 10:27 oliver.tale-yazdi: I think open source repos are fine. Other implementors are just not supposed to look at it
@@ -2694,3 +2694,16 @@ In the Initialize message the relative bit is not set (https://github.com/davxy/
 What do you think of this?
 
 All channels are public, I believe its a good thing if fuzzing efforts are more public, put into a channel with 572 members rather than one with 113.  Could come in handy in tight spot. [edited]
+2026-05-25 15:58 jan: Writing this here since the other channel is busy with the fuzzying/conformance testing.
+
+I was asked about this in the past before, and recently it has become increasingly clear as to what we'll be requiring of your PVM implementations for future milestones, so here's a small FYI: while the clean room implementation rules for the JAM prize do not change, you are allowed to look at the exact machine code that other implementations emit (but only in a black-box fashion!) and generate similar machine code in your implementation without being penalized (so e.g. you can use my `polkatool disassemble` and look at what exact machine code that prints out, and even if you mimic that you won't be penalized).
+
+The reason for this is that, at least for JAM 1.0, the new gas cost model and the upcoming gas metering of the paging mechanism itself will de facto require very specific machine code to be generated which is at least as efficient as what the gas cost model assumes. It would be silly to force everyone to reverse engineer this from the GP (especially since for a lot of instructions there isn't really a lot of wiggle room as to how they can be translated into machine code). I will most likely also write an unofficial reference document with "baseline" native machine code lowerings for each PVM instructions to make things easier (so you'll be required to emit code which is at least as efficient as what's written there).
+2026-05-25 23:46 ascriv: > <@jan:parity.io> Writing this here since the other channel is busy with the fuzzying/conformance testing.
+> 
+> I was asked about this in the past before, and recently it has become increasingly clear as to what we'll be requiring of your PVM implementations for future milestones, so here's a small FYI: while the clean room implementation rules for the JAM prize do not change, you are allowed to look at the exact machine code that other implementations emit (but only in a black-box fashion!) and generate similar machine code in your implementation without being penalized (so e.g. you can use my `polkatool disassemble` and look at what exact machine code that prints out, and even if you mimic that you won't be penalized).
+> 
+> The reason for this is that, at least for JAM 1.0, the new gas cost model and the upcoming gas metering of the paging mechanism itself will de facto require very specific machine code to be generated which is at least as efficient as what the gas cost model assumes. It would be silly to force everyone to reverse engineer this from the GP (especially since for a lot of instructions there isn't really a lot of wiggle room as to how they can be translated into machine code). I will most likely also write an unofficial reference document with "baseline" native machine code lowerings for each PVM instructions to make things easier (so you'll be required to emit code which is at least as efficient as what's written there).
+
+Why not put this into the gp itself? If conformance is de facto mandatory 
+2026-05-25 23:47 ascriv: Could put a reference in gp to the reference doc like how bandersnatch stuff is done [edited]

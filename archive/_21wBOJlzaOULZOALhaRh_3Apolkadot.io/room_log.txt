@@ -1,5 +1,5 @@
 # room: #jam:polkadot.io
-# exported: 2026-05-25 04:44 UTC
+# exported: 2026-05-26 04:37 UTC
 2024-04-20 02:08 johnjiao123: 
 2024-04-20 02:09 johnjiao123: 
 2024-05-30 21:48 nradko: Hey everyone,
@@ -12677,6 +12677,7 @@ I guess M2 compliance would be a prerequisite for toaster?
 2026-03-31 23:35 dave: You certainly need to have implemented the network protocol, there's not much point if you don't have that. We don't expect perfect implementations at this point though...
 2026-04-01 11:13 oliver.tale-yazdi: How many JAM teams will be at the Web3 Summit? I was wondering if it makes sense to have a meetup there (before, during or after).  
 Please just put a ➕️ emoji on this message if you attend and would be interested in this. I will count the unique teams then.
+  ↳ 2026-05-25 09:25 tomusdrw: Any updates on this? I'm starting to plan a trip and wonder wether I should be ealier or stay longer.
 2026-04-02 19:08 bkchr: Hey. So, right now we are finalizing the submission tool. We are pushing now to get this done ASAP (already works, but just needs some more testing). There will be a tool to submit the blobs and then they will be tested. If the tests are passing, you will get an interview with the Fellowship to do some checks that you actually understand what you have implemented. We are all aware of AI and that people use it all the time, but there is a huge difference between vibe coding something and actually understanding what you build there and how it works. The fellowship will do this. If this is passed as well, the fellowship will put a remark on chain that will tell the W3F to send the payments.
   ↳ 2026-04-02 20:17 clearloop: if we'll need to update to 0.8 or just keep 0.7.4, since there are updates in GP recently, shall we re-do the process of the w3f review part?
   ↳ 2026-04-02 20:53 bkchr: Tianyi | SpaceJam: What W3F review part? 
@@ -13447,6 +13448,7 @@ hopefully this helps debugging
 2026-05-24 20:56 tomusdrw: Yup, report works, thanks! Downloading full session fails though, but the error is different - the file exceeds 2Gs and the backend refuses to provide it.
   ↳ 2026-05-24 21:04 bkchr: Do you need the full session? 
   ↳ 2026-05-24 21:06 bkchr: A proper fix requires to restart the fuzzer binaries to stream the data. 
+  ↳ 2026-05-25 05:57 yu2c: It might help us think through it. 👀Would it be possible to give us access to the full session?
 2026-05-24 20:57 boymaas: I just tried. Still the "Authorize failed: Some lanes haven't completed yet — wait for the chain to finish." Error.
 2026-05-24 20:57 bkchr: Please give me the link
 2026-05-24 20:58 boymaas: [Authorize failed: Some lanes haven't completed yet — wait for the chain to finish.](https://fuzz.jamtoaster.network/submissions/t-0x1c29671fc7140b513379355ecf0d94bf4ad1cada3ef94537c98fe68f59869700-gp0-7-2-202605210901-bec3fa2-ccda34c4)
@@ -13461,3 +13463,82 @@ Authorize failed: Failed to assemble combined suite report
 
 all good now, thanks!
 2026-05-24 23:36 emielsebastiaan: All good on our end too. Thank you. 
+2026-05-25 05:52 shimonchick: I just pushed a submission last night, watched it go to 100k, went to sleep, wake up, its not there 🤔
+  ↳ 2026-05-25 05:52 shimonchick: thankfully reports work now
+2026-05-25 06:13 dakkk: Basti.await: the issue with full sessions remains, files are too big for the server;
+
+https://fuzz.jamtoaster.network/api/fuzzing/dl/jQ8TqMvgqUvEGDtAZ1U9VK-1DRmetOl0hOD-3EIYoaE
+
+`{"statusCode":500,"code":"ERR_FS_FILE_TOO_LARGE","error":"Internal Server Error","message":"File size (5917189213) is greater than 2 GiB"}` [edited]
+2026-05-25 07:04 prematurata: I am wondering, After passing and and receiving attestation, Can we queue other submission(s) to test out new code?
+2026-05-25 08:44 bkchr: This can only be fixed with a restart of the fuzzer to stream the data.
+2026-05-25 08:50 bkchr: The fuzzer is not for testing your implementations. davxy should provide you with traces so that you can run it locally
+2026-05-25 09:02 tomusdrw: I've also noticed it's the fuzzer logs that are large, perhaps logs from the fuzzer (source) and target could be downloaded separately?
+2026-05-25 09:05 bkchr: This is why report and full session are separated
+2026-05-25 09:05 bkchr: davxy: told me that you actually only need report to reproduce it
+2026-05-25 09:43 dakkk: Usually true, but my target is "stopping" around at 15k blocks of L2b without any message, the report runs perfectly locally. I'm not sure what can I do to find the reason [edited]
+2026-05-25 09:45 bkchr: Link please
+2026-05-25 09:45 dakkk: sorry, here it is: https://fuzz.jamtoaster.network/submissions/t-0xf438d9b7ede483d500c3b9b32a40943233c27c61c6b8d5e92dc1e16ff2da6310-0-7-2-3d7c70e3
+  ↳ 2026-05-25 11:06 tomusdrw: ```
+Target process exited with status: 137
+```
+
+dakkk | JamPy that most likely means it was killed due to running OOM [edited]
+  ↳ 2026-05-25 11:08 dakkk: oh, I didn't see that; it's probably true [edited]
+2026-05-25 11:06 bkchr: How do you determine this? 
+2026-05-25 11:07 dakkk: determine what? tom pointed out the exit reason in the log, it is probably an OOM; I enabled a memory profiler so I'll able to know how much ram caused this [edited]
+2026-05-25 11:18 davxy: If you just re-execute the last step, and the failure is due to some OOM error, probably this doesn't reproduce the issue.
+So you're going to need the full history (full session data) or a subset of it.
+
+A current limitation is that we currently keep only the last 1K steps (we prune older steps). So if this is not sufficient for you to reproduce, this gets more annoying.
+We can change the fuzzer to keep archives of the previous steps in batches of 1K maybe. Let's first check if you're able to reproduce with the last 1K steps. But IIUC we need to first change some download limit (currently 2G?) [edited]
+2026-05-25 11:24 dakkk: I think the same, I'm unable to reproduce with only 1k steps, but saving all the batches would require an enormous amount of space (if 1k is ~5G on full). It may be better to save initial state and all the blocks applied, it should be lighter
+
+2026-05-25 12:01 dakkk: Basti.await: fuzz is down, 502 bad gateway 
+2026-05-25 12:02 shimonchick: In my implementation i had oom because of pruning logic, worth checking 
+2026-05-25 12:09 bkchr: Yea I know, looks like some issue with the toaster to me. Nothing that I can fix, I pinged the relevant people
+  ↳ 2026-05-25 12:45 david: This has been resolved [edited]
+  ↳ 2026-05-25 13:20 libingjiang: Basti.await: It looks like one stage has completed, but the status has not been updating as expected.
+
+https://fuzz.jamtoaster.network/submissions/t-0x4a88912aadd2b981a2c472731f696ae05d8274bfe77c18957fac97b52ac0f761-v0-2-7-d379f06b
+  ↳ 2026-05-25 14:15 bkchr: Check again
+  ↳ 2026-05-25 15:12 libingjiang: The status is updated now. Thanks a lot!
+2026-05-25 14:10 david: 
+2026-05-25 14:45 r2rtnl: Basti.await: Encouraged by yesterday’s attestation progress among other teams, I tried publishing the attestation for TurboJam again, but the error still persists:
+"Authorize failed: Failed to resolve manifest digest for docker.io/r2rationality/turbojam-fuzz:v0.2.8: Registry docker.io did not return Docker-Content-Digest for r2rationality/turbojam-fuzz:v0.2.8"
+
+The original (docker.io) submission link:
+https://fuzz.jamtoaster.network/submissions/t-0x988068f9f4a32beb4122c7fe8f3ecd2fb42339682511cbbc6f82cc4e6ef89b25-v0-2-8-919fe30e
+
+Since most teams use ghcr.io, I created another submission using an image published to ghcr.io, and I was able to publish the attestation for this later submission successfully.
+
+The new (ghcr.io) submission link:
+https://fuzz.jamtoaster.network/submissions/t-0x988068f9f4a32beb4122c7fe8f3ecd2fb42339682511cbbc6f82cc4e6ef89b25-v0-2-9-141dee1c
+
+JFYI for teams that publish on docker.io
+2026-05-25 14:59 bmaas: > <@r2rtnl:matrix.org> Basti.await: Encouraged by yesterday’s attestation progress among other teams, I tried publishing the attestation for TurboJam again, but the error still persists:
+> "Authorize failed: Failed to resolve manifest digest for docker.io/r2rationality/turbojam-fuzz:v0.2.8: Registry docker.io did not return Docker-Content-Digest for r2rationality/turbojam-fuzz:v0.2.8"
+> 
+> The original (docker.io) submission link:
+> https://fuzz.jamtoaster.network/submissions/t-0x988068f9f4a32beb4122c7fe8f3ecd2fb42339682511cbbc6f82cc4e6ef89b25-v0-2-8-919fe30e
+> 
+> Since most teams use ghcr.io, I created another submission using an image published to ghcr.io, and I was able to publish the attestation for this later submission successfully.
+> 
+> The new (ghcr.io) submission link:
+> https://fuzz.jamtoaster.network/submissions/t-0x988068f9f4a32beb4122c7fe8f3ecd2fb42339682511cbbc6f82cc4e6ef89b25-v0-2-9-141dee1c
+> 
+> JFYI for teams that publish on docker.io
+
+JamZig⚡️ also uses docker.io and was able to submit. Hope it helps
+2026-05-25 15:04 bkchr: The issue is related to some using the `docker.io` prefix
+2026-05-25 15:04 bkchr: Without this prefix it works
+2026-05-25 15:11 r2rtnl: Interesting, thank you. From my side, I confirm that I explicitly used docker.io in the image name of the original submission.
+2026-05-25 20:46 dakkk: Basti.await:  is it possible to fix the 2 GB issue for session download? It seems I have a memory issue that arises only on full spec (and my current run is eating 20 MB every 100 blocks, so it will fail again), but I need some traces in order to be able to debug it [edited]
+2026-05-25 20:56 bkchr: > <@dakkk:matrix.org> Basti.await:  is it possible to fix the 2 GB issue for session download? It seems I have a memory issue that arises only on full (and my current run is eating 20 MB every 100 blocks, so it will fail again), but I need some traces in order to be able to debug it
+
+I paused the scheduler. Then I can fix it when all sessions are finished 
+2026-05-25 20:56 bkchr: It is already fixed, I just need to redeploy 
+2026-05-25 21:18 dakkk: Ok, let me know when you have done 👍
+2026-05-25 23:42 philoniare: image.png
+2026-05-25 23:42 philoniare: Do we need to mark somewhere that we passed to continue the review process?
+2026-05-26 02:26 0xjunha: Also curious of it. I've sent a DM to Anaelle LTD | Technical Fellowship Secretary. But rather than communicating via DM, it would be nice to have an open repo, channel, etc. to share the code review & interview process status across teams
