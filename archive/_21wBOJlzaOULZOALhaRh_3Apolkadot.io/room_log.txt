@@ -1,5 +1,5 @@
 # room: #jam:polkadot.io
-# exported: 2026-05-26 04:37 UTC
+# exported: 2026-05-27 07:13 UTC
 2024-04-20 02:08 johnjiao123: 
 2024-04-20 02:09 johnjiao123: 
 2024-05-30 21:48 nradko: Hey everyone,
@@ -13542,3 +13542,30 @@ I paused the scheduler. Then I can fix it when all sessions are finished
 2026-05-25 23:42 philoniare: image.png
 2026-05-25 23:42 philoniare: Do we need to mark somewhere that we passed to continue the review process?
 2026-05-26 02:26 0xjunha: Also curious of it. I've sent a DM to Anaelle LTD | Technical Fellowship Secretary. But rather than communicating via DM, it would be nice to have an open repo, channel, etc. to share the code review & interview process status across teams
+  ↳ 2026-05-26 05:25 anaelleltd: Hello there.
+  ↳ 2026-05-26 05:27 anaelleltd: I only need basic individual info from teams before I can schedule interviews. A channel would be too much of an overkill at this stage, because the comms posted would not really be relevant to other teams. 
+  ↳ 2026-05-26 05:27 anaelleltd: Also, DM are easier for tracking discussions/qs and requests. [edited]
+  ↳ 2026-05-26 05:28 anaelleltd: We can use existing JAM channel for all public-facing questions and answers.
+  ↳ 2026-05-26 05:28 anaelleltd: Thanks.
+2026-05-26 08:35 shimonchick: is the fuzzer overloaded rn? we are hanging on preflight
+  ↳ 2026-05-26 08:46 knight1205: since last 12 hours now 🤔
+2026-05-26 08:47 bkchr: > <@bkchr:parity.io> I paused the scheduler. Then I can fix it when all sessions are finished 
+
+I should put that more prominent into the Ui 
+2026-05-26 10:11 bkchr: We are back and fuzzing is continuing
+2026-05-26 10:18 bkchr: Downloading session reports that are bigger than 2gb is now supported
+2026-05-26 10:18 bkchr: CC dakkk | JamPy 
+2026-05-26 10:22 oliver.tale-yazdi: Regarding the Summit meetup: the current idea is to meet on the second day afternoon of the Summit at the venue, probably in some dedicated JAM room. This is easier to organize and there could be cheaper tickets for JAM teams. Mila | Pala Labs would know more
+  ↳ 2026-05-26 11:00 milawords: Could every JAM team that would like to attend please respond with the number of implementers who would be joining from their team?
+  ↳ 2026-05-26 15:07 emielsebastiaan: We’ll be at web3 summit with the entire team. Is there an agenda for the meeting? We don’t have too much to report from our end tbh. I guess our attendance depends on agenda and attendance of others. 
+  ↳ 2026-05-26 17:31 boymaas: JamZig⚡ would like to attend with in total 2 team members
+2026-05-27 02:10 dimartiro: Hey all 👋 — question for whoever's working on finality.
+
+The GP (§18) defines the BEEFY commitment itself, and the beefy root (the MMR super-peak) is part of the STF, so that side is well-defined and conformance-tested (`bad_beefy_mmr`). What I *can't* find is anything in JAMNP-S about **distributing** those signed commitments over the network — the CE stream kinds I see stop around 145 (judgment publication), with nothing for finality.
+
+So before anyone locks something in:
+
+1. **Scope** — is BEEFY commitment distribution meant to be standardized in JAMNP, or is it considered out of scope?
+2. If in scope — is there a reserved CE stream-kind + wire format for the signed commitment, or is anyone already working on one?
+
+Mainly trying to avoid each team picking different numbers/formats and silently failing to interoperate. Thanks!

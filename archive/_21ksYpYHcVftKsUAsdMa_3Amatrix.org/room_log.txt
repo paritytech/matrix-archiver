@@ -1,5 +1,5 @@
 # room: #jam-conformance:matrix.org
-# exported: 2026-05-26 04:38 UTC
+# exported: 2026-05-27 07:14 UTC
 2025-08-20 15:56 erin: tomusdrw: i've set up the archiver to archive this also, so hopefully will be up starting tomorrow
 2025-08-21 06:33 ascriv: https://github.com/davxy/jam-conformance/issues/26 should we not discourage open source implementations (for now)? [edited]
 2025-08-21 10:27 oliver.tale-yazdi: I think open source repos are fine. Other implementors are just not supposed to look at it
@@ -2707,3 +2707,12 @@ The reason for this is that, at least for JAM 1.0, the new gas cost model and th
 
 Why not put this into the gp itself? If conformance is de facto mandatory 
 2026-05-25 23:47 ascriv: Could put a reference in gp to the reference doc like how bandersnatch stuff is done [edited]
+2026-05-26 09:20 jan: That is too low-level/too much of an implementation detail to be put in the GP itself.
+
+The GP *will* still require this indirectly because that's how you'll be able to satisfy the requirements it specifies, but it's not going to spell it out explicitly. It's the same for many other parts of the GP where e.g. if you translate a given part of the GP directly into code you might get an implementation that's non-conformant. It's just the nature of the GP being very high level.
+2026-05-26 16:06 dakkk: Basti.await: logs api is returning 404 on my last submission: https://fuzz.jamtoaster.network/submissions/t-0xf438d9b7ede483d500c3b9b32a40943233c27c61c6b8d5e92dc1e16ff2da6310-0-7-2-a042d7ba
+  ↳ 2026-05-26 16:16 bkchr: Fixed :)
+2026-05-27 04:20 libingjiang: Basti.await: Just to confirm, does L2b now require running 1M steps?
+
+https://fuzz.jamtoaster.network/submissions/t-0x4a88912aadd2b981a2c472731f696ae05d8274bfe77c18957fac97b52ac0f761-v0-2-9-d1ef16db
+2026-05-27 05:09 dakkk: It was 100k before it should be an error [@bkchr:parity.io](https://matrix.to/#/@bkchr:parity.io) ; same here  https://fuzz.jamtoaster.network/submissions/t-0xf438d9b7ede483d500c3b9b32a40943233c27c61c6b8d5e92dc1e16ff2da6310-0-7-2-a042d7ba
