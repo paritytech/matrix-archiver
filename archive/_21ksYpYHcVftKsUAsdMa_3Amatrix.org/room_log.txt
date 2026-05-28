@@ -1,5 +1,5 @@
 # room: #jam-conformance:matrix.org
-# exported: 2026-05-27 07:14 UTC
+# exported: 2026-05-28 04:40 UTC
 2025-08-20 15:56 erin: tomusdrw: i've set up the archiver to archive this also, so hopefully will be up starting tomorrow
 2025-08-21 06:33 ascriv: https://github.com/davxy/jam-conformance/issues/26 should we not discourage open source implementations (for now)? [edited]
 2025-08-21 10:27 oliver.tale-yazdi: I think open source repos are fine. Other implementors are just not supposed to look at it
@@ -2716,3 +2716,19 @@ The GP *will* still require this indirectly because that's how you'll be able to
 
 https://fuzz.jamtoaster.network/submissions/t-0x4a88912aadd2b981a2c472731f696ae05d8274bfe77c18957fac97b52ac0f761-v0-2-9-d1ef16db
 2026-05-27 05:09 dakkk: It was 100k before it should be an error [@bkchr:parity.io](https://matrix.to/#/@bkchr:parity.io) ; same here  https://fuzz.jamtoaster.network/submissions/t-0xf438d9b7ede483d500c3b9b32a40943233c27c61c6b8d5e92dc1e16ff2da6310-0-7-2-a042d7ba
+2026-05-27 09:43 bkchr: https://github.com/davxy/jam-conformance/blob/264a4f367f5c23c3298dc1cb21913ac68e0e8440/conformance-criteria/fuzzer_configs/l2_tiny.toml#L9
+2026-05-27 09:45 bkchr: It should be 1 million
+2026-05-27 09:54 dakkk: We are talking about L2B (full with mutations); yesterday was 100k, now is 1M. If 1M is correct, then other teams are conformant with 90% less blocks checks
+2026-05-27 09:54 libingjiang: I thought L2b should correspond to `l2_full`
+
+https://github.com/davxy/jam-conformance/blob/264a4f367f5c23c3298dc1cb21913ac68e0e8440/conformance-criteria/fuzzer_configs/l2_full.toml
+2026-05-27 09:59 bkchr: Yeah you are right
+2026-05-27 09:59 bkchr: Sorry 
+2026-05-27 10:00 bkchr: This was an issue with the deploy. 
+2026-05-27 10:02 dakkk: no problem
+2026-05-27 10:20 libingjiang: No worries! Glad to see it successfully ran 230k+ consecutive full-spec steps.
+2026-05-27 10:32 dakkk: it restarted, but it is 1M again
+2026-05-27 10:39 bkchr: Yeah, now it should be correct
+2026-05-27 16:55 dakkk: toaster UI is down (~1 hour): 502 Bad Gateway [edited]
+2026-05-27 17:17 david: This will be back shortly
+2026-05-27 17:19 david: resolved
