@@ -1,5 +1,5 @@
 # room: #jam:polkadot.io
-# exported: 2026-05-28 04:39 UTC
+# exported: 2026-05-29 04:41 UTC
 2024-04-20 02:08 johnjiao123: 
 2024-04-20 02:09 johnjiao123: 
 2024-05-30 21:48 nradko: Hey everyone,
@@ -13559,6 +13559,9 @@ I should put that more prominent into the Ui
   ↳ 2026-05-26 11:00 milawords: Could every JAM team that would like to attend please respond with the number of implementers who would be joining from their team?
   ↳ 2026-05-26 15:07 emielsebastiaan: We’ll be at web3 summit with the entire team. Is there an agenda for the meeting? We don’t have too much to report from our end tbh. I guess our attendance depends on agenda and attendance of others. 
   ↳ 2026-05-26 17:31 boymaas: JamZig⚡ would like to attend with in total 2 team members
+  ↳ 2026-05-28 08:52 tomusdrw: Typeberry: 2 team members, we already bought tickets though.
+  ↳ 2026-05-28 08:59 polykrate: Jotl would like to attend with one team member 
+  ↳ 2026-05-28 13:01 emielsebastiaan: 3/4 members and we already have tickets
 2026-05-27 02:10 dimartiro: Hey all 👋 — question for whoever's working on finality.
 
 The GP (§18) defines the BEEFY commitment itself, and the beefy root (the MMR super-peak) is part of the STF, so that side is well-defined and conformance-tested (`bad_beefy_mmr`). What I *can't* find is anything in JAMNP-S about **distributing** those signed commitments over the network — the CE stream kinds I see stop around 145 (judgment publication), with nothing for finality.
@@ -13574,6 +13577,11 @@ Mainly trying to avoid each team picking different numbers/formats and silently 
   ↳ 2026-05-27 13:25 dimartiro: Is a network protocol for BEEFY signature distribution planned? Without one we can't exchange signatures to reach the 2/3+1 threshold, which blocks M2 right?
   ↳ 2026-05-27 13:33 dave: Sure. But BEEFY is separate to GRANDPA, it is not necessary for finality
   ↳ 2026-05-27 13:35 dave: AIUI it runs after finality to produce shorter proofs of finality
+  ↳ 2026-05-28 11:59 dimartiro: Right — got that BEEFY is separate from GRANDPA and runs after finality. My concern is still scoped to two things:
+
+  - Is BEEFY signature distribution required for M2?
+  - If it is required, how do we implement it without a spec? Without a defined CE stream-kind and wire format, every team will pick different ones and silently fail to interop.
+  ↳ 2026-05-28 12:00 dimartiro: Please let me know if I'm missing something
 2026-05-27 10:21 sparky000: Hey, I have a question: is anyone working on implementing the Move language for the JAM protocol?
 2026-05-27 10:51 shimonchick: Did somebody restart the fuzzing jobs? Last night i left it it was on step 300k, today checking in its started again from 10k
 2026-05-27 10:51 bkchr: Yeah it was me. Sorry we had to do this because of some misconfiguration of the fuzzer
@@ -13595,3 +13603,34 @@ As recommended in [this announcement](https://matrix.to/#/!wBOJlzaOULZOALhaRh:po
 
   ↳ 2026-05-27 23:58 anaelleltd: If you have any questions, please post them in this thread. 
   ↳ 2026-05-27 23:58 anaelleltd: Thank you!
+2026-05-28 05:43 knight1205: Hi, how much time and memory roughly, teams took in l2b and l3a? just curious as we had some issues earlier (fixed now) and will help us find any further issues. [edited]
+  ↳ 2026-05-28 05:46 dakkk: l2b ~20h, l3a ~2h
+  ↳ 2026-05-28 13:03 dakkk: and memory is about 10GB for L2B without using any disk cache
+2026-05-28 23:01 danicuki: 
+2026-05-28 23:02 danicuki: > <@anaelleltd:matrix.org> **JAM Prize Fellowship evaluations - Update 1**
+> 
+> The [JAM Submission app](https://fuzz.jamtoaster.network/) was released on 19th May and is now available for all JAM implementers to register their team, submit their implementation, and run the conformance fuzzer on demand. 
+> 
+> 14/24 teams have already successfully passed all M1 conformance tests and obtained their attestations. They are currently awaiting an interview with the Polkadot Technical Fellowship.
+> 
+> [A tracker](https://polkadottechnicalfellowship.notion.site/2ef96f88d0a78051b94ef4a6d6c9be8c?v=2ef96f88d0a78036b33a000c2cb9a0b1) is available with an overview of the overall process and future expected steps. Please note that the number assigned to each team is based on the date their initial PR was submitted in the [JAM milestone delivery repo](https://github.com/w3f/jam-milestone-delivery/pulls). 
+> 
+> As recommended in [this announcement](https://matrix.to/#/!wBOJlzaOULZOALhaRh:polkadot.io/$Da2rATuW6LbaY19qFVEVzMLN8coJWzYdolfxWuYPuEI?via=polkadot.io&via=matrix.org&via=parity.io), interviews for M1 evaluations will be scheduled as per the following guidelines:
+> - **Priority group 1:** The 7 teams whose implementations passed all W3F fuzzing tests between 4th February and 2nd March 2026.
+> - **Priority group 2:** The 2 teams whose implementations were being fuzzed by W3F prior to 24th March 2026.
+> - **Priority group 3:** All the remaining teams, in the order of attestation timestamps.
+> 
+> *Advance notice: While we will endeavour to get back to you with an interview date and time as soon as possible, scheduling depends on Fellows’ availability, which will likely be reduced during Web3 summit (June) and the EU summer holidays (July and August).*
+> 
+
+Thank you. The tracker is genuinely useful and appreciated.
+
+Regarding the interview schedule, no problem.
+
+We’ve only been waiting since December, so what’s another summer?
+2026-05-28 23:20 danicuki: That said, it would be wonderful if a few interview slots could be found before the holidays, so implementers could also enjoy the summer with a bit more certainty about what comes next.
+  ↳ 2026-05-28 23:38 anaelleltd: Agreed that interviews need to start ASAP to get the ball rolling for good. I will do my best to get this sorted for Priority  group 1. 🙏
+2026-05-28 23:32 jan: > We've only been waiting since December, so what's another summer?
+
+While I have no authority over non-technical matters within Parity and the Fellowship, I think this needs to be said: on behalf of Parity and the Fellowship, we're sorry. We've obviously screwed up with the M1 milestone process so far. I sincerely hope this doesn't sour you (as in, all of JAM implementers) on JAM, and that you'll continue with future milestones.
+2026-05-29 03:02 ascriv: It happens. I would personally feel better if it was made clear what exactly went wrong, something like a post mortem, and why this won’t repeat for M2
