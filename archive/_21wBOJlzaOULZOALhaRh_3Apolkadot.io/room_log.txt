@@ -1,5 +1,5 @@
 # room: #jam:polkadot.io
-# exported: 2026-05-29 04:41 UTC
+# exported: 2026-05-30 04:33 UTC
 2024-04-20 02:08 johnjiao123: 
 2024-04-20 02:09 johnjiao123: 
 2024-05-30 21:48 nradko: Hey everyone,
@@ -13303,6 +13303,7 @@ But we do everything functional, so parallelism / reversions are very cheap so f
 
 will change when actually maintaining a Trie etc
   ↳ 2026-05-23 07:40 clearloop: you were right )) no differences at all and even slower now, I'll just accept it and wait 🥲 so likely either the blocks in the fuzzer are more complex, but still tricky that with compiler we can not even reach the polkjam-int level speed in stats, while in the performance table we were 2x at storage traces [edited]
+  ↳ 2026-05-29 06:56 clearloop: btw I can confirm that the compiler was not significantly slower at the 96-cores machine —— it was caused by the PVM execution is really minor in the 1M fuzz
 2026-05-22 13:17 boymaas: So the queue will be unpaused once all current sessions are finished and an upgrade of the conformance tool is done. Is that the idea here? Just asking as we are still on queued status. 
 2026-05-22 13:18 bkchr: Yes
 2026-05-22 13:18 emielsebastiaan: Less than 1h for our L2b to finish. 
@@ -13562,6 +13563,10 @@ I should put that more prominent into the Ui
   ↳ 2026-05-28 08:52 tomusdrw: Typeberry: 2 team members, we already bought tickets though.
   ↳ 2026-05-28 08:59 polykrate: Jotl would like to attend with one team member 
   ↳ 2026-05-28 13:01 emielsebastiaan: 3/4 members and we already have tickets
+  ↳ 2026-05-29 13:51 milawords: Hi Emiel Jeff | Jam On The Lisp
+tomusdrw Boy Maas | JamZig⚡
+
+Thank you for letting us know how many people from your side would attend. As of now there is no agenda and it would be more of a casual catch up. However, if there are specific points the implementers would like to discuss, we can guide the conversation accordingly. [edited]
 2026-05-27 02:10 dimartiro: Hey all 👋 — question for whoever's working on finality.
 
 The GP (§18) defines the BEEFY commitment itself, and the beefy root (the MMR super-peak) is part of the STF, so that side is well-defined and conformance-tested (`bad_beefy_mmr`). What I *can't* find is anything in JAMNP-S about **distributing** those signed commitments over the network — the CE stream kinds I see stop around 145 (judgment publication), with nothing for finality.
@@ -13634,3 +13639,28 @@ We’ve only been waiting since December, so what’s another summer?
 
 While I have no authority over non-technical matters within Parity and the Fellowship, I think this needs to be said: on behalf of Parity and the Fellowship, we're sorry. We've obviously screwed up with the M1 milestone process so far. I sincerely hope this doesn't sour you (as in, all of JAM implementers) on JAM, and that you'll continue with future milestones.
 2026-05-29 03:02 ascriv: It happens. I would personally feel better if it was made clear what exactly went wrong, something like a post mortem, and why this won’t repeat for M2
+2026-05-29 06:32 danicuki: I agree.
+
+The apology is appreciated and truly meaningful. What would give teams confidence going into M2 is understanding what happened, what was learned, and what will change.
+
+The concern is not only M1 itself. It’s whether M1 is an exception or a preview of the process for the remaining four milestones.
+
+A postmortem with concrete actions for M2-M5 would go a long way toward rebuilding confidence.
+2026-05-29 06:50 bkchr: There was a lot of change the last months. It was impacting all of Polkadot. At the same time there was a lot of other things to manage. So, m1 was falling through the cracks.
+
+There was already some work done for M2 and we will ensure not the same happens as with M1. We will get some overview on the current state and then we will go ahead with it. We will try to communicate some timeline when we have an overview. 
+2026-05-29 07:01 xlchen: it will be better if we can have more structured communication. maybe a progress update biweekly. so that we know some progress is going on (or not otherwise)
+2026-05-29 07:12 ascriv: Yes some sort of heartbeat would be valuable 
+2026-05-29 07:21 emielsebastiaan: Thank you, Basti.await, for stepping up, and thank you, Jan Bujak , for acknowledging that things have not run smoothly, at least over the past half year.
+
+The bar for each JAM Prize milestone should be very high. Reaching any milestone should be treated as a serious accomplishment. Plans need to be made, but plans also sometimes need to change. When teams have spent more than two years of their lives working toward this, that commitment deserves to be taken into account.
+
+What we should aim for is a process that remains demanding, but is also fair, transparent, and respectful of the effort already invested. The JAM Prize should maintain high standards while recognizing that serious teams are building under uncertainty, and that good-faith adaptation is part of the work.
+
+M1 could also serve as a useful gate for access to more sensitive or even strategic information and communication channels. Looking ahead, perhaps Web3 Summit could be used as a moment to align expectations, clarify the path forward, and turn the current situation into a more constructive process for everyone involved.
+2026-05-29 11:44 r2rtnl: Anaelle LTD | Technical Fellowship Secretary Basti.await If attestation timestamps are going to be used to prioritize interviews, would it be possible to also consider the actual fuzzing completion time when there are significant discrepancies?
+
+During the first week of fuzzing, there were issues with publishing attestations, so several projects were only able to publish them days after fuzzing had completed. TurboJam may be one of the more affected cases: it completed fuzzing on May 21, among the first projects, but was only able to publish the attestation on May 25, among the last. It also had to complete fuzzing twice to work around an issue with Docker images published on docker.io.
+
+Using the attestation timestamp “as is” adds a lot of noise. It would rank teams not by implementation readiness or performance, but by an independent factor that was outside the implementing teams’ control.
+  ↳ 2026-05-30 04:04 anaelleltd: Is the timestamp for fuzzing completion available somewhere? I looked through the fuzzing report (Zip files) linked in the attestation, but I can't find it cleanly outlined anywhere. 
