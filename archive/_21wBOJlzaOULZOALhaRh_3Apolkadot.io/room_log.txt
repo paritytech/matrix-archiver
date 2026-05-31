@@ -1,5 +1,5 @@
 # room: #jam:polkadot.io
-# exported: 2026-05-30 04:33 UTC
+# exported: 2026-05-31 04:44 UTC
 2024-04-20 02:08 johnjiao123: 
 2024-04-20 02:09 johnjiao123: 
 2024-05-30 21:48 nradko: Hey everyone,
@@ -13611,6 +13611,7 @@ As recommended in [this announcement](https://matrix.to/#/!wBOJlzaOULZOALhaRh:po
 2026-05-28 05:43 knight1205: Hi, how much time and memory roughly, teams took in l2b and l3a? just curious as we had some issues earlier (fixed now) and will help us find any further issues. [edited]
   ↳ 2026-05-28 05:46 dakkk: l2b ~20h, l3a ~2h
   ↳ 2026-05-28 13:03 dakkk: and memory is about 10GB for L2B without using any disk cache
+  ↳ 2026-05-31 04:27 knight1205: and l3b?
 2026-05-28 23:01 danicuki: 
 2026-05-28 23:02 danicuki: > <@anaelleltd:matrix.org> **JAM Prize Fellowship evaluations - Update 1**
 > 
@@ -13664,3 +13665,18 @@ During the first week of fuzzing, there were issues with publishing attestations
 
 Using the attestation timestamp “as is” adds a lot of noise. It would rank teams not by implementation readiness or performance, but by an independent factor that was outside the implementing teams’ control.
   ↳ 2026-05-30 04:04 anaelleltd: Is the timestamp for fuzzing completion available somewhere? I looked through the fuzzing report (Zip files) linked in the attestation, but I can't find it cleanly outlined anywhere. 
+  ↳ 2026-05-30 17:02 r2rtnl: Anaelle LTD | Technical Fellowship Secretary  Given the sensitivity of the issue — a change in ranking by just a few places could mean waiting another month or more for an interview, based on the tentative timeline you provided — I believe Basti.await is best positioned to answer this question correctly. I’m sharing below what seems reasonable to me, but only as FYI.
+
+The closest single timestamp provided in the attestation report’s manifest.json is the startTime of the L3b preset. It does not include the execution time, so if two implementations have L3b start times within several hours of each other, we could add an estimated L3b execution time from L3b/report.json: the target’s import_mean, in milliseconds, divided by 1000, multiplied by the number of steps, which is 100,000 for L3b. That should work for most cases and seems reasonable as a ranking measure.
+
+However, TurboJam’s case is even harder because we had to make another submission after being unable to publish the attestation from the first submission, despite waiting four days for a fix. If Basti.await can still recover the report from the original session, we could use that. Unfortunately, the original session's link stopped working when the attestation for the new submission was published, even though the two submissions had different image names and version numbers.
+
+If that report is not recoverable anymore, I can only refer to the screenshot with the L3b timestamp that was published into this "Let's JAM" channel on May 21 and ask Basti.await to act as a witness, since he was looking into this issue at the time.
+
+The original submission link (for reference, does not work any more): https://fuzz.jamtoaster.network/submissions/t-0x988068f9f4a32beb4122c7fe8f3ecd2fb42339682511cbbc6f82cc4e6ef89b25-v0-2-8-919fe30e
+2026-05-30 10:07 polykrate: Hello, 
+I applied for the fuzzer a few days ago but the submission is still under review, is there an admin that can check ? 
+  ↳ 2026-05-30 10:13 bkchr: What is your team name? 
+  ↳ 2026-05-30 10:14 polykrate: Jotl, n°23 on the submission
+  ↳ 2026-05-30 10:38 bkchr: Approved you 
+  ↳ 2026-05-30 10:43 polykrate: Tks a lot
