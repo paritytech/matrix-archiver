@@ -1,5 +1,5 @@
 # room: #jam:polkadot.io
-# exported: 2026-05-31 04:44 UTC
+# exported: 2026-06-01 04:45 UTC
 2024-04-20 02:08 johnjiao123: 
 2024-04-20 02:09 johnjiao123: 
 2024-05-30 21:48 nradko: Hey everyone,
@@ -13587,6 +13587,7 @@ Mainly trying to avoid each team picking different numbers/formats and silently 
   - Is BEEFY signature distribution required for M2?
   - If it is required, how do we implement it without a spec? Without a defined CE stream-kind and wire format, every team will pick different ones and silently fail to interop.
   ↳ 2026-05-28 12:00 dimartiro: Please let me know if I'm missing something
+  ↳ 2026-05-31 17:22 dave: We'll probably have something defined by the time M2 testing happens. If we don't it won't be required obviously
 2026-05-27 10:21 sparky000: Hey, I have a question: is anyone working on implementing the Move language for the JAM protocol?
 2026-05-27 10:51 shimonchick: Did somebody restart the fuzzing jobs? Last night i left it it was on step 300k, today checking in its started again from 10k
 2026-05-27 10:51 bkchr: Yeah it was me. Sorry we had to do this because of some misconfiguration of the fuzzer
@@ -13612,6 +13613,12 @@ As recommended in [this announcement](https://matrix.to/#/!wBOJlzaOULZOALhaRh:po
   ↳ 2026-05-28 05:46 dakkk: l2b ~20h, l3a ~2h
   ↳ 2026-05-28 13:03 dakkk: and memory is about 10GB for L2B without using any disk cache
   ↳ 2026-05-31 04:27 knight1205: and l3b?
+  ↳ 2026-05-31 06:40 dakkk: 4. Since also your impl is in python, do you have better or worse perf?
+  ↳ 2026-05-31 06:43 knight1205: for l2a and l2b we are faster than other python implementations. but i am not quite sure about l3. [edited]
+  ↳ 2026-05-31 06:44 knight1205: l2a ~ 9h, l2b ~17h
+  ↳ 2026-05-31 14:02 knight1205: > <@dakkk:matrix.org> 4. Since also your impl is in python, do you have better or worse perf?
+
+L3a ~ 2.5 hrs, l3b running unexpectedly slow.
 2026-05-28 23:01 danicuki: 
 2026-05-28 23:02 danicuki: > <@anaelleltd:matrix.org> **JAM Prize Fellowship evaluations - Update 1**
 > 
@@ -13674,9 +13681,43 @@ However, TurboJam’s case is even harder because we had to make another submiss
 If that report is not recoverable anymore, I can only refer to the screenshot with the L3b timestamp that was published into this "Let's JAM" channel on May 21 and ask Basti.await to act as a witness, since he was looking into this issue at the time.
 
 The original submission link (for reference, does not work any more): https://fuzz.jamtoaster.network/submissions/t-0x988068f9f4a32beb4122c7fe8f3ecd2fb42339682511cbbc6f82cc4e6ef89b25-v0-2-8-919fe30e
+  ↳ 2026-05-31 13:54 bkchr: Hey @r2rtnl, I think that is fine for the teams who got blocked by this issue. I'm not sure there are that many more. I think the best is with a case by case. For you it is clear as you posted here etc 
+  ↳ 2026-05-31 23:34 anaelleltd: r2rtnl I have updated the tracker with 05/21/2026 as the M1 conformance date for TurboJAM, which was posted [here](https://matrix.to/#/!wBOJlzaOULZOALhaRh:polkadot.io/$dmjjlaHhUQDfGqV1PYaz--bUiF45J2YDkY1vKK7hQ_M?via=polkadot.io&via=matrix.org&via=parity.io). Thanks.
 2026-05-30 10:07 polykrate: Hello, 
 I applied for the fuzzer a few days ago but the submission is still under review, is there an admin that can check ? 
   ↳ 2026-05-30 10:13 bkchr: What is your team name? 
   ↳ 2026-05-30 10:14 polykrate: Jotl, n°23 on the submission
   ↳ 2026-05-30 10:38 bkchr: Approved you 
   ↳ 2026-05-30 10:43 polykrate: Tks a lot
+2026-05-31 05:04 dakkk: 
+2026-05-31 13:38 danicuki: One question I genuinely don’t know the answer to anymore:
+
+Who is the person currently leading JAM?
+
+The answer used to feel obvious.
+
+Today, with the Gray Paper, conformance infrastructure, Fellowship evaluations, and ecosystem coordination all involving different people, it’s less clear.
+2026-05-31 13:42 danicuki: If I am about to invest another 2–3 years into M2–M5, I need to understand who is steering the ship.
+2026-05-31 22:03 bkchr: > <@danicuki:matrix.org> One question I genuinely don’t know the answer to anymore:
+> 
+> Who is the person currently leading JAM?
+> 
+> The answer used to feel obvious.
+> 
+> Today, with the Gray Paper, conformance infrastructure, Fellowship evaluations, and ecosystem coordination all involving different people, it’s less clear.
+
+Isn't it better to have multiple people? Generally I don't see that much change in this regard.
+What exactly you want to hear?
+
+There exists now a document from me on a potential design for a parachain service. Which will be used to create a plan to get this deployed and Polkadot migrated in a reasonable time frame.
+
+In the short term we will also hopefully can launch the first public test net with JAM. 
+2026-05-31 23:58 ascriv: > <@bkchr:parity.io> Isn't it better to have multiple people? Generally I don't see that much change in this regard.
+> What exactly you want to hear?
+> 
+> There exists now a document from me on a potential design for a parachain service. Which will be used to create a plan to get this deployed and Polkadot migrated in a reasonable time frame.
+> 
+> In the short term we will also hopefully can launch the first public test net with JAM. 
+
+Is the document published?
+2026-06-01 03:01 leo: Who can get DartJAM approved to test on the fuzzer? 😄
