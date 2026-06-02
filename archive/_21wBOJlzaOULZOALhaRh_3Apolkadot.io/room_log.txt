@@ -1,5 +1,5 @@
 # room: #jam:polkadot.io
-# exported: 2026-06-01 04:45 UTC
+# exported: 2026-06-02 04:45 UTC
 2024-04-20 02:08 johnjiao123: 
 2024-04-20 02:09 johnjiao123: 
 2024-05-30 21:48 nradko: Hey everyone,
@@ -13683,6 +13683,7 @@ If that report is not recoverable anymore, I can only refer to the screenshot wi
 The original submission link (for reference, does not work any more): https://fuzz.jamtoaster.network/submissions/t-0x988068f9f4a32beb4122c7fe8f3ecd2fb42339682511cbbc6f82cc4e6ef89b25-v0-2-8-919fe30e
   ↳ 2026-05-31 13:54 bkchr: Hey @r2rtnl, I think that is fine for the teams who got blocked by this issue. I'm not sure there are that many more. I think the best is with a case by case. For you it is clear as you posted here etc 
   ↳ 2026-05-31 23:34 anaelleltd: r2rtnl I have updated the tracker with 05/21/2026 as the M1 conformance date for TurboJAM, which was posted [here](https://matrix.to/#/!wBOJlzaOULZOALhaRh:polkadot.io/$dmjjlaHhUQDfGqV1PYaz--bUiF45J2YDkY1vKK7hQ_M?via=polkadot.io&via=matrix.org&via=parity.io). Thanks.
+  ↳ 2026-06-01 14:46 r2rtnl: Anaelle LTD | Technical Fellowship Secretary Basti.await Thank you for looking into this!
 2026-05-30 10:07 polykrate: Hello, 
 I applied for the fuzzer a few days ago but the submission is still under review, is there an admin that can check ? 
   ↳ 2026-05-30 10:13 bkchr: What is your team name? 
@@ -13721,3 +13722,32 @@ In the short term we will also hopefully can launch the first public test net wi
 
 Is the document published?
 2026-06-01 03:01 leo: Who can get DartJAM approved to test on the fuzzer? 😄
+2026-06-01 05:06 emielsebastiaan: > <@ascriv:matrix.org> Is the document published?
+
+https://github.com/paritytech/polkadot-sdk/pull/11883
+2026-06-01 10:25 polykrate: Screenshot 2026-06-01 at 12-24-39 JAM Submission App.png
+2026-06-01 10:26 polykrate: Hello, 
+There could be a bug on a the fuzzer I passed the first lane however when I launch another run it said the lanes was never completed 
+
+2026-06-01 10:26 polykrate: Screenshot 2026-06-01 at 12-25-18 JAM Submission App.png
+2026-06-01 10:28 polykrate: and when a lane is completed, does it restart whith the last lane that failed or restart from L2a ? 
+2026-06-01 10:31 dakkk: It always restarts from the first lane every time [edited]
+2026-06-01 10:31 polykrate: ok thanks
+2026-06-01 12:12 jan: > A postmortem with concrete actions for M2-M5 would go a long way toward rebuilding confidence.
+
+I can't comment on M2 since that's not in my wheelhouse, but I can write some of my thoughts regarding M3+ (i.e. the "performance" milestones). Note: this is not official and at this point **these are just my personal thoughts** for now, but is something I can have at least *some* influence over. (Also, my opinions can change, and any feedback/better ideas are welcome.)
+
+So for the performance milestones there's a high chance we'll just have (unlike for M1) a fully open (but *very* comprehensive) testing harness, and release it relatively early before any official conformance testing takes place. The idea is simple: we want to maximize performance. So we give you a comprehensive set of "benchmarks" you can plug your node into, and your task is to make it as fast as possible.
+
+Here the thresholds of what's considered "passing" would be callibrated compared to the other implementations. For each test/category we'd come up with a "hard" threshold - i.e. you'll be required to be at least this fast to qualify, and assuming you'd pass the "hard" threshold we'd rank each implementation according to how fast it was compared to other implementations which passed the "hard" threshold.
+
+Remember: this is a *performance* milestone, so we don't want just "good enough" implementations - we want incentivize people to *maximize* performance, so instead of doing a "first come first serve" like for M1 where it matters *when* you submit, we want people to take their time. So we'd set a deadline for everyone to optimize their implementation, and then have people drag race.
+
+Doing it this way avoids many problems we've encountered with M1:
+
+- You get direct/open access to the testing harness, and you get it early, so you can provide feedback, report any bugs/issues and make PRs with improvements.
+- You get to run the workloads you'll be tested on, so you can use proper tooling/profilers/etc. to help you maximize performance. (Doing performance work in a black-box fashion is pretty much nonsense, and while we could require everyone to come up with their own benchmarks to test their implementations, it's in the best interest of everyone for people to contribute those benchmarks into a central harness.)
+- There's (hopefully) no fighting over "position in the queue", since we're not only measuring a strict "passed/failed" state; everyone's tested at the same time, and you're ranked according to how fast your implementation is. (The assumption here is: since the harness would be open there wouldn't be any "oppsies" that would warrant a retest, and running the harness "officially" would be then just a formality once the submission/testing deadline hits.)
+- The community can collaboratively get involved with the testing, instead of it being done internally within the Fellowship/Parity/W3F.
+
+So I think the theme here would be: be more open and have the JAM community involved into testing the process. If we could make the harness and its test comprehensive enough (i.e. cover enough ground so that you can't reasonably "cheat") then we don't need to make the testing harness and the benchmarks private, and that would make life for everyone better since the process wouldn't be an opaque black-box over which you have no control over.
