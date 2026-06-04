@@ -1,5 +1,5 @@
 # room: #graypaper:polkadot.io
-# exported: 2026-06-03 04:45 UTC
+# exported: 2026-06-04 04:45 UTC
 2024-04-17 20:29 syed: https://matrix.to/#/!hyzRkDqDthePbodYFz:parity.io/$f_DMsIEcDXZegw6Sabnehzc-LrdDQkmq5MbxDDyoZxY?via=parity.io&via=web3.foundation
 
 2024-04-17 20:29 syed: 
@@ -7192,3 +7192,14 @@ Anyway, if you'd like then feel free to try to remove the bitmask (replacing it 
 2026-05-06 08:07 unskilledpigeon: what happen to JAM?
 did the foundation stopped this?
 I don’t see any update and news on graypaper.com/news. also the deliveries from the last year is pending for review.
+2026-06-03 20:44 gav: ## Release: 0.8.0
+
+GP v0.8.0 is tagged and [released](https://github.com/gavofyork/graypaper/releases/tag/v0.8.0).
+
+The main changes here are:
+- support for dynamically changing the size of active validators
+- gas cost model
+
+There are several smaller changes also, primarily for convenience as we get closer to creating useful services and over soundness as we get closer to audit.
+
+v0.8.1 will see additional changes to the PVM and especially its paging model. Unlike the slog getting to 0.8.0, we hope to ensure 0.8 a short-lived series and get to 0.9.0 - and audit - much quicker.
