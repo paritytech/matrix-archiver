@@ -1,5 +1,5 @@
 # room: #jam-conformance:matrix.org
-# exported: 2026-06-05 04:44 UTC
+# exported: 2026-06-06 04:34 UTC
 2025-08-20 15:56 erin: tomusdrw: i've set up the archiver to archive this also, so hopefully will be up starting tomorrow
 2025-08-21 06:33 ascriv: https://github.com/davxy/jam-conformance/issues/26 should we not discourage open source implementations (for now)? [edited]
 2025-08-21 10:27 oliver.tale-yazdi: I think open source repos are fine. Other implementors are just not supposed to look at it
@@ -2732,3 +2732,36 @@ https://github.com/davxy/jam-conformance/blob/264a4f367f5c23c3298dc1cb21913ac68e
 2026-05-27 16:55 dakkk: toaster UI is down (~1 hour): 502 Bad Gateway [edited]
 2026-05-27 17:17 david: This will be back shortly
 2026-05-27 17:19 david: resolved
+2026-06-05 06:47 shimonchick: Is there an 0.8 test vector timeline?
+  ↳ 2026-06-05 07:00 jan: We first need to fully update PolkaJAM to 0.8, which is work-in-progress. You can get started on the PVM test vectors though (if you haven't yet), which should be aligned IIRC: https://github.com/w3f/jamtestvectors/pull/3
+  ↳ 2026-06-05 07:16 shimonchick: Oh yeah, those have been around for a while now, i had the ones in the new-gas-cost-model repo since February 
+  ↳ 2026-06-05 07:18 shimonchick: I just dont fully understand, doesn't the new gas cost model require us to parse the program iteratively per block, or ahead of time once for the whole program's gas and then a second time at execution time? For interpreters isn't that actually kind of a slowdown? [edited]
+  ↳ 2026-06-05 07:21 xlchen: we don’t really care about interpreter performance 
+  ↳ 2026-06-05 07:22 jan: Currently you need to parse it ahead-of-time. We probably would like to support completely just-in-time program processing eventually, but for now in the interest of time (and to simplify things, because that removes a ton of corner cases which otherwise would have to be specced) we've made it so that you have to parse it ahead of time.
+  ↳ 2026-06-05 07:22 jan: And yes, interpreter performance is secondary here.
+  ↳ 2026-06-05 07:25 jan: You might have noticed the changes in the GP 0.8 around `deblob` - that's responsible for validating a program blob and for checking whether the initial jump into the program is valid.
+  ↳ 2026-06-05 07:32 jan: There is still one major-ish PVM-related change that will be coming to the GP, and that's page gas metering, which is another feature that makes sense for the recompiler, but will be even more extra overhead for the interpreter. (Which is fine, because the only major use cases of an interpreter are debugging/offline tooling, and maybe light clients which could maybe even run in a faster non-conformant mode if they need extra speed) [edited]
+  ↳ 2026-06-05 07:34 shimonchick: Okay, so essentially its time to start implementing recompilers i guess. Ive been holding on to my interpreter for quite some time now ;d
+  ↳ 2026-06-05 07:40 jan: Are you aiming for the performance milestones (M3+)? If so then yes, you will need a recompiler.
+  ↳ 2026-06-05 07:41 jan: So basically the bar for M3 will probably be a recompiler that works but isn't necessarily optimized or production-ready, and M4 will require a fully optimized one.
+  ↳ 2026-06-05 07:42 jan: And, if you're aiming for the performance milestones I would probably recommend to implement your recompiler in a systems language (Rust, C, C++, D, Zig, etc.). [edited]
+  ↳ 2026-06-05 07:44 jan: Fast-ish non-systems languages (Java, C#, Go, etc.) could *maybe* be fast enough when written in a specific way, but that's somewhat iffy (and we still don't know the exact performance bar that'll be required).
+  ↳ 2026-06-05 08:59 oliver.tale-yazdi: The concern here is that the code emission would be to slow, not the emitted code, or?
+  ↳ 2026-06-05 09:00 oliver.tale-yazdi: I assume because of JIT assembling being nasty in high level languages
+  ↳ 2026-06-05 09:02 jan: Yes. Your codegen and your gas cost calculator will have to be fast, and in non-systems languages this will be very tricky. (For example, the gas cost model is designed to take advantage of SIMD to speed it up, and if you can't use explicit SIMD in your language then you'll have a hard time optimizing it.)
+  ↳ 2026-06-05 09:03 jan: Although you'll *probably* also have to implement your VM's runtime in a systems language too.
+  ↳ 2026-06-05 09:10 oliver.tale-yazdi: Hm this is the more concerning part to me. A native runtime with a non-native node will be a challenge 
+  ↳ 2026-06-05 09:15 jan: Note that M4 will most likely have the following requirements:
+- Each toplevel VM and associated inner VMs will have to run pinned to a single core where nothing else is allowed to run (sans some allowance for a small runtime for you to manage the VM).
+- You'll need to be able to spawn new inner VMs without leaving the core.
+- You'll need to be able to switch between the toplevel VM and the inner VM without leaving the core.
+- You'll have to process page faults (for both the outer VM and the inner VM; currently only inner VMs need this, but with page gas metering outer VMs will need it too) without leaving the core.
+  ↳ 2026-06-05 09:17 jan: You will need some kind of a runtime (manager/operating system/whatever you want to call it) to manage this, and it will have to run alongside the guest code somewhere.
+  ↳ 2026-06-05 09:18 oliver.tale-yazdi: >..without leaving the core
+
+>You'll have to process page faults
+
+Okay might just write an OS then 😆 But okay M4 seems unrealistic for non-native then
+  ↳ 2026-06-05 09:19 jan: We need to strictly control the L3 cache of the CPU core that's running guest code, otherwise bad things can happen. So, for example, this is pretty much impossible to do in a language with a garbage collector, because the GC will just trigger whenever and do whatever it wants.
+  ↳ 2026-06-05 09:19 jan: It's not necessarily unrealistic, but writing _everything_ in such a language is unrealistic. [edited]
+  ↳ 2026-06-05 09:22 jan: Unfortunately this is the cost of trying to simultaneously have deterministic (as opposed to time-based) and secure gas metering, while also allowing arbitrary almost limitless resource usage for trustless guest programs.
