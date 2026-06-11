@@ -18,7 +18,7 @@ a:hover{color:#90caf9}
 em{font-style:italic}
 </style>
 <h1>#graypaper:polkadot.io</h1>
-<p><small>last updated 2026-06-10 04:44 UTC</small></p>
+<p><small>last updated 2026-06-11 04:45 UTC</small></p>
 <p><a href='room_log.txt'>⇩ plaintext</a> · <a href='../../'>⇦ all rooms</a></p>
 <hr>
 <div class='msg'><a class='ts' href='#$G0deSwnlYlCrSn5lIFL__hi6bgWVITql5VyahU4bzpI'>#</a> <a class='ts' name='$G0deSwnlYlCrSn5lIFL__hi6bgWVITql5VyahU4bzpI' href='https://matrix.to/#/!ddsEwXlCWnreEGuqXZ:polkadot.io/$G0deSwnlYlCrSn5lIFL__hi6bgWVITql5VyahU4bzpI' target='_blank'>2024-04-17 20:29</a>&ensp;<span class='u' style='color:#da6aa2'>syed</span>: <a href="https://matrix.to/#/!hyzRkDqDthePbodYFz:parity.io/$f_DMsIEcDXZegw6Sabnehzc-LrdDQkmq5MbxDDyoZxY?via=parity.io&amp;via=web3.foundation" rel="noopener" target="_blank">https://matrix.to/#/!hyzRkDqDthePbodYFz:parity.io/$f_DMsIEcDXZegw6Sabnehzc-LrdDQkmq5MbxDDyoZxY?via=parity.io&amp;via=web3.foundation</a>
@@ -7194,3 +7194,9 @@ The main changes here are:
 There are several smaller changes also, primarily for convenience as we get closer to creating useful services and over soundness as we get closer to audit.
 
 v0.8.1 will see additional changes to the PVM and especially its paging model. Unlike the slog getting to 0.8.0, we hope to ensure 0.8 a short-lived series and get to 0.9.0 - and audit - much quicker.</div>
+<div class='msg'><a class='ts' href='#$F157NDs3yQsKa--1zyb_lqkDDdQzPnWYfEuBPhuM40s'>#</a> <a class='ts' name='$F157NDs3yQsKa--1zyb_lqkDDdQzPnWYfEuBPhuM40s' href='https://matrix.to/#/!ddsEwXlCWnreEGuqXZ:polkadot.io/$F157NDs3yQsKa--1zyb_lqkDDdQzPnWYfEuBPhuM40s' target='_blank'>2026-06-10 14:22</a>&ensp;<span class='u' style='color:#bfaf39'>dakkk</span>: In GP 0.8.0 and new gas model I can&#x27;t figure out this thing; in A.54 why is 3 subtracted from the final gas state cycles count?
+
+(I&#x27;m not linking fluffylabs graypaper reader since it is not updated to 0.8.0 fluffylabs ) <span class="edited">(edited)</span></div>
+<div class='msg'><a class='ts' href='#$1V8c-TWiWFzCMp34TxsQ8E3WqpP15xBnxLtkKQa0JeQ'>#</a> <a class='ts' name='$1V8c-TWiWFzCMp34TxsQ8E3WqpP15xBnxLtkKQa0JeQ' href='https://matrix.to/#/!ddsEwXlCWnreEGuqXZ:polkadot.io/$1V8c-TWiWFzCMp34TxsQ8E3WqpP15xBnxLtkKQa0JeQ' target='_blank'>2026-06-10 14:23</a>&ensp;<span class='u' style='color:#bfaf39'>dakkk</span>: image.png</div>
+<div class='msg'><a class='ts' href='#$WOUIBaaD1uw8_56t2RoDNdw6uVSbA2djaOLRXJ8F_4Q'>#</a> <a class='ts' name='$WOUIBaaD1uw8_56t2RoDNdw6uVSbA2djaOLRXJ8F_4Q' href='https://matrix.to/#/!ddsEwXlCWnreEGuqXZ:polkadot.io/$WOUIBaaD1uw8_56t2RoDNdw6uVSbA2djaOLRXJ8F_4Q' target='_blank'>2026-06-10 14:25</a>&ensp;<span class='u' style='color:#da5c80'>jan</span>: To make the gas costs cheaper for short basic blocks. Real CPUs work across basic blocks, our gas cost model can&#x27;t, so this is to account for that. We still need to verify whether that&#x27;s safe, but for now I&#x27;ve set it to 3 semi-arbitrarily. If it ends up being unsafe this will be changed/removed. (Every numeric value in the gas cost model is still subject to change.) <span class="edited">(edited)</span></div>
+<div class='msg'><a class='ts' href='#$fMfdvV483Fl5iV4bluNptBrP-I7eiGj1H62uTSexkXI'>#</a> <a class='ts' name='$fMfdvV483Fl5iV4bluNptBrP-I7eiGj1H62uTSexkXI' href='https://matrix.to/#/!ddsEwXlCWnreEGuqXZ:polkadot.io/$fMfdvV483Fl5iV4bluNptBrP-I7eiGj1H62uTSexkXI' target='_blank'>2026-06-10 14:29</a>&ensp;<span class='u' style='color:#bfaf39'>dakkk</span>: got it (y) </div>

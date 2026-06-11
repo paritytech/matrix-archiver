@@ -1,5 +1,5 @@
 # room: #graypaper:polkadot.io
-# exported: 2026-06-10 04:44 UTC
+# exported: 2026-06-11 04:45 UTC
 2024-04-17 20:29 syed: https://matrix.to/#/!hyzRkDqDthePbodYFz:parity.io/$f_DMsIEcDXZegw6Sabnehzc-LrdDQkmq5MbxDDyoZxY?via=parity.io&via=web3.foundation
 
 2024-04-17 20:29 syed: 
@@ -7203,3 +7203,9 @@ The main changes here are:
 There are several smaller changes also, primarily for convenience as we get closer to creating useful services and over soundness as we get closer to audit.
 
 v0.8.1 will see additional changes to the PVM and especially its paging model. Unlike the slog getting to 0.8.0, we hope to ensure 0.8 a short-lived series and get to 0.9.0 - and audit - much quicker.
+2026-06-10 14:22 dakkk: In GP 0.8.0 and new gas model I can't figure out this thing; in A.54 why is 3 subtracted from the final gas state cycles count?
+
+(I'm not linking fluffylabs graypaper reader since it is not updated to 0.8.0 fluffylabs ) [edited]
+2026-06-10 14:23 dakkk: image.png
+2026-06-10 14:25 jan: To make the gas costs cheaper for short basic blocks. Real CPUs work across basic blocks, our gas cost model can't, so this is to account for that. We still need to verify whether that's safe, but for now I've set it to 3 semi-arbitrarily. If it ends up being unsafe this will be changed/removed. (Every numeric value in the gas cost model is still subject to change.) [edited]
+2026-06-10 14:29 dakkk: got it (y) 

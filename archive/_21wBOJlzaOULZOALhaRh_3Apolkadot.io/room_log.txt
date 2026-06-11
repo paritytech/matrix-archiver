@@ -1,5 +1,5 @@
 # room: #jam:polkadot.io
-# exported: 2026-06-10 04:43 UTC
+# exported: 2026-06-11 04:44 UTC
 2024-04-20 02:08 johnjiao123: 
 2024-04-20 02:09 johnjiao123: 
 2024-05-30 21:48 nradko: Hey everyone,
@@ -13763,3 +13763,17 @@ So I think the theme here would be: be more open and have the JAM community invo
 Will do :)
 2026-06-07 07:57 celadari: Who do we need to notify and how do we proceed for the interview with the Fellowship ?
 2026-06-07 16:46 ascriv: From last time I checked, the utility of DOT in a post-JAM launch world, aside from its use within the parachains service, is essentially as a storage token. Is this still the case?
+2026-06-10 18:00 shimonchick: Would using Claude Mythos to find a vulnerability in our JAM implementation be considered against the "Generative AI must not be used in any substantive way.". Assuming we do not write any code with AI, but use it to test our implementation? [edited]
+  ↳ 2026-06-10 18:27 jan: FWIW, considering the (at this point) clear usefulness of such tools I'd expect everyone's implementations to be audited by AI at around the last milestone by a third-party (so there's little-to-no possibility for contamination), however at this point doing it yourself might be iffy, as it could be tricky to make sure the model doesn't inadvertently push you into a certain direction.
+
+For example, any divergence from the GP could be reasonably construed as a security issue as it would at very least allow for denial of service attacks if nothing else, so in that case if the model points out that "hey, you're not compliant with the GP here" then that would, as far as I understand, violate the rules insofar as the requirement to have an AI-unassisted clean room implementation go.
+
+(Remember that the point of the JAM prize isn't only to get functional JAM implementations, but to also expand JAM expertise around the community, _and_ to make sure the GP is solid, hence letting AI do the work here in any capacity is at odds with these objectives.)
+
+(Also, disclaimer: this is just my personal opinion and is not our official position as it pertains to the JAM prize.) [edited]
+  ↳ 2026-06-10 18:31 shimonchick: okay, so to be certain im compliant i cannot use it. But would an initiative where we create an AI reviewer against all fuzzer targets/binaries and generates comparison reports be beneficial to us implementers?
+  ↳ 2026-06-10 18:35 shimonchick: Perhaps having clarification on this rule would be nice. Because nowadays a lot of questions beyond writing code with AI arise. For example, what about using AI to understand GP?
+  ↳ 2026-06-10 18:36 jan: Not sure what you mean by that. However, you don't really need AI to compare your implementations. Put them on a testnet and see if they disagree. You could even have a community fuzzer where you could fuzz every implementation against each other and generate testcases using that. As long as it's done in a blackbox fashion (i.e. you don't look at each other's implementation) and you need to manually investigate each failure and figure out which implementation is correct (or maybe neither is) then that should be fine according to the rules (as long as the fuzzer is open to everyone, and the artifacts are testcases).
+  ↳ 2026-06-10 18:37 jan: AFAIU, using AI purely to understand the GP should be fine. (IIRC the GP reader that tomusdrw made always had a button which triggers AI to explain parts of the GP and no one has ever complained about that wrt the JAM prize.) [edited]
+  ↳ 2026-06-10 18:38 shimonchick: Yep, i am asking because i have also used the reader and found it very helpful
+  ↳ 2026-06-10 18:39 jan: (Of course you need to keep in mind that ultimately you are responsible for your code and your understanding of the GP, so if the AI is wrong and you blindly trust it then that's on you. AI could be used to help you understand the GP, but you still need to understand it yourself and not just assume what the AI tells you is always true and accept it as fact.) [edited]
