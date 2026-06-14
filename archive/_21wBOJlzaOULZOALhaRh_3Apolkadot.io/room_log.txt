@@ -1,5 +1,5 @@
 # room: #jam:polkadot.io
-# exported: 2026-06-13 04:44 UTC
+# exported: 2026-06-14 04:44 UTC
 2024-04-20 02:08 johnjiao123: 
 2024-04-20 02:09 johnjiao123: 
 2024-05-30 21:48 nradko: Hey everyone,
@@ -12907,6 +12907,7 @@ HAPPY FUZZING!
   ↳ 2026-05-19 11:04 clearloop: Registered
   ↳ 2026-05-19 12:25 libingjiang: Registered
   ↳ 2026-05-19 18:06 ascriv: Registered
+  ↳ 2026-06-13 16:46 abutlabs: Registration request sent. Any chance you have a moment to approve me?
 2026-05-19 10:23 dakkk: the wallet we choose in this procedure is the one used for the prize payment, or is it unrelated?
 2026-05-19 10:23 bkchr: Unrelated 
 2026-05-19 10:23 bkchr: You will need to have some DOT in it 
@@ -13757,6 +13758,7 @@ So I think the theme here would be: be more open and have the JAM community invo
 2026-06-05 06:48 shimonchick: As GP 0.8 got released a couple of days ago, is there plans to migrate the fuzzer to 0.8 and to release new test vectors? OR is it being held off for the sake of current runs?
 2026-06-05 09:24 bkchr: The fuzzer will not change. As it would be unfair for teams joining later to target a different GP version. The fuzzer is frozen on 0.7.2. Maybe we can later release a new one to help testing your implementation, but when it comes to the conformace testing it will not be required.
   ↳ 2026-06-05 09:58 shimonchick: reusing it for testing 0.8 conformance would be super useful
+  ↳ 2026-06-13 12:40 merkle547: the w3f test vectors (on the git repo) are on 0.7.1 though...
 2026-06-07 07:57 celadari: Screenshot from 2026-06-07 04-50-12.png
   ↳ 2026-06-07 08:01 dakkk: pm Anaelle LTD
   ↳ 2026-06-07 10:35 celadari: > <@dakkk:matrix.org> pm Anaelle LTD
