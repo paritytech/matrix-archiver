@@ -1,5 +1,5 @@
 # room: #jam:polkadot.io
-# exported: 2026-06-14 04:44 UTC
+# exported: 2026-06-15 04:45 UTC
 2024-04-20 02:08 johnjiao123: 
 2024-04-20 02:09 johnjiao123: 
 2024-05-30 21:48 nradko: Hey everyone,
@@ -13562,7 +13562,6 @@ I should put that more prominent into the Ui
   ↳ 2026-05-26 15:07 emielsebastiaan: We’ll be at web3 summit with the entire team. Is there an agenda for the meeting? We don’t have too much to report from our end tbh. I guess our attendance depends on agenda and attendance of others. 
   ↳ 2026-05-26 17:31 boymaas: JamZig⚡ would like to attend with in total 2 team members
   ↳ 2026-05-28 08:52 tomusdrw: Typeberry: 2 team members, we already bought tickets though.
-  ↳ 2026-05-28 08:59 polykrate: Jotl would like to attend with one team member 
   ↳ 2026-05-28 13:01 emielsebastiaan: 3/4 members and we already have tickets
   ↳ 2026-05-29 13:51 milawords: Hi Emiel Jeff | Jam On The Lisp
 tomusdrw Boy Maas | JamZig⚡
@@ -13621,6 +13620,7 @@ As recommended in [this announcement](https://matrix.to/#/!wBOJlzaOULZOALhaRh:po
   ↳ 2026-05-31 14:02 knight1205: > <@dakkk:matrix.org> 4. Since also your impl is in python, do you have better or worse perf?
 
 L3a ~ 2.5 hrs, l3b running unexpectedly slow.
+2026-05-28 08:59 polykrate: 
 2026-05-28 23:01 danicuki: 
 2026-05-28 23:02 danicuki: > <@anaelleltd:matrix.org> **JAM Prize Fellowship evaluations - Update 1**
 > 
