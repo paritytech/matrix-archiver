@@ -1,5 +1,5 @@
 # room: #jam:polkadot.io
-# exported: 2026-06-17 04:44 UTC
+# exported: 2026-06-18 04:45 UTC
 2024-04-20 02:08 johnjiao123: 
 2024-04-20 02:09 johnjiao123: 
 2024-05-30 21:48 nradko: Hey everyone,
@@ -13799,3 +13799,16 @@ When and where: on the second day, June 19, after Gavin's JAM fireside chat. If 
 
 Looking forward to meeting some of you in Berlin this week!
 Bring the JAM with you. 🤗 [edited]
+2026-06-17 18:31 abutlabs: I sent a registration request to the fuzzer on Saturday, haven't heard anything from the PR request or the fuzzer website. Anyone here that could help me out and join the fuzz queue? I haven't had any communication with the community or jam prize folks until now. I built a client + Jam education tools with the help of AI and am excited about the prospect whether or not I qualify for any prize money. - became very interested after pba-x 🪁 [edited]
+  ↳ 2026-06-17 18:34 shimonchick: You can check rule 9 on https://jam.web3.foundation/rules
+  ↳ 2026-06-17 18:34 bkchr: Abutlabs? 
+  ↳ 2026-06-17 18:35 shimonchick: Otherwise, Basti.await is the person who approves teams on the fuzzer
+  ↳ 2026-06-17 18:35 bkchr: Yeah I approved him now 
+  ↳ 2026-06-17 18:35 bkchr: > <@bkchr:parity.io> Abutlabs? 
+
+Stupid question 
+  ↳ 2026-06-17 18:49 abutlabs: Basti.await: thanks! I read in the comments there could be quite a wait in the queue, correct - is this currently still weeks, months? 
+  ↳ 2026-06-17 18:50 bkchr: > <@abutlabs:matrix.org> Basti.await: thanks! I read in the comments there could be quite a wait in the queue, correct - is this currently still weeks, months? 
+
+What queue? 
+2026-06-17 18:50 abutlabs: 
