@@ -1,5 +1,5 @@
 # room: #jam:polkadot.io
-# exported: 2026-06-18 04:45 UTC
+# exported: 2026-06-19 04:45 UTC
 2024-04-20 02:08 johnjiao123: 
 2024-04-20 02:09 johnjiao123: 
 2024-05-30 21:48 nradko: Hey everyone,
@@ -13812,3 +13812,4 @@ Stupid question
 
 What queue? 
 2026-06-17 18:50 abutlabs: 
+2026-06-18 18:46 shimonchick: Something that doesnt quite work but was interesting for me when i came across. Would be interesting to see once we all start running in toaster: https://dune.com/substrate/jamtestnet
