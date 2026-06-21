@@ -1,5 +1,5 @@
 # room: #jam:polkadot.io
-# exported: 2026-06-20 04:41 UTC
+# exported: 2026-06-21 04:45 UTC
 2024-04-20 02:08 johnjiao123: 
 2024-04-20 02:09 johnjiao123: 
 2024-05-30 21:48 nradko: Hey everyone,
@@ -13835,3 +13835,5 @@ The potential issues I could think of are
 2026-06-19 16:40 charles.hetterich: ima_ed2125b.jpeg
 2026-06-19 16:40 charles.hetterich: ^relevant snippet from the paper
 2026-06-19 16:46 dave: If by dynamic pricing you mean that some amount of DOT would buy you a different amount of storage at different points in time, this is not really compatible with or at least would significantly complicate the storage deposit mechanism in JAM. At the moment there is a fixed function between the balance of a service and how much data it can store. If this function is time-dependent, what happens when the price goes up and a service no longer has a large enough deposit to cover its storage costs?
+2026-06-20 06:28 dakkk: is the talk of Gavin about Jam from yesterday available in some place? [edited]
+2026-06-20 06:48 mommy2508: I have a question please, what would these new tokens be in Jam ? CORE + JAMKB ?
