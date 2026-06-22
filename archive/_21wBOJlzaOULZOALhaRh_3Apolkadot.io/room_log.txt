@@ -1,5 +1,5 @@
 # room: #jam:polkadot.io
-# exported: 2026-06-21 04:45 UTC
+# exported: 2026-06-22 04:45 UTC
 2024-04-20 02:08 johnjiao123: 
 2024-04-20 02:09 johnjiao123: 
 2024-05-30 21:48 nradko: Hey everyone,
@@ -13837,3 +13837,33 @@ The potential issues I could think of are
 2026-06-19 16:46 dave: If by dynamic pricing you mean that some amount of DOT would buy you a different amount of storage at different points in time, this is not really compatible with or at least would significantly complicate the storage deposit mechanism in JAM. At the moment there is a fixed function between the balance of a service and how much data it can store. If this function is time-dependent, what happens when the price goes up and a service no longer has a large enough deposit to cover its storage costs?
 2026-06-20 06:28 dakkk: is the talk of Gavin about Jam from yesterday available in some place? [edited]
 2026-06-20 06:48 mommy2508: I have a question please, what would these new tokens be in Jam ? CORE + JAMKB ?
+2026-06-21 12:29 kianenigma: Nothing was streamed but everything was recorded and I am sure will come out of the W3S/W3F youtube account within a few weeks.
+2026-06-21 12:41 kianenigma: I think it is best to see the full talk as it requires some context, but what I will rephrase what I learnt as best as I can: 
+
+1. Imagine Polkadot's relay chain and parachain's relationship. There is no concern related to a parachain causing *overhead on the state of the relay chain* -- the protocol simply doesn't allow this. Each parachain's overhead on the relay chain state is fixed (some hashes + wasm code), and accounted for by a deposit
+2. In JAM, this is fundamentally different. A JAM service can write an arbitrary amount to the JAM chain's state in its accumulate, and therefore a new area of accounting is needed
+
+In the talk a few proposals were mentioned around this, all revolving around the idea of using tokens (not necessarily a "crypto" token but think more broadly as a "access token" used in CS before any blockchain) to represent them: CORE for any core of JAM and JAMKB for any KB of the JAM's state, and they would both be strict utility tokens with supplies that exactly represent the underlying utility (a core or a KB of state). So if 21 GiB is the presumed max capacity of the JAM's state, there would be ~21M JAMKB tokens ever created.  
+
+You could also continue to use DOT for them, but the fact that DOT has a different supply + other utilities + its demand depends on many other things than e.g. wishing to use a JAM core, as I understood, means it will inevitably be a suboptimal design.
+
+Both JAM and CORE if created will be minted and controlled by the DOTDAO (Polkadot Gov) and then handed out as the DAO decides. 
+
+I personally have some questions about whether this should have a "use it or lose it" mechanism to prevent hoarding.
+2026-06-21 12:54 ascriv: to prevent hoarding, we could charge “property taxes” on jamkb ownership, some % per year, or fixed fee per kb (X pusd per kb per year)
+
+or require locking X DOT to own Y JAMKB [edited]
+2026-06-21 17:53 danicuki: > <@kianenigma:parity.io> I think it is best to see the full talk as it requires some context, but what I will rephrase what I learnt as best as I can: 
+> 
+> 1. Imagine Polkadot's relay chain and parachain's relationship. There is no concern related to a parachain causing *overhead on the state of the relay chain* -- the protocol simply doesn't allow this. Each parachain's overhead on the relay chain state is fixed (some hashes + wasm code), and accounted for by a deposit
+> 2. In JAM, this is fundamentally different. A JAM service can write an arbitrary amount to the JAM chain's state in its accumulate, and therefore a new area of accounting is needed
+> 
+> In the talk a few proposals were mentioned around this, all revolving around the idea of using tokens (not necessarily a "crypto" token but think more broadly as a "access token" used in CS before any blockchain) to represent them: CORE for any core of JAM and JAMKB for any KB of the JAM's state, and they would both be strict utility tokens with supplies that exactly represent the underlying utility (a core or a KB of state). So if 21 GiB is the presumed max capacity of the JAM's state, there would be ~21M JAMKB tokens ever created.  
+> 
+> You could also continue to use DOT for them, but the fact that DOT has a different supply + other utilities + its demand depends on many other things than e.g. wishing to use a JAM core, as I understood, means it will inevitably be a suboptimal design.
+> 
+> Both JAM and CORE if created will be minted and controlled by the DOTDAO (Polkadot Gov) and then handed out as the DAO decides. 
+> 
+> I personally have some questions about whether this should have a "use it or lose it" mechanism to prevent hoarding.
+
+Here are some slides: https://x.com/krayt78/status/2068055193946570910
