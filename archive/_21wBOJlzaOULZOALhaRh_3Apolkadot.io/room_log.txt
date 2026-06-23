@@ -1,5 +1,5 @@
 # room: #jam:polkadot.io
-# exported: 2026-06-22 04:45 UTC
+# exported: 2026-06-23 04:35 UTC
 2024-04-20 02:08 johnjiao123: 
 2024-04-20 02:09 johnjiao123: 
 2024-05-30 21:48 nradko: Hey everyone,
@@ -13867,3 +13867,10 @@ or require locking X DOT to own Y JAMKB [edited]
 > I personally have some questions about whether this should have a "use it or lose it" mechanism to prevent hoarding.
 
 Here are some slides: https://x.com/krayt78/status/2068055193946570910
+2026-06-22 12:27 milawords: Hi all,
+
+It was great to see the JAM implementer teams who made it to the Web3 Summit in Berlin. Thanks again for attending.
+
+Let's keep jamming :)
+2026-06-22 12:27 milawords: image.png
+2026-06-22 12:29 shimonchick: Is there going to be a recap/video for the ones who could not attend? [edited]
