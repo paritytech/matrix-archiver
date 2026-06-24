@@ -1,5 +1,5 @@
 # room: #jam:polkadot.io
-# exported: 2026-06-23 04:35 UTC
+# exported: 2026-06-24 04:38 UTC
 2024-04-20 02:08 johnjiao123: 
 2024-04-20 02:09 johnjiao123: 
 2024-05-30 21:48 nradko: Hey everyone,
@@ -13874,3 +13874,5 @@ It was great to see the JAM implementer teams who made it to the Web3 Summit in 
 Let's keep jamming :)
 2026-06-22 12:27 milawords: image.png
 2026-06-22 12:29 shimonchick: Is there going to be a recap/video for the ones who could not attend? [edited]
+2026-06-23 08:50 dakkk: Are there any update / plan about the interviews for M1 milestones? 
+  ↳ 2026-06-23 11:00 bkchr: Anaelle LTD | Technical Fellowship Secretary: is setting up the interviews. AFAIK we should see the first in July, depending on availability 
