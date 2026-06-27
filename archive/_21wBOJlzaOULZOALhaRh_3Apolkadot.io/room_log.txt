@@ -1,5 +1,5 @@
 # room: #jam:polkadot.io
-# exported: 2026-06-26 04:39 UTC
+# exported: 2026-06-27 04:33 UTC
 2024-04-20 02:08 johnjiao123: 
 2024-04-20 02:09 johnjiao123: 
 2024-05-30 21:48 nradko: Hey everyone,
@@ -13883,3 +13883,11 @@ Let's keep jamming :)
 
 Though not sure if it is caused by the implementation or what is running, but, you can just submit a new run
 2026-06-25 19:47 abutlabs: yup, it's on my side. I see it now. ty [edited]
+2026-06-26 14:52 celadari: Hi guys, I just realized there are
+6 teams in group A
+7 teams in group B
+6 teams in group C
+5 teams in group D
+
+Does it mean that some teams in the groups won't receive M1 or the limit rule is only valid for M2, M3, M4 and so forth ?
+2026-06-26 20:54 xlchen: not all the team will finish all milestones 
