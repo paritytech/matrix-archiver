@@ -1,5 +1,5 @@
 # room: #jam:polkadot.io
-# exported: 2026-06-27 04:33 UTC
+# exported: 2026-06-28 04:44 UTC
 2024-04-20 02:08 johnjiao123: 
 2024-04-20 02:09 johnjiao123: 
 2024-05-30 21:48 nradko: Hey everyone,
@@ -13891,3 +13891,14 @@ Though not sure if it is caused by the implementation or what is running, but, y
 
 Does it mean that some teams in the groups won't receive M1 or the limit rule is only valid for M2, M3, M4 and so forth ?
 2026-06-26 20:54 xlchen: not all the team will finish all milestones 
+2026-06-27 06:28 celadari: This is well explained in the rules : number of teams per group set receiving the funds decreases by 1 at each milestone.
+
+I'm asking about M1 specifically and the team limit per group set regarding M1  :)
+2026-06-27 07:23 dakkk: if there are 10M (= 100 * 100k), there are 4 languagre groups, and  the teams per group decreases by 1 at each milestone, the starting teams per groups should be 7 (it's a first degree equation) [edited]
+2026-06-27 12:20 celadari: Sorry I should have been more precise.
+Here is the rule I was refering to:
+```
+One full milestone prize (100,000 DOT + 1,000 KSM) will be reserved for Milestone 5 (M5) in each language set; two full milestone prizes for M4 in each language set, three full milestone prizes for M3, four full milestone prizes for M2.
+```
+
+So my questions now are:  What is the rule for M1 regarding number of teams per group set elligible to claim full M1 prize ? What happens to the teams in group sets that are "overpopulated" ?
