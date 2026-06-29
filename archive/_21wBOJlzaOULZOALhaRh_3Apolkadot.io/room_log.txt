@@ -1,5 +1,5 @@
 # room: #jam:polkadot.io
-# exported: 2026-06-28 04:44 UTC
+# exported: 2026-06-29 04:44 UTC
 2024-04-20 02:08 johnjiao123: 
 2024-04-20 02:09 johnjiao123: 
 2024-05-30 21:48 nradko: Hey everyone,
@@ -13902,3 +13902,6 @@ One full milestone prize (100,000 DOT + 1,000 KSM) will be reserved for Mileston
 ```
 
 So my questions now are:  What is the rule for M1 regarding number of teams per group set elligible to claim full M1 prize ? What happens to the teams in group sets that are "overpopulated" ?
+2026-06-28 09:55 abutlabs: image.png
+2026-06-28 09:56 abutlabs: oCaml Client inbound 👋 - https://fuzz.jamtoaster.network/attestation/0xe6ebb3402b669c6d4837a4ff8e28467721d3548ccdf6d1c5754a6f490e4c3e40 [edited]
+2026-06-28 11:05 dakkk: Congratulations! Did you used LLMs for coding it? [edited]
