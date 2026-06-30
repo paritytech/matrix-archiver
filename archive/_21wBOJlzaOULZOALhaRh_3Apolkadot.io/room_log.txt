@@ -1,5 +1,5 @@
 # room: #jam:polkadot.io
-# exported: 2026-06-29 04:44 UTC
+# exported: 2026-06-30 04:37 UTC
 2024-04-20 02:08 johnjiao123: 
 2024-04-20 02:09 johnjiao123: 
 2024-05-30 21:48 nradko: Hey everyone,
@@ -13905,3 +13905,26 @@ So my questions now are:  What is the rule for M1 regarding number of teams per 
 2026-06-28 09:55 abutlabs: image.png
 2026-06-28 09:56 abutlabs: oCaml Client inbound 👋 - https://fuzz.jamtoaster.network/attestation/0xe6ebb3402b669c6d4837a4ff8e28467721d3548ccdf6d1c5754a6f490e4c3e40 [edited]
 2026-06-28 11:05 dakkk: Congratulations! Did you used LLMs for coding it? [edited]
+2026-06-30 03:18 anaelleltd: **JAM Prize Fellowship evaluations - Update 2**
+
+24/25 teams have successfully passed all M1 conformance tests and obtained their attestations. We are currently working on scheduling interviews for Priority group 1 from mid-July 2026 onwards. 
+
+The purpose of the Fellowship interview is to get a feel for the expertise of the developer claiming the prize. 
+This is in accordance with [JAM Prize rules #12 and #13](https://jam.web3.foundation/rules): 
+*”An interview may be requested after submission to ensure team members are the legitimate authors of the code. This precludes the use of generative AI. The interview will seek to ensure the individual has definitive expertise on both the Graypaper and their own codebase. INABILITY TO PROVE THIS EXPERTISE MAY RESULT IN A REDUCED PRIZE OR FULL DISQUALIFICATION.”*
+*”Following the accepted completion of each milestone, teams may nominate one Fellowship candidate/member to be promoted directly to rank III and (optionally) a second candidate/member to rank II (more information about the ranks can be found on the Polkadot Fellowship Manifesto).”* 
+
+It is also noted in “The Paths to Implementation” that: *“[...] One developer may be promoted to the rank commensurate with their code and protocol contributions regardless of regular time requirements. The promotion should be in line with regular interpretation of the Manifesto except for the time requirements (which are disregarded). The maximum rank to be attained in this way shall be III Dan (Fellow).”*
+
+At M1, the Fellowship interview will only involve the team member nominated as a candidate for promotion to Rank 3. No other team members will be allowed to participate in this interview.
+
+Interviewees will need to demonstrate Graypaper literacy. They should have their JAM repo ready, and it is expected that they will know the correlation of their repo to the Graypaper better than the author of the Graypaper could work out himself. 
+
+Ahead of Fellowship interviews, teams will be asked to:
+1) Nominate a team member as candidate for promotion to Rank 3
+2) Ensure that their JAM repo is ready for presentation to the author of the Graypaper
+
+We will keep updating the [tracker](https://polkadottechnicalfellowship.notion.site/2ef96f88d0a78051b94ef4a6d6c9be8c?v=2ef96f88d0a78036b33a000c2cb9a0b1) for JAM Prize evaluations as further information about interviews becomes available, so that teams know where they stand in the overall process.
+
+*Previous updates:* [1](https://matrix.to/#/!wBOJlzaOULZOALhaRh:polkadot.io/$Ib5gDsuCOUqJLmkdBVox6tmWECTv-YfUgXlYPKL0_L8?via=polkadot.io&via=matrix.org&via=parity.io)
+
