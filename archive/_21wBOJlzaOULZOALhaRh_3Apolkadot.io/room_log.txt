@@ -1,5 +1,5 @@
 # room: #jam:polkadot.io
-# exported: 2026-06-30 04:37 UTC
+# exported: 2026-07-01 04:44 UTC
 2024-04-20 02:08 johnjiao123: 
 2024-04-20 02:09 johnjiao123: 
 2024-05-30 21:48 nradko: Hey everyone,
@@ -13928,3 +13928,53 @@ We will keep updating the [tracker](https://polkadottechnicalfellowship.notion.s
 
 *Previous updates:* [1](https://matrix.to/#/!wBOJlzaOULZOALhaRh:polkadot.io/$Ib5gDsuCOUqJLmkdBVox6tmWECTv-YfUgXlYPKL0_L8?via=polkadot.io&via=matrix.org&via=parity.io)
 
+2026-06-30 07:58 shimonchick: > <@anaelleltd:matrix.org> **JAM Prize Fellowship evaluations - Update 2**
+> 
+> 24/25 teams have successfully passed all M1 conformance tests and obtained their attestations. We are currently working on scheduling interviews for Priority group 1 from mid-July 2026 onwards. 
+> 
+> The purpose of the Fellowship interview is to get a feel for the expertise of the developer claiming the prize. 
+> This is in accordance with [JAM Prize rules #12 and #13](https://jam.web3.foundation/rules): 
+> *”An interview may be requested after submission to ensure team members are the legitimate authors of the code. This precludes the use of generative AI. The interview will seek to ensure the individual has definitive expertise on both the Graypaper and their own codebase. INABILITY TO PROVE THIS EXPERTISE MAY RESULT IN A REDUCED PRIZE OR FULL DISQUALIFICATION.”*
+> *”Following the accepted completion of each milestone, teams may nominate one Fellowship candidate/member to be promoted directly to rank III and (optionally) a second candidate/member to rank II (more information about the ranks can be found on the Polkadot Fellowship Manifesto).”* 
+> 
+> It is also noted in “The Paths to Implementation” that: *“[...] One developer may be promoted to the rank commensurate with their code and protocol contributions regardless of regular time requirements. The promotion should be in line with regular interpretation of the Manifesto except for the time requirements (which are disregarded). The maximum rank to be attained in this way shall be III Dan (Fellow).”*
+> 
+> At M1, the Fellowship interview will only involve the team member nominated as a candidate for promotion to Rank 3. No other team members will be allowed to participate in this interview.
+> 
+> Interviewees will need to demonstrate Graypaper literacy. They should have their JAM repo ready, and it is expected that they will know the correlation of their repo to the Graypaper better than the author of the Graypaper could work out himself. 
+> 
+> Ahead of Fellowship interviews, teams will be asked to:
+> 1) Nominate a team member as candidate for promotion to Rank 3
+> 2) Ensure that their JAM repo is ready for presentation to the author of the Graypaper
+> 
+> We will keep updating the [tracker](https://polkadottechnicalfellowship.notion.site/2ef96f88d0a78051b94ef4a6d6c9be8c?v=2ef96f88d0a78036b33a000c2cb9a0b1) for JAM Prize evaluations as further information about interviews becomes available, so that teams know where they stand in the overall process.
+> 
+> *Previous updates:* [1](https://matrix.to/#/!wBOJlzaOULZOALhaRh:polkadot.io/$Ib5gDsuCOUqJLmkdBVox6tmWECTv-YfUgXlYPKL0_L8?via=polkadot.io&via=matrix.org&via=parity.io)
+> 
+
+The imposter syndrome hits me knowing Gav would ask me on GP 😬
+2026-06-30 16:51 danicuki: Thank you for the update.
+
+One point I think needs clarification is the relationship between the Fellowship promotion interview and the prize eligibility / authorship verification.
+
+If the interview is only about evaluating the nominated Rank 3 candidate for Fellowship promotion, then it makes sense that only that person is interviewed.
+
+But if the interview is also being used to verify team authorship, no-AI compliance, and prize eligibility, then limiting it to a single team member seems problematic.
+
+JAM implementations are team efforts. Different contributors may have deep expertise in different parts of the codebase: PVM, STF, networking, block import, testing, architecture, etc. Expecting one nominated person to demonstrate definitive expertise over the entire implementation may not reflect how the implementation was actually built.
+
+The quoted rule says the interview may be requested “to ensure team members are the legitimate authors of the code.” That sounds like a team-level authorship check, not only an individual Fellowship promotion check.
+
+Could you clarify whether the M1 interview outcome affects only the nominated candidate’s Fellowship promotion, or whether it may also affect the team’s prize eligibility?
+
+If it can affect prize eligibility, I think teams should be allowed to have the relevant core contributors present, or at least have a separate process where specific contributors can answer questions about the parts of the implementation they authored.
+2026-06-30 16:59 bkchr: These interviews are about the prize eligibility. 
+2026-06-30 17:59 danicuki: > <@bkchr:parity.io> These interviews are about the prize eligibility. 
+
+Then why only one team member is allowed? 
+2026-06-30 18:07 celadari: Or if only one team member allowed why not: prize eligibility + rank 3 promotion at the same time ?
+2026-06-30 19:35 clearloop: btw shall we present the repo in the interview? or we can just send the code to the reviewer (invite them to our repo) that we can better sync before it [edited]
+2026-07-01 00:03 anaelleltd: danicuki | Jamixir KwickBit - Charles-Edouard LADARI  Please note that the Fellowship interview for **JAM prize milestone evaluations** (external competition) is separate from the Fellowship interview for promotion to rank 3 (internal process). [edited]
+2026-07-01 00:06 anaelleltd: As per Rule 13, M1 needs to be formally accepted and ratified before promotion interviews can take place. 
+2026-07-01 00:07 anaelleltd: For the time being, the Fellowship is only dealing with JAM Prize interviews, which will only involve the nominees for rank 3 promotion.
+2026-07-01 00:10 anaelleltd: Tianyi | SpaceJam: I will forward more info about the format of the interview once I am made aware of the details.
