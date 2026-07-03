@@ -1,5 +1,5 @@
 # room: #jam:polkadot.io
-# exported: 2026-07-02 04:35 UTC
+# exported: 2026-07-03 04:29 UTC
 2024-04-20 02:08 johnjiao123: 
 2024-04-20 02:09 johnjiao123: 
 2024-05-30 21:48 nradko: Hey everyone,
@@ -13999,3 +13999,14 @@ If the interview is meant to assess the nominated candidate’s personal JAM kno
 
 On the other hand, if the interview can affect M1 acceptance, prize reduction, or disqualification under Rule 12, then it seems like a team-level authorship check. In that case, limiting the process to a single person is problematic, because different core contributors may have authored and deeply understood different parts of the implementation.
 
+2026-07-02 16:13 abutlabs: I'm working on a Lasair testnet + Jamswap App - it runs 6 JAM nodes (Lasair) and deploys a DEX service (prototype). To date, I don't think any other DEX is doing order book trading. JAM unlocks it. Would be cool to run these kind of prototype apps with a mixture of our clients. It'll even kickstart conversation around how JAMKB needs to work based in real-life examples. Here's the project if anyone wants to take a look - https://github.com/abutlabs/jamswap - dakkk | JamPy yeah I mentioned before that I have been using LLMs during development. I stated it upfront everywhere I could to be honest about it - For me, using LLMs unlocked being a part of this - I guess I'm on a different track than the other teams since I expect no guarantee of prize money. Looking forward to building cool stuff on JAM in any case [edited]
+  ↳ 2026-07-02 18:53 bkchr: Hey, interesting project!
+  ↳ 2026-07-02 18:54 bkchr: > The matching is deterministic (integer-only, no randomness), so every validator re-runs it and gets the byte-identical result
+
+Not every validator is running the `refine`. They are only running the `refine` of the work packages for the cores they are assigned to
+  ↳ 2026-07-02 23:31 abutlabs: Basti.await: thanks man, it means a lot to me to hear back from you.
+
+My idea behind this is that Jamswap could be public good of JAM - chain. We need real world services to start running realistic cross client test nets. What if JAM backs this one and there's a DEX on JAM that doesn't attempt to exploit high fees to make money? Polkadot has always been about the long game
+
+Collective effort on making certain esstial services well done / using those same servises to test the consensus of all our clients? very cool [edited]
+2026-07-02 23:36 abutlabs: 
