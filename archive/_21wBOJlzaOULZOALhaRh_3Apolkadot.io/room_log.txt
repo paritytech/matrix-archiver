@@ -1,5 +1,5 @@
 # room: #jam:polkadot.io
-# exported: 2026-07-03 04:29 UTC
+# exported: 2026-07-04 04:25 UTC
 2024-04-20 02:08 johnjiao123: 
 2024-04-20 02:09 johnjiao123: 
 2024-05-30 21:48 nradko: Hey everyone,
@@ -14009,4 +14009,7 @@ Not every validator is running the `refine`. They are only running the `refine` 
 My idea behind this is that Jamswap could be public good of JAM - chain. We need real world services to start running realistic cross client test nets. What if JAM backs this one and there's a DEX on JAM that doesn't attempt to exploit high fees to make money? Polkadot has always been about the long game
 
 Collective effort on making certain esstial services well done / using those same servises to test the consensus of all our clients? very cool [edited]
+  ↳ 2026-07-03 06:55 bkchr: But if every validator would run this, they could not be running other services. Can you not build this as a normal service?
+  ↳ 2026-07-03 15:14 abutlabs: Good catch — the docs are updated. Every validator was never meant to run refine: each validator only stores the service's state and re-executes accumulate (settlement) on block import — refine just runs on the core's 3 assigned guarantors - The repo is less than a week old, so there's obviously still a lot to think through. This will run as a normal service though
+  ↳ 2026-07-03 18:08 bkchr: Okay good 👍 
 2026-07-02 23:36 abutlabs: 
