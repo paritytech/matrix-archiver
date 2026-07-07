@@ -1,5 +1,5 @@
 # room: #graypaper:polkadot.io
-# exported: 2026-07-06 04:40 UTC
+# exported: 2026-07-07 04:33 UTC
 2024-04-17 20:29 syed: https://matrix.to/#/!hyzRkDqDthePbodYFz:parity.io/$f_DMsIEcDXZegw6Sabnehzc-LrdDQkmq5MbxDDyoZxY?via=parity.io&via=web3.foundation
 
 2024-04-17 20:29 syed: 
@@ -7209,3 +7209,4 @@ v0.8.1 will see additional changes to the PVM and especially its paging model. U
 2026-06-10 14:23 dakkk: image.png
 2026-06-10 14:25 jan: To make the gas costs cheaper for short basic blocks. Real CPUs work across basic blocks, our gas cost model can't, so this is to account for that. We still need to verify whether that's safe, but for now I've set it to 3 semi-arbitrarily. If it ends up being unsafe this will be changed/removed. (Every numeric value in the gas cost model is still subject to change.) [edited]
 2026-06-10 14:29 dakkk: got it (y) 
+2026-07-06 21:03 bkchr: https://graypaper.fluffylabs.dev/#/07f041d/11a001111002?v=0.8.0 why are we including the length of the key in the storage costs? As the key is hashed before it is put into the trie. So, we could just require a payment of 32 bytes instead of the full key length?
