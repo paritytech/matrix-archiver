@@ -1,5 +1,5 @@
 # room: #graypaper:polkadot.io
-# exported: 2026-07-10 04:33 UTC
+# exported: 2026-07-11 04:16 UTC
 2024-04-17 20:29 syed: https://matrix.to/#/!hyzRkDqDthePbodYFz:parity.io/$f_DMsIEcDXZegw6Sabnehzc-LrdDQkmq5MbxDDyoZxY?via=parity.io&via=web3.foundation
 
 2024-04-17 20:29 syed: 
@@ -7234,3 +7234,10 @@ So probably just stored by some kind of archive nodes.
 > So probably just stored by some kind of archive nodes.
 
 But state economics are never about archive nodes.
+2026-07-10 11:20 gav: The reality is that *as an ecosystem* JAM will be hampered by keys of large size becoming normalised. [edited]
+2026-07-10 11:21 gav: The cost this this diversion from optimal protocol economics introduces to services is pretty insignificant (and conceptually sensible), yet the upside *for the ecosystem* is potentially quite great.  [edited]
+2026-07-10 11:22 gav: So while it’s fair to say that the protocol itself would be sound without this cost, it’s still not necessarily sensible to remove it. 
+2026-07-10 11:23 gav: And I’ve noticed over the last ten or so years that being maxi and myopic about minimising costs at the protocol level doesn’t generally lead to great outcomes. It’s a form of early optimisation, which as we all know, is the root of all evil:) [edited]
+2026-07-10 11:26 gav: Are there any specific use-cases that you think this would destroy if left as-is?
+2026-07-10 11:26 gav: (Because I think it could limit how easy it is to ensure automated service destruction by elevating the potential costs of archive nodes, thus needing more complex protocols and economics to deliver the same service) [edited]
+2026-07-10 11:28 bkchr: No. I mean generally I was just wondering :D I was probably too bound to my way how storage keys are produced. Probably fine to optimize to make the key smaller and benefit of this 
