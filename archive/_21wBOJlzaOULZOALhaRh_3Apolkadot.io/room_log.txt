@@ -1,5 +1,5 @@
 # room: #jam:polkadot.io
-# exported: 2026-07-15 04:14 UTC
+# exported: 2026-07-16 04:15 UTC
 2024-04-20 02:08 johnjiao123: 
 2024-04-20 02:09 johnjiao123: 
 2024-05-30 21:48 nradko: Hey everyone,
@@ -14015,4 +14015,5 @@ Collective effort on making certain esstial services well done / using those sam
 2026-07-02 23:36 abutlabs: 
 2026-07-04 07:33 mommy2508: Is there a date for the web 3 summit videos ? 
 2026-07-04 21:09 shimonchick: Hey, am I understanding correctly, that fellowship salaries are paid from the treasury, which currently is about 30 something million worth of DOT. With current churn being ~3m for salaries and (assuming all 25 teams get rank 3) another 2m, there is headroom for ~5 years and then polkadot treasury is depleted? (Assuming no other grants, and we don't have another token by then)?
-2026-07-14 22:45 abutlabs: Is there a fuzzer for authoring JAM blocks coming soon? I've been running a testnet with JAMswap deployed to 3 Polkajam nodes & 3 Lasair nodes authoring, rotating and importing blocks. Getting close to it working as expected  via the Specs and pretty F'ing excited!  [edited]
+2026-07-14 22:45 abutlabs: Is there a fuzzer for authoring JAM blocks coming soon? I've been running a testnet with JAMswap deployed to 3 Polkajam nodes & 3 Lasair nodes authoring, rotating and importing blocks. Getting close to it working as expected  via the Specs and pretty excited!  [edited]
+  ↳ 2026-07-15 20:01 abutlabs: Anything concrete yet on BEEFY signature (beyond graypaper #205)?
