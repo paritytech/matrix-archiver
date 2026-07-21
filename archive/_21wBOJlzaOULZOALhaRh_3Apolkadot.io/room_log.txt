@@ -1,5 +1,5 @@
 # room: #jam:polkadot.io
-# exported: 2026-07-20 04:27 UTC
+# exported: 2026-07-21 04:15 UTC
 2024-04-20 02:08 johnjiao123: 
 2024-04-20 02:09 johnjiao123: 
 2024-05-30 21:48 nradko: Hey everyone,
@@ -14019,3 +14019,5 @@ Collective effort on making certain esstial services well done / using those sam
   ↳ 2026-07-15 20:01 abutlabs: Anything concrete yet on BEEFY signature (beyond graypaper #205)?
   ↳ 2026-07-16 12:04 dave: If you mean the networking spec for this not yet
 2026-07-18 17:12 dakkk: Talk from Gavin at web3 summit 2026: https://www.youtube.com/watch?v=0dqpx2kKdyA
+2026-07-20 06:43 ascriv: hi, @[Anaelle LTD | Technical Fellowship Secretary] can you share the current timeline for the priority group interviews to be started/completed?
+2026-07-20 10:52 anaelleltd: There is no update to share at the moment. Scheduling is still WIP from what was communicated to me. 
