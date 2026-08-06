@@ -1,5 +1,5 @@
 # room: #jam:polkadot.io
-# exported: 2026-08-05 04:14 UTC
+# exported: 2026-08-06 04:14 UTC
 2024-04-20 02:08 johnjiao123: 
 2024-04-20 02:09 johnjiao123: 
 2024-05-30 21:48 nradko: Hey everyone,
@@ -14029,3 +14029,33 @@ Collective effort on making certain esstial services well done / using those sam
 2026-08-03 19:47 mommy2508: We deserve an explanation 
 2026-08-03 21:25 lobis: 
 2026-08-04 02:01 ewaddicor: Why are there no updates in here, when do M2 submissions begin?
+2026-08-05 12:15 shimonchick: Is the project alive?
+2026-08-05 12:18 dave: Yes the project is alive, not sure what the status is with submissions
+2026-08-05 12:20 jan: Yes. Alive and kicking. Internally we're actually increasing the amount of resources allocated to JAM (more people working on JAM related things, etc.). Unfortunately I don't have visibility wrt to what's happening with the submissions, but I can try to ping people/ask around. (No promises though.)
+2026-08-05 12:22 shimonchick: Would do wonders for us implementers to have some visibility. From outside perspective seems like months without any announcement/updates to GP
+2026-08-05 12:24 dave: Re the GP, we're working on the changes for 0.9 now. This includes the final pieces of the gas model. The repo is public and you can see the PRs we're working on here: https://github.com/gavofyork/graypaper/pulls
+2026-08-05 12:25 jan: If people are interested in GP changes, at very least for when it comes to the PVM related parts, I'd be happy to write up a quick summary/overview of what's happening/what's going to happen/what's the roadmap.
+2026-08-05 12:26 dave: Re prize submissions I have prodded some people, hopefully that will lead to an update getting posted here. I totally understand the frustration at the lack of updates/progress on that front, I would love to see these prizes go out
+2026-08-05 12:32 shimonchick: Community calls/ office open hour would do wonders here for us to understand what is going on without constantly polling and to b more involved with GP changes
+2026-08-05 12:35 jan: Well, we used to have those JAM implementers meetings/calls in the past; if someone's interested in organizing one I'd be happy to join and talk about stuff if people want to listen. [edited]
+2026-08-05 12:43 ycc3741: Could we please get a concrete update on when the interview schedule will be finalised?
+
+The expected timeline has already moved from June to July, and we're now in August without any definitive information. While I understand that delays can happen, the prolonged uncertainty has made it increasingly difficult to plan around the interview process.
+
+If the interview dates still cannot be confirmed, could you at least provide an estimated date by which the schedule will be finalised? 
+Having a clear expectation would be very appreciated.
+2026-08-05 13:04 xlchen: who is the right person to ping for interview and other JAM prize question? if there is no one responsible for public communication, we need someone to take this role
+2026-08-05 13:09 ycc3741: Agree. There needs to be a clear point of contact for interview communication. 
+We've been redirected multiple times without anyone being able to provide a definitive update.
+
+It seems Anaelle is currently traveling. 
+If that's the case, should we expect any updates before she returns, or only after she's back?
+2026-08-05 13:34 bkchr: > <@xlchen:matrix.org> who is the right person to ping for interview and other JAM prize question? if there is no one responsible for public communication, we need someone to take this role
+
+@[Anaelle LTD | Technical Fellowship Secretary - Travelling 23/07-18/08] is the person taking care of the interview process. I don't know her latest state, but I would assume scheduling conflicts. However, I know that there is even with her being away some movement on the interview front. 
+2026-08-05 14:10 emielsebastiaan: Over two weeks ago my team was informed that our interview could take place in the week of August 3 (this week). We confirmed our availability and cleared our schedules. Unfortunately we are still waiting to hear anything. So if there is any scheduling conflict I suppose it is on the side of Parity/Fellowship… 🤷🏿 
+2026-08-05 14:23 emielsebastiaan: > <@dave:parity.io> Re prize submissions I have prodded some people, hopefully that will lead to an update getting posted here. I totally understand the frustration at the lack of updates/progress on that front, I would love to see these prizes go out
+
+For the JAM Prize M1 payout; it should not be too hard to assess if our software (which has already been proven conformant) is an original work (ie built without AI). Which for the record it is…
+2026-08-05 14:30 jaymansfield: Hey Anaelle, quick question. I see 3 projects in a priority group 0 now on the tracker. What was the criteria for this new first group?
+2026-08-05 14:37 emielsebastiaan: We were informed that priority group 0 are “well known actors” that could “assist in evaluation of the rest”. Other than that I have no idea what this means or what would be expected.
