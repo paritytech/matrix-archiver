@@ -1,5 +1,5 @@
 # room: #jam:polkadot.io
-# exported: 2026-08-06 04:14 UTC
+# exported: 2026-08-07 04:05 UTC
 2024-04-20 02:08 johnjiao123: 
 2024-04-20 02:09 johnjiao123: 
 2024-05-30 21:48 nradko: Hey everyone,
@@ -14059,3 +14059,25 @@ If that's the case, should we expect any updates before she returns, or only aft
 For the JAM Prize M1 payout; it should not be too hard to assess if our software (which has already been proven conformant) is an original work (ie built without AI). Which for the record it is…
 2026-08-05 14:30 jaymansfield: Hey Anaelle, quick question. I see 3 projects in a priority group 0 now on the tracker. What was the criteria for this new first group?
 2026-08-05 14:37 emielsebastiaan: We were informed that priority group 0 are “well known actors” that could “assist in evaluation of the rest”. Other than that I have no idea what this means or what would be expected.
+2026-08-06 16:24 sourabhniyogi: For the new [JAMKB](https://medium.com/polkadot-network/dot-dao-and-the-need-for-jamkb-a069e72e9728), can we get a GP issue on it and the interface shape (refine vs accumulate host functions) and which version this will land in?  
+
+What's the timeline for 0.8.x => 0.9.x => 1.0 for the rest of the year going into early 2027?
+
+We can do an online meetup this month or next if anyone (Jan?) volunteers to give an update --
+2026-08-06 16:29 dave: AIUI JAMKB is just the name for the token that already exists?
+2026-08-06 16:30 dave: ie What service balances are
+2026-08-06 16:31 dave: So there is no GP change for this
+2026-08-06 16:36 sourabhniyogi: How does refine/accumulate read/write to the service-specific authorized (?) JAMKB slice of the 21Mx1K=21GB?
+2026-08-06 16:38 dave: Refine cannot interact with JAMKB because it is stateless. In accumulate you can use the `transfer` host-call to send JAMKB to other services along with a memo
+2026-08-06 16:39 dave: At all times the balance of a service must be >= the required deposit for all the state that it has
+2026-08-06 16:39 dave: This is all covered in the GP and has not been changed for a long time, see the "Service Accounts" section in particular
+2026-08-06 16:46 sourabhniyogi: What motivated the _memory optimization_ that JAMKB is for to the tune of ~21GB exactly?  So no DOT transfers with `transfer` host-call at all? [edited]
+2026-08-06 16:50 dave: DOT will not exist at the lowest level of JAM no, but it will exist on eg the asset hub parachain running on the parachains service. It will probably be used to eg pay for coretime, and will presumably be exchangeable for JAMKB.
+2026-08-06 16:52 dave: 21GB is presumably because we want the JAM state to fit entirely in memory. At least eg PolkaJam is designed around that and gas costs will reflect this. I don't know the exact calculation that produced the number though...
+2026-08-06 17:08 ascriv: figured it’s not a coincidence that it reflects btc supply?
+2026-08-06 17:13 ascriv: same reason DOT cap is 100x btc supply, and the whole halving thing 
+2026-08-06 17:18 ascriv: > <@dave:parity.io> DOT will not exist at the lowest level of JAM no, but it will exist on eg the asset hub parachain running on the parachains service. It will probably be used to eg pay for coretime, and will presumably be exchangeable for JAMKB.
+
+I hope DOT will indeed be *required* to purchase coretime, because that’s the only real utility left for it in a post jam world aside from as a governance token 
+2026-08-06 17:30 ascriv: DOT for time/JAMKB for space. different tokens for different fundamental substrates. probably a good narrative there 
+2026-08-06 18:16 mommy2508: There are news about the stablecoin on Dot ? (pUSD) 
