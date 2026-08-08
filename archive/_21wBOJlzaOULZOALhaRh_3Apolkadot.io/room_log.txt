@@ -1,5 +1,5 @@
 # room: #jam:polkadot.io
-# exported: 2026-08-07 04:05 UTC
+# exported: 2026-08-08 03:41 UTC
 2024-04-20 02:08 johnjiao123: 
 2024-04-20 02:09 johnjiao123: 
 2024-05-30 21:48 nradko: Hey everyone,
@@ -14081,3 +14081,25 @@ We can do an online meetup this month or next if anyone (Jan?) volunteers to giv
 I hope DOT will indeed be *required* to purchase coretime, because that’s the only real utility left for it in a post jam world aside from as a governance token 
 2026-08-06 17:30 ascriv: DOT for time/JAMKB for space. different tokens for different fundamental substrates. probably a good narrative there 
 2026-08-06 18:16 mommy2508: There are news about the stablecoin on Dot ? (pUSD) 
+2026-08-07 10:16 mommy2508: Thank you for the answer 😅
+2026-08-07 11:35 bill: This has nothing to do with JAM. Maybe ask on the [Forum](https://forum.polkadot.network/) instead?
+2026-08-07 12:44 mommy2508: Ok sorry 
+2026-08-07 17:13 bkchr: Today with had the first M1 interview with @[arjan | PyJAMaz] and @Emiel. Let's join me congratulating them on passing this first interview! 🎉 🎉
+2026-08-07 17:13 bkchr: We will continue with the interviews on Monday. 
+2026-08-07 17:37 bkchr: The process of the interview is the following:
+
+All team members are allowed to join. However, it is expected that the one going for the rank 3 promotion in the fellowship is speaking the most. All other team members are still allowed to jump in.
+
+The interview starts with the candidate giving an high level introduction to JAM. How the protocol is working. Maybe comparing it to other protocols etc. After the high level introduction we want to see deep technical understanding from the candidate. We will ultimately pick two of the chapters from 3 to 13. Starting with an easy chapter, followed by talking about PVM and lastly we pick on of the more complicated chapters like e.g. Accumulation. After this we conclude JAM. 
+
+We expect from you deep understanding of the protocol and that you are able to freely talk about the graypaper. 
+
+Last but not least we go into the last missing pieces of the fellowship interview. Which mainly means we are talking about the philosophical aspects of what we are building. 
+2026-08-07 23:02 dakkk: Is the part of proving that we wrote the code separated from the rank3 promotion? Maybe someone could be interested in the price for the code he wrote, but not in the promotion [edited]
+2026-08-07 23:10 bkchr: > <@dakkk:matrix.org> Is the part of proving that you wrote the code separated from the rank3 promotion? Maybe someone could be interested in the price for the code he wrote, but not in the promotion
+
+Yeah for sure. You can do this. It would just mean that we skip the last part. 
+2026-08-07 23:25 dakkk: Ok but I don't understand why the code is never quoted in this process; one may know every part of the GP but never wrote a line of code and vice versa, one may wrote an implementation without understanding everything. The code and the commit history are not reviewed in this call? Like "explain why you wrote this" or "where and how do you implemented this part of the GP" [edited]
+2026-08-07 23:30 bkchr: If you have deep level understanding of the protocol, you for sure also know how to implement it. Also nowadays with Ai the bottleneck is not the writting of the code, but to be able to understand and reason about the protocol. For the first interview we actually looked over the code, but it wasn't that helpful. 
+2026-08-07 23:33 dakkk: Ok, understood 
+2026-08-07 23:51 dakkk: Btw one smart person can write the code using ai in one week and then study the gp for the interview. Showing that you took two year of coding for realizing it, it is still a valuable proof imo
