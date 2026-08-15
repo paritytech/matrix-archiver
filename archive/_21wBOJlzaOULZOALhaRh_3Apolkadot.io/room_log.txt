@@ -1,5 +1,5 @@
 # room: #jam:polkadot.io
-# exported: 2026-08-14 03:52 UTC
+# exported: 2026-08-15 03:23 UTC
 2024-04-20 02:08 johnjiao123: 
 2024-04-20 02:09 johnjiao123: 
 2024-05-30 21:48 nradko: Hey everyone,
@@ -14104,3 +14104,22 @@ Yeah for sure. You can do this. It would just mean that we skip the last part.
 2026-08-07 23:33 dakkk: Ok, understood 
 2026-08-07 23:51 dakkk: Btw one smart person can write the code using ai in one week and then study the gp for the interview. Showing that you took two year of coding for realizing it, it is still a valuable proof imo
 2026-08-08 09:09 bkchr: Yes. We are also aware. The process can also slightly change per candidate. For teams that are well known, we can be a little bit more flexible. 
+2026-08-14 17:34 bkchr: > <@bkchr:parity.io> The process of the interview is the following:
+> 
+> All team members are allowed to join. However, it is expected that the one going for the rank 3 promotion in the fellowship is speaking the most. All other team members are still allowed to jump in.
+> 
+> The interview starts with the candidate giving an high level introduction to JAM. How the protocol is working. Maybe comparing it to other protocols etc. After the high level introduction we want to see deep technical understanding from the candidate. We will ultimately pick two of the chapters from 3 to 13. Starting with an easy chapter, followed by talking about PVM and lastly we pick on of the more complicated chapters like e.g. Accumulation. After this we conclude JAM. 
+> 
+> We expect from you deep understanding of the protocol and that you are able to freely talk about the graypaper. 
+> 
+> Last but not least we go into the last missing pieces of the fellowship interview. Which mainly means we are talking about the philosophical aspects of what we are building. 
+
+BTW, please also ensure that you have read the fellowship manifesto. We are not asking specific questions about it, but you should be familiar to pass the test. It also mentions the requirements for rank 3
+2026-08-14 17:52 prematurata: Thanks for the update basti. Can you share a bit more about the appointment scheduling process? 
+2026-08-14 18:58 knight1205: Along with rank 3, there is an optional nomination allowed for rank 2. What will be the process of that? If anyone has any information on that.
+2026-08-14 22:35 bkchr: > <@prematurata:matrix.org> Thanks for the update basti. Can you share a bit more about the appointment scheduling process? 
+
+We are still going ahead with interviews. They are scheduled as time allows. Next one is Monday. 
+2026-08-14 22:37 bkchr: > <@knight1205:matrix.org> Along with rank 3, there is an optional nomination allowed for rank 2. What will be the process of that? If anyone has any information on that.
+
+Please mention it. As rank 2 is always just requires a written justification, I think we require the same here. Probably the candidate should be around for the interviews to judge the technical expertise 
