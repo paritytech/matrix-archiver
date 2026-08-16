@@ -1,5 +1,5 @@
 # room: #jam:polkadot.io
-# exported: 2026-08-15 03:23 UTC
+# exported: 2026-08-16 03:28 UTC
 2024-04-20 02:08 johnjiao123: 
 2024-04-20 02:09 johnjiao123: 
 2024-05-30 21:48 nradko: Hey everyone,
@@ -14123,3 +14123,5 @@ We are still going ahead with interviews. They are scheduled as time allows. Nex
 2026-08-14 22:37 bkchr: > <@knight1205:matrix.org> Along with rank 3, there is an optional nomination allowed for rank 2. What will be the process of that? If anyone has any information on that.
 
 Please mention it. As rank 2 is always just requires a written justification, I think we require the same here. Probably the candidate should be around for the interviews to judge the technical expertise 
+  ↳ 2026-08-15 04:32 clearloop: so if the fellowship interview is within the M1 interview?
+2026-08-15 17:54 shimonchick: As most high ranked technical fellows are also part of parity, is the interview going to be with parity members mostly?
