@@ -1,5 +1,5 @@
 # room: #jam:polkadot.io
-# exported: 2026-08-17 03:28 UTC
+# exported: 2026-08-18 03:26 UTC
 2024-04-20 02:08 johnjiao123: 
 2024-04-20 02:09 johnjiao123: 
 2024-05-30 21:48 nradko: Hey everyone,
@@ -14124,4 +14124,8 @@ We are still going ahead with interviews. They are scheduled as time allows. Nex
 
 Please mention it. As rank 2 is always just requires a written justification, I think we require the same here. Probably the candidate should be around for the interviews to judge the technical expertise 
   ↳ 2026-08-15 04:32 clearloop: so if the fellowship interview is within the M1 interview?
+  ↳ 2026-08-17 09:02 bkchr: I don't get your question
+  ↳ 2026-08-17 09:03 clearloop: I meant after the M1 interview,  if we need to wait for another interview to applicate the fellowship or the M1 interview is the one round for the two: M1 price + fellowship seats [edited]
+  ↳ 2026-08-17 10:12 bkchr: Ahh yeah, M1 includes both interviews 
 2026-08-15 17:54 shimonchick: As most high ranked technical fellows are also part of parity, is the interview going to be with parity members mostly?
+2026-08-17 09:01 bkchr: People who finished the initial rounds, can help with the later rounds 

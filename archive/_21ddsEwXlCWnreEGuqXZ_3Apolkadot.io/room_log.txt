@@ -1,5 +1,5 @@
 # room: #graypaper:polkadot.io
-# exported: 2026-08-17 03:28 UTC
+# exported: 2026-08-18 03:26 UTC
 2024-04-17 20:29 syed: https://matrix.to/#/!hyzRkDqDthePbodYFz:parity.io/$f_DMsIEcDXZegw6Sabnehzc-LrdDQkmq5MbxDDyoZxY?via=parity.io&via=web3.foundation
 
 2024-04-17 20:29 syed: 
@@ -7241,3 +7241,8 @@ But state economics are never about archive nodes.
 2026-07-10 11:26 gav: Are there any specific use-cases that you think this would destroy if left as-is?
 2026-07-10 11:26 gav: (Because I think it could limit how easy it is to ensure automated service destruction by elevating the potential costs of archive nodes, thus needing more complex protocols and economics to deliver the same service) [edited]
 2026-07-10 11:28 bkchr: No. I mean generally I was just wondering :D I was probably too bound to my way how storage keys are produced. Probably fine to optimize to make the key smaller and benefit of this 
+2026-08-17 15:32 bkchr: As far as I can see, `assign` requires that you always forward `80` authorizer hashes. This means if you for example only have `7` different hashes, it will require Coretime to always setup the queue correctly to loop over these. IMO it would make more sense to have this looping natively in JAM (as it already supports, but only for fixed 80 slots). 
+2026-08-17 15:44 dave: You mean allow some length other than 80?
+2026-08-17 15:45 bkchr: Basically a smaller length than 80
+2026-08-17 15:45 dave: Sounds reasonable to me
+2026-08-17 21:15 bkchr: https://github.com/gavofyork/graypaper/pull/553
