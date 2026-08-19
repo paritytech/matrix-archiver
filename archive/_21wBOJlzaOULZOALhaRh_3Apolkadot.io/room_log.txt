@@ -1,5 +1,5 @@
 # room: #jam:polkadot.io
-# exported: 2026-08-18 03:26 UTC
+# exported: 2026-08-19 03:27 UTC
 2024-04-20 02:08 johnjiao123: 
 2024-04-20 02:09 johnjiao123: 
 2024-05-30 21:48 nradko: Hey everyone,
@@ -14129,3 +14129,68 @@ Please mention it. As rank 2 is always just requires a written justification, I 
   ↳ 2026-08-17 10:12 bkchr: Ahh yeah, M1 includes both interviews 
 2026-08-15 17:54 shimonchick: As most high ranked technical fellows are also part of parity, is the interview going to be with parity members mostly?
 2026-08-17 09:01 bkchr: People who finished the initial rounds, can help with the later rounds 
+2026-08-18 10:58 celadari: Hello guys, a practical help question regarding a specific requirement:
+
+> Any team that is developing its implementation in private needs to provide a history of their github commits on-chain.
+> This means submitting a remark on-chain for each commit pushed on their repo.
+
+ Has any team a script to share that takes care of doing that for all commits ? (We have way too many commits, not feasible one by one)
+2026-08-18 11:01 dakkk: the point of commit history onchain is timestamping, if you put all the hashes now it is pointless I suppose
+2026-08-18 11:08 bkchr: Yeah 
+2026-08-18 11:08 clearloop: so if at this case, we have to public our repo?
+2026-08-18 11:09 bkchr: To check/verify someone needs to have access at least 
+  ↳ 2026-08-18 11:10 clearloop: if invite you or gav to the repo would work, I have already sent the invitations
+2026-08-18 11:09 clearloop: I just made a batch of our commit hashes here with timestamp in the message https://assethub-polkadot.subscan.io/extrinsic/19603303-3
+2026-08-18 11:21 celadari: submitting every commit on chain would not have been practical ... we have 277 commits, I don't know other teams how many commits they have...
+2026-08-18 11:21 celadari: Would be easier to give access to the repo to reviewers
+  ↳ 2026-08-18 11:23 alexandre.balde: You can do both: submit a remark with a small ordered sample of your 277 commits along with the timestamp for each, as well as give access. Whoever is given access can confirm.
+2026-08-18 11:25 bkchr: > <@celadari:matrix.org> submitting every commit on chain would not have been practical ... we have 277 commits, I don't know other teams how many commits they have...
+
+It was not about every commit. But seeing a timeline that is clear because your remark is timely bound by the Blockchain. 
+2026-08-18 11:26 bkchr: But I would not stress about it for people who have worked on this since some time now and are not unknown [edited]
+2026-08-18 11:29 shimonchick: There was remark commit github action that was shared here around early 2025
+2026-08-18 11:33 ycc3741: If our repositories are public, do we still need to submit the commit hashes on-chain?
+
+2026-08-18 11:35 bkchr: Just because you repo is public, it doesn't proof anything
+2026-08-18 11:35 prematurata: I guess only some of us were there back then
+2026-08-18 11:35 prematurata: I am not sure it answers properly but i do believe in here there was someone asking this 1y ago more or less and someone from parity i think said it was ok 
+2026-08-18 11:36 prematurata: But i don't remember the specifics 
+2026-08-18 11:36 ycc3741: We have several thousand commits in our repositories, so putting all of them on-chain seems a bit impractical.
+Do we need to put all of them on-chain, or is there another way we should handle this?
+
+We were a bit confused because Rule 16 seems to mention on-chain commit hashes specifically for code developed in private.
+
+2026-08-18 11:37 prematurata: I believe it was mentioned that gh has a way to fetch unforgeable timestampted data that could more or less prove that the history is genuine, but I dont remember who asked here 
+2026-08-18 11:37 bkchr: If that works, it is kind of fine 
+2026-08-18 11:37 bkchr: Again, you don't need all commits put out there
+2026-08-18 11:38 ycc3741: Got it. So which commits would we need to put on-chain, and what would be the recommended way to handle this for a repository with a long commit history?
+
+2026-08-18 11:38 prematurata: i just had a few of my commits in blockchain (you can see it's in notion) i think the idea was to prove that you worked on it at that time etc. SO every some number of commits (or when i felt like i committed a big feature) i had it committed on chain
+2026-08-18 11:40 vinsystems: > <@gav:polkadot.io> Fellowship will be looking for evidence that the team coded the software organically. That it’s not a port or AI adjusted version of some other team’s software. To this extent it’s important for the teams to demonstrate an organic development process. Regular, sensibly-sized commits are one way of doing this and we assume GitHub is reasonably corruption-resistant (git alone obviously isn’t). But if you don’t want to use GitHub then make sure you credibly timestamp the commits elsewhere such as on a public blockchain. 
+
+Gavin said this ☝️
+2026-08-18 11:41 emielsebastiaan: Timestamps of git commits can be spoofed even when published on GitHub. Timestamps of GitHub Pull requests and GitHub Releases cannot be spoofed. So that should be sufficiently able to provide public evidence on an organically developed code base. 
+2026-08-18 11:42 ycc3741: We have both the GitHub PRs and Releases preserved for our repositories. 
+In that case, would those be sufficient as public evidence of our organic development history, or do we still need to put anything on-chain?
+
+2026-08-18 11:44 prematurata: I believe, but don't take my words on it, that also gh ci actions are collectable via api and bring commit Shas with it along with the telemetry (start time etc)
+2026-08-18 11:44 bkchr: Now it would be any way too late for it. 
+2026-08-18 11:49 oliver.tale-yazdi: We remarked every master commit since inception of our repo to prove non-modified history with this: https://github.com/JamBrains/remark-commit 
+You can see the account here: https://collectives-polkadot.subscan.io/account/1jamyjYe97qPPtdeYVcUosPwc2Bv1Y6zNEMtzPW8a2z2abN   
+it goes back to 2024-06-18 [edited]
+2026-08-18 11:52 ycc3741: Just to make sure we understand the rules correctly: 
+Rule 14 mentions a clear Git history and publicly timestamped commits, 
+and Rule 15 says that timestamps may be provided by pushing code to GitHub on a timely basis. 
+Rule 16 mentions on-chain commit hashes specifically for code developed in private.
+
+Since our code was developed publicly on GitHub, with a clear Git history as well as PR and Release records, would these be sufficient evidence for the development history without additional on-chain timestamping? Or is there any other action you would recommend we take to provide sufficient evidence?
+
+
+2026-08-18 12:00 boymaas: I interpreted the code as development in "private," referring to teams who did not push it to any third party like Github. 
+
+In my case, I pushed to GitHub with pull requests, assuming the pull requests serve as timestamp proof since you cannot alter the time or date of a pull request on GitHub.
+2026-08-18 12:00 bkchr: Yeah if these timestamps can not be faked, I think it is fine
+2026-08-18 12:00 bkchr: In the end the idea is just to proof that you not just build everything yesterday
+2026-08-18 12:01 bkchr: Which is also generally important if we assume that you faked it
+2026-08-18 12:08 ycc3741: Got it, that makes sense. Thanks for clarifying!
+
