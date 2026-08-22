@@ -18,7 +18,7 @@ a:hover{color:#90caf9}
 em{font-style:italic}
 </style>
 <h1>#jam:polkadot.io</h1>
-<p><small>last updated 2026-08-21 03:30 UTC</small></p>
+<p><small>last updated 2026-08-22 03:24 UTC</small></p>
 <p><a href='room_log.txt'>⇩ plaintext</a> · <a href='../../'>⇦ all rooms</a></p>
 <hr>
 <div class='msg'><a class='ts' href='#$we4SYXTHwmKn094X9Zs_7mWUOoUVh4icvVdxD83RZfs'>#</a> <a class='ts' name='$we4SYXTHwmKn094X9Zs_7mWUOoUVh4icvVdxD83RZfs' href='https://matrix.to/#/!wBOJlzaOULZOALhaRh:polkadot.io/$we4SYXTHwmKn094X9Zs_7mWUOoUVh4icvVdxD83RZfs' target='_blank'>2024-04-20 02:08</a>&ensp;<span class='u' style='color:#d0709e'>johnjiao123</span>: </div>
@@ -14077,3 +14077,34 @@ In my case, I pushed to GitHub with pull requests, assuming the pull requests se
 <div class='msg'><a class='ts' href='#$hkKTIX-0VZye8AhiS-PFMJkiyfAXQCy5UurWFxtpvlQ'>#</a> <a class='ts' name='$hkKTIX-0VZye8AhiS-PFMJkiyfAXQCy5UurWFxtpvlQ' href='https://matrix.to/#/!wBOJlzaOULZOALhaRh:polkadot.io/$hkKTIX-0VZye8AhiS-PFMJkiyfAXQCy5UurWFxtpvlQ' target='_blank'>2026-08-18 12:01</a>&ensp;<span class='u' style='color:#cd6fc8'>bkchr</span>: Which is also generally important if we assume that you faked it</div>
 <div class='msg'><a class='ts' href='#$KAFxd1Dk6Spjd89S-R5WQseCyTS6RhVb6az8P0_qB8k'>#</a> <a class='ts' name='$KAFxd1Dk6Spjd89S-R5WQseCyTS6RhVb6az8P0_qB8k' href='https://matrix.to/#/!wBOJlzaOULZOALhaRh:polkadot.io/$KAFxd1Dk6Spjd89S-R5WQseCyTS6RhVb6az8P0_qB8k' target='_blank'>2026-08-18 12:08</a>&ensp;<span class='u' style='color:#817ecb'>ycc3741</span>: Got it, that makes sense. Thanks for clarifying!
 </div>
+<div class='msg'><a class='ts' href='#$ci2C5OEijxAJM9fsBR7GufT8qrZDgFKgy4yHt5JlKzE'>#</a> <a class='ts' name='$ci2C5OEijxAJM9fsBR7GufT8qrZDgFKgy4yHt5JlKzE' href='https://matrix.to/#/!wBOJlzaOULZOALhaRh:polkadot.io/$ci2C5OEijxAJM9fsBR7GufT8qrZDgFKgy4yHt5JlKzE' target='_blank'>2026-08-21 15:01</a>&ensp;<span class='u' style='color:#cd8957'>gav</span>: ## PSA: JAM Prize M1 Examination Interviews
+
+The purpose of the M1 interview is to give *you*, JAM implementation teams, a reasonable chance to satisfy our need to be confident that your team implemented the portions of the Gray Paper needed for M1 conformance, primarily the state-transition function. This is contained in chapters 3-13 inclusive, as well as relevant appendices. When we say &quot;your team implemented&quot; we mean in line with the JAM Prize rules, which implies that the Gray Paper was <em>read and comprehended</em> by <em>humans</em> (not AI) on the team and that comprehension was then utilized to create an implementation in an accepted language.
+
+The interview involves questions and subject-prompts devised to provide adequate opportunity for the team, through the members present, to show beyond a reasonable doubt that they understood the protocol sufficiently well to correctly and comprehensively implement it.
+
+Successful teams will approach the interview with this firmly in mind. They will field sufficient team members in order to demonstrate complete understanding of the concepts and logic contained in chapters 3-13. Teams are not required to know specific design considerations and rationale beyond what is written in the Gray Paper to pass, but such understanding will be taken into account for the Fellowship evaluation and overall pass grade. During examination, teams may refer to the Gray Paper, a translation of it, personal notes and/or their implementation.
+
+Teams are given up to 120 minutes to demonstrate comprehensive M1 knowledge which is not enough time to discuss all logic and hence (rather in line with JAM/Elves design) two sections one smaller and one larger are selected at random for examination. In addition to these two portions time is reserved for three others: 1, a discussion of JAM&#x27;s architecture; 2, the rationale for JAM&#x27;s design; and 3, the PVM or some other appendix.
+
+The examination is an expert evaluation (at least two members from the Gray Paper Editorial Board and at least two Rank V+ of the Fellowship with substantial JAM knowledge) of the breadth and depth of understanding of the team members present of JAM. All examiners present are invited to declare a grade for the team in each of the 5 interview portions. Consensus is reached between examiners for a final grade following the examination; unanimity is preferred but a majority verdict among expert examiners present is sufficient.
+
+There are 5 possible grades and each section is graded independently. There are:
+- <code>P</code> *Pass*: sufficient protocol expertise demonstrated to be confident that the team members present could reasonably have implemented an M1 JAM node. This does not imply sufficient technical expertise for Fellowship Rank III; this is a separate evaluation.
+- <code>M</code> *Pass with Merit*: excellent protocol knowledge. If demonstrated primarily by the team member who is candidate for Fellowship fast-track, then it almost certainly implies sufficient technical expertise.
+- <code>D</code> *Pass with Distinction*: apparently perfect protocol knowledge, along with depth of knowledge of design rationale and content beyond what is covered in the Gray Paper. This may be followed with an invitation to the Gray Paper Editorial Board.
+- <code>U</code> *Undecided/Incomplete*: insufficient protocol expertise demonstrated to be confident that the team members present could reasonably have implemented an M1 JAM node. Typically this is through showing a lack of knowledge of the logic in the Gray Paper which is required for an M1 implementation. Comprehension may be incomplete or entirely missing. **A lack of familiarity with any concepts or logic in sections 3-13 may result in this grade**. 
+- <code>F</code> *Failure*: little or no protocol expertise demonstrated.
+
+Generally if expert examiners agree on an <code>F</code> grade in any section, then the team will not pass.
+
+In the interests of transparency, the examinations henceforth will be made as public as possible. If teams and examiners present agree, then a full recording of the interview will be made and published by the head-examiner (approval by teams may be deferred until after the recording has happened). Regardless of this, discussion notes taken by at least one examiner and approved by all, will be published. All grading information including the sections selected and individual examiners grades, will be published, as well as basic information such as examiners and members present, the date/time and length. (I would hope no teams have any problem with at least the latter two affordances, but if a team does wish to ask for exemption from these then the request should be made to the Web3 Foundation&#x27;s e-mail account. Audio/video recording of the interview is entirely voluntary.)
+ <span class="edited">(edited)</span></div>
+<div class='msg'><a class='ts' href='#$Wc0gcrit-NXNBBM6yP10Xj5T6VEF_f4ek5zcz_404lA'>#</a> <a class='ts' name='$Wc0gcrit-NXNBBM6yP10Xj5T6VEF_f4ek5zcz_404lA' href='https://matrix.to/#/!wBOJlzaOULZOALhaRh:polkadot.io/$Wc0gcrit-NXNBBM6yP10Xj5T6VEF_f4ek5zcz_404lA' target='_blank'>2026-08-21 15:10</a>&ensp;<span class='u' style='color:#cd8957'>gav</span>: To maximise chances of success, teams are encouraged to:
+
+- re-familiarise themselves with (revise!) the Gray Paper chapters 3-13 - read and make notes - make yourself an expert;
+- re-read relevant non-GP JAM materials to better understand JAM&#x27;s design rationale and architecture;
+- re-familiarise themselves with their own implementation to help re-ignite any stale understanding;
+- field enough members at the interview to ensure complete coverage of the M1 portion of the Gray Paper;
+
+Just thrusting a fuzz-test-passing codebase in our direction is insufficient to claim the JAM prize. You must show that it is you who wrote it and that you did so through comprehension of the Gray Paper. **This is your time to shine** ☀️. (Re-examinations are possible but are prioritised below other teams and later milestones. Make the best of this chance!) <span class="edited">(edited)</span></div>

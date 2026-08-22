@@ -1,5 +1,5 @@
 # room: #jam:polkadot.io
-# exported: 2026-08-21 03:30 UTC
+# exported: 2026-08-22 03:24 UTC
 2024-04-20 02:08 johnjiao123: 
 2024-04-20 02:09 johnjiao123: 
 2024-05-30 21:48 nradko: Hey everyone,
@@ -14194,3 +14194,34 @@ In my case, I pushed to GitHub with pull requests, assuming the pull requests se
 2026-08-18 12:01 bkchr: Which is also generally important if we assume that you faked it
 2026-08-18 12:08 ycc3741: Got it, that makes sense. Thanks for clarifying!
 
+2026-08-21 15:01 gav: ## PSA: JAM Prize M1 Examination Interviews
+
+The purpose of the M1 interview is to give *you*, JAM implementation teams, a reasonable chance to satisfy our need to be confident that your team implemented the portions of the Gray Paper needed for M1 conformance, primarily the state-transition function. This is contained in chapters 3-13 inclusive, as well as relevant appendices. When we say "your team implemented" we mean in line with the JAM Prize rules, which implies that the Gray Paper was *read and comprehended* by *humans* (not AI) on the team and that comprehension was then utilized to create an implementation in an accepted language.
+
+The interview involves questions and subject-prompts devised to provide adequate opportunity for the team, through the members present, to show beyond a reasonable doubt that they understood the protocol sufficiently well to correctly and comprehensively implement it.
+
+Successful teams will approach the interview with this firmly in mind. They will field sufficient team members in order to demonstrate complete understanding of the concepts and logic contained in chapters 3-13. Teams are not required to know specific design considerations and rationale beyond what is written in the Gray Paper to pass, but such understanding will be taken into account for the Fellowship evaluation and overall pass grade. During examination, teams may refer to the Gray Paper, a translation of it, personal notes and/or their implementation.
+
+Teams are given up to 120 minutes to demonstrate comprehensive M1 knowledge which is not enough time to discuss all logic and hence (rather in line with JAM/Elves design) two sections one smaller and one larger are selected at random for examination. In addition to these two portions time is reserved for three others: 1, a discussion of JAM's architecture; 2, the rationale for JAM's design; and 3, the PVM or some other appendix.
+
+The examination is an expert evaluation (at least two members from the Gray Paper Editorial Board and at least two Rank V+ of the Fellowship with substantial JAM knowledge) of the breadth and depth of understanding of the team members present of JAM. All examiners present are invited to declare a grade for the team in each of the 5 interview portions. Consensus is reached between examiners for a final grade following the examination; unanimity is preferred but a majority verdict among expert examiners present is sufficient.
+
+There are 5 possible grades and each section is graded independently. There are:
+- `P` *Pass*: sufficient protocol expertise demonstrated to be confident that the team members present could reasonably have implemented an M1 JAM node. This does not imply sufficient technical expertise for Fellowship Rank III; this is a separate evaluation.
+- `M` *Pass with Merit*: excellent protocol knowledge. If demonstrated primarily by the team member who is candidate for Fellowship fast-track, then it almost certainly implies sufficient technical expertise.
+- `D` *Pass with Distinction*: apparently perfect protocol knowledge, along with depth of knowledge of design rationale and content beyond what is covered in the Gray Paper. This may be followed with an invitation to the Gray Paper Editorial Board.
+- `U` *Undecided/Incomplete*: insufficient protocol expertise demonstrated to be confident that the team members present could reasonably have implemented an M1 JAM node. Typically this is through showing a lack of knowledge of the logic in the Gray Paper which is required for an M1 implementation. Comprehension may be incomplete or entirely missing. **A lack of familiarity with any concepts or logic in sections 3-13 may result in this grade**. 
+- `F` *Failure*: little or no protocol expertise demonstrated.
+
+Generally if expert examiners agree on an `F` grade in any section, then the team will not pass.
+
+In the interests of transparency, the examinations henceforth will be made as public as possible. If teams and examiners present agree, then a full recording of the interview will be made and published by the head-examiner (approval by teams may be deferred until after the recording has happened). Regardless of this, discussion notes taken by at least one examiner and approved by all, will be published. All grading information including the sections selected and individual examiners grades, will be published, as well as basic information such as examiners and members present, the date/time and length. (I would hope no teams have any problem with at least the latter two affordances, but if a team does wish to ask for exemption from these then the request should be made to the Web3 Foundation's e-mail account. Audio/video recording of the interview is entirely voluntary.)
+ [edited]
+2026-08-21 15:10 gav: To maximise chances of success, teams are encouraged to:
+
+- re-familiarise themselves with (revise!) the Gray Paper chapters 3-13 - read and make notes - make yourself an expert;
+- re-read relevant non-GP JAM materials to better understand JAM's design rationale and architecture;
+- re-familiarise themselves with their own implementation to help re-ignite any stale understanding;
+- field enough members at the interview to ensure complete coverage of the M1 portion of the Gray Paper;
+
+Just thrusting a fuzz-test-passing codebase in our direction is insufficient to claim the JAM prize. You must show that it is you who wrote it and that you did so through comprehension of the Gray Paper. **This is your time to shine** ☀️. (Re-examinations are possible but are prioritised below other teams and later milestones. Make the best of this chance!) [edited]
