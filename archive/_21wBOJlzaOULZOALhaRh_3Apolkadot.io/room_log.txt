@@ -1,5 +1,5 @@
 # room: #jam:polkadot.io
-# exported: 2026-08-26 03:31 UTC
+# exported: 2026-08-27 04:59 UTC
 2024-04-20 02:08 johnjiao123: 
 2024-04-20 02:09 johnjiao123: 
 2024-05-30 21:48 nradko: Hey everyone,
@@ -14225,3 +14225,38 @@ In the interests of transparency, the examinations henceforth will be made as pu
 - field enough members at the interview to ensure complete coverage of the M1 portion of the Gray Paper;
 
 Just thrusting a fuzz-test-passing codebase in our direction is insufficient to claim the JAM prize. You must show that it is you who wrote it and that you did so through comprehension of the Gray Paper. **This is your time to shine** ☀️. (Re-examinations are possible but are prioritised below other teams and later milestones. Make the best of this chance!) [edited]
+2026-08-26 09:59 anaelleltd: **JAM Prize Fellowship evaluations - Update 3**
+
+A full brief for JAM Prize M1 evaluations has been published by the author of GP and can be found [here](https://matrix.to/#/!wBOJlzaOULZOALhaRh:polkadot.io/$ci2C5OEijxAJM9fsBR7GufT8qrZDgFKgy4yHt5JlKzE?via=polkadot.io&via=matrix.org&via=parity.io). 
+More specific guidance for teams is also available [here](https://matrix.to/#/!wBOJlzaOULZOALhaRh:polkadot.io/$Wc0gcrit-NXNBBM6yP10Xj5T6VEF_f4ek5zcz_404lA?via=polkadot.io&via=matrix.org&via=parity.io).
+
+The first round of M1 interviews began w/c 3rd August 2026, following some adjustments in the Priority groups. 
+6 teams have passed their M1 evaluations and 3 nominees have been approved to join the Fellowship at Rank 3. The Fellowship will be voting to accept M1 submissions from successful teams so that they can receive their prize from W3F.
+
+To increase the number of available interviewers for remaining teams, JAM implementers that have been formally accepted on-chain will be invited to participate in the evaluation process alongside Fellows.
+
+We will keep updating the [tracker](https://polkadottechnicalfellowship.notion.site/2ef96f88d0a78051b94ef4a6d6c9be8c?v=2ef96f88d0a78036b33a000c2cb9a0b1) for JAM Prize evaluations as further information about schedules becomes available, so that teams know where they stand in the overall process.
+
+*Previous updates:* [1](https://matrix.to/#/!wBOJlzaOULZOALhaRh:polkadot.io/$Ib5gDsuCOUqJLmkdBVox6tmWECTv-YfUgXlYPKL0_L8?via=polkadot.io&via=matrix.org&via=parity.io) | [2](https://matrix.to/#/!wBOJlzaOULZOALhaRh:polkadot.io/$qnUT2eEfXfSR2dsvxVBkGGnR34so5W9Fqvgi62N7TzQ?via=polkadot.io&via=matrix.org&via=parity.io)
+
+2026-08-26 10:46 celadari: Thank you, Anaelle, for the update.
+
+One important question: will feedback be provided on why, among the six teams that passed the M1 evaluation, only three nominees were approved to join the Fellowship at Rank 3?
+
+In particular, it would be very helpful for the other three teams to understand the reasons their nominees were not approved.
+2026-08-26 11:22 bkchr: I think we provided feedback to anyone who did not directly pass. Sometimes it is just lack of time. 
+2026-08-26 11:23 bkchr: General feedback as already provided, make yourself familiar with the requirements for rank 3 in the manifesto 
+  ↳ 2026-08-26 12:36 celadari: Will do
+2026-08-26 12:32 jan: As Basti said, AFAIK, it was mostly either lack of time, *or* people have not actually read the manifesto so the Fellowship interview had to be deferred. You should not read  too much into "why other teams were not immediately approved", because it doesn't necessarily mean that those who were not approved actually failed.
+  ↳ 2026-08-26 12:36 celadari: Thank you for the precision
+2026-08-26 12:39 jan: If you want to maximize your chance of success then make sure to thoroughly read the manifesto and think about its implications (i.e. not only what is explicitly written it in, but also _why_). And of course, do what Gav has already recommended.
+
+In general, the interview itself is not meant to be super hard, and we're not looking to catch people on technicalities and obscure minutiae. As long as you're well versed in the JAM protocol, you're the actual author of your JAM implementation, you can reasonably show that you did in fact write it, and you answer the questions on topic, then I don't think you have much to worry about. So don't stress too much about it, and just give it your best shot and you'll be fine. [edited]
+2026-08-26 12:43 jan: Remember: we **want** people to pass, get their JAM prize, and continue with the milestones!
+2026-08-26 15:20 clearloop: I'm here to open source all my work around JAM including https://github.com/spacejamapp/spacejam given that I didn't pass the interview 😭 most of the work were finished at early 2025 that I don't have good memories, also busy with new projects for making a life these days ))
+
+it is totally reasonable to expect implementors have a deep understanding of graypaper, I'll try to do my best at the next time!
+
+would be surprised code written by me can be treated as AI-written anyway, before writing the first line of spacejam, I wrote done that this could be my last work or the new journal, it's been 6 years working in the ecosystem, spending all my salaries buying DOT because I trust, so whatever the outcome is, I'll have an answer very soon! and thanks for reminding me that I don't need to prove myself to anybody!
+
+good luck everyone! [edited]
