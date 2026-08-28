@@ -1,5 +1,5 @@
 # room: #jam:polkadot.io
-# exported: 2026-08-27 04:59 UTC
+# exported: 2026-08-28 05:50 UTC
 2024-04-20 02:08 johnjiao123: 
 2024-04-20 02:09 johnjiao123: 
 2024-05-30 21:48 nradko: Hey everyone,
@@ -14260,3 +14260,4 @@ it is totally reasonable to expect implementors have a deep understanding of gra
 would be surprised code written by me can be treated as AI-written anyway, before writing the first line of spacejam, I wrote done that this could be my last work or the new journal, it's been 6 years working in the ecosystem, spending all my salaries buying DOT because I trust, so whatever the outcome is, I'll have an answer very soon! and thanks for reminding me that I don't need to prove myself to anybody!
 
 good luck everyone! [edited]
+2026-08-27 12:30 emielsebastiaan: I welcome other JAM implementers to chime in on the forum on a renewed and somewhat less technical and more political discussion about Kusama's future on JAM: https://forum.polkadot.network/t/kusama-futures-in-the-jam-era/18482
