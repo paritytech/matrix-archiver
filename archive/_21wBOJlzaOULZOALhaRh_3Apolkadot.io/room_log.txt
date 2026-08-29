@@ -1,5 +1,5 @@
 # room: #jam:polkadot.io
-# exported: 2026-08-28 05:50 UTC
+# exported: 2026-08-29 03:23 UTC
 2024-04-20 02:08 johnjiao123: 
 2024-04-20 02:09 johnjiao123: 
 2024-05-30 21:48 nradko: Hey everyone,
@@ -14261,3 +14261,6 @@ would be surprised code written by me can be treated as AI-written anyway, befor
 
 good luck everyone! [edited]
 2026-08-27 12:30 emielsebastiaan: I welcome other JAM implementers to chime in on the forum on a renewed and somewhat less technical and more political discussion about Kusama's future on JAM: https://forum.polkadot.network/t/kusama-futures-in-the-jam-era/18482
+2026-08-28 07:34 shimonchick: https://medium.com/polkadot-network/dot-daoism-under-jam-an-island-story-efe0d02ee084
+  ↳ 2026-08-28 07:36 shimonchick: Are there any forum posts/timeline/talks from DOT DAO on when corevm would switch to JAM?
+  ↳ 2026-08-28 07:37 bkchr: CoreVM  is Jam only. 
