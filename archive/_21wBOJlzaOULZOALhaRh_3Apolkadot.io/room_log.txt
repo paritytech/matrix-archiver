@@ -1,5 +1,5 @@
 # room: #jam:polkadot.io
-# exported: 2026-09-01 03:29 UTC
+# exported: 2026-09-02 03:28 UTC
 2024-04-20 02:08 johnjiao123: 
 2024-04-20 02:09 johnjiao123: 
 2024-05-30 21:48 nradko: Hey everyone,
@@ -14264,3 +14264,4 @@ good luck everyone! [edited]
 2026-08-28 07:34 shimonchick: https://medium.com/polkadot-network/dot-daoism-under-jam-an-island-story-efe0d02ee084
   ↳ 2026-08-28 07:36 shimonchick: Are there any forum posts/timeline/talks from DOT DAO on when corevm would switch to JAM?
   ↳ 2026-08-28 07:37 bkchr: CoreVM  is Jam only. 
+2026-09-01 09:02 bill: Hi all - just wanted to let you know that we're working on getting the JAM M1 milestone payouts ASAP for the four teams who have already passed.
