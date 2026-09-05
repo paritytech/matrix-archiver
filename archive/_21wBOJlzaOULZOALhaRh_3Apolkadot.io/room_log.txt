@@ -1,5 +1,5 @@
 # room: #jam:polkadot.io
-# exported: 2026-09-04 03:26 UTC
+# exported: 2026-09-05 03:25 UTC
 2024-04-20 02:08 johnjiao123: 
 2024-04-20 02:09 johnjiao123: 
 2024-05-30 21:48 nradko: Hey everyone,
@@ -14265,3 +14265,16 @@ good luck everyone! [edited]
   ↳ 2026-08-28 07:36 shimonchick: Are there any forum posts/timeline/talks from DOT DAO on when corevm would switch to JAM?
   ↳ 2026-08-28 07:37 bkchr: CoreVM  is Jam only. 
 2026-09-01 09:02 bill: Hi all - just wanted to let you know that we're working on getting the JAM M1 milestone payouts ASAP for the four teams who have already passed.
+2026-09-04 15:47 bill: 
+Hi all -
+
+Web3 Foundation is ready to process payouts for successful M1 JAM Prize recipients.
+
+Please fill out the form [here](https://docs.google.com/forms/d/e/1FAIpQLSc8osoSf38irzTgn6fI9IC6xYXNq7KOB7P22nhB6q0881cJFg/viewform). The form asks you to include an invoice in PDF format  - a template is  available [here](https://docs.google.com/spreadsheets/d/1ZvX-STD2YbdhKidUTeAfiCxh8F0vaI3z/edit?gid=1882672248#gid=1882672248)
+
+Note 1 - Ordinarily payouts are on 30-day payment terms. I'll work to get them out ASAP but please keep in mind that they won't be an immediate.
+
+Note 2 - the Rules of the Jam Prize state that milestone payouts will not be paid before the Fellowship ratifies version 1.0 of the JAM protocol. We are waiving this requirement, but this should not be taken as an indication that any other requirements in the Rules are or will be waived.
+  ↳ 2026-09-04 15:52 shimonchick: google sheet requires permissions to access
+2026-09-04 15:47 bill: Feel free to let me know (here or via DM) if you have any questions.
+  ↳ 2026-09-04 16:12 alexandre.balde: Question: is the waiving of the ratification rule temporary, or will it apply to any teams which complete the first milestone before the Fellowship ratifies version 1.0?
