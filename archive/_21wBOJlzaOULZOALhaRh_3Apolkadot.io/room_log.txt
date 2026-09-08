@@ -1,5 +1,5 @@
 # room: #jam:polkadot.io
-# exported: 2026-09-07 03:29 UTC
+# exported: 2026-09-08 03:26 UTC
 2024-04-20 02:08 johnjiao123: 
 2024-04-20 02:09 johnjiao123: 
 2024-05-30 21:48 nradko: Hey everyone,
@@ -14265,16 +14265,33 @@ good luck everyone! [edited]
   ↳ 2026-08-28 07:36 shimonchick: Are there any forum posts/timeline/talks from DOT DAO on when corevm would switch to JAM?
   ↳ 2026-08-28 07:37 bkchr: CoreVM  is Jam only. 
 2026-09-01 09:02 bill: Hi all - just wanted to let you know that we're working on getting the JAM M1 milestone payouts ASAP for the four teams who have already passed.
-2026-09-04 15:47 bill: 
-Hi all -
+2026-09-04 15:47 bill: Hi all -
 
 Web3 Foundation is ready to process payouts for successful M1 JAM Prize recipients.
 
 Please fill out the form [here](https://docs.google.com/forms/d/e/1FAIpQLSc8osoSf38irzTgn6fI9IC6xYXNq7KOB7P22nhB6q0881cJFg/viewform). The form asks you to include an invoice in PDF format  - a template is  available [here](https://docs.google.com/spreadsheets/d/1ZvX-STD2YbdhKidUTeAfiCxh8F0vaI3z/edit?gid=1882672248#gid=1882672248)
 
-Note 1 - Ordinarily payouts are on 30-day payment terms. I'll work to get them out ASAP but please keep in mind that they won't be an immediate.
+Note 1 - Ordinarily payouts are on 30-day payment terms. I'll work to get them out ASAP but please keep in mind payments won't be immediate.
 
-Note 2 - the Rules of the Jam Prize state that milestone payouts will not be paid before the Fellowship ratifies version 1.0 of the JAM protocol. We are waiving this requirement, but this should not be taken as an indication that any other requirements in the Rules are or will be waived.
+Note 2 - the Rules of the Jam Prize state that milestone payouts will not be paid before the Fellowship ratifies version 1.0 of the JAM protocol. We are waiving this requirement, but this should not be taken as an indication that any other requirements in the Rules are or will be waived. [edited]
   ↳ 2026-09-04 15:52 shimonchick: google sheet requires permissions to access
 2026-09-04 15:47 bill: Feel free to let me know (here or via DM) if you have any questions.
   ↳ 2026-09-04 16:12 alexandre.balde: Question: is the waiving of the ratification rule temporary, or will it apply to any teams which complete the first milestone before the Fellowship ratifies version 1.0?
+2026-09-07 08:06 danicuki: GM, What e-mail should we use to send the invoice? 
+2026-09-07 08:36 bill: You submit it as part of the form. If there is an issue with submitting it via form, you can contact jam@web3.foundation with any questions
+2026-09-07 08:46 bill: Alexandre Baldé: Re: waiving of the ratification rule, I see it as permanent, certainly for Milestone 1. 
+2026-09-07 08:47 bill: Mihail | PeanutButterAndJAM: Re: invoice template access - sorry, let me check with the creator of that form to get it share it publicly. Thanks for letting me know
+2026-09-07 08:53 bill: Mihail | PeanutButterAndJAM: Re: invoice template access, this will be made public later today. We will also make a broader public announcement about it then (and not just to the JAM teams in here)
+2026-09-07 09:58 bill: Hi all - one update - for any specific questions about payment, please email jam@web3.foundation directly. If you message me, I'm just going to ask them, so this saves us both some time =)
+
+Kindly note that Web3 Foundation does not provide tax or legal advice, and inquiries regarding these matters will not be addressed. Additionally, we cannot change the invoice process or payment schedule for individual teams; we have to follow the rules as laid out in the JAM Prize Rules page - https://jam.web3.foundation/rules
+2026-09-07 11:51 bill: FYI - the Google Form and invoice template are now public. I will also be announcing shortly publicly on Twitter and the Polkadot Forum. Please feel free to let me know if you have any issues accessing them.
+
+CC Mihail | PeanutButterAndJAM 
+  ↳ 2026-09-07 11:55 alexandre.balde: I suggest that you pin the Google Form/invoice templates in this room's description.
+Either direct links to them, or to the social media announcements you mentioned.
+
+That'll save someone (probably you) time in the near future.
+2026-09-07 11:53 xlchen: just to confirm, we only need to do it after a successful m1 interview?
+2026-09-07 11:53 bill: correct
+2026-09-07 11:54 bill: There's a place on the form to show where your team passed the interview. These are placed by a system.remark voted on by the Fellowship on-chain.
