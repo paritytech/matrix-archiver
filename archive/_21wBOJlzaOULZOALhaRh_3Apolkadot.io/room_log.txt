@@ -1,5 +1,5 @@
 # room: #jam:polkadot.io
-# exported: 2026-09-09 03:27 UTC
+# exported: 2026-09-10 03:26 UTC
 2024-04-20 02:08 johnjiao123: 
 2024-04-20 02:09 johnjiao123: 
 2024-05-30 21:48 nradko: Hey everyone,
@@ -14295,3 +14295,24 @@ That'll save someone (probably you) time in the near future.
 2026-09-07 11:53 xlchen: just to confirm, we only need to do it after a successful m1 interview?
 2026-09-07 11:53 bill: correct
 2026-09-07 11:54 bill: There's a place on the form to show where your team passed the interview. These are placed by a system.remark voted on by the Fellowship on-chain.
+2026-09-09 10:12 bkchr: @room as the fellowship will changes its way of handing out salaries from "keepers of knowledge" more into contribution based salaries, I wanted to give a heads up. Parity is aiming to have JAM ready for production end of Q1 2027. This opens up a lot of opportunities for JAM builders joining the Fellowship to contribute torwards this, e.g. helping with the parachain service, tooling, light clients etc. 
+
+I'm planning to open proposals for the batch of passed rank 3 interviews around end of september to get you onboarded. 
+  ↳ 2026-09-09 10:16 shimonchick: This is super nice to hear. But as the fellowship treasury is in such a depleted state, and there is no further funding, are there going to be new fellows before Q1 27? 
+  ↳ 2026-09-09 10:17 shimonchick: Is there a WFC (or a draft) that specifies the new mechanism?
+  ↳ 2026-09-09 10:20 bill: I wouldn't say it is in a "depleted state" with recent changes. And we are working on sustainable funding going forward. I will be at the next monthly Fellowship call to discuss.
+  ↳ 2026-09-09 10:25 shimonchick: Well, we are all technical people here and the info is public. All of us can do the basic maths on sustainability. I think all of us realise what is going on, the question is what is planned to change it? Or are we hoping on the 27 launch for the DOT price to rise?
+  ↳ 2026-09-09 18:50 bkchr: What is "planned to change it", the "it"? Fellowship treasury? 
+2026-09-09 16:31 danicuki: > <@bkchr:parity.io> @room as the fellowship will changes its way of handing out salaries from "keepers of knowledge" more into contribution based salaries, I wanted to give a heads up. Parity is aiming to have JAM ready for production end of Q1 2027. This opens up a lot of opportunities for JAM builders joining the Fellowship to contribute torwards this, e.g. helping with the parachain service, tooling, light clients etc. 
+> 
+> I'm planning to open proposals for the batch of passed rank 3 interviews around end of september to get you onboarded. 
+
+This looks very promising. We implementers really need a more stable environment to keep our efforts on JAM. 
+
+I confess that the Fellowship treasury issue was a surprise for us. 
+
+If these premises are true:
+ - JAM go live on Q1-Q2 2027
+ - we will have guaranteed Fellowship salaries until the launch, then
+
+I am sure there will be many people outside Parity eager to contribute and make JAM a successful project. 
