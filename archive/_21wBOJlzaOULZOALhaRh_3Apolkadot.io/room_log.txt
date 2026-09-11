@@ -1,5 +1,5 @@
 # room: #jam:polkadot.io
-# exported: 2026-09-10 03:26 UTC
+# exported: 2026-09-11 03:26 UTC
 2024-04-20 02:08 johnjiao123: 
 2024-04-20 02:09 johnjiao123: 
 2024-05-30 21:48 nradko: Hey everyone,
@@ -14316,3 +14316,20 @@ If these premises are true:
  - we will have guaranteed Fellowship salaries until the launch, then
 
 I am sure there will be many people outside Parity eager to contribute and make JAM a successful project. 
+2026-09-10 15:17 shimonchick: Currently, on JAM it only makes sense to store data for workloads that are meant to be computed by guarantors. However, if we were to move to a 2-token model (as the JAMKB essay proposes), one with fixed supply meant to represent stored data and (possibly a separate mechanism for buying coretime), what is stopping the protocol from having a secondary use case as a highly available, highly redundant storage system?
+2026-09-10 15:21 dave: The 2-token model is effectively what is in the GP now. The second token (used to buy coretime) isn't really part of the core protocol
+2026-09-10 15:23 dave: The storage paid for by JAMKB will be quite expensive as the data is kept on all full nodes until explicitly deleted. When you buy coretime you get DA storage included "for free", this lasts for ~28 days, plausibly there is some use case where you pay for coretime just to use this storage
+2026-09-10 15:38 shimonchick: Yep, but wouldn't that effectively mean that (if no protocol change is done), to achieve this use case a developer would need to possess both tokens, instead of the only one relevant for their use case?
+2026-09-10 15:40 shimonchick: Essentially, i came to the realisation that JAM has the potential to be a better distributed storage alternative to Filecoin. 
+2026-09-10 15:40 shimonchick: With relatively little service logic on top
+2026-09-10 15:43 dave: You will generally need both tokens to do anything useful yes, because you need JAMKB to pay for at least service code hosting and then you need to buy coretime to execute it
+2026-09-10 15:44 dave: But if you do not need much on-chain state then you do not need much JAMKB
+2026-09-10 15:56 shimonchick: It feels a bit weird to me that both compute heavy and storage heavy (utilizing a lot of DA segments) workloads would need to buy coretime the same way (and assuming dynamic permissionless market) the price for distributed compute and storage is the same. I can definitely see people deploying storage heavy low compute use cases (such as proofs that occasionally need core time to be verified, etc). Because essentially with the 28 day guarantee one would at most need to buy 2 slots (one for storage and one for the delayed on-demand verification)
+2026-09-10 15:58 jaymansfield: The interesting case is services using the DA for long term storage. Nothing really stops it today. A work package could import the old segments and re-export them before the 28 days are up. The only real catch here is that there’s only so much data that can be persisted this way due to the import/export limits per WP.
+2026-09-10 16:02 shimonchick: And that costs like one coretime slot per month. Not sure how economics would play out, but it could be a real bargain for certain payloads given the distributed storage guarantees
+2026-09-10 16:03 dave: Each (core, slot) gets a fixed amount of compute and a fixed amount of DA storage and you pay for them together. You don't have to use it all of course. That you get a fixed amount of each keeps the protocol simple and hopefully keeps the performance predictable and consistent. It also incentivises people to make balanced work-packages, which could plausibly mean selling off the resources you don't need to someone else
+2026-09-10 16:08 shimonchick: The builder pipeline and the secondary market there will be interesting to see
+2026-09-10 19:16 bkchr: Not really. The DA layer is in the analogy of JAM being a computer, similar to the RAM. Not really long term storage 
+2026-09-10 19:16 bkchr: You can clearly build nice use cases with the DA layer 
+2026-09-10 19:16 bkchr: For example a service which state entirely lives in the DA layer, as long as you build a package every 28 days and re-reference the exported data pieces 
+2026-09-10 19:17 bkchr: At some point I had the idea to write for example a twitter like thingy or  a block. Which outputs the data into the DA 
