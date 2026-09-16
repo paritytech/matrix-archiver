@@ -1,5 +1,5 @@
 # room: #jam:polkadot.io
-# exported: 2026-09-15 03:27 UTC
+# exported: 2026-09-16 03:27 UTC
 2024-04-20 02:08 johnjiao123: 
 2024-04-20 02:09 johnjiao123: 
 2024-05-30 21:48 nradko: Hey everyone,
@@ -14335,3 +14335,4 @@ I am sure there will be many people outside Parity eager to contribute and make 
 2026-09-10 19:17 bkchr: At some point I had the idea to write for example a twitter like thingy or  a block. Which outputs the data into the DA 
 2026-09-11 08:51 bkchr: The first parachain is running on top of JAM: https://x.com/bkchr/status/2098141048450994596
 2026-09-11 08:58 ascriv: hyped 🤘 [edited]
+2026-09-15 19:26 davxy: PSA: the next nightly of the PolkaJam node will implement GP 0.8.0. There may still be some rough edges, so anyone interested in cross-testing is welcome to try the 0.8 test vectors from this [PR](https://github.com/davxy/jam-test-vectors/pull/112), or drop a message in the jam-conformance [repo](https://github.com/davxy/jam-conformance/issues) [edited]
