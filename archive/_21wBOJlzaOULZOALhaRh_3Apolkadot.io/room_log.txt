@@ -1,5 +1,5 @@
 # room: #jam:polkadot.io
-# exported: 2026-09-21 03:29 UTC
+# exported: 2026-09-22 03:27 UTC
 2024-04-20 02:08 johnjiao123: 
 2024-04-20 02:09 johnjiao123: 
 2024-05-30 21:48 nradko: Hey everyone,
@@ -14350,3 +14350,9 @@ I was trying to get doom running again with a mixed testnet under 0.8.0 and two 
 	1.	Can you confirm if polkajam’s invoke host call has the new ϱ < g gas pre-check?
 In invoke if gR is larger then the services remaining gas, polkajam doesn’t seem to OOG as expected. It looks like it still refines and only takes into consideration the actual gas used (g’R) in the end.
 	2.	Does the inner pvm use the new gas cost modal yet? I think it may still be charging 1 gas per instruction. The outer pvm gas costing looks fine. [edited]
+  ↳ 2026-09-21 09:38 davxy: Yes to both, from what I can tell.
+1. invoke applies the ϱ < g pre-check with g = M_K + g_R. If the outer gas cannot cover it, the call exits out of gas before the inner PVM runs. 
+2. The inner PVM uses the same gas cost model as the outer. Inner machines are compiled on the same polkavm engine, and the engine default is the 0.8.0 model.
+Which polkajam commit or nightly do you run? 
+
+  ↳ 2026-09-22 00:29 jaymansfield: You're right I checked again and both our nodes reach the invoke with the same gas and both fail the pre-check. My mistake, sorry for the noise. The one remaining difference is the result code for that case: you report ∞, we report ⊚.  Can you check to see if for GP 14.13 you perform the if |e| ≠ m_e before the r ∉ B check? Thanks!
