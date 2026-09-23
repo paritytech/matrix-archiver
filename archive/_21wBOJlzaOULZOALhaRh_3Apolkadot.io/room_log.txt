@@ -1,5 +1,5 @@
 # room: #jam:polkadot.io
-# exported: 2026-09-22 03:27 UTC
+# exported: 2026-09-23 03:28 UTC
 2024-04-20 02:08 johnjiao123: 
 2024-04-20 02:09 johnjiao123: 
 2024-05-30 21:48 nradko: Hey everyone,
@@ -14356,3 +14356,4 @@ In invoke if gR is larger then the services remaining gas, polkajam doesn’t se
 Which polkajam commit or nightly do you run? 
 
   ↳ 2026-09-22 00:29 jaymansfield: You're right I checked again and both our nodes reach the invoke with the same gas and both fail the pre-check. My mistake, sorry for the noise. The one remaining difference is the result code for that case: you report ∞, we report ⊚.  Can you check to see if for GP 14.13 you perform the if |e| ≠ m_e before the r ∉ B check? Thanks!
+  ↳ 2026-09-22 13:44 davxy: Fixed upstream. I'll ping you as soon as it lands on nightly. Thanks for the report [edited]

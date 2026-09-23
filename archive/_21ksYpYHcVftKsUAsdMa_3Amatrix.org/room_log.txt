@@ -1,5 +1,5 @@
 # room: #jam-conformance:matrix.org
-# exported: 2026-09-22 03:28 UTC
+# exported: 2026-09-23 03:29 UTC
 2025-08-20 15:56 erin: tomusdrw: i've set up the archiver to archive this also, so hopefully will be up starting tomorrow
 2025-08-21 06:33 ascriv: https://github.com/davxy/jam-conformance/issues/26 should we not discourage open source implementations (for now)? [edited]
 2025-08-21 10:27 oliver.tale-yazdi: I think open source repos are fine. Other implementors are just not supposed to look at it
@@ -2780,6 +2780,12 @@ If I include it the pinky pvm gas vector no longer matches but I don’t see any
   ↳ 2026-09-22 01:04 jan: Jason | JavaJAM: Okay, so looking at this closer, you said "I don't see anything in the GP to say to exclude it", but if you look at the table in the "Gas Cost Model" section the instructions where this matters invoke `\mathfrak{P}` but the cmov (correctly) doesn't have this, so it shouldn't matter what the functions which return the destination register returns here? Am I missing something?
   ↳ 2026-09-22 01:25 jaymansfield: ˇs also feeds the dependency set p in A.58. If φD is a source, cmov waits for any earlier write to φD in the block which adds cycles.
   ↳ 2026-09-22 01:28 jan: Ah, okay, thanks for the clarification.
+  ↳ 2026-09-22 03:45 jan: Jason | JavaJAM: Okay, sorry for the confusion, I initially completely misunderstood what you were talking about (I though you were talking about the decode slots, not the dependency tracking).
+
+So, actually, final confirmation now that I've looked at it closer: the test vectors will actually be updated. The destination register for cmov *should* be included in the source registers. (Since on AMD64 the cmov instruction *does* actually treat the destination as a false dependency; they apparently only fixed this in the new APX ISA where there's now a three operand cmov.)
+
+
+  ↳ 2026-09-22 03:45 jan: Thank you for bringing this to my attention!
 2026-09-11 16:34 jan: These introduce the new gas cost model. Note that for GP 0.9.x we will be changing the code blob format for the final time before JAM 1.0, which will also require new test vectors (which I can provide now if there's interest, although the GP PR is not yet merged), however the gas cost model is unchanged between 0.8.x and 0.9.x (except 0.9.x will also introduce gas metering of *memory*, but that's semi-orthogonal to the basic-block based gas metering of *code* introduced in 0.8.x). [edited]
 2026-09-11 16:37 jan: Here are the two relevant GP PRs for PVM changes that will be in 0.9.x, in case anyone's interested:
 

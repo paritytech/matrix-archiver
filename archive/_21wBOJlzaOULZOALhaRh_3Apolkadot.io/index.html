@@ -18,7 +18,7 @@ a:hover{color:#90caf9}
 em{font-style:italic}
 </style>
 <h1>#jam:polkadot.io</h1>
-<p><small>last updated 2026-09-22 03:27 UTC</small></p>
+<p><small>last updated 2026-09-23 03:28 UTC</small></p>
 <p><a href='room_log.txt'>⇩ plaintext</a> · <a href='../../'>⇦ all rooms</a></p>
 <hr>
 <div class='msg'><a class='ts' href='#$we4SYXTHwmKn094X9Zs_7mWUOoUVh4icvVdxD83RZfs'>#</a> <a class='ts' name='$we4SYXTHwmKn094X9Zs_7mWUOoUVh4icvVdxD83RZfs' href='https://matrix.to/#/!wBOJlzaOULZOALhaRh:polkadot.io/$we4SYXTHwmKn094X9Zs_7mWUOoUVh4icvVdxD83RZfs' target='_blank'>2024-04-20 02:08</a>&ensp;<span class='u' style='color:#d0709e'>johnjiao123</span>: </div>
@@ -14239,3 +14239,4 @@ In invoke if gR is larger then the services remaining gas, polkajam doesn’t se
 Which polkajam commit or nightly do you run? 
 </div>
 <div class='msg reply'><a class='ts' href='#$rSLCOnj78GwB9jFx0-qBBkxD7WVb49n7AkjoUVW_oc8'>#</a> <a class='ts' name='$rSLCOnj78GwB9jFx0-qBBkxD7WVb49n7AkjoUVW_oc8' href='https://matrix.to/#/!wBOJlzaOULZOALhaRh:polkadot.io/$rSLCOnj78GwB9jFx0-qBBkxD7WVb49n7AkjoUVW_oc8' target='_blank'>2026-09-22 00:29</a>&ensp;<span class='u' style='color:#d470bf'>jaymansfield</span>: You&#x27;re right I checked again and both our nodes reach the invoke with the same gas and both fail the pre-check. My mistake, sorry for the noise. The one remaining difference is the result code for that case: you report ∞, we report ⊚.  Can you check to see if for GP 14.13 you perform the if |e| ≠ m_e before the r ∉ B check? Thanks!</div>
+<div class='msg reply'><a class='ts' href='#$xhQUKuHtSkwjp6Ga_VAl_h6iJ--Nv0SYs27ZMkIjfx0'>#</a> <a class='ts' name='$xhQUKuHtSkwjp6Ga_VAl_h6iJ--Nv0SYs27ZMkIjfx0' href='https://matrix.to/#/!wBOJlzaOULZOALhaRh:polkadot.io/$xhQUKuHtSkwjp6Ga_VAl_h6iJ--Nv0SYs27ZMkIjfx0' target='_blank'>2026-09-22 13:44</a>&ensp;<span class='u' style='color:#c9419d'>davxy</span>: Fixed upstream. I&#x27;ll ping you as soon as it lands on nightly. Thanks for the report <span class="edited">(edited)</span></div>
