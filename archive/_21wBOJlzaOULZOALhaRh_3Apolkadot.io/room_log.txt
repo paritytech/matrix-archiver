@@ -1,5 +1,5 @@
 # room: #jam:polkadot.io
-# exported: 2026-09-25 03:26 UTC
+# exported: 2026-09-26 03:26 UTC
 2024-04-20 02:08 johnjiao123: 
 2024-04-20 02:09 johnjiao123: 
 2024-05-30 21:48 nradko: Hey everyone,
@@ -14359,3 +14359,6 @@ Which polkajam commit or nightly do you run?
   ↳ 2026-09-22 00:29 jaymansfield: You're right I checked again and both our nodes reach the invoke with the same gas and both fail the pre-check. My mistake, sorry for the noise. The one remaining difference is the result code for that case: you report ∞, we report ⊚.  Can you check to see if for GP 14.13 you perform the if |e| ≠ m_e before the r ∉ B check? Thanks!
   ↳ 2026-09-22 13:44 davxy: Fixed upstream. I'll ping you as soon as it lands on nightly. Thanks for the report [edited]
   ↳ 2026-09-23 14:57 shimonchick: Which work package did you test against? Can i join the party as well?
+  ↳ 2026-09-25 13:25 jaymansfield: Mihail | PeanutButterAndJAM: I've been running multiple local testnets everyday trying to compare different scenarios. Other then doom, my WPs are very simple and are just to achieve the different outcomes I'm trying to verify. Does PBAJ have a published binary that has implemented M2? I can try comparing javajam against it as well.
+  ↳ 2026-09-25 13:39 shimonchick: Perhaps i can dockerize one and share it later today or tomorrow 
+  ↳ 2026-09-25 16:57 shimonchick: Jason | JavaJAM: https://hub.docker.com/repository/docker/shimonchick/pbnjam-node
