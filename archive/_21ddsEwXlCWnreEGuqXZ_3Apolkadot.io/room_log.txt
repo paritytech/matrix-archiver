@@ -1,5 +1,5 @@
 # room: #graypaper:polkadot.io
-# exported: 2026-09-26 03:27 UTC
+# exported: 2026-09-27 03:30 UTC
 2024-04-17 20:29 syed: https://matrix.to/#/!hyzRkDqDthePbodYFz:parity.io/$f_DMsIEcDXZegw6Sabnehzc-LrdDQkmq5MbxDDyoZxY?via=parity.io&via=web3.foundation
 
 2024-04-17 20:29 syed: 
@@ -7246,3 +7246,11 @@ But state economics are never about archive nodes.
 2026-08-17 15:45 bkchr: Basically a smaller length than 80
 2026-08-17 15:45 dave: Sounds reasonable to me
 2026-08-17 21:15 bkchr: https://github.com/gavofyork/graypaper/pull/553
+2026-09-26 05:50 shwchg: Quick question about disputes and the accumulation ready queue \(\omega\).
+Why doesn't a non-positive verdict remove a Work Report that is already in \(\omega\)?
+Is there any special reason for this, or would it make sense for me to open a PR?
+2026-09-26 06:08 dave: You're supposed to roll back the chain to the point where the report became available
+2026-09-26 06:24 shwchg: But if the report has become available and is sitting in \(\omega\), but has not actually been accumulated yet, is there a reason we still need to roll back to before availability?
+Wouldn't removing the report from \(\omega\) be enough to prevent any accumulation of it, while avoiding the cost of a reorg?
+2026-09-26 06:28 dave: Possibly but don't think it's worth the extra complexity
+2026-09-26 06:28 shwchg: I see. thanks!

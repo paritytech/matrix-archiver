@@ -1,5 +1,5 @@
 # room: #jam:polkadot.io
-# exported: 2026-09-26 03:26 UTC
+# exported: 2026-09-27 03:29 UTC
 2024-04-20 02:08 johnjiao123: 
 2024-04-20 02:09 johnjiao123: 
 2024-05-30 21:48 nradko: Hey everyone,
@@ -14362,3 +14362,5 @@ Which polkajam commit or nightly do you run?
   ↳ 2026-09-25 13:25 jaymansfield: Mihail | PeanutButterAndJAM: I've been running multiple local testnets everyday trying to compare different scenarios. Other then doom, my WPs are very simple and are just to achieve the different outcomes I'm trying to verify. Does PBAJ have a published binary that has implemented M2? I can try comparing javajam against it as well.
   ↳ 2026-09-25 13:39 shimonchick: Perhaps i can dockerize one and share it later today or tomorrow 
   ↳ 2026-09-25 16:57 shimonchick: Jason | JavaJAM: https://hub.docker.com/repository/docker/shimonchick/pbnjam-node
+2026-09-26 11:49 merkle547: Hello everyone. Long time lurker here, working on ML1. I was wondering, are the team interviews published publicly?
+2026-09-26 13:57 bill: I don't believe so, at least I haven't seen them.
