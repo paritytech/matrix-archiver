@@ -1,5 +1,5 @@
 # room: #jam:polkadot.io
-# exported: 2026-09-27 03:29 UTC
+# exported: 2026-09-28 03:33 UTC
 2024-04-20 02:08 johnjiao123: 
 2024-04-20 02:09 johnjiao123: 
 2024-05-30 21:48 nradko: Hey everyone,
@@ -14303,6 +14303,7 @@ I'm planning to open proposals for the batch of passed rank 3 interviews around 
   ↳ 2026-09-09 10:20 bill: I wouldn't say it is in a "depleted state" with recent changes. And we are working on sustainable funding going forward. I will be at the next monthly Fellowship call to discuss.
   ↳ 2026-09-09 10:25 shimonchick: Well, we are all technical people here and the info is public. All of us can do the basic maths on sustainability. I think all of us realise what is going on, the question is what is planned to change it? Or are we hoping on the 27 launch for the DOT price to rise?
   ↳ 2026-09-09 18:50 bkchr: What is "planned to change it", the "it"? Fellowship treasury? 
+  ↳ 2026-09-27 06:44 ascriv: Can individuals who passed the M1 part of the interview but did not pass (or weren’t eligible for) the rank 3 interview still take on some of these proposals, or are they limited to only the rank 3-passing cohort? [edited]
 2026-09-09 16:31 danicuki: > <@bkchr:parity.io> @room as the fellowship will changes its way of handing out salaries from "keepers of knowledge" more into contribution based salaries, I wanted to give a heads up. Parity is aiming to have JAM ready for production end of Q1 2027. This opens up a lot of opportunities for JAM builders joining the Fellowship to contribute torwards this, e.g. helping with the parachain service, tooling, light clients etc. 
 > 
 > I'm planning to open proposals for the batch of passed rank 3 interviews around end of september to get you onboarded. 
