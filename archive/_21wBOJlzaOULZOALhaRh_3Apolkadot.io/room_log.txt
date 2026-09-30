@@ -1,5 +1,5 @@
 # room: #jam:polkadot.io
-# exported: 2026-09-29 03:29 UTC
+# exported: 2026-09-30 03:30 UTC
 2024-04-20 02:08 johnjiao123: 
 2024-04-20 02:09 johnjiao123: 
 2024-05-30 21:48 nradko: Hey everyone,
@@ -14363,5 +14363,20 @@ Which polkajam commit or nightly do you run?
   ↳ 2026-09-25 13:25 jaymansfield: Mihail | PeanutButterAndJAM: I've been running multiple local testnets everyday trying to compare different scenarios. Other then doom, my WPs are very simple and are just to achieve the different outcomes I'm trying to verify. Does PBAJ have a published binary that has implemented M2? I can try comparing javajam against it as well.
   ↳ 2026-09-25 13:39 shimonchick: Perhaps i can dockerize one and share it later today or tomorrow 
   ↳ 2026-09-25 16:57 shimonchick: Jason | JavaJAM: https://hub.docker.com/repository/docker/shimonchick/pbnjam-node
+  ↳ 2026-09-29 11:56 davxy: Jason | JavaJAM: Next nightly will contain the fix to the issue you reported
 2026-09-26 11:49 merkle547: Hello everyone. Long time lurker here, working on ML1. I was wondering, are the team interviews published publicly?
 2026-09-26 13:57 bill: I don't believe so, at least I haven't seen them.
+2026-09-29 08:47 anaelleltd: **JAM Prize Fellowship evaluations - Update 4**
+
+A reminder to all JAM implementers to check that the details of their [M1 submissions](https://github.com/w3f/jam-milestone-delivery) are up-to-date ahead of their interviews. All candidates for onboarding at Rank 3 should also make sure to familiarise themselves with the [Manifesto](https://github.com/polkadot-fellows/manifesto/blob/0c3df46d76625980b8b48742cb86f4d8fa6dda8d/manifesto.pdf) prior to sitting their Fellowship interview.
+
+15 teams out of 25 have now passed their M1 evaluations. So far, 6 nominees have been approved to join the Fellowship at Rank 3. The Fellowship will be voting to induct and promote all successful nominees in upcoming days.
+
+Teams that have been formally approved on-chain by the Fellowship can follow the process described in this [forum post](https://forum.polkadot.network/t/jam-prize-milestone-1-payouts/18584) to receive their payouts.
+
+We will keep updating the [tracker](https://polkadottechnicalfellowship.notion.site/2ef96f88d0a78051b94ef4a6d6c9be8c?v=2ef96f88d0a78036b33a000c2cb9a0b1) for JAM Prize evaluations as further information about schedules becomes available, so that teams know where they stand in the overall process.
+
+*Previous updates:* [1](https://matrix.to/#/!wBOJlzaOULZOALhaRh:polkadot.io/$Ib5gDsuCOUqJLmkdBVox6tmWECTv-YfUgXlYPKL0_L8?via=polkadot.io&via=matrix.org&via=parity.io) | [2](https://matrix.to/#/!wBOJlzaOULZOALhaRh:polkadot.io/$qnUT2eEfXfSR2dsvxVBkGGnR34so5W9Fqvgi62N7TzQ?via=polkadot.io&via=matrix.org&via=parity.io) |  [3](https://matrix.to/#/!wBOJlzaOULZOALhaRh:polkadot.io/$2XPQ9Nrfh_6XVySBmx8hIHHphqCdO84F-GyOzmA4O8w?via=polkadot.io&via=matrix.org&via=parity.io)
+
+  ↳ 2026-09-29 08:52 dakkk: Do we have to make our repositories public after the interview? [edited]
+  ↳ 2026-09-29 09:12 bkchr: No 
