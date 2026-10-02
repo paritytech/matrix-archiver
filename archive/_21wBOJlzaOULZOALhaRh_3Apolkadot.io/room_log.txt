@@ -1,5 +1,5 @@
 # room: #jam:polkadot.io
-# exported: 2026-10-01 03:34 UTC
+# exported: 2026-10-02 03:29 UTC
 2024-04-20 02:08 johnjiao123: 
 2024-04-20 02:09 johnjiao123: 
 2024-05-30 21:48 nradko: Hey everyone,
@@ -14380,3 +14380,8 @@ We will keep updating the [tracker](https://polkadottechnicalfellowship.notion.s
 
   ↳ 2026-09-29 08:52 dakkk: Do we have to make our repositories public after the interview? [edited]
   ↳ 2026-09-29 09:12 bkchr: No 
+2026-10-01 13:44 bkchr: I [will do a parachain service AMA call](https://calendar.google.com/calendar/event?action=TEMPLATE&tmeid=NmI4aG51Nzhzc2VjMWNpcHQ4a284YWw0YWQgYmFzdGlhbkBwYXJpdHkuaW8&tmsrc=bastian%40parity.io) on the 15th of october. I expect  (or wish :P) from you that you are reading [the parachain service design](https://github.com/paritytech/polkadot-sdk/pull/11883) before. In the call I will then give a introduction to the parachain service and open the stage for questions :) Outcome should be that I find some brave people to review the design and give me an approval. 
+2026-10-01 14:15 ascriv: > <@bkchr:parity.io> I [will do a parachain service AMA call](https://calendar.google.com/calendar/event?action=TEMPLATE&tmeid=NmI4aG51Nzhzc2VjMWNpcHQ4a284YWw0YWQgYmFzdGlhbkBwYXJpdHkuaW8&tmsrc=bastian%40parity.io) on the 15th of october. I expect  (or wish :P) from you that you are reading [the parachain service design](https://github.com/paritytech/polkadot-sdk/pull/11883) before. In the call I will then give a introduction to the parachain service and open the stage for questions :) Outcome should be that I find some brave people to review the design and give me an approval. 
+
+getting "could not find the requested event" error for the gcal link
+2026-10-01 14:33 bkchr: Looks like I need to study to publish an event. I will  try later again
