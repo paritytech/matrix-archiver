@@ -1,5 +1,5 @@
 # room: #jam:polkadot.io
-# exported: 2026-10-02 03:29 UTC
+# exported: 2026-10-03 03:35 UTC
 2024-04-20 02:08 johnjiao123: 
 2024-04-20 02:09 johnjiao123: 
 2024-05-30 21:48 nradko: Hey everyone,
@@ -14385,3 +14385,16 @@ We will keep updating the [tracker](https://polkadottechnicalfellowship.notion.s
 
 getting "could not find the requested event" error for the gcal link
 2026-10-01 14:33 bkchr: Looks like I need to study to publish an event. I will  try later again
+2026-10-02 11:46 bkchr: https://calendar.google.com/calendar/event?action=TEMPLATE&tmeid=NDhpZG01Y2VoNjViZGpkOXR2cXZ2Z2NwaTIgY19hYTQ3OTIxMjcyYzExNGQ3YzViNDUzMmU4ZDQyOTMyYzZlZTdmNDkyNDRlMDA5YjYyODM1ZTVjZDU1MjI5OWY0QGc&tmsrc=c_aa47921272c114d7c5b4532e8d42932c6ee7f49244e009b62835e5cd552299f4%40group.calendar.google.com looks like I managed this now :P
+2026-10-02 11:46 bkchr: Needed to create a new calendar for this 🙈
+2026-10-02 11:46 bkchr: But the meet link is found in the description
+2026-10-02 16:36 mommy2508: Why won't Gav be there anymore at the dark Prague ? 😞
+2026-10-02 18:30 ascriv: > <@bkchr:parity.io> https://calendar.google.com/calendar/event?action=TEMPLATE&tmeid=NDhpZG01Y2VoNjViZGpkOXR2cXZ2Z2NwaTIgY19hYTQ3OTIxMjcyYzExNGQ3YzViNDUzMmU4ZDQyOTMyYzZlZTdmNDkyNDRlMDA5YjYyODM1ZTVjZDU1MjI5OWY0QGc&tmsrc=c_aa47921272c114d7c5b4532e8d42932c6ee7f49244e009b62835e5cd552299f4%40group.calendar.google.com looks like I managed this now :P
+
+getting the same error.. anyone else able to use this link?
+2026-10-02 18:30 ascriv: that’s sad. i’ll be there [edited]
+2026-10-02 18:32 bkchr: > <@ascriv:matrix.org> getting the same error.. anyone else able to use this link?
+
+Hmm. I tried it with my personal account 🤔 
+2026-10-02 18:33 dakkk: The link works fine on Firefox for me, but it doesn't work on my Android phone 
+2026-10-02 18:34 jaymansfield: Worked for me too
