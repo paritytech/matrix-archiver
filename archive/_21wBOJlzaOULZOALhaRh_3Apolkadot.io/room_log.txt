@@ -1,5 +1,5 @@
 # room: #jam:polkadot.io
-# exported: 2026-10-04 04:30 UTC
+# exported: 2026-10-05 03:35 UTC
 2024-04-20 02:08 johnjiao123: 
 2024-04-20 02:09 johnjiao123: 
 2024-05-30 21:48 nradko: Hey everyone,
@@ -14398,3 +14398,6 @@ getting the same error.. anyone else able to use this link?
 Hmm. I tried it with my personal account 🤔 
 2026-10-02 18:33 dakkk: The link works fine on Firefox for me, but it doesn't work on my Android phone 
 2026-10-02 18:34 jaymansfield: Worked for me too
+2026-10-04 07:33 libingjiang: Hi everyone, could you help test our asset service on JAM? I've airdropped some testnet DOT to everyone. We've implemented Ownership Abstraction, so you can interact with the chain directly using your Matrix account.
+
+https://locus.minijam.xyz/
