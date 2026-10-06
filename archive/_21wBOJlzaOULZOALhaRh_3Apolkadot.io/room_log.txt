@@ -1,5 +1,5 @@
 # room: #jam:polkadot.io
-# exported: 2026-10-05 03:35 UTC
+# exported: 2026-10-06 03:30 UTC
 2024-04-20 02:08 johnjiao123: 
 2024-04-20 02:09 johnjiao123: 
 2024-05-30 21:48 nradko: Hey everyone,
@@ -14401,3 +14401,4 @@ Hmm. I tried it with my personal account 🤔
 2026-10-04 07:33 libingjiang: Hi everyone, could you help test our asset service on JAM? I've airdropped some testnet DOT to everyone. We've implemented Ownership Abstraction, so you can interact with the chain directly using your Matrix account.
 
 https://locus.minijam.xyz/
+2026-10-05 16:48 prematurata: Do anyone have kyc/kyb process link?
