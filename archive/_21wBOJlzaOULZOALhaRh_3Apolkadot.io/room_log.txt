@@ -1,5 +1,5 @@
 # room: #jam:polkadot.io
-# exported: 2026-10-13 03:33 UTC
+# exported: 2026-10-14 03:26 UTC
 2024-04-20 02:08 johnjiao123: 
 2024-04-20 02:09 johnjiao123: 
 2024-05-30 21:48 nradko: Hey everyone,
@@ -14402,3 +14402,34 @@ Hmm. I tried it with my personal account 🤔
 
 https://locus.minijam.xyz/
 2026-10-05 16:48 prematurata: Do anyone have kyc/kyb process link?
+2026-10-13 10:34 dakkk: Are there any updates about the prize payments? On chain remarks stopped more than 1 month ago
+  ↳ 2026-10-13 11:13 shimonchick: I got my M1 like 1.5 months ago 
+  ↳ 2026-10-13 11:14 shimonchick: Just needed to do KYB and KYC with W3F and then a test transfer and then the full one with the vesting
+  ↳ 2026-10-13 11:15 dakkk: Yep, but this is possible only after the on-chain remark. [edited]
+2026-10-13 15:26 bkchr: https://collectives.subsquare.io/fellowship/referenda/649
+https://collectives.subsquare.io/fellowship/referenda/648
+https://collectives.subsquare.io/fellowship/referenda/647
+https://collectives.subsquare.io/fellowship/referenda/646
+https://collectives.subsquare.io/fellowship/referenda/645
+https://collectives.subsquare.io/fellowship/referenda/644
+https://collectives.subsquare.io/fellowship/referenda/643
+https://collectives.subsquare.io/fellowship/referenda/642
+2026-10-13 15:26 bkchr: Congrats to you all passing the M1 interviews. 
+2026-10-13 15:31 bill: Good work everyone! For those of you who have passed, you can now submit your invoice. 
+
+Form is here: https://docs.google.com/forms/d/e/1FAIpQLSc8osoSf38irzTgn6fI9IC6xYXNq7KOB7P22nhB6q0881cJFg/viewform 
+
+If you need a blank invoice template, one is here (but you don't need to use it if you usually use another template - it's just there if you need it): https://docs.google.com/spreadsheets/d/1ZvX-STD2YbdhKidUTeAfiCxh8F0vaI3z/
+2026-10-13 16:07 florentina57: that's impressive 17 teams passed M1 💪🤩💯 GG
+2026-10-13 16:11 shimonchick: Wen m2 👀
+2026-10-13 17:40 prematurata: Congrats all. Also is there any news about fellowship inclusion? It's been a while now
+2026-10-13 18:10 dakkk: can we even if the referenda is still deciding or do we have to wait?
+2026-10-13 20:21 bkchr: I had to move the call by 1 hour to 12pm. Sorry for the short notice
+2026-10-13 21:25 bkchr: https://collectives.subsquare.io/fellowship/referenda/651
+https://collectives.subsquare.io/fellowship/referenda/652
+https://collectives.subsquare.io/fellowship/referenda/653
+https://collectives.subsquare.io/fellowship/referenda/654
+https://collectives.subsquare.io/fellowship/referenda/655
+https://collectives.subsquare.io/fellowship/referenda/656
+2026-10-13 21:26 bkchr: Anoter round of proposals :) Congrats to the people that have passed the M3 interviews so far
+2026-10-13 21:26 bkchr: If someone has some DOT available on collectives, please help with the decision deposits :P 
