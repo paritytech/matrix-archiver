@@ -1,5 +1,5 @@
 # room: #jam:polkadot.io
-# exported: 2026-10-14 03:26 UTC
+# exported: 2026-10-15 03:27 UTC
 2024-04-20 02:08 johnjiao123: 
 2024-04-20 02:09 johnjiao123: 
 2024-05-30 21:48 nradko: Hey everyone,
@@ -14423,8 +14423,13 @@ If you need a blank invoice template, one is here (but you don't need to use it 
 2026-10-13 16:07 florentina57: that's impressive 17 teams passed M1 💪🤩💯 GG
 2026-10-13 16:11 shimonchick: Wen m2 👀
 2026-10-13 17:40 prematurata: Congrats all. Also is there any news about fellowship inclusion? It's been a while now
-2026-10-13 18:10 dakkk: can we even if the referenda is still deciding or do we have to wait?
+2026-10-13 18:10 dakkk: can we submit it even if the referenda is still deciding or do we have to wait? [edited]
 2026-10-13 20:21 bkchr: I had to move the call by 1 hour to 12pm. Sorry for the short notice
+  ↳ 2026-10-14 10:50 hitchhooker: is this internal? even cant be found
+  ↳ 2026-10-14 16:09 luke_jamixir: https://calendar.app.google/zzXMMzqKSEFZ9jVKA
+  ↳ 2026-10-14 16:13 bkchr: > <@hitchhooker:matrix.org> is this internal? even cant be found
+
+https://calendar.google.com/calendar/event?action=TEMPLATE&tmeid=NDhpZG01Y2VoNjViZGpkOXR2cXZ2Z2NwaTIgY19hYTQ3OTIxMjcyYzExNGQ3YzViNDUzMmU4ZDQyOTMyYzZlZTdmNDkyNDRlMDA5YjYyODM1ZTVjZDU1MjI5OWY0QGc&tmsrc=c_aa47921272c114d7c5b4532e8d42932c6ee7f49244e009b62835e5cd552299f4%40group.calendar.google.com
 2026-10-13 21:25 bkchr: https://collectives.subsquare.io/fellowship/referenda/651
 https://collectives.subsquare.io/fellowship/referenda/652
 https://collectives.subsquare.io/fellowship/referenda/653
