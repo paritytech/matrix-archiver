@@ -1,5 +1,5 @@
 # room: #jam:polkadot.io
-# exported: 2026-10-17 03:25 UTC
+# exported: 2026-10-18 03:26 UTC
 2024-04-20 02:08 johnjiao123: 
 2024-04-20 02:09 johnjiao123: 
 2024-05-30 21:48 nradko: Hey everyone,
@@ -14457,6 +14457,7 @@ https://collectives.subsquare.io/fellowship/referenda/656
 Right now this still depends on polkajam, we still need to find a way for you to reasonable contribute 
   ↳ 2026-10-15 09:32 shimonchick: Cool. do you accept PRs? Some teams have already been testing locally against polkajam binaries on guaraneeing/auditing/availability side. I could help on P2-4
   ↳ 2026-10-15 11:57 bkchr: Best to coordinate with Javier, but yeah we will want you to help as much as possible 
+  ↳ 2026-10-17 17:07 shimonchick: I've been playing with a fork of this, using my implementation as oracle instead of polkajam. I would be curious if there are other teams that have M2 compatible binaries already i could do a registry and test each against the other
 2026-10-15 10:03 luke_jamixir: the paracahin service AMA is now. right? is this the correct link? https://meet.google.com/oey-cfog-htb
 2026-10-15 10:04 bkchr: Yes, I will join in a moment
 2026-10-15 12:08 davxy: I'm not involved in running or maintaining the _self-service_ web app running on the fuzz.jamtoaster.network. I mainly maintain the [scripts](https://github.com/davxy/jam-conformance/tree/main/scripts) used by the backend.
