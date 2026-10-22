@@ -1,5 +1,5 @@
 # room: #jam:polkadot.io
-# exported: 2026-10-21 03:27 UTC
+# exported: 2026-10-22 03:27 UTC
 2024-04-20 02:08 johnjiao123: 
 2024-04-20 02:09 johnjiao123: 
 2024-05-30 21:48 nradko: Hey everyone,
@@ -14460,6 +14460,7 @@ Right now this still depends on polkajam, we still need to find a way for you to
   ↳ 2026-10-17 17:07 shimonchick: I've been playing with a fork of this, using my implementation as oracle instead of polkajam. I would be curious if there are other teams that have M2 compatible binaries already i could do a registry and test each against the other
   ↳ 2026-10-19 15:47 javier: Thanks Mihail | PeanutButterAndJAM we still need to refactor in order to allow others to contribute. I'm exploring that option and will keep you in touch
   ↳ 2026-10-19 16:04 jaymansfield: JavaJAM also has a full node binary available. I've been running extensive comparison tests with different work packages against polkajam for weeks now. Would be great to start including others in the mix but hard to know the status of other implementations at the moment. https://github.com/javajamio/javajam-releases
+  ↳ 2026-10-21 12:36 shimonchick: I'll try it out in a mixed testnet soon. Mine is also available, dockerized here: https://hub.docker.com/r/shimonchick/pbnjam-node [edited]
 2026-10-15 10:03 luke_jamixir: the paracahin service AMA is now. right? is this the correct link? https://meet.google.com/oey-cfog-htb
 2026-10-15 10:04 bkchr: Yes, I will join in a moment
 2026-10-15 12:08 davxy: I'm not involved in running or maintaining the _self-service_ web app running on the fuzz.jamtoaster.network. I mainly maintain the [scripts](https://github.com/davxy/jam-conformance/tree/main/scripts) used by the backend.
