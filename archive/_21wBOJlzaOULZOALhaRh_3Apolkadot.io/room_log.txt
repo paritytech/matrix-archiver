@@ -1,5 +1,5 @@
 # room: #jam:polkadot.io
-# exported: 2026-10-24 03:25 UTC
+# exported: 2026-10-25 03:27 UTC
 2024-04-20 02:08 johnjiao123: 
 2024-04-20 02:09 johnjiao123: 
 2024-05-30 21:48 nradko: Hey everyone,
@@ -14477,3 +14477,9 @@ https://github.com/jamixir/jamboree
 
 If it doesn't work with your client, tell me here or open an issue.
   ↳ 2026-10-19 16:25 jaymansfield: Oh this is great. Will be trying it out!
+2026-10-24 09:21 ascriv: is there a plan to have a public testnet available on the toaster soon? I’d like to test out a couple services i’ve been developing
+  ↳ 2026-10-24 09:24 shimonchick: we could spin up one ourselves, no? I've been playing with polkajam binary and javajam recently, we could do a testnet hosted somewhere that spins multiple implementations [edited]
+  ↳ 2026-10-24 09:28 ascriv: would be nice to use the toaster ideally but if it’s not ready then that’s a good fallback
+  ↳ 2026-10-24 09:38 luke_jamixir: Yes that would be nice to have 
+  ↳ 2026-10-24 10:18 shimonchick: We could agree on some self hosted hostnames ahead of time and put that in a genesis.json and spin up a bunch of tiny testnets ourselves. Currently i dont have a VPS, but on my side it wouldn't cost too much per month to expose a node to the internet
+  ↳ 2026-10-24 10:26 ascriv: I think there’s also a benefit to a shared setup like the toaster for debugging. But self-hosted nodes seem like a good way to get started if we can’t use the toaster 
