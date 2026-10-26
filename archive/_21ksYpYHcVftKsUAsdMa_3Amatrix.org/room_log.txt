@@ -1,5 +1,5 @@
 # room: #jam-conformance:matrix.org
-# exported: 2026-10-25 03:28 UTC
+# exported: 2026-10-26 03:33 UTC
 2025-08-20 15:56 erin: tomusdrw: i've set up the archiver to archive this also, so hopefully will be up starting tomorrow
 2025-08-21 06:33 ascriv: https://github.com/davxy/jam-conformance/issues/26 should we not discourage open source implementations (for now)? [edited]
 2025-08-21 10:27 oliver.tale-yazdi: I think open source repos are fine. Other implementors are just not supposed to look at it
@@ -2822,3 +2822,10 @@ Thank you
 The values are a first draft. Looks sensible to me, if you have different opinion please comment on the issue: https://github.com/davxy/jam-conformance/issues/215
 
 
+2026-10-25 13:44 davxy: @room  The first batch of GP 0.8.0 traces+reports is ready: https://github.com/davxy/jam-conformance/pull/212
+ [edited]
+2026-10-25 13:52 emielsebastiaan: Is there a reason PyJAMaz was not included in this batch? 
+2026-10-25 13:57 davxy: I haven't received a ping [here](https://github.com/davxy/jam-conformance/issues/20) to update the version tag, nor a PR to update `targets.json`. I'll include you in the loop.
+2026-10-25 13:58 davxy: My bad https://github.com/davxy/jam-conformance/issues/20#issuecomment-6214366090 :-)
+2026-10-25 13:58 emielsebastiaan: Thanks! Have a great weekend. 
+2026-10-25 14:06 davxy: included [edited]
