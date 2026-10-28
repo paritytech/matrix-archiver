@@ -1,5 +1,5 @@
 # room: #jam-conformance:matrix.org
-# exported: 2026-10-27 03:29 UTC
+# exported: 2026-10-28 03:22 UTC
 2025-08-20 15:56 erin: tomusdrw: i've set up the archiver to archive this also, so hopefully will be up starting tomorrow
 2025-08-21 06:33 ascriv: https://github.com/davxy/jam-conformance/issues/26 should we not discourage open source implementations (for now)? [edited]
 2025-08-21 10:27 oliver.tale-yazdi: I think open source repos are fine. Other implementors are just not supposed to look at it
@@ -2829,3 +2829,5 @@ The values are a first draft. Looks sensible to me, if you have different opinio
 2026-10-25 13:58 davxy: My bad https://github.com/davxy/jam-conformance/issues/20#issuecomment-6214366090 :-)
 2026-10-25 13:58 emielsebastiaan: Thanks! Have a great weekend. 
 2026-10-25 14:06 davxy: included [edited]
+2026-10-27 17:47 davxy: Conformance-related work has been moved to the [jam-conformance organization](https://github.com/jam-conformance).
+2026-10-27 17:50 davxy: I'll send an invitation to the implementors in the next days
