@@ -1,5 +1,5 @@
 # room: #jam:polkadot.io
-# exported: 2026-10-28 03:21 UTC
+# exported: 2026-10-29 03:21 UTC
 2024-04-20 02:08 johnjiao123: 
 2024-04-20 02:09 johnjiao123: 
 2024-05-30 21:48 nradko: Hey everyone,
@@ -14483,3 +14483,38 @@ If it doesn't work with your client, tell me here or open an issue.
   ↳ 2026-10-24 09:38 luke_jamixir: Yes that would be nice to have 
   ↳ 2026-10-24 10:18 shimonchick: We could agree on some self hosted hostnames ahead of time and put that in a genesis.json and spin up a bunch of tiny testnets ourselves. Currently i dont have a VPS, but on my side it wouldn't cost too much per month to expose a node to the internet
   ↳ 2026-10-24 10:26 ascriv: I think there’s also a benefit to a shared setup like the toaster for debugging. But self-hosted nodes seem like a good way to get started if we can’t use the toaster 
+  ↳ 2026-10-28 14:28 dave: We're planning to launch a small public testnet on the toaster, will hopefully get that running soon. Initially we'll just run PolkaJam but it would be great to include other implementations as well
+  ↳ 2026-10-28 14:29 dave: If you'd like access to the toaster for testing out your implementation, please get in touch with David Dorgan
+2026-10-28 17:29 ascriv: is rule 9 (the no substantive use of generative AI one) of the jam prize still in effect as written?
+2026-10-28 17:32 ascriv: if so, can implementers have some more clarity on what “substantive” means? I get that the spirit of the rule is to prevent using an agent to port one of the existing open source impls to another language, e.g.
+2026-10-28 17:34 dakkk: The issue in using generative ai in this context is that for solving a code problem it may use information from other implementations, "dirtying" the clean room, and maybe introducing the same bug in multiple implementations [edited]
+2026-10-28 17:34 shimonchick: It's funny how fast things changed and knowledge became more important than the code itself 
+2026-10-28 17:36 dave: We want people to read and understand the GP themselves. If you have just used an LLM to generate your implementation and do not understand how the system works or what the LLM has done that is no good. It is more than just not wanting the LLM to copy other implementations
+2026-10-28 17:38 ascriv: that makes sense. but reading and understanding the GP can be consistent with using AI, if each change it does is understood by the implementer for example [edited]
+2026-10-28 17:38 shimonchick: I would be surprised if no team uses AI in 26. In 24 most of us didn't, in 25 maybe some but if someone tells me they use zero AI today i would genuinely be surprised.
+2026-10-28 17:39 ascriv: understanding the gp can also not be achieved even in the case of an implementer not using AI at all
+2026-10-28 17:39 jan: If you want to be safe I'd suggest you work in a way where the LLM is a dumb code monkey -- you don't give it high level instructions like e.g. "implement me PVM", but instead specify exactly what it should do and how. The former doesn't require you to understand what you're doing, while the latter does. [edited]
+2026-10-28 17:40 dakkk: it's one of the rules, it is not  weird if people follow them
+  ↳ 2026-10-28 17:44 shimonchick: Sure. I was banging my head as well a lot in 24 chiseling on code myself, which helps in understanding whats going on. We can pretend all you want, or we can be open about the benefits and downsides of using AI. One cant become a systems engineer by blindly trusting an agent, but can certainly take advantage of having a tutor by your side that can test dozens of scenarios for cheap and give you the opportunity to make more informed decisions on your architecture 
+2026-10-28 17:41 ascriv: > <@jan:parity.io> If you want to be safe I'd suggest you work in a way where the LLM is a dumb code money -- you don't give it high level instructions like e.g. "implement me PVM", but instead specify exactly what it should do and how. The former doesn't require you to understand what you're doing, while the latter does.
+
+I think that makes sense. but it would be great for implementer confidence if we can codify this into the rules of the jam prize itself instead of a blanket “no ai” clause 
+2026-10-28 17:41 jan: Also, you might want to consider using a dumber/non-frontier AI - those still can do great work when you are tightly in control (i.e. understand everything).
+2026-10-28 17:42 jan: Well, I don't make the rules, but the landscape has indeed changed significantly compared to when the JAM prize was first announced.
+2026-10-28 17:43 dave: Practically speaking if your implementation looks substantially vibe-coded and you do not demonstrate good knowledge of the protocol in the interview then you are unlikely to pass. If you understand the protocol well and understand what your AI has done then you are probably fine, but this is not an official position, just my opinion
+2026-10-28 17:43 jan: Nowadays you can pretty much just one shot a JAM node implementation with frontier AI and get a working implementation.
+2026-10-28 17:45 jan: There's definitely a spectrum here. On one hand you have the vibe coders, and on the other hand you have zero AI people. A reasonable position is somewhere in the middle, and with the JAM Prize it's more on the side of "you absolutely need to understand what you're coding, regardless of how the code was written".
+2026-10-28 17:45 shimonchick: Do we need to be explicit about that rule? Because 2 years ago when we started we didn't have such powerful agents
+2026-10-28 17:46 ascriv: so it sounds like we have unofficial go-ahead to technically break 9 which isn’t a very comfy position. how would we go about changing the wording of rule 9?
+2026-10-28 17:49 shimonchick: Speaking for myself only, but i believe i was judged by showcasing substantial understanding of the architecture and design decisions of the implementation, not that much on showing the code itself 
+2026-10-28 17:49 shimonchick: The code is a byproduct of understanding what you're doing, no?
+2026-10-28 17:51 jan: FWIW there was at least one team which vibe coded their implementation, and it was very obvious, and they failed the interview without us even having to look at the code.
+2026-10-28 17:57 jan: Let me maybe put it that way: if you'd have written very similar code without any AI assistance *and* you'd end up with roughly the same amount of expertise, just slower, then you're probably fine. But if AI is allowing you to do things which you wouldn't be able to do (because e.g. you don't have the knowledge), then that might be problematic wrt the rules.
+2026-10-28 18:05 alexandre.balde: Chiming in briefly: this is a rehash of a discussion that has been had at least once (in this channel, at least, back in August).
+
+I don't wish to steer the outcome in any direction, but to avoid another rehash in the future, the [FAQ](https://jam.web3.foundation/#faqs) could have something like:
+
+> Q: does using AI to develop my implementation disqualify it from the prize?
+> On one hand you have the vibe coders, and on the other hand you have zero AI people. The further away from the former, the better.
+
+(liberally paraphrasing from Jan Bujak's words) [edited]
