@@ -1,5 +1,5 @@
 # room: #jam:polkadot.io
-# exported: 2026-10-30 03:20 UTC
+# exported: 2026-10-31 03:16 UTC
 2024-04-20 02:08 johnjiao123: 
 2024-04-20 02:09 johnjiao123: 
 2024-05-30 21:48 nradko: Hey everyone,
@@ -14518,3 +14518,4 @@ I don't wish to steer the outcome in any direction, but to avoid another rehash 
 > On one hand you have the vibe coders, and on the other hand you have zero AI people. The further away from the former, the better.
 
 (liberally paraphrasing from Jan Bujak's words) [edited]
+2026-10-30 03:46 0xjunha: For earlier milestones of the JAM prize, understanding every bit of GP (this is what the M1 interview checked) plus having a codebase that is not product of vibe coding might be enough, but when some implementers approach M5 and then finally aim to join the prod network (mainnet) as validators then understanding every detail of critical path in the codebase would also be very important
