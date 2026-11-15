@@ -1,5 +1,5 @@
 # room: #jam:polkadot.io
-# exported: 2026-11-14 03:15 UTC
+# exported: 2026-11-15 03:17 UTC
 2024-04-20 02:08 johnjiao123: 
 2024-04-20 02:09 johnjiao123: 
 2024-05-30 21:48 nradko: Hey everyone,
@@ -14531,3 +14531,4 @@ How do we get a validator slot so that we can test out block authoring, guarante
 Sent you a message on this
   ↳ 2026-11-12 14:21 david: Just for information, once you can sync the existing testnet chain, the main other requirement is that you support custom private keys instead of any hard coded defaults.
 2026-11-12 09:33 dakkk: 
+2026-11-15 02:44 philoniare: Hi all, seeing a permanent GRANDPA finality stall with polkajam v0.8.0 `polkajam 0.1.29` on a local dev network: 6 validators (`--chain dev --finality-mode grandpa`). From `grandpa=trace` logs: a block is authored a few ms before the prevote timers fire, 4 validators have imported it and prevote for it, the other 2 prevote for its parent and drop the 4 prevotes ("Ignoring message targeting … lower than round base"). Those 2 never precommit, the other 4 give 4 precommits where 5 are needed, and the round never completes. After that it's "finality lagging" and fallback to AURA every epoch. Happened in 3 of 7 runs. The dropped prevotes don't seem to be reconsidered once the block is imported (inferred from logs). Our voter keeps such votes and re-tallies them when the block arrives, like Substrate's "until imported" queue. Is this known, or already fixed in a nightly? Happy to share the full trace logs.
