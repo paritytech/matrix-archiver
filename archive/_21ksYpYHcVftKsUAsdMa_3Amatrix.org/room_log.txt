@@ -1,5 +1,5 @@
 # room: #jam-conformance:matrix.org
-# exported: 2026-11-19 03:18 UTC
+# exported: 2026-11-20 03:18 UTC
 2025-08-20 15:56 erin: tomusdrw: i've set up the archiver to archive this also, so hopefully will be up starting tomorrow
 2025-08-21 06:33 ascriv: https://github.com/davxy/jam-conformance/issues/26 should we not discourage open source implementations (for now)? [edited]
 2025-08-21 10:27 oliver.tale-yazdi: I think open source repos are fine. Other implementors are just not supposed to look at it
@@ -2836,3 +2836,5 @@ The values are a first draft. Looks sensible to me, if you have different opinio
 2026-11-02 02:27 r2rtnl: https://github.com/jam-conformance/jam-test-vectors/issues/119
 2026-11-03 11:27 dakkk: I've prepared some testvectors to test Xi; expected results are produced by jampy. If someone want to test them: https://github.com/dakk/jam-refine-vectors
 2026-11-16 17:55 dakkk: I just pushed a new heavy test https://github.com/dakk/jam-refine-vectors/blob/master/vectors/refine-heavy-wp.json ; it could be useful for benchmarking your  VMs. Jampy tooks ~16 seconds to refine
+2026-11-19 14:47 philoniare: Where is the best place to report cases where polkajam binary appears to deviate from the Gray Paper?
+2026-11-19 14:53 rustybot: Perhaps you can open am issue here https://github.com/paritytech/polkajam-releases
