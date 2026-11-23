@@ -1,5 +1,5 @@
 # room: #jam:polkadot.io
-# exported: 2026-11-22 03:17 UTC
+# exported: 2026-11-23 03:19 UTC
 2024-04-20 02:08 johnjiao123: 
 2024-04-20 02:09 johnjiao123: 
 2024-05-30 21:48 nradko: Hey everyone,
@@ -14533,3 +14533,5 @@ Sent you a message on this
 2026-11-12 09:33 dakkk: 
 2026-11-15 02:44 philoniare: Hi all, seeing a permanent GRANDPA finality stall with polkajam v0.8.0 `polkajam 0.1.29` on a local dev network: 6 validators (`--chain dev --finality-mode grandpa`). From `grandpa=trace` logs: a block is authored a few ms before the prevote timers fire, 4 validators have imported it and prevote for it, the other 2 prevote for its parent and drop the 4 prevotes ("Ignoring message targeting … lower than round base"). Those 2 never precommit, the other 4 give 4 precommits where 5 are needed, and the round never completes. After that it's "finality lagging" and fallback to AURA every epoch. Happened in 3 of 7 runs. The dropped prevotes don't seem to be reconsidered once the block is imported (inferred from logs). Our voter keeps such votes and re-tallies them when the block arrives, like Substrate's "until imported" queue. Is this known, or already fixed in a nightly? Happy to share the full trace logs.
 2026-11-21 17:03 supported: 
+2026-11-22 10:46 shimonchick: Correct me if I'm mistaken, but now with the 0.8+ dynamic validator size, we could programmatically scale the network up and down based on demand? Having benefit of lower idle network cost when there isn't much coretime utilisation 
+2026-11-22 21:39 bkchr: Yes, this is the reason for this kind of feature
