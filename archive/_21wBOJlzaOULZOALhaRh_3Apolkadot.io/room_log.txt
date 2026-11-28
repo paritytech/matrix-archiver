@@ -1,5 +1,5 @@
 # room: #jam:polkadot.io
-# exported: 2026-11-27 03:18 UTC
+# exported: 2026-11-28 03:17 UTC
 2024-04-20 02:08 johnjiao123: 
 2024-04-20 02:09 johnjiao123: 
 2024-05-30 21:48 nradko: Hey everyone,
@@ -14535,3 +14535,32 @@ Sent you a message on this
 2026-11-21 17:03 supported: 
 2026-11-22 10:46 shimonchick: Correct me if I'm mistaken, but now with the 0.8+ dynamic validator size, we could programmatically scale the network up and down based on demand? Having benefit of lower idle network cost when there isn't much coretime utilisation 
 2026-11-22 21:39 bkchr: Yes, this is the reason for this kind of feature
+2026-11-27 11:39 anaelleltd: **JAM Prize Fellowship evaluations - Update 5**
+
+The proposed design for [JAM Parachain service](https://github.com/paritytech/polkadot-sdk/pull/11883) is now undergoing review. 
+
+The fuzzer for JAM Prize M2 is currently in development and can be found [here](https://github.com/paritytech/jam-m2-conformance). 
+
+All JAM M1 interviews have been scheduled, with remaining teams due to be examined in December. The deferred Fellowship Rank 3 interviews are running in parallel to ensure that all Rank 3 nominees get evaluated before the end of year.
+
+19 teams out of 25 have now passed their M1 evaluations. So far, 11 nominees have been approved to join the Fellowship at Rank 3 and a total of 5 JAM implementers have applied for onboarding at Rank 2.
+
+Please refer to this [tracker](https://polkadottechnicalfellowship.notion.site/2ef96f88d0a78051b94ef4a6d6c9be8c?v=2ef96f88d0a78036b33a000c2cb9a0b1) for more information on JAM Prize evaluations.
+
+*Previous updates:* [1](https://matrix.to/#/!wBOJlzaOULZOALhaRh:polkadot.io/$Ib5gDsuCOUqJLmkdBVox6tmWECTv-YfUgXlYPKL0_L8?via=polkadot.io&via=matrix.org&via=parity.io) | [2](https://matrix.to/#/!wBOJlzaOULZOALhaRh:polkadot.io/$qnUT2eEfXfSR2dsvxVBkGGnR34so5W9Fqvgi62N7TzQ?via=polkadot.io&via=matrix.org&via=parity.io) |  [3](https://matrix.to/#/!wBOJlzaOULZOALhaRh:polkadot.io/$2XPQ9Nrfh_6XVySBmx8hIHHphqCdO84F-GyOzmA4O8w?via=polkadot.io&via=matrix.org&via=parity.io) | [4](https://matrix.to/#/!wBOJlzaOULZOALhaRh:polkadot.io/$qkiWlxx8vMjY09x9Z6fw5Y7ODEhPEJDgLDgeBfRDzNk?via=polkadot.io&via=matrix.org&via=parity.io) 
+
+  ↳ 2026-11-27 11:58 dakkk: Thank you for the update Anaelle. 
+The M2 fuzzer cannot be used by us since it requires the polkajam source code, right?
+  ↳ 2026-11-27 12:05 shimonchick: dakkk | JamPy: yeah, unfortunately for now they're not decoupled. I did a fork of the repo and used my implementation as an oracle, to test the harness. It still had some issues when i checked 2 weeks ago
+  ↳ 2026-11-27 12:10 alexandre.balde: Is this because your team implemented its own version of the PVM, or some other reason?
+  ↳ 2026-11-27 12:18 dakkk: What do you mean? I implemented the PVM, but it doesn't make any difference
+2026-11-27 23:43 ascriv: 
+2026-11-28 00:37 ascriv: I've been building jam-lean, an executable model of the Gray Paper (v0.8.1) in Lean 4, and it now has a companion book covering every section of the paper:
+
+📖 https://ascrivener.github.io/jam-lean/book/
+
+some uses of this project:
+- as an executable version of the gray paper it can help a lot with conformance 
+- we can now prove, in lean, certain aspects of the protocol itself behave the way we’d like
+- since the pvm is modeled, we can similarly prove services behave the way we’d like by making proofs about their compiled pvm code
+- ambitious: a jam node implementation itself can be proven to be correct (compared to the model) [edited]
